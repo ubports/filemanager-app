@@ -1,0 +1,18 @@
+Source: app-template
+Priority: extra
+Maintainer: Ugo Riboni <ugo.riboni@canonical.com>
+Build-Depends: debhelper (>= 8.0.0), 
+Standards-Version: 3.9.3
+Section: misc
+Homepage: https://launchpad.net/app-template
+
+Package: app-template
+Section: misc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends},
+         qmlscene,
+         qt-components-ubuntu,
+         qtdeclarative5-qtquick2-plugin
+Description: AppTemplate application
+ Core AppTemplate application
+
