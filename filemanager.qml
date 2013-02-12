@@ -9,7 +9,7 @@ import Ubuntu.Components 0.1
 
 MainView {
     // objectName for functional testing purposes (autopilot-qt5)
-    objectName: "appTemplate"
+    objectName: "filemanager"
     
     width: units.gu(50)
     height: units.gu(75)
@@ -22,7 +22,7 @@ MainView {
         Tab {
             objectName: "Tab1"
             
-            title: i18n.tr("AppTemplate")
+            title: i18n.tr("File Manager")
             
             // Tab content begins here
             page: Page {

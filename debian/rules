@@ -18,10 +18,10 @@ override_dh_auto_install:
 override_dh_install:
 	mkdir -p $(CURDIR)/debian/tmp/usr/share/applications/
 	mkdir -p $(CURDIR)/debian/tmp/usr/bin/
-	mkdir -p $(CURDIR)/debian/tmp/usr/share/app-template/
-	cp app-template.desktop $(CURDIR)/debian/tmp/usr/share/applications/
-	cp app-template $(CURDIR)/debian/tmp/usr/bin/
-	cp -r *.qml *.png $(CURDIR)/debian/tmp/usr/share/app-template/
+	mkdir -p $(CURDIR)/debian/tmp/usr/share/ubuntu-filemanager-app/
+	cp ubuntu-filemanager-app.desktop $(CURDIR)/debian/tmp/usr/share/applications/
+	cp ubuntu-filemanager-app $(CURDIR)/debian/tmp/usr/bin/
+	cp -r *.qml *.png $(CURDIR)/debian/tmp/usr/share/ubuntu-filemanager-app/
 	
 	dh_install --sourcedir=debian/tmp --fail-missing
 

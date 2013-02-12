@@ -1,0 +1,2 @@
+#!/bin/bash
+qmlscene /usr/share/ubuntu-filemanager-app/filemanager.qml

@@ -1,2 +1,0 @@
-#!/bin/bash
-qmlscene /usr/share/app-template/appTemplate.qml
