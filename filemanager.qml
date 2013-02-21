@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
+import org.nemomobile.folderlistmodel 1.0
 
 /*!
     \brief MainView with Tabs element.
