@@ -1,1 +1,15 @@
-this is an example README file.
+Prerequisites
+=============
+
+Folderlistmodel plugin must be built and installed before running. 
+
+Currently it can be obtained like this:
+
+bzr branch lp:~ajalkane/ubuntu-filemanager-app/qml-folderlistmodel
+
+Running filemanager
+===================
+
+qmlscene -I $(qmake -query QT_INSTALL_IMPORTS) filemanager.qml
+
+
