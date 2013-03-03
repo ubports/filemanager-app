@@ -27,11 +27,9 @@ MainView {
             
             // Tab content begins here
             page: Page {
-                Column {
-                    anchors.centerIn: parent
-                    Label {
-                        text: i18n.tr("Swipe from right to left to change tab.")
-                    }
+                FolderListView {
+                    anchors.fill: parent
+                    anchors.margins: units.gu(2)
                 }
             }
         }
