@@ -26,11 +26,7 @@ MainView {
             title: i18n.tr("File Manager")
             
             // Tab content begins here
-            page: Page {
-                FolderListView {
-                    anchors.fill: parent
-                    anchors.margins: units.gu(2)
-                }
+            page: FolderListPage {
             }
         }
         
