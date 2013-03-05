@@ -21,7 +21,7 @@ MainView {
         
         // First tab begins here
         Tab {
-            objectName: "Tab1"
+            objectName: "folderListPage"
             
             title: i18n.tr("File Manager")
             
@@ -32,34 +32,10 @@ MainView {
         
         // Second tab begins here
         Tab {
-            objectName: "Tab2"
+            objectName: "bookmarksPage"
             
-            title: i18n.tr("Optional Screen")
-            page: Page {
-                anchors.margins: units.gu(2)
-                
-                tools: ToolbarActions {
-                    Action {
-                        objectName: "action"
-                        
-                        iconSource: Qt.resolvedUrl("avatar.png")
-                        text: i18n.tr("Tap me!")
-                        
-                        onTriggered: {
-                            label.text = i18n.tr("Toolbar tapped")
-                        }
-                    }
-                }
-                
-                Column {
-                    anchors.centerIn: parent
-                    Label {
-                        id: label
-                        objectName: "label"
-                        
-                        text: i18n.tr("Swipe from bottom to up to reveal the toolbar.")
-                    }
-                }
+            title: i18n.tr("Bookmarks")
+            page: BookmarksPage {
             }
         }
     }
