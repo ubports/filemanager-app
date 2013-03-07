@@ -37,9 +37,9 @@ ListView {
         // grabDismissAreaEvents seemed promising, but at least with onPressAndHold
         // makes background view scroll when moving mouse as if mouse button was still down.
         // grabDismissAreaEvents: false
-
         // Without this the popover jumps up at the start of the application. SDK bug?
-        Component.onCompleted: hide()
+        // Bug report has been made of these https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1152270
+        visible: false
     }
 
     delegate: FolderListDelegate {
