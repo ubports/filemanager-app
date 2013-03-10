@@ -1,0 +1,6 @@
+Building and installing
+=======================
+
+qmake && make
+sudo make install
+
