@@ -11,15 +11,25 @@ Page {
     }
 
     tools: ToolbarActions {
+        lock: true
+        active: true
+
         back: Action {
             text: i18n.tr("Up")
             onTriggered: {
                 pageModel.path = pageModel.parentPath
                 console.log("Up triggered")
             }
+            visible: pageModel.path != "/"
         }
-        active: pageModel.path != "/"
-        lock: true
+
+        Action {
+            text: i18n.tr("Home")
+            onTriggered: {
+                pageModel.path = pageModel.homePath()
+                console.log("Home triggered")
+            }
+        }
     }
 
     FolderListView {
