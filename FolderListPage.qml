@@ -12,7 +12,7 @@ Page {
 
     tools: ToolbarActions {
         back: Action {
-            text: "Up"
+            text: i18n.tr("Up")
             onTriggered: {
                 pageModel.path = pageModel.parentPath
                 console.log("Up triggered")
