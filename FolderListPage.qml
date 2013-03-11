@@ -7,7 +7,7 @@ Page {
 
     FolderListModel {
         id: pageModel
-        path: "/" // TODO get home
+        path: homePath()
     }
 
     tools: ToolbarActions {
