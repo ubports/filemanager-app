@@ -1,27 +1,31 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
+import org.nemomobile.folderlistmodel 1.0
 
 Page {
     anchors.margins: units.gu(2)
+
+    FolderListModel {
+        id: pageModel
+        path: "/" // TODO get home
+    }
 
     tools: ToolbarActions {
         back: Action {
             text: "Up"
             onTriggered: {
-                // FIXME: The path should be normalized. This is just a quick and dirty
-                // solution - this results in paths like "/home/user/Documents/../Videos/../Music
-                // when used for a while. The path will grow indefinitely.
-                folderListView.path = folderListView.path + "/.."
+                pageModel.path = pageModel.parentPath
                 console.log("Up triggered")
             }
         }
-        active: folderListView.path != "/"
+        active: pageModel.path != "/"
         lock: true
     }
 
     FolderListView {
         id: folderListView
+
+        folderListModel: pageModel
         anchors.fill: parent
-        path: "/"
     }
 }

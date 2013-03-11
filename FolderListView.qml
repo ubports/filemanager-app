@@ -5,11 +5,10 @@ import org.nemomobile.folderlistmodel 1.0
 
 ListView {
     id: root
-    property alias path: folderListModel.path
 
-    model: FolderListModel {
-        id: folderListModel
-    }
+    property FolderListModel folderListModel
+    property string path: folderListModel.path
+    model: folderListModel
 
     ActionSelectionPopover {
         id: actionSelectionPopover
