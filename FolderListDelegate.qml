@@ -12,4 +12,5 @@ ListItem.Subtitled {
     // icons packaged into the application. Both folder and individual
     // files will need an icon.
     icon: model.isDir ? "/usr/share/icons/gnome/22x22/apps/file-manager.png" : ""
+    progression: model.isDir
 }

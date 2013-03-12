@@ -41,12 +41,28 @@ ListView {
         visible: false
     }
 
+    Dialog {
+        id: notifyDialog
+        visible: false
+        Button {
+            text: i18n.tr("Ok")
+            onClicked: notifyDialog.hide()
+        }
+    }
+
     delegate: FolderListDelegate {
         id: delegate
         onClicked: {
             if (model.isDir) {
-                console.log("Changing to dir", model.filePath)
-                folderListModel.path = model.filePath
+                if (model.isReadable && model.isExecutable) {
+                    console.log("Changing to dir", model.filePath)
+                    folderListModel.path = model.filePath
+                } else {
+                    notifyDialog.caller = delegate
+                    notifyDialog.title = i18n.tr("Folder not accessible")
+                    notifyDialog.text = i18n.tr("Can not access ") + model.fileName
+                    notifyDialog.show()
+                }
             } else {
                 console.log("Non dir clicked")
             }
