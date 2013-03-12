@@ -5,7 +5,7 @@ import org.nemomobile.folderlistmodel 1.0
 
 ListItem.Subtitled {
     text: model.fileName
-    subText: model.modifiedDate + (!model.isDir ? " " + fileSize : "")
+    subText: Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate) + (!model.isDir ? " " + fileSize : "")
     // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
     // Nemo mobile has icon provider. Have to figure out what's the proper way
     // to get "system wide" icons in Ubuntu Touch, or if we have to use
