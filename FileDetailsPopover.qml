@@ -22,7 +22,7 @@ Popover {
             permissions.push(i18n.tr("Executable"))
         }
 
-
+        // Now why does this not work?
         // return permissions.join(", ")
         var permStr = ""
         for (var i = 0; i < permissions.length; ++i) {
