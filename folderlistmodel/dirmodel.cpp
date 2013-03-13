@@ -347,22 +347,18 @@ bool DirModel::rename(int row, const QString &newName)
         return false;
     }
 
-    bool  retval = true;
     const QFileInfo &fi = mDirectoryContents.at(row);
     QString newFullFilename(fi.absolutePath() + QDir::separator() + newName);
-    if (!fi.isDir()) {
-        QFile f(fi.absoluteFilePath());              
-        if (!f.rename(newFullFilename))
-            qDebug() << Q_FUNC_INFO << "Rename returned error code: " << f.error() << f.errorString();
-        else   
-            retval = true;
-    } else {
-        QDir d(fi.absoluteFilePath());
-        retval = d.rename(fi.absoluteFilePath(), newFullFilename);
-        // QDir has no way to detect what went wrong. woohoo!
-        retval = true;
+
+    //QFile::rename() works for File and Dir
+    QFile f(fi.absoluteFilePath());
+    bool retval = f.rename(newFullFilename);
+    if (!retval)
+    {
+        qDebug() << Q_FUNC_INFO << "Rename returned error code: " << f.error() << f.errorString();
+        emit(QObject::tr("Rename error"), f.errorString());
     }
-    if (retval)
+    else
     {
         mDirectoryContents[row] = QFileInfo(newFullFilename);
         QModelIndex idx = createIndex(row,0);
@@ -380,7 +376,7 @@ void DirModel::mkdir(const QString &newDir)
     if (!retval) {
         const char *errorStr = strerror(errno);
         qDebug() << Q_FUNC_INFO << "Error creating new directory: " << errno << " (" << errorStr << ")";
-        emit error("Error creating new folder", errorStr);
+        emit error(QObject::tr("Error creating new folder"), errorStr);
     } else {
         refresh();
     }
