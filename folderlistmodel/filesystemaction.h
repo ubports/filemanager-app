@@ -22,6 +22,8 @@
 #ifndef FILESYSTEMACTION_H
 #define FILESYSTEMACTION_H
 
+#include "removenotifier.h"
+
 #include <QObject>
 #include <QFileInfo>
 #include <QVector>
@@ -43,6 +45,9 @@ signals:
     void     added(const QString& );
     void     added(const QFileInfo& );
     void     progress(int curItem, int totalItems, int percent);
+
+public slots:
+    void     pathChanged(const QString& path);
 
 private slots:
     void     processAction();
@@ -91,11 +96,14 @@ private:
    Action            *     m_curAction;
    bool                    m_cancelCurrentAction;
    bool                    m_busy;
+   static RemoveNotifier   m_removeNotifier;
+   QString                 m_path;
 
 private:
    Action * createAction(ActionType, const QString& target = QLatin1String(0));
-   void     addEntry(Action* action, const QFileInfo& info);
+   void     addEntry(Action* action, const QString &pathname);
    void     doCurrentEntry(ActionEntry *);
+
 };
     
 

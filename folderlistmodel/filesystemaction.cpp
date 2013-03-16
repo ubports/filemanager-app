@@ -30,6 +30,8 @@
 #define SHOULD_EMIT_PROGRESS_SIGNAL(action)       (1)
 
 
+RemoveNotifier   FileSystemAction::m_removeNotifier;
+
 
 FileSystemAction::FileSystemAction(QObject *parent) :
     QObject(parent)
@@ -37,24 +39,22 @@ FileSystemAction::FileSystemAction(QObject *parent) :
   , m_cancelCurrentAction(false)
   , m_busy(false)
 {
+  //as m_removeNotifier is static it will send signals to all instances of
+  //the model
+    connect(&m_removeNotifier, SIGNAL(removed(QFileInfo)),
+            this,              SIGNAL(removed(QFileInfo)));
+
+    connect(&m_removeNotifier, SIGNAL(removed(QString)),
+            this,              SIGNAL(removed(QString)));
 }
 
 
 void FileSystemAction::remove(const QStringList &paths)
-{
-    int index = 0;
+{  
     Action* myAction = createAction(ActionRemove);
     for (int counter=0; counter < paths.count(); counter++)
-    {
-        QFileInfo info(paths.at(counter));
-        if (info.exists())
-        {
-            addEntry(myAction, info);
-        }
-        else
-        {
-            //TODO emit an error
-        }
+    {       
+        addEntry(myAction, paths.at(counter));
     }
     m_queuedActions.append(myAction);
     if (!m_busy)
@@ -82,8 +82,20 @@ FileSystemAction::Action* FileSystemAction::createAction(ActionType type, const 
     return action;
 }
 
-void  FileSystemAction::addEntry(Action* action, const QFileInfo& info)
+void  FileSystemAction::addEntry(Action* action, const QString& pathname)
 {
+    QFileInfo info(pathname);
+    if (!info.exists())
+    {
+        info.setFile(m_path, pathname);
+    }
+    if (!info.exists())
+    {
+        emit error(QObject::tr("File or Directory does not exist"),
+                   pathname + QObject::tr(" does not exist")
+                  );
+        return;
+    }
     ActionEntry * entry = new ActionEntry();
     QFileInfo   item;   
     if (info.isDir())
@@ -161,7 +173,7 @@ void FileSystemAction::processActionEntry()
         const QFileInfo & mainItem = curEntry->reversedOrder.at(curEntry->currItem -1);
         if (m_curAction->type == ActionRemove || m_curAction->type == ActionMove)
         {
-            emit removed(mainItem);
+            m_removeNotifier.notifyRemoved(mainItem); // notify all instances
         }
         else
         {
@@ -219,4 +231,10 @@ void FileSystemAction::doCurrentEntry(ActionEntry *entry)
             ok = QFile::remove(fi.absoluteFilePath());
         }
     }    
+}
+
+
+void FileSystemAction::pathChanged(const QString &path)
+{
+    m_path = path;
 }

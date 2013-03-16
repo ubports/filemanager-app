@@ -95,9 +95,10 @@ private:
 
 DirModel::DirModel(QObject *parent)
     : QAbstractListModel(parent)
+    , fsAction(new FileSystemAction(this) )
     , mShowDirectories(true)
     , mAwaitingResults(false)
-    , fsAction(new FileSystemAction(this) )
+
 {
     mNameFilters = QStringList() << "*";
 
@@ -131,6 +132,9 @@ DirModel::DirModel(QObject *parent)
 
     connect(fsAction, SIGNAL(error(QString,QString)),
             this,     SIGNAL(error(QString,QString)));
+
+    connect(this,     SIGNAL(pathChanged(QString)),
+            fsAction, SLOT(pathChanged(QString)));
 
 }
 
@@ -280,7 +284,7 @@ void DirModel::setPath(const QString &pathName)
     ioWorkerThread()->addRequest(dlw);
 
     mCurrentDir = pathName;
-    emit pathChanged();
+    emit pathChanged(pathName);
 }
 
 static bool fileCompare(const QFileInfo &a, const QFileInfo &b)

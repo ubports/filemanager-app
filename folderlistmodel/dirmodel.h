@@ -119,7 +119,7 @@ signals:
     void awaitingResultsChanged();
     void nameFiltersChanged();
     void showDirectoriesChanged();
-    void pathChanged();
+    void pathChanged(const QString& newPath);
     void error(const QString &errorTitle, const QString &errorMessage);
 
 public:
