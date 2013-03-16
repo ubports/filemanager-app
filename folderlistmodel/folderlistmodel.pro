@@ -7,17 +7,11 @@ TARGET = $$qtLibraryTarget($$TARGET)
 uri = org.nemomobile.folderlistmodel
 
 # Input
-SOURCES += plugin.cpp \
-           dirmodel.cpp \
-           iorequest.cpp \
-           iorequestworker.cpp \
-           ioworkerthread.cpp
+SOURCES += plugin.cpp
 
-HEADERS += plugin.h \
-           dirmodel.h \
-           iorequest.h \
-           iorequestworker.h \
-           ioworkerthread.h
+HEADERS += plugin.h
+
+include (folderlistmodel.pri)
 
 OTHER_FILES = qmldir
 
@@ -36,4 +30,5 @@ unix {
     target.path = $$installPath
     INSTALLS += target qmldir
 }
+
 

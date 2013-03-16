@@ -39,10 +39,12 @@
 
 #include "iorequest.h"
 
+class FileSystemAction;
+
 class DirModel : public QAbstractListModel
 {
     Q_OBJECT
-
+public:
     enum Roles {
         FileNameRole = Qt::UserRole,
         CreationDateRole,
@@ -151,7 +153,7 @@ public:
      * \param row points to the item to b e removed
      * \return true if it was possible to remove the item
      */
-    Q_INVOKABLE bool  remove(int row);
+    Q_INVOKABLE void remove(int row);
 
 public slots:
     /*!
@@ -175,7 +177,37 @@ public slots:
      */
     void paste();
 
+signals:
+    /*!
+     * \brief insertedItem()
+     *
+     *  It happens when a new file is inserted in a existent view,
+     *  for example from  \ref mkdir() or \ref paste()
+     *
+     *  It can be used to make the new row visible to the user doing a scroll to
+     */
+    void  insertedRow(int row);
+    /*!
+     * \brief progress()
+     *  Sends status about recursive and multi-items remove/move/copy
+     *
+     * \param curItem     current item being handled
+     * \param totalItems  total of items including recursive directories content
+     * \param percent     a percent done
+     */
+    void     progress(int curItem, int totalItems, int percent);
 
+private slots:
+    void onItemRemoved(const QString&);
+    void onItemRemoved(const QFileInfo&);
+    void onItemAdded(const QString&);
+    void onItemAdded(const QFileInfo&);
+
+private:
+    int  addItem(const QFileInfo& fi);
+
+private:
+    FileSystemAction  *  fsAction;  //!< it does file system recursive remove/copy/move
 //[0]
 
  private:

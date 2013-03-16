@@ -41,6 +41,7 @@
 
 #include "dirmodel.h"
 #include "ioworkerthread.h"
+#include "filesystemaction.h"
 
 Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread);
 
@@ -95,7 +96,8 @@ private:
 DirModel::DirModel(QObject *parent)
     : QAbstractListModel(parent)
     , mShowDirectories(true)
-    , mAwaitingResults(false)    
+    , mAwaitingResults(false)
+    , fsAction(new FileSystemAction(this) )
 {
     mNameFilters = QStringList() << "*";
 
@@ -112,8 +114,24 @@ DirModel::DirModel(QObject *parent)
     for (;it != roles.constEnd(); ++it)
         mRoleMapping.insert(it.value(), it.key());
 
-    // make sure we cover all roles
-//    Q_ASSERT(roles.count() == IsFileRole - FileNameRole);
+    connect(fsAction, SIGNAL(progress(int,int,int)),
+            this,     SIGNAL(progress(int,int,int)));
+
+    connect(fsAction, SIGNAL(added(QFileInfo)),
+            this,     SLOT(onItemAdded(QFileInfo)));
+
+    connect(fsAction, SIGNAL(added(QString)),
+            this,     SLOT(onItemAdded(QString)));
+
+    connect(fsAction, SIGNAL(removed(QFileInfo)),
+            this,     SLOT(onItemRemoved(QFileInfo)));
+
+    connect(fsAction, SIGNAL(removed(QString)),
+            this,     SLOT(onItemRemoved(QString)));
+
+    connect(fsAction, SIGNAL(error(QString,QString)),
+            this,     SIGNAL(error(QString,QString)));
+
 }
 
 // roleNames has changed between Qt4 and Qt5. In Qt5 it is a virtual
@@ -303,40 +321,13 @@ void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
         if (!doAdd)
             continue;
 
-        QVector<QFileInfo>::Iterator it = qLowerBound(mDirectoryContents.begin(),
-                                                      mDirectoryContents.end(),
-                                                      fi,
-                                                      fileCompare);
-
-        if (it == mDirectoryContents.end()) {
-            beginInsertRows(QModelIndex(), mDirectoryContents.count(), mDirectoryContents.count());
-            mDirectoryContents.append(fi);
-            endInsertRows();
-        } else {
-            int idx = it - mDirectoryContents.begin();
-            beginInsertRows(QModelIndex(), idx, idx);
-            mDirectoryContents.insert(it, fi);
-            endInsertRows();
-        }
+        addItem(fi);
     }
 }
 
 void DirModel::rm(const QStringList &paths)
 {
-    // TODO: handle directory deletions?
-    bool error = false;
-
-    foreach (const QString &path, paths) {
-        error |= QFile::remove(path);
-
-        if (error) {
-            qWarning() << Q_FUNC_INFO << "Failed to remove " << path;
-            error = false;
-        }
-    }
-
-    // TODO: just remove removed items; don't reload the entire model
-    refresh();
+   fsAction->remove(paths);
 }
 
 bool DirModel::rename(int row, const QString &newName)
@@ -368,9 +359,7 @@ bool DirModel::rename(int row, const QString &newName)
 }
 
 void DirModel::mkdir(const QString &newDir)
-{
-    qDebug() << Q_FUNC_INFO << "Creating new folder " << newDir << " to " << mCurrentDir;
-
+{  
     QDir dir(mCurrentDir);
     bool retval = dir.mkdir(newDir);
     if (!retval) {
@@ -378,7 +367,7 @@ void DirModel::mkdir(const QString &newDir)
         qDebug() << Q_FUNC_INFO << "Error creating new directory: " << errno << " (" << errorStr << ")";
         emit error(QObject::tr("Error creating new folder"), errorStr);
     } else {
-        refresh();
+        onItemAdded(dir.filePath(newDir));
     }
 }
 
@@ -453,18 +442,18 @@ bool DirModel::cdUp()
 }
 
 
-bool DirModel::remove(int row)
+void DirModel::remove(int row)
 {
-    bool ret = true;
     if (IS_VALID_ROW(row))
     {
-
+        const QFileInfo &fi = mDirectoryContents.at(row);
+        QStringList list(fi.absoluteFilePath());
+        this->rm(list);
     }
     else
     {
         WARN_ROW_OUT_OF_RANGE(row);
     }
-    return ret;
 }
 
 
@@ -520,6 +509,57 @@ bool  DirModel::cdInto(int row)
         WARN_ROW_OUT_OF_RANGE(row);
     }
     return ret;
+}
+
+void DirModel::onItemRemoved(const QString &pathname)
+{
+    QFileInfo info(pathname);
+    onItemRemoved(info);
+}
+
+
+void DirModel::onItemRemoved(const QFileInfo &fi)
+{
+    int row = mDirectoryContents.indexOf(fi);
+    if (row >= 0)
+    {
+        beginRemoveRows(QModelIndex(), row, row);
+        mDirectoryContents.remove(row,1);
+        endRemoveRows();
+    }
+}
+
+void DirModel::onItemAdded(const QString &pathname)
+{
+    QFileInfo info(pathname);
+    onItemAdded(info);
+}
+
+
+void DirModel::onItemAdded(const QFileInfo &fi)
+{
+    int newRow = addItem(fi);
+    emit insertedRow(newRow);
+}
+
+int DirModel::addItem(const QFileInfo &fi)
+{
+    QVector<QFileInfo>::Iterator it = qLowerBound(mDirectoryContents.begin(),
+                                                  mDirectoryContents.end(),
+                                                  fi,
+                                                  fileCompare);
+    int idx =  mDirectoryContents.count();
+    if (it == mDirectoryContents.end()) {
+        beginInsertRows(QModelIndex(), mDirectoryContents.count(), mDirectoryContents.count());
+        mDirectoryContents.append(fi);
+        endInsertRows();
+    } else {
+        idx = it - mDirectoryContents.begin();
+        beginInsertRows(QModelIndex(), idx, idx);
+        mDirectoryContents.insert(it, fi);
+        endInsertRows();
+    }
+    return idx;
 }
 
 // for dirlistworker

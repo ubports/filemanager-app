@@ -94,7 +94,7 @@ void SimpleList::onCdUP()
 
 void SimpleList::onRemove()
 {
-    m_model->remove(m_curRow);
+     m_model->remove(m_curRow);
 }
 
 void SimpleList::onCopy()
