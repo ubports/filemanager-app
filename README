@@ -10,6 +10,6 @@ bzr branch lp:~ajalkane/ubuntu-filemanager-app/qml-folderlistmodel
 Running filemanager
 ===================
 
-qmlscene -I $(qmake -query QT_INSTALL_IMPORTS) filemanager.qml
+qmlscene filemanager.qml
 
 
