@@ -12,8 +12,7 @@ ListView {
 
     ActionSelectionPopover {
         id: actionSelectionPopover
-        property string filePath
-
+        property var model
         actions: ActionList {
             Action {
                 text: i18n.tr("Add as bookmark")
@@ -26,7 +25,9 @@ ListView {
                     print(text)
                     PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
                                     actionSelectionPopover.caller,
-                                    { "filePath": actionSelectionPopover.filePath } )
+                                        { "model": actionSelectionPopover.model
+                                        }
+                                    )
                 }
             }
         }
@@ -79,7 +80,7 @@ ListView {
         onPressAndHold: {
             console.log("FolderListDelegate onPressAndHold")
             actionSelectionPopover.caller = delegate
-            actionSelectionPopover.filePath = filePath
+            actionSelectionPopover.model = model
             actionSelectionPopover.show();
         }
     }
