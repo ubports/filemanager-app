@@ -75,8 +75,15 @@ ListView {
                 }
             } else {
                 console.log("Non dir clicked")
+                PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), delegate,
+                                {
+                                    fileName: model.fileName,
+                                    filePath: model.filePath
+
+                                 })
             }
         }
+
         onPressAndHold: {
             console.log("FolderListDelegate onPressAndHold")
             actionSelectionPopover.caller = delegate
