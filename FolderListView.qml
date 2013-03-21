@@ -51,15 +51,6 @@ ListView {
         }
     }
 
-    Column {
-        anchors.centerIn: root
-        Label {
-            text: i18n.tr("No files")
-            fontSize: "large"
-            visible: root.count == 0
-        }
-    }
-
     delegate: FolderListDelegate {
         id: delegate
         onClicked: {
