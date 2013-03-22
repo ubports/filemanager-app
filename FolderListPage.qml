@@ -18,7 +18,7 @@ Page {
         back: Action {
             text: i18n.tr("Up")
             onTriggered: {
-                pageModel.path = pageModel.parentPath
+                pageModel.path = pageModel.parentPath()
                 console.log("Up triggered")
             }
             visible: pageModel.path != "/"
