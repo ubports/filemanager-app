@@ -13,6 +13,8 @@ HEADERS += plugin.h
 
 include (folderlistmodel.pri)
 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 OTHER_FILES = qmldir
 
 !equals(_PRO_FILE_PWD_, $$OUT_PWD) {

@@ -36,6 +36,7 @@
 #include <QUrl>
 #include <QIcon>
 
+
 #include <errno.h>
 #include <string.h>
 
@@ -43,9 +44,10 @@
 #include "ioworkerthread.h"
 #include "filesystemaction.h"
 
-Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread);
 
-#define IS_VALID_ROW(row)            (row >=0 && row < mDirectoryContents.count())
+Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread)
+
+#define IS_VALID_ROW(row)             (row >=0 && row < mDirectoryContents.count())
 #define WARN_ROW_OUT_OF_RANGE(row)    qWarning() << Q_FUNC_INFO << "row" << row << "Out of bounds access"
 
 class DirListWorker : public IORequest
@@ -58,7 +60,9 @@ public:
 
     void run()
     {
+#if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << "Running on: " << QThread::currentThreadId();
+#endif
 
         QDir tmpDir = QDir(mPathName);
         QDirIterator it(tmpDir);
@@ -95,10 +99,9 @@ private:
 
 DirModel::DirModel(QObject *parent)
     : QAbstractListModel(parent)
-    , fsAction(new FileSystemAction(this) )
+    , m_fsAction(new FileSystemAction(this) )
     , mShowDirectories(true)
-    , mAwaitingResults(false)
-
+    , mAwaitingResults(false)    
 {
     mNameFilters = QStringList() << "*";
 
@@ -115,27 +118,31 @@ DirModel::DirModel(QObject *parent)
     for (;it != roles.constEnd(); ++it)
         mRoleMapping.insert(it.value(), it.key());
 
-    connect(fsAction, SIGNAL(progress(int,int,int)),
+    connect(m_fsAction, SIGNAL(progress(int,int,int)),
             this,     SIGNAL(progress(int,int,int)));
 
-    connect(fsAction, SIGNAL(added(QFileInfo)),
+    connect(m_fsAction, SIGNAL(added(QFileInfo)),
             this,     SLOT(onItemAdded(QFileInfo)));
 
-    connect(fsAction, SIGNAL(added(QString)),
+    connect(m_fsAction, SIGNAL(added(QString)),
             this,     SLOT(onItemAdded(QString)));
 
-    connect(fsAction, SIGNAL(removed(QFileInfo)),
+    connect(m_fsAction, SIGNAL(removed(QFileInfo)),
             this,     SLOT(onItemRemoved(QFileInfo)));
 
-    connect(fsAction, SIGNAL(removed(QString)),
+    connect(m_fsAction, SIGNAL(removed(QString)),
             this,     SLOT(onItemRemoved(QString)));
 
-    connect(fsAction, SIGNAL(error(QString,QString)),
+    connect(m_fsAction, SIGNAL(error(QString,QString)),
             this,     SIGNAL(error(QString,QString)));
 
     connect(this,     SIGNAL(pathChanged(QString)),
-            fsAction, SLOT(pathChanged(QString)));
+            m_fsAction, SLOT(pathChanged(QString)));
 
+}
+
+DirModel::~DirModel()
+{   
 }
 
 // roleNames has changed between Qt4 and Qt5. In Qt5 it is a virtual
@@ -214,14 +221,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         case ModifiedDateRole:
             return fi.lastModified();
         case FileSizeRole: {
-            qint64 kb = fi.size() / 1024;
-            if (kb < 1)
-                return QString::number(fi.size()) + " bytes";
-            else if (kb < 1024)
-                return QString::number(kb) + " kb";
-
-            kb /= 1024;
-            return QString::number(kb) + "mb";
+             return fileSize(fi.size());
         }
         case IconSourceRole: {
             const QString &fileName = fi.fileName();
@@ -272,8 +272,9 @@ void DirModel::setPath(const QString &pathName)
 
     mAwaitingResults = true;
     emit awaitingResultsChanged();
+#if DEBUG_MESSAGES
     qDebug() << Q_FUNC_INFO << "Changing to " << pathName << " on " << QThread::currentThreadId();
-
+#endif
     beginResetModel();
     mDirectoryContents.clear();
     endResetModel();
@@ -300,10 +301,14 @@ static bool fileCompare(const QFileInfo &a, const QFileInfo &b)
 
 void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
 {
+#if DEBUG_MESSAGES
     qDebug() << Q_FUNC_INFO << "Got new files: " << newFiles.count();
+#endif
 
     if (mAwaitingResults) {
+#if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << "No longer awaiting results";
+#endif
         mAwaitingResults = false;
         emit awaitingResultsChanged();
     }
@@ -331,12 +336,15 @@ void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
 
 void DirModel::rm(const QStringList &paths)
 {
-   fsAction->remove(paths);
+   m_fsAction->remove(paths);
 }
 
 bool DirModel::rename(int row, const QString &newName)
 {
-    qDebug() << Q_FUNC_INFO << "Renaming " << row << " to " << newName;    
+#if DEBUG_MESSAGES
+    qDebug() << Q_FUNC_INFO << "Renaming " << row << " to " << newName;
+#endif
+
     if (!IS_VALID_ROW(row)) {
         WARN_ROW_OUT_OF_RANGE(row);
         return false;
@@ -460,17 +468,28 @@ void DirModel::remove(int row)
     }
 }
 
+void DirModel::remove(const QStringList& items)
+{
+     this->rm(items);
+}
 
 void DirModel::copy(int row)
 {
     if (IS_VALID_ROW(row))
     {
-
+        const QFileInfo &fi = mDirectoryContents.at(row);
+        QStringList list(fi.absoluteFilePath());
+        this->copy(list);
     }
     else
     {
         WARN_ROW_OUT_OF_RANGE(row);
     }
+}
+
+void DirModel::copy(const QStringList &items)
+{
+   m_fsAction->copy(items);
 }
 
 
@@ -478,7 +497,9 @@ void DirModel::cut(int row)
 {
     if (IS_VALID_ROW(row))
     {
-
+        const QFileInfo &fi = mDirectoryContents.at(row);
+        QStringList list(fi.absoluteFilePath());
+        m_fsAction->cut(list);
     }
     else
     {
@@ -486,9 +507,16 @@ void DirModel::cut(int row)
     }
 }
 
+
+void DirModel::cut(const QStringList &items)
+{
+     m_fsAction->cut(items);
+}
+
+
 void DirModel::paste()
 {
-
+   m_fsAction->paste();
 }
 
 
@@ -564,6 +592,46 @@ int DirModel::addItem(const QFileInfo &fi)
         endInsertRows();
     }
     return idx;
+}
+
+
+
+void DirModel::cancelAction()
+{
+    m_fsAction->cancel();
+}
+
+QString DirModel::fileSize(qint64 size) const
+{
+    struct UnitSizes
+    {
+        qint64      bytes;
+        const char *name;
+    };
+
+    static UnitSizes m_unitBytes[5] =
+    {
+        { 1,           "Bytes" }
+       ,{1024,         "KB"}
+        // got it from http://wiki.answers.com/Q/How_many_bytes_are_in_a_megabyte
+       ,{1000 * 1000,  "MB"}
+       ,{1000 *  m_unitBytes[2].bytes,   "GB"}
+       ,{1000 *  m_unitBytes[3].bytes, "TB"}
+    };
+
+    QString ret;
+    int unit = sizeof(m_unitBytes)/sizeof(m_unitBytes[0]);
+    while( unit-- > 1 && size < m_unitBytes[unit].bytes );
+    if (unit > 0 )
+    {
+        ret.sprintf("%0.1f %s", (float)size/m_unitBytes[unit].bytes,
+                    m_unitBytes[unit].name);
+    }
+    else
+    {
+        ret.sprintf("%ld %s", (long int)size, m_unitBytes[0].name);
+    }
+    return ret;
 }
 
 // for dirlistworker

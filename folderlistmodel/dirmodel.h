@@ -61,8 +61,9 @@ public:
 
 public:
     DirModel(QObject *parent = 0);
+    ~DirModel();
 
-    int rowCount(const QModelIndex &index) const
+    int rowCount(const QModelIndex &index = QModelIndex()) const
     {
         if (index.parent() != QModelIndex())
             return 0;
@@ -138,22 +139,48 @@ public:
      *    \return true if row points to a directory and the directory is readble, false otherwise
      */
     Q_INVOKABLE  bool cdInto(int row);
+
     /*!
      * \brief copy() puts the item pointed by \a row (dir or file) into the clipboard
      * \param row points to the item file or directory
      */
     Q_INVOKABLE void  copy(int row);
+
     /*!
-     * \brief cut() puts the item into the clipboard as \ref copy(), mark the item to be removed after \ref paste()
-     * \param row points to the item file or directory
+     *  \brief copy(const QStringList& urls) several items (dirs or files) into the clipboard
+     *  \param items  fullpathnames or names only
      */
+    Q_INVOKABLE void  copy(const QStringList& items);
+
+    /*!
+     * \brief cut() puts the item into the clipboard as \ref copy(),
+     *        mark the item to be removed after \ref paste()
+     * \param row points to the item file or directory
+     */   
     Q_INVOKABLE void  cut(int row);
+
+    /*!
+     *  \brief cut() puts several items (dirs or files) into the clipboard as \ref copy(),
+     *         mark the item to be removed after \ref paste()
+     *   \param items  fullpathnames or names only
+     */
+    Q_INVOKABLE void  cut(const QStringList& items);
+
     /*!
      * \brief remove()  remove a item file or directory
+     *
+     * I gets the item indicated by \row and calls \ref rm()
+     *
      * \param row points to the item to b e removed
      * \return true if it was possible to remove the item
      */
     Q_INVOKABLE void remove(int row);
+
+    /*!
+     *  Just calls \ref rm()
+     */
+    Q_INVOKABLE void remove(const QStringList& items);
+
 
 public slots:
     /*!
@@ -176,6 +203,11 @@ public slots:
      *  If the operation was \ref cut(), then remove the original item
      */
     void paste();
+
+    /*!
+     * \brief cancelAction() any copy/cut/remove can be cancelled
+     */
+    void cancelAction();
 
 signals:
     /*!
@@ -206,8 +238,13 @@ private slots:
 private:
     int  addItem(const QFileInfo& fi);
 
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
+public:
+#else
 private:
-    FileSystemAction  *  fsAction;  //!< it does file system recursive remove/copy/move
+#endif
+    FileSystemAction  *  m_fsAction;  //!< it does file system recursive remove/copy/move
+    QString fileSize(qint64 size)  const;
 //[0]
 
  private:

@@ -22,18 +22,27 @@
 #ifndef FILESYSTEMACTION_H
 #define FILESYSTEMACTION_H
 
-#include "removenotifier.h"
+//#include "removenotifier.h"
 
 #include <QObject>
 #include <QFileInfo>
 #include <QVector>
+
+class DirModelMimeData;
+class RemoveNotifier;
+
+/*!
+ * \brief The FileSystemAction class
+ *
+ *
+ */
 
 class FileSystemAction : public QObject
 {
     Q_OBJECT
 public:
     explicit FileSystemAction(QObject *parent = 0);
-
+    ~FileSystemAction();
 public slots:
     void     cancel();
     void     remove(const QStringList & filePaths);
@@ -48,12 +57,19 @@ signals:
 
 public slots:
     void     pathChanged(const QString& path);
+    void     paste();
+    void     cut(const QStringList& );
+    void     copy(const QStringList&);
 
 private slots:
     void     processAction();
-    void     processActionEntry();
+    void     processActionEntry();   
 
-private:
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
+ public:
+#else
+ private:
+#endif
    enum ActionType
    {
        ActionRemove,
@@ -62,7 +78,9 @@ private:
        ActionHardMoveCopy,
        ActionHardMoveRemove
    };
+   void     createAndProcessAction(ActionType actionType, const QStringList& paths);
 
+private:
    /*!
        An ActionEntry represents a high level item as a File or a Directory which an Action is required
 
@@ -86,10 +104,10 @@ private:
        QList<ActionEntry*> entries;
        int                 totalItems;
        int                 currItem;
-       QString             target;
+       int                 baseOrigSize;
        quint64             totalBytes;
        quint64             bytesWritten;
-       int                 currtEntry;
+       int                 currEntry;
    };
 
    QVector<Action*>        m_queuedActions;  //!< work always at item 0, after finishing taking item 0 out
@@ -98,14 +116,40 @@ private:
    bool                    m_busy;
    static RemoveNotifier   m_removeNotifier;
    QString                 m_path;
+   DirModelMimeData  *     m_mimeData;
+   QString                 m_errorTitle;
+   QString                 m_errorMsg;
 
-private:
-   Action * createAction(ActionType, const QString& target = QLatin1String(0));
+private:  
+   Action * createAction(ActionType, int origBase = 0);
    void     addEntry(Action* action, const QString &pathname);
-   void     doCurrentEntry(ActionEntry *);
-
+   void     removeEntry(ActionEntry *);
+   void     copyEntry(ActionEntry *);
+   void     moveEntry(ActionEntry *entry);
+   bool     moveUsingSameFileSystem(const QString& itemToMovePathname);
+   QString  targetFom(const QString& origItem);
 };
     
 
+/*!
+ * \brief The RemoveNotifier is a utility class for \ref FileSystemAction to send
+ *         notifications about removed files/dir
+ *
+ *  This class must have a unique instance to notify all instances of \ref FileSystemAction and \ref DirModel
+ */
+class RemoveNotifier : public QObject
+{
+    Q_OBJECT
+
+    friend class FileSystemAction;
+private:
+    explicit RemoveNotifier(QObject *parent = 0);
+    void notifyRemoved(const QString& item);
+    void notifyRemoved(const QFileInfo& fi);
+
+signals:
+    void     removed(const QString& item);
+    void     removed(const QFileInfo&);
+};
 
 #endif // FILESYSTEMACTION_H

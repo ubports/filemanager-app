@@ -9,7 +9,8 @@
 #include <QFileInfo>
 #include <QMetaType>
 
-
+#define TIME_TO_PROCESS       1000
+#define TIME_TO_REFRESH_DIR   80
 
 
 class DeepDir
@@ -21,9 +22,13 @@ public:
         remove();
     }
     bool remove();
-    QString path()   { return root;}
+    QString path()         { return root;}
+    QString firstLevel()   { return firstDirLevel; }
+    QString lastLevel()    { return lastDirLevel; }
 private:
     QString  root;
+    QString  firstDirLevel;
+    QString  lastDirLevel;
 };
 
 
@@ -34,7 +39,7 @@ public:
     bool addSubDirLevel(const QString&dir);
     bool create(int counter =1);
     bool create(const QString& name, int counter = 1);
-    QString lastCreated();
+    QString lastFileCreated();
     QStringList createdList()   { return m_filesCreated; }
     int      created()          { return m_filesCreated.count();}
     int      howManyExist();
@@ -116,7 +121,7 @@ bool TempFiles::create(const QString& name, int counter )
         myName.sprintf("%s%c%s_%02d", m_dir.toLatin1().constData(),
                        QDir::separator().toLatin1(),
                        name.toLatin1().constData(),
-                       counter);
+                       counter);      
         QFile file(myName);
         if (file.open(QFile::WriteOnly))
         {
@@ -137,7 +142,7 @@ bool TempFiles::create(const QString& name, int counter )
     return true;
 }
 
-QString TempFiles::lastCreated()
+QString TempFiles::lastFileCreated()
 {
     QString ret;
     if (m_filesCreated.count() > 0)
@@ -164,7 +169,12 @@ DeepDir::DeepDir(const QString &rootDir, int level) :
                 {
                     break;
                 }
+                if (counter == 1)
+                {
+                   firstDirLevel =  temp.lastPath();
+                }
             }
+            lastDirLevel = temp.lastPath();
         }
     }
     else
@@ -200,6 +210,7 @@ protected slots:
     void slotFileAdded(const QFileInfo& f)   {m_filesAdded.append(f.absoluteFilePath()); }
     void slotFileRemoved(const QFileInfo& f) {m_filesRemoved.append(f.absoluteFilePath()); }
     void progress(int, int, int);
+    void cancel(int,int,int);
 
 private Q_SLOTS:
     void initTestCase();       //before all tests
@@ -214,6 +225,12 @@ private Q_SLOTS:
     void  modelRemoveRecursiveDirByIndex();
     void  modelRemoveMultiItemsByFullPathname();
     void  modelRemoveMultiItemsByName();
+    void  modelCopyDirPasteIntoAnotherModel();
+    void  modelCopyManyItemsPasteIntoAnotherModel();
+    void  modelCutManyItemsPasteIntoAnotherModel();
+    void  fsActionMoveItemsForcingCopyAndThenRemove();
+    void  modelCancelRemoveAction();
+    void  modelTestFileSize();
 
 private:
     void initDeepDirs();
@@ -266,6 +283,12 @@ void TestFolderModel::progress(int cur, int total, int percent)
     m_progressCounter++; 
 }
 
+
+void TestFolderModel::cancel(int, int, int)
+{
+    DirModel * model = static_cast<DirModel*> (sender());
+    model->cancelAction();
+}
 
 TestFolderModel::~TestFolderModel()
 {
@@ -343,11 +366,11 @@ void TestFolderModel::fsActionRemoveSingleFile()
     QCOMPARE(file.create("fsAtion_removeSingleFile") , true);
 
     fsAction.remove(file.createdList());
-    QTest::qWait(700);
+    QTest::qWait(TIME_TO_PROCESS);
     QCOMPARE(m_filesRemoved.count() , 1);
 
-    QCOMPARE(m_filesRemoved.at(0), file.lastCreated());
-    QFileInfo now(file.lastCreated());
+    QCOMPARE(m_filesRemoved.at(0), file.lastFileCreated());
+    QFileInfo now(file.lastFileCreated());
     QCOMPARE(now.exists(),  false);
 }
 
@@ -361,7 +384,7 @@ void TestFolderModel::fsActionRemoveSingleDir()
 
     QStringList myDeepDir(m_deepDir_01->path());
     fsAction.remove(myDeepDir);
-    QTest::qWait(900);
+    QTest::qWait(TIME_TO_PROCESS);
 
     QCOMPARE(m_filesRemoved.count() , 1);
     QCOMPARE( QFileInfo(m_deepDir_01->path()).exists(),  false);
@@ -379,9 +402,9 @@ void TestFolderModel::fsActionRemoveOneFileOneDir()
     QCOMPARE(file.create("fsActionRemoveOneFileOneDir") , true);
 
     QStringList twoItems(m_deepDir_01->path());
-    twoItems.append(file.lastCreated());
+    twoItems.append(file.lastFileCreated());
     fsAction.remove(twoItems);
-    QTest::qWait(900);
+    QTest::qWait(TIME_TO_PROCESS);
 
     QCOMPARE(m_filesRemoved.count() , 2);
     QCOMPARE( QFileInfo(m_deepDir_01->path()).exists(),  false);
@@ -408,7 +431,7 @@ void TestFolderModel::fsActionRemoveTwoFilesTwoDirs()
     fourItems.append(twoFiles.createdList());
 
     fsAction.remove(fourItems);
-    QTest::qWait(900);
+    QTest::qWait(TIME_TO_PROCESS);
 
     QCOMPARE(m_filesRemoved.count() , 4);
     QCOMPARE(QFileInfo(m_deepDir_01->path()).exists(),  false);
@@ -425,14 +448,14 @@ void TestFolderModel::modelRemoveRecursiveDirByIndex()
 
     m_dirModel_01 = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
-    QTest::qWait(50);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
 
-    QCOMPARE(m_dirModel_01->rowCount(QModelIndex()), 1);
+    QCOMPARE(m_dirModel_01->rowCount(), 1);
     m_dirModel_01->remove(0);
     QTest::qWait(500);
 
     QCOMPARE(m_filesRemoved.count() , 1);
-    QCOMPARE(m_dirModel_01->rowCount(QModelIndex()), 0);
+    QCOMPARE(m_dirModel_01->rowCount(), 0);
 }
 
 void TestFolderModel::modelRemoveMultiItemsByFullPathname()
@@ -441,9 +464,12 @@ void TestFolderModel::modelRemoveMultiItemsByFullPathname()
     m_deepDir_01 = new DeepDir(tmpDir, 0);
     QCOMPARE( QFileInfo(m_deepDir_01->path()).exists(),  true);
 
+    const int filesToCreate = 2;
+    const int itemsToCreate = filesToCreate + 1;
+
     TempFiles files;
     files.addSubDirLevel(tmpDir);
-    files.create(2);  // 2 files
+    files.create(filesToCreate);
 
     QStringList items (files.createdList());
 
@@ -453,14 +479,14 @@ void TestFolderModel::modelRemoveMultiItemsByFullPathname()
 
     m_dirModel_01 = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
-    QTest::qWait(50);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
 
-    QCOMPARE(m_dirModel_01->rowCount(QModelIndex()), 3);
+    QCOMPARE(m_dirModel_01->rowCount(), itemsToCreate);
     m_dirModel_01->rm(items);
     QTest::qWait(500);
 
-    QCOMPARE(m_filesRemoved.count() , 3);
-    QCOMPARE(m_dirModel_01->rowCount(QModelIndex()), 0);
+    QCOMPARE(m_filesRemoved.count() , itemsToCreate);
+    QCOMPARE(m_dirModel_01->rowCount(), 0);
     QCOMPARE(files.howManyExist(), 0);
 }
 
@@ -468,26 +494,207 @@ void TestFolderModel::modelRemoveMultiItemsByFullPathname()
 void TestFolderModel::modelRemoveMultiItemsByName()
 {
      QString tmpDir("modelRemoveMultiItemsByName");
+     const int filesToCreate = 4;
 
      TempFiles files;
      files.addSubDirLevel(tmpDir);
      files.create(4);
-     QCOMPARE(files.howManyExist(), 4);
+     QCOMPARE(files.howManyExist(), filesToCreate);
 
      m_dirModel_01 = new DirModel();
      m_dirModel_01->setPath(files.lastPath());
-     QTest::qWait(50);
+     QTest::qWait(TIME_TO_REFRESH_DIR);
 
      QStringList items(files.createdNames());
-     m_dirModel_01->rm(items);
+     m_dirModel_01->remove(items);
      QTest::qWait(500);
 
-     QCOMPARE(m_filesRemoved.count() , 4);
-     QCOMPARE(m_dirModel_01->rowCount(QModelIndex()),    0);
+     QCOMPARE(m_filesRemoved.count() , filesToCreate);
+     QCOMPARE(m_dirModel_01->rowCount(),    0);
      QCOMPARE(files.howManyExist(), 0);
+
+     QDir().rmdir(m_dirModel_01->path());
 }
 
 
+void TestFolderModel::modelCopyDirPasteIntoAnotherModel()
+{
+    QString orig("modelCopyDirToAnotherModel_orig");
+
+    m_deepDir_01 = new DeepDir(orig, 1);
+    m_dirModel_01 = new DirModel();
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(),  1);
+
+    QString target("modelCopyDirToAnotherModel_target");
+    m_deepDir_02 = new DeepDir(target, 0);
+    m_dirModel_02 = new DirModel();
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+
+    QCOMPARE( QFileInfo(m_deepDir_02->path()).exists(),  true);
+    QCOMPARE(m_dirModel_02->rowCount(),  0);
+
+    m_dirModel_01->copy(0);
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QCOMPARE(m_dirModel_02->rowCount(),  1);
+}
+
+
+void TestFolderModel::modelCopyManyItemsPasteIntoAnotherModel()
+{
+    QString orig("modelCopyManyItemstoAnotherModel_orig");
+
+    m_deepDir_01  = new DeepDir(orig, 5);
+    m_dirModel_01 = new DirModel();
+    const int  filesCreated = 10;
+    const int  itemsCreated = filesCreated + 1;
+
+    TempFiles tempFiles;
+    tempFiles.addSubDirLevel(orig);
+    tempFiles.create(filesCreated);
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
+
+    QString target("modelCopyManyItemstoAnotherModel_target");
+    m_deepDir_02 = new DeepDir(target, 0);
+    m_dirModel_02 = new DirModel();
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+
+    QCOMPARE( QFileInfo(m_deepDir_02->path()).exists(),  true);
+    QCOMPARE(m_dirModel_02->rowCount(),  0);
+
+    QStringList allFiles(m_deepDir_01->firstLevel());
+    allFiles.append(tempFiles.createdList());
+
+    m_dirModel_01->copy(allFiles);
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QCOMPARE(m_dirModel_02->rowCount(),  itemsCreated);
+    QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
+}
+
+
+
+
+void TestFolderModel::modelCutManyItemsPasteIntoAnotherModel()
+{
+    QString orig("modelCutManyItemsPasteIntoAnotherModel_orig");
+
+    m_deepDir_01 = new DeepDir(orig, 5);
+    m_dirModel_01 = new DirModel();
+    const int  filesCreated = 10;
+    const int  itemsCreated = filesCreated + 1;
+
+    TempFiles tempFiles;
+    tempFiles.addSubDirLevel(orig);
+    tempFiles.create(filesCreated);
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
+
+    QString target("modelCutManyItemsPasteIntoAnotherModel_target");
+    m_deepDir_02 = new DeepDir(target, 0);
+    m_dirModel_02 = new DirModel();
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+
+    QCOMPARE( QFileInfo(m_deepDir_02->path()).exists(),  true);
+    QCOMPARE(m_dirModel_02->rowCount(),  0);
+
+    QStringList allFiles(m_deepDir_01->firstLevel());
+    allFiles.append(tempFiles.createdList());
+
+    m_dirModel_01->cut(allFiles);
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QCOMPARE(m_dirModel_02->rowCount(),  itemsCreated); //pasted into
+    QCOMPARE(m_dirModel_01->rowCount(),  0);  //cut from
+}
+
+ void  TestFolderModel::fsActionMoveItemsForcingCopyAndThenRemove()
+ {
+     QString orig("fsActionMoveItemsForcingCopyAndThenRemove_orig");
+
+     m_deepDir_01 = new DeepDir(orig, 2);
+     m_dirModel_01 = new DirModel();
+     const int  filesCreated = 4;
+     const int  itemsCreated = filesCreated + 1;
+
+     TempFiles tempFiles;
+     tempFiles.addSubDirLevel(orig);
+     tempFiles.create(filesCreated);
+     m_dirModel_01->setPath(m_deepDir_01->path());
+     QTest::qWait(TIME_TO_REFRESH_DIR);
+     QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
+
+     QString target("fsActionMoveItemsForcingCopyAndThenRemove_target");
+     m_deepDir_02 = new DeepDir(target, 0);
+     m_dirModel_02 = new DirModel();
+     m_dirModel_02->setPath(m_deepDir_02->path());
+     QTest::qWait(TIME_TO_REFRESH_DIR);
+
+     QCOMPARE( QFileInfo(m_deepDir_02->path()).exists(),  true);
+     QCOMPARE(m_dirModel_02->rowCount(),  0);
+
+     QStringList allFiles(m_deepDir_01->firstLevel());
+     allFiles.append(tempFiles.createdList());
+
+     m_dirModel_02->m_fsAction->createAndProcessAction(FileSystemAction::ActionHardMoveCopy,
+                                                       allFiles);
+
+     QTest::qWait(TIME_TO_PROCESS);
+
+     QCOMPARE(m_dirModel_02->rowCount(),  itemsCreated); //pasted into
+     QCOMPARE(m_dirModel_01->rowCount(),  0);  //cut from
+ }
+
+ void TestFolderModel::modelCancelRemoveAction()
+ {
+     const int level = 30;
+     m_deepDir_01 = new DeepDir("modelCancelRemoveAction", level);
+     QCOMPARE( QFileInfo(m_deepDir_01->path()).exists(),  true);
+
+     m_dirModel_01 = new DirModel();
+     m_dirModel_01->setPath(m_deepDir_01->path());
+     QTest::qWait(TIME_TO_REFRESH_DIR);
+
+     QCOMPARE(m_dirModel_01->rowCount(), 1);
+     connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
+             this,          SLOT(progress(int,int,int)));
+     connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
+             this,          SLOT(cancel(int,int,int)));
+
+     m_dirModel_01->remove(0);
+     QTest::qWait(TIME_TO_PROCESS);
+     QTest::qWait(5);
+
+     QCOMPARE(m_filesRemoved.count() , 0);
+     QCOMPARE(m_dirModel_01->rowCount(), 1);
+     QCOMPARE(m_progressCounter, 1);
+     QVERIFY(m_progressTotalItems < level);  // much more than level files were created
+ }
+
+ void TestFolderModel::modelTestFileSize()
+ {
+
+     m_dirModel_01 = new DirModel();
+
+     QCOMPARE(m_dirModel_01->fileSize(0),      QString("0 Bytes"));
+     QCOMPARE(m_dirModel_01->fileSize(1023),   QString("1023 Bytes"));
+     QCOMPARE(m_dirModel_01->fileSize(1024),   QString("1.0 KB"));
+     QCOMPARE(m_dirModel_01->fileSize(1000*1000),
+              QString("1.0 MB"));
+     QCOMPARE(m_dirModel_01->fileSize(1000*1000*1000),
+              QString("1.0 GB"));
+ }
 
 int main(int argc, char *argv[])
 {

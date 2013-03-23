@@ -85,7 +85,9 @@ void IORequestWorker::run()
 
 void IORequestWorker::exit()
 {
+#if DEBUG_MESSAGES
     qDebug() << Q_FUNC_INFO << "Quitting";
+#endif
     QMutexLocker lock(&mMutex);
     mTimeToQuit = true;
     mWaitCondition.wakeOne();
