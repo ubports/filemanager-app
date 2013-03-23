@@ -99,7 +99,7 @@ void SimpleList::onRemove()
 
 void SimpleList::onCopy()
 {
-
+    m_model->copy(m_curRow);
 }
 
 void SimpleList::onCut()
