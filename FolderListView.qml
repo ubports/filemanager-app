@@ -10,6 +10,22 @@ ListView {
     property string path: folderListModel.path
     model: folderListModel
 
+    Component {
+        id: confirmSingleDeleteDialog
+        ConfirmDialog {
+            property string filePath
+            property string fileName
+            title: i18n.tr("Delete?")
+            text: "Are you sure you want to permanently delete '" + fileName + "'?"
+
+            onAccepted: {
+                console.log("Delete accepted for filePath, fileName", filePath, fileName)
+
+                folderListModel.rm(filePath)
+            }
+        }
+    }
+
     ActionSelectionPopover {
         id: actionSelectionPopover
         property var model
@@ -30,6 +46,17 @@ ListView {
                                     )
                 }
             }
+            Action {
+                text: i18n.tr("Delete")
+                onTriggered: {
+                    print(text)
+                    PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller,
+                                    { "filePath" : actionSelectionPopover.model.filePath,
+                                      "fileName" : actionSelectionPopover.model.fileName }
+                                    )
+                }
+            }
+            
         }
         // TODO: problem: clicking outside popup makes the click go through to the
         // folder listview, so for example you'd change directory while only trying
