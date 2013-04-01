@@ -16,13 +16,22 @@ ListView {
             property string filePath
             property string fileName
             title: i18n.tr("Delete?")
-            text: "Are you sure you want to permanently delete '" + fileName + "'?"
+            text: i18n.tr("Are you sure you want to permanently delete") + " '" + fileName + "'?"
 
             onAccepted: {
                 console.log("Delete accepted for filePath, fileName", filePath, fileName)
 
                 folderListModel.rm(filePath)
             }
+        }
+    }
+
+    Dialog {
+        id: notifyDialog
+        visible: false
+        Button {
+            text: i18n.tr("Ok")
+            onClicked: notifyDialog.hide()
         }
     }
 
@@ -56,7 +65,6 @@ ListView {
                                     )
                 }
             }
-            
         }
         // TODO: problem: clicking outside popup makes the click go through to the
         // folder listview, so for example you'd change directory while only trying
@@ -67,15 +75,6 @@ ListView {
         // Without this the popover jumps up at the start of the application. SDK bug?
         // Bug report has been made of these https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1152270
         visible: false
-    }
-
-    Dialog {
-        id: notifyDialog
-        visible: false
-        Button {
-            text: i18n.tr("Ok")
-            onClicked: notifyDialog.hide()
-        }
     }
 
     delegate: FolderListDelegate {

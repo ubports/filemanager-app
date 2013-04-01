@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
+import Ubuntu.Components.Popups 0.1
 import org.nemomobile.folderlistmodel 1.0
 
 Page {
@@ -9,6 +10,37 @@ Page {
     FolderListModel {
         id: pageModel
         path: homePath()
+    }
+
+    Component {
+        id: notifyDialog
+        Dialog {
+            id: notifyDialogRoot
+            Button {
+                text: i18n.tr("Ok")
+                onClicked: {
+                    console.log("NotifyDialogRoot onClicked")
+                    PopupUtils.close(notifyDialogRoot)
+                }
+            }
+        }
+    }
+
+    Component {
+        id: createFolderDialog
+        ConfirmDialogWithInput {
+            title: i18n.tr("Create folder?")
+            text: i18n.tr("Enter name for new folder")
+
+            onAccepted: {
+                console.log("Create folder accepted", inputText)
+                if (inputText !== '') {
+                    pageModel.mkdir(inputText)
+                } else {
+                    console.log("Empty directory name, ignored")
+                }
+            }
+        }
     }
 
     tools: ToolbarActions {
@@ -22,6 +54,16 @@ Page {
                 console.log("Up triggered")
             }
             visible: pageModel.path != "/"
+        }
+
+        // IMPROVE: would rather have this as more hidden, in a separate menu that has
+        // file manipulation operations
+        Action {
+            text: i18n.tr("Create folder")
+            onTriggered: {
+                print(text)
+                PopupUtils.open(createFolderDialog)
+            }
         }
 
         Action {
@@ -51,6 +93,19 @@ Page {
         id: folderListView
 
         folderListModel: pageModel
-        anchors.fill: parent
+        anchors.fill: parent        
+    }
+
+    // Errors from model
+    Connections {
+        target: pageModel
+        onError: {
+            console.log("FolderListModel Error Title/Description", errorTitle, errorMessage)
+            PopupUtils.open(notifyDialog, root,
+                            {
+                                title: i18n.tr(errorTitle),
+                                text: i18n.tr(errorMessage)
+                            })
+        }
     }
 }
