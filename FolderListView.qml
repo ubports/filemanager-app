@@ -26,15 +26,6 @@ ListView {
         }
     }
 
-    Dialog {
-        id: notifyDialog
-        visible: false
-        Button {
-            text: i18n.tr("Ok")
-            onClicked: notifyDialog.hide()
-        }
-    }
-
     ActionSelectionPopover {
         id: actionSelectionPopover
         property var model
@@ -85,10 +76,12 @@ ListView {
                     console.log("Changing to dir", model.filePath)
                     folderListModel.path = model.filePath
                 } else {
-                    notifyDialog.caller = delegate
-                    notifyDialog.title = i18n.tr("Folder not accessible")
-                    notifyDialog.text = i18n.tr("Can not access ") + model.fileName
-                    notifyDialog.show()
+                    PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
+                                    {
+                                        title: i18n.tr("Folder not accessible"),
+                                        text: i18n.tr("Can not access ") + model.fileName
+
+                                     })
                 }
             } else {
                 console.log("Non dir clicked")

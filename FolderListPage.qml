@@ -13,20 +13,6 @@ Page {
     }
 
     Component {
-        id: notifyDialog
-        Dialog {
-            id: notifyDialogRoot
-            Button {
-                text: i18n.tr("Ok")
-                onClicked: {
-                    console.log("NotifyDialogRoot onClicked")
-                    PopupUtils.close(notifyDialogRoot)
-                }
-            }
-        }
-    }
-
-    Component {
         id: createFolderDialog
         ConfirmDialogWithInput {
             title: i18n.tr("Create folder?")
@@ -101,7 +87,7 @@ Page {
         target: pageModel
         onError: {
             console.log("FolderListModel Error Title/Description", errorTitle, errorMessage)
-            PopupUtils.open(notifyDialog, root,
+            PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), root,
                             {
                                 title: i18n.tr(errorTitle),
                                 text: i18n.tr(errorMessage)
