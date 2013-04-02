@@ -33,8 +33,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QDateTime>
-#include <QUrl>
-#include <QIcon>
+#include <QPixmap>
 
 
 #include <errno.h>
@@ -45,10 +44,12 @@
 #include "filesystemaction.h"
 
 
-Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread)
-
 #define IS_VALID_ROW(row)             (row >=0 && row < mDirectoryContents.count())
 #define WARN_ROW_OUT_OF_RANGE(row)    qWarning() << Q_FUNC_INFO << "row" << row << "Out of bounds access"
+
+
+Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread)
+
 
 class DirListWorker : public IORequest
 {
@@ -98,10 +99,10 @@ private:
 };
 
 DirModel::DirModel(QObject *parent)
-    : QAbstractListModel(parent)
-    , m_fsAction(new FileSystemAction(this) )
+    : QAbstractListModel(parent)   
     , mShowDirectories(true)
-    , mAwaitingResults(false)    
+    , mAwaitingResults(false)
+    , m_fsAction(new FileSystemAction(this) )
 {
     mNameFilters = QStringList() << "*";
 
@@ -412,6 +413,29 @@ bool DirModel::awaitingResults() const
     return mAwaitingResults;
 }
 
+
+QString DirModel::parentPath() const
+{
+    QDir dir(mCurrentDir);
+    if (dir.isRoot()) {
+        qDebug() << Q_FUNC_INFO << "already at root";
+        return mCurrentDir;
+    }
+
+    bool success = dir.cdUp();
+    if (!success) {
+        qWarning() << Q_FUNC_INFO << "Failed to to go to parent of " << mCurrentDir;
+        return mCurrentDir;
+    }
+    qDebug() << Q_FUNC_INFO << "returning" << dir.absolutePath();
+    return dir.absolutePath();
+}
+
+QString DirModel::homePath() const
+{
+    return QDir::homePath();
+}
+
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
  QVariant  DirModel::headerData(int section, Qt::Orientation orientation, int role) const
  {
@@ -441,7 +465,7 @@ void DirModel::goHome()
 bool DirModel::cdUp()
 {
     int ret = false;
-    if (!mCurrentDir.isEmpty()) // we in any dir
+    if (!mCurrentDir.isEmpty()) // we are in any dir
     {
         QDir current(mCurrentDir);
         if (current.cdUp())
@@ -574,6 +598,15 @@ void DirModel::onItemAdded(const QFileInfo &fi)
     emit insertedRow(newRow);
 }
 
+/*!
+ * \brief DirModel::addItem() adds an item into the model
+ *        This code was moved from onItemsAdded(const QVector<QFileInfo> &newFiles),
+ *           the reason is:  this code now is used for \ref mkdir() and for \ref paste() operations
+ *           that inserts new items
+ * \param fi
+ * \return  the index where it was inserted, it can be used in the view
+ * \sa insertedRow()
+ */
 int DirModel::addItem(const QFileInfo &fi)
 {
     QVector<QFileInfo>::Iterator it = qLowerBound(mDirectoryContents.begin(),

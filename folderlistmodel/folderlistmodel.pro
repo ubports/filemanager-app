@@ -1,36 +1,34 @@
-TEMPLATE = lib
-TARGET = folderlistmodel
-QT += qml quick
-CONFIG += qt plugin
+TARGET = nemofolderlistmodel
 
-TARGET = $$qtLibraryTarget($$TARGET)
-uri = org.nemomobile.folderlistmodel
+PLUGIN_IMPORT_PATH = org/nemomobile/folderlistmodel
+PLUGIN_URI         = org.nemomobile.folderlistmodel
+
+# plugin.h and plugin.cpp use URI from PLUGIN_URI instead of hard coded
+DEFINES += PLUGIN_URI=$$PLUGIN_URI
+
+#core:  sources + headers, separated here to use in regression test project
+include (folderlistmodel.pri)
 
 # Input
 SOURCES += plugin.cpp
-
 HEADERS += plugin.h
 
-include (folderlistmodel.pri)
-
+## QApplication::clipboard() needs gui
+QT += gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-OTHER_FILES = qmldir
-
-!equals(_PRO_FILE_PWD_, $$OUT_PWD) {
-    copy_qmldir.target = $$OUT_PWD/qmldir
-    copy_qmldir.depends = $$_PRO_FILE_PWD_/qmldir
-    copy_qmldir.commands = $(COPY_FILE) \"$$replace(copy_qmldir.depends, /, $$QMAKE_DIR_SEP)\" \"$$replace(copy_qmldir.target, /, $$QMAKE_DIR_SEP)\"
-    QMAKE_EXTRA_TARGETS += copy_qmldir
-    PRE_TARGETDEPS += $$copy_qmldir.target
+exists(../plugin.pri) {
+   include(../plugin.pri)
 }
-
-qmldir.files = qmldir
-unix {
-    installPath = $$[QT_INSTALL_IMPORTS]/$$replace(uri, \\., /)
-    qmldir.path = $$installPath
-    target.path = $$installPath
-    INSTALLS += target qmldir
+else {
+    TEMPLATE = lib
+    CONFIG += qt plugin hide_symbols
+    QT += qml
+    target.path = $$[QT_INSTALL_QML]/$$PLUGIN_IMPORT_PATH
+    INSTALLS += target
+    qmldir.files += $$PWD/qmldir
+    qmldir.path +=  $$[QT_INSTALL_QML]/$$$$PLUGIN_IMPORT_PATH
+    INSTALLS += qmldir
 }
 
 

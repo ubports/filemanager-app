@@ -14,3 +14,9 @@ SOURCES += tst_folderlistmodel.cpp
 
 include (../../folderlistmodel/folderlistmodel.pri)
 
+HEADERS += \
+    tempfiles.h
+
+SOURCES += \
+    tempfiles.cpp
+

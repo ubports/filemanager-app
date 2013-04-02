@@ -70,15 +70,6 @@ public:
         return mDirectoryContents.count();
     }
 
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL)
-    //make this work with tables
-    int columnCount(const QModelIndex &) const
-    {
-        return IsExecutableRole - FileNameRole + 1;
-    }
-    QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
-#endif
-
     // TODO: this won't be safe if the model can change under the holder of the row
     Q_INVOKABLE QVariant data(int row, const QByteArray &stringRole) const;
 
@@ -91,9 +82,9 @@ public:
     }
 
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
-    inline QString path() const { return mCurrentDir; }
+    inline QString path() const { return mCurrentDir; }  
 
-    Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
+    Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged);
     bool awaitingResults() const;
 
     void setPath(const QString &pathName);
@@ -112,7 +103,6 @@ public:
     QStringList nameFilters() const;
     void setNameFilters(const QStringList &nameFilters);
 
-
 public slots:
     void onItemsAdded(const QVector<QFileInfo> &newFiles);
 
@@ -123,6 +113,15 @@ signals:
     void pathChanged(const QString& newPath);
     void error(const QString &errorTitle, const QString &errorMessage);
 
+private:
+    QStringList mNameFilters;
+    bool mShowDirectories;
+    bool mAwaitingResults;
+    QString mCurrentDir;
+    QVector<QFileInfo> mDirectoryContents;
+    QHash<QByteArray, int> mRoleMapping;
+
+//[0] new stuff Ubuntu File Manager
 public:
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
     // There's no virtual roleNames in Qt4. Proxy returns the role names
@@ -133,7 +132,20 @@ public:
     QHash<int, QByteArray> roleNames() const;
 #endif
 
-//[0] new stuff Ubuntu File Manager
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL)
+    //make this work with tables
+    virtual int columnCount(const QModelIndex &) const
+    {
+        return IsExecutableRole - FileNameRole + 1;
+    }
+    virtual QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
+#endif
+
+    Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
+    Q_INVOKABLE QString parentPath() const;
+
+    Q_INVOKABLE QString homePath() const;
+
     /*!
      *    \brief Tries to make the directory pointed by row as the current to be browsed
      *    \return true if row points to a directory and the directory is readble, false otherwise
@@ -213,7 +225,7 @@ signals:
     /*!
      * \brief insertedItem()
      *
-     *  It happens when a new file is inserted in a existent view,
+     *  It happens when a new file is inserted in an existent view,
      *  for example from  \ref mkdir() or \ref paste()
      *
      *  It can be used to make the new row visible to the user doing a scroll to
@@ -246,14 +258,6 @@ private:
     FileSystemAction  *  m_fsAction;  //!< it does file system recursive remove/copy/move
     QString fileSize(qint64 size)  const;
 //[0]
-
- private:
-    QStringList mNameFilters;
-    bool mShowDirectories;
-    bool mAwaitingResults;
-    QString mCurrentDir;
-    QVector<QFileInfo> mDirectoryContents;
-    QHash<QByteArray, int> mRoleMapping;
 };
 
 

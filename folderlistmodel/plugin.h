@@ -46,7 +46,8 @@
 
 #include "dirmodel.h"
 
-// Q_DECLARE_METATYPE(QVector<QFileInfo>)
+#define QUOTES(x)  #x
+
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 class Q_DECL_EXPORT NemoFolderListModelPlugin 
@@ -58,8 +59,7 @@ class NemoFolderListModelPlugin
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.nemomobile.folderlistmodel")
-    //    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
+    Q_PLUGIN_METADATA(IID QUOTES(PLUGIN_URI))
 #endif
 
 public:

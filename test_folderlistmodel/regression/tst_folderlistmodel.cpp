@@ -1,6 +1,6 @@
 #include "filesystemaction.h"
 #include "dirmodel.h"
-
+#include "tempfiles.h"
 #include <stdio.h>
 
 #include <QApplication>
@@ -11,190 +11,6 @@
 
 #define TIME_TO_PROCESS       1000
 #define TIME_TO_REFRESH_DIR   80
-
-
-class DeepDir
-{
-public:
-    DeepDir(const QString& rootDir, int level);
-    ~ DeepDir()
-    {
-        remove();
-    }
-    bool remove();
-    QString path()         { return root;}
-    QString firstLevel()   { return firstDirLevel; }
-    QString lastLevel()    { return lastDirLevel; }
-private:
-    QString  root;
-    QString  firstDirLevel;
-    QString  lastDirLevel;
-};
-
-
-class TempFiles
-{
-public:
-    TempFiles();
-    bool addSubDirLevel(const QString&dir);
-    bool create(int counter =1);
-    bool create(const QString& name, int counter = 1);
-    QString lastFileCreated();
-    QStringList createdList()   { return m_filesCreated; }
-    int      created()          { return m_filesCreated.count();}
-    int      howManyExist();
-    void removeAll();
-    QStringList createdNames();
-    QString   lastPath()        { return m_dir; }
-private:
-    QString       m_dir;
-    QStringList   m_filesCreated;
-    QByteArray    m_content;
-};
-
-
-TempFiles::TempFiles() : m_content(QByteArray(1010, 'z'))
-{
-    m_dir = QDir::tempPath();
-}
-
-
-bool TempFiles::addSubDirLevel(const QString &dir)
-{
-    QFileInfo d( m_dir + QDir::separator() + dir);
-    if (d.exists()  || QDir().mkpath(d.absoluteFilePath()))
-    {
-        m_dir = d.absoluteFilePath();
-        return true;
-    }
-    return false;
-}
-
-void TempFiles::removeAll()
-{
-    int counter = m_filesCreated.count();
-    while(counter--)
-    {
-        if (QFileInfo(m_filesCreated.at(counter)).exists())
-        {
-            QFile::remove(m_filesCreated.at(counter));
-            m_filesCreated.removeAt(counter);
-        }
-    }
-}
-
-
-QStringList TempFiles::createdNames()
-{
-    QStringList names;
-    int counter = m_filesCreated.count();
-    while(counter--) {
-        names.append(QFileInfo(m_filesCreated.at(counter)).fileName());
-    }
-    return names;
-}
-
-int TempFiles::howManyExist()
-{
-    int ret = 0;
-    int counter = m_filesCreated.count();
-    while(counter--)
-    {
-        if (QFileInfo(m_filesCreated.at(counter)).exists())
-        {
-           ret++;
-        }
-    }
-    return ret;
-}
-
-bool TempFiles::create(int counter)
-{
-   return  create(QLatin1String("tempfile"), counter);
-}
-
-bool TempFiles::create(const QString& name, int counter )
-{
-    QString myName;
-    while(counter--)
-    {
-        myName.sprintf("%s%c%s_%02d", m_dir.toLatin1().constData(),
-                       QDir::separator().toLatin1(),
-                       name.toLatin1().constData(),
-                       counter);      
-        QFile file(myName);
-        if (file.open(QFile::WriteOnly))
-        {
-            if (file.write(m_content) == (qint64)m_content.size())
-            {
-                m_filesCreated.append(myName);
-                m_content += "azaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
-
-    }
-    return true;
-}
-
-QString TempFiles::lastFileCreated()
-{
-    QString ret;
-    if (m_filesCreated.count() > 0)
-    {
-        ret = m_filesCreated.at(m_filesCreated.count() -1);
-    }
-    return ret;
-}
-
-DeepDir::DeepDir(const QString &rootDir, int level) :
-    root(QDir::tempPath() + QDir::separator() + rootDir)
-{  
-    if (!rootDir.isEmpty())
-    {
-        remove(); // clear        
-        QString levelStr;
-        TempFiles temp;
-        if (temp.addSubDirLevel(rootDir))
-        {
-            for(int counter=1 ; counter <= level; counter++)
-            {
-                levelStr.sprintf("level_%02d", counter);
-                if ( !temp.addSubDirLevel(levelStr) || !temp.create(2) )
-                {
-                    break;
-                }
-                if (counter == 1)
-                {
-                   firstDirLevel =  temp.lastPath();
-                }
-            }
-            lastDirLevel = temp.lastPath();
-        }
-    }
-    else
-    {
-        root.clear();
-    }
-}
-
-bool DeepDir::remove()
-{
-    bool ret = false;
-    if (!root.isEmpty() && QFileInfo(root).exists())
-    {
-        QString cmd("/bin/rm -rf " + root);
-        ret = ::system(cmd.toLatin1().constData()) == 0 ;
-    }
-    return ret;
-}
-
-
 
 class TestFolderModel : public QObject
 {
@@ -580,9 +396,6 @@ void TestFolderModel::modelCopyManyItemsPasteIntoAnotherModel()
     QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
 }
 
-
-
-
 void TestFolderModel::modelCutManyItemsPasteIntoAnotherModel()
 {
     QString orig("modelCutManyItemsPasteIntoAnotherModel_orig");
@@ -619,8 +432,8 @@ void TestFolderModel::modelCutManyItemsPasteIntoAnotherModel()
     QCOMPARE(m_dirModel_01->rowCount(),  0);  //cut from
 }
 
- void  TestFolderModel::fsActionMoveItemsForcingCopyAndThenRemove()
- {
+void  TestFolderModel::fsActionMoveItemsForcingCopyAndThenRemove()
+{
      QString orig("fsActionMoveItemsForcingCopyAndThenRemove_orig");
 
      m_deepDir_01 = new DeepDir(orig, 2);
@@ -654,10 +467,10 @@ void TestFolderModel::modelCutManyItemsPasteIntoAnotherModel()
 
      QCOMPARE(m_dirModel_02->rowCount(),  itemsCreated); //pasted into
      QCOMPARE(m_dirModel_01->rowCount(),  0);  //cut from
- }
+}
 
- void TestFolderModel::modelCancelRemoveAction()
- {
+void TestFolderModel::modelCancelRemoveAction()
+{
      const int level = 30;
      m_deepDir_01 = new DeepDir("modelCancelRemoveAction", level);
      QCOMPARE( QFileInfo(m_deepDir_01->path()).exists(),  true);
@@ -680,11 +493,10 @@ void TestFolderModel::modelCutManyItemsPasteIntoAnotherModel()
      QCOMPARE(m_dirModel_01->rowCount(), 1);
      QCOMPARE(m_progressCounter, 1);
      QVERIFY(m_progressTotalItems < level);  // much more than level files were created
- }
+}
 
- void TestFolderModel::modelTestFileSize()
- {
-
+void TestFolderModel::modelTestFileSize()
+{
      m_dirModel_01 = new DirModel();
 
      QCOMPARE(m_dirModel_01->fileSize(0),      QString("0 Bytes"));
@@ -694,7 +506,7 @@ void TestFolderModel::modelCutManyItemsPasteIntoAnotherModel()
               QString("1.0 MB"));
      QCOMPARE(m_dirModel_01->fileSize(1000*1000*1000),
               QString("1.0 GB"));
- }
+}
 
 int main(int argc, char *argv[])
 {

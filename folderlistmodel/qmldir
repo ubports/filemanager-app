@@ -1,3 +1,1 @@
-module org.nemomobile.folderlistmodel
-plugin folderlistmodel
-
+plugin nemofolderlistmodel
