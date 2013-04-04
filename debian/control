@@ -9,9 +9,10 @@ Homepage: https://launchpad.net/app-template
 Package: app-template
 Section: misc
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends},
-         qmlscene,
+Depends: qmlscene,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
+         ${misc:Depends},
+         ${shlibs:Depends},
 Description: AppTemplate application
  Long description for the application (may span multiple lines).
