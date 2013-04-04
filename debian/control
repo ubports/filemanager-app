@@ -14,5 +14,4 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
 Description: AppTemplate application
- Core AppTemplate application
-
+ Long description for the application (may span multiple lines).
