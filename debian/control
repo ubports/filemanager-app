@@ -13,6 +13,5 @@ Depends: qmlscene,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
          ${misc:Depends},
-         ${shlibs:Depends},
 Description: AppTemplate application
  Long description for the application (may span multiple lines).
