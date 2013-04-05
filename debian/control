@@ -12,6 +12,6 @@ Architecture: all
 Depends: ${misc:Depends},
          qmlscene,
          qtdeclarative5-qtquick2-plugin,
-         qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
+         qtdeclarative5-ubuntu-ui-toolkit-plugin,
 Description: AppTemplate application
  Long description for the application (may span multiple lines).
