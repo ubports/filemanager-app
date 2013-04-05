@@ -9,9 +9,9 @@ Vcs-Bzr: https://code.launchpad.net/~ubuntu-touch-coreapps-drivers/ubuntu-phone-
 
 Package: app-template
 Architecture: all
-Depends: qmlscene,
+Depends: ${misc:Depends},
+         qmlscene,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
-         ${misc:Depends},
 Description: AppTemplate application
  Long description for the application (may span multiple lines).
