@@ -55,6 +55,7 @@ private slots:
     void   onNewDir();
     void   onRename();
     void   onShowDirs(bool);
+    void   onShowHidden(bool);
     void   onRowClicked(QModelIndex);
     void   onVerticalHeaderClicked(int);
 };

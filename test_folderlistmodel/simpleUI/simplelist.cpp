@@ -55,6 +55,7 @@ SimpleList::SimpleList(QWidget *parent) :
     connect(ui->pushButtonRename, SIGNAL(clicked()),  this, SLOT(onRename()));
 
     connect(ui->checkBoxShowDirs, SIGNAL(clicked(bool)), this, SLOT(onShowDirs(bool)));
+    connect(ui->checkBoxShowHidden, SIGNAL(clicked(bool)), this, SLOT(onShowHidden(bool)));
 
     ui->checkBoxShowDirs->setChecked( m_model->showDirectories() );
 }
@@ -126,6 +127,11 @@ void SimpleList::onRename()
 void SimpleList::onShowDirs(bool show)
 {
     m_model->setShowDirectories(show);
+}
+
+void SimpleList::onShowHidden(bool s)
+{
+    m_model->setShowHiddenFiles(s);
 }
 
 void SimpleList::onVerticalHeaderClicked(int row)

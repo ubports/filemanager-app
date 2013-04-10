@@ -55,8 +55,9 @@ class DirListWorker : public IORequest
 {
     Q_OBJECT
 public:
-    DirListWorker(const QString &pathName)
+    DirListWorker(const QString &pathName, QDir::Filter filter)
         : mPathName(pathName)
+        , mFilter(filter)
     { }
 
     void run()
@@ -65,16 +66,12 @@ public:
         qDebug() << Q_FUNC_INFO << "Running on: " << QThread::currentThreadId();
 #endif
 
-        QDir tmpDir = QDir(mPathName);
+        QDir tmpDir = QDir(mPathName, QString(), QDir::NoSort, mFilter);
         QDirIterator it(tmpDir);
         QVector<QFileInfo> directoryContents;
 
         while (it.hasNext()) {
-            it.next();
-
-            // skip hidden files
-            if (it.fileName()[0] == QLatin1Char('.'))
-                continue;
+            it.next();        
 
             directoryContents.append(it.fileInfo());
             if (directoryContents.count() >= 50) {
@@ -95,13 +92,15 @@ signals:
     void itemsAdded(const QVector<QFileInfo> &files);
 
 private:
-    QString mPathName;
+    QString       mPathName;
+    QDir::Filter  mFilter;
 };
 
 DirModel::DirModel(QObject *parent)
     : QAbstractListModel(parent)   
     , mShowDirectories(true)
-    , mAwaitingResults(false)
+    , mAwaitingResults(false)   
+    , mShowHiddenFiles(false)
     , m_fsAction(new FileSystemAction(this) )
 {
     mNameFilters = QStringList() << "*";
@@ -280,8 +279,19 @@ void DirModel::setPath(const QString &pathName)
     mDirectoryContents.clear();
     endResetModel();
 
+    int filter = QDir::AllEntries | QDir::NoDotAndDotDot ;
+    if (!mShowDirectories)
+    {
+        filter &= ~QDir::AllDirs;
+        filter &= ~QDir::Dirs;
+    }
+    if (mShowHiddenFiles)
+    {
+        filter |= QDir::Hidden;
+    }
+    QDir::Filter dirFilter = static_cast<QDir::Filter>(filter);
     // TODO: we need to set a spinner active before we start getting results from DirListWorker
-    DirListWorker *dlw = new DirListWorker(pathName);
+    DirListWorker *dlw = new DirListWorker(pathName, dirFilter);
     connect(dlw, SIGNAL(itemsAdded(QVector<QFileInfo>)), SLOT(onItemsAdded(QVector<QFileInfo>)));
     ioWorkerThread()->addRequest(dlw);
 
@@ -315,8 +325,6 @@ void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
     }
 
     foreach (const QFileInfo &fi, newFiles) {
-        if (!mShowDirectories && fi.isDir())
-            continue;
 
         bool doAdd = true;
         foreach (const QString &nameFilter, mNameFilters) {
@@ -665,6 +673,21 @@ QString DirModel::fileSize(qint64 size) const
         ret.sprintf("%ld %s", (long int)size, m_unitBytes[0].name);
     }
     return ret;
+}
+
+
+
+bool DirModel::showHiddenFiles() const
+{
+    return mShowHiddenFiles;
+}
+
+
+void DirModel::setShowHiddenFiles(bool show)
+{
+    mShowHiddenFiles = show;
+    refresh();
+    emit showHiddenFilesChanged();
 }
 
 // for dirlistworker

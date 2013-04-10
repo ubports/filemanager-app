@@ -133,6 +133,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxShowHidden">
+          <property name="text">
+           <string>show Hidden Files</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>

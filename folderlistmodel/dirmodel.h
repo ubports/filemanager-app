@@ -83,11 +83,10 @@ public:
 
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
     inline QString path() const { return mCurrentDir; }  
-
-    Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged);
-    bool awaitingResults() const;
-
     void setPath(const QString &pathName);
+
+    Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
+    bool awaitingResults() const;    
 
     Q_INVOKABLE void rm(const QStringList &paths);
 
@@ -97,7 +96,6 @@ public:
 
     Q_PROPERTY(bool showDirectories READ showDirectories WRITE setShowDirectories NOTIFY showDirectoriesChanged)
     bool showDirectories() const;
-    void setShowDirectories(bool showDirectories);
 
     Q_PROPERTY(QStringList nameFilters READ nameFilters WRITE setNameFilters NOTIFY nameFiltersChanged)
     QStringList nameFilters() const;
@@ -143,6 +141,9 @@ public:
 
     Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
     Q_INVOKABLE QString parentPath() const;
+
+    Q_PROPERTY(bool showHiddenFiles READ showHiddenFiles WRITE setShowHiddenFiles NOTIFY showHiddenFilesChanged)
+    bool showHiddenFiles() const;    
 
     Q_INVOKABLE QString homePath() const;
 
@@ -221,6 +222,9 @@ public slots:
      */
     void cancelAction();
 
+    void setShowDirectories(bool showDirectories);
+    void setShowHiddenFiles(bool show);
+
 signals:
     /*!
      * \brief insertedItem()
@@ -241,6 +245,8 @@ signals:
      */
     void     progress(int curItem, int totalItems, int percent);
 
+    void     showHiddenFilesChanged();
+
 private slots:
     void onItemRemoved(const QString&);
     void onItemRemoved(const QFileInfo&);
@@ -249,6 +255,9 @@ private slots:
 
 private:
     int  addItem(const QFileInfo& fi);
+
+private:
+    bool               mShowHiddenFiles;
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
 public:
