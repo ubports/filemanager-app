@@ -1,18 +1,18 @@
 Source: ubuntu-filemanager-app
 Priority: extra
-Maintainer: Ugo Riboni <ugo.riboni@canonical.com>
-Build-Depends: debhelper (>= 8.0.0), 
-Standards-Version: 3.9.3
+Maintainer: Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>
+Build-Depends: debhelper (>= 9), 
+Standards-Version: 3.9.4
 Section: misc
 Homepage: https://launchpad.net/ubuntu-filemanager-app
+Vcs-Bzr: https://code.launchpad.net/~ubuntu-filemanager-dev/ubuntu-filemanager-app/trunk
 
 Package: ubuntu-filemanager-app
 Section: misc
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends},
+Architecture: all
+Depends: ${misc:Depends},
          qmlscene,
-         qt-components-ubuntu,
+         qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
          qtdeclarative5-qtquick2-plugin
 Description: File Manager application
  Core File Manager application
-
