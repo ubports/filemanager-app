@@ -83,5 +83,8 @@ ListView {
         }
     }
 
-
+    Scrollbar {
+        flickableItem: root
+        align: Qt.AlignTrailing
+    }
 }
