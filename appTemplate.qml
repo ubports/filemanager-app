@@ -10,6 +10,7 @@ import Ubuntu.Components 0.1
 MainView {
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "appTemplate"
+    applicationName: "app-template"
     
     width: units.gu(50)
     height: units.gu(75)
