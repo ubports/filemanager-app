@@ -50,6 +50,9 @@
 
 Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread)
 
+namespace {
+    QHash<QByteArray, int> roleMapping;
+}
 
 class DirListWorker : public IORequest
 {
@@ -84,12 +87,13 @@ public:
 
         // last batch
         emit itemsAdded(directoryContents);
-
+        emit workerFinished();
         //std::sort(directoryContents.begin(), directoryContents.end(), DirModel::fileCompare);
     }
 
 signals:
     void itemsAdded(const QVector<QFileInfo> &files);
+    void workerFinished();
 
 private:
     QString       mPathName;
@@ -106,17 +110,11 @@ DirModel::DirModel(QObject *parent)
     mNameFilters = QStringList() << "*";
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    // There's no virtual in Qt4.
-    setRoleNames(proxyRoleNames());
+    // There's no setRoleNames in Qt5.
+    setRoleNames(buildRoleNames());
 #else
     // In Qt5, the roleNames() is virtual and will work just fine.
 #endif
-
-    // populate reverse mapping
-    const QHash<int, QByteArray> &roles = roleNames();
-    QHash<int, QByteArray>::ConstIterator it = roles.constBegin();
-    for (;it != roles.constEnd(); ++it)
-        mRoleMapping.insert(it.value(), it.key());
 
     connect(m_fsAction, SIGNAL(progress(int,int,int)),
             this,     SIGNAL(progress(int,int,int)));
@@ -145,16 +143,23 @@ DirModel::~DirModel()
 {   
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 // roleNames has changed between Qt4 and Qt5. In Qt5 it is a virtual
-// function and you can not call setRoleNames. same code base. Oh well.
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-QHash<int, QByteArray> DirModel::proxyRoleNames() const
-#else
+ // function and setRoleNames should not be used.
 QHash<int, QByteArray> DirModel::roleNames() const
-#endif
 {
     static QHash<int, QByteArray> roles;
     if (roles.isEmpty()) {
+        roles = buildRoleNames();
+    }
+
+    return roles;
+}
+#endif
+
+QHash<int, QByteArray> DirModel::buildRoleNames() const
+{
+    QHash<int, QByteArray> roles;
         roles.insert(FileNameRole, QByteArray("fileName"));
         roles.insert(CreationDateRole, QByteArray("creationDate"));
         roles.insert(ModifiedDateRole, QByteArray("modifiedDate"));
@@ -166,6 +171,15 @@ QHash<int, QByteArray> DirModel::roleNames() const
         roles.insert(IsReadableRole, QByteArray("isReadable"));
         roles.insert(IsWritableRole, QByteArray("isWritable"));
         roles.insert(IsExecutableRole, QByteArray("isExecutable"));
+
+    // populate reverse mapping
+    if (roleMapping.isEmpty()) {
+        QHash<int, QByteArray>::ConstIterator it = roles.constBegin();
+        for (;it != roles.constEnd(); ++it)
+            roleMapping.insert(it.value(), it.key());
+
+        // make sure we cover all roles
+        //    Q_ASSERT(roles.count() == IsFileRole - FileNameRole);
     }
 
     return roles;
@@ -173,9 +187,9 @@ QHash<int, QByteArray> DirModel::roleNames() const
 
 QVariant DirModel::data(int row, const QByteArray &stringRole) const
 {
-    QHash<QByteArray, int>::ConstIterator it = mRoleMapping.constFind(stringRole);
+    QHash<QByteArray, int>::ConstIterator it = roleMapping.constFind(stringRole);
 
-    if (it == mRoleMapping.constEnd())
+    if (it == roleMapping.constEnd())
         return QVariant();
 
     return data(index(row, 0), *it);
@@ -293,6 +307,7 @@ void DirModel::setPath(const QString &pathName)
     // TODO: we need to set a spinner active before we start getting results from DirListWorker
     DirListWorker *dlw = new DirListWorker(pathName, dirFilter);
     connect(dlw, SIGNAL(itemsAdded(QVector<QFileInfo>)), SLOT(onItemsAdded(QVector<QFileInfo>)));
+    connect(dlw, SIGNAL(workerFinished()), SLOT(onResultsFetched()));
     ioWorkerThread()->addRequest(dlw);
 
     mCurrentDir = pathName;
@@ -310,12 +325,7 @@ static bool fileCompare(const QFileInfo &a, const QFileInfo &b)
     return QString::localeAwareCompare(a.fileName(), b.fileName()) < 0;
 }
 
-void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
-{
-#if DEBUG_MESSAGES
-    qDebug() << Q_FUNC_INFO << "Got new files: " << newFiles.count();
-#endif
-
+void DirModel::onResultsFetched() {
     if (mAwaitingResults) {
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << "No longer awaiting results";
@@ -323,6 +333,13 @@ void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
         mAwaitingResults = false;
         emit awaitingResultsChanged();
     }
+}
+
+void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
+{
+#if DEBUG_MESSAGES
+    qDebug() << Q_FUNC_INFO << "Got new files: " << newFiles.count();
+#endif
 
     foreach (const QFileInfo &fi, newFiles) {
 

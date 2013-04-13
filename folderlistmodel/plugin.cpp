@@ -29,21 +29,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
  */
 
+#include <QVector>
+#include <QFileInfo>
+
 #include "plugin.h"
 
 NemoFolderListModelPlugin::NemoFolderListModelPlugin() { }
 
 NemoFolderListModelPlugin::~NemoFolderListModelPlugin() { }
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-void NemoFolderListModelPlugin::initializeEngine(QDeclarativeEngine *engine, const char *uri)
-#else
-void NemoFolderListModelPlugin::initializeEngine(QQmlEngine *engine, const char *uri)
+void NemoFolderListModelPlugin::initializeEngine(QmlEngine *engine, const char *uri)
 {
     Q_UNUSED(engine)
     Q_ASSERT(uri == QLatin1String(QUOTES(PLUGIN_URI)));
 }
-#endif
 
 void NemoFolderListModelPlugin::registerTypes(const char *uri)
 {
@@ -51,8 +50,4 @@ void NemoFolderListModelPlugin::registerTypes(const char *uri)
     qRegisterMetaType<QVector<QFileInfo> >();
     qmlRegisterType<DirModel>(uri, 1, 0, "FolderListModel");
 }
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-Q_EXPORT_PLUGIN2(nemofolderlistmodel, NemoFolderListModelPlugin);
-#endif
 

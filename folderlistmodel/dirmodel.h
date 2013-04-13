@@ -103,6 +103,7 @@ public:
 
 public slots:
     void onItemsAdded(const QVector<QFileInfo> &newFiles);
+    void onResultsFetched();
 
 signals:
     void awaitingResultsChanged();
@@ -112,24 +113,20 @@ signals:
     void error(const QString &errorTitle, const QString &errorMessage);
 
 private:
+    QHash<int, QByteArray> buildRoleNames() const;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+    // In Qt5, the roleNames() is virtual and will work just fine. On qt4 setRoleNames must be used with buildRoleNames.
+    QHash<int, QByteArray> roleNames() const;
+#endif
+
     QStringList mNameFilters;
     bool mShowDirectories;
     bool mAwaitingResults;
     QString mCurrentDir;
     QVector<QFileInfo> mDirectoryContents;
-    QHash<QByteArray, int> mRoleMapping;
 
-//[0] new stuff Ubuntu File Manager
 public:
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    // There's no virtual roleNames in Qt4. Proxy returns the role names
-    // that are initialized in constructor.
-    QHash<int, QByteArray> proxyRoleNames() const;
-#else
-    // In Qt5, the roleNames() is virtual and will work just fine.
-    QHash<int, QByteArray> roleNames() const;
-#endif
-
+    //[0] new stuff Ubuntu File Manager
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
     //make this work with tables
     virtual int columnCount(const QModelIndex &) const
@@ -139,7 +136,7 @@ public:
     virtual QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
 #endif
 
-    Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
+    // Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
     Q_INVOKABLE QString parentPath() const;
 
     Q_PROPERTY(bool showHiddenFiles READ showHiddenFiles WRITE setShowHiddenFiles NOTIFY showHiddenFilesChanged)

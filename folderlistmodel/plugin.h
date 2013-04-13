@@ -37,11 +37,29 @@
 #include <QtDeclarative>
 #include <QDeclarativeEngine>
 #include <QDeclarativeExtensionPlugin>
+#include <QVector>
+#include <QFileInfo>
+
+#define PLUGIN_CLASS_EXPORT
+#define PLUGIN_CLASS_EXTERNAL_EXPORT Q_EXPORT_PLUGIN2(nemofolderlistmodel, NemoFolderListModelPlugin);
+#define PLUGIN_CLASS_EXTEND
+typedef QDeclarativeExtensionPlugin QmlPluginParent;
+typedef QDeclarativeEngine QmlEngine;
+Q_DECLARE_METATYPE(QVector<QFileInfo>)
+
 #else
 #include <QQmlComponent>
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QQmlExtensionPlugin>
+
+#define PLUGIN_CLASS_EXPORT Q_DECL_EXPORT
+#define PLUGIN_CLASS_EXTERNAL_EXPORT
+#define PLUGIN_CLASS_EXTEND \
+    Q_OBJECT \
+    Q_PLUGIN_METADATA(IID "org.nemomobile.folderlistmodel")
+typedef QQmlExtensionPlugin QmlPluginParent;
+typedef QQmlEngine QmlEngine;
 #endif
 
 #include "dirmodel.h"
@@ -49,33 +67,18 @@
 #define QUOTES(x)  #x
 
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-class Q_DECL_EXPORT NemoFolderListModelPlugin 
-    : public QDeclarativeExtensionPlugin
-#else
-class NemoFolderListModelPlugin 
-    : public QQmlExtensionPlugin
-#endif
+class PLUGIN_CLASS_EXPORT NemoFolderListModelPlugin  : public QmlPluginParent
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID QUOTES(PLUGIN_URI))
-#endif
+    PLUGIN_CLASS_EXTEND
 
 public:
     NemoFolderListModelPlugin();
     virtual ~NemoFolderListModelPlugin();
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    void initializeEngine(QDeclarativeEngine *engine, const char *uri);
-#else
-    void initializeEngine(QQmlEngine *engine, const char *uri);
-#endif
+    void initializeEngine(QmlEngine *engine, const char *uri);
     void registerTypes(const char *uri);
 };
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-Q_EXPORT_PLUGIN2(nemofolderlistmodel, NemoFolderListModelPlugin);
-#endif
+PLUGIN_CLASS_EXTERNAL_EXPORT
 
 #endif // NEMO_QML_PLUGINS_FOLDERLISTMODEL
