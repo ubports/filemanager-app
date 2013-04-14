@@ -58,6 +58,7 @@ private slots:
     void   onShowHidden(bool);
     void   onRowClicked(QModelIndex);
     void   onVerticalHeaderClicked(int);
+    void   setSort(int col, Qt::SortOrder order);
 };
 
 #endif // SIMPLELIST_H

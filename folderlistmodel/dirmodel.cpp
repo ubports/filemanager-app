@@ -33,8 +33,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QDateTime>
-#include <QPixmap>
-
+#include <QFileIconProvider>
 
 #include <errno.h>
 #include <string.h>
@@ -53,6 +52,68 @@ Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread)
 namespace {
     QHash<QByteArray, int> roleMapping;
 }
+
+
+static bool fileCompareAscending(const QFileInfo &a, const QFileInfo &b)
+{
+    if (a.isDir() && !b.isDir())
+        return true;
+
+    if (b.isDir() && !a.isDir())
+        return false;
+
+    return QString::localeAwareCompare(a.fileName(), b.fileName()) < 0;
+}
+
+
+static bool fileCompareDescending(const QFileInfo &a, const QFileInfo &b)
+{
+    if (a.isDir() && !b.isDir())
+        return true;
+
+    if (b.isDir() && !a.isDir())
+        return false;
+
+    return QString::localeAwareCompare(a.fileName(), b.fileName()) > 0;
+}
+
+static bool dateCompareDescending(const QFileInfo &a, const QFileInfo &b)
+{
+    if (a.isDir() && !b.isDir())
+        return true;
+
+    if (b.isDir() && !a.isDir())
+        return false;
+
+    return a.lastModified() > b.lastModified();
+}
+
+static bool dateCompareAscending(const QFileInfo &a, const QFileInfo &b)
+{
+    if (a.isDir() && !b.isDir())
+        return true;
+
+    if (b.isDir() && !a.isDir())
+        return false;
+
+    return a.lastModified() < b.lastModified();
+}
+
+/*!
+ *  Sort was originaly done in \ref onItemsAdded() and that code is now in \ref addItem(),
+ *  the reason to keep doing sort and do not let QDir does it is that when adding new items
+ *  by \ref mkdir() or \paste() it is not necessary to call refresh() to load the entire directory
+ *  to organize it items again. New items order/position are organized by \ref addItem()
+ *
+ */
+static CompareFunction availableCompareFunctions[2][2] =
+{
+    {fileCompareAscending, fileCompareDescending}
+   ,{dateCompareAscending, dateCompareDescending}
+};
+
+
+
 
 class DirListWorker : public IORequest
 {
@@ -87,8 +148,7 @@ public:
 
         // last batch
         emit itemsAdded(directoryContents);
-        emit workerFinished();
-        //std::sort(directoryContents.begin(), directoryContents.end(), DirModel::fileCompare);
+        emit workerFinished();      
     }
 
 signals:
@@ -105,6 +165,9 @@ DirModel::DirModel(QObject *parent)
     , mShowDirectories(true)
     , mAwaitingResults(false)   
     , mShowHiddenFiles(false)
+    , mSortBy(SortByName)
+    , mSortOrder(SortAscending)
+    , mCompareFunction(0)
     , m_fsAction(new FileSystemAction(this) )
 {
     mNameFilters = QStringList() << "*";
@@ -137,6 +200,7 @@ DirModel::DirModel(QObject *parent)
     connect(this,     SIGNAL(pathChanged(QString)),
             m_fsAction, SLOT(pathChanged(QString)));
 
+    setCompareAndReorder();
 }
 
 DirModel::~DirModel()
@@ -203,11 +267,12 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
     if (role == Qt::DecorationRole)
-    {
-        QModelIndex idxIcon = createIndex(index.row(), IconSourceRole - FileNameRole);
-        QString iconPath = data(idxIcon, Qt::DisplayRole).toString();
-        QPixmap pic(iconPath);
-        return pic;
+    {       
+        if (index.column() == 0)
+        {
+            return QFileIconProvider().icon(mDirectoryContents.at(index.row()));
+        }
+        return QVariant();
     }
     role = FileNameRole + index.column();
 #else
@@ -314,16 +379,6 @@ void DirModel::setPath(const QString &pathName)
     emit pathChanged(pathName);
 }
 
-static bool fileCompare(const QFileInfo &a, const QFileInfo &b)
-{
-    if (a.isDir() && !b.isDir())
-        return true;
-
-    if (b.isDir() && !a.isDir())
-        return false;
-
-    return QString::localeAwareCompare(a.fileName(), b.fileName()) < 0;
-}
 
 void DirModel::onResultsFetched() {
     if (mAwaitingResults) {
@@ -633,11 +688,11 @@ void DirModel::onItemAdded(const QFileInfo &fi)
  * \sa insertedRow()
  */
 int DirModel::addItem(const QFileInfo &fi)
-{
+{      
     QVector<QFileInfo>::Iterator it = qLowerBound(mDirectoryContents.begin(),
                                                   mDirectoryContents.end(),
                                                   fi,
-                                                  fileCompare);
+                                                  mCompareFunction);
     int idx =  mDirectoryContents.count();
     if (it == mDirectoryContents.end()) {
         beginInsertRows(QModelIndex(), mDirectoryContents.count(), mDirectoryContents.count());
@@ -658,6 +713,7 @@ void DirModel::cancelAction()
 {
     m_fsAction->cancel();
 }
+
 
 QString DirModel::fileSize(qint64 size) const
 {
@@ -694,7 +750,7 @@ QString DirModel::fileSize(qint64 size) const
 
 
 
-bool DirModel::showHiddenFiles() const
+bool DirModel::getShowHiddenFiles() const
 {
     return mShowHiddenFiles;
 }
@@ -702,9 +758,94 @@ bool DirModel::showHiddenFiles() const
 
 void DirModel::setShowHiddenFiles(bool show)
 {
-    mShowHiddenFiles = show;
-    refresh();
-    emit showHiddenFilesChanged();
+    if (show != mShowHiddenFiles)
+    {
+        mShowHiddenFiles = show;
+        refresh();
+        emit showHiddenFilesChanged();
+    }
+}
+
+
+void DirModel::toggleShowDirectories()
+{
+    setShowDirectories(!mShowDirectories);
+}
+
+
+void DirModel::toggleShowHiddenFiles()
+{
+    setShowHiddenFiles(!mShowHiddenFiles);
+}
+
+
+DirModel::SortBy
+DirModel::getSortBy()  const
+{
+    return mSortBy;
+}
+
+
+void DirModel::setSortBy(SortBy field)
+{
+    if (field != mSortBy)
+    {
+        mSortBy = field;
+        setCompareAndReorder();
+        emit sortByChanged();
+    }
+}
+
+
+DirModel::SortOrder
+DirModel::getSortOrder() const
+{
+    return mSortOrder;
+}
+
+void DirModel::setSortOrder(SortOrder order)
+{
+    if ( order != mSortOrder )
+    {
+        mSortOrder = order;
+        setCompareAndReorder();
+        emit sortOrderChanged();
+    }
+}
+
+
+void DirModel::toggleSortOrder()
+{
+    SortOrder  order = static_cast<SortOrder> (mSortOrder ^ 1);
+    setSortOrder(order);
+}
+
+
+void DirModel::toggleSortBy()
+{
+    SortBy by = static_cast<SortBy> (mSortBy ^ 1);
+    setSortBy(by);
+}
+
+/*!
+ * \brief DirModel::setCompareAndReorder() called when  SortOrder or SortBy change
+ *
+ *  It does not reload items from disk, just reorganize items from \a mDirectoryContents array
+ */
+void DirModel::setCompareAndReorder()
+{
+    mCompareFunction = availableCompareFunctions[mSortBy][mSortOrder];
+    if (mDirectoryContents.count() > 0)
+    {
+        QVector<QFileInfo> tmpDirectoryContents = mDirectoryContents;
+        beginResetModel();
+        mDirectoryContents.clear();
+        endResetModel();
+        for(int counter=0; counter < tmpDirectoryContents.count(); counter++)
+        {
+            addItem(tmpDirectoryContents.at(counter));
+        }
+    }
 }
 
 // for dirlistworker

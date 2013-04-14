@@ -40,6 +40,7 @@
 #include "iorequest.h"
 
 class FileSystemAction;
+typedef bool  (*CompareFunction)(const QFileInfo &a, const QFileInfo &b);
 
 class DirModel : public QAbstractListModel
 {
@@ -110,7 +111,7 @@ signals:
     void nameFiltersChanged();
     void showDirectoriesChanged();
     void pathChanged(const QString& newPath);
-    void error(const QString &errorTitle, const QString &errorMessage);
+    void error(const QString &errorTitle, const QString &errorMessage);   
 
 private:
     QHash<int, QByteArray> buildRoleNames() const;
@@ -126,7 +127,7 @@ private:
     QVector<QFileInfo> mDirectoryContents;
 
 public:
-    //[0] new stuff Ubuntu File Manager
+    //[0] new stuff Ubuntu File Manager   
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
     //make this work with tables
     virtual int columnCount(const QModelIndex &) const
@@ -139,8 +140,26 @@ public:
     // Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
     Q_INVOKABLE QString parentPath() const;
 
-    Q_PROPERTY(bool showHiddenFiles READ showHiddenFiles WRITE setShowHiddenFiles NOTIFY showHiddenFilesChanged)
-    bool showHiddenFiles() const;    
+    Q_PROPERTY(bool showHiddenFiles READ getShowHiddenFiles WRITE setShowHiddenFiles NOTIFY showHiddenFilesChanged)
+    bool getShowHiddenFiles() const;
+
+    Q_ENUMS(SortBy)
+    enum SortBy
+    {
+        SortByName,
+        SortByDate
+    };
+    Q_PROPERTY(SortBy sortBy READ getSortBy WRITE setSortBy NOTIFY sortByChanged)
+    SortBy getSortBy() const;
+
+    Q_ENUMS(SortOrder)
+    enum SortOrder
+    {
+        SortAscending   = Qt::AscendingOrder,
+        SortDescending = Qt::DescendingOrder
+    };
+    Q_PROPERTY(SortOrder sortOrder READ getSortOrder WRITE setSortOrder NOTIFY sortOrderChanged)
+    SortOrder getSortOrder() const;
 
     Q_INVOKABLE QString homePath() const;
 
@@ -221,6 +240,13 @@ public slots:
 
     void setShowDirectories(bool showDirectories);
     void setShowHiddenFiles(bool show);
+    void setSortBy(SortBy field);
+    void setSortOrder(SortOrder order);
+
+    void toggleShowDirectories();
+    void toggleShowHiddenFiles();
+    void toggleSortOrder();
+    void toggleSortBy();
 
 signals:
     /*!
@@ -243,6 +269,8 @@ signals:
     void     progress(int curItem, int totalItems, int percent);
 
     void     showHiddenFilesChanged();
+    void     sortByChanged();
+    void     sortOrderChanged();
 
 private slots:
     void onItemRemoved(const QString&);
@@ -252,9 +280,13 @@ private slots:
 
 private:
     int  addItem(const QFileInfo& fi);
+    void setCompareAndReorder();
 
 private:
     bool               mShowHiddenFiles;
+    SortBy             mSortBy;
+    SortOrder          mSortOrder;
+    CompareFunction    mCompareFunction;
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
 public:

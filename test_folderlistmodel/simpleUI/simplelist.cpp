@@ -58,6 +58,14 @@ SimpleList::SimpleList(QWidget *parent) :
     connect(ui->checkBoxShowHidden, SIGNAL(clicked(bool)), this, SLOT(onShowHidden(bool)));
 
     ui->checkBoxShowDirs->setChecked( m_model->showDirectories() );
+
+    resize(800,600);
+
+    connect(m_model, SIGNAL(insertedRow(int)), ui->tableView, SLOT(resizeRowToContents(int)));
+    connect(ui->tableView->horizontalHeader(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
+            this,                              SLOT(setSort(int,Qt::SortOrder)));
+
+    ui->tableView->horizontalHeader()->setSortIndicator(0,Qt::AscendingOrder);
 }
 
 SimpleList::~SimpleList()
@@ -137,4 +145,22 @@ void SimpleList::onShowHidden(bool s)
 void SimpleList::onVerticalHeaderClicked(int row)
 {
     m_curRow = row;
+}
+
+
+void SimpleList::setSort(int col, Qt::SortOrder order)
+{
+    if (col == 0 || col == 2)
+    {
+        if (col == 0)
+        {
+            m_model->setSortBy(DirModel::SortByName);
+        }
+        else
+        {
+            m_model->setSortBy(DirModel::SortByDate);
+        }
+        DirModel::SortOrder o = (DirModel::SortOrder)order;
+        m_model->setSortOrder(o);
+    }
 }

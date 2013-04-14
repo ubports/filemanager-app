@@ -17,7 +17,17 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QTableView" name="tableView"/>
+      <widget class="QTableView" name="tableView">
+       <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="verticalHeaderMinimumSectionSize">
+        <number>25</number>
+       </attribute>
+       <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+        <bool>true</bool>
+       </attribute>
+      </widget>
      </item>
      <item>
       <widget class="QGroupBox" name="groupBox">
