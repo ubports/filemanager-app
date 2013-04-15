@@ -5,7 +5,7 @@ Folderlistmodel plugin must be built and installed before running.
 
 Currently it can be obtained like this:
 
-bzr branch lp:~ajalkane/ubuntu-filemanager-app/qml-folderlistmodel
+bzr branch lp:~carlos-mazieri/ubuntu-filemanager-app/model
 
 Running filemanager
 ===================
