@@ -1,0 +1,6 @@
+*.qmlproject.user
+
+debian/files
+debian/app-template/
+debian/*.debhelper.log
+debian/*.substvars
