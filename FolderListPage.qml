@@ -89,8 +89,10 @@ Page {
             console.log("FolderListModel Error Title/Description", errorTitle, errorMessage)
             PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), root,
                             {
-                                title: i18n.tr(errorTitle),
-                                text: i18n.tr(errorMessage)
+                                // Unfortunately title can not handle too long texts. TODO: bug report
+                                // title: i18n.tr(errorTitle),
+                                title: i18n.tr("File operation error"),
+                                text: errorTitle + ": " + errorMessage
                             })
         }
     }
