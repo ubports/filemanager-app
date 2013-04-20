@@ -167,7 +167,7 @@ DirModel::DirModel(QObject *parent)
     , mShowHiddenFiles(false)
     , mSortBy(SortByName)
     , mSortOrder(SortAscending)
-    , mCompareFunction(0)
+    , mCompareFunction(0) 
     , m_fsAction(new FileSystemAction(this) )
 {
     mNameFilters = QStringList() << "*";
@@ -199,6 +199,9 @@ DirModel::DirModel(QObject *parent)
 
     connect(this,     SIGNAL(pathChanged(QString)),
             m_fsAction, SLOT(pathChanged(QString)));
+
+    connect(m_fsAction, SIGNAL(clipboardChanged()),
+            this,       SIGNAL(clipboardChanged()));
 
     setCompareAndReorder();
 }
@@ -835,7 +838,7 @@ void DirModel::toggleSortBy()
 void DirModel::setCompareAndReorder()
 {
     mCompareFunction = availableCompareFunctions[mSortBy][mSortOrder];
-    if (mDirectoryContents.count() > 0)
+    if (mDirectoryContents.count() > 0 && !mAwaitingResults )
     {
         QVector<QFileInfo> tmpDirectoryContents = mDirectoryContents;
         beginResetModel();
@@ -846,6 +849,12 @@ void DirModel::setCompareAndReorder()
             addItem(tmpDirectoryContents.at(counter));
         }
     }
+}
+
+
+int DirModel::getClipboardUrlsCounter() const
+{
+    return m_fsAction->clipboardLocalUrlsConunter();
 }
 
 // for dirlistworker

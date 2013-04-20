@@ -26,11 +26,14 @@
 #include <QDir>
 #include <QMetaType>
 #include <QHeaderView>
+#include <QDebug>
+#include <QProgressBar>
 
 SimpleList::SimpleList(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SimpleList),
-    m_curRow(-1)
+    m_curRow(-1),
+    m_pbar( new QProgressBar() )
 {
     ui->setupUi(this);
 
@@ -65,7 +68,16 @@ SimpleList::SimpleList(QWidget *parent) :
     connect(ui->tableView->horizontalHeader(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
             this,                              SLOT(setSort(int,Qt::SortOrder)));
 
+    connect(m_model, SIGNAL(progress(int,int,int)),
+            this,    SLOT(progress(int,int,int)));
+
+    connect(m_model, SIGNAL(clipboardChanged()),
+            this,    SLOT(clipboardChanged()));
+
     ui->tableView->horizontalHeader()->setSortIndicator(0,Qt::AscendingOrder);
+
+    m_pbar->setMaximum(100);
+    m_pbar->setMinimum(0);
 }
 
 SimpleList::~SimpleList()
@@ -163,4 +175,27 @@ void SimpleList::setSort(int col, Qt::SortOrder order)
         DirModel::SortOrder o = (DirModel::SortOrder)order;
         m_model->setSortOrder(o);
     }
+}
+
+void SimpleList::clipboardChanged()
+{
+    qDebug() <<   "clipboardChanged()" << m_model->getClipboardUrlsCounter();
+}
+
+void SimpleList::progress(int cur, int total, int percent)
+{
+    QString p;
+    m_pbar->setValue(percent);
+    if (cur == 0)
+    {
+        m_pbar->reset();
+        m_pbar->show();
+    }
+    else
+        if (percent == 100)
+        {
+            m_pbar->hide();
+        }
+    p.sprintf("progress(cur=%d, total=%d, percent=%d", cur,total,percent);
+    qDebug() << p;
 }

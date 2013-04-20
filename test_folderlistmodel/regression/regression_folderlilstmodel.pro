@@ -20,3 +20,4 @@ HEADERS += \
 SOURCES += \
     tempfiles.cpp
 
+# DEFINES += DEBUG_REMOVE

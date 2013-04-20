@@ -26,7 +26,7 @@ protected slots:
     void slotFileAdded(const QFileInfo& f)   {m_filesAdded.append(f.absoluteFilePath()); }
     void slotFileRemoved(const QFileInfo& f) {m_filesRemoved.append(f.absoluteFilePath()); }
     void progress(int, int, int);
-    void cancel(int,int,int);
+    void cancel(int index, int, int percent);
 
 private Q_SLOTS:
     void initTestCase();       //before all tests
@@ -47,6 +47,7 @@ private Q_SLOTS:
     void  fsActionMoveItemsForcingCopyAndThenRemove();
     void  modelCancelRemoveAction();
     void  modelTestFileSize();
+    void  modelRemoveDirWithHiddenFilesAndLinks();
 
 private:
     void initDeepDirs();
@@ -97,13 +98,19 @@ TestFolderModel::TestFolderModel() : m_deepDir_01(0)
 void TestFolderModel::progress(int cur, int total, int percent)
 {
     m_progressCounter++; 
+    m_progressCurrentItem = cur;
+    m_progressTotalItems  = total;
+    m_progressPercentDone = percent;
 }
 
 
-void TestFolderModel::cancel(int, int, int)
+void TestFolderModel::cancel(int index, int, int percent)
 {
     DirModel * model = static_cast<DirModel*> (sender());
-    model->cancelAction();
+    if (index || percent)
+    {
+         model->cancelAction();
+    }
 }
 
 TestFolderModel::~TestFolderModel()
@@ -491,8 +498,8 @@ void TestFolderModel::modelCancelRemoveAction()
 
      QCOMPARE(m_filesRemoved.count() , 0);
      QCOMPARE(m_dirModel_01->rowCount(), 1);
-     QCOMPARE(m_progressCounter, 1);
-     QVERIFY(m_progressTotalItems < level);  // much more than level files were created
+     QVERIFY(m_progressCurrentItem > 0);     // some file were performed
+     QVERIFY(m_progressPercentDone < 100);   //
 }
 
 void TestFolderModel::modelTestFileSize()
@@ -506,6 +513,56 @@ void TestFolderModel::modelTestFileSize()
               QString("1.0 MB"));
      QCOMPARE(m_dirModel_01->fileSize(1000*1000*1000),
               QString("1.0 GB"));
+}
+
+
+
+void TestFolderModel::modelRemoveDirWithHiddenFilesAndLinks()
+{
+     const int level = 3;
+     m_deepDir_01 = new DeepDir("modelRemoveDirWithHiddenFilesAndLinks", level);
+     QCOMPARE( QFileInfo(m_deepDir_01->path()).exists(),  true);
+
+     m_dirModel_01 = new DirModel();
+     m_dirModel_01->setShowHiddenFiles(true);
+     m_dirModel_01->setPath(m_deepDir_01->path());
+     QTest::qWait(TIME_TO_REFRESH_DIR);
+
+     QCOMPARE(m_dirModel_01->rowCount(), 1);
+
+     connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
+             this,          SLOT(progress(int,int,int)));
+
+     QModelIndex filepathIdx = m_dirModel_01->index(0, DirModel::FilePathRole - DirModel::FileNameRole);
+     QString firstItemFullPath(m_dirModel_01->data(filepathIdx).toString());
+
+     // hidden files and links are created under first item
+     QFile hiddenFile(firstItemFullPath
+                      + QDir::separator()
+                      + QLatin1String(".hidden.txt"));
+
+     QCOMPARE(hiddenFile.open(QFile::WriteOnly)  ,true);
+     hiddenFile.close();
+     QString link_to_hiddenFile(firstItemFullPath
+                                + QDir::separator()
+                                + QLatin1String("link_to_hiddenFile"));
+     QCOMPARE(hiddenFile.link(link_to_hiddenFile), true);
+
+     QString hiddenFolder(firstItemFullPath
+                          + QDir::separator()
+                          + QLatin1String(".hiddenFolder"));
+
+     QCOMPARE(QDir().mkdir(hiddenFolder)         , true);
+     QString link_to_hidden_folder(firstItemFullPath
+                                   + QDir::separator()
+                                   + QLatin1String("link_to_hidden_folder"));
+     QCOMPARE(QFile(hiddenFolder).link(link_to_hidden_folder),  true);
+
+     m_dirModel_01->remove(0);
+     QTest::qWait(TIME_TO_PROCESS);
+
+     QCOMPARE(m_dirModel_01->rowCount(), 0);
+     QCOMPARE(m_progressPercentDone, 100);
 }
 
 int main(int argc, char *argv[])

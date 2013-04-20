@@ -48,8 +48,9 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDebug>
+#include <QThread>
 
-#define  STEP_FILES               10  // number of the files to work on a step, when this number is reached a signal is emited
+#define  STEP_FILES               5  // number of the files to work on a step, when this number is reached a signal is emited
 
 #define SHOULD_EMIT_PROGRESS_SIGNAL(action)       (1)
 
@@ -57,71 +58,138 @@
 
 RemoveNotifier   FileSystemAction::m_removeNotifier;
 
+static  QLatin1String GNOME_COPIED_MIME_TYPE  ("x-special/gnome-copied-files");
+static  QLatin1String KDE_CUT_MIME_TYPE       ("application/x-kde-cutselection");
 
 
 class DirModelMimeData : public QMimeData
 {
-public:
-    enum DataOperation
-    {
-        Copy, Cut
-    };
+public:   
     explicit DirModelMimeData();
-    virtual QStringList   formats() const    { return m_formats; }
-    void                  setCutFormat();
-    static DataOperation  operation(const QMimeData *mime);
-    void setIntoClipboard(const QStringList& files, const QString &path, bool isCut = false);
+    virtual QStringList     formats() const    { return m_formats; }
+public:    
+    ClipboardOperation      clipBoardOperation();
+    void                    setIntoClipboard(const QStringList& files, const QString &path, ClipboardOperation operation);
     static const QMimeData *clipboardMimeData();
+    QStringList             localUrls();
 private:
-    QStringList   m_formats;
+    static QList<QUrl>      gnomeUrls(const QMimeData *mime, ClipboardOperation& operation);
+private:
+    QStringList              m_formats;
+    const QMimeData *        m_appMime;
 };
 
-
+//===============================================================================================
+/*!
+ * \brief DirModelMimeData::DirModelMimeData
+ */
 DirModelMimeData::DirModelMimeData() :
-    QMimeData()
+    QMimeData() 
 {
     m_formats.append("text/uri-list");
-    m_formats.append("x-special/gnome-copied-files");
+    m_formats.append(GNOME_COPIED_MIME_TYPE);
     m_formats.append("text/plain");
     m_formats.append("COMPOUND_TEXT");
     m_formats.append("TARGETS");
     m_formats.append("MULTIPLE");
     m_formats.append("TIMESTAMP");
     m_formats.append("SAVE_TARGETS");
+
+    m_appMime = 0;
 }
 
-void DirModelMimeData::setCutFormat()
-{
-    m_formats.append("application/x-kde-cutselection");
-}
 
-DirModelMimeData::DataOperation
-DirModelMimeData::operation(const QMimeData * mime)
+//===============================================================================================
+/*!
+ * \brief DirModelMimeData::gnomeUrls
+ * \param mime
+ * \param operation
+ * \return
+ */
+QList<QUrl>
+DirModelMimeData::gnomeUrls(const QMimeData * mime,
+                            ClipboardOperation& operation)
 {
-    QStringList formats = mime->formats();
-    int f = formats.count();
-    while(f--)
+    QList<QUrl>  urls;
+    if (mime->hasFormat(GNOME_COPIED_MIME_TYPE))
     {
-        const QString &mi = formats.at(f);
-        if(mi.startsWith("x-special/") ||
-           mi.startsWith("application/") )
-        {
-            if (mi.contains("cut"))
+       QByteArray  bytes = mime->data(GNOME_COPIED_MIME_TYPE);
+       QList<QString>  d = QString(bytes).split(QLatin1String("\r\n"),
+                                                QString::SkipEmptyParts);
+       for (int counter= 0; counter < d.count(); counter++)
+       {
+           if (counter==0)
+           {
+               QStringList couple = d.at(0).split(QLatin1Char('\n'));
+               urls.append(couple[1]);
+               if (couple[0] == QLatin1String("cut"))  {
+                   operation = ClipboardCut;
+               }
+               else  {
+                   operation = ClipboardCopy;
+               }
+           }
+           else {
+               urls.append(d.at(counter));
+           }
+       }
+    }
+    return urls;
+}
+
+//===============================================================================================
+/*!
+ * \brief DirModelMimeData::clipBoardOperation()
+ * \param mime
+ * \return
+ */
+ClipboardOperation DirModelMimeData::clipBoardOperation()
+{
+    ClipboardOperation op = ClipboardCopy;
+    m_appMime = clipboardMimeData();
+    if (m_appMime)
+    {
+       //first check for GNOME clipboard format, op comes with Copy/Cut
+        if (gnomeUrls(m_appMime, op).count() == 0)
+        { // there is no gnome format, tries KDE format
+            QStringList formats = m_appMime->formats();
+            int f = formats.count();
+            while(f--)
             {
-                return Cut;
+                const QString &mi = formats.at(f);
+                if(mi.startsWith("application/x-kde") )
+                {
+                    if (mi.contains("cut"))
+                    {
+                        op = ClipboardCut;
+                        break;
+                    }
+                }
             }
         }
     }
-    return Copy;
+    return op;
 }
 
 
-void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString& path, bool isCut)
-{
-    if (isCut)  {
-        setCutFormat();
+//===============================================================================================
+/*!
+ * \brief DirModelMimeData::setIntoClipboard
+ * \param files
+ * \param path
+ * \param isCut
+ */
+void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString& path, ClipboardOperation operation)
+{   
+    int index = m_formats.indexOf(KDE_CUT_MIME_TYPE);
+    if (index != -1 && operation != ClipboardCut)
+    {
+        m_formats.removeAt(index);
     }
-
+    else
+    if (operation == ClipboardCut)  {
+        m_formats.append(KDE_CUT_MIME_TYPE);
+    }   
     QClipboard *clipboard = QApplication::clipboard();
     if (clipboard)
     {
@@ -132,6 +200,8 @@ void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString&
         }
         QList<QUrl> urls;
         QFileInfo fi;
+        QByteArray gnomeData;
+        gnomeData += operation == ClipboardCut ? "cut\n" : "copy\n";
         for(int counter = 0; counter < files.count(); counter++)
         {
             const QString& item = files.at(counter);
@@ -142,7 +212,9 @@ void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString&
             }
             if (fi.exists())
             {
-                urls.append(QUrl::fromLocalFile(fi.canonicalFilePath()));
+                QUrl item = QUrl::fromLocalFile(fi.canonicalFilePath());
+                urls.append(item);
+                gnomeData += item.toEncoded() + "\r\n";
             }
             else
             {                
@@ -150,14 +222,19 @@ void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString&
             }
         }
         if (urls.count() > 0)
-        {
+        {          
+            setData(GNOME_COPIED_MIME_TYPE, gnomeData);
             setUrls(urls);
             clipboard->setMimeData(this);
         }
     }
 }
 
-
+//===============================================================================================
+/*!
+ * \brief DirModelMimeData::clipboardMimeData
+ * \return
+ */
 const QMimeData *DirModelMimeData::clipboardMimeData()
 {
     const QMimeData *ret = 0;
@@ -169,18 +246,64 @@ const QMimeData *DirModelMimeData::clipboardMimeData()
     return ret;
 }
 
+//===============================================================================================
+/*!
+ * \brief DirModelMimeData::localUrls
+ * \return
+ */
+QStringList
+DirModelMimeData::localUrls()
+{
+     m_appMime = DirModelMimeData::clipboardMimeData();
+     QStringList paths;
+     //it may have external urls
+     if (m_appMime)
+     {
+         QList<QUrl> urls;
+         if (m_appMime->hasUrls())
+         {
+             urls =  m_appMime->urls();
+         }
+         else
+         {
+             ClipboardOperation op;
+             urls = gnomeUrls(m_appMime, op);
+         }
+         for (int counter=0; counter < urls.count(); counter++)
+         {
+             if (urls.at(counter).isLocalFile())
+             {
+                 paths.append(urls.at(counter).toLocalFile());
+             }
+         }
+     }
+     return paths;
+}
 
+/*!
+ * \brief RemoveNotifier::RemoveNotifier
+ * \param parent
+ */
 RemoveNotifier::RemoveNotifier(QObject *parent) :
     QObject(parent)
 {
 }
 
+//===============================================================================================
+/*!
+ * \brief RemoveNotifier::notifyRemoved
+ * \param fi
+ */
 void RemoveNotifier::notifyRemoved(const QFileInfo &fi)
 {
     emit removed(fi);
 }
 
-
+//===============================================================================================
+/*!
+ * \brief RemoveNotifier::notifyRemoved
+ * \param item
+ */
 void RemoveNotifier::notifyRemoved(const QString &item)
 {
     emit removed(item);
@@ -190,6 +313,12 @@ void RemoveNotifier::notifyRemoved(const QString &item)
 /* static QMimeData */
 DirModelMimeData     mimeData;
 
+
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::FileSystemAction
+ * \param parent
+ */
 FileSystemAction::FileSystemAction(QObject *parent) :
     QObject(parent)
   , m_curAction(0)
@@ -204,41 +333,65 @@ FileSystemAction::FileSystemAction(QObject *parent) :
 
     connect(&m_removeNotifier, SIGNAL(removed(QString)),
             this,              SIGNAL(removed(QString)));
+
+    QClipboard *clipboard = QApplication::clipboard();
+    connect(clipboard, SIGNAL(dataChanged()), this, SIGNAL(clipboardChanged()));
 }
 
-
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::~FileSystemAction
+ */
 FileSystemAction::~FileSystemAction()
 {
    // m_mimeData using  static data because it used to crash
    // delete m_mimeData;
 }
 
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::remove
+ * \param paths
+ */
 void FileSystemAction::remove(const QStringList &paths)
 {  
-    createAndProcessAction(ActionRemove, paths);
+    createAndProcessAction(ActionRemove, paths, NoClipboard);
 }
 
-
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::createAction
+ * \param type
+ * \param origBase
+ * \return
+ */
 FileSystemAction::Action* FileSystemAction::createAction(ActionType type, int  origBase)
 {
     Action * action = new Action();
     action->type         = type;
     action->baseOrigSize = origBase;
+    action->targetPath   = m_path;
     action->totalItems   = 0;
     action->currItem     = 0;
-    action->currEntry   = 0;
+    action->currEntry    = 0;
     action->totalBytes   = 0;
     action->bytesWritten = 0;
 
     return action;
 }
 
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::addEntry
+ * \param action
+ * \param pathname
+ */
 void  FileSystemAction::addEntry(Action* action, const QString& pathname)
 {
     QFileInfo info(pathname);
     if (!info.exists())
     {
-        info.setFile(m_path, pathname);
+        info.setFile(action->targetPath, pathname);
     }
     if (!info.exists())
     {
@@ -253,8 +406,9 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
     if (action->type != ActionMove && info.isDir())
     {
         QDirIterator it(info.absoluteFilePath(),
-                QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot,
-                QDirIterator::Subdirectories);
+                        QDir::AllEntries | QDir::System |
+                              QDir::NoDotAndDotDot | QDir::Hidden,
+                        QDirIterator::Subdirectories);
         while (it.hasNext() &&  !it.next().isEmpty())
         {
             item = it.fileInfo();
@@ -277,7 +431,10 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
     action->entries.append(entry);
 }
 
-
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::processAction
+ */
 void FileSystemAction::processAction()
 {   
     if (m_curAction)
@@ -304,7 +461,7 @@ void FileSystemAction::processAction()
         QTimer::singleShot(0, this, SLOT(processActionEntry()) );
         if (SHOULD_EMIT_PROGRESS_SIGNAL(m_curAction))
         {
-            emit progress(0,m_curAction->totalBytes, 0);
+            emit progress(0,m_curAction->totalItems, 0);
         }
     }
     else
@@ -314,12 +471,25 @@ void FileSystemAction::processAction()
 }
 
 
-
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::processActionEntry
+ */
 void FileSystemAction::processActionEntry()
 {
     ActionEntry * curEntry = static_cast<ActionEntry*>
             ( m_curAction->entries.at(m_curAction->currEntry) );
 
+#if defined(SIMULATE_LONG_ACTION)
+    {
+        unsigned int delay = SIMULATE_LONG_ACTION;
+        if (delay == 1)
+        {
+            delay = 100;           //each (10 * STEP_FILES) files will waits a second
+            QThread::msleep(delay);
+        }
+    }
+#endif
     if (!m_cancelCurrentAction)
     {
         switch(m_curAction->type)
@@ -389,7 +559,11 @@ void FileSystemAction::processActionEntry()
     if (SHOULD_EMIT_PROGRESS_SIGNAL(m_curAction))
     {
         int percent = (m_curAction->currItem * 100) / m_curAction->totalItems;
-        if (percent > 100) percent = 100;
+        if (percent >= 100)
+        {
+            percent = 100;
+            endCurrentAction();
+        }
         emit progress(m_curAction->currItem, m_curAction->totalItems, percent);
     }
  //Check if the current action has finished or cancelled
@@ -406,13 +580,20 @@ void FileSystemAction::processActionEntry()
 }
 
 
-
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::cancel
+ */
 void FileSystemAction::cancel()
 {
     m_cancelCurrentAction = true;
 }
 
-
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::removeEntry
+ * \param entry
+ */
 void FileSystemAction::removeEntry(ActionEntry *entry)
 {      
     QDir dir;
@@ -425,8 +606,8 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
         )
 
     {
-        const QFileInfo &fi = entry->reversedOrder.at(entry->currItem);
-        if (fi.isDir())
+        const QFileInfo &fi = entry->reversedOrder.at(entry->currItem);       
+        if (fi.isDir() && !fi.isSymLink())
         {
             m_cancelCurrentAction = !dir.rmdir(fi.absoluteFilePath());
         }
@@ -434,6 +615,9 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
         {
             m_cancelCurrentAction = !QFile::remove(fi.absoluteFilePath());
         }
+#if DEBUG_REMOVE
+        qDebug() << "remove ret=" << !m_cancelCurrentAction << fi.absoluteFilePath();
+#endif
         if (m_cancelCurrentAction)
         {
             m_errorTitle = QObject::tr("Could not remove the item ") +
@@ -443,7 +627,11 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
     }    
 }
 
-
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::copyEntry
+ * \param entry
+ */
 void  FileSystemAction::copyEntry(ActionEntry *entry)
 {
     //do one step at least
@@ -484,7 +672,11 @@ void  FileSystemAction::copyEntry(ActionEntry *entry)
     }//for
 }
 
-
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::moveEntry
+ * \param entry
+ */
 void FileSystemAction::moveEntry(ActionEntry *entry)
 {
     QFile file;
@@ -509,43 +701,48 @@ void FileSystemAction::moveEntry(ActionEntry *entry)
     }//for
 }
 
-
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::pathChanged
+ * \param path
+ */
 void FileSystemAction::pathChanged(const QString &path)
 {
     m_path = path;
 }
 
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::copy
+ * \param pathnames
+ */
 void FileSystemAction::copy(const QStringList &pathnames)
 {
-    m_mimeData->setIntoClipboard(pathnames, m_path, false);
+    m_mimeData->setIntoClipboard(pathnames, m_path, ClipboardCopy);
 }
 
-
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::cut
+ * \param pathnames
+ */
 void FileSystemAction::cut(const QStringList &pathnames)
 {
-     m_mimeData->setIntoClipboard(pathnames, m_path, true);
+     m_mimeData->setIntoClipboard(pathnames, m_path, ClipboardCut);
 }
 
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::paste
+ */
 void FileSystemAction::paste()
 {
-    const QMimeData *mime = DirModelMimeData::clipboardMimeData();
-    QStringList paths;
-    //it may have external urls
-    if (mime && mime->hasUrls())
-    {
-        QList<QUrl> urls =  mime->urls();
-        for (int counter=0; counter < urls.count(); counter++)
-        {
-            if (urls.at(counter).isLocalFile())
-            {
-                paths.append(urls.at(counter).toLocalFile());
-            }
-        }
-    }
-    if (paths.count() > 0)
-    {   
-       ActionType   actionType  = ActionCopy; // start with Copy and check for Cut
-       if (DirModelMimeData::operation(mime) == DirModelMimeData::Cut)
+    QStringList paths     = m_mimeData->localUrls();
+    if (paths.count())
+    {         
+       ActionType actionType  = ActionCopy; // start with Copy and check for Cut
+       ClipboardOperation  operation = m_mimeData->clipBoardOperation();
+       if (operation == ClipboardCut)
        {
             if ( moveUsingSameFileSystem(paths.at(0)) ) {
                 actionType = ActionMove;
@@ -553,20 +750,25 @@ void FileSystemAction::paste()
                 actionType = ActionHardMoveCopy; // first step              
             }
        }
-       createAndProcessAction(actionType, paths);
+       createAndProcessAction(actionType, paths, operation);
     }   
 }
 
-
-void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStringList& paths)
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::createAndProcessAction
+ * \param actionType
+ * \param paths
+ * \param operation
+ */
+void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStringList& paths, ClipboardOperation operation)
 {
     Action       *myAction       = 0;
-    int           origPathLen    = 0;
-    if (actionType != ActionRemove && actionType != ActionHardMoveRemove)
-    {
-        origPathLen = QFileInfo(paths.at(0)).absolutePath().length() ;
-    }
-    myAction = createAction(actionType, origPathLen);
+    int           origPathLen    = 0;   
+    myAction                     = createAction(actionType, origPathLen);
+    myAction->operation          = operation;
+    myAction->origPath           = QFileInfo(paths.at(0)).absolutePath();
+    myAction->baseOrigSize       = myAction->origPath.length();
     for (int counter=0; counter < paths.count(); counter++)
     {
         addEntry(myAction, paths.at(counter));
@@ -582,6 +784,7 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
     }
 }
 
+//===============================================================================================
 /*!
  * \brief FileSystemAction::targetFom() makes a destination full pathname from \a origItem
  * \param origItem full pathname from a item intended to be copied or moved into current path
@@ -589,13 +792,14 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
  */
 QString FileSystemAction::targetFom(const QString& origItem)
 {
-    QString target(m_path + origItem.mid(m_curAction->baseOrigSize));
+    QString target(m_curAction->targetPath + origItem.mid(m_curAction->baseOrigSize));
     return target;
 }
 
+//===============================================================================================
 /*!
- * \brief FileSystemAction::moveUsingSameFileSystem() Checks if the item begin moved to current m_path
- *        belongs to the same File System
+ * \brief FileSystemAction::moveUsingSameFileSystem() Checks if the item being moved to
+ *   current m_path belongs to the same File System
  *
  * \param itemToMovePathname  first item being moved from a paste operation
  *
@@ -615,4 +819,44 @@ bool FileSystemAction::moveUsingSameFileSystem(const QString& itemToMovePathname
         originFsId = vfs.f_fsid;
     }
     return targetFsId == originFsId;
+}
+
+//=======================================================
+/*!
+ * \brief FileSystemAction::clipboardLocalUrlsConunter
+ * \return
+ */
+int FileSystemAction::clipboardLocalUrlsConunter()
+{
+    return m_mimeData->localUrls().count();
+}
+
+//================================================================================
+/*!
+ * \brief FileSystemAction::endCurrentAction() finishes an Action
+ *
+ *  If a Paste was made from a Cut operation, items pasted become avaialable in the clipboard
+ *   as from Copy source operation, so items can be now Pasted again, but with no source removal
+ */
+void FileSystemAction::endCurrentAction()
+{
+    if ( m_curAction->origPath != m_curAction->targetPath &&
+         m_curAction->operation == ClipboardCut)
+    {
+         QStringList items;
+         const ActionEntry *entry;
+         int   last;
+         for(int e = 0; e < m_curAction->entries.count(); e++)
+         {
+             entry   = m_curAction->entries.at(e);
+             last    = entry->reversedOrder.count() -1;
+             QString item(targetFom(entry->reversedOrder.at(last).absoluteFilePath()));
+             items.append(item);
+         }
+         if (items.count())
+         {
+             QString targetPath = m_curAction->targetPath;
+             m_mimeData->setIntoClipboard(items, targetPath, ClipboardCopy);
+         }
+    }
 }

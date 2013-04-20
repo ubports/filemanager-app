@@ -26,6 +26,7 @@
 #include <QModelIndex>
 
 class DirModel;
+class QProgressBar;
 
 namespace Ui {
 class SimpleList;
@@ -43,6 +44,7 @@ private:
     Ui::SimpleList *ui;
     DirModel       *m_model;
     int            m_curRow;
+    QProgressBar  * m_pbar;
 
 private slots:
     void   onCdInto();
@@ -59,6 +61,8 @@ private slots:
     void   onRowClicked(QModelIndex);
     void   onVerticalHeaderClicked(int);
     void   setSort(int col, Qt::SortOrder order);
+    void   progress(int, int,int);
+    void   clipboardChanged();
 };
 
 #endif // SIMPLELIST_H

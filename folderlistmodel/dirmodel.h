@@ -137,8 +137,8 @@ public:
     virtual QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
 #endif
 
-    // Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
-    Q_INVOKABLE QString parentPath() const;
+    Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
+    QString parentPath() const;
 
     Q_PROPERTY(bool showHiddenFiles READ getShowHiddenFiles WRITE setShowHiddenFiles NOTIFY showHiddenFilesChanged)
     bool getShowHiddenFiles() const;
@@ -160,6 +160,9 @@ public:
     };
     Q_PROPERTY(SortOrder sortOrder READ getSortOrder WRITE setSortOrder NOTIFY sortOrderChanged)
     SortOrder getSortOrder() const;
+
+    Q_PROPERTY(int clipboardUrlsCounter READ getClipboardUrlsCounter NOTIFY clipboardChanged)
+    Q_INVOKABLE int getClipboardUrlsCounter() const;
 
     Q_INVOKABLE QString homePath() const;
 
@@ -271,6 +274,8 @@ signals:
     void     showHiddenFilesChanged();
     void     sortByChanged();
     void     sortOrderChanged();
+
+    void     clipboardChanged();
 
 private slots:
     void onItemRemoved(const QString&);

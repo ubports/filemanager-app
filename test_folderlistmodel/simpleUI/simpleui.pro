@@ -21,5 +21,9 @@ FORMS    += simplelist.ui
 
 include (../../folderlistmodel/folderlistmodel.pri)
 
+#DEFINES += DEBUG_REMOVE
+
+DEFINES += SIMULATE_LONG_ACTION
+
 
 

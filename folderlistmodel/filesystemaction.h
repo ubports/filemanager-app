@@ -46,21 +46,27 @@
 class DirModelMimeData;
 class RemoveNotifier;
 
+
+enum ClipboardOperation
+{
+    NoClipboard, ClipboardCopy, ClipboardCut
+};
+
 /*!
  * \brief The FileSystemAction class
  *
  *
  */
-
 class FileSystemAction : public QObject
 {
     Q_OBJECT
-public:
+public:  
     explicit FileSystemAction(QObject *parent = 0);
     ~FileSystemAction();
 public slots:
     void     cancel();
     void     remove(const QStringList & filePaths);
+    int      clipboardLocalUrlsConunter();
 
 signals:
     void     error(const QString& errorTitle, const QString &errorMessage);
@@ -69,6 +75,7 @@ signals:
     void     added(const QString& );
     void     added(const QFileInfo& );
     void     progress(int curItem, int totalItems, int percent);
+    void     clipboardChanged();
 
 public slots:
     void     pathChanged(const QString& path);
@@ -93,7 +100,8 @@ private slots:
        ActionHardMoveCopy,
        ActionHardMoveRemove
    };
-   void     createAndProcessAction(ActionType actionType, const QStringList& paths);
+   void     createAndProcessAction(ActionType actionType, const QStringList& paths,
+                                   ClipboardOperation operation=NoClipboard);
 
 private:
    /*!
@@ -120,9 +128,12 @@ private:
        int                 totalItems;
        int                 currItem;
        int                 baseOrigSize;
+       QString             origPath;
+       QString             targetPath;
        quint64             totalBytes;
        quint64             bytesWritten;
        int                 currEntry;
+       ClipboardOperation  operation;
    };
 
    QVector<Action*>        m_queuedActions;  //!< work always at item 0, after finishing taking item 0 out
@@ -143,6 +154,7 @@ private:
    void     moveEntry(ActionEntry *entry);
    bool     moveUsingSameFileSystem(const QString& itemToMovePathname);
    QString  targetFom(const QString& origItem);
+   void     endCurrentAction();
 };
     
 
