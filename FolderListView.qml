@@ -115,6 +115,14 @@ ListView {
                 }
             }
             Action {
+                text: i18n.tr("Cut")
+                onTriggered: {
+                    console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
+                    model.cutIndex(actionSelectionPopover.model.index)
+                    console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
+                }
+            }
+            Action {
                 text: i18n.tr("Delete")
                 onTriggered: {
                     print(text)
