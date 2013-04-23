@@ -274,7 +274,7 @@ void TestFolderModel::modelRemoveRecursiveDirByIndex()
     QTest::qWait(TIME_TO_REFRESH_DIR);
 
     QCOMPARE(m_dirModel_01->rowCount(), 1);
-    m_dirModel_01->remove(0);
+    m_dirModel_01->removeIndex(0);
     QTest::qWait(500);
 
     QCOMPARE(m_filesRemoved.count() , 1);
@@ -329,7 +329,7 @@ void TestFolderModel::modelRemoveMultiItemsByName()
      QTest::qWait(TIME_TO_REFRESH_DIR);
 
      QStringList items(files.createdNames());
-     m_dirModel_01->remove(items);
+     m_dirModel_01->removePaths(items);
      QTest::qWait(500);
 
      QCOMPARE(m_filesRemoved.count() , filesToCreate);
@@ -359,7 +359,7 @@ void TestFolderModel::modelCopyDirPasteIntoAnotherModel()
     QCOMPARE( QFileInfo(m_deepDir_02->path()).exists(),  true);
     QCOMPARE(m_dirModel_02->rowCount(),  0);
 
-    m_dirModel_01->copy(0);
+    m_dirModel_01->copyIndex(0);
     m_dirModel_02->paste();
     QTest::qWait(TIME_TO_PROCESS);
 
@@ -395,7 +395,7 @@ void TestFolderModel::modelCopyManyItemsPasteIntoAnotherModel()
     QStringList allFiles(m_deepDir_01->firstLevel());
     allFiles.append(tempFiles.createdList());
 
-    m_dirModel_01->copy(allFiles);
+    m_dirModel_01->copyPaths(allFiles);
     m_dirModel_02->paste();
     QTest::qWait(TIME_TO_PROCESS);
 
@@ -431,7 +431,7 @@ void TestFolderModel::modelCutManyItemsPasteIntoAnotherModel()
     QStringList allFiles(m_deepDir_01->firstLevel());
     allFiles.append(tempFiles.createdList());
 
-    m_dirModel_01->cut(allFiles);
+    m_dirModel_01->cutPaths(allFiles);
     m_dirModel_02->paste();
     QTest::qWait(TIME_TO_PROCESS);
 
@@ -492,7 +492,7 @@ void TestFolderModel::modelCancelRemoveAction()
      connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
              this,          SLOT(cancel(int,int,int)));
 
-     m_dirModel_01->remove(0);
+     m_dirModel_01->removeIndex(0);
      QTest::qWait(TIME_TO_PROCESS);
      QTest::qWait(5);
 
@@ -558,7 +558,7 @@ void TestFolderModel::modelRemoveDirWithHiddenFilesAndLinks()
                                    + QLatin1String("link_to_hidden_folder"));
      QCOMPARE(QFile(hiddenFolder).link(link_to_hidden_folder),  true);
 
-     m_dirModel_01->remove(0);
+     m_dirModel_01->removeIndex(0);
      QTest::qWait(TIME_TO_PROCESS);
 
      QCOMPARE(m_dirModel_01->rowCount(), 0);

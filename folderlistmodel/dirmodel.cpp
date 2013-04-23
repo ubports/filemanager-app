@@ -561,7 +561,7 @@ bool DirModel::cdUp()
 }
 
 
-void DirModel::remove(int row)
+void DirModel::removeIndex(int row)
 {
     if (IS_VALID_ROW(row))
     {
@@ -575,18 +575,18 @@ void DirModel::remove(int row)
     }
 }
 
-void DirModel::remove(const QStringList& items)
+void DirModel::removePaths(const QStringList& items)
 {
      this->rm(items);
 }
 
-void DirModel::copy(int row)
+void DirModel::copyIndex(int row)
 {
     if (IS_VALID_ROW(row))
     {
         const QFileInfo &fi = mDirectoryContents.at(row);
         QStringList list(fi.absoluteFilePath());
-        this->copy(list);
+        this->copyPaths(list);
     }
     else
     {
@@ -594,13 +594,13 @@ void DirModel::copy(int row)
     }
 }
 
-void DirModel::copy(const QStringList &items)
+void DirModel::copyPaths(const QStringList &items)
 {
    m_fsAction->copy(items);
 }
 
 
-void DirModel::cut(int row)
+void DirModel::cutIndex(int row)
 {
     if (IS_VALID_ROW(row))
     {
@@ -615,7 +615,7 @@ void DirModel::cut(int row)
 }
 
 
-void DirModel::cut(const QStringList &items)
+void DirModel::cutPaths(const QStringList &items)
 {
      m_fsAction->cut(items);
 }

@@ -115,17 +115,17 @@ void SimpleList::onCdUP()
 
 void SimpleList::onRemove()
 {
-     m_model->remove(m_curRow);
+     m_model->removeIndex(m_curRow);
 }
 
 void SimpleList::onCopy()
 {
-    m_model->copy(m_curRow);
+    m_model->copyIndex(m_curRow);
 }
 
 void SimpleList::onCut()
 {
-    m_model->cut(m_curRow);
+    m_model->cutIndex(m_curRow);
 }
 
 
