@@ -62,6 +62,15 @@ Page {
             text: i18n.tr("Paste" + " (" + pageModel.clipboardUrlsCounter + ")")
             onTriggered: {
                 console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
+                PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
+                                root,
+                                {
+                                    title: i18n.tr("Paste files"),
+                                    folderListModel: pageModel
+                                 }
+                                )
+
+
                 pageModel.paste()
             }
             visible: pageModel.clipboardUrlsCounter > 0
