@@ -58,6 +58,14 @@ Page {
             }
             visible: pageModel.path != "/"
         }
+        Action {
+            text: i18n.tr("Paste" + " (" + pageModel.clipboardUrlsCounter + ")")
+            onTriggered: {
+                console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
+                pageModel.paste()
+            }
+            visible: pageModel.clipboardUrlsCounter > 0
+        }
 
         // IMPROVE: would rather have this as more hidden, in a separate menu that has
         // file manipulation operations
