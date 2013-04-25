@@ -22,7 +22,7 @@ import org.nemomobile.folderlistmodel 1.0
 
 Page {
     id: root
-    anchors.margins: units.gu(2)
+    anchors.fill: parent
 
     FolderListModel {
         id: pageModel
@@ -47,6 +47,7 @@ Page {
     }
 
     tools: ToolbarActions {
+        id: toolbar
         lock: true
         active: true
 
@@ -111,9 +112,21 @@ Page {
 
     FolderListView {
         id: folderListView
+        header: Label {
+            text: pageModel.path
+            fontSize: "large"
+        }
+
+        clip: true
 
         folderListModel: pageModel
-        anchors.fill: parent        
+        anchors.fill: parent
+        // IMPROVE: this should work (?), but it doesn't. Height is undefined. Anyway in previous
+        // SDK version the parent size was properly initialized. Now the size of toolbar is not taken into
+        // account and apparently you can't even query toolbar's height.
+     // anchors.bottomMargin: toolbar.height
+        // So hard-code it. Not nice at all:
+        anchors.bottomMargin: units.gu(8)
     }
 
     // Errors from model
