@@ -25,6 +25,8 @@
 #include <QFile>
 #include <QFileInfo>
 
+#define FILES_TO_CREATE   2
+
 TempFiles::TempFiles() : m_content(QByteArray(1010, 'z'))
 {
     m_dir = QDir::tempPath();
@@ -36,7 +38,7 @@ bool TempFiles::addSubDirLevel(const QString &dir)
     QFileInfo d( m_dir + QDir::separator() + dir);
     if (d.exists()  || QDir().mkpath(d.absoluteFilePath()))
     {
-        m_dir = d.absoluteFilePath();
+        m_dir = d.absoluteFilePath();        
         return true;
     }
     return false;
@@ -125,7 +127,9 @@ QString TempFiles::lastFileCreated()
 }
 
 DeepDir::DeepDir(const QString &rootDir, int level) :
-    root(QDir::tempPath() + QDir::separator() + rootDir)
+    root(QDir::tempPath() + QDir::separator() + rootDir),
+    totalFiles(0),
+    totalItems(0)
 {
     if (!rootDir.isEmpty())
     {
@@ -133,14 +137,16 @@ DeepDir::DeepDir(const QString &rootDir, int level) :
         QString levelStr;
         TempFiles temp;
         if (temp.addSubDirLevel(rootDir))
-        {
+        {          
             for(int counter=1 ; counter <= level; counter++)
             {
                 levelStr.sprintf("level_%02d", counter);
-                if ( !temp.addSubDirLevel(levelStr) || !temp.create(2) )
+                if ( !temp.addSubDirLevel(levelStr) || !temp.create(FILES_TO_CREATE) )
                 {
                     break;
                 }
+                totalFiles += FILES_TO_CREATE;
+                totalItems += FILES_TO_CREATE + 1;
                 if (counter == 1)
                 {
                    firstDirLevel =  temp.lastPath();

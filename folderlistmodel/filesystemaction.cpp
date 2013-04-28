@@ -49,6 +49,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QThread>
+#include <QTemporaryFile>
 
 #define  STEP_FILES               5  // number of the files to work on a step, when this number is reached a signal is emited
 
@@ -78,6 +79,16 @@ private:
     QStringList              m_formats;
     const QMimeData *        m_appMime;
 };
+
+
+void FileSystemAction::CopyFile::clear()
+{
+    bytesWritten = 0;
+    if (source)   delete source;
+    if (target)   delete target;
+    source = 0;
+    target = 0;
+}
 
 //===============================================================================================
 /*!
@@ -201,7 +212,9 @@ void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString&
         QList<QUrl> urls;
         QFileInfo fi;
         QByteArray gnomeData;
-        gnomeData += operation == ClipboardCut ? "cut\n" : "copy\n";
+        gnomeData += operation == ClipboardCut ?
+                                     QLatin1String("cut\n") :
+                                     QLatin1String("copy\n");
         for(int counter = 0; counter < files.count(); counter++)
         {
             const QString& item = files.at(counter);
@@ -214,7 +227,7 @@ void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString&
             {
                 QUrl item = QUrl::fromLocalFile(fi.canonicalFilePath());
                 urls.append(item);
-                gnomeData += item.toEncoded() + "\r\n";
+                gnomeData += item.toEncoded() + QLatin1String("\r\n");
             }
             else
             {                
@@ -376,6 +389,7 @@ FileSystemAction::Action* FileSystemAction::createAction(ActionType type, int  o
     action->currEntry    = 0;
     action->totalBytes   = 0;
     action->bytesWritten = 0;
+    action->done         = false;
 
     return action;
 }
@@ -403,7 +417,7 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
     ActionEntry * entry = new ActionEntry();
     QFileInfo   item;
     //ActionMove will perform a rename, so no Directory expanding is necessary
-    if (action->type != ActionMove && info.isDir())
+    if (action->type != ActionMove && info.isDir() && !info.isSymLink())
     {
         QDirIterator it(info.absoluteFilePath(),
                         QDir::AllEntries | QDir::System |
@@ -411,18 +425,18 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
                         QDirIterator::Subdirectories);
         while (it.hasNext() &&  !it.next().isEmpty())
         {
-            item = it.fileInfo();
+            item = it.fileInfo();        
             entry->reversedOrder.prepend(it.fileInfo());
-            if (item.isFile() && action->type == ActionCopy)
+            if (item.isFile() && !item.isDir())
             {
-                action->totalBytes += info.size();
+                action->totalBytes += item.size();
             }
         }
     }
     entry->reversedOrder.append(info);
 
     action->totalItems += entry->reversedOrder.count();
-    if (info.isFile() && action->type == ActionCopy)
+    if (info.isFile() && !info.isDir())
     {
         action->totalBytes += info.size();
     }
@@ -461,7 +475,10 @@ void FileSystemAction::processAction()
         QTimer::singleShot(0, this, SLOT(processActionEntry()) );
         if (SHOULD_EMIT_PROGRESS_SIGNAL(m_curAction))
         {
-            emit progress(0,m_curAction->totalItems, 0);
+            int total = m_curAction->type != ActionHardMoveCopy ?
+                        m_curAction->totalItems :
+                        m_curAction->totalItems / 2;
+            emit progress(0,total, 0);
         }
     }
     else
@@ -476,7 +493,7 @@ void FileSystemAction::processAction()
  * \brief FileSystemAction::processActionEntry
  */
 void FileSystemAction::processActionEntry()
-{
+{   
     ActionEntry * curEntry = static_cast<ActionEntry*>
             ( m_curAction->entries.at(m_curAction->currEntry) );
 
@@ -497,17 +514,30 @@ void FileSystemAction::processActionEntry()
            case ActionRemove:
            case ActionHardMoveRemove:
                 removeEntry(curEntry);
+                endActionEntry();
                 break;
            case ActionCopy:
            case ActionHardMoveCopy:
-                copyEntry(curEntry);
+                copyEntry();          // specially: this is a slot
                 break;
           case ActionMove:
                 moveEntry(curEntry);
+                endActionEntry();
                 break;
         }
-    }
- // first of all check for any error or a cancel issued by the user
+    }   
+}
+
+//===============================================================================================
+/*!
+ * \brief FileSystemAction::endActionEntry
+ */
+void FileSystemAction::endActionEntry()
+{
+    ActionEntry * curEntry = static_cast<ActionEntry*>
+            ( m_curAction->entries.at(m_curAction->currEntry) );
+
+    // first of all check for any error or a cancel issued by the user
     if (m_cancelCurrentAction)
     {
         if (!m_errorTitle.isEmpty())
@@ -518,18 +548,18 @@ void FileSystemAction::processActionEntry()
         QTimer::singleShot(0, this, SLOT(processAction()));
         return;
     }
- // check if the current entry has finished
- // if so Views need to receive the notification about that
+    // check if the current entry has finished
+    // if so Views need to receive the notification about that
     if (curEntry->currItem == curEntry->reversedOrder.count())
     {
         const QFileInfo & mainItem = curEntry->reversedOrder.at(curEntry->currItem -1);
         if (m_curAction->type == ActionRemove || m_curAction->type == ActionMove ||
-            m_curAction->type == ActionHardMoveRemove)
+                m_curAction->type == ActionHardMoveRemove)
         {
             m_removeNotifier.notifyRemoved(mainItem); // notify all instances
         }
         if (m_curAction->type == ActionCopy || m_curAction->type == ActionMove ||
-            m_curAction->type == ActionHardMoveCopy)
+                m_curAction->type == ActionHardMoveCopy)
         {
             emit added( targetFom(mainItem.absoluteFilePath()) );
         }
@@ -537,7 +567,7 @@ void FileSystemAction::processActionEntry()
         //check if is doing a hard move and the copy part has finished
         //if so switch the action to remove
         if (m_curAction->type == ActionHardMoveCopy &&
-            m_curAction->currEntry == m_curAction->entries.count() )
+                m_curAction->currEntry == m_curAction->entries.count() )
         {
             m_curAction->type      = ActionHardMoveRemove;
             m_curAction->currEntry = 0;
@@ -555,30 +585,24 @@ void FileSystemAction::processActionEntry()
     {
         curEntry->currStep = 0;
     }
- //work done
-    if (SHOULD_EMIT_PROGRESS_SIGNAL(m_curAction))
+
+    int percent = notifyProgress();
+    //Check if the current action has finished or cancelled
+    if (m_cancelCurrentAction || percent == 100)
     {
-        int percent = (m_curAction->currItem * 100) / m_curAction->totalItems;
-        if (percent >= 100)
+        if (!m_cancelCurrentAction)
         {
-            percent = 100;
             endCurrentAction();
         }
-        emit progress(m_curAction->currItem, m_curAction->totalItems, percent);
-    }
- //Check if the current action has finished or cancelled
-    if (m_cancelCurrentAction || m_curAction->currItem == m_curAction->totalItems)
-    {
         //it may have other actions to do
         QTimer::singleShot(0, this, SLOT(processAction()));
     }
     else
     {
-        //keep working on current Action
+        //keep working on current Action maybe more entries
         QTimer::singleShot(0, this, SLOT(processActionEntry()));
     }
 }
-
 
 //===============================================================================================
 /*!
@@ -632,21 +656,26 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
  * \brief FileSystemAction::copyEntry
  * \param entry
  */
-void  FileSystemAction::copyEntry(ActionEntry *entry)
-{
-    //do one step at least
+void  FileSystemAction::copyEntry()
+{   
+    ActionEntry * entry = static_cast<ActionEntry*>
+            ( m_curAction->entries.at(m_curAction->currEntry) );
+
     for(; !m_cancelCurrentAction                          &&
           entry->currStep       < STEP_FILES              &&
           m_curAction->currItem < m_curAction->totalItems &&
           entry->currItem       < entry->reversedOrder.count()
-        ; entry->currStep++,    m_curAction->currItem++, entry->currItem++
+        ; entry->currStep++,    entry->currItem++
         )
 
-    {
+    {       
         const QFileInfo &fi = entry->reversedOrder.at(entry->currItem);
         QString orig    = fi.absoluteFilePath();
         QString target = targetFom(orig);
         QString path(target);
+        // do this here to allow progress send right item number, copySingleFile will emit progress()
+        m_curAction->currItem++;
+
         if (!fi.isDir())
         {
             QFileInfo  t(target);
@@ -660,16 +689,35 @@ void  FileSystemAction::copyEntry(ActionEntry *entry)
             m_errorMsg   = path;
             return;
         }
-        if (!fi.isDir())
+        if (!fi.isDir() || fi.isSymLink())
         {
-            if (!QFile::copy(orig,target))
+            m_curAction->copyFile.clear();
+            m_curAction->copyFile.source = new QFile(orig);
+            if (!m_curAction->copyFile.source->open(QFile::ReadOnly))
             {
                 m_cancelCurrentAction = true;
-                m_errorTitle = QObject::tr("Could not create the file ") + target;
-                m_errorMsg   = ::strerror(errno);
+                m_errorTitle = QObject::tr("Could not open file");
+                m_errorMsg   = orig;
+                return;
             }
+            m_curAction->copyFile.target = new QTemporaryFile(path);
+            if (! m_curAction->copyFile.target->open())
+            {
+                m_cancelCurrentAction = true;
+                m_errorTitle = QObject::tr("Could not create temporary file");
+                m_errorMsg   =  m_curAction->copyFile.target->fileName();
+                return;
+            }
+            m_curAction->copyFile.targetName = target;
+            copySingleFile();
         }
-    }//for
+    }//for    
+
+    //no copy going on
+    if (!m_curAction->copyFile.source)
+    {
+        endActionEntry();
+    }
 }
 
 //===============================================================================================
@@ -747,7 +795,7 @@ void FileSystemAction::paste()
             if ( moveUsingSameFileSystem(paths.at(0)) ) {
                 actionType = ActionMove;
             } else {
-                actionType = ActionHardMoveCopy; // first step              
+                actionType = ActionHardMoveCopy; // first step
             }
        }
        createAndProcessAction(actionType, paths, operation);
@@ -776,6 +824,7 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
     if (actionType == ActionHardMoveCopy)
     {
         myAction->totalItems *= 2; //duplicate this
+        myAction->totalBytes *= 2;
     }
     m_queuedActions.append(myAction);
     if (!m_busy)
@@ -859,4 +908,175 @@ void FileSystemAction::endCurrentAction()
              m_mimeData->setIntoClipboard(items, targetPath, ClipboardCopy);
          }
     }
+}
+
+//================================================================================
+/*!
+ * \brief FileSystemAction::copySingleFile() do a single file copy
+ *
+ * Several write operations are required to copy big files, each operation writes (STEP_FILES * 4k) bytes.
+ * After a write operation if more operations are required to copy the whole file,
+ * a progress() signal is emited and a new write operation is scheduled to happen in the next loop interaction.
+ *
+ */
+void FileSystemAction::copySingleFile()
+{
+    char block[4096];
+    int  step = 0;
+    bool copySingleFileDone = false;
+    int  startBytes         = m_curAction->copyFile.bytesWritten;
+
+    while( m_curAction->copyFile.source           &&
+           !m_curAction->copyFile.source->atEnd() &&
+           !m_cancelCurrentAction                 &&
+           m_curAction->copyFile.bytesWritten < m_curAction->copyFile.source->size() &&
+           step++ < STEP_FILES
+         )
+    {
+        qint64 in = m_curAction->copyFile.source->read(block, sizeof(block));
+        if (in > 0)
+        {
+            if(in != m_curAction->copyFile.target->write(block, in))
+            {
+                  m_curAction->copyFile.source->close();
+                  m_curAction->copyFile.target->close();
+                  m_cancelCurrentAction = true;
+                  m_errorTitle = QObject::tr("Write error in ")
+                                  + m_curAction->copyFile.targetName,
+                  m_errorMsg   = ::strerror(errno);
+                  break;
+            }
+            m_curAction->bytesWritten          += in;
+            m_curAction->copyFile.bytesWritten += in;
+        }
+        else
+        if (in < 0)
+        {
+           m_cancelCurrentAction = true;
+           m_errorTitle = QObject::tr("Read error in ")
+                           + m_curAction->copyFile.source->fileName();
+           m_errorMsg   = ::strerror(errno);
+           break;
+        }
+    }// end write loop
+
+    // write loop finished, the copy might be finished
+    if (m_curAction->copyFile.bytesWritten == m_curAction->copyFile.source->size() &&
+        m_curAction->copyFile.source->isOpen()                                     &&
+        !m_cancelCurrentAction
+       )
+    {
+        m_curAction->copyFile.source->close();
+        m_curAction->copyFile.target->close();
+        m_curAction->copyFile.target->setAutoRemove(false);
+        m_cancelCurrentAction = !m_curAction->copyFile.target->setPermissions(
+                                     m_curAction->copyFile.source->permissions());
+        if (m_cancelCurrentAction)
+        {
+            m_errorTitle = QObject::tr("Set permissions error in ")
+                            + m_curAction->copyFile.targetName,
+            m_errorMsg   = ::strerror(errno);
+        }
+        else
+        {           
+            m_cancelCurrentAction = ! m_curAction->copyFile.target->
+                                       rename(m_curAction->copyFile.targetName);
+            if (m_cancelCurrentAction)
+            {
+                m_errorTitle = QObject::tr("Rename error: renaming to ")
+                                + m_curAction->copyFile.targetName,
+                m_errorMsg   = ::strerror(errno);               
+            }
+            else
+            {
+                copySingleFileDone = true;               
+            }
+        }
+    }
+
+    if (m_cancelCurrentAction)
+    {
+        m_curAction->copyFile.target->setAutoRemove(true);
+        m_curAction->copyFile.clear();
+        endActionEntry();
+    }
+    else
+    {
+        notifyProgress();
+        if (copySingleFileDone)
+        {
+            m_curAction->copyFile.clear();
+            //whem the whole copy could be done just in one call
+            //do not schedule to call copyEntry()
+            if (startBytes > 0)
+            {
+                //the whole took more than one call to copySingleFile()
+                QTimer::singleShot(0, this, SLOT(copyEntry()));
+            }
+        }
+        else
+        {          
+            QTimer::singleShot(0, this, SLOT(copySingleFile()));
+        }
+    }
+}
+
+
+//================================================================================
+/*!
+ * \brief FileSystemAction::percentWorkDone() Compute the percent of work done
+ *
+ * Copy operations are based on bytes written while remove/move operations are based on items number
+ *
+ * \return the percent of work done
+ */
+int FileSystemAction::percentWorkDone()
+{
+    int percent = 0;
+    if (m_curAction->type != ActionCopy && m_curAction->type != ActionHardMoveCopy)
+    {
+         percent = (m_curAction->currItem * 100) / m_curAction->totalItems;
+    }
+    else
+    {
+         percent = (m_curAction->bytesWritten * 100) / m_curAction->totalBytes ;
+    }
+    if (percent > 100)
+    {
+        percent = 100;
+    }
+    return percent;
+}
+
+
+//================================================================================
+/*!
+ * \brief FileSystemAction::notifyProgress() Notify the progress signal
+ *
+ * \return the percent of work done
+ */
+int FileSystemAction::notifyProgress()
+{
+    int percent = percentWorkDone();
+    if (percent == 0)
+    {
+        percent = 1;
+    }
+    if (SHOULD_EMIT_PROGRESS_SIGNAL(m_curAction) && !m_curAction->done)
+    {
+        int curItem    = m_curAction->currItem;
+        int totalItems =  m_curAction->totalItems;
+        if (m_curAction->type == ActionHardMoveCopy ||
+            m_curAction->type ==ActionHardMoveRemove)
+        {
+            curItem /= 2;
+            totalItems /= 2;
+        }
+        emit progress(curItem, totalItems, percent);
+        if (percent == 100)
+        {
+            m_curAction->done = true;
+        }
+    }
+    return  percent;
 }

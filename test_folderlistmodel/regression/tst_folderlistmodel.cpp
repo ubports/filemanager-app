@@ -8,6 +8,7 @@
 #include <QtTest/QtTest>
 #include <QFileInfo>
 #include <QMetaType>
+#include <QDirIterator>
 
 #define TIME_TO_PROCESS       1000
 #define TIME_TO_REFRESH_DIR   80
@@ -48,12 +49,16 @@ private Q_SLOTS:
     void  modelCancelRemoveAction();
     void  modelTestFileSize();
     void  modelRemoveDirWithHiddenFilesAndLinks();
+    void  modelCancelCopyAction();
+    void  modelCopyFileAndDirectoryLinks();
 
 private:
     void initDeepDirs();
     void cleanDeepDirs();
     void initModels();
     void cleanModels();
+    bool compareDirectories(const QString& d1,
+                            const QString& d2);
 
 private:
     FileSystemAction  fsAction;
@@ -101,13 +106,51 @@ void TestFolderModel::progress(int cur, int total, int percent)
     m_progressCurrentItem = cur;
     m_progressTotalItems  = total;
     m_progressPercentDone = percent;
+ //  qDebug() << "progress()" << cur << total << percent;
 }
 
+
+bool TestFolderModel::compareDirectories(const QString &d1, const QString &d2)
+{
+    QDirIterator d1Info(d1,
+                    QDir::Files | QDir::Hidden | QDir::System,
+                    QDirIterator::Subdirectories);
+
+    QDirIterator d2Info(d2,
+                    QDir::Files | QDir::Hidden | QDir::System,
+                    QDirIterator::Subdirectories);
+
+    while (d1Info.hasNext() &&  !d1Info.next().isEmpty())
+    {
+        if (!d2Info.hasNext())
+        {
+            return false;
+        }
+        qDebug() << d1Info.fileName() << d2Info.fileName();
+        if (d1Info.fileName() != d2Info.fileName())
+        {
+            return false;
+        }
+        if (d1Info.fileInfo().size() != d2Info.fileInfo().size())
+        {
+            return false;
+        }
+        if (d1Info.fileInfo().permissions() != d2Info.fileInfo().permissions())
+        {
+            return false;
+        }
+    }
+    if (d2Info.hasNext())
+    {
+        return false;
+    }
+    return true;
+}
 
 void TestFolderModel::cancel(int index, int, int percent)
 {
     DirModel * model = static_cast<DirModel*> (sender());
-    if (index || percent)
+    if (index > 1 ||  percent > 1)
     {
          model->cancelAction();
     }
@@ -179,7 +222,13 @@ void TestFolderModel::init()
 void TestFolderModel::cleanup()
 {   
     cleanDeepDirs();
-    cleanModels();
+    cleanModels();    
+    m_filesAdded.clear();
+    m_filesRemoved.clear();
+    m_progressCounter = 0;
+    m_progressTotalItems = 0;
+    m_progressCurrentItem = 0;
+    m_progressPercentDone = 0;
 }
 
 
@@ -351,8 +400,10 @@ void TestFolderModel::modelCopyDirPasteIntoAnotherModel()
     QCOMPARE(m_dirModel_01->rowCount(),  1);
 
     QString target("modelCopyDirToAnotherModel_target");
-    m_deepDir_02 = new DeepDir(target, 0);
+    m_deepDir_02 = new DeepDir(target, 0);    
     m_dirModel_02 = new DirModel();
+    connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
+            this,          SLOT(progress(int,int,int)));
     m_dirModel_02->setPath(m_deepDir_02->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
 
@@ -364,6 +415,9 @@ void TestFolderModel::modelCopyDirPasteIntoAnotherModel()
     QTest::qWait(TIME_TO_PROCESS);
 
     QCOMPARE(m_dirModel_02->rowCount(),  1);
+    QCOMPARE(m_progressPercentDone, 100);
+
+    QCOMPARE(compareDirectories(orig, target), true);
 }
 
 
@@ -374,8 +428,22 @@ void TestFolderModel::modelCopyManyItemsPasteIntoAnotherModel()
     m_deepDir_01  = new DeepDir(orig, 5);
     m_dirModel_01 = new DirModel();
     const int  filesCreated = 10;
-    const int  itemsCreated = filesCreated + 1;
+    int  itemsCreated = filesCreated + 1;
 
+    //create a big file to test copy loop
+    QByteArray buf(4096, 't');
+    QFile big(m_deepDir_01->path() + QDir::separator() + "big.txt");
+    QCOMPARE(big.open(QFile::WriteOnly),  true);
+    for(int i=0; i < 106; i++)
+    {
+        int wrote = (int) big.write(buf);
+        QCOMPARE(wrote, buf.size());
+        buf += "sdfsdsedccw121222";
+    }
+    big.close();
+    itemsCreated++;
+
+    // create more temporary files
     TempFiles tempFiles;
     tempFiles.addSubDirLevel(orig);
     tempFiles.create(filesCreated);
@@ -387,6 +455,8 @@ void TestFolderModel::modelCopyManyItemsPasteIntoAnotherModel()
     m_deepDir_02 = new DeepDir(target, 0);
     m_dirModel_02 = new DirModel();
     m_dirModel_02->setPath(m_deepDir_02->path());
+    connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
+            this,          SLOT(progress(int,int,int)));
     QTest::qWait(TIME_TO_REFRESH_DIR);
 
     QCOMPARE( QFileInfo(m_deepDir_02->path()).exists(),  true);
@@ -394,6 +464,7 @@ void TestFolderModel::modelCopyManyItemsPasteIntoAnotherModel()
 
     QStringList allFiles(m_deepDir_01->firstLevel());
     allFiles.append(tempFiles.createdList());
+    allFiles.append(big.fileName());
 
     m_dirModel_01->copyPaths(allFiles);
     m_dirModel_02->paste();
@@ -401,6 +472,8 @@ void TestFolderModel::modelCopyManyItemsPasteIntoAnotherModel()
 
     QCOMPARE(m_dirModel_02->rowCount(),  itemsCreated);
     QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
+    QCOMPARE(m_progressPercentDone, 100);
+    QCOMPARE(compareDirectories(orig, target), true);
 }
 
 void TestFolderModel::modelCutManyItemsPasteIntoAnotherModel()
@@ -443,10 +516,10 @@ void  TestFolderModel::fsActionMoveItemsForcingCopyAndThenRemove()
 {
      QString orig("fsActionMoveItemsForcingCopyAndThenRemove_orig");
 
-     m_deepDir_01 = new DeepDir(orig, 2);
+     m_deepDir_01 = new DeepDir(orig, 1);
      m_dirModel_01 = new DirModel();
      const int  filesCreated = 4;
-     const int  itemsCreated = filesCreated + 1;
+     const int  itemsCreated = filesCreated +1;
 
      TempFiles tempFiles;
      tempFiles.addSubDirLevel(orig);
@@ -457,9 +530,14 @@ void  TestFolderModel::fsActionMoveItemsForcingCopyAndThenRemove()
 
      QString target("fsActionMoveItemsForcingCopyAndThenRemove_target");
      m_deepDir_02 = new DeepDir(target, 0);
-     m_dirModel_02 = new DirModel();
+     m_dirModel_02 = new DirModel();          
      m_dirModel_02->setPath(m_deepDir_02->path());
      QTest::qWait(TIME_TO_REFRESH_DIR);
+
+     connect(m_dirModel_02->m_fsAction, SIGNAL(added(QString)),
+             this, SLOT(slotFileAdded(QString)));
+     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
+             this,          SLOT(progress(int,int,int)));
 
      QCOMPARE( QFileInfo(m_deepDir_02->path()).exists(),  true);
      QCOMPARE(m_dirModel_02->rowCount(),  0);
@@ -474,6 +552,10 @@ void  TestFolderModel::fsActionMoveItemsForcingCopyAndThenRemove()
 
      QCOMPARE(m_dirModel_02->rowCount(),  itemsCreated); //pasted into
      QCOMPARE(m_dirModel_01->rowCount(),  0);  //cut from
+
+     int totalCopied = filesCreated + m_deepDir_01->itemsCreated();
+     QCOMPARE(itemsCreated, m_filesAdded.count());
+     QCOMPARE(totalCopied, m_progressTotalItems);
 }
 
 void TestFolderModel::modelCancelRemoveAction()
@@ -563,6 +645,53 @@ void TestFolderModel::modelRemoveDirWithHiddenFilesAndLinks()
 
      QCOMPARE(m_dirModel_01->rowCount(), 0);
      QCOMPARE(m_progressPercentDone, 100);
+}
+
+
+void TestFolderModel::modelCancelCopyAction()
+{
+    QString orig("modelCancelCopyAction_orig");
+
+    m_deepDir_01  = new DeepDir(orig, 0);
+
+    //create a big file to test copy loop
+    QByteArray buf(4096, 't');
+    QFile big(m_deepDir_01->path() + QDir::separator() + "big.txt");
+    QCOMPARE(big.open(QFile::WriteOnly),  true);
+    for(int i=0; i < 186; i++)
+    {
+        int wrote = (int) big.write(buf);
+        QCOMPARE(wrote, buf.size());
+        buf += "sdfsdsedccw121222";
+    }
+    big.close();
+
+    m_dirModel_01 = new DirModel();
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(), 1);
+
+    QString target("modelCancelCopyAction_target");
+    m_deepDir_02 = new DeepDir(target, 0);
+    m_dirModel_02 = new DirModel();
+    connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
+            this,          SLOT(progress(int,int,int)));
+    connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
+            this,          SLOT(cancel(int,int,int)));
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+
+    m_dirModel_01->copyIndex(0);
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QCOMPARE( QFileInfo(m_deepDir_02->path()).exists(),  true);
+    QCOMPARE(m_dirModel_02->rowCount(),  0);
+}
+
+void TestFolderModel::modelCopyFileAndDirectoryLinks()
+{
+    QCOMPARE(false, true);
 }
 
 int main(int argc, char *argv[])

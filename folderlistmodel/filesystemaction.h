@@ -37,7 +37,6 @@
 #ifndef FILESYSTEMACTION_H
 #define FILESYSTEMACTION_H
 
-//#include "removenotifier.h"
 
 #include <QObject>
 #include <QFileInfo>
@@ -45,7 +44,8 @@
 
 class DirModelMimeData;
 class RemoveNotifier;
-
+class QFile;
+class QTemporaryFile;
 
 enum ClipboardOperation
 {
@@ -86,6 +86,8 @@ public slots:
 private slots:
     void     processAction();
     void     processActionEntry();   
+    void     copyEntry();
+    void     copySingleFile();
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
  public:
@@ -104,6 +106,20 @@ private slots:
                                    ClipboardOperation operation=NoClipboard);
 
 private:
+
+   struct CopyFile
+   {
+     public:
+       CopyFile() : bytesWritten(0), source(0), target(0) {}
+       ~CopyFile() { clear(); }
+       void clear();
+
+       qint64            bytesWritten;           // set 0 when reach  bytesToNotify, notify progress
+       QFile          *  source;
+       QTemporaryFile *  target;
+       QString           targetName;
+   };
+
    /*!
        An ActionEntry represents a high level item as a File or a Directory which an Action is required
 
@@ -122,7 +138,7 @@ private:
    struct Action
    {
     public:
-       ~Action()           {qDeleteAll(entries); entries.clear();}
+       ~Action()           {qDeleteAll(entries); entries.clear(); copyFile.clear();}
        ActionType          type;
        QList<ActionEntry*> entries;
        int                 totalItems;
@@ -134,6 +150,8 @@ private:
        quint64             bytesWritten;
        int                 currEntry;
        ClipboardOperation  operation;
+       CopyFile            copyFile;
+       bool                done;
    };
 
    QVector<Action*>        m_queuedActions;  //!< work always at item 0, after finishing taking item 0 out
@@ -149,12 +167,14 @@ private:
 private:  
    Action * createAction(ActionType, int origBase = 0);
    void     addEntry(Action* action, const QString &pathname);
-   void     removeEntry(ActionEntry *);
-   void     copyEntry(ActionEntry *);
+   void     removeEntry(ActionEntry *);   
    void     moveEntry(ActionEntry *entry);
    bool     moveUsingSameFileSystem(const QString& itemToMovePathname);
    QString  targetFom(const QString& origItem);
    void     endCurrentAction();
+   int      percentWorkDone();
+   int      notifyProgress();
+   void     endActionEntry();
 };
     
 

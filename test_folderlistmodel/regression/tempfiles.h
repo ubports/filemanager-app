@@ -77,10 +77,14 @@ public:
     QString path()         { return root;}
     QString firstLevel()   { return firstDirLevel; }
     QString lastLevel()    { return lastDirLevel; }
+    int     filesCreated() const { return totalFiles;}
+    int     itemsCreated() const { return totalItems;}
 private:
     QString  root;
     QString  firstDirLevel;
     QString  lastDirLevel;
+    int      totalFiles;
+    int      totalItems;
 };
 
 #endif // TEMPFILES_H
