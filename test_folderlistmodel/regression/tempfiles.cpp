@@ -27,7 +27,7 @@
 
 #define FILES_TO_CREATE   2
 
-TempFiles::TempFiles() : m_content(QByteArray(1010, 'z'))
+TempFiles::TempFiles() : m_content(QByteArray(4*4096, 'z'))
 {
     m_dir = QDir::tempPath();
 }
@@ -102,7 +102,7 @@ bool TempFiles::create(const QString& name, int counter )
             if (file.write(m_content) == (qint64)m_content.size())
             {
                 m_filesCreated.append(myName);
-                m_content += "azaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                m_content += QByteArray(1024, 'z');
             }
             else {
                 return false;

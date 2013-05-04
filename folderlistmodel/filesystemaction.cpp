@@ -47,14 +47,12 @@
 #include <QUrl>
 #include <QFileInfo>
 #include <QDir>
-#include <QDebug>
 #include <QThread>
 #include <QTemporaryFile>
 
-#define  STEP_FILES               5  // number of the files to work on a step, when this number is reached a signal is emited
+#define  STEP_FILES               5  // number of the files to work on a step, when this number is reached a signal is emitted
 
 #define SHOULD_EMIT_PROGRESS_SIGNAL(action)       (1)
-
 
 
 RemoveNotifier   FileSystemAction::m_removeNotifier;
@@ -167,10 +165,10 @@ ClipboardOperation DirModelMimeData::clipBoardOperation()
             int f = formats.count();
             while(f--)
             {
-                const QString &mi = formats.at(f);
-                if(mi.startsWith("application/x-kde") )
+                const QString &mi = formats.at(f);             
+                if(mi.startsWith(QLatin1String("application/x-kde")) )
                 {
-                    if (mi.contains("cut"))
+                    if (mi.contains(QLatin1String("cut")))
                     {
                         op = ClipboardCut;
                         break;
@@ -191,7 +189,7 @@ ClipboardOperation DirModelMimeData::clipBoardOperation()
  * \param isCut
  */
 void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString& path, ClipboardOperation operation)
-{   
+{     
     int index = m_formats.indexOf(KDE_CUT_MIME_TYPE);
     if (index != -1 && operation != ClipboardCut)
     {
@@ -200,7 +198,7 @@ void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString&
     else
     if (operation == ClipboardCut)  {
         m_formats.append(KDE_CUT_MIME_TYPE);
-    }   
+    }     
     QClipboard *clipboard = QApplication::clipboard();
     if (clipboard)
     {
@@ -225,7 +223,7 @@ void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString&
             }
             if (fi.exists())
             {
-                QUrl item = QUrl::fromLocalFile(fi.canonicalFilePath());
+                QUrl item = QUrl::fromLocalFile(fi.absoluteFilePath());
                 urls.append(item);
                 gnomeData += item.toEncoded() + QLatin1String("\r\n");
             }
@@ -290,6 +288,9 @@ DirModelMimeData::localUrls()
              }
          }
      }
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO << paths;
+#endif
      return paths;
 }
 
@@ -338,6 +339,7 @@ FileSystemAction::FileSystemAction(QObject *parent) :
   , m_cancelCurrentAction(false)
   , m_busy(false)
   , m_mimeData ( & ::mimeData )  // using  static data because it used to crash
+  , m_clipboardModifiedByOther(false)
 {
   //as m_removeNotifier is static it will send signals to all instances of
   //the model
@@ -348,7 +350,9 @@ FileSystemAction::FileSystemAction(QObject *parent) :
             this,              SIGNAL(removed(QString)));
 
     QClipboard *clipboard = QApplication::clipboard();
+
     connect(clipboard, SIGNAL(dataChanged()), this, SIGNAL(clipboardChanged()));
+    connect(clipboard, SIGNAL(dataChanged()), this, SLOT(clipboardHasChanged()));
 }
 
 //===============================================================================================
@@ -402,6 +406,9 @@ FileSystemAction::Action* FileSystemAction::createAction(ActionType type, int  o
  */
 void  FileSystemAction::addEntry(Action* action, const QString& pathname)
 {
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO << pathname;
+#endif
     QFileInfo info(pathname);
     if (!info.exists())
     {
@@ -427,7 +434,7 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
         {
             item = it.fileInfo();        
             entry->reversedOrder.prepend(it.fileInfo());
-            if (item.isFile() && !item.isDir())
+            if (item.isFile() && !item.isDir() && !item.isSymLink())
             {
                 action->totalBytes += item.size();
             }
@@ -436,7 +443,7 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
     entry->reversedOrder.append(info);
 
     action->totalItems += entry->reversedOrder.count();
-    if (info.isFile() && !info.isDir())
+    if (info.isFile() && !info.isDir() && !info.isSymLink())
     {
         action->totalBytes += info.size();
     }
@@ -472,13 +479,10 @@ void FileSystemAction::processAction()
         m_cancelCurrentAction = false;
         m_errorMsg.clear();
         m_errorTitle.clear();
-        QTimer::singleShot(0, this, SLOT(processActionEntry()) );
+        scheduleSlot(SLOT(processActionEntry()));
         if (SHOULD_EMIT_PROGRESS_SIGNAL(m_curAction))
-        {
-            int total = m_curAction->type != ActionHardMoveCopy ?
-                        m_curAction->totalItems :
-                        m_curAction->totalItems / 2;
-            emit progress(0,total, 0);
+        {         
+            emit progress(0,m_curAction->totalItems, 0);
         }
     }
     else
@@ -493,7 +497,11 @@ void FileSystemAction::processAction()
  * \brief FileSystemAction::processActionEntry
  */
 void FileSystemAction::processActionEntry()
-{   
+{
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO;
+#endif
+
     ActionEntry * curEntry = static_cast<ActionEntry*>
             ( m_curAction->entries.at(m_curAction->currEntry) );
 
@@ -518,7 +526,7 @@ void FileSystemAction::processActionEntry()
                 break;
            case ActionCopy:
            case ActionHardMoveCopy:
-                copyEntry();          // specially: this is a slot
+                processCopyEntry();          // specially: this is a slot
                 break;
           case ActionMove:
                 moveEntry(curEntry);
@@ -534,6 +542,9 @@ void FileSystemAction::processActionEntry()
  */
 void FileSystemAction::endActionEntry()
 {
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO;
+#endif
     ActionEntry * curEntry = static_cast<ActionEntry*>
             ( m_curAction->entries.at(m_curAction->currEntry) );
 
@@ -545,7 +556,7 @@ void FileSystemAction::endActionEntry()
             emit error(m_errorTitle, m_errorMsg);
         }
         //it may have other actions to do
-        QTimer::singleShot(0, this, SLOT(processAction()));
+        scheduleSlot(SLOT(processAction()));
         return;
     }
     // check if the current entry has finished
@@ -588,19 +599,24 @@ void FileSystemAction::endActionEntry()
 
     int percent = notifyProgress();
     //Check if the current action has finished or cancelled
-    if (m_cancelCurrentAction || percent == 100)
+    if (m_cancelCurrentAction ||
+        m_curAction->currEntry == m_curAction->entries.count())
     {
         if (!m_cancelCurrentAction)
         {
             endCurrentAction();
+            if (percent < 100)
+            {
+                notifyProgress(100);
+            }
         }
         //it may have other actions to do
-        QTimer::singleShot(0, this, SLOT(processAction()));
+        scheduleSlot(SLOT(processAction()));
     }
     else
     {
         //keep working on current Action maybe more entries
-        QTimer::singleShot(0, this, SLOT(processActionEntry()));
+        scheduleSlot(SLOT(processActionEntry()));
     }
 }
 
@@ -656,12 +672,23 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
  * \brief FileSystemAction::copyEntry
  * \param entry
  */
-void  FileSystemAction::copyEntry()
-{   
-    ActionEntry * entry = static_cast<ActionEntry*>
+void  FileSystemAction::processCopyEntry()
+{
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO;
+#endif
+
+     ActionEntry * entry = static_cast<ActionEntry*>
             ( m_curAction->entries.at(m_curAction->currEntry) );
 
-    for(; !m_cancelCurrentAction                          &&
+    /*
+     * This flag will be true when processCopySingleFile() has put any slot in the execution queue
+     * it will work to stop the loop.
+     * Later processCopyEntry() will be called again to continue working
+     */
+    bool scheduleAnySlot = false;
+
+    for(; !m_cancelCurrentAction  && !scheduleAnySlot     &&
           entry->currStep       < STEP_FILES              &&
           m_curAction->currItem < m_curAction->totalItems &&
           entry->currItem       < entry->reversedOrder.count()
@@ -676,7 +703,7 @@ void  FileSystemAction::copyEntry()
         // do this here to allow progress send right item number, copySingleFile will emit progress()
         m_curAction->currItem++;
 
-        if (!fi.isDir())
+        if (fi.isFile() || fi.isSymLink())
         {
             QFileInfo  t(target);
             path = t.path();
@@ -686,10 +713,31 @@ void  FileSystemAction::copyEntry()
         {
             m_cancelCurrentAction = true;
             m_errorTitle = QObject::tr("Could not create the directory");
-            m_errorMsg   = path;
-            return;
+            m_errorMsg   = path;         
         }
-        if (!fi.isDir() || fi.isSymLink())
+        else
+        if (fi.isSymLink())
+        {
+            m_cancelCurrentAction = ! copySymLink(target,fi);
+            if (m_cancelCurrentAction)
+            {
+                m_errorTitle = QObject::tr("Could not create link to");
+                m_errorMsg   = target;
+            }
+        }
+        else
+        if (fi.isDir())
+        {
+            m_cancelCurrentAction = !
+                 QFile(target).setPermissions(fi.permissions());
+            if (m_cancelCurrentAction)
+            {
+                m_errorTitle = QObject::tr("Could not set permissions to dir");
+                m_errorMsg   = target;
+            }
+        }
+        else
+        if (fi.isFile())
         {
             m_curAction->copyFile.clear();
             m_curAction->copyFile.source = new QFile(orig);
@@ -698,23 +746,21 @@ void  FileSystemAction::copyEntry()
                 m_cancelCurrentAction = true;
                 m_errorTitle = QObject::tr("Could not open file");
                 m_errorMsg   = orig;
-                return;
             }
-            m_curAction->copyFile.target = new QTemporaryFile(path);
+            m_curAction->copyFile.target = new QTemporaryFile();
             if (! m_curAction->copyFile.target->open())
             {
                 m_cancelCurrentAction = true;
                 m_errorTitle = QObject::tr("Could not create temporary file");
                 m_errorMsg   =  m_curAction->copyFile.target->fileName();
-                return;
             }
             m_curAction->copyFile.targetName = target;
-            copySingleFile();
+            scheduleAnySlot =  processCopySingleFile();
         }
     }//for    
 
     //no copy going on
-    if (!m_curAction->copyFile.source)
+    if (!scheduleAnySlot)
     {
         endActionEntry();
     }
@@ -766,6 +812,9 @@ void FileSystemAction::pathChanged(const QString &path)
  */
 void FileSystemAction::copy(const QStringList &pathnames)
 {
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO << pathnames;
+#endif
     m_mimeData->setIntoClipboard(pathnames, m_path, ClipboardCopy);
 }
 
@@ -776,6 +825,9 @@ void FileSystemAction::copy(const QStringList &pathnames)
  */
 void FileSystemAction::cut(const QStringList &pathnames)
 {
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO << pathnames;
+#endif
      m_mimeData->setIntoClipboard(pathnames, m_path, ClipboardCut);
 }
 
@@ -786,12 +838,17 @@ void FileSystemAction::cut(const QStringList &pathnames)
 void FileSystemAction::paste()
 {
     QStringList paths     = m_mimeData->localUrls();
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO << paths;
+#endif
     if (paths.count())
     {         
        ActionType actionType  = ActionCopy; // start with Copy and check for Cut
        ClipboardOperation  operation = m_mimeData->clipBoardOperation();
        if (operation == ClipboardCut)
        {
+            //so far it always returns true since on Linux it is possible to rename
+            // between different file systems
             if ( moveUsingSameFileSystem(paths.at(0)) ) {
                 actionType = ActionMove;
             } else {
@@ -799,7 +856,7 @@ void FileSystemAction::paste()
             }
        }
        createAndProcessAction(actionType, paths, operation);
-    }   
+    }
 }
 
 //===============================================================================================
@@ -811,6 +868,9 @@ void FileSystemAction::paste()
  */
 void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStringList& paths, ClipboardOperation operation)
 {
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO << paths;
+#endif
     Action       *myAction       = 0;
     int           origPathLen    = 0;   
     myAction                     = createAction(actionType, origPathLen);
@@ -825,6 +885,11 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
     {
         myAction->totalItems *= 2; //duplicate this
         myAction->totalBytes *= 2;
+    }
+    if (operation == ClipboardCut)
+    {
+        //this must still be false when cut finishes to change the clipboard to the target
+        m_clipboardModifiedByOther = false;
     }
     m_queuedActions.append(myAction);
     if (!m_busy)
@@ -856,9 +921,11 @@ QString FileSystemAction::targetFom(const QString& origItem)
  */
 bool FileSystemAction::moveUsingSameFileSystem(const QString& itemToMovePathname)
 {
+#if 0 //disabled since on Linux it looks like renaming between different file systems works
     unsigned long targetFsId = 0xffff;
     unsigned long originFsId = 0xfffe;
     struct statvfs  vfs;
+
     if ( ::statvfs(m_path.toLatin1().constData(), &vfs) == 0 )
     {
         targetFsId = vfs.f_fsid;
@@ -868,6 +935,10 @@ bool FileSystemAction::moveUsingSameFileSystem(const QString& itemToMovePathname
         originFsId = vfs.f_fsid;
     }
     return targetFsId == originFsId;
+#else
+    Q_UNUSED(itemToMovePathname);
+    return true;
+#endif
 }
 
 //=======================================================
@@ -886,11 +957,15 @@ int FileSystemAction::clipboardLocalUrlsConunter()
  *
  *  If a Paste was made from a Cut operation, items pasted become avaialable in the clipboard
  *   as from Copy source operation, so items can be now Pasted again, but with no source removal
+ *
+ * It checks for \a m_clipboardModifiedByOther that idenftifies if the clipboard was modified during the
+ * operation maybe by another application.
  */
 void FileSystemAction::endCurrentAction()
 {
     if ( m_curAction->origPath != m_curAction->targetPath &&
-         m_curAction->operation == ClipboardCut)
+         m_curAction->operation == ClipboardCut           &&
+         !m_clipboardModifiedByOther )
     {
          QStringList items;
          const ActionEntry *entry;
@@ -916,14 +991,19 @@ void FileSystemAction::endCurrentAction()
  *
  * Several write operations are required to copy big files, each operation writes (STEP_FILES * 4k) bytes.
  * After a write operation if more operations are required to copy the whole file,
- * a progress() signal is emited and a new write operation is scheduled to happen in the next loop interaction.
+ * a progress() signal is emitted and a new write operation is scheduled to happen in the next loop interaction.
  *
+ * \return  true if scheduled to another slot either processCopyEntry() or itself; false if not.
  */
-void FileSystemAction::copySingleFile()
+bool FileSystemAction::processCopySingleFile()
 {
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO;
+#endif
     char block[4096];
     int  step = 0;
     bool copySingleFileDone = false;
+    bool scheduleAnySlot    = true;
     int  startBytes         = m_curAction->copyFile.bytesWritten;
 
     while( m_curAction->copyFile.source           &&
@@ -961,9 +1041,10 @@ void FileSystemAction::copySingleFile()
     }// end write loop
 
     // write loop finished, the copy might be finished
-    if (m_curAction->copyFile.bytesWritten == m_curAction->copyFile.source->size() &&
-        m_curAction->copyFile.source->isOpen()                                     &&
-        !m_cancelCurrentAction
+    if (!m_cancelCurrentAction
+        && m_curAction->copyFile.source
+        && m_curAction->copyFile.bytesWritten == m_curAction->copyFile.source->size()
+        && m_curAction->copyFile.source->isOpen()
        )
     {
         m_curAction->copyFile.source->close();
@@ -996,7 +1077,10 @@ void FileSystemAction::copySingleFile()
 
     if (m_cancelCurrentAction)
     {
-        m_curAction->copyFile.target->setAutoRemove(true);
+        if (m_curAction->copyFile.target)
+        {
+            m_curAction->copyFile.target->setAutoRemove(true);
+        }
         m_curAction->copyFile.clear();
         endActionEntry();
     }
@@ -1011,14 +1095,20 @@ void FileSystemAction::copySingleFile()
             if (startBytes > 0)
             {
                 //the whole took more than one call to copySingleFile()
-                QTimer::singleShot(0, this, SLOT(copyEntry()));
+                scheduleSlot(SLOT(processCopyEntry()));                
+            }
+            else
+            {   //return normally to entry loop
+                scheduleAnySlot = false;
             }
         }
         else
         {          
-            QTimer::singleShot(0, this, SLOT(copySingleFile()));
+            scheduleSlot(SLOT(processCopySingleFile()));
         }
     }
+
+    return scheduleAnySlot;
 }
 
 
@@ -1055,28 +1145,78 @@ int FileSystemAction::percentWorkDone()
  *
  * \return the percent of work done
  */
-int FileSystemAction::notifyProgress()
+int FileSystemAction::notifyProgress(int forcePercent)
 {
-    int percent = percentWorkDone();
+    int percent = forcePercent > 0 ? forcePercent :  percentWorkDone();
     if (percent == 0)
     {
         percent = 1;
     }
     if (SHOULD_EMIT_PROGRESS_SIGNAL(m_curAction) && !m_curAction->done)
-    {
-        int curItem    = m_curAction->currItem;
-        int totalItems =  m_curAction->totalItems;
+    {       
         if (m_curAction->type == ActionHardMoveCopy ||
             m_curAction->type ==ActionHardMoveRemove)
         {
-            curItem /= 2;
-            totalItems /= 2;
+            emit progress(m_curAction->currItem/2,  m_curAction->totalItems/2, percent);
         }
-        emit progress(curItem, totalItems, percent);
-        if (percent == 100)
+        else
+        {
+            emit progress(m_curAction->currItem,  m_curAction->totalItems, percent);
+        }
+        if (percent == 100 && m_curAction->currItem ==  m_curAction->totalItems)
         {
             m_curAction->done = true;
         }
     }
     return  percent;
+}
+
+//================================================================================
+/*!
+ * \brief FileSystemAction::copySymLink() creates the \a target as a link according to \a orig
+ * \param target full pathname of the file to be created
+ * \param orig   original file, it carries the link that \a target will point to
+ * \return true if it could create, else if not
+ */
+bool FileSystemAction::copySymLink(const QString &target, const QFileInfo &orig)
+{   
+    QString link(orig.symLinkTarget());
+    QFileInfo linkFile(link);
+    if (linkFile.isAbsolute() && linkFile.absolutePath() == orig.absolutePath())
+    {
+        link = linkFile.fileName();
+    }
+    bool ret = QFile::link(link, target);
+    if (ret)
+    {
+        QFileInfo t(target);
+        if ((ret=t.exists()) && t.permissions() != orig.permissions())
+        {
+            ret = QFile::setPermissions(target,orig.permissions());
+        }
+    }
+#if DEBUG_MESSAGES
+    qDebug() << "FileSystemAction::copySymLink" << ret << target << link;
+#endif   
+    return ret;
+}
+
+//================================================================================
+void FileSystemAction::scheduleSlot(const char *slot)
+{
+#if DEBUG_MESSAGES
+    qDebug() << "FileSystemAction::scheduleSlot()" << slot;
+#endif
+    QTimer::singleShot(0, this, slot);
+}
+
+//================================================================================
+/*!
+ * \brief FileSystemAction::clipboardHasChanged() used to identify if the clipboard changed during a Cut operation
+ *
+ *  \sa \ref endCurrentAction()
+ */
+void FileSystemAction::clipboardHasChanged()
+{
+    m_clipboardModifiedByOther = true;
 }

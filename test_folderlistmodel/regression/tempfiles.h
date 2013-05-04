@@ -44,12 +44,12 @@ public:
     bool create(int counter =1);
     bool create(const QString& name, int counter = 1);
     QString lastFileCreated();
-    QStringList createdList()   { return m_filesCreated; }
-    int      created()          { return m_filesCreated.count();}
+    QStringList createdList() const   { return m_filesCreated; }
+    int      created()        const   { return m_filesCreated.count();}
     int      howManyExist();
     void removeAll();
     QStringList createdNames();
-    QString   lastPath()        { return m_dir; }
+    QString   lastPath()       const { return m_dir; }
 private:
     QString       m_dir;
     QStringList   m_filesCreated;
@@ -74,9 +74,9 @@ public:
         remove();
     }
     bool remove();
-    QString path()         { return root;}
-    QString firstLevel()   { return firstDirLevel; }
-    QString lastLevel()    { return lastDirLevel; }
+    QString path()       const  { return root;}
+    QString firstLevel() const  { return firstDirLevel; }
+    QString lastLevel()  const  { return lastDirLevel; }
     int     filesCreated() const { return totalFiles;}
     int     itemsCreated() const { return totalItems;}
 private:

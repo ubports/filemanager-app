@@ -86,8 +86,9 @@ public slots:
 private slots:
     void     processAction();
     void     processActionEntry();   
-    void     copyEntry();
-    void     copySingleFile();
+    void     processCopyEntry();
+    bool     processCopySingleFile();
+    void     clipboardHasChanged();
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
  public:
@@ -163,6 +164,7 @@ private:
    DirModelMimeData  *     m_mimeData;
    QString                 m_errorTitle;
    QString                 m_errorMsg;
+   bool                    m_clipboardModifiedByOther;
 
 private:  
    Action * createAction(ActionType, int origBase = 0);
@@ -173,8 +175,10 @@ private:
    QString  targetFom(const QString& origItem);
    void     endCurrentAction();
    int      percentWorkDone();
-   int      notifyProgress();
+   int      notifyProgress(int forcePercent = 0);
    void     endActionEntry();
+   bool     copySymLink(const QString& target, const QFileInfo& orig);
+   void     scheduleSlot(const char *slot);
 };
     
 

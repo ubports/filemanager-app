@@ -29,19 +29,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
  */
 
+#include <errno.h>
+#include <string.h>
+#include "dirmodel.h"
+#include "ioworkerthread.h"
+#include "filesystemaction.h"
+
 #include <QDirIterator>
 #include <QDir>
 #include <QDebug>
 #include <QDateTime>
 #include <QFileIconProvider>
-
-#include <errno.h>
-#include <string.h>
-
-#include "dirmodel.h"
-#include "ioworkerthread.h"
-#include "filesystemaction.h"
-
 
 #define IS_VALID_ROW(row)             (row >=0 && row < mDirectoryContents.count())
 #define WARN_ROW_OUT_OF_RANGE(row)    qWarning() << Q_FUNC_INFO << "row" << row << "Out of bounds access"
@@ -100,7 +98,7 @@ static bool dateCompareAscending(const QFileInfo &a, const QFileInfo &b)
 }
 
 /*!
- *  Sort was originaly done in \ref onItemsAdded() and that code is now in \ref addItem(),
+ *  Sort was originally done in \ref onItemsAdded() and that code is now in \ref addItem(),
  *  the reason to keep doing sort and do not let QDir does it is that when adding new items
  *  by \ref mkdir() or \paste() it is not necessary to call refresh() to load the entire directory
  *  to organize it items again. New items order/position are organized by \ref addItem()
@@ -141,7 +139,7 @@ public:
             if (directoryContents.count() >= 50) {
                 emit itemsAdded(directoryContents);
 
-                // clear() would force a deallocation, micro-optimisation
+                // clear() would force a deallocation, micro-optimization
                 directoryContents.erase(directoryContents.begin(), directoryContents.end());
             }
         }
@@ -309,11 +307,11 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             const QString &fileName = fi.fileName();
 
             if (fi.isDir())
-                return "image://theme/icon-m-common-directory";
+                return QLatin1String("image://theme/icon-m-common-directory");
 
-            if (fileName.endsWith(".jpg", Qt::CaseInsensitive) ||
-                fileName.endsWith(".png", Qt::CaseInsensitive)) {
-                return "image://nemoThumbnail/" + fi.filePath();
+            if (fileName.endsWith(QLatin1String(".jpg"), Qt::CaseInsensitive) ||
+                fileName.endsWith(QLatin1String(".png"), Qt::CaseInsensitive)) {
+                return QLatin1String("image://nemoThumbnail/") + fi.filePath();
             }
 
             return "image://theme/icon-m-content-document";

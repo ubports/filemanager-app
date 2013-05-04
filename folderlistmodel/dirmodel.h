@@ -61,7 +61,7 @@ public:
     };
 
 public:
-    DirModel(QObject *parent = 0);
+    explicit DirModel(QObject *parent = 0);
     ~DirModel();
 
     int rowCount(const QModelIndex &index = QModelIndex()) const

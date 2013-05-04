@@ -28,6 +28,7 @@
 #include <QHeaderView>
 #include <QDebug>
 #include <QProgressBar>
+#include <QMessageBox>
 
 SimpleList::SimpleList(QWidget *parent) :
     QWidget(parent),
@@ -73,6 +74,9 @@ SimpleList::SimpleList(QWidget *parent) :
 
     connect(m_model, SIGNAL(clipboardChanged()),
             this,    SLOT(clipboardChanged()));
+
+    connect(m_model, SIGNAL(error(QString,QString)),
+            this,    SLOT(error(QString,QString)));
 
     ui->tableView->horizontalHeader()->setSortIndicator(0,Qt::AscendingOrder);
 
@@ -198,4 +202,14 @@ void SimpleList::progress(int cur, int total, int percent)
         }
     p.sprintf("progress(cur=%d, total=%d, percent=%d", cur,total,percent);
     qDebug() << p;
+}
+
+
+void SimpleList::error(QString title, QString message)
+{
+    if (m_pbar)
+    {
+        m_pbar->hide();
+    }
+    QMessageBox::critical(this, title, message);
 }

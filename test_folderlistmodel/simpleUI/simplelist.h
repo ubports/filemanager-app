@@ -63,6 +63,7 @@ private slots:
     void   setSort(int col, Qt::SortOrder order);
     void   progress(int, int,int);
     void   clipboardChanged();
+    void   error(QString title, QString message);
 };
 
 #endif // SIMPLELIST_H
