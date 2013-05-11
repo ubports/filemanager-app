@@ -52,6 +52,23 @@ namespace {
 }
 
 
+
+
+static bool fileCompareExists(const QFileInfo &a, const QFileInfo &b)
+{
+    if (a.isDir() && !b.isDir())
+        return true;
+
+    if (b.isDir() && !a.isDir())
+        return false;
+
+    bool ret = QString::localeAwareCompare(a.absoluteFilePath(), b.absoluteFilePath()) < 0;
+#if DEBUG_MESSAGES
+    qDebug() <<  Q_FUNC_INFO << ret << a.absoluteFilePath() << b.absoluteFilePath();
+#endif
+    return ret;
+}
+
 static bool fileCompareAscending(const QFileInfo &a, const QFileInfo &b)
 {
     if (a.isDir() && !b.isDir())
@@ -133,7 +150,7 @@ public:
         QVector<QFileInfo> directoryContents;
 
         while (it.hasNext()) {
-            it.next();        
+            it.next();
 
             directoryContents.append(it.fileInfo());
             if (directoryContents.count() >= 50) {
@@ -146,7 +163,7 @@ public:
 
         // last batch
         emit itemsAdded(directoryContents);
-        emit workerFinished();      
+        emit workerFinished();
     }
 
 signals:
@@ -159,13 +176,13 @@ private:
 };
 
 DirModel::DirModel(QObject *parent)
-    : QAbstractListModel(parent)   
+    : QAbstractListModel(parent)
     , mShowDirectories(true)
-    , mAwaitingResults(false)   
+    , mAwaitingResults(false)
     , mShowHiddenFiles(false)
     , mSortBy(SortByName)
     , mSortOrder(SortAscending)
-    , mCompareFunction(0) 
+    , mCompareFunction(0)
     , m_fsAction(new FileSystemAction(this) )
 {
     mNameFilters = QStringList() << "*";
@@ -205,7 +222,7 @@ DirModel::DirModel(QObject *parent)
 }
 
 DirModel::~DirModel()
-{   
+{
 }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
@@ -268,7 +285,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
     if (role == Qt::DecorationRole)
-    {       
+    {
         if (index.column() == 0)
         {
             return QFileIconProvider().icon(mDirectoryContents.at(index.row()));
@@ -288,7 +305,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
     }
 
     if (index.column() != 0)
-        return QVariant();   
+        return QVariant();
 #endif
 
     const QFileInfo &fi = mDirectoryContents.at(index.row());
@@ -453,7 +470,7 @@ bool DirModel::rename(int row, const QString &newName)
 }
 
 void DirModel::mkdir(const QString &newDir)
-{  
+{
     QDir dir(mCurrentDir);
     bool retval = dir.mkdir(newDir);
     if (!retval) {
@@ -656,8 +673,8 @@ void DirModel::onItemRemoved(const QString &pathname)
 
 
 void DirModel::onItemRemoved(const QFileInfo &fi)
-{
-    int row = mDirectoryContents.indexOf(fi);
+{  
+    int row = rowOfItem(fi);   
     if (row >= 0)
     {
         beginRemoveRows(QModelIndex(), row, row);
@@ -689,12 +706,13 @@ void DirModel::onItemAdded(const QFileInfo &fi)
  * \sa insertedRow()
  */
 int DirModel::addItem(const QFileInfo &fi)
-{      
+{
     QVector<QFileInfo>::Iterator it = qLowerBound(mDirectoryContents.begin(),
                                                   mDirectoryContents.end(),
                                                   fi,
                                                   mCompareFunction);
     int idx =  mDirectoryContents.count();
+
     if (it == mDirectoryContents.end()) {
         beginInsertRows(QModelIndex(), mDirectoryContents.count(), mDirectoryContents.count());
         mDirectoryContents.append(fi);
@@ -704,7 +722,7 @@ int DirModel::addItem(const QFileInfo &fi)
         beginInsertRows(QModelIndex(), idx, idx);
         mDirectoryContents.insert(it, fi);
         endInsertRows();
-    }
+    }   
     return idx;
 }
 
@@ -853,6 +871,25 @@ void DirModel::setCompareAndReorder()
 int DirModel::getClipboardUrlsCounter() const
 {
     return m_fsAction->clipboardLocalUrlsConunter();
+}
+
+
+int DirModel::rowOfItem(const QFileInfo& fi)
+{
+    QVector<QFileInfo>::Iterator it = qBinaryFind(mDirectoryContents.begin(),
+                                                  mDirectoryContents.end(),
+                                                  fi,
+                                                  fileCompareExists);
+    int row;
+    if (it == mDirectoryContents.end())
+    {       
+        row = -1;
+    }
+    else
+    {
+        row = it - mDirectoryContents.begin();
+    }
+    return row;
 }
 
 // for dirlistworker

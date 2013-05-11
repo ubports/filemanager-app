@@ -83,11 +83,11 @@ public:
     }
 
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
-    inline QString path() const { return mCurrentDir; }  
+    inline QString path() const { return mCurrentDir; }
     void setPath(const QString &pathName);
 
     Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
-    bool awaitingResults() const;    
+    bool awaitingResults() const;
 
     Q_INVOKABLE void rm(const QStringList &paths);
 
@@ -111,7 +111,7 @@ signals:
     void nameFiltersChanged();
     void showDirectoriesChanged();
     void pathChanged(const QString& newPath);
-    void error(const QString &errorTitle, const QString &errorMessage);   
+    void error(const QString &errorTitle, const QString &errorMessage);
 
 private:
     QHash<int, QByteArray> buildRoleNames() const;
@@ -127,7 +127,7 @@ private:
     QVector<QFileInfo> mDirectoryContents;
 
 public:
-    //[0] new stuff Ubuntu File Manager   
+    //[0] new stuff Ubuntu File Manager
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
     //make this work with tables
     virtual int columnCount(const QModelIndex &) const
@@ -188,7 +188,7 @@ public:
      * \brief cutIndex() puts the item into the clipboard as \ref copy(),
      *        mark the item to be removed after \ref paste()
      * \param row points to the item file or directory
-     */   
+     */
     Q_INVOKABLE void  cutIndex(int row);
 
     /*!
@@ -286,6 +286,7 @@ private slots:
 private:
     int  addItem(const QFileInfo& fi);
     void setCompareAndReorder();
+    int  rowOfItem(const QFileInfo& fi);
 
 private:
     bool               mShowHiddenFiles;

@@ -54,6 +54,8 @@
 
 #define SHOULD_EMIT_PROGRESS_SIGNAL(action)       (1)
 
+#define   COMMON_SIZE_ITEM       120
+
 
 RemoveNotifier   FileSystemAction::m_removeNotifier;
 
@@ -61,22 +63,35 @@ static  QLatin1String GNOME_COPIED_MIME_TYPE  ("x-special/gnome-copied-files");
 static  QLatin1String KDE_CUT_MIME_TYPE       ("application/x-kde-cutselection");
 
 
+
 class DirModelMimeData : public QMimeData
 {
-public:   
+public:
     explicit DirModelMimeData();
+    ~DirModelMimeData();
     virtual QStringList     formats() const    { return m_formats; }
-public:    
-    ClipboardOperation      clipBoardOperation();
+    virtual bool            hasFormat ( const QString & mimeType ) const;
+public:
     void                    setIntoClipboard(const QStringList& files, const QString &path, ClipboardOperation operation);
     static const QMimeData *clipboardMimeData();
-    QStringList             localUrls();
+    QStringList             localUrls(ClipboardOperation& operation);
 private:
     static QList<QUrl>      gnomeUrls(const QMimeData *mime, ClipboardOperation& operation);
+    ClipboardOperation      clipBoardOperation();
+    bool                    fillClipboard(const QStringList& files, const QString &path, ClipboardOperation operation);
 private:
     QStringList              m_formats;
     const QMimeData *        m_appMime;
+     QByteArray              gnomeData;
+     QList<QUrl>             urls;
+#if DEBUG_MESSAGES
+     static   int            instances;
+#endif
 };
+
+#if DEBUG_MESSAGES
+   int DirModelMimeData::instances = 0;
+#endif
 
 
 void FileSystemAction::CopyFile::clear()
@@ -88,12 +103,26 @@ void FileSystemAction::CopyFile::clear()
     target = 0;
 }
 
+bool DirModelMimeData::hasFormat ( const QString & mimeType ) const
+{
+   bool ret = false;
+   if (  mimeType == KDE_CUT_MIME_TYPE  )
+   {
+      ret = true;
+   }
+   else
+   {
+      ret = m_formats.contains(mimeType);
+   }
+   return ret;
+}
+
 //===============================================================================================
 /*!
  * \brief DirModelMimeData::DirModelMimeData
  */
 DirModelMimeData::DirModelMimeData() :
-    QMimeData() 
+    QMimeData()
 {
     m_formats.append("text/uri-list");
     m_formats.append(GNOME_COPIED_MIME_TYPE);
@@ -105,8 +134,17 @@ DirModelMimeData::DirModelMimeData() :
     m_formats.append("SAVE_TARGETS");
 
     m_appMime = 0;
+#if DEBUG_MESSAGES
+     qDebug() << Q_FUNC_INFO << this << "instances" << ++instances;
+#endif
 }
 
+DirModelMimeData::~DirModelMimeData()
+{
+#if DEBUG_MESSAGES
+   qDebug() << Q_FUNC_INFO << this << "instances" << --instances;
+#endif
+}
 
 //===============================================================================================
 /*!
@@ -165,7 +203,7 @@ ClipboardOperation DirModelMimeData::clipBoardOperation()
             int f = formats.count();
             while(f--)
             {
-                const QString &mi = formats.at(f);             
+                const QString &mi = formats.at(f);
                 if(mi.startsWith(QLatin1String("application/x-kde")) )
                 {
                     if (mi.contains(QLatin1String("cut")))
@@ -189,56 +227,74 @@ ClipboardOperation DirModelMimeData::clipBoardOperation()
  * \param isCut
  */
 void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString& path, ClipboardOperation operation)
-{     
+{
+  QClipboard *clipboard = QApplication::clipboard();
+  if (clipboard)
+  {
+        if (clipboard->ownsClipboard())
+        {
+            //it used to crash, so leave it for now
+           // clipboard->clear();
+        }
+        DirModelMimeData *mime = new DirModelMimeData();
+        if (mime->fillClipboard(files, path, operation))
+        {
+           clipboard->setMimeData(mime);
+        }
+        else
+        {
+            delete mime;
+        }
+  }
+}
+
+
+bool DirModelMimeData::fillClipboard(const QStringList& files, const QString &path, ClipboardOperation operation)
+{
+    bool ret = false;
     int index = m_formats.indexOf(KDE_CUT_MIME_TYPE);
     if (index != -1 && operation != ClipboardCut)
     {
         m_formats.removeAt(index);
     }
     else
-    if (operation == ClipboardCut)  {
-        m_formats.append(KDE_CUT_MIME_TYPE);
-    }     
-    QClipboard *clipboard = QApplication::clipboard();
-    if (clipboard)
+    if (operation == ClipboardCut)
     {
-        if (clipboard->ownsClipboard())
+        m_formats.append(KDE_CUT_MIME_TYPE);
+    }
+
+    urls.clear();
+    QFileInfo fi;
+    gnomeData.clear();
+    gnomeData += operation == ClipboardCut ?
+                                    QLatin1String("cut\n") :
+                                    QLatin1String("copy\n");
+    for(int counter = 0; counter < files.count(); counter++)
+    {
+        const QString& item = files.at(counter);
+        fi.setFile(item);
+        if (!fi.exists())
         {
-            //it used to crash, so leave it for now
-            // clipboard->clear();
+            fi.setFile(path + QDir::separator() + item);
         }
-        QList<QUrl> urls;
-        QFileInfo fi;
-        QByteArray gnomeData;
-        gnomeData += operation == ClipboardCut ?
-                                     QLatin1String("cut\n") :
-                                     QLatin1String("copy\n");
-        for(int counter = 0; counter < files.count(); counter++)
+        if (fi.exists())
         {
-            const QString& item = files.at(counter);
-            fi.setFile(item);
-            if (!fi.exists())
-            {
-                fi.setFile(path + QDir::separator() + item);
-            }
-            if (fi.exists())
-            {
-                QUrl item = QUrl::fromLocalFile(fi.absoluteFilePath());
-                urls.append(item);
-                gnomeData += item.toEncoded() + QLatin1String("\r\n");
-            }
-            else
-            {                
-                //emit error( QObject::tr("Item does not exist"), item);
-            }
+            QUrl item = QUrl::fromLocalFile(fi.absoluteFilePath());
+            urls.append(item);
+            gnomeData += item.toEncoded() + QLatin1String("\r\n");
         }
-        if (urls.count() > 0)
-        {          
-            setData(GNOME_COPIED_MIME_TYPE, gnomeData);
-            setUrls(urls);
-            clipboard->setMimeData(this);
+        else
+        {
+            //emit error( QObject::tr("Item does not exist"), item);
         }
     }
+    if (urls.count() > 0)
+    {
+        setData(GNOME_COPIED_MIME_TYPE, gnomeData);
+        setUrls(urls);
+        ret = true;
+    }
+    return ret;
 }
 
 //===============================================================================================
@@ -263,7 +319,7 @@ const QMimeData *DirModelMimeData::clipboardMimeData()
  * \return
  */
 QStringList
-DirModelMimeData::localUrls()
+DirModelMimeData::localUrls(ClipboardOperation& operation)
 {
      m_appMime = DirModelMimeData::clipboardMimeData();
      QStringList paths;
@@ -274,15 +330,15 @@ DirModelMimeData::localUrls()
          if (m_appMime->hasUrls())
          {
              urls =  m_appMime->urls();
+             operation = clipBoardOperation();
          }
          else
          {
-             ClipboardOperation op;
-             urls = gnomeUrls(m_appMime, op);
+             urls = gnomeUrls(m_appMime, operation);
          }
          for (int counter=0; counter < urls.count(); counter++)
          {
-             if (urls.at(counter).isLocalFile())
+             if (urls.at(counter).toString().startsWith(QLatin1String("file://")))
              {
                  paths.append(urls.at(counter).toLocalFile());
              }
@@ -324,10 +380,6 @@ void RemoveNotifier::notifyRemoved(const QString &item)
 }
 
 
-/* static QMimeData */
-DirModelMimeData     mimeData;
-
-
 //===============================================================================================
 /*!
  * \brief FileSystemAction::FileSystemAction
@@ -338,7 +390,7 @@ FileSystemAction::FileSystemAction(QObject *parent) :
   , m_curAction(0)
   , m_cancelCurrentAction(false)
   , m_busy(false)
-  , m_mimeData ( & ::mimeData )  // using  static data because it used to crash
+  , m_mimeData ( new DirModelMimeData() )
   , m_clipboardModifiedByOther(false)
 {
   //as m_removeNotifier is static it will send signals to all instances of
@@ -360,9 +412,8 @@ FileSystemAction::FileSystemAction(QObject *parent) :
  * \brief FileSystemAction::~FileSystemAction
  */
 FileSystemAction::~FileSystemAction()
-{
-   // m_mimeData using  static data because it used to crash
-   // delete m_mimeData;
+{   
+   delete m_mimeData;
 }
 
 //===============================================================================================
@@ -371,7 +422,7 @@ FileSystemAction::~FileSystemAction()
  * \param paths
  */
 void FileSystemAction::remove(const QStringList &paths)
-{  
+{
     createAndProcessAction(ActionRemove, paths, NoClipboard);
 }
 
@@ -432,11 +483,15 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
                         QDirIterator::Subdirectories);
         while (it.hasNext() &&  !it.next().isEmpty())
         {
-            item = it.fileInfo();        
+            item = it.fileInfo();
             entry->reversedOrder.prepend(it.fileInfo());
             if (item.isFile() && !item.isDir() && !item.isSymLink())
             {
                 action->totalBytes += item.size();
+            }
+            else
+            {
+                action->totalBytes += COMMON_SIZE_ITEM;
             }
         }
     }
@@ -446,6 +501,10 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
     if (info.isFile() && !info.isDir() && !info.isSymLink())
     {
         action->totalBytes += info.size();
+    }
+    else
+    {
+        action->totalBytes += COMMON_SIZE_ITEM;
     }
     entry->currItem  = 0;
     entry->currStep  = 0;
@@ -457,13 +516,13 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
  * \brief FileSystemAction::processAction
  */
 void FileSystemAction::processAction()
-{   
+{
     if (m_curAction)
     {
         //it will be ActionHardMoveRemove only when switched from ActionHardMoveCopy
         //in this case the move is done in two steps COPY and REMOVE
         if (m_curAction->type != ActionHardMoveCopy)
-        {     
+        {
             delete m_curAction;
             m_curAction = 0;
         }
@@ -481,7 +540,7 @@ void FileSystemAction::processAction()
         m_errorTitle.clear();
         scheduleSlot(SLOT(processActionEntry()));
         if (SHOULD_EMIT_PROGRESS_SIGNAL(m_curAction))
-        {         
+        {
             emit progress(0,m_curAction->totalItems, 0);
         }
     }
@@ -511,7 +570,7 @@ void FileSystemAction::processActionEntry()
         if (delay == 1)
         {
             delay = 100;           //each (10 * STEP_FILES) files will waits a second
-            QThread::msleep(delay);
+            QThread::currentThread()->wait(delay);
         }
     }
 #endif
@@ -533,7 +592,7 @@ void FileSystemAction::processActionEntry()
                 endActionEntry();
                 break;
         }
-    }   
+    }
 }
 
 //===============================================================================================
@@ -635,7 +694,7 @@ void FileSystemAction::cancel()
  * \param entry
  */
 void FileSystemAction::removeEntry(ActionEntry *entry)
-{      
+{
     QDir dir;
     //do one step at least
     for(; !m_cancelCurrentAction                          &&
@@ -646,7 +705,7 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
         )
 
     {
-        const QFileInfo &fi = entry->reversedOrder.at(entry->currItem);       
+        const QFileInfo &fi = entry->reversedOrder.at(entry->currItem);
         if (fi.isDir() && !fi.isSymLink())
         {
             m_cancelCurrentAction = !dir.rmdir(fi.absoluteFilePath());
@@ -664,7 +723,7 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
                                        fi.absoluteFilePath();
             m_errorMsg   = ::strerror(errno);
         }
-    }    
+    }
 }
 
 //===============================================================================================
@@ -695,7 +754,7 @@ void  FileSystemAction::processCopyEntry()
         ; entry->currStep++,    entry->currItem++
         )
 
-    {       
+    {
         const QFileInfo &fi = entry->reversedOrder.at(entry->currItem);
         QString orig    = fi.absoluteFilePath();
         QString target = targetFom(orig);
@@ -713,7 +772,7 @@ void  FileSystemAction::processCopyEntry()
         {
             m_cancelCurrentAction = true;
             m_errorTitle = QObject::tr("Could not create the directory");
-            m_errorMsg   = path;         
+            m_errorMsg   = path;
         }
         else
         if (fi.isSymLink())
@@ -724,6 +783,7 @@ void  FileSystemAction::processCopyEntry()
                 m_errorTitle = QObject::tr("Could not create link to");
                 m_errorMsg   = target;
             }
+            m_curAction->bytesWritten += COMMON_SIZE_ITEM;
         }
         else
         if (fi.isDir())
@@ -735,6 +795,7 @@ void  FileSystemAction::processCopyEntry()
                 m_errorTitle = QObject::tr("Could not set permissions to dir");
                 m_errorMsg   = target;
             }
+            m_curAction->bytesWritten += COMMON_SIZE_ITEM;
         }
         else
         if (fi.isFile())
@@ -757,7 +818,7 @@ void  FileSystemAction::processCopyEntry()
             m_curAction->copyFile.targetName = target;
             scheduleAnySlot =  processCopySingleFile();
         }
-    }//for    
+    }//for
 
     //no copy going on
     if (!scheduleAnySlot)
@@ -837,14 +898,14 @@ void FileSystemAction::cut(const QStringList &pathnames)
  */
 void FileSystemAction::paste()
 {
-    QStringList paths     = m_mimeData->localUrls();
+    ClipboardOperation  operation;
+    QStringList paths     = m_mimeData->localUrls(operation);
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << paths;
 #endif
     if (paths.count())
-    {         
+    {
        ActionType actionType  = ActionCopy; // start with Copy and check for Cut
-       ClipboardOperation  operation = m_mimeData->clipBoardOperation();
        if (operation == ClipboardCut)
        {
             //so far it always returns true since on Linux it is possible to rename
@@ -872,7 +933,7 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
         qDebug() << Q_FUNC_INFO << paths;
 #endif
     Action       *myAction       = 0;
-    int           origPathLen    = 0;   
+    int           origPathLen    = 0;
     myAction                     = createAction(actionType, origPathLen);
     myAction->operation          = operation;
     myAction->origPath           = QFileInfo(paths.at(0)).absolutePath();
@@ -948,7 +1009,8 @@ bool FileSystemAction::moveUsingSameFileSystem(const QString& itemToMovePathname
  */
 int FileSystemAction::clipboardLocalUrlsConunter()
 {
-    return m_mimeData->localUrls().count();
+    ClipboardOperation operation;
+    return m_mimeData->localUrls(operation).count();
 }
 
 //================================================================================
@@ -1059,18 +1121,18 @@ bool FileSystemAction::processCopySingleFile()
             m_errorMsg   = ::strerror(errno);
         }
         else
-        {           
+        {
             m_cancelCurrentAction = ! m_curAction->copyFile.target->
                                        rename(m_curAction->copyFile.targetName);
             if (m_cancelCurrentAction)
             {
                 m_errorTitle = QObject::tr("Rename error: renaming to ")
                                 + m_curAction->copyFile.targetName,
-                m_errorMsg   = ::strerror(errno);               
+                m_errorMsg   = ::strerror(errno);
             }
             else
             {
-                copySingleFileDone = true;               
+                copySingleFileDone = true;
             }
         }
     }
@@ -1095,7 +1157,7 @@ bool FileSystemAction::processCopySingleFile()
             if (startBytes > 0)
             {
                 //the whole took more than one call to copySingleFile()
-                scheduleSlot(SLOT(processCopyEntry()));                
+                scheduleSlot(SLOT(processCopyEntry()));
             }
             else
             {   //return normally to entry loop
@@ -1103,7 +1165,7 @@ bool FileSystemAction::processCopySingleFile()
             }
         }
         else
-        {          
+        {
             scheduleSlot(SLOT(processCopySingleFile()));
         }
     }
@@ -1153,7 +1215,7 @@ int FileSystemAction::notifyProgress(int forcePercent)
         percent = 1;
     }
     if (SHOULD_EMIT_PROGRESS_SIGNAL(m_curAction) && !m_curAction->done)
-    {       
+    {
         if (m_curAction->type == ActionHardMoveCopy ||
             m_curAction->type ==ActionHardMoveRemove)
         {
@@ -1163,7 +1225,7 @@ int FileSystemAction::notifyProgress(int forcePercent)
         {
             emit progress(m_curAction->currItem,  m_curAction->totalItems, percent);
         }
-        if (percent == 100 && m_curAction->currItem ==  m_curAction->totalItems)
+        if (percent == 100 && m_curAction->currItem == m_curAction->totalItems)
         {
             m_curAction->done = true;
         }
@@ -1179,25 +1241,24 @@ int FileSystemAction::notifyProgress(int forcePercent)
  * \return true if it could create, else if not
  */
 bool FileSystemAction::copySymLink(const QString &target, const QFileInfo &orig)
-{   
+{
     QString link(orig.symLinkTarget());
     QFileInfo linkFile(link);
     if (linkFile.isAbsolute() && linkFile.absolutePath() == orig.absolutePath())
     {
         link = linkFile.fileName();
     }
+#if QT_VERSION <= 0x040704
+    QString current = QDir::currentPath();
+    QDir::setCurrent(linkFile.absolutePath());
     bool ret = QFile::link(link, target);
-    if (ret)
-    {
-        QFileInfo t(target);
-        if ((ret=t.exists()) && t.permissions() != orig.permissions())
-        {
-            ret = QFile::setPermissions(target,orig.permissions());
-        }
-    }
+    QDir::setCurrent(current);
+#else
+    bool ret = QFile::link(link, target);
+#endif
 #if DEBUG_MESSAGES
     qDebug() << "FileSystemAction::copySymLink" << ret << target << link;
-#endif   
+#endif
     return ret;
 }
 

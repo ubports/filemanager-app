@@ -20,6 +20,8 @@
  */
 
 #include "tempfiles.h"
+#include <stdlib.h>
+
 
 #include <QDir>
 #include <QFile>
@@ -38,7 +40,7 @@ bool TempFiles::addSubDirLevel(const QString &dir)
     QFileInfo d( m_dir + QDir::separator() + dir);
     if (d.exists()  || QDir().mkpath(d.absoluteFilePath()))
     {
-        m_dir = d.absoluteFilePath();        
+        m_dir = d.absoluteFilePath();
         return true;
     }
     return false;
@@ -137,7 +139,7 @@ DeepDir::DeepDir(const QString &rootDir, int level) :
         QString levelStr;
         TempFiles temp;
         if (temp.addSubDirLevel(rootDir))
-        {          
+        {
             for(int counter=1 ; counter <= level; counter++)
             {
                 levelStr.sprintf("level_%02d", counter);
