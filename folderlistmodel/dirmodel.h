@@ -36,6 +36,7 @@
 #include <QFileInfo>
 #include <QVector>
 #include <QStringList>
+#include <QDir>
 
 #include "iorequest.h"
 
@@ -170,8 +171,9 @@ public:
      *    \brief Tries to make the directory pointed by row as the current to be browsed
      *    \return true if row points to a directory and the directory is readble, false otherwise
      */
-    Q_INVOKABLE  bool cdInto(int row);
+    Q_INVOKABLE  bool cdIntoIndex(int row);
 
+    Q_INVOKABLE  bool cdIntoPath(const QString& filename);
     /*!
      * \brief copyIndex() puts the item pointed by \a row (dir or file) into the clipboard
      * \param row points to the item file or directory
@@ -213,6 +215,20 @@ public:
      */
     Q_INVOKABLE void removePaths(const QStringList& items);
 
+    /*!
+     *  Tries to open a file using a suitable application, if the index points to a directory
+     *  it goes into it using \ref cdIntoIndex() or \ref cdIntoPath()
+     *
+     *  \note Qt uses Qt QDesktopServices::openUrl()
+     */
+
+    Q_INVOKABLE bool  openIndex(int row);
+    /*!
+     *  Same as \ref openIndex() but using a file name instead of index
+     *
+     *  \sa \ref cdIntoPath()
+     */
+    Q_INVOKABLE bool  openPath(const QString& filename);
 
 public slots:
     /*!
@@ -239,7 +255,7 @@ public slots:
     /*!
      * \brief cancelAction() any copy/cut/remove can be cancelled
      */
-    void cancelAction();
+    void cancelAction();    
 
     void setShowDirectories(bool showDirectories);
     void setShowHiddenFiles(bool show);
@@ -284,9 +300,13 @@ private slots:
     void onItemAdded(const QFileInfo&);
 
 private:
-    int  addItem(const QFileInfo& fi);
-    void setCompareAndReorder();
-    int  rowOfItem(const QFileInfo& fi);
+    int           addItem(const QFileInfo& fi);
+    void          setCompareAndReorder();
+    int           rowOfItem(const QFileInfo& fi);
+    QDir::Filter  currentDirFilter()  const;
+    QString       dirItems(const QFileInfo& fi) const;
+    bool          cdInto(const QFileInfo& fi);
+    bool          openItem(const QFileInfo& fi);
 
 private:
     bool               mShowHiddenFiles;

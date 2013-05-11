@@ -42,11 +42,18 @@ SimpleList::SimpleList(QWidget *parent) :
 
     qRegisterMetaType< QVector<QFileInfo> > ("QVector<QFileInfo>");
 
-    ui->tableView->setModel(m_model);
-    m_model->goHome();
+    ui->tableView->setModel(m_model);   
 
-    connect(ui->tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(onRowClicked(QModelIndex)));
-    connect(ui->tableView->verticalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(onVerticalHeaderClicked(int)));
+    connect(ui->tableView, SIGNAL(clicked(QModelIndex)),
+            this,          SLOT(onRowClicked(QModelIndex)));
+    connect(ui->tableView, SIGNAL(doubleClicked(QModelIndex)),
+            this,          SLOT(onOpenItem(QModelIndex)));
+
+    connect(ui->tableView->verticalHeader(), SIGNAL(sectionClicked(int)),
+            this,                            SLOT(onVerticalHeaderClicked(int)));
+
+    connect(m_model, SIGNAL(pathChanged(QString)),
+            this,    SLOT(pathChanged(QString)));
 
     connect(ui->pushButtonCdUp,   SIGNAL(clicked()),  this, SLOT(onCdUP()));
     connect(ui->pushButtonCopy,   SIGNAL(clicked()),  this, SLOT(onCopy()));
@@ -65,7 +72,9 @@ SimpleList::SimpleList(QWidget *parent) :
 
     resize(800,600);
 
-    connect(m_model, SIGNAL(insertedRow(int)), ui->tableView, SLOT(resizeRowToContents(int)));
+    connect(m_model, SIGNAL(insertedRow(int)),
+            this,    SLOT(resizeColumnForName(int)));
+
     connect(ui->tableView->horizontalHeader(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
             this,                              SLOT(setSort(int,Qt::SortOrder)));
 
@@ -82,6 +91,9 @@ SimpleList::SimpleList(QWidget *parent) :
 
     m_pbar->setMaximum(100);
     m_pbar->setMinimum(0);
+
+    m_model->goHome();
+    clipboardChanged();
 }
 
 SimpleList::~SimpleList()
@@ -104,7 +116,7 @@ void SimpleList::onRowClicked(QModelIndex index)
 
 void SimpleList::onCdInto()
 {
-    m_model->cdInto(m_curRow);
+    m_model->cdIntoIndex(m_curRow);
 }
 
 void SimpleList::onGoHome()
@@ -182,8 +194,8 @@ void SimpleList::setSort(int col, Qt::SortOrder order)
 }
 
 void SimpleList::clipboardChanged()
-{
-    qDebug() <<   "clipboardChanged()" << m_model->getClipboardUrlsCounter();
+{   
+    ui->lcdNumber->display(m_model->getClipboardUrlsCounter());
 }
 
 void SimpleList::progress(int cur, int total, int percent)
@@ -212,4 +224,33 @@ void SimpleList::error(QString title, QString message)
         m_pbar->hide();
     }
     QMessageBox::critical(this, title, message);
+}
+
+void SimpleList::onOpenItem(QModelIndex index)
+{
+    if (index.isValid())
+    {
+        m_curRow = index.row();
+        if (!m_model->openIndex(m_curRow))
+        {
+            QModelIndex idx = m_model->index(m_curRow, 0);
+            QString item = m_model->data(idx).toString();
+            error("Could not open item index", item);
+        }
+    }
+    else
+    {
+        m_curRow = -1;
+    }
+}
+
+
+void SimpleList::pathChanged(QString path)
+{
+    this->setWindowTitle(path);
+}
+
+void SimpleList::resizeColumnForName(int)
+{
+    ui->tableView->resizeColumnToContents(0);
 }

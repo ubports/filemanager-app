@@ -273,7 +273,7 @@ bool DirModelMimeData::fillClipboard(const QStringList& files, const QString &pa
     {
         const QString& item = files.at(counter);
         fi.setFile(item);
-        if (!fi.exists())
+        if (!fi.isAbsolute())
         {
             fi.setFile(path + QDir::separator() + item);
         }
@@ -285,7 +285,9 @@ bool DirModelMimeData::fillClipboard(const QStringList& files, const QString &pa
         }
         else
         {
-            //emit error( QObject::tr("Item does not exist"), item);
+         // emit error( QObject::tr("Item does not exist"), item);
+           urls.clear();
+           break;
         }
     }
     if (urls.count() > 0)
@@ -461,7 +463,7 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
         qDebug() << Q_FUNC_INFO << pathname;
 #endif
     QFileInfo info(pathname);
-    if (!info.exists())
+    if (!info.isAbsolute())
     {
         info.setFile(action->targetPath, pathname);
     }

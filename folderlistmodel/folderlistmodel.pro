@@ -23,7 +23,12 @@ exists(../plugin.pri) {
 else {
     TEMPLATE = lib
     CONFIG += qt plugin hide_symbols
-    QT += qml
+    greaterThan(QT_MAJOR_VERSION, 4) {
+       QT += qml
+    }
+    else {
+       QT += declarative
+    }
     target.path = $$[QT_INSTALL_QML]/$$PLUGIN_IMPORT_PATH
     INSTALLS += target
     qmldir.files += $$PWD/qmldir

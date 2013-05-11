@@ -40,6 +40,9 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QFileIconProvider>
+#include <QUrl>
+#include <QDesktopServices>
+
 
 #define IS_VALID_ROW(row)             (row >=0 && row < mDirectoryContents.count())
 #define WARN_ROW_OUT_OF_RANGE(row)    qWarning() << Q_FUNC_INFO << "row" << row << "Out of bounds access"
@@ -318,6 +321,10 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         case ModifiedDateRole:
             return fi.lastModified();
         case FileSizeRole: {
+             if (fi.isDir())
+             {
+                return dirItems(fi);
+             }
              return fileSize(fi.size());
         }
         case IconSourceRole: {
@@ -376,17 +383,7 @@ void DirModel::setPath(const QString &pathName)
     mDirectoryContents.clear();
     endResetModel();
 
-    int filter = QDir::AllEntries | QDir::NoDotAndDotDot ;
-    if (!mShowDirectories)
-    {
-        filter &= ~QDir::AllDirs;
-        filter &= ~QDir::Dirs;
-    }
-    if (mShowHiddenFiles)
-    {
-        filter |= QDir::Hidden;
-    }
-    QDir::Filter dirFilter = static_cast<QDir::Filter>(filter);
+    QDir::Filter dirFilter = currentDirFilter();
     // TODO: we need to set a spinner active before we start getting results from DirListWorker
     DirListWorker *dlw = new DirListWorker(pathName, dirFilter);
     connect(dlw, SIGNAL(itemsAdded(QVector<QFileInfo>)), SLOT(onItemsAdded(QVector<QFileInfo>)));
@@ -642,21 +639,12 @@ void DirModel::paste()
 }
 
 
-bool  DirModel::cdInto(int row)
+bool  DirModel::cdIntoIndex(int row)
 {
-    int ret = false;
+    bool ret = false;
     if (IS_VALID_ROW(row))
     {
-        const QFileInfo & fi = mDirectoryContents.at(row);
-        if (fi.isDir() && fi.isReadable())
-        {
-            QDir childDir(mCurrentDir);
-            if ( childDir.cd(fi.fileName()) )
-            {
-                setPath(childDir.absolutePath());
-                ret = true;
-            }
-        }
+        ret = cdInto(mDirectoryContents.at(row));
     }
     else
     {
@@ -665,6 +653,37 @@ bool  DirModel::cdInto(int row)
     return ret;
 }
 
+
+bool  DirModel::cdIntoPath(const QString &filename)
+{
+    QFileInfo fi(filename);
+    if (fi.isRelative())
+    {
+        fi.setFile(mCurrentDir, filename);
+    }
+    return cdInto(fi);
+}
+
+
+bool  DirModel::cdInto(const QFileInfo &fi)
+{
+    bool ret = false;
+    if (fi.exists() && fi.isDir() && fi.isReadable())
+    {
+        QDir childDir(mCurrentDir);
+        if ( childDir.cd(fi.fileName()) )
+        {
+            setPath(childDir.absolutePath());
+            ret = true;
+        }
+    }
+    return ret;
+}
+
+/*!
+ * \brief DirModel::onItemRemoved()
+ * \param pathname full pathname of removed file
+ */
 void DirModel::onItemRemoved(const QString &pathname)
 {
     QFileInfo info(pathname);
@@ -683,6 +702,10 @@ void DirModel::onItemRemoved(const QFileInfo &fi)
     }
 }
 
+/*!
+ * \brief DirModel::onItemAdded()
+ * \param pathname full pathname of the added file
+ */
 void DirModel::onItemAdded(const QString &pathname)
 {
     QFileInfo info(pathname);
@@ -890,6 +913,79 @@ int DirModel::rowOfItem(const QFileInfo& fi)
         row = it - mDirectoryContents.begin();
     }
     return row;
+}
+
+
+QDir::Filter DirModel::currentDirFilter() const
+{
+    int filter = QDir::AllEntries | QDir::NoDotAndDotDot ;
+    if (!mShowDirectories)
+    {
+        filter &= ~QDir::AllDirs;
+        filter &= ~QDir::Dirs;
+    }
+    if (mShowHiddenFiles)
+    {
+        filter |= QDir::Hidden;
+    }
+    QDir::Filter dirFilter = static_cast<QDir::Filter>(filter);
+    return dirFilter;
+}
+
+QString DirModel::dirItems(const QFileInfo& fi) const
+{
+    int counter = 0;
+    QDir d(fi.absoluteFilePath(), QString(), QDir::NoSort, currentDirFilter());
+    counter = d.count();
+    if (counter < 0)
+    {
+        counter = 0;
+    }
+    QString ret (QString::number(counter) + QLatin1Char(' '));
+    ret += QObject::tr("items");
+    return ret;
+}
+
+
+bool DirModel::openIndex(int row)
+{
+    bool ret = false;
+    if (IS_VALID_ROW(row))
+    {
+        ret = openItem(mDirectoryContents.at(row));
+    }
+    else
+    {
+        WARN_ROW_OUT_OF_RANGE(row);
+    }
+    return ret;
+}
+
+bool DirModel::openPath(const QString &filename)
+{
+    QFileInfo fi(filename);
+    if (fi.isRelative())
+    {
+        fi.setFile(mCurrentDir, filename);
+    }
+    return openItem(fi);
+}
+
+bool DirModel::openItem(const QFileInfo &fi)
+{
+    bool ret = false;
+    if (fi.exists())
+    {
+        if (fi.isDir())
+        {
+            ret = cdInto(fi);
+        }
+        else
+        {
+            ret = QDesktopServices::openUrl(QUrl::fromLocalFile(fi.absoluteFilePath()));
+        }
+    }
+    return ret;
 }
 
 // for dirlistworker

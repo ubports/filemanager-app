@@ -59,11 +59,14 @@ private slots:
     void   onShowDirs(bool);
     void   onShowHidden(bool);
     void   onRowClicked(QModelIndex);
+    void   onOpenItem(QModelIndex index);
     void   onVerticalHeaderClicked(int);
     void   setSort(int col, Qt::SortOrder order);
     void   progress(int, int,int);
     void   clipboardChanged();
     void   error(QString title, QString message);
+    void   pathChanged(QString path);
+    void   resizeColumnForName(int);
 };
 
 #endif // SIMPLELIST_H
