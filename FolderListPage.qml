@@ -83,7 +83,7 @@ Page {
             text: i18n.tr("Create folder")
             onTriggered: {
                 print(text)
-                PopupUtils.open(createFolderDialog)
+                PopupUtils.open(createFolderDialog, root)
             }
         }
 
