@@ -18,12 +18,14 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.Popups 0.1
+import org.nemomobile.folderlistmodel 1.0
 
 Dialog {
     id: root
 
     property string fileName
     property string filePath
+    property FolderListModel folderListModel
 
     title: i18n.tr("Choose action")
     text: i18n.tr("For file: ") + fileName
@@ -32,7 +34,7 @@ Dialog {
         text: i18n.tr("Open")
         onClicked: {
             console.log("Opening file", filePath)
-            Qt.openUrlExternally("file://" + filePath)
+            folderListModel.openPath(filePath)
             onClicked: PopupUtils.close(root)
         }
     }
