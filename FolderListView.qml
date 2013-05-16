@@ -91,11 +91,6 @@ ListView {
         property var model
         actions: ActionList {
             Action {
-                text: i18n.tr("Add as bookmark")
-                // TODO
-                onTriggered: print(text)
-            }
-            Action {
                 text: i18n.tr("Show details")
                 onTriggered: {
                     print(text)

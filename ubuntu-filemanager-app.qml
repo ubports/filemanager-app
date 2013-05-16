@@ -46,15 +46,6 @@ MainView {
             // Tab content begins here
             page: FolderListPage {
             }
-        }
-        
-        // Second tab begins here
-        Tab {
-            objectName: "bookmarksPage"
-            
-            title: i18n.tr("Bookmarks")
-            page: BookmarksPage {
-            }
-        }
+        }        
     }
 }
