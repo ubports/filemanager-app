@@ -53,6 +53,8 @@ Page {
 
         back: Action {
             text: i18n.tr("Up")
+            // TODO: temporary
+            iconSource: "/usr/share/icons/Humanity/actions/48/up.svg"
             onTriggered: {
                 pageModel.path = pageModel.parentPath
                 console.log("Up triggered")
@@ -61,6 +63,8 @@ Page {
         }
         Action {
             text: i18n.tr("Paste" + " (" + pageModel.clipboardUrlsCounter + ")")
+            // TODO: temporary
+            iconSource: "/usr/share/icons/Humanity/actions/48/edit-paste.svg"
             onTriggered: {
                 console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
                 PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
@@ -81,6 +85,8 @@ Page {
         // file manipulation operations
         Action {
             text: i18n.tr("Create folder")
+            // TODO: temporary
+            iconSource: "/usr/share/icons/Humanity/actions/48/folder-new.svg"
             onTriggered: {
                 print(text)
                 PopupUtils.open(createFolderDialog, root)
@@ -89,6 +95,8 @@ Page {
 
         Action {
             text: i18n.tr("Home")
+            // TODO: temporary
+            iconSource: "/usr/share/icons/Humanity/actions/48/go-home.svg"
             onTriggered: {
                 pageModel.path = pageModel.homePath()
                 console.log("Home triggered")
