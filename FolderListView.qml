@@ -157,6 +157,7 @@ ListView {
 
     delegate: FolderListDelegate {
         id: delegate
+
         onClicked: {
             if (model.isDir) {
                 if (model.isReadable && model.isExecutable) {
@@ -172,11 +173,11 @@ ListView {
                 }
             } else {
                 console.log("Non dir clicked")
-                PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), delegate,
+                PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
                                 {
                                     fileName: model.fileName,
-                                    filePath: model.filePath
-
+                                    filePath: model.filePath,
+                                    folderListModel: root.folderListModel
                                  })
             }
         }
