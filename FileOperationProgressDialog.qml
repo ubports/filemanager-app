@@ -49,14 +49,11 @@ Dialog {
         onProgress: {
             console.log("On progress ", curItem, totalItems, percent)
             progress.value = percent
-            // TODO: is this a bug in backend? The first received signal is curItem=0, totalItems=0. Work around:
-            if (!(curItem == 0 && totalItems == 0)) {
-                if (curItem == totalItems) {
-                    console.log("All files processed, closing progress dialog")
-                    PopupUtils.close(root)
-                } else {
-                    root.text = descriptionPrepend + " " + curItem + "/" + totalItems
-                }
+            if (curItem == totalItems) {
+                console.log("All files processed, closing progress dialog")
+                PopupUtils.close(root)
+            } else {
+                root.text = descriptionPrepend + " " + curItem + "/" + totalItems
             }
         }
     }
