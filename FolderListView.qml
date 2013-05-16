@@ -108,6 +108,9 @@ ListView {
             }
             Action {
                 text: i18n.tr("Copy")
+                // TODO: temporary.
+                iconSource: "/usr/share/icons/Humanity/actions/48/edit-copy.svg"
+
                 onTriggered: {
                     console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
                     model.copyIndex(actionSelectionPopover.model.index)
@@ -116,6 +119,8 @@ ListView {
             }
             Action {
                 text: i18n.tr("Cut")
+                // TODO: temporary
+                iconSource: "/usr/share/icons/Humanity/actions/48/edit-cut.svg"
                 onTriggered: {
                     console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
                     model.cutIndex(actionSelectionPopover.model.index)
@@ -124,6 +129,8 @@ ListView {
             }
             Action {
                 text: i18n.tr("Delete")
+                // TODO: temporary
+                iconSource: "/usr/share/icons/Humanity/actions/48/edit-delete.svg"
                 onTriggered: {
                     print(text)
                     PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller,
@@ -134,6 +141,8 @@ ListView {
             }            
             Action {
                 text: i18n.tr("Rename")
+                // TODO: temporary
+                iconSource: "/usr/share/icons/Humanity/actions/48/rotate.svg"
                 onTriggered: {
                     print(text)
                     PopupUtils.open(confirmRenameDialog, actionSelectionPopover.caller,
