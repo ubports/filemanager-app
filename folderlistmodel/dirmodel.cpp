@@ -43,6 +43,10 @@
 #include <QUrl>
 #include <QDesktopServices>
 
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL) || QT_VERSION >= 0x050000
+# include <QMimeType>
+# include <QMimeDatabase>
+#endif
 
 #define IS_VALID_ROW(row)             (row >=0 && row < mDirectoryContents.count())
 #define WARN_ROW_OUT_OF_RANGE(row)    qWarning() << Q_FUNC_INFO << "row" << row << "Out of bounds access"
@@ -291,7 +295,16 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
     {
         if (index.column() == 0)
         {
-            return QFileIconProvider().icon(mDirectoryContents.at(index.row()));
+            QMimeDatabase database;
+            QIcon icon;
+            QMimeType mime = database.mimeTypeForFile(mDirectoryContents.at(index.row()));
+            if (mime.isValid()) {               
+                icon = QIcon::fromTheme(mime.iconName());                
+            }
+            if (icon.isNull()) {
+                icon = QFileIconProvider().icon(mDirectoryContents.at(index.row()));             
+            }           
+            return icon;
         }
         return QVariant();
     }

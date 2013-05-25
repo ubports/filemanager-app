@@ -56,7 +56,6 @@
 
 #define   COMMON_SIZE_ITEM       120
 
-
 RemoveNotifier   FileSystemAction::m_removeNotifier;
 
 static  QLatin1String GNOME_COPIED_MIME_TYPE  ("x-special/gnome-copied-files");
@@ -67,13 +66,22 @@ static  QLatin1String KDE_CUT_MIME_TYPE       ("application/x-kde-cutselection")
 class DirModelMimeData : public QMimeData
 {
 public:
+    enum ClipBoardDataOwner
+    {
+        Nobody,    // might have failed
+        Application,
+        MySelf
+    };
+
     explicit DirModelMimeData();
     ~DirModelMimeData();
     virtual QStringList     formats() const    { return m_formats; }
     virtual bool            hasFormat ( const QString & mimeType ) const;
 public:
-    void                    setIntoClipboard(const QStringList& files, const QString &path, ClipboardOperation operation);
-    static const QMimeData *clipboardMimeData();
+    ClipBoardDataOwner      setIntoClipboard(const QStringList& files,
+                                             const QString &path,
+                                             ClipboardOperation operation);
+    const QMimeData *clipboardMimeData();
     QStringList             localUrls(ClipboardOperation& operation);
 private:
     static QList<QUrl>      gnomeUrls(const QMimeData *mime, ClipboardOperation& operation);
@@ -82,17 +90,15 @@ private:
 private:
     QStringList              m_formats;
     const QMimeData *        m_appMime;
-     QByteArray              gnomeData;
-     QList<QUrl>             urls;
-#if DEBUG_MESSAGES
-     static   int            instances;
-#endif
+    QByteArray               gnomeData;
+    QList<QUrl>              urls;
+    static DirModelMimeData* m_globalMimeData; //!< some mobile devices do not use X, they may not have clipboard
+    static   int             instances;
 };
 
-#if DEBUG_MESSAGES
-   int DirModelMimeData::instances = 0;
-#endif
 
+int DirModelMimeData::instances = 0;
+DirModelMimeData*  DirModelMimeData::m_globalMimeData = 0;
 
 void FileSystemAction::CopyFile::clear()
 {
@@ -123,6 +129,7 @@ bool DirModelMimeData::hasFormat ( const QString & mimeType ) const
  */
 DirModelMimeData::DirModelMimeData() :
     QMimeData()
+  , m_appMime(0)
 {
     m_formats.append("text/uri-list");
     m_formats.append(GNOME_COPIED_MIME_TYPE);
@@ -133,17 +140,28 @@ DirModelMimeData::DirModelMimeData() :
     m_formats.append("TIMESTAMP");
     m_formats.append("SAVE_TARGETS");
 
-    m_appMime = 0;
+    ++instances;
 #if DEBUG_MESSAGES
-     qDebug() << Q_FUNC_INFO << this << "instances" << ++instances;
+     qDebug() << Q_FUNC_INFO << this << "instances" << instances;
 #endif
 }
 
+
+
+
 DirModelMimeData::~DirModelMimeData()
 {
+    --instances;
 #if DEBUG_MESSAGES
-   qDebug() << Q_FUNC_INFO << this << "instances" << --instances;
+    qDebug() << Q_FUNC_INFO << this  << "instances" << instances
+             << "m_globalMimeData" << m_globalMimeData;
 #endif
+    if (instances == 1 && m_globalMimeData)
+    {
+        DirModelMimeData * tmp = m_globalMimeData;
+        m_globalMimeData = 0;
+        delete tmp;
+    }
 }
 
 //===============================================================================================
@@ -214,7 +232,7 @@ ClipboardOperation DirModelMimeData::clipBoardOperation()
                 }
             }
         }
-    }
+    }    
     return op;
 }
 
@@ -222,30 +240,54 @@ ClipboardOperation DirModelMimeData::clipBoardOperation()
 //===============================================================================================
 /*!
  * \brief DirModelMimeData::setIntoClipboard
+ *
+ *  Try to put data in the global cliboard
+ *
+ *  \note:
+ *       On mobile devices clipboard might not work, in this case a local Clipboard is simulated
+ *
  * \param files
  * \param path
  * \param isCut
+ * \return who is owner of clipboard data
  */
-void DirModelMimeData::setIntoClipboard(const QStringList &files, const QString& path, ClipboardOperation operation)
+DirModelMimeData::ClipBoardDataOwner
+DirModelMimeData::setIntoClipboard(const QStringList &files, const QString& path, ClipboardOperation operation)
 {
+  DirModelMimeData::ClipBoardDataOwner  ret = Nobody;
   QClipboard *clipboard = QApplication::clipboard();
   if (clipboard)
-  {
-        if (clipboard->ownsClipboard())
-        {
-            //it used to crash, so leave it for now
-           // clipboard->clear();
-        }
-        DirModelMimeData *mime = new DirModelMimeData();
+  {      
+        ret = Application;
+        DirModelMimeData *mime = m_globalMimeData ? m_globalMimeData
+                                                  : new DirModelMimeData();
         if (mime->fillClipboard(files, path, operation))
         {
            clipboard->setMimeData(mime);
+           const QMimeData *data = clipboard->mimeData();
+           //it looks like some mobile devices does not have X
+           //in this case we simulate our own clipboard
+           if (!data && !m_globalMimeData)
+           {
+               m_globalMimeData = mime;
+           }        
+#if DEBUG_MESSAGES
+           qDebug() << Q_FUNC_INFO << "mime" << mime << "clipboard->mimeData()" << data
+                    << "m_ownClipboardMimeData" << m_globalMimeData;
+#endif
         }
         else
+        if (m_globalMimeData != mime)
         {
             delete mime;
         }
+        //check if it is necessary to send notification about Clipboard changed
+        if (m_globalMimeData)
+        {
+           ret = MySelf;
+        }
   }
+  return ret;
 }
 
 
@@ -308,10 +350,20 @@ const QMimeData *DirModelMimeData::clipboardMimeData()
 {
     const QMimeData *ret = 0;
     QClipboard *clipboard = QApplication::clipboard();
+    if (m_globalMimeData)
+    {
+        ret = m_globalMimeData;
+    }
+    else
     if (clipboard)
     {
         ret = clipboard->mimeData();
     }
+#if DEBUG_MESSAGES
+    qDebug() << Q_FUNC_INFO << "clipboard" << clipboard
+                << "m_ownClipboardMimeData" << m_globalMimeData
+                << "clipboard->mimeData()" << ret;
+#endif
     return ret;
 }
 
@@ -323,7 +375,7 @@ const QMimeData *DirModelMimeData::clipboardMimeData()
 QStringList
 DirModelMimeData::localUrls(ClipboardOperation& operation)
 {
-     m_appMime = DirModelMimeData::clipboardMimeData();
+     m_appMime = clipboardMimeData();
      QStringList paths;
      //it may have external urls
      if (m_appMime)
@@ -405,8 +457,8 @@ FileSystemAction::FileSystemAction(QObject *parent) :
 
     QClipboard *clipboard = QApplication::clipboard();
 
-    connect(clipboard, SIGNAL(dataChanged()), this, SIGNAL(clipboardChanged()));
-    connect(clipboard, SIGNAL(dataChanged()), this, SLOT(clipboardHasChanged()));
+    connect(clipboard, SIGNAL(dataChanged()), this,    SIGNAL(clipboardChanged()));
+    connect(clipboard, SIGNAL(dataChanged()), this,    SLOT(clipboardHasChanged()));
 }
 
 //===============================================================================================
@@ -878,7 +930,12 @@ void FileSystemAction::copy(const QStringList &pathnames)
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << pathnames;
 #endif
-    m_mimeData->setIntoClipboard(pathnames, m_path, ClipboardCopy);
+    DirModelMimeData::ClipBoardDataOwner owner =
+               m_mimeData->setIntoClipboard(pathnames, m_path, ClipboardCopy);
+    if (owner == DirModelMimeData::MySelf )
+    {
+        emit clipboardChanged();
+    }
 }
 
 //===============================================================================================
@@ -891,7 +948,12 @@ void FileSystemAction::cut(const QStringList &pathnames)
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << pathnames;
 #endif
-     m_mimeData->setIntoClipboard(pathnames, m_path, ClipboardCut);
+     DirModelMimeData::ClipBoardDataOwner owner =
+         m_mimeData->setIntoClipboard(pathnames, m_path, ClipboardCut);
+     if (owner == DirModelMimeData::MySelf )
+     {
+         emit clipboardChanged();
+     }
 }
 
 //===============================================================================================
@@ -1044,6 +1106,7 @@ void FileSystemAction::endCurrentAction()
          if (items.count())
          {
              QString targetPath = m_curAction->targetPath;
+             //it is not necessary to handle own clipboard here
              m_mimeData->setIntoClipboard(items, targetPath, ClipboardCopy);
          }
     }

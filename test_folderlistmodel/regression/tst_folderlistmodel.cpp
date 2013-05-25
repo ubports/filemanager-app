@@ -9,9 +9,32 @@
 #include <QFileInfo>
 #include <QMetaType>
 #include <QDirIterator>
+#include <QIcon>
+#include <QPixmap>
+#include <QFileIconProvider>
+#include <QMimeDatabase>
+#include <QMimeType>
+#include <QCryptographicHash>
+#include <QDesktopServices>
+
+//files to generate
+#include "testonly_pdf.h"
+#include "sound_mp3.h"
+#include "media_asx.h"
+#include "media_xspf.h"
 
 #define TIME_TO_PROCESS       2300
 #define TIME_TO_REFRESH_DIR   80
+
+#if QT_VERSION  >= 0x050000
+#define  QSKIP_ALL_TESTS(statement)   QSKIP(statement)
+#else
+#define  QSKIP_ALL_TESTS(statement)   QSKIP(statement,SkipAll)
+#endif
+
+
+QByteArray md5FromIcon(const QIcon& icon);
+QString createFileInTempDir(const QString& name, const char *content, qint64 size);
 
 class TestDirModel : public QObject
 {
@@ -28,6 +51,7 @@ protected slots:
     void slotFileRemoved(const QFileInfo& f) {m_filesRemoved.append(f.absoluteFilePath()); }
     void progress(int, int, int);
     void cancel(int index, int, int percent);
+    void slotclipboardChanged();
 
 private Q_SLOTS:
     void initTestCase();       //before all tests
@@ -53,6 +77,15 @@ private Q_SLOTS:
     void  modelCopyFileAndDirectoryLinks();
     void  modelCopyAndPaste3Times();
     void  modelCutAndPaste3Times();
+    void  getThemeIcons();
+    void  fileIconProvider();
+
+    //define TEST_OPENFILES to test QDesktopServices::openUrl() for some files
+#if defined(TEST_OPENFILES)
+    void  openMP3();
+    void  openTXT();
+    void  openPDF();
+#endif
 
 
 private:
@@ -66,6 +99,10 @@ private:
     bool createLink(const QString& fullSouce,
                     const QString& link,
                     bool  fullLink = false);
+
+    bool createFileAndCheckIfIconIsExclisive(const QString& termination,
+                                             const unsigned char *content,
+                                             qint64 len);
 
 private:
     FileSystemAction  fsAction;
@@ -84,6 +121,9 @@ private:
     int            m_progressTotalItems;
     int            m_progressCurrentItem;
     int            m_progressPercentDone;
+    bool           m_receivedClipboardChangesSignal;
+    QHash<QByteArray, QString>  m_md5IconsTable;
+    QFileIconProvider           m_provider;
 
 };
 
@@ -190,34 +230,31 @@ bool TestDirModel::compareDirectories(const QString &d1, const QString &d2)
                     QDir::Files | QDir::Hidden | QDir::System,
                     QDirIterator::Subdirectories);
 
-    QDirIterator d2Info(d2,
-                    QDir::Files | QDir::Hidden | QDir::System,
-                    QDirIterator::Subdirectories);
+    int len = d1.length();
 
     while (d1Info.hasNext() &&  !d1Info.next().isEmpty())
     {
-        if (!d2Info.hasNext())
-        {
-            return false;
-        }
-        d2Info.next();
+        QString target(d2  + d1Info.fileInfo().absoluteFilePath().mid(len));
+
+        QFileInfo d2Info(target);
         if (d1Info.fileName() != d2Info.fileName())
         {
+            qDebug() << "false name" << d1Info.fileName() << d2Info.fileName();
             return false;
         }
-        if (d1Info.fileInfo().size() != d2Info.fileInfo().size())
+        if (d1Info.fileInfo().size() != d2Info.size())
         {
+            qDebug() << "false size" << d1Info.fileName() << d1Info.fileInfo().size()
+                                    << d2Info.fileName() << d2Info.size();
             return false;
         }
-        if (d1Info.fileInfo().permissions() != d2Info.fileInfo().permissions())
+        if (d1Info.fileInfo().permissions() != d2Info.permissions())
         {
+            qDebug() << "false permissions" << d1Info.fileName() << d2Info.fileName();
             return false;
-        }
+        }       
     }
-    if (d2Info.hasNext())
-    {
-        return false;
-    }
+
     return true;
 }
 
@@ -228,6 +265,11 @@ void TestDirModel::cancel(int index, int, int percent)
     {
          model->cancelAction();
     }
+}
+
+void TestDirModel::slotclipboardChanged()
+{
+     m_receivedClipboardChangesSignal     = true;
 }
 
 TestDirModel::~TestDirModel()
@@ -289,6 +331,7 @@ void TestDirModel::init()
    m_progressTotalItems = 0;
    m_progressCurrentItem = 0;
    m_progressPercentDone = 0;
+   m_receivedClipboardChangesSignal     = false;
 }
 
 
@@ -303,6 +346,7 @@ void TestDirModel::cleanup()
     m_progressTotalItems = 0;
     m_progressCurrentItem = 0;
     m_progressPercentDone = 0;
+    m_receivedClipboardChangesSignal     = false;
 }
 
 
@@ -470,6 +514,8 @@ void TestDirModel::modelCopyDirPasteIntoAnotherModel()
     m_deepDir_01 = new DeepDir(orig, 1);
     m_dirModel_01 = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
+    connect(m_dirModel_01,  SIGNAL(clipboardChanged()),
+            this,           SLOT(slotclipboardChanged()));
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_01->rowCount(),  1);
 
@@ -478,7 +524,8 @@ void TestDirModel::modelCopyDirPasteIntoAnotherModel()
     m_dirModel_02 = new DirModel();
     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
             this,          SLOT(progress(int,int,int)));
-    m_dirModel_02->setPath(m_deepDir_02->path());
+    m_dirModel_02->setPath(m_deepDir_02->path());    
+
     QTest::qWait(TIME_TO_REFRESH_DIR);
 
     QCOMPARE( QFileInfo(m_deepDir_02->path()).exists(),  true);
@@ -489,9 +536,9 @@ void TestDirModel::modelCopyDirPasteIntoAnotherModel()
     QTest::qWait(TIME_TO_PROCESS);
 
     QCOMPARE(m_dirModel_02->rowCount(),  1);
-    QCOMPARE(m_progressPercentDone, 100);
-
+    QCOMPARE(m_progressPercentDone, 100);   
     QCOMPARE(compareDirectories(m_deepDir_01->path(), m_deepDir_02->path()), true);
+    QCOMPARE(m_receivedClipboardChangesSignal,      true);
 }
 
 
@@ -501,6 +548,8 @@ void TestDirModel::modelCopyManyItemsPasteIntoAnotherModel()
 
     m_deepDir_01  = new DeepDir(orig, 5);
     m_dirModel_01 = new DirModel();
+    connect(m_dirModel_01,  SIGNAL(clipboardChanged()),
+            this,           SLOT(slotclipboardChanged()));
     const int  filesCreated = 10;
     int  itemsCreated = filesCreated + 1;
 
@@ -548,6 +597,7 @@ void TestDirModel::modelCopyManyItemsPasteIntoAnotherModel()
     QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
     QCOMPARE(m_progressPercentDone, 100);
     QCOMPARE(compareDirectories(m_deepDir_01->path(), m_deepDir_02->path()), true);
+    QCOMPARE(m_receivedClipboardChangesSignal,   true);
 }
 
 void TestDirModel::modelCutManyItemsPasteIntoAnotherModel()
@@ -556,6 +606,8 @@ void TestDirModel::modelCutManyItemsPasteIntoAnotherModel()
 
     m_deepDir_01 = new DeepDir(orig, 5);
     m_dirModel_01 = new DirModel();
+    connect(m_dirModel_01,  SIGNAL(clipboardChanged()),
+            this,           SLOT(slotclipboardChanged()));
     const int  filesCreated = 10;
     const int  itemsCreated = filesCreated + 1;
 
@@ -584,6 +636,7 @@ void TestDirModel::modelCutManyItemsPasteIntoAnotherModel()
 
     QCOMPARE(m_dirModel_02->rowCount(),  itemsCreated); //pasted into
     QCOMPARE(m_dirModel_01->rowCount(),  0);  //cut from
+    QCOMPARE(m_receivedClipboardChangesSignal,  true);
 }
 
 void  TestDirModel::fsActionMoveItemsForcingCopyAndThenRemove()
@@ -916,6 +969,181 @@ void TestDirModel::modelCutAndPaste3Times()
     QCOMPARE(model3.rowCount(),  items.count());
 }
 
+
+
+void TestDirModel::getThemeIcons()
+{
+    QStringList mimesToTest = QStringList()
+                             << "text/plain"
+                             << "text/x-c++src"
+                             << "text/x-csrc"
+                             << "inode/directory"
+                             << "application/msword"
+                             << "application/octet-stream"
+                             << "application/pdf"
+                             << "application/postscript"
+                             << "application/x-bzip-compressed-tar"
+                             << "application/x-executable"
+                             << "application/x-gzip"
+                             << "application/x-shellscript"                                                         
+                             ;
+    QMimeDatabase mimeBase;
+    QString msg;
+    QHash<QByteArray, QString>     md5IconsTable;
+
+    for (int counter=0; counter < mimesToTest.count(); counter++)
+    {
+        QMimeType mimetype = mimeBase.mimeTypeForName(mimesToTest.at(counter));
+        msg = QLatin1String("invalid mimetype ") + mimesToTest.at(counter);        
+        if (!mimetype.isValid())
+        {
+              QSKIP_ALL_TESTS(qPrintable(msg));
+        }
+        QIcon   icon = QIcon::fromTheme(mimetype.iconName());
+        msg = QLatin1String("invalid QIcon::fromTheme ") + mimetype.iconName();       
+        if (icon.isNull())
+        {
+              QSKIP_ALL_TESTS(qPrintable(msg));
+        }
+
+        QPixmap pix = icon.pixmap(QSize(48,48));
+        msg = QLatin1String("invalid QPixmap from icon ") + mimetype.iconName();       
+        if (pix.isNull())
+        {
+              QSKIP_ALL_TESTS(qPrintable(msg));
+        }
+
+        QImage image = pix.toImage();
+        msg = QLatin1String("invalid QImage from QPixmap/QIcon ") + mimetype.iconName();       
+        if (image.isNull())
+        {
+              QSKIP_ALL_TESTS(qPrintable(msg));
+        }
+
+        const uchar *bits = image.bits();
+        const char *bytes = reinterpret_cast<const char*> (bits);
+        QByteArray bytesArray(bytes, image.byteCount());
+        QByteArray md5 = QCryptographicHash::hash(bytesArray, QCryptographicHash::Md5);
+        bool ret = !md5IconsTable.contains(md5);
+        qWarning("%s icon using QIcon::fromTheme() for mime type %s",
+                  ret ? "GOOD" : "BAD ",
+                   mimetype.name().toLatin1().constData());
+        md5IconsTable.insert(md5, mimesToTest.at(counter));
+    }
+}
+
+
+bool TestDirModel::createFileAndCheckIfIconIsExclisive(const QString& termination,
+                                                       const unsigned char *content,
+                                                       qint64 len)
+{
+    QString myFile = createFileInTempDir(QString("tst_folderlistmodel_test.") + termination,
+                                         reinterpret_cast<const char*> (content),
+                                         len);
+    bool ret = false;
+    bool triedIcon = false;
+    if (!myFile.isEmpty())
+    {
+        QFileInfo myFileInfo(myFile);
+        if (myFileInfo.exists())
+        {
+            triedIcon = true;
+            QIcon icon = m_provider.icon(myFileInfo);
+            QFile::remove(myFile);
+            QByteArray  md5 = md5FromIcon(icon);
+            ret = !m_md5IconsTable.contains(md5);
+            qWarning("%s icon from QFileIconProvide::icon() for  %s",  ret ? "GOOD" : "QFileIconProvider::File or a BAD", qPrintable(myFile));
+        }
+    }
+    if(!triedIcon)
+    {
+        qDebug() << "ERROR: could not get icon for" << myFile;
+    }
+    return ret;
+}
+
+
+//generate some files and test if there is a icon available in
+void TestDirModel::fileIconProvider()
+{    
+    QIcon commonIcon  = m_provider.icon(QFileIconProvider::File);
+    if (commonIcon.isNull())
+    {
+        QFAIL("No QFileIconProvider::File available");
+    }
+
+    QByteArray  commonIconMd5 = md5FromIcon(commonIcon);
+    m_md5IconsTable.insert(commonIconMd5 , "commonIcon");
+
+    //generate PDF file
+    createFileAndCheckIfIconIsExclisive("mp3",  sound_44100_mp3_data, sound_44100_mp3_data_len);
+    createFileAndCheckIfIconIsExclisive("pdf",  testonly_pdf_data, testonly_pdf_len);
+    createFileAndCheckIfIconIsExclisive("asx",  media_asx, media_asx_len);
+    createFileAndCheckIfIconIsExclisive("xspf", media_xspf, media_xspf_len);
+}
+
+
+#if defined(TEST_OPENFILES)
+void TestDirModel::TestDirModel::openMP3()
+{
+    QString mp3File = createFileInTempDir("tst_folderlistmodel_for_open.mp3",
+                                          reinterpret_cast<const char*>(sound_44100_mp3_data),
+                                          sound_44100_mp3_data_len);
+    QCOMPARE(mp3File.isEmpty(),   false);
+    QUrl mp3Url = QUrl::fromLocalFile(mp3File);
+    bool ret = QDesktopServices::openUrl(mp3Url);
+    if (ret)
+    {
+         QTest::qWait(TIME_TO_PROCESS *5);
+         qWarning("GOOD: QDesktopServices::openUrl() works for MP3 files");
+    }
+    else {
+        qWarning("BAD: QDesktopServices::openUrl() does NOT work for MP3 files");
+    }
+    QCOMPARE(QFile::remove(mp3File),  true);
+}
+
+void  TestDirModel::openTXT()
+{
+    QByteArray text("This is a test only\n");
+    QString txtFile = createFileInTempDir("tst_folderlistmodel_for_open.txt",
+                                          text.constData(),
+                                          text.size());
+    QCOMPARE(txtFile.isEmpty(),   false);
+    QUrl txtUrl = QUrl::fromLocalFile(txtFile);
+    bool ret = QDesktopServices::openUrl(txtUrl);
+    if (ret)
+    {
+         QTest::qWait(TIME_TO_PROCESS *5);
+         qWarning("GOOD: QDesktopServices::openUrl() works for TEXT files");
+    }
+    else {
+         qWarning("BAD: QDesktopServices::openUrl() does NOT work for TEXT files");
+    }
+    QCOMPARE(QFile::remove(txtFile),  true);
+}
+
+void  TestDirModel::openPDF()
+{
+    QString pdfFile = createFileInTempDir("tst_folderlistmodel_for_open.pdf",
+                                          reinterpret_cast<const char*>(testonly_pdf_data),
+                                          testonly_pdf_len);
+    QCOMPARE(pdfFile.isEmpty(),   false);
+    QUrl pdfUrl = QUrl::fromLocalFile(pdfFile);
+    bool ret = QDesktopServices::openUrl(pdfUrl);
+    if (ret)
+    {
+         QTest::qWait(TIME_TO_PROCESS *5);
+         ("GOOD: QDesktopServices::openUrl() works for PDF files");
+    }
+    else {
+        qWarning("BAD: QDesktopServices::openUrl() does NOT work for PDF files");
+    }
+    QCOMPARE(QFile::remove(pdfFile),  true);
+}
+#endif
+
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -924,6 +1152,44 @@ int main(int argc, char *argv[])
 
     return ret;
 }
+
+
+
+
+QByteArray md5FromIcon(const QIcon& icon)
+{
+    QByteArray ret;
+    if (!icon.isNull())
+    {
+       QPixmap pix = icon.pixmap(QSize(48,48));
+       QImage image = pix.toImage();
+       if (!image.isNull())
+       {
+           const uchar *bits = image.bits();
+           const char *bytes = reinterpret_cast<const char*> (bits);
+           QByteArray bytesArray(bytes, image.byteCount());
+           ret = QCryptographicHash::hash(bytesArray, QCryptographicHash::Md5);
+       }
+    }
+    return ret;
+}
+
+QString createFileInTempDir(const QString& name, const char *content, qint64 size)
+{
+    QString ret;
+    QString fullName(QDir::tempPath() + QDir::separator() + name);
+    QFile file(fullName);
+    if (file.open(QFile::WriteOnly))
+    {
+        if (file.write(content, size) == size)
+        {
+            ret = fullName;
+        }
+        file.close();
+    }
+    return ret;
+}
+
 
 
 #include "tst_folderlistmodel.moc"

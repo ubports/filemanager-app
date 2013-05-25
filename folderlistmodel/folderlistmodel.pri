@@ -17,3 +17,10 @@ HEADERS += $$PWD/dirmodel.h \
 
 INCLUDEPATH  += $$PWD 
 
+greaterThan(QT_MAJOR_VERSION, 4) {
+   QT += qml
+}
+else {
+    QT += declarative    
+}
+

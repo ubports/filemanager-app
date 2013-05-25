@@ -4,7 +4,12 @@ CONFIG   += testcase
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4) {
+   QT += widgets
+}
+else {
+   include($$PWD/mimetypes/mimetypes-src.pri)
+}
 
 #------------------------------------------------
 
@@ -19,5 +24,7 @@ HEADERS += \
 
 SOURCES += \
     tempfiles.cpp
+
+INCLUDEPATH += $$PWD
 
 # DEFINES += DEBUG_REMOVE
