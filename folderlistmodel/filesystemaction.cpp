@@ -969,6 +969,12 @@ void FileSystemAction::paste()
 #endif
     if (paths.count())
     {
+       if (QFileInfo(m_path).absoluteFilePath() == QFileInfo(paths.at(0)).absolutePath())
+       {
+           emit error(tr("Cannot paste"),
+                      tr("origin and destination folder are the same"));
+           return;
+       }
        ActionType actionType  = ActionCopy; // start with Copy and check for Cut
        if (operation == ClipboardCut)
        {
