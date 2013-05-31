@@ -17,3 +17,11 @@ Depends: ${misc:Depends},
          qtdeclarative5-nemo-qml-plugins-folderlistmodel
 Description: File Manager application
  Core File Manager application
+
+Package: ubuntu-filemanager-app-autopilot
+Architecture: all
+Depends: libautopilot-qt,
+         libqt5test5,
+         ubuntu-filemanager-app (= ${source:Version})
+Description: Autopilot tests for File Manager Application
+ This package contains the autopilot tests for the File Manager
