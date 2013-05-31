@@ -75,6 +75,7 @@ private Q_SLOTS:
     void  modelTestFileSize();
     void  modelRemoveDirWithHiddenFilesAndLinks();
     void  modelCancelCopyAction();
+    void  modelCopyPasteAndPasteAgain();
     void  modelCopyFileAndDirectoryLinks();
     void  modelCopyAndPaste3Times();
     void  modelCutAndPaste3Times();
@@ -1021,6 +1022,42 @@ void TestDirModel::modelCutAndPaste3Times()
     QCOMPARE(model3.rowCount(),  items.count());
 }
 
+
+void TestDirModel::modelCopyPasteAndPasteAgain()
+{
+    QString orig("modelCopyPasteAndPasteAgain_orig");
+    m_deepDir_01  = new DeepDir(orig, 1);
+    m_dirModel_01  = new DirModel();
+    connect(m_dirModel_01,  SIGNAL(error(QString,QString)),
+            this,           SLOT(slotError(QString,QString)));
+
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(), 1);
+
+
+    QString target("modelCopyPasteAndPasteAgain_target");
+    m_deepDir_02  = new DeepDir(target, 0);
+    m_dirModel_02  = new DirModel();
+    connect(m_dirModel_02,  SIGNAL(error(QString,QString)),
+            this,           SLOT(slotError(QString,QString)));
+
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 0);
+
+    m_dirModel_01->copyIndex(0);
+
+    //first time
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+    //second time
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QCOMPARE(compareDirectories(m_deepDir_01->path(), m_deepDir_02->path()), true);
+    QCOMPARE(m_receivedErrorSignal,   false);
+}
 
 
 void TestDirModel::getThemeIcons()

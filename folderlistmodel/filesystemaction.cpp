@@ -862,7 +862,7 @@ void  FileSystemAction::processCopyEntry()
                 m_errorTitle = QObject::tr("Could not open file");
                 m_errorMsg   = orig;
             }
-            m_curAction->copyFile.target = new QTemporaryFile();
+             m_curAction->copyFile.target = new QTemporaryFile();
             if (! m_curAction->copyFile.target->open())
             {
                 m_cancelCurrentAction = true;
@@ -1193,17 +1193,30 @@ bool FileSystemAction::processCopySingleFile()
         }
         else
         {
-            m_cancelCurrentAction = ! m_curAction->copyFile.target->
-                                       rename(m_curAction->copyFile.targetName);
-            if (m_cancelCurrentAction)
+            QFile testExistTarget(m_curAction->copyFile.targetName);
+            if (testExistTarget.exists())
             {
-                m_errorTitle = QObject::tr("Rename error: renaming to ")
-                                + m_curAction->copyFile.targetName,
-                m_errorMsg   = ::strerror(errno);
+                if ((m_cancelCurrentAction = ! testExistTarget.remove()))
+                {
+                    m_errorTitle = QObject::tr("Could not remove original file ")
+                                    + m_curAction->copyFile.targetName,
+                    m_errorMsg   = ::strerror(errno);
+                }
             }
-            else
+            if (!m_cancelCurrentAction)
             {
-                copySingleFileDone = true;
+                m_cancelCurrentAction = ! m_curAction->copyFile.target->
+                        rename(m_curAction->copyFile.targetName);
+                if (m_cancelCurrentAction)
+                {
+                    m_errorTitle = QObject::tr("Rename error: renaming to ")
+                            + m_curAction->copyFile.targetName,
+                            m_errorMsg   = ::strerror(errno);
+                }
+                else
+                {
+                    copySingleFileDone = true;
+                }
             }
         }
     }
