@@ -21,6 +21,7 @@ import Ubuntu.Components.ListItems 0.1 as ListItem
 import org.nemomobile.folderlistmodel 1.0
 
 ListItem.Subtitled {
+    objectName: "folder" + index
     text: model.fileName
     subText: Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate) + (!model.isDir ? " " + fileSize : "")
     // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
