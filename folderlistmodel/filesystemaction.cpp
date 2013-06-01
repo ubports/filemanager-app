@@ -420,6 +420,9 @@ RemoveNotifier::RemoveNotifier(QObject *parent) :
  */
 void RemoveNotifier::notifyRemoved(const QFileInfo &fi)
 {
+#if DEBUG_MESSAGES
+    qDebug() << Q_FUNC_INFO << "emit removed(QFileInfo)" << fi.absoluteFilePath();
+#endif
     emit removed(fi);
 }
 
@@ -430,6 +433,9 @@ void RemoveNotifier::notifyRemoved(const QFileInfo &fi)
  */
 void RemoveNotifier::notifyRemoved(const QString &item)
 {
+#if DEBUG_MESSAGES
+    qDebug() << Q_FUNC_INFO << "emit removed(QString)" << item;
+#endif
     emit removed(item);
 }
 
@@ -549,7 +555,16 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
             }
         }
     }
+    //this is the item being handled
     entry->reversedOrder.append(info);
+
+    // verify if the destination item already exists
+    if (action->type == ActionCopy || action->type == ActionMove ||
+            action->type == ActionHardMoveCopy)
+    {
+        QFileInfo destination(targetFom(info.absoluteFilePath()));
+        entry->alreadyExists = destination.exists();
+    }
 
     action->totalItems += entry->reversedOrder.count();
     if (info.isFile() && !info.isDir() && !info.isSymLink())
@@ -560,8 +575,6 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
     {
         action->totalBytes += COMMON_SIZE_ITEM;
     }
-    entry->currItem  = 0;
-    entry->currStep  = 0;
     action->entries.append(entry);
 }
 
@@ -685,7 +698,12 @@ void FileSystemAction::endActionEntry()
         if (m_curAction->type == ActionCopy || m_curAction->type == ActionMove ||
                 m_curAction->type == ActionHardMoveCopy)
         {
-            emit added( targetFom(mainItem.absoluteFilePath()) );
+            QString addedItem = targetFom(mainItem.absoluteFilePath());
+            if (curEntry->alreadyExists)
+            {
+                m_removeNotifier.notifyRemoved(addedItem);
+            }
+            emit added(addedItem);
         }
         m_curAction->currEntry++;
         //check if is doing a hard move and the copy part has finished
@@ -1008,10 +1026,14 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
     myAction->operation          = operation;
     myAction->origPath           = QFileInfo(paths.at(0)).absolutePath();
     myAction->baseOrigSize       = myAction->origPath.length();
+    Action * saveAction          = m_curAction;
+    m_curAction                  = myAction;
     for (int counter=0; counter < paths.count(); counter++)
     {
+        //targetFom() uses m_curAction and is called inside addEntry()
         addEntry(myAction, paths.at(counter));
     }
+    m_curAction    = saveAction;
     if (actionType == ActionHardMoveCopy)
     {
         myAction->totalItems *= 2; //duplicate this

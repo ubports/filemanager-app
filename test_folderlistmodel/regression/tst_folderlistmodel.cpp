@@ -1043,6 +1043,20 @@ void TestDirModel::modelCopyPasteAndPasteAgain()
             this,           SLOT(slotError(QString,QString)));
 
     m_dirModel_02->setPath(m_deepDir_02->path());
+    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QFileInfo)),
+            this,                      SLOT(slotFileAdded(QFileInfo)));
+    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QString)),
+            this,                      SLOT(slotFileAdded(QString)));
+
+#if 0  /* it is not necessary to connect this signal because it is already handled
+        * by fsAction member, since the RemoveNotifier is static, the signal is emited to
+        * fsAction even it is not being used here
+        */
+      connect(m_dirModel_02->m_fsAction, SIGNAL(removed(QFileInfo)),
+              this,                      SLOT(slotFileRemoved(QFileInfo)));
+      connect(m_dirModel_02->m_fsAction, SIGNAL(removed(QString)),
+              this,                      SLOT(slotFileRemoved(QString)));
+#endif
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_02->rowCount(), 0);
 
@@ -1051,12 +1065,18 @@ void TestDirModel::modelCopyPasteAndPasteAgain()
     //first time
     m_dirModel_02->paste();
     QTest::qWait(TIME_TO_PROCESS);
+    QCOMPARE(m_filesRemoved.count(),  0);
+    QCOMPARE(m_filesAdded.count(),    1);
+
     //second time
     m_dirModel_02->paste();
     QTest::qWait(TIME_TO_PROCESS);
 
     QCOMPARE(compareDirectories(m_deepDir_01->path(), m_deepDir_02->path()), true);
-    QCOMPARE(m_receivedErrorSignal,   false);
+    QCOMPARE(m_receivedErrorSignal,   false);   
+    //same item was removed from view and added again
+    QCOMPARE(m_filesRemoved.count(),  1);
+    QCOMPARE(m_filesAdded.count(),    2);
 }
 
 

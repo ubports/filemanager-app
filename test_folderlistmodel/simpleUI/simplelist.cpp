@@ -212,7 +212,7 @@ void SimpleList::progress(int cur, int total, int percent)
         {
             m_pbar->hide();
         }
-    p.sprintf("progress(cur=%d, total=%d, percent=%d", cur,total,percent);
+    p.sprintf("progress(cur=%d, total=%d, percent=%d)", cur,total,percent);
     qDebug() << p;
 }
 
