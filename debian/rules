@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export CFLAGS := $(shell dpkg-buildflags --get CFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
+export CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
+export LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
+
+%:
+	dh $@ --fail-missing
+
+override_dh_auto_configure:
+	# hack hack, until some more suitable .pro files in place
+	ln -s folderlistmodel src
+	cd src && ln -s folderlistmodel.pro src.pro
+	qmake
+
+override_dh_builddeb:
+	dh_builddeb -- -Zxz
+
