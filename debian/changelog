@@ -1,7 +1,6 @@
 nemo-qml-plugin-folderlistmodel (0.3.4-0ubuntu1) UNRELEASED; urgency=low
 
   * Initial release
-  * add_top_level_pro_file.patch:
-    - Ad-hoc top level .pro file to make it build
+  * Ad-hoc top level .pro file to make it build
 
  -- Timo Jyrinki <timo-jyrinki@ubuntu.com>  Tue, 04 Jun 2013 16:42:17 +0300
