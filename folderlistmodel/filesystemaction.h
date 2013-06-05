@@ -129,11 +129,17 @@ private:
    struct ActionEntry
    {
      public:
+       ActionEntry(): currStep(0),currItem(0),alreadyExists(false), newName(0) {}
        ~ActionEntry()
-       { reversedOrder.clear(); }
+       {
+           reversedOrder.clear();
+           if (newName) { delete newName; }
+       }
        QList<QFileInfo>   reversedOrder;   //!< last item must be the item from the list
        int                currStep;
        int                currItem;
+       bool               alreadyExists;
+       QString *          newName; //TODO:  allow to rename an existent file when it already exists
    };
 
    struct Action
