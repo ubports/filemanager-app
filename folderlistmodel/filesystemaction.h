@@ -62,11 +62,11 @@ enum ClipboardOperation
  * will be expanded to have the whole directory content recursively, so before performing an Action the whole list of items
  * are built.
  * After an item be performed (an \ref ActionEntry) the \ref endCurrentAction()  emits signals of:
- * \ref progresss(), \ref added() and \ref removed().
+ * \ref progress(), \ref added() and \ref removed().
  * These signals are also emitted when processing a such number of files inside an entry, in the case an entry is
  * a directory, the define \ref STEP_FILES is used for that.
  *
- * It is a single thread processing, some slots are used to work a little and then they are scheculed to continue
+ * It is a single thread processing, some slots are used to work a little and then they are scheduled to continue
  * working in the next main loop interaction, this flow is controlled by:
  *  \li \ref processAction()           -> starts an \ref Action
  *  \li \ref processActionEntry()      -> starts an \ref ActionEntry
@@ -80,14 +80,14 @@ enum ClipboardOperation
  * ---------
  * \li Paste operations are made as single move using QFile::rename()
  * \li After pasting from a Cut operation, if no other application has changed the clipboard,
- *     the destination becomes source in the clipboard as Copy for futher paste operations
+ *     the destination becomes source in the clipboard as Copy for further paste operations
  * \li Pasting in the same place where the Copy or Cut was made is not allowed, an \ref error() signal is emitted,
  *     in the future a rename can implemented
  * \li Paste from Copy when the destination already exists: individual files are overwritten
  *     and both signals \ref added() and \ref removed() are emitted, directories are not touched.
  * \li Paste  from Cut when the destination already exists: existent items (files or directories) are removed first,
  *     directories are removed in a special way, they are first moved to a temporary area and then scheduled to be removed later
- *     by creating an  auxilar Remove \ref Action, see \ref moveDirToTempAndRemoveItLater().
+ *     by creating an  auxiliary Remove \ref Action, see \ref moveDirToTempAndRemoveItLater().
  */
 class FileSystemAction : public QObject
 {
