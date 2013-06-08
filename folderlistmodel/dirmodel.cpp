@@ -35,6 +35,13 @@
 #include "ioworkerthread.h"
 #include "filesystemaction.h"
 
+#include <taglib/attachedpictureframe.h>
+#include <taglib/id3v2tag.h>
+#include <taglib/fileref.h>
+#include <taglib/mpegfile.h>
+#include <taglib/tag.h>
+#include <taglib/audioproperties.h>
+
 #include <QDirIterator>
 #include <QDir>
 #include <QDebug>
@@ -191,6 +198,7 @@ DirModel::DirModel(QObject *parent)
     , mSortOrder(SortAscending)
     , mCompareFunction(0)
     , m_fsAction(new FileSystemAction(this) )
+    , mFilterDirectories(false)
 {
     mNameFilters = QStringList() << "*";
 
@@ -260,6 +268,14 @@ QHash<int, QByteArray> DirModel::buildRoleNames() const
         roles.insert(IsReadableRole, QByteArray("isReadable"));
         roles.insert(IsWritableRole, QByteArray("isWritable"));
         roles.insert(IsExecutableRole, QByteArray("isExecutable"));
+        roles.insert(TrackTitleRole, QByteArray("trackTitle"));
+        roles.insert(TrackArtistRole, QByteArray("trackArtist"));
+        roles.insert(TrackAlbumRole, QByteArray("trackAlbum"));
+        roles.insert(TrackYearRole, QByteArray("trackYear"));
+        roles.insert(TrackNumberRole, QByteArray("trackNumber"));
+        roles.insert(TrackGenreRole, QByteArray("trackGenre"));
+        roles.insert(TrackLengthRole, QByteArray("trackLength"));
+        roles.insert(TrackCoverRole, QByteArray("trackCover"));
 
     // populate reverse mapping
     if (roleMapping.isEmpty()) {
@@ -310,7 +326,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
     }
     role = FileNameRole + index.column();
 #else
-    if (role < FileNameRole || role > IsExecutableRole) {
+    if (role < FileNameRole || role > TrackCoverRole) {
         qWarning() << Q_FUNC_INFO << "Got an out of range role: " << role;
         return QVariant();
     }
@@ -365,6 +381,56 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             return fi.isWritable();
         case IsExecutableRole:
             return fi.isExecutable();
+        case TrackTitleRole:
+        case TrackArtistRole:
+        case TrackAlbumRole:
+        case TrackYearRole:
+        case TrackNumberRole:
+        case TrackGenreRole:
+        case TrackLengthRole:
+        case TrackCoverRole:
+            if (!fi.isDir()) {
+                TagLib::FileRef f(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::AudioProperties::Fast);
+                TagLib::MPEG::File mp3(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
+                TagLib::Tag *tag = f.tag();
+                TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];
+                switch (role) {
+                    case TrackTitleRole:
+                        return QString::fromUtf8(tag->title().toCString(true));
+                    case TrackArtistRole:
+                        return QString::fromUtf8(tag->artist().toCString(true));
+                    case TrackAlbumRole:
+                        return QString::fromUtf8(tag->album().toCString(true));
+                    case TrackYearRole:
+                        return QString::number(tag->year());
+                    case TrackNumberRole:
+                        return QString::number(tag->track());
+                    case TrackGenreRole:
+                        return QString::fromUtf8(tag->genre().toCString(true));
+                    case TrackLengthRole:
+                        if(!f.isNull() && f.audioProperties()) {
+                            return QString::number(f.audioProperties()->length());
+                        } else {
+                            return QString::number(0);
+                        }
+                    case TrackCoverRole:
+                        if(!list.isEmpty()) {
+                            TagLib::ID3v2::AttachedPictureFrame *Pic = static_cast<TagLib::ID3v2::AttachedPictureFrame *>(list.front());
+                            QImage img;
+                            img.loadFromData((const uchar *) Pic->picture().data(), Pic->picture().size());
+                            return img;
+                        } else {
+                            return "";
+                        }
+                    default:
+                        // this should not happen, ever
+                        Q_ASSERT(false);
+                        qWarning() << Q_FUNC_INFO << "Got an unknown role: " << role;
+                        return QVariant();
+                }
+            } else {
+                return "";
+            }
         default:
 #if !defined(REGRESSION_TEST_FOLDERLISTMODEL)
             // this should not happen, ever
@@ -425,13 +491,15 @@ void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
 #endif
 
     foreach (const QFileInfo &fi, newFiles) {
+        if (!mShowDirectories && fi.isDir())
+            continue;
 
-        bool doAdd = true;
+        bool doAdd = false;
         foreach (const QString &nameFilter, mNameFilters) {
             // TODO: using QRegExp for wildcard matching is slow
             QRegExp re(nameFilter, Qt::CaseInsensitive, QRegExp::Wildcard);
-            if (!re.exactMatch(fi.fileName())) {
-                doAdd = false;
+            if (re.exactMatch(fi.fileName()) || (fi.isDir() && !mFilterDirectories)) {
+                doAdd = true;
                 break;
             }
         }
@@ -502,6 +570,18 @@ void DirModel::setShowDirectories(bool showDirectories)
     mShowDirectories = showDirectories;
     refresh();
     emit showDirectoriesChanged();
+}
+
+bool DirModel::filterDirectories() const
+{
+    return mFilterDirectories;
+}
+
+void DirModel::setFilterDirectories(bool filterDirectories)
+{
+    mFilterDirectories = filterDirectories;
+    refresh();
+    emit filterDirectoriesChanged();
 }
 
 QStringList DirModel::nameFilters() const
