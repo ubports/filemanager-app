@@ -199,6 +199,8 @@ DirModel::DirModel(QObject *parent)
     , mCompareFunction(0)
     , m_fsAction(new FileSystemAction(this) )
     , mFilterDirectories(false)
+    , mIsRecursive(false)
+    , mReadsMediaMetadata(false)
 {
     mNameFilters = QStringList() << "*";
 
@@ -389,7 +391,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         case TrackGenreRole:
         case TrackLengthRole:
         case TrackCoverRole:
-            if (!fi.isDir()) {
+            if (!fi.isDir() && mReadsMediaMetadata) {
                 TagLib::FileRef f(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::AudioProperties::Fast);
                 TagLib::MPEG::File mp3(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
                 TagLib::Tag *tag = f.tag();
@@ -570,6 +572,30 @@ void DirModel::setShowDirectories(bool showDirectories)
     mShowDirectories = showDirectories;
     refresh();
     emit showDirectoriesChanged();
+}
+
+bool DirModel::isRecursive() const
+{
+    return mIsRecursive;
+}
+
+void DirModel::setIsRecursive(bool isRecursive)
+{
+    mIsRecursive = isRecursive;
+    refresh();
+    emit isRecursiveChanged();
+}
+
+bool DirModel::readsMediaMetadata() const
+{
+    return mReadsMediaMetadata;
+}
+
+void DirModel::setReadsMediaMetadata(bool readsMediaMetadata)
+{
+    mReadsMediaMetadata = readsMediaMetadata;
+    refresh();
+    emit readsMediaMetadataChanged();
 }
 
 bool DirModel::filterDirectories() const
