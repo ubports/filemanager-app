@@ -76,6 +76,7 @@ private Q_SLOTS:
     void  modelRemoveDirWithHiddenFilesAndLinks();
     void  modelCancelCopyAction();
     void  modelCopyPasteAndPasteAgain();
+    void  modelCutPasteIntoExistentItems();
     void  modelCopyFileAndDirectoryLinks();
     void  modelCopyAndPaste3Times();
     void  modelCutAndPaste3Times();
@@ -1049,7 +1050,7 @@ void TestDirModel::modelCopyPasteAndPasteAgain()
             this,                      SLOT(slotFileAdded(QString)));
 
 #if 0  /* it is not necessary to connect this signal because it is already handled
-        * by fsAction member, since the RemoveNotifier is static, the signal is emited to
+        * by fsAction member, since the RemoveNotifier is static, the signal is emitted to
         * fsAction even it is not being used here
         */
       connect(m_dirModel_02->m_fsAction, SIGNAL(removed(QFileInfo)),
@@ -1077,6 +1078,68 @@ void TestDirModel::modelCopyPasteAndPasteAgain()
     //same item was removed from view and added again
     QCOMPARE(m_filesRemoved.count(),  1);
     QCOMPARE(m_filesAdded.count(),    2);
+}
+
+
+void TestDirModel::modelCutPasteIntoExistentItems()
+{
+    QString orig("modelCutPasteIntoExistentItems_orig");
+    QString moreOneLevel("MoreOneLevel");
+    TempFiles tempFiles_01;
+    TempFiles tempDir_01;
+
+    const int createCounter = 5;
+
+    tempFiles_01.addSubDirLevel(orig);
+    tempFiles_01.create(createCounter - 1);
+    tempDir_01.addSubDirLevel(orig);
+    tempDir_01.addSubDirLevel(moreOneLevel);
+    tempDir_01.create(2);
+
+    m_dirModel_01  = new DirModel();
+    connect(m_dirModel_01,  SIGNAL(error(QString,QString)),
+            this,           SLOT(slotError(QString,QString)));
+    m_dirModel_01->setPath(tempFiles_01.lastPath());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(), createCounter);
+
+    QString target("modelCutPasteIntoExistentItems_target");
+    TempFiles tempFiles_02;
+    TempFiles tempDir_02;
+
+    tempFiles_02.addSubDirLevel(target);
+    tempFiles_02.create(createCounter -1);
+    tempDir_02.addSubDirLevel(target);
+    tempDir_02.addSubDirLevel(moreOneLevel);
+    tempDir_02.create(2);
+    m_dirModel_02  = new DirModel();
+    connect(m_dirModel_02,  SIGNAL(error(QString,QString)),
+            this,           SLOT(slotError(QString,QString)));
+    m_dirModel_02->setPath(tempFiles_02.lastPath());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), createCounter);
+
+    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QFileInfo)),
+            this,                      SLOT(slotFileAdded(QFileInfo)));
+    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QString)),
+            this,                      SLOT(slotFileAdded(QString)));
+
+    //both directories have the same content
+    QCOMPARE(compareDirectories(tempFiles_01.lastPath(), tempFiles_02.lastPath()), true);
+
+    //cut from first Model
+    QStringList items(tempFiles_01.createdList());
+    items.append(tempDir_01.lastPath());
+    m_dirModel_01->cutPaths(items);
+    //paste into the second model
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QCOMPARE(m_receivedErrorSignal,   false);
+   // same item removed from model_01 (cut) and from model_02 because it already exists there
+   // for temp directory removed() signal is also emitted, so there is one more
+    QCOMPARE(m_filesRemoved.count(),  createCounter *2 + 1);
+    QCOMPARE(m_filesAdded.count(),    createCounter );
 }
 
 

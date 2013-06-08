@@ -50,9 +50,16 @@
 #include <QThread>
 #include <QTemporaryFile>
 
-#define  STEP_FILES               5  // number of the files to work on a step, when this number is reached a signal is emitted
+/*!
+ *   number of the files to work on a step, when this number is reached a signal is emitted
+ */
+#define  STEP_FILES               5
 
-#define SHOULD_EMIT_PROGRESS_SIGNAL(action)       (1)
+/*!
+ *  Auxiliar Actions do not emit progress() signal
+ *  \sa moveDirToTempAndRemoveItLater()
+ */
+#define SHOULD_EMIT_PROGRESS_SIGNAL(action)       (!action->isAux)
 
 #define   COMMON_SIZE_ITEM       120
 
@@ -505,6 +512,8 @@ FileSystemAction::Action* FileSystemAction::createAction(ActionType type, int  o
     action->totalBytes   = 0;
     action->bytesWritten = 0;
     action->done         = false;
+    action->auxAction    = 0;
+    action->isAux        = false;
 
     return action;
 }
@@ -601,6 +610,9 @@ void FileSystemAction::processAction()
     }
     if (m_curAction)
     {
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO << "performing action type" << m_curAction->type;
+#endif
         m_busy = true;
         m_cancelCurrentAction = false;
         m_errorMsg.clear();
@@ -918,8 +930,28 @@ void FileSystemAction::moveEntry(ActionEntry *entry)
     {
         const QFileInfo &fi = entry->reversedOrder.at(entry->currItem);
         file.setFileName(fi.absoluteFilePath());
-        QString target = targetFom(fi.absoluteFilePath());
-        if (!file.rename(target))
+        QString target(targetFom(fi.absoluteFilePath()));
+        QFileInfo targetInfo(target);
+        //rename will fail
+        if (targetInfo.exists())
+        {
+            if (targetInfo.isFile() || targetInfo.isSymLink())
+            {
+                if (!QFile::remove(target))
+                {
+                    m_cancelCurrentAction = true;
+                    m_errorTitle = QObject::tr("Could remove the directory/file ") + target;
+                    m_errorMsg   = ::strerror(errno);
+                }
+            }
+            else
+            if (targetInfo.isDir())
+            {
+               //move target to /tmp and remove it later by creating an Remove action
+               moveDirToTempAndRemoveItLater(target);
+            }
+        }
+        if (!m_cancelCurrentAction && !file.rename(target))
         {
             m_cancelCurrentAction = true;
             m_errorTitle = QObject::tr("Could not move the directory/file ") + target;
@@ -1363,7 +1395,7 @@ bool FileSystemAction::copySymLink(const QString &target, const QFileInfo &orig)
     bool ret = QFile::link(link, target);
 #endif
 #if DEBUG_MESSAGES
-    qDebug() << "FileSystemAction::copySymLink" << ret << target << link;
+    qDebug() << Q_FUNC_INFO << ret << target << link;
 #endif
     return ret;
 }
@@ -1372,7 +1404,7 @@ bool FileSystemAction::copySymLink(const QString &target, const QFileInfo &orig)
 void FileSystemAction::scheduleSlot(const char *slot)
 {
 #if DEBUG_MESSAGES
-    qDebug() << "FileSystemAction::scheduleSlot()" << slot;
+    qDebug() << Q_FUNC_INFO << slot;
 #endif
     QTimer::singleShot(0, this, slot);
 }
@@ -1386,4 +1418,41 @@ void FileSystemAction::scheduleSlot(const char *slot)
 void FileSystemAction::clipboardHasChanged()
 {
     m_clipboardModifiedByOther = true;
+}
+
+
+//================================================================================
+/*!
+ * \brief FileSystemAction::moveDirToTempAndRemoveItLater() moves a directory to temp and shedules it for be removed later
+ *
+ * When pasting from cut actions, directories will be totally replaced, when they already exist, they need to be removed
+ * before moving the new content, so the solution is to move them to temp directory and create another action to remove
+ * them later, after that the content is moved to a target that does not exist any more.
+ *
+ * \param dir directory name which is the target for paste operation and needs get removed first
+ */
+void FileSystemAction::moveDirToTempAndRemoveItLater(const QString& dir)
+{
+#if DEBUG_MESSAGES
+    qDebug() << Q_FUNC_INFO << dir;
+#endif
+    QString tempDir;
+    {
+        //create this temporary file just to get a unique name
+        QTemporaryFile d;
+        d.setAutoRemove(true);
+        d.open();
+        d.close();
+        tempDir = d.fileName();
+    }
+    if (QFile::rename(dir, tempDir))
+    {
+        if (!m_curAction->auxAction)
+        {   // this new action as Remove will remove all dirs
+            m_curAction->auxAction = createAction(ActionRemove);
+            m_curAction->isAux     = true;
+            m_queuedActions.append(m_curAction->auxAction);
+        }
+        addEntry(m_curAction->auxAction, tempDir);
+    }
 }
