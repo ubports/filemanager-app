@@ -148,9 +148,10 @@ class DirListWorker : public IORequest
 {
     Q_OBJECT
 public:
-    DirListWorker(const QString &pathName, QDir::Filter filter)
+    DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive)
         : mPathName(pathName)
         , mFilter(filter)
+        , mIsRecursive(isRecursive)
     { }
 
     void run()
@@ -159,14 +160,27 @@ public:
         qDebug() << Q_FUNC_INFO << "Running on: " << QThread::currentThreadId();
 #endif
 
-        QDir tmpDir = QDir(mPathName, QString(), QDir::NoSort, mFilter);
-        QDirIterator it(tmpDir);
         QVector<QFileInfo> directoryContents;
+        directoryContents = add(mPathName, mFilter, mIsRecursive, directoryContents);
 
+        // last batch
+        emit itemsAdded(directoryContents);
+        emit workerFinished();
+    }
+
+    QVector<QFileInfo> add(const QString &pathName, QDir::Filter filter, const bool isRecursive, QVector<QFileInfo> directoryContents)
+    {
+        QDir tmpDir = QDir(pathName, QString(), QDir::NoSort, filter);
+        QDirIterator it(tmpDir);
         while (it.hasNext()) {
             it.next();
 
-            directoryContents.append(it.fileInfo());
+            if(it.fileInfo().isDir() && isRecursive) {
+                directoryContents = add(it.fileInfo().filePath(), filter, isRecursive, directoryContents);
+            } else {
+                directoryContents.append(it.fileInfo());
+            }
+
             if (directoryContents.count() >= 50) {
                 emit itemsAdded(directoryContents);
 
@@ -175,9 +189,7 @@ public:
             }
         }
 
-        // last batch
-        emit itemsAdded(directoryContents);
-        emit workerFinished();
+        return directoryContents;
     }
 
 signals:
@@ -185,8 +197,10 @@ signals:
     void workerFinished();
 
 private:
+    void add(const QString &pathName, QDir::Filter filter, const bool isRecursive, QVector<QFileInfo> directoryContents) const;
     QString       mPathName;
     QDir::Filter  mFilter;
+    bool       mIsRecursive;
 };
 
 DirModel::DirModel(QObject *parent)
@@ -466,7 +480,7 @@ void DirModel::setPath(const QString &pathName)
 
     QDir::Filter dirFilter = currentDirFilter();
     // TODO: we need to set a spinner active before we start getting results from DirListWorker
-    DirListWorker *dlw = new DirListWorker(pathName, dirFilter);
+    DirListWorker *dlw = new DirListWorker(pathName, dirFilter, mIsRecursive);
     connect(dlw, SIGNAL(itemsAdded(QVector<QFileInfo>)), SLOT(onItemsAdded(QVector<QFileInfo>)));
     connect(dlw, SIGNAL(workerFinished()), SLOT(onResultsFetched()));
     ioWorkerThread()->addRequest(dlw);
@@ -1046,6 +1060,10 @@ QDir::Filter DirModel::currentDirFilter() const
     if (mShowHiddenFiles)
     {
         filter |= QDir::Hidden;
+    }
+    if (mIsRecursive)
+    {
+        filter |= QDir::NoSymLinks;
     }
     QDir::Filter dirFilter = static_cast<QDir::Filter>(filter);
     return dirFilter;
