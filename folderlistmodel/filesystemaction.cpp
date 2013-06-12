@@ -1449,8 +1449,8 @@ void FileSystemAction::moveDirToTempAndRemoveItLater(const QString& dir)
     {
         if (!m_curAction->auxAction)
         {   // this new action as Remove will remove all dirs
-            m_curAction->auxAction = createAction(ActionRemove);
-            m_curAction->isAux     = true;
+            m_curAction->auxAction            = createAction(ActionRemove);
+            m_curAction->auxAction->isAux     = true;
             m_queuedActions.append(m_curAction->auxAction);
         }
         addEntry(m_curAction->auxAction, tempDir);

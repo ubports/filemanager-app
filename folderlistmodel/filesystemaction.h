@@ -70,6 +70,7 @@ enum ClipboardOperation
  * working in the next main loop interaction, this flow is controlled by:
  *  \li \ref processAction()           -> starts an \ref Action
  *  \li \ref processActionEntry()      -> starts an \ref ActionEntry
+ *  \li \ref endActionEntry()          -> ends an \ref ActionEntry
  *  \li \ref processCopyEntry()        -> starts an \ref copy from an \ref ActionEntry
  *  \li \ref processCopySingleFile()   -> perform single file copy, it may have many interactions if the file is big,
  *                                        each interaction it writes (4KB * STEP_FILES) and emit \ref progress() signal

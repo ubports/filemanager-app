@@ -158,7 +158,7 @@ void TestDirModel::progress(int cur, int total, int percent)
     m_progressCurrentItem = cur;
     m_progressTotalItems  = total;
     m_progressPercentDone = percent;
-//   qDebug() << "progress()" << cur << total << percent;
+ //   qWarning() << "progress()" << cur << total << percent;
 }
 
 
@@ -1084,11 +1084,12 @@ void TestDirModel::modelCopyPasteAndPasteAgain()
 void TestDirModel::modelCutPasteIntoExistentItems()
 {
     QString orig("modelCutPasteIntoExistentItems_orig");
+    m_deepDir_01  = new DeepDir(orig, 0);
     QString moreOneLevel("MoreOneLevel");
     TempFiles tempFiles_01;
     TempFiles tempDir_01;
 
-    const int createCounter = 5;
+    const int createCounter = 8;
 
     tempFiles_01.addSubDirLevel(orig);
     tempFiles_01.create(createCounter - 1);
@@ -1104,6 +1105,7 @@ void TestDirModel::modelCutPasteIntoExistentItems()
     QCOMPARE(m_dirModel_01->rowCount(), createCounter);
 
     QString target("modelCutPasteIntoExistentItems_target");
+    m_deepDir_02  = new DeepDir(target, 0);
     TempFiles tempFiles_02;
     TempFiles tempDir_02;
 
@@ -1115,6 +1117,8 @@ void TestDirModel::modelCutPasteIntoExistentItems()
     m_dirModel_02  = new DirModel();
     connect(m_dirModel_02,  SIGNAL(error(QString,QString)),
             this,           SLOT(slotError(QString,QString)));
+    connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
+            this,          SLOT(progress(int,int,int)));
     m_dirModel_02->setPath(tempFiles_02.lastPath());
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_02->rowCount(), createCounter);
@@ -1133,7 +1137,7 @@ void TestDirModel::modelCutPasteIntoExistentItems()
     m_dirModel_01->cutPaths(items);
     //paste into the second model
     m_dirModel_02->paste();
-    QTest::qWait(TIME_TO_PROCESS);
+    QTest::qWait(TIME_TO_PROCESS *2);
 
     QCOMPARE(m_receivedErrorSignal,   false);
    // same item removed from model_01 (cut) and from model_02 because it already exists there
