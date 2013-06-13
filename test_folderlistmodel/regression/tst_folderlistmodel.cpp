@@ -3,6 +3,13 @@
 #include "tempfiles.h"
 #include <stdio.h>
 
+#include <taglib/attachedpictureframe.h>
+#include <taglib/id3v2tag.h>
+#include <taglib/fileref.h>
+#include <taglib/mpegfile.h>
+#include <taglib/tag.h>
+#include <taglib/audioproperties.h>
+
 #include <QApplication>
 #include <QtCore/QString>
 #include <QtTest/QtTest>
@@ -82,6 +89,7 @@ private Q_SLOTS:
     void  modelCopyAndPasteInTheSamePlace();
     void  getThemeIcons();
     void  fileIconProvider();
+    void  verifyMP3Metadata();
 
     //define TEST_OPENFILES to test QDesktopServices::openUrl() for some files
 #if defined(TEST_OPENFILES)
@@ -1191,6 +1199,26 @@ void TestDirModel::fileIconProvider()
     createFileAndCheckIfIconIsExclisive("xspf", media_xspf, media_xspf_len);
 }
 
+//generate mp3 and verify its metadata
+void TestDirModel::verifyMP3Metadata()
+{
+    QString mp3File = createFileInTempDir("tst_folderlistmodel_for_media_read.mp3",
+                                          reinterpret_cast<const char*>(sound_44100_mp3_data),
+                                          sound_44100_mp3_data_len);
+    QCOMPARE(mp3File.isEmpty(),   false);
+    QUrl mp3Url = QUrl::fromLocalFile(mp3File);
+
+    TagLib::FileRef f(mp3File.toStdString().c_str(), true, TagLib::AudioProperties::Fast);
+    TagLib::Tag *tag = f.tag();
+
+    QCOMPARE(TStringToQString(tag->title()), QString("TitleTest"));
+    QCOMPARE(TStringToQString(tag->title()), QString("TitleTest"));
+    QCOMPARE(TStringToQString(tag->artist()), QString("ArtistTest"));
+    QCOMPARE(TStringToQString(tag->album()), QString("AlbumTest"));
+    QCOMPARE(QString::number(tag->year()), QString::number(2013));
+    QCOMPARE(QString::number(tag->track()), QString::number(99));
+    QCOMPARE(TStringToQString(tag->genre()), QString("GenreTest"));
+}
 
 #if defined(TEST_OPENFILES)
 void TestDirModel::TestDirModel::openMP3()
