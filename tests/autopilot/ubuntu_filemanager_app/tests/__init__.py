@@ -49,7 +49,8 @@ class FileManagerTestCase(AutopilotTestCase):
         self.app = self.launch_test_application(
             "qmlscene",
             "/usr/share/ubuntu-filemanager-app/ubuntu-filemanager-app.qml",
-            "--desktop_file_hint=/usr/share/applications/ubuntu-filemanager-app.desktop",
+            "--desktop_file_hint="
+            "/usr/share/applications/ubuntu-filemanager-app.desktop",
             app_type='qt')
 
     def tap_item(self, item):
