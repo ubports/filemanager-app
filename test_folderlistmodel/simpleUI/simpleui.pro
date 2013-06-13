@@ -8,12 +8,14 @@ QT       += core gui
 
 
 greaterThan(QT_MAJOR_VERSION, 4) {
-   QT += widgets
+   QT += widgets quick
 }
 else {
    include(../regression/mimetypes/mimetypes-src.pri)
 }
 
+LIBS += -ltag
+   
 TEMPLATE = app
 
 DEFINES += REGRESSION_TEST_FOLDERLISTMODEL

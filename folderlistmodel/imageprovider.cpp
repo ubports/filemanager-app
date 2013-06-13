@@ -38,12 +38,14 @@
 **
 ****************************************************************************/
 
-
 #include "imageprovider.h"
 
 #include <taglib/attachedpictureframe.h>
 #include <taglib/id3v2tag.h>
 #include <taglib/mpegfile.h>
+
+#include <QtGlobal>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 
 CoverArtImageProvider::CoverArtImageProvider() : QQuickImageProvider(QQuickImageProvider::Image) {}
 
@@ -77,3 +79,5 @@ QImage CoverArtFullImageProvider::requestImage(const QString &id, QSize *size, c
     }
     return img;
 }
+
+#endif

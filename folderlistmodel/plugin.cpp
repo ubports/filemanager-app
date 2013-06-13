@@ -41,8 +41,14 @@ NemoFolderListModelPlugin::~NemoFolderListModelPlugin() { }
 void NemoFolderListModelPlugin::initializeEngine(QmlEngine *engine, const char *uri)
 {
     Q_ASSERT(uri == QLatin1String(QUOTES(PLUGIN_URI)));
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     engine->addImageProvider(QLatin1String("cover-art"), new CoverArtImageProvider);
     engine->addImageProvider(QLatin1String("cover-art-full"), new CoverArtFullImageProvider);
+#else
+    Q_UNUSED(engine);
+#endif
+
 }
 
 void NemoFolderListModelPlugin::registerTypes(const char *uri)
