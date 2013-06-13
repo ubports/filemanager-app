@@ -1212,7 +1212,6 @@ void TestDirModel::verifyMP3Metadata()
     TagLib::Tag *tag = f.tag();
 
     QCOMPARE(TStringToQString(tag->title()), QString("TitleTest"));
-    QCOMPARE(TStringToQString(tag->title()), QString("TitleTest"));
     QCOMPARE(TStringToQString(tag->artist()), QString("ArtistTest"));
     QCOMPARE(TStringToQString(tag->album()), QString("AlbumTest"));
     QCOMPARE(QString::number(tag->year()), QString::number(2013));
