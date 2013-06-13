@@ -26,3 +26,7 @@ class MainWindow(object):
 
     def get_action_popover(self):
         return self.app.select_single("ActionSelectionPopover")
+
+    def get_home_button(self):
+        # FIXME not working.
+        return self.app.select_single("Action", objectName="home_button")
