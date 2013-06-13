@@ -22,9 +22,6 @@ class TestMainWindow(FileManagerTestCase):
         self.assertThat(
             self.main_window.get_qml_view().visible, Eventually(Equals(True)))
 
-    def tearDown(self):
-        super(TestMainWindow, self).tearDown()
-
     def test_toolbar_shows(self):
         """Make sure that dragging from the bottom reveals the hidden
         toolbar."""
