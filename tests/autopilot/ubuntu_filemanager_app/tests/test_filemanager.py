@@ -27,7 +27,7 @@ class TestMainWindow(FileManagerTestCase):
         self._patch_home()
         super(TestMainWindow, self).setUp()
         self.assertThat(
-            self.main_window.get_qml_view().visible, Eventually(Equals(True)))
+            self.ubuntusdk.get_qml_view().visible, Eventually(Equals(True)))
 
     def _patch_home(self):
         temp_dir = tempfile.mkdtemp()
@@ -42,7 +42,7 @@ class TestMainWindow(FileManagerTestCase):
         # Currently, we need to open again the home folder to show the newly
         # created one. See bug #1190676.
         # TODO when the bug is fixed, remove the next line.
-        self.pointing_device.click_object(self.main_window.get_home_button())
+        self.ubuntusdk.click_toolbar_button('Home')
 
         first_folder = self.main_window.get_folder(0)
         self.tap_item(first_folder)

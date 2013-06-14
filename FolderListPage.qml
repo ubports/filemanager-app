@@ -94,7 +94,6 @@ Page {
         }
 
         Action {
-            objectName: "home_button"
             text: i18n.tr("Home")
             // TODO: temporary
             iconSource: "/usr/share/icons/Humanity/actions/48/go-home.svg"

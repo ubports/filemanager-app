@@ -16,17 +16,9 @@ class MainWindow(object):
     def __init__(self, app):
         self.app = app
 
-    def get_qml_view(self):
-        """Get the main QML view"""
-        return self.app.select_single("QQuickView")
-
     def get_folder(self, index):
         """Returns the list view folder with index number."""
         return self.app.select_many("Subtitled")[index]
 
     def get_action_popover(self):
         return self.app.select_single("ActionSelectionPopover")
-
-    def get_home_button(self):
-        # FIXME not working.
-        return self.app.select_single("Action", objectName="home_button")

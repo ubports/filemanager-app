@@ -16,6 +16,7 @@ from autopilot.testcase import AutopilotTestCase
 from time import sleep
 
 from ubuntu_filemanager_app.emulators.main_window import MainWindow
+from ubuntu_filemanager_app.emulators.ubuntusdk import ubuntusdk
 
 
 class FileManagerTestCase(AutopilotTestCase):
@@ -62,3 +63,7 @@ class FileManagerTestCase(AutopilotTestCase):
     @property
     def main_window(self):
         return MainWindow(self.app)
+
+    @property
+    def ubuntusdk(self):
+        return ubuntusdk(self, self.app)
