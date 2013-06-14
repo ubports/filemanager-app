@@ -24,5 +24,7 @@ class MainWindow(object):
         return self.app.select_single("ActionSelectionPopover")
 
     def get_current_folder_name(self):
+        # XXX the label with the folder name doesn't have an objectName.
+        # See bug #1190855.
         return self.app.select_single('FolderListView').select_many(
             'Label')[0].text
