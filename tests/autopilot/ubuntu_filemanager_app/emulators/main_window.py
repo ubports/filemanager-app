@@ -22,3 +22,7 @@ class MainWindow(object):
 
     def get_action_popover(self):
         return self.app.select_single("ActionSelectionPopover")
+
+    def get_current_folder_name(self):
+        return self.app.select_single('FolderListView').select_many(
+            'Label')[0].text

@@ -49,3 +49,16 @@ class TestMainWindow(FileManagerTestCase):
 
         action_popover = self.main_window.get_action_popover()
         self.assertThat(lambda: action_popover.opacity, Eventually(Equals(1)))
+
+    def test_open_directory(self):
+        sub_dir = tempfile.mkdtemp(dir=os.environ['HOME'])
+        # Currently, we need to open again the home folder to show the newly
+        # created one. See bug #1190676.
+        # TODO when the bug is fixed, remove the next line.
+        self.ubuntusdk.click_toolbar_button('Home')
+
+        first_folder = self.main_window.get_folder(0)
+        self.pointing_device.click_object(first_folder)
+        self.assertThat(
+            self.main_window.get_current_folder_name,
+            Eventually(Equals(sub_dir)))
