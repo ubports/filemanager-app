@@ -38,11 +38,7 @@ class TestMainWindow(FileManagerTestCase):
 
     def test_toolbar_shows(self):
         """Dragging from the bottom reveals the hidden toolbar."""
-        tempfile.mkdtemp(dir=os.environ['HOME'])
-        # Currently, we need to open again the home folder to show the newly
-        # created one. See bug #1190676.
-        # TODO when the bug is fixed, remove the next line.
-        self.ubuntusdk.click_toolbar_button('Home')
+        self._make_directory_in_home()
 
         first_folder = self.main_window.get_folder(0)
         self.tap_item(first_folder)
@@ -50,12 +46,16 @@ class TestMainWindow(FileManagerTestCase):
         action_popover = self.main_window.get_action_popover()
         self.assertThat(lambda: action_popover.opacity, Eventually(Equals(1)))
 
-    def test_open_directory(self):
-        sub_dir = tempfile.mkdtemp(dir=os.environ['HOME'])
+    def _make_directory_in_home(self):
+        path = tempfile.mkdtemp(dir=os.environ['HOME'])
         # Currently, we need to open again the home folder to show the newly
         # created one. See bug #1190676.
         # TODO when the bug is fixed, remove the next line.
         self.ubuntusdk.click_toolbar_button('Home')
+        return path
+
+    def test_open_directory(self):
+        sub_dir = self._make_directory_in_home()
 
         first_folder = self.main_window.get_folder(0)
         self.pointing_device.click_object(first_folder)
