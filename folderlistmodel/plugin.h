@@ -63,6 +63,8 @@ typedef QQmlEngine QmlEngine;
 #endif
 
 #include "dirmodel.h"
+#include "imageprovider.h"
+
 
 #define QUOTES(x)  #x
 

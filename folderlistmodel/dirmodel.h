@@ -58,7 +58,15 @@ public:
         IsFileRole,
         IsReadableRole,
         IsWritableRole,
-        IsExecutableRole
+        IsExecutableRole,
+        TrackTitleRole,
+        TrackArtistRole,
+        TrackAlbumRole,
+        TrackYearRole,
+        TrackNumberRole,
+        TrackGenreRole,
+        TrackLengthRole,
+        TrackCoverRole
     };
 
 public:
@@ -96,6 +104,15 @@ public:
 
     Q_INVOKABLE void mkdir(const QString &newdir);
 
+    Q_PROPERTY(bool filterDirectories READ filterDirectories WRITE setFilterDirectories NOTIFY filterDirectoriesChanged)
+    bool filterDirectories() const;
+
+    Q_PROPERTY(bool isRecursive READ isRecursive WRITE setIsRecursive NOTIFY isRecursiveChanged)
+    bool isRecursive() const;
+
+    Q_PROPERTY(bool readsMediaMetadata READ readsMediaMetadata WRITE setReadsMediaMetadata NOTIFY readsMediaMetadataChanged)
+    bool readsMediaMetadata() const;
+
     Q_PROPERTY(bool showDirectories READ showDirectories WRITE setShowDirectories NOTIFY showDirectoriesChanged)
     bool showDirectories() const;
 
@@ -110,6 +127,9 @@ public slots:
 signals:
     void awaitingResultsChanged();
     void nameFiltersChanged();
+    void filterDirectoriesChanged();
+    void isRecursiveChanged();
+    void readsMediaMetadataChanged();
     void showDirectoriesChanged();
     void pathChanged(const QString& newPath);
     void error(const QString &errorTitle, const QString &errorMessage);
@@ -122,8 +142,11 @@ private:
 #endif
 
     QStringList mNameFilters;
+    bool mFilterDirectories;
     bool mShowDirectories;
     bool mAwaitingResults;
+    bool mIsRecursive;
+    bool mReadsMediaMetadata;
     QString mCurrentDir;
     QVector<QFileInfo> mDirectoryContents;
 
@@ -257,6 +280,9 @@ public slots:
      */
     void cancelAction();    
 
+    void setIsRecursive(bool isRecursive);
+    void setReadsMediaMetadata(bool readsMediaMetadata);
+    void setFilterDirectories(bool filterDirectories);
     void setShowDirectories(bool showDirectories);
     void setShowHiddenFiles(bool show);
     void setSortBy(SortBy field);

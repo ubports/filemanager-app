@@ -24,11 +24,12 @@ else {
     TEMPLATE = lib
     CONFIG += qt plugin hide_symbols
     greaterThan(QT_MAJOR_VERSION, 4) {
-       QT += qml
+       QT += qml quick
     }
     else {
        QT += declarative
     }
+    LIBS += -ltag
     target.path = $$[QT_INSTALL_QML]/$$PLUGIN_IMPORT_PATH
     INSTALLS += target
     qmldir.files += $$PWD/qmldir
