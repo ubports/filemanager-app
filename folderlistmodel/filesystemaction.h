@@ -53,9 +53,42 @@ enum ClipboardOperation
 };
 
 /*!
- * \brief The FileSystemAction class
+ * \brief The FileSystemAction class does file system operations copy/cut/paste/remove items
  *
+ * Implementation:
+ * --------------
+ * Remove and Paste (from either Copy or Cut) operations are performed by creating a list of items and putting this list
+ * inside a \ref Action data structure. Each item is an \ref ActionEntry, if this item is a directory this ActionEntry will
+ * will be expanded to have the whole directory content recursively, so before performing an Action the whole list of items
+ * are built.
+ * After an item be performed (an \ref ActionEntry) the \ref endCurrentAction()  emits signals of:
+ * \ref progress(), \ref added() and \ref removed().
+ * These signals are also emitted when processing a such number of files inside an entry, in the case an entry is
+ * a directory, the define \ref STEP_FILES is used for that.
  *
+ * It is a single thread processing, some slots are used to work a little and then they are scheduled to continue
+ * working in the next main loop interaction, this flow is controlled by:
+ *  \li \ref processAction()           -> starts an \ref Action
+ *  \li \ref processActionEntry()      -> starts an \ref ActionEntry
+ *  \li \ref endActionEntry()          -> ends an \ref ActionEntry
+ *  \li \ref processCopyEntry()        -> starts an \ref copy from an \ref ActionEntry
+ *  \li \ref processCopySingleFile()   -> perform single file copy, it may have many interactions if the file is big,
+ *                                        each interaction it writes (4KB * STEP_FILES) and emit \ref progress() signal
+ *                                        and schedules itself for next write or \ref processCopyEntry() if it has already
+ *                                        finished.
+ *
+ * Behavior:
+ * ---------
+ * \li Paste operations are made as single move using QFile::rename()
+ * \li After pasting from a Cut operation, if no other application has changed the clipboard,
+ *     the destination becomes source in the clipboard as Copy for further paste operations
+ * \li Pasting in the same place where the Copy or Cut was made is not allowed, an \ref error() signal is emitted,
+ *     in the future a rename can implemented
+ * \li Paste from Copy when the destination already exists: individual files are overwritten
+ *     and both signals \ref added() and \ref removed() are emitted, directories are not touched.
+ * \li Paste  from Cut when the destination already exists: existent items (files or directories) are removed first,
+ *     directories are removed in a special way, they are first moved to a temporary area and then scheduled to be removed later
+ *     by creating an  auxiliary Remove \ref Action, see \ref moveDirToTempAndRemoveItLater().
  */
 class FileSystemAction : public QObject
 {
@@ -159,6 +192,8 @@ private:
        ClipboardOperation  operation;
        CopyFile            copyFile;
        bool                done;
+       Action *            auxAction;
+       bool                isAux;
    };
 
    QVector<Action*>        m_queuedActions;  //!< work always at item 0, after finishing taking item 0 out
@@ -185,6 +220,7 @@ private:
    void     endActionEntry();
    bool     copySymLink(const QString& target, const QFileInfo& orig);
    void     scheduleSlot(const char *slot);
+   void     moveDirToTempAndRemoveItLater(const QString& dir);
 };
     
 
