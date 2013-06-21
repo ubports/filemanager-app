@@ -5,13 +5,15 @@ CONFIG   += testcase
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4) {
-   QT += widgets
+   QT += widgets quick
 }
 else {
    include($$PWD/mimetypes/mimetypes-src.pri)
 }
 
 #------------------------------------------------
+
+LIBS += -ltag
 
 DEFINES += REGRESSION_TEST_FOLDERLISTMODEL
 
