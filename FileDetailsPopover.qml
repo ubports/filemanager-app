@@ -23,6 +23,11 @@ Popover {
     id: root
     property var model
 
+    anchors {
+        margins: units.gu(2)
+        bottom: parent.bottom
+    }
+
     function dateTimeFormat(dateTime) {
         return Qt.formatDateTime(dateTime, Qt.DefaultLocaleShortDate)
     }
@@ -52,19 +57,28 @@ Popover {
     }
 
     Column {
-        anchors.margins: units.gu(2)
+        spacing: units.gu(1)
+        anchors {
+            margins: units.gu(2)
+            left: parent.left
+            right: parent.right
+            top: parent.top
+        }
+
         Row {
+            spacing: units.gu(1)
             Image {
                 // TODO: how to get proper icon?
                 source: model.isDir
-                        ? "/usr/share/icons/gnome/48x48/apps/file-manager.png"
-                        : "/usr/share/icons/gnome/48x48/mimetypes/text-x-preview.png"
+                        ? "/usr/share/icons/Humanity/places/48/folder.svg"
+                        : "/usr/share/icons/Humanity/mimes/48/empty.svg"
             }
             Label {
                 text: model.fileName
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
+
         Grid {
             columns: 2
             spacing: units.gu(1)
