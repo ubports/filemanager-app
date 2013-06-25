@@ -28,7 +28,9 @@ Page {
     title: folderName(pageModel.path)
 
     function folderName(folder) {
-        if (folder === "/") {
+        if (folder === pageModel.homePath()) {
+            return "Home"
+        } else if (folder === "/") {
             return folder
         } else {
             return folder.substr(folder.lastIndexOf('/') + 1)
@@ -61,6 +63,12 @@ Page {
         id: toolbar
         locked: true
         opened: true
+
+        Component.onCompleted: {
+            // FIXME: Use a proper up icon when one is designed
+            back.iconSource = "/usr/share/icons/ubuntu-mobile/actions/scalable/keyboard-caps.svg"
+            back.text = "Up"
+        }
 
         ToolbarButton {
             text: i18n.tr("Paste" + " (" + pageModel.clipboardUrlsCounter + ")")

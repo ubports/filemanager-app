@@ -39,11 +39,30 @@ MainView {
 
         Component.onCompleted: goHome()
 
-        // TODO: Also push folders above the user's home folder, but still start there
-        // FIXME: This uses a hack to get to the root page, because clear removes the last page
+        // FIXME: This is only used to get the user's home folder!!!
+        FolderListModel {
+            id: tempModel
+        }
+
         function goHome() {
+            // FIXME: Get the user's home folder without requiring an instance
+            // of a FolderListModel
+            goTo(tempModel.homePath())
+        }
+
+        function goTo(folder) {
             pageStack.clear()
-            pageStack.push(Qt.resolvedUrl("FolderListPage.qml"), {"title": i18n.tr("Home")})
+
+            var items = folder.split('/')
+
+            var path = ""
+            for (var i = 0; i < items.length; i++) {
+                path = path + "/" + items[i]
+                path = path.replace("//", "/")
+                pageStack.push(Qt.resolvedUrl("FolderListPage.qml"), {"folder": path})
+            }
+
+
         }
     }
 }
