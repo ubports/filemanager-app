@@ -94,6 +94,8 @@ ListView {
 
     ActionSelectionPopover {
         id: actionSelectionPopover
+        objectName: "fileActionsPopover"
+
         property var model
         actions: ActionList {
             Action {

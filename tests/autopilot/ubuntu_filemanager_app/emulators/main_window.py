@@ -25,4 +25,5 @@ class MainWindow(object):
         return self.app.select_many("Subtitled")[index]
 
     def get_action_popover(self):
-        return self.app.select_single("ActionSelectionPopover")
+        # Returns all instances, but with current one as first index
+        return self.app.select_many("ActionSelectionPopover")[0]
