@@ -23,10 +23,7 @@ Popover {
     id: root
     property var model
 
-    anchors {
-        margins: units.gu(2)
-        bottom: parent.bottom
-    }
+    contentHeight: contents.height + 2 * contents.anchors.margins
 
     function dateTimeFormat(dateTime) {
         return Qt.formatDateTime(dateTime, Qt.DefaultLocaleShortDate)
@@ -57,6 +54,7 @@ Popover {
     }
 
     Column {
+        id: contents
         spacing: units.gu(1)
         anchors {
             margins: units.gu(2)
