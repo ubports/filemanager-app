@@ -33,19 +33,17 @@ MainView {
     width: units.gu(50)
     height: units.gu(75)
     
-    Tabs {
-        id: tabs
-        anchors.fill: parent
-        
-        // First tab begins here
-        Tab {
-            objectName: "folderListPage"
-            
-            title: i18n.tr("File Manager")
-            
-            // Tab content begins here
-            page: FolderListPage {
-            }
-        }        
+    PageStack {
+        objectName: "pageStack"
+        id: pageStack
+
+        Component.onCompleted: goHome()
+
+        // TODO: Also push folders above the user's home folder, but still start there
+        // FIXME: This uses a hack to get to the root page, because clear removes the last page
+        function goHome() {
+            pageStack.clear()
+            pageStack.push(Qt.resolvedUrl("FolderListPage.qml"), {"title": i18n.tr("Home")})
+        }
     }
 }
