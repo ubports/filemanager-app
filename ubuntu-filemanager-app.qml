@@ -33,36 +33,20 @@ MainView {
     width: units.gu(50)
     height: units.gu(75)
     
-    PageStack {
-        objectName: "pageStack"
-        id: pageStack
+    FolderListPage {
+        objectName: "folderPage"
+        id: folderPage
 
-        Component.onCompleted: goHome()
-
-        // FIXME: This is only used to get the user's home folder!!!
-        FolderListModel {
-            id: tempModel
-        }
+        folder: homeFolder
 
         function goHome() {
             // FIXME: Get the user's home folder without requiring an instance
             // of a FolderListModel
-            goTo(tempModel.homePath())
+            goTo(homeFolder)
         }
 
-        function goTo(folder) {
-            pageStack.clear()
-
-            var items = folder.split('/')
-
-            var path = ""
-            for (var i = 0; i < items.length; i++) {
-                path = path + "/" + items[i]
-                path = path.replace("//", "/")
-                pageStack.push(Qt.resolvedUrl("FolderListPage.qml"), {"folder": path})
-            }
-
-
+        function goTo(location) {
+            folder = location
         }
     }
 }

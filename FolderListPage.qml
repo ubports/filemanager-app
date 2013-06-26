@@ -24,8 +24,9 @@ Page {
     id: root
     anchors.fill: parent
 
-    property string folder: pageModel.homePath()
+    property string folder
     title: folderName(pageModel.path)
+    property string homeFolder: pageModel.homePath()
 
     function folderName(folder) {
         if (folder === pageModel.homePath()) {
@@ -64,10 +65,13 @@ Page {
         locked: true
         opened: true
 
-        Component.onCompleted: {
-            // FIXME: Use a proper up icon when one is designed
-            back.iconSource = "/usr/share/icons/ubuntu-mobile/actions/scalable/keyboard-caps.svg"
-            back.text = "Up"
+        back: ToolbarButton {
+            text: "Up"
+            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/keyboard-caps.svg"
+            visible: folder != "/"
+            onTriggered: {
+                goTo(pageModel.parentPath)
+            }
         }
 
         ToolbarButton {

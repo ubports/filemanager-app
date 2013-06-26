@@ -174,7 +174,7 @@ ListView {
             if (model.isDir) {
                 if (model.isReadable && model.isExecutable) {
                     console.log("Changing to dir", model.filePath)
-                    pageStack.push(Qt.resolvedUrl("FolderListPage.qml"), {"folder": model.filePath})
+                    goTo(model.filePath)
                 } else {
                     PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
                                     {
