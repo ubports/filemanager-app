@@ -45,18 +45,63 @@ Page {
     }
 
     ActionSelectionPopover {
-        id: createActionsPopover
-        objectName: "createActionsPopover"
+        id: folderActionsPopover
+        objectName: "folderActionsPopover"
 
         actions: ActionList {
             Action {
-                text: i18n.tr("Folder")
+                text: i18n.tr("Create new folder")
                 onTriggered: {
                     print(text)
 
                     PopupUtils.open(createFolderDialog, root)
                 }
             }
+
+            // TODO: Disabled until backend supports creating files
+//            Action {
+//                text: i18n.tr("Create new file")
+//                onTriggered: {
+//                    print(text)
+
+//                    PopupUtils.open(createFileDialog, root)
+//                }
+//            }
+
+            Action {
+                text: pageModel.clipboardUrlsCounter === 1
+                        ? i18n.tr("Paste %1 file").arg(pageModel.clipboardUrlsCounter)
+                        : i18n.tr("Paste %1 files").arg(pageModel.clipboardUrlsCounter)
+                onTriggered: {
+                    console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
+                    PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
+                                    root,
+                                    {
+                                        title: i18n.tr("Paste files"),
+                                        folderListModel: pageModel
+                                     }
+                                    )
+
+
+                    pageModel.paste()
+                }
+
+                // FIXME: This property is depreciated!
+                visible: pageModel.clipboardUrlsCounter > 0
+            }
+
+            // FIXME: Doesn't work!
+//            Action {
+//                text: i18n.tr("Properties")
+//                onTriggered: {
+//                    print(text)
+//                    PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
+//                                    root,
+//                                        { "model": pageModel
+//                                        }
+//                                    )
+//                }
+//            }
         }
 
         // Without this the popover jumps up at the start of the application. SDK bug?
@@ -67,7 +112,7 @@ Page {
     Component {
         id: createFolderDialog
         ConfirmDialogWithInput {
-            title: i18n.tr("Create folder?")
+            title: i18n.tr("Create folder")
             text: i18n.tr("Enter name for new folder")
 
             onAccepted: {
@@ -76,6 +121,23 @@ Page {
                     pageModel.mkdir(inputText)
                 } else {
                     console.log("Empty directory name, ignored")
+                }
+            }
+        }
+    }
+
+    Component {
+        id: createFileDialog
+        ConfirmDialogWithInput {
+            title: i18n.tr("Create file")
+            text: i18n.tr("Enter name for new file")
+
+            onAccepted: {
+                console.log("Create file accepted", inputText)
+                if (inputText !== '') {
+                    //FIXME: Actually create a new file!
+                } else {
+                    console.log("Empty file name, ignored")
                 }
             }
         }
@@ -98,35 +160,13 @@ Page {
         }
 
         ToolbarButton {
-            text: i18n.tr("Paste" + " (" + pageModel.clipboardUrlsCounter + ")")
+            text: i18n.tr("Actions")
             // TODO: temporary
-            iconSource: "/usr/share/icons/Humanity/actions/48/edit-paste.svg"
-            onTriggered: {
-                console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
-                PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
-                                root,
-                                {
-                                    title: i18n.tr("Paste files"),
-                                    folderListModel: pageModel
-                                 }
-                                )
-
-
-                pageModel.paste()
-            }
-            visible: pageModel.clipboardUrlsCounter > 0
-        }
-
-        // IMPROVE: would rather have this as more hidden, in a separate menu that has
-        // file manipulation operations
-        ToolbarButton {
-            text: i18n.tr("Create")
-            // TODO: temporary
-            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/add.svg"
+            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/edit.svg"
             onTriggered: {
                 print(text)
-                createActionsPopover.caller = caller
-                createActionsPopover.show();
+                folderActionsPopover.caller = caller
+                folderActionsPopover.show();
             }
         }
 
