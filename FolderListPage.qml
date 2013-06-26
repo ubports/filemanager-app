@@ -69,7 +69,9 @@ Page {
 //            }
 
             Action {
-                text: pageModel.clipboardUrlsCounter === 1
+                text: pageModel.clipboardUrlsCounter === 0
+                      ? i18n.tr("Paste")
+                      : pageModel.clipboardUrlsCounter === 1
                         ? i18n.tr("Paste %1 file").arg(pageModel.clipboardUrlsCounter)
                         : i18n.tr("Paste %1 files").arg(pageModel.clipboardUrlsCounter)
                 onTriggered: {
@@ -86,8 +88,10 @@ Page {
                     pageModel.paste()
                 }
 
-                // FIXME: This property is depreciated!
+                // FIXME: This property is depreciated and doesn't seem to work!
                 visible: pageModel.clipboardUrlsCounter > 0
+
+                enabled: pageModel.clipboardUrlsCounter > 0
             }
 
             // FIXME: Doesn't work!

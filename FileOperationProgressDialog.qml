@@ -57,4 +57,12 @@ Dialog {
             }
         }
     }
+
+    // Errors from model
+    Connections {
+        target: pageModel
+        onError: {
+            PopupUtils.close(root)
+        }
+    }
 }

@@ -44,7 +44,6 @@ MainView {
 
     function goTo(location) {
         folderPage.folder = location
-        tabs.selectedTabIndex = 0
     }
 
     function folderName(folder) {
@@ -62,8 +61,8 @@ MainView {
     property bool wideAspect: width >= units.gu(80)
 
     FolderListPage {
-        objectName: "folderPage"
         id: folderPage
+        objectName: "folderPage"
 
         folder: root.homeFolder
     }
