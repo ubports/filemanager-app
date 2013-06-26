@@ -89,7 +89,7 @@ Page {
                 }
 
                 // FIXME: This property is depreciated and doesn't seem to work!
-                visible: pageModel.clipboardUrlsCounter > 0
+                //visible: pageModel.clipboardUrlsCounter > 0
 
                 enabled: pageModel.clipboardUrlsCounter > 0
             }
