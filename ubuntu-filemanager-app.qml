@@ -26,27 +26,45 @@ import org.nemomobile.folderlistmodel 1.0
 */
 
 MainView {
+    id: root
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
     applicationName: "ubuntu-filemanager-app"
     
     width: units.gu(50)
     height: units.gu(75)
-    
+
+    property string homeFolder: "~"
+
+    function goHome() {
+        // FIXME: Get the user's home folder without requiring an instance
+        // of a FolderListModel
+        goTo(root.homeFolder)
+    }
+
+    function goTo(location) {
+        folderPage.folder = location
+        tabs.selectedTabIndex = 0
+    }
+
+    function folderName(folder) {
+        if (folder === root.homeFolder) {
+            return i18n.tr("Home")
+        } else if (folder === "/") {
+            return i18n.tr("File System")
+        } else {
+            return folder.substr(folder.lastIndexOf('/') + 1)
+        }
+    }
+
+    property alias filemanager: root
+
+    property bool wideAspect: width >= units.gu(80)
+
     FolderListPage {
         objectName: "folderPage"
         id: folderPage
 
-        folder: homeFolder
-
-        function goHome() {
-            // FIXME: Get the user's home folder without requiring an instance
-            // of a FolderListModel
-            goTo(homeFolder)
-        }
-
-        function goTo(location) {
-            folder = location
-        }
+        folder: root.homeFolder
     }
 }

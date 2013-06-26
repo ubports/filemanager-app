@@ -28,7 +28,7 @@ ListView {
     property string path: folderListModel.path
     model: folderListModel
 
-    header: Caption {
+    header: Header {
         text: (root.count == 1 ? i18n.tr("%1 (%2 file)").arg(root.path).arg(root.count) :
                                  i18n.tr("%1 (%2 files)").arg(root.path).arg(root.count))
     }

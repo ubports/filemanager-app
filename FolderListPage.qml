@@ -24,23 +24,44 @@ Page {
     id: root
     anchors.fill: parent
 
+    // This stores the location using ~ to represent home
     property string folder
-    title: folderName(pageModel.path)
+    title: folderName(folder)
     property string homeFolder: pageModel.homePath()
 
-    function folderName(folder) {
-        if (folder === pageModel.homePath()) {
-            return "Home"
-        } else if (folder === "/") {
-            return folder
-        } else {
-            return folder.substr(folder.lastIndexOf('/') + 1)
-        }
+    function goTo(folder) {
+        // Since the FolderListModel returns paths using the actual
+        // home folder, this replaces with ~ before actually going
+        // to the specified folder
+        filemanager.goTo(folder.replace(root.homeFolder, "~"))
     }
 
     FolderListModel {
         id: pageModel
-        path: root.folder
+
+        // This replaces ~ with the actual home folder, since the
+        // plugin doesn't recognize the ~
+        path: root.folder.replace("~", root.homeFolder)
+    }
+
+    ActionSelectionPopover {
+        id: createActionsPopover
+        objectName: "createActionsPopover"
+
+        actions: ActionList {
+            Action {
+                text: i18n.tr("Folder")
+                onTriggered: {
+                    print(text)
+
+                    PopupUtils.open(createFolderDialog, root)
+                }
+            }
+        }
+
+        // Without this the popover jumps up at the start of the application. SDK bug?
+        // Bug report has been made of these https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1152270
+        visible: false
     }
 
     Component {
@@ -59,6 +80,8 @@ Page {
             }
         }
     }
+
+
 
     tools: ToolbarItems {
         id: toolbar
@@ -97,24 +120,23 @@ Page {
         // IMPROVE: would rather have this as more hidden, in a separate menu that has
         // file manipulation operations
         ToolbarButton {
-            text: i18n.tr("Create folder")
+            text: i18n.tr("Create")
             // TODO: temporary
             iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/add.svg"
             onTriggered: {
                 print(text)
-                PopupUtils.open(createFolderDialog, root)
+                createActionsPopover.caller = caller
+                createActionsPopover.show();
             }
         }
 
         ToolbarButton {
-            text: i18n.tr("Home")
-            // TODO: temporary
-            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/go-to.svg"
+            text: i18n.tr("Places")
+            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/location.svg"
             onTriggered: {
-                goHome()
+                print(text)
 
-                //pageModel.path = pageModel.homePath()
-                console.log("Home triggered")
+                PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), caller)
             }
         }
     }
