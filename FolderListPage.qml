@@ -26,12 +26,38 @@ Page {
 
     title: folderName(folder)
 
-    property bool showHiddenFiles: false
-
     property variant fileView: root
+
+    property bool showHiddenFiles: false
 
     onShowHiddenFilesChanged: {
         pageModel.showHiddenFiles = root.showHiddenFiles
+    }
+
+    property string sortingMethod: "Name"
+
+    onSortingMethodChanged: {
+        console.log("Sorting by: " + sortingMethod)
+        if (sortingMethod === "Name") {
+            pageModel.sortBy = FolderListModel.SortByName
+        } else if (sortingMethod === "Date") {
+            pageModel.sortBy = FolderListModel.SortByDate
+        } else {
+            // Something fatal happened!
+            console.log("ERROR: Invalid sort type:", sortingMethod)
+        }
+    }
+
+    property bool sortAccending: true
+
+    onSortAccendingChanged: {
+        console.log("Sorting accending: " + sortAccending)
+
+        if (sortAccending) {
+            pageModel.sortOrder = FolderListModel.SortAscending
+        } else {
+            pageModel.sortOrder = FolderListModel.SortDescending
+        }
     }
 
     // This stores the location using ~ to represent home
@@ -75,7 +101,7 @@ Page {
 
         actions: ActionList {
             Action {
-                text: i18n.tr("Create new folder")
+                text: i18n.tr("Create New Folder")
                 onTriggered: {
                     print(text)
 
@@ -85,7 +111,7 @@ Page {
 
             // TODO: Disabled until backend supports creating files
 //            Action {
-//                text: i18n.tr("Create new file")
+//                text: i18n.tr("Create New File")
 //                onTriggered: {
 //                    print(text)
 
@@ -97,8 +123,8 @@ Page {
                 text: pageModel.clipboardUrlsCounter === 0
                       ? i18n.tr("Paste")
                       : pageModel.clipboardUrlsCounter === 1
-                        ? i18n.tr("Paste %1 file").arg(pageModel.clipboardUrlsCounter)
-                        : i18n.tr("Paste %1 files").arg(pageModel.clipboardUrlsCounter)
+                        ? i18n.tr("Paste %1 File").arg(pageModel.clipboardUrlsCounter)
+                        : i18n.tr("Paste %1 Files").arg(pageModel.clipboardUrlsCounter)
                 onTriggered: {
                     console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
                     PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),

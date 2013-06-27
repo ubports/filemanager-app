@@ -45,5 +45,31 @@ Popover {
                 }
             }
         }
+
+        ValueSelector {
+            text: "Sort By"
+            selectedIndex: values.indexOf(fileView.sortingMethod)
+            values: [
+                "Name",
+                "Date"
+            ]
+
+            onSelectedIndexChanged: {
+                fileView.sortingMethod = values[selectedIndex]
+            }
+        }
+
+        ValueSelector {
+            text: "Sort Order"
+            selectedIndex: sortAccending ? 0 : 1
+            values: [
+                "Ascending",
+                "Descending"
+            ]
+
+            onSelectedIndexChanged: {
+                fileView.sortAccending = (values[selectedIndex] === "Ascending")
+            }
+        }
     }
 }
