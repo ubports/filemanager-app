@@ -24,24 +24,49 @@ Page {
     id: root
     anchors.fill: parent
 
+    title: folderName(folder)
+
+    property bool showHiddenFiles: false
+
+    property variant fileView: root
+
+    onShowHiddenFilesChanged: {
+        pageModel.showHiddenFiles = root.showHiddenFiles
+    }
+
     // This stores the location using ~ to represent home
     property string folder
-    title: folderName(folder)
-    property string homeFolder: pageModel.homePath()
+    property string homeFolder: "~"
 
-    function goTo(folder) {
+    // This replaces ~ with the actual home folder, since the
+    // plugin doesn't recognize the ~
+    property string path: folder.replace("~", pageModel.homePath())
+
+    function goHome() {
+        goTo(root.homeFolder)
+    }
+
+    function goTo(location) {
         // Since the FolderListModel returns paths using the actual
         // home folder, this replaces with ~ before actually going
         // to the specified folder
-        filemanager.goTo(folder.replace(root.homeFolder, "~"))
+        root.folder = location.replace(pageModel.homePath(), "~")
+    }
+
+    function folderName(folder) {
+        if (folder === root.homeFolder) {
+            return i18n.tr("Home")
+        } else if (folder === "/") {
+            return i18n.tr("File System")
+        } else {
+            return folder.substr(folder.lastIndexOf('/') + 1)
+        }
     }
 
     FolderListModel {
         id: pageModel
 
-        // This replaces ~ with the actual home folder, since the
-        // plugin doesn't recognize the ~
-        path: root.folder.replace("~", root.homeFolder)
+        path: root.path
     }
 
     ActionSelectionPopover {
@@ -165,12 +190,23 @@ Page {
 
         ToolbarButton {
             text: i18n.tr("Actions")
-            // TODO: temporary
             iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/edit.svg"
+
             onTriggered: {
                 print(text)
                 folderActionsPopover.caller = caller
                 folderActionsPopover.show();
+            }
+        }
+
+        ToolbarButton {
+            text: i18n.tr("Settings")
+            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
+
+            onTriggered: {
+                print(text)
+
+                PopupUtils.open(Qt.resolvedUrl("SettingsPopover.qml"), caller)
             }
         }
 

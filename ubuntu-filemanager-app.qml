@@ -34,28 +34,6 @@ MainView {
     width: units.gu(50)
     height: units.gu(75)
 
-    property string homeFolder: "~"
-
-    function goHome() {
-        // FIXME: Get the user's home folder without requiring an instance
-        // of a FolderListModel
-        goTo(root.homeFolder)
-    }
-
-    function goTo(location) {
-        folderPage.folder = location
-    }
-
-    function folderName(folder) {
-        if (folder === root.homeFolder) {
-            return i18n.tr("Home")
-        } else if (folder === "/") {
-            return i18n.tr("File System")
-        } else {
-            return folder.substr(folder.lastIndexOf('/') + 1)
-        }
-    }
-
     property alias filemanager: root
 
     property bool wideAspect: width >= units.gu(80)
@@ -64,6 +42,6 @@ MainView {
         id: folderPage
         objectName: "folderPage"
 
-        folder: root.homeFolder
+        folder: folderPage.homeFolder
     }
 }
