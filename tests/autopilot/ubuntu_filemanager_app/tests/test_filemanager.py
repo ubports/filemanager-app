@@ -52,6 +52,8 @@ class TestMainWindow(FileManagerTestCase):
         # created one. See bug #1190676.
         # TODO when the bug is fixed, remove the next line.
         self.ubuntusdk.click_toolbar_button('Home')
+        while self.app.select_single('FolderListPage').loading:
+            pass
         return path
 
     def test_open_directory(self):

@@ -24,9 +24,25 @@ Page {
     id: root
     anchors.fill: parent
 
+    property string folder
+    title: folderName(pageModel.path)
+    property string homeFolder: pageModel.homePath()
+
+    function folderName(folder) {
+        if (folder === pageModel.homePath()) {
+            return "Home"
+        } else if (folder === "/") {
+            return folder
+        } else {
+            return folder.substr(folder.lastIndexOf('/') + 1)
+        }
+    }
+
+    property bool loading: pageModel.awaitingResults
+
     FolderListModel {
         id: pageModel
-        path: homePath()
+        path: root.folder
     }
 
     Component {
@@ -46,22 +62,21 @@ Page {
         }
     }
 
-    tools: ToolbarActions {
+    tools: ToolbarItems {
         id: toolbar
-        lock: true
-        active: true
+        locked: true
+        opened: true
 
-        back: Action {
-            text: i18n.tr("Up")
-            // TODO: temporary
-            iconSource: "/usr/share/icons/Humanity/actions/48/up.svg"
+        back: ToolbarButton {
+            text: "Up"
+            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/keyboard-caps.svg"
+            visible: folder != "/"
             onTriggered: {
-                pageModel.path = pageModel.parentPath
-                console.log("Up triggered")
+                goTo(pageModel.parentPath)
             }
-            visible: pageModel.path != "/"
         }
-        Action {
+
+        ToolbarButton {
             text: i18n.tr("Paste" + " (" + pageModel.clipboardUrlsCounter + ")")
             // TODO: temporary
             iconSource: "/usr/share/icons/Humanity/actions/48/edit-paste.svg"
@@ -83,22 +98,24 @@ Page {
 
         // IMPROVE: would rather have this as more hidden, in a separate menu that has
         // file manipulation operations
-        Action {
+        ToolbarButton {
             text: i18n.tr("Create folder")
             // TODO: temporary
-            iconSource: "/usr/share/icons/Humanity/actions/48/folder-new.svg"
+            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/add.svg"
             onTriggered: {
                 print(text)
                 PopupUtils.open(createFolderDialog, root)
             }
         }
 
-        Action {
+        ToolbarButton {
             text: i18n.tr("Home")
             // TODO: temporary
-            iconSource: "/usr/share/icons/Humanity/actions/48/go-home.svg"
+            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/go-to.svg"
             onTriggered: {
-                pageModel.path = pageModel.homePath()
+                goHome()
+
+                //pageModel.path = pageModel.homePath()
                 console.log("Home triggered")
             }
         }
@@ -120,10 +137,6 @@ Page {
 
     FolderListView {
         id: folderListView
-        header: Label {
-            text: pageModel.path
-            fontSize: "large"
-        }
 
         clip: true
 

@@ -21,10 +21,9 @@ class MainWindow(object):
         return self.app.select_many("Subtitled")[index]
 
     def get_action_popover(self):
-        return self.app.select_single("ActionSelectionPopover")
+        # Returns all instances, but with current one as first index
+        return self.app.select_many("ActionSelectionPopover")[0]
 
     def get_current_folder_name(self):
-        # XXX the label with the folder name doesn't have an objectName.
-        # See bug #1190855.
-        return self.app.select_single('FolderListView').select_many(
-            'Label')[0].text
+        return self.app.select_single('FolderListView').folderPath
+

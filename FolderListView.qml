@@ -17,6 +17,7 @@
  */
 import QtQuick 2.0
 import Ubuntu.Components 0.1
+import Ubuntu.Components.ListItems 0.1
 import Ubuntu.Components.Popups 0.1
 import org.nemomobile.folderlistmodel 1.0
 
@@ -24,16 +25,22 @@ ListView {
     id: root
 
     property FolderListModel folderListModel
-    property string path: folderListModel.path
+    property string folderPath: folderListModel.path
     model: folderListModel
+
+    header: Caption {
+        objectName: "directoryHeader"
+        text: (root.count == 1 ? i18n.tr("%1 (%2 file)").arg(root.folderPath).arg(root.count) :
+                                 i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))
+    }
 
     Component {
         id: confirmSingleDeleteDialog
         ConfirmDialog {
             property string filePath
             property string fileName
-            title: i18n.tr("Delete?")
-            text: i18n.tr("Are you sure you want to permanently delete") + " '" + fileName + "'?"
+            title: i18n.tr("Delete")
+            text: i18n.tr("Are you sure you want to permanently delete '%1'?").arg(fileName)
 
             onAccepted: {
                 console.log("Delete accepted for filePath, fileName", filePath, fileName)
@@ -88,6 +95,8 @@ ListView {
 
     ActionSelectionPopover {
         id: actionSelectionPopover
+        objectName: "fileActionsPopover"
+
         property var model
         actions: ActionList {
             Action {
@@ -166,7 +175,7 @@ ListView {
             if (model.isDir) {
                 if (model.isReadable && model.isExecutable) {
                     console.log("Changing to dir", model.filePath)
-                    folderListModel.path = model.filePath
+                    goTo(model.filePath)
                 } else {
                     PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
                                     {

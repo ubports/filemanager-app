@@ -69,12 +69,10 @@ class ubuntusdk(object):
         if not toolbar.opened:
             self.open_toolbar()
         row = toolbar.select_single("QQuickRow")
-        loaderList = row.select_many("QQuickLoader")
-        for loader in loaderList:
-            buttonList = loader.select_many("Button")
-            for button in buttonList:
-                if button.text == buttonLabel:
-                    return button
+        buttonList = row.select_many("ActionItem")
+        for button in buttonList:
+            if button.text == buttonLabel:
+                return button
 
     def click_toolbar_button(self, buttonLabel):
         """Clicks the toolbar button with buttonLabel"""

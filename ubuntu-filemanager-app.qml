@@ -33,19 +33,22 @@ MainView {
     width: units.gu(50)
     height: units.gu(75)
     
-    Tabs {
-        id: tabs
-        anchors.fill: parent
-        
-        // First tab begins here
-        Tab {
-            objectName: "folderListPage"
-            
-            title: i18n.tr("File Manager")
-            
-            // Tab content begins here
-            page: FolderListPage {
-            }
-        }        
+    FolderListPage {
+        objectName: "folderPage"
+        id: folderPage
+
+        folder: homeFolder
+
+        function goHome() {
+            // FIXME: Get the user's home folder without requiring an instance
+            // of a FolderListModel
+            goTo(homeFolder)
+        }
+
+        function goTo(location) {
+            // FIXME: Why is this needed? Folder doesn't seem to refresh without it
+            folder = ""
+            folder = location
+        }
     }
 }
