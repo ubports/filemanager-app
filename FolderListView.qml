@@ -25,12 +25,12 @@ ListView {
     id: root
 
     property FolderListModel folderListModel
-    property string path: folderListModel.path
+    property string folderPath: folderListModel.path
     model: folderListModel
 
     header: Caption {
-        text: (root.count == 1 ? i18n.tr("%1 (%2 file)").arg(root.path).arg(root.count) :
-                                 i18n.tr("%1 (%2 files)").arg(root.path).arg(root.count))
+        text: (root.count == 1 ? i18n.tr("%1 (%2 file)").arg(root.folderPath).arg(root.count) :
+                                 i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))
     }
 
     Component {

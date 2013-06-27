@@ -46,6 +46,8 @@ MainView {
         }
 
         function goTo(location) {
+            // FIXME: Why is this needed? Folder doesn't seem to refresh without it
+            folder = ""
             folder = location
         }
     }

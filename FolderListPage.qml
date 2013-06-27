@@ -38,6 +38,8 @@ Page {
         }
     }
 
+    property bool loading: pageModel.awaitingResults
+
     FolderListModel {
         id: pageModel
         path: root.folder
