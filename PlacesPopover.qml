@@ -72,6 +72,7 @@ Popover {
 
         Repeater {
             id: placesList
+            objectName: "placesList"
 
             model: places
 

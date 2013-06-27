@@ -16,14 +16,17 @@ class MainWindow(object):
     def __init__(self, app):
         self.app = app
 
-    def get_qml_view(self):
-        """Get the main QML view"""
-        return self.app.select_single("QQuickView")
-
     def get_folder(self, index):
         """Returns the list view folder with index number."""
-        return self.app.select_many("Subtitled")[index]
+        return self.app.select_single('FolderListPage').select_many("Subtitled")[index]
+
+    def get_folder_count(self):
+        return len(self.app.select_single('FolderListPage').select_many("Subtitled"))
 
     def get_action_popover(self):
         # Returns all instances, but with current one as first index
         return self.app.select_many("ActionSelectionPopover")[0]
+
+    def get_current_folder_name(self):
+        return self.app.select_single('FolderListView').folderPath
+

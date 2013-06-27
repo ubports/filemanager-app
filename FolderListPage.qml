@@ -77,6 +77,11 @@ Page {
         // home folder, this replaces with ~ before actually going
         // to the specified folder
         root.folder = location.replace(pageModel.homePath(), "~")
+        refresh()
+    }
+
+    function refresh() {
+        pageModel.refresh()
     }
 
     function folderName(folder) {
@@ -88,6 +93,8 @@ Page {
             return folder.substr(folder.lastIndexOf('/') + 1)
         }
     }
+
+    property bool loading: pageModel.awaitingResults
 
     FolderListModel {
         id: pageModel

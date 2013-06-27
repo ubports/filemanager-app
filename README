@@ -1,15 +1,13 @@
 Prerequisites
 =============
 
-Folderlistmodel plugin must be built and installed before running. 
+The package qtdeclarative5-nemo-qml-plugins-folderlistmodel must be installed
+before running. 
 
-Currently it can be obtained like this:
-
-bzr branch lp:~carlos-mazieri/ubuntu-filemanager-app/model
+Currently it can be obtained from
+https://launchpad.net/~ubuntu-touch-coreapps-drivers/+archive/daily
 
 Running filemanager
 ===================
 
-qmlscene filemanager.qml
-
-
+qmlscene ubuntu-filemanager-app.qml

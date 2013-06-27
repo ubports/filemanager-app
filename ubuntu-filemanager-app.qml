@@ -42,6 +42,6 @@ MainView {
         id: folderPage
         objectName: "folderPage"
 
-        folder: folderPage.homeFolder
+        folder: homeFolder
     }
 }
