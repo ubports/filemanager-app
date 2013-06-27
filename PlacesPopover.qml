@@ -86,5 +86,40 @@ Popover {
                 }
             }
         }
+
+        Empty {
+
+            TextField {
+                id: locationField
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.left
+                    right: goButton.left
+                    margins: units.gu(1)
+                }
+
+                placeholderText: i18n.tr("Location...")
+
+                onAccepted: goButton.clicked()
+            }
+
+            Button {
+                id: goButton
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    right: parent.right
+                    margins: units.gu(1)
+                }
+
+                text: i18n.tr("Go")
+                enabled: locationField.acceptableInput
+
+                onClicked: {
+                    print("User switched to:", locationField.text)
+                    fileView.folder = locationField.text
+                    PopupUtils.close(root)
+                }
+            }
+        }
     }
 }
