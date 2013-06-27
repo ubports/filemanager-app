@@ -30,3 +30,5 @@ class MainWindow(object):
     def get_current_folder_name(self):
         return self.app.select_single('FolderListView').folderPath
 
+    def get_page_title(self):
+        return self.app.select_single('FolderListPage').title
