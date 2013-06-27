@@ -16,6 +16,7 @@ from autopilot.testcase import AutopilotTestCase
 from time import sleep
 
 from ubuntu_filemanager_app.emulators.main_window import MainWindow
+from ubuntu_filemanager_app.emulators.ubuntusdk import ubuntusdk
 
 
 class FileManagerTestCase(AutopilotTestCase):
@@ -49,7 +50,8 @@ class FileManagerTestCase(AutopilotTestCase):
         self.app = self.launch_test_application(
             "qmlscene",
             "/usr/share/ubuntu-filemanager-app/ubuntu-filemanager-app.qml",
-            "--desktop_file_hint=/usr/share/applications/ubuntu-filemanager-app.desktop",
+            "--desktop_file_hint="
+            "/usr/share/applications/ubuntu-filemanager-app.desktop",
             app_type='qt')
 
     def tap_item(self, item):
@@ -61,3 +63,7 @@ class FileManagerTestCase(AutopilotTestCase):
     @property
     def main_window(self):
         return MainWindow(self.app)
+
+    @property
+    def ubuntusdk(self):
+        return ubuntusdk(self, self.app)
