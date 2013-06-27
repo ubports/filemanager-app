@@ -29,6 +29,7 @@ ListView {
     model: folderListModel
 
     header: Caption {
+        objectName: "directoryHeader"
         text: (root.count == 1 ? i18n.tr("%1 (%2 file)").arg(root.folderPath).arg(root.count) :
                                  i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))
     }
