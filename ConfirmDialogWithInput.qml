@@ -28,10 +28,12 @@ Dialog {
 
     TextField {
         id: input
+        objectName: "inputField"
         focus: true
     }
 
     Button {
+        objectName: "okButton"
         text: i18n.tr("Ok")
         onClicked: {
             accepted()
@@ -40,6 +42,7 @@ Dialog {
     }
 
     Button {
+        objectName: "cancelButton"
         text: i18n.tr("Cancel")
         onClicked: {
             rejected()
