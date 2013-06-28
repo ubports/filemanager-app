@@ -98,6 +98,14 @@ Popover {
                     margins: units.gu(1)
                 }
 
+                inputMethodHints: Qt.ImhNoAutoUppercase
+
+                validator: RegExpValidator {
+                    regExp: /.+/
+                }
+
+                text: fileView.path
+
                 placeholderText: i18n.tr("Location...")
 
                 onAccepted: goButton.clicked()
