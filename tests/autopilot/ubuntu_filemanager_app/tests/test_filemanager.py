@@ -78,6 +78,27 @@ class TestMainWindow(FileManagerTestCase):
         self.assertThat(
             self.main_window.get_current_folder_name,
             Eventually(Equals(sub_dir)))
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(0)))
+
+    def test_delete_directory(self):
+        sub_dir = self._make_directory_in_home()
+        first_folder = self.main_window.get_file_item(0)
+
+        self.tap_item(first_folder)
+        action_popover = self.main_window.get_action_popover()
+        self._run_action(action_popover, 'Delete')
+
+        self._cancel_action()
+
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+
+        self.tap_item(first_folder)
+        action_popover = self.main_window.get_action_popover()
+        self._run_action(action_popover, 'Delete')
+
+        self._confirm_action()
+
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(0)))
 
     def test_create_directory(self):
         name = 'Test Directory'
@@ -131,6 +152,16 @@ class TestMainWindow(FileManagerTestCase):
             if action.text == name:
                 requested = action
         self.pointing_device.click_object(requested)
+
+    def _confirm_action(self):
+        dialog = self.app.select_single('ConfirmDialog')
+        okButton = dialog.select_single('Button',objectName='okButton')
+        self.pointing_device.click_object(okButton)
+
+    def _cancel_action(self):
+        dialog = self.app.select_single('ConfirmDialog')
+        cancelButton = dialog.select_single('Button',objectName='cancelButton')
+        self.pointing_device.click_object(cancelButton)
 
     def _provide_input(self, text):
         """Fill in the input dialog"""
