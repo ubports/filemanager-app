@@ -13,6 +13,7 @@ import tempfile
 
 import mock
 import os
+import os.path
 import shutil
 
 from autopilot.matchers import Eventually
@@ -75,6 +76,18 @@ class TestMainWindow(FileManagerTestCase):
         self.assertThat(
             self.main_window.get_current_folder_name,
             Eventually(Equals(sub_dir)))
+
+    def test_going_up(self):
+        upDir = os.path.split(os.environ['HOME'])[0]
+        upName = os.path.split(upDir)[1]
+
+        home_place = self._get_place("Home")
+        self.pointing_device.click_object(home_place)
+
+        self._check_location("Home", os.environ['HOME'])
+
+        self.ubuntusdk.click_toolbar_button('Up')
+        self._check_location(upName, upDir)
 
     def test_going_home(self):
         home_place = self._get_place("Home")
