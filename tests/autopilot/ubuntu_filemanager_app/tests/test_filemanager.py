@@ -67,6 +67,17 @@ class TestMainWindow(FileManagerTestCase):
 
         return path
 
+    def _make_file_in_home(self):
+        path = tempfile.mkstemp(dir=os.environ['HOME'])
+        # Currently, we need to open again the home folder to show the newly
+        # created one. See bug #1190676.
+        # TODO when the bug is fixed, remove the following line
+        self._go_to_place('Home')
+
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+
+        return path
+
     def test_open_directory(self):
         sub_dir = self._make_directory_in_home()
 
@@ -82,6 +93,26 @@ class TestMainWindow(FileManagerTestCase):
 
     def test_delete_directory(self):
         sub_dir = self._make_directory_in_home()
+        first_folder = self.main_window.get_file_item(0)
+
+        self.tap_item(first_folder)
+        action_popover = self.main_window.get_action_popover()
+        self._run_action(action_popover, 'Delete')
+
+        self._cancel_action()
+
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+
+        self.tap_item(first_folder)
+        action_popover = self.main_window.get_action_popover()
+        self._run_action(action_popover, 'Delete')
+
+        self._confirm_action()
+
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(0)))
+
+    def test_delete_file(self):
+        sub_dir = self._make_file_in_home()
         first_folder = self.main_window.get_file_item(0)
 
         self.tap_item(first_folder)
