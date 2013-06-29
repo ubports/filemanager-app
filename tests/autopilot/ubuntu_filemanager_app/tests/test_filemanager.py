@@ -68,7 +68,7 @@ class TestMainWindow(FileManagerTestCase):
         return path
 
     def _make_file_in_home(self):
-        path = tempfile.mkstemp(dir=os.environ['HOME'])
+        path = tempfile.mkstemp(dir=os.environ['HOME'])[1]
         # Currently, we need to open again the home folder to show the newly
         # created one. See bug #1190676.
         # TODO when the bug is fixed, remove the following line
@@ -90,6 +90,53 @@ class TestMainWindow(FileManagerTestCase):
             self.main_window.get_current_folder_name,
             Eventually(Equals(sub_dir)))
         self.assertThat(self.main_window.get_file_count, Eventually(Equals(0)))
+
+    def test_rename_directory(self):
+        sub_dir = self._make_directory_in_home()
+        dir_name = os.path.split(sub_dir)[1]
+        new_name = 'New Test Directory'
+
+        first_folder = self.main_window.get_file_item(0)
+
+        self.tap_item(first_folder)
+        action_popover = self.main_window.get_action_popover()
+        self._run_action(action_popover, 'Rename')
+
+        self._cancel_action()
+
+        self.assertThat(lambda: self.main_window.get_filenames()[0], Eventually(Equals(dir_name)))
+
+        self.tap_item(first_folder)
+        action_popover = self.main_window.get_action_popover()
+        self._run_action(action_popover, 'Rename')
+
+        self._provide_input(new_name)
+
+        self.assertThat(lambda: self.main_window.get_filenames()[0], Eventually(Equals(new_name)))
+
+    def test_rename_file(self):
+        path = self._make_file_in_home()
+        name = os.path.split(path)[1]
+        new_name = 'New Test File'
+
+        first_file = self.main_window.get_file_item(0)
+
+        self.tap_item(first_file)
+        action_popover = self.main_window.get_action_popover()
+        self._run_action(action_popover, 'Rename')
+
+        self._cancel_action()
+
+        self.assertThat(lambda: self.main_window.get_filenames()[0], Eventually(Equals(name)))
+
+        self.tap_item(first_file)
+        action_popover = self.main_window.get_action_popover()
+        self._run_action(action_popover, 'Rename')
+
+        self._provide_input(new_name)
+
+        self.assertThat(lambda: self.main_window.get_filenames()[0], Eventually(Equals(new_name)))
+
 
     def test_delete_directory(self):
         sub_dir = self._make_directory_in_home()
@@ -186,11 +233,15 @@ class TestMainWindow(FileManagerTestCase):
 
     def _confirm_action(self):
         dialog = self.app.select_single('ConfirmDialog')
+        if dialog == None:
+            dialog = self.app.select_single('ConfirmDialogWithInput')
         okButton = dialog.select_single('Button',objectName='okButton')
         self.pointing_device.click_object(okButton)
 
     def _cancel_action(self):
         dialog = self.app.select_single('ConfirmDialog')
+        if dialog == None:
+            dialog = self.app.select_single('ConfirmDialogWithInput')
         cancelButton = dialog.select_single('Button',objectName='cancelButton')
         self.pointing_device.click_object(cancelButton)
 
@@ -198,7 +249,17 @@ class TestMainWindow(FileManagerTestCase):
         """Fill in the input dialog"""
         dialog = self.app.select_single('ConfirmDialogWithInput')
         field = dialog.select_single('TextField')
+
         self.pointing_device.click_object(field)
+
+        clearButton = field.select_single('AbstractButton')
+        #if clearButton:
+        self.pointing_device.click_object(clearButton)
+
+        self.assertThat(field.text, Eventually(Equals("")))
+
+        self.pointing_device.click_object(field)
+
         self.keyboard.type(text)
         self.assertThat(field.text,
             Eventually(Equals(text)))

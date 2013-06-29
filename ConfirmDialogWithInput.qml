@@ -23,6 +23,7 @@ Dialog {
     id: root
 
     property alias inputText: input.text
+    property alias placeholderText: input.placeholderText
     signal accepted
     signal rejected
 
