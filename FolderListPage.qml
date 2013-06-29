@@ -76,6 +76,10 @@ Page {
         // Since the FolderListModel returns paths using the actual
         // home folder, this replaces with ~ before actually going
         // to the specified folder
+        while (location !== '/' && location.substring(location.lastIndexOf('/')+1) === "") {
+            location = location.substring(0, location.length - 1)
+        }
+
         root.folder = location.replace(pageModel.homePath(), "~")
         refresh()
     }
@@ -94,12 +98,41 @@ Page {
         }
     }
 
+    function pathExists(path) {
+        path = path.replace("~", pageModel.homePath())
+
+        if (path === '/')
+            return true
+
+        if(path.charAt(0) === '/') {
+            console.log("Directory: " + path.substring(0, path.lastIndexOf('/')+1))
+            repeaterModel.path = path.substring(0, path.lastIndexOf('/')+1)
+            console.log("Sub dir: " + path.substring(path.lastIndexOf('/')+1))
+            if (path.substring(path.lastIndexOf('/')+1) !== "" && !repeaterModel.cdIntoPath(path.substring(path.lastIndexOf('/')+1))) {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return false
+        }
+    }
+
     property bool loading: pageModel.awaitingResults
 
     FolderListModel {
         id: pageModel
 
         path: root.path
+    }
+
+    FolderListModel {
+        id: repeaterModel
+        path: root.folder
+
+        onPathChanged: {
+            console.log("Path: " + repeaterModel.path)
+        }
     }
 
     ActionSelectionPopover {

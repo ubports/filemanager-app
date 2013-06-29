@@ -100,9 +100,7 @@ Popover {
 
                 inputMethodHints: Qt.ImhNoAutoUppercase
 
-                validator: RegExpValidator {
-                    regExp: /.+/
-                }
+                property bool valid: pathExists(text)
 
                 text: fileView.path
 
@@ -120,11 +118,11 @@ Popover {
                 }
 
                 text: i18n.tr("Go")
-                enabled: locationField.acceptableInput
+                enabled: locationField.acceptableInput && locationField.valid
 
                 onClicked: {
                     print("User switched to:", locationField.text)
-                    fileView.folder = locationField.text
+                    goTo(locationField.text)
                     PopupUtils.close(root)
                 }
             }
