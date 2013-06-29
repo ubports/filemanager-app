@@ -96,6 +96,10 @@ class FileSystemAction : public QObject
 public:  
     explicit FileSystemAction(QObject *parent = 0);
     ~FileSystemAction();
+
+public:
+    bool     isBusy() const;
+
 public slots:
     void     cancel();
     void     remove(const QStringList & filePaths);

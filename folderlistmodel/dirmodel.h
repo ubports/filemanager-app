@@ -37,11 +37,13 @@
 #include <QVector>
 #include <QStringList>
 #include <QDir>
+#include <QDateTime>
 
 #include "iorequest.h"
+#include "filecompare.h"
 
 class FileSystemAction;
-typedef bool  (*CompareFunction)(const QFileInfo &a, const QFileInfo &b);
+
 
 class DirModel : public QAbstractListModel
 {
@@ -94,6 +96,21 @@ public:
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
     inline QString path() const { return mCurrentDir; }
     void setPath(const QString &pathName);
+
+    Q_PROPERTY(QDateTime pathCreatedDate  READ pathCreatedDate)
+    QDateTime pathCreatedDate() const;
+
+    Q_PROPERTY(QDateTime pathModifiedDate READ  pathModifiedDate)
+    QDateTime   pathModifiedDate() const;
+
+    Q_PROPERTY(QString pathCreatedDateLocaleShort  READ  pathCreatedDateLocaleShort)
+    QString     pathCreatedDateLocaleShort() const;
+
+    Q_PROPERTY(QString  pathModifiedDateLocaleShort READ pathModifiedDateLocaleShort)
+    QString     pathModifiedDateLocaleShort() const;
+
+    Q_PROPERTY(bool pathIsWritable  READ pathIsWritable)
+    bool pathIsWritable() const;
 
     Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
     bool awaitingResults() const;
@@ -188,6 +205,9 @@ public:
     Q_PROPERTY(int clipboardUrlsCounter READ getClipboardUrlsCounter NOTIFY clipboardChanged)
     int getClipboardUrlsCounter() const;
 
+    Q_PROPERTY(bool enableExternalFSWatcher READ getEnabledExternalFSWatcher WRITE setEnabledExternalFSWatcher)
+    bool  getEnabledExternalFSWatcher() const;
+
     Q_INVOKABLE QString homePath() const;
 
     /*!
@@ -244,14 +264,22 @@ public:
      *
      *  \note Qt uses Qt QDesktopServices::openUrl()
      */
-
     Q_INVOKABLE bool  openIndex(int row);
+
     /*!
      *  Same as \ref openIndex() but using a file name instead of index
+     *
+     *  It allows to open directories and files using absoulte paths
      *
      *  \sa \ref cdIntoPath()
      */
     Q_INVOKABLE bool  openPath(const QString& filename);
+
+    // some helper functions that can be useful to other QML applications than File Manager
+    Q_INVOKABLE  bool  existsDir(const QString&  folderName) const;
+    Q_INVOKABLE  bool  canReadDir(const QString& folderName) const;
+    Q_INVOKABLE  bool  existsFile(const QString& fileName)   const;
+    Q_INVOKABLE  bool  canReadFile(const QString& fileName)  const;
 
 public slots:
     /*!
@@ -287,6 +315,8 @@ public slots:
     void setShowHiddenFiles(bool show);
     void setSortBy(SortBy field);
     void setSortOrder(SortOrder order);
+    void setEnabledExternalFSWatcher(bool enable);
+
 
     void toggleShowDirectories();
     void toggleShowHiddenFiles();
@@ -333,12 +363,31 @@ private:
     QString       dirItems(const QFileInfo& fi) const;
     bool          cdInto(const QFileInfo& fi);
     bool          openItem(const QFileInfo& fi);
+    DirListWorker * createWorkerRequest(IORequest::RequestType requestType,
+                                                  const QString& pathName);
+    bool          canReadDir(const QFileInfo& d)   const;
+    bool          canReadFile(const QFileInfo& f)  const;
+    QFileInfo     setParentIfRelative(const QString &fileOrDir) const;
+
+private:
+    void          startExternalFsWatcher();
+    void          stoptExternalFsWatcher();
+private slots:
+    void          onItemAddedOutsideFm(QFileInfo&);
+    void          onItemRemovedOutSideFm(QFileInfo&);
+    void          onItemChangedOutSideFm(QFileInfo&);
+    void          onExternalFsWatcherFinihed();
+protected:
+   virtual void   timerEvent(QTimerEvent *);
 
 private:
     bool               mShowHiddenFiles;
     SortBy             mSortBy;
     SortOrder          mSortOrder;
     CompareFunction    mCompareFunction;
+    int                mExternalFSWatcherTimer;
+    bool               mEnableExternalFSWatcher;
+    QDateTime          mLastModifiedCurrentPath;
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
 public:

@@ -44,6 +44,7 @@ public:
     bool create(int counter =1);
     bool create(const QString& name, int counter = 1);
     QString lastFileCreated();
+    QString lastNameCreated();
     QStringList createdList() const   { return m_filesCreated; }
     int      created()        const   { return m_filesCreated.count();}
     int      howManyExist();

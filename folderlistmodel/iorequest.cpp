@@ -31,6 +31,93 @@
 
 #include "iorequest.h"
 
-IORequest::IORequest() : QObject()
+#include <QDirIterator>
+#include <QFileInfo>
+#include <QDebug>
+
+IORequest::IORequest() : QObject(), m_type(DirList)
 {
+}
+
+IORequest::RequestType IORequest::type() const
+{
+    return m_type;
+}
+
+
+DirListWorker::DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive)
+    : mPathName(pathName)
+    , mFilter(filter)
+    , mIsRecursive(isRecursive)
+{
+
+}
+
+
+void DirListWorker::run()
+{
+#if DEBUG_MESSAGES
+    qDebug() << Q_FUNC_INFO << "Running on: " << QThread::currentThreadId();
+#endif
+
+    QVector<QFileInfo> directoryContents = getContents();
+
+    // last batch
+    emit itemsAdded(directoryContents);
+    emit workerFinished();
+}
+
+
+QVector<QFileInfo> DirListWorker::getContents()
+{
+    QVector<QFileInfo> directoryContents;
+    directoryContents = add(mPathName, mFilter, mIsRecursive, directoryContents);
+    return directoryContents;
+}
+
+
+QVector<QFileInfo> DirListWorker::add(const QString &pathName,
+                                      QDir::Filter filter,
+                                      const bool isRecursive,
+                                      QVector<QFileInfo> directoryContents)
+{
+    QDir tmpDir = QDir(pathName, QString(), QDir::NoSort, filter);
+    QDirIterator it(tmpDir);
+    while (it.hasNext()) {
+        it.next();
+
+        if(it.fileInfo().isDir() && isRecursive) {
+            directoryContents = add(it.fileInfo().filePath(), filter, isRecursive, directoryContents);
+        } else {
+            directoryContents.append(it.fileInfo());
+        }
+
+        if (directoryContents.count() >= 50) {
+            emit itemsAdded(directoryContents);
+
+            // clear() would force a deallocation, micro-optimization
+            directoryContents.erase(directoryContents.begin(), directoryContents.end());
+        }
+    }
+
+    return directoryContents;
+}
+
+
+//---------------------------------------------------------------------------------------------------------
+ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const QVector<QFileInfo>& content,
+                                                   const QString &pathName,
+                                                   QDir::Filter filter,
+                                                   const bool isRecursive)
+    : DirListWorker(pathName, filter, isRecursive)
+
+{
+    m_type        = DirListExternalFSChanges;
+    m_curContent  = content;
+}
+
+
+void ExternalFileSystemChangesWorker::run()
+{
+    QVector<QFileInfo> directoryContents = getContents();
 }
