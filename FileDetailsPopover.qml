@@ -23,10 +23,12 @@ Popover {
     id: root
     property var model
 
+    property string path: model.path || (fileView.path + '/' + model.fileName)
+
     contentHeight: contents.height + 2 * contents.anchors.margins
 
     function dateTimeFormat(dateTime) {
-        return Qt.formatDateTime(dateTime, Qt.DefaultLocaleShortDate)
+        return Qt.formatDateTime(dateTime, Qt.DefaultLocaleShortDate) || "Uknown"
     }
 
     function permissionsToString(model) {
@@ -66,22 +68,35 @@ Popover {
         Row {
             spacing: units.gu(1)
             Image {
-                // TODO: how to get proper icon?
-                source: model.isDir
-                        ? "/usr/share/icons/Humanity/places/48/folder.svg"
-                        : "/usr/share/icons/Humanity/mimes/48/empty.svg"
-            }
-            Label {
-                text: model.fileName
                 anchors.verticalCenter: parent.verticalCenter
+
+                // TODO: how to get proper icon?
+                source: fileIcon(root.path, model.isDir)
+            }
+
+            Label {
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: folderName(root.path)
+                font.bold: true
             }
         }
 
         Grid {
             columns: 2
             spacing: units.gu(1)
+
             Label {
-                text: i18n.tr("Size:")
+                text: i18n.tr("Path:")
+            }
+
+            Label {
+                text: root.path
+            }
+
+            Label {
+                text: model.isDir ? i18n.tr("Contents:")
+                                  : i18n.tr("Size:")
             }
             Label {
                 text: model.fileSize
