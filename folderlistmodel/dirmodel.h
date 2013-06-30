@@ -373,9 +373,9 @@ private:
     void          startExternalFsWatcher();
     void          stoptExternalFsWatcher();
 private slots:
-    void          onItemAddedOutsideFm(QFileInfo&);
+    void          onItemAddedOutsideFm(QFileInfo&fi);
     void          onItemRemovedOutSideFm(QFileInfo&);
-    void          onItemChangedOutSideFm(QFileInfo&);
+    void          onItemChangedOutSideFm(QFileInfo&fi);
     void          onExternalFsWatcherFinihed();
 protected:
    virtual void   timerEvent(QTimerEvent *);

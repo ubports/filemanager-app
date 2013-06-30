@@ -32,7 +32,7 @@
 #ifndef IOREQUEST_H
 #define IOREQUEST_H
 
-#include <QObject>
+#include <QHash>
 #include <QDir>
 #include <QFileInfo>
 #include <QVector>
@@ -101,7 +101,7 @@ signals:
     void     added(const QFileInfo& );
     void     finished();
 private:
-    QVector<QFileInfo> m_curContent;
+    QHash<QString, QFileInfo>    m_curContent;   //!< using hash because the vector can be in any order
 };
 
 
