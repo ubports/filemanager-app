@@ -58,9 +58,9 @@
 #define IS_VALID_ROW(row)             (row >=0 && row < mDirectoryContents.count())
 #define WARN_ROW_OUT_OF_RANGE(row)    qWarning() << Q_FUNC_INFO << "row" << row << "Out of bounds access"
 
-#define    NO_EXT_FS_WATCHER_TIMER  -1
-#define    IS_EXT_FS_WATCHER_TIMER_ACTIVE()  (mExternalFSWatcherTimer != NO_EXT_FS_WATCHER_TIMER)
-#define    IS_FILE_MANAGER_IDLE()            (!mAwaitingResults)
+#define NO_EXT_FS_WATCHER_TIMER  -1
+#define IS_EXT_FS_WATCHER_TIMER_ACTIVE()  (mExternalFSWatcherTimer != NO_EXT_FS_WATCHER_TIMER)
+#define IS_FILE_MANAGER_IDLE()            (!mAwaitingResults)
 
 
 Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread)
@@ -720,7 +720,10 @@ void DirModel::onItemRemoved(const QString &pathname)
 
 void DirModel::onItemRemoved(const QFileInfo &fi)
 {  
-    int row = rowOfItem(fi);   
+    int row = rowOfItem(fi);
+#if DEBUG_MESSAGES
+    qDebug() <<  Q_FUNC_INFO << "row" << row;
+#endif
     if (row >= 0)
     {
         beginRemoveRows(QModelIndex(), row, row);
@@ -728,6 +731,7 @@ void DirModel::onItemRemoved(const QFileInfo &fi)
         endRemoveRows();
     }
 }
+
 
 /*!
  * \brief DirModel::onItemAdded()
@@ -926,18 +930,32 @@ int DirModel::getClipboardUrlsCounter() const
 
 int DirModel::rowOfItem(const QFileInfo& fi)
 {
-    QVector<QFileInfo>::Iterator it = qBinaryFind(mDirectoryContents.begin(),
-                                                  mDirectoryContents.end(),
-                                                  fi,
-                                                  fileCompareExists);
-    int row;
-    if (it == mDirectoryContents.end())
-    {       
-        row = -1;
-    }
-    else
+    int row = -1;
+    //to use qBinaryFind() the array needs to be ordered ascending
+    if (mCompareFunction == fileCompareAscending)
     {
-        row = it - mDirectoryContents.begin();
+        QVector<QFileInfo>::Iterator it = qBinaryFind(mDirectoryContents.begin(),
+                                                      mDirectoryContents.end(),
+                                                      fi,
+                                                      fileCompareExists);
+        if (it != mDirectoryContents.end())
+        {
+            row = it - mDirectoryContents.begin();
+        }
+    }
+    else //walk through whole array
+    {
+       //TODO improve this search
+       int counter = mDirectoryContents.count();
+       while (counter--)
+       {
+           if ( 0 == QString::localeAwareCompare(fi.absoluteFilePath(),
+                              mDirectoryContents.at(counter).absoluteFilePath()) )
+           {
+               row = counter;
+               break;
+           }
+       }
     }
     return row;
 }
@@ -1085,23 +1103,59 @@ void DirModel::timerEvent(QTimerEvent *)
                 this,         SLOT(onItemChangedOutSideFm(QFileInfo&)));
         connect(fsWatcher,    SIGNAL(finished()),
                 this,         SLOT(onExternalFsWatcherFinihed()));
+
+        qDebug() << "started Auto-Refresh" << QDateTime::currentDateTime();
     }
 }
 
-
-void DirModel::onItemAddedOutsideFm(QFileInfo&)
+/*!
+ * \brief DirModel::onItemAddedOutsideFm() It receives a  signal saying an item was added by other application
+ * \param fi
+ */
+void DirModel::onItemAddedOutsideFm(QFileInfo& fi)
 {
-
+    if (mEnableExternalFSWatcher && IS_FILE_MANAGER_IDLE())
+    {
+        int row = rowOfItem(fi);
+        if (row == -1)
+        {
+            onItemAdded(fi);;
+        }
+    }
 }
 
-void DirModel::onItemRemovedOutSideFm(QFileInfo&)
+/*!
+ * \brief DirModel::onItemRemovedOutSideFm() It receives a  signal saying an item was removed by other application
+ *
+ * Just calls \ref onItemRemoved() which already checks if the item exists
+ *
+ * \param fi
+ */
+void DirModel::onItemRemovedOutSideFm(QFileInfo& fi)
 {
-
+    if (mEnableExternalFSWatcher && IS_FILE_MANAGER_IDLE())
+    {
+        onItemRemoved(fi);
+    }
 }
 
-void DirModel::onItemChangedOutSideFm(QFileInfo&)
+/*!
+ * \brief DirModel::onItemChangedOutSideFm()
+ *
+ * A File or a Dir modified by other applications: size,date, permissions
+ */
+void DirModel::onItemChangedOutSideFm(QFileInfo& fi)
 {
-
+    if (mEnableExternalFSWatcher && IS_FILE_MANAGER_IDLE())
+    {
+        int row = rowOfItem(fi);
+        if (row >= 0)
+        {
+            QModelIndex first = index(row,0);
+            QModelIndex last  = index(row, roleMapping.count() -1);
+            emit dataChanged(first, last);
+        }
+    }
 }
 
 void DirModel::onExternalFsWatcherFinihed()

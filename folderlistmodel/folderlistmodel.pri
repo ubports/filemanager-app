@@ -4,7 +4,7 @@ SOURCES += $$PWD/dirmodel.cpp \
            $$PWD/ioworkerthread.cpp \
            $$PWD/filesystemaction.cpp \
            $$PWD/imageprovider.cpp \
-           $$PWD/filecompare.cpp
+           $$PWD/filecompare.cpp \
 
 
 
@@ -15,7 +15,7 @@ HEADERS += $$PWD/dirmodel.h \
            $$PWD/ioworkerthread.h \
            $$PWD/filesystemaction.h \
            $$PWD/imageprovider.h \
-           $$PWD/filecompare.h
+           $$PWD/filecompare.h \
 
 
 

@@ -29,6 +29,7 @@
 #include <QDebug>
 #include <QProgressBar>
 #include <QMessageBox>
+#include <QTimer>
 
 SimpleList::SimpleList(QWidget *parent) :
     QWidget(parent),
@@ -208,7 +209,7 @@ void SimpleList::progress(int cur, int total, int percent)
 {
     QString p;
     m_pbar->setValue(percent);
-    if (cur == 0)
+    if (cur == 0 && percent == 0)
     {
         m_pbar->reset();
         m_pbar->show();
@@ -216,7 +217,7 @@ void SimpleList::progress(int cur, int total, int percent)
     else
         if (percent == 100)
         {
-            m_pbar->hide();
+            QTimer::singleShot(200, m_pbar, SLOT(hide()));
         }
     p.sprintf("progress(cur=%d, total=%d, percent=%d)", cur,total,percent);
     qDebug() << p;

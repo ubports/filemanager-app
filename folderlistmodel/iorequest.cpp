@@ -113,11 +113,41 @@ ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const QVector<Q
 
 {
     m_type        = DirListExternalFSChanges;
-    m_curContent  = content;
+    int counter = content.count();
+    while (counter--)
+    {
+        m_curContent.insert( content.at(counter).absoluteFilePath(), content.at(counter) );
+    }
 }
 
 
 void ExternalFileSystemChangesWorker::run()
 {
     QVector<QFileInfo> directoryContents = getContents();
+    int counter = directoryContents.count();
+    while (counter--)
+    {
+        const QFileInfo& originalItem = directoryContents.at(counter);
+        const QFileInfo  existItem    = m_curContent.value(originalItem.absoluteFilePath());
+        if ( existItem.exists() )
+        {
+            //it may have changed
+            if ( originalItem != existItem )
+            {
+                emit changed(originalItem);
+            }
+            //remove this item
+            m_curContent.remove(originalItem.absoluteFilePath());
+        }
+        else // originalItem was added
+        {
+            emit added(originalItem);
+        }
+    }
+    QHash<QString, QFileInfo>::iterator  i = m_curContent.begin();
+    while ( i != m_curContent.end() )
+    {
+        emit removed(i.value());
+        ++i;
+    }
 }
