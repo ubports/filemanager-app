@@ -128,6 +128,12 @@ QString TempFiles::lastFileCreated()
     return ret;
 }
 
+QString TempFiles::lastNameCreated()
+{
+    QFileInfo f(lastFileCreated());
+    return f.fileName();
+}
+
 DeepDir::DeepDir(const QString &rootDir, int level) :
     root(QDir::tempPath() + QDir::separator() + rootDir),
     totalFiles(0),

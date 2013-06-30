@@ -1,5 +1,7 @@
-/*
- * Copyright (C) 2012 Robin Burchell <robin+nemo@viroteck.net>
+/**************************************************************************
+ *
+ * Copyright 2013 Canonical Ltd.
+ * Copyright 2013 Carlos J Mazieri <carlos.mazieri@gmail.com>
  *
  * You may use this file under the terms of the BSD license as follows:
  *
@@ -27,38 +29,23 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
+ *
+ * File: filecompare.h
+ * Date: 6/25/2013
  */
 
-#ifndef IOREQUESTWORKER_H
-#define IOREQUESTWORKER_H
+#ifndef FILECOMPARE_H
+#define FILECOMPARE_H
 
-#include <QObject>
-#include <QThread>
-#include <QMutex>
-#include <QWaitCondition>
+class QFileInfo;
 
-#include "iorequest.h"
+typedef bool  (*CompareFunction)(const QFileInfo &a, const QFileInfo &b);
 
-class IORequestWorker : public QThread
-{
-    Q_OBJECT
-public:
-    explicit IORequestWorker();
+bool fileCompareExists(const QFileInfo &a, const QFileInfo &b);
+bool fileCompareAscending(const QFileInfo &a, const QFileInfo &b);
+bool fileCompareDescending(const QFileInfo &a, const QFileInfo &b);
 
-    void addRequest(IORequest *request);
+bool dateCompareDescending(const QFileInfo &a, const QFileInfo &b);
+bool dateCompareAscending(const QFileInfo &a, const QFileInfo &b);
 
-    void run();
-
-    void exit();
-
-private:
-    void  removeAutoRefreshThread(int toRemoveCounter);
-
-private:
-    QMutex mMutex;
-    QWaitCondition mWaitCondition;
-    QList<IORequest *> mRequests;
-    bool mTimeToQuit;
-};
-
-#endif // IOREQUESTWORKER_H
+#endif // FILECOMPARE_H

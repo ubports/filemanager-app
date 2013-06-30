@@ -32,6 +32,7 @@
 #include <errno.h>
 #include <string.h>
 #include "dirmodel.h"
+#include "iorequest.h"
 #include "ioworkerthread.h"
 #include "filesystemaction.h"
 
@@ -45,7 +46,6 @@
 #include <QDirIterator>
 #include <QDir>
 #include <QDebug>
-#include <QDateTime>
 #include <QFileIconProvider>
 #include <QUrl>
 #include <QDesktopServices>
@@ -58,6 +58,10 @@
 #define IS_VALID_ROW(row)             (row >=0 && row < mDirectoryContents.count())
 #define WARN_ROW_OUT_OF_RANGE(row)    qWarning() << Q_FUNC_INFO << "row" << row << "Out of bounds access"
 
+#define NO_EXT_FS_WATCHER_TIMER  -1
+#define IS_EXT_FS_WATCHER_TIMER_ACTIVE()  (mExternalFSWatcherTimer != NO_EXT_FS_WATCHER_TIMER)
+#define IS_FILE_MANAGER_IDLE()            (!mAwaitingResults)
+
 
 Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread)
 
@@ -66,67 +70,6 @@ namespace {
 }
 
 
-
-
-static bool fileCompareExists(const QFileInfo &a, const QFileInfo &b)
-{
-    if (a.isDir() && !b.isDir())
-        return true;
-
-    if (b.isDir() && !a.isDir())
-        return false;
-
-    bool ret = QString::localeAwareCompare(a.absoluteFilePath(), b.absoluteFilePath()) < 0;
-#if DEBUG_MESSAGES
-    qDebug() <<  Q_FUNC_INFO << ret << a.absoluteFilePath() << b.absoluteFilePath();
-#endif
-    return ret;
-}
-
-static bool fileCompareAscending(const QFileInfo &a, const QFileInfo &b)
-{
-    if (a.isDir() && !b.isDir())
-        return true;
-
-    if (b.isDir() && !a.isDir())
-        return false;
-
-    return QString::localeAwareCompare(a.fileName(), b.fileName()) < 0;
-}
-
-
-static bool fileCompareDescending(const QFileInfo &a, const QFileInfo &b)
-{
-    if (a.isDir() && !b.isDir())
-        return true;
-
-    if (b.isDir() && !a.isDir())
-        return false;
-
-    return QString::localeAwareCompare(a.fileName(), b.fileName()) > 0;
-}
-
-static bool dateCompareDescending(const QFileInfo &a, const QFileInfo &b)
-{
-    if (a.isDir() && !b.isDir())
-        return true;
-
-    if (b.isDir() && !a.isDir())
-        return false;
-
-    return a.lastModified() > b.lastModified();
-}
-
-static bool dateCompareAscending(const QFileInfo &a, const QFileInfo &b)
-{
-    if (a.isDir() && !b.isDir())
-        return true;
-
-    if (b.isDir() && !a.isDir())
-        return false;
-
-    return a.lastModified() < b.lastModified();
-}
 
 /*!
  *  Sort was originally done in \ref onItemsAdded() and that code is now in \ref addItem(),
@@ -144,77 +87,22 @@ static CompareFunction availableCompareFunctions[2][2] =
 
 
 
-class DirListWorker : public IORequest
-{
-    Q_OBJECT
-public:
-    DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive)
-        : mPathName(pathName)
-        , mFilter(filter)
-        , mIsRecursive(isRecursive)
-    { }
-
-    void run()
-    {
-#if DEBUG_MESSAGES
-        qDebug() << Q_FUNC_INFO << "Running on: " << QThread::currentThreadId();
-#endif
-
-        QVector<QFileInfo> directoryContents;
-        directoryContents = add(mPathName, mFilter, mIsRecursive, directoryContents);
-
-        // last batch
-        emit itemsAdded(directoryContents);
-        emit workerFinished();
-    }
-
-    QVector<QFileInfo> add(const QString &pathName, QDir::Filter filter, const bool isRecursive, QVector<QFileInfo> directoryContents)
-    {
-        QDir tmpDir = QDir(pathName, QString(), QDir::NoSort, filter);
-        QDirIterator it(tmpDir);
-        while (it.hasNext()) {
-            it.next();
-
-            if(it.fileInfo().isDir() && isRecursive) {
-                directoryContents = add(it.fileInfo().filePath(), filter, isRecursive, directoryContents);
-            } else {
-                directoryContents.append(it.fileInfo());
-            }
-
-            if (directoryContents.count() >= 50) {
-                emit itemsAdded(directoryContents);
-
-                // clear() would force a deallocation, micro-optimization
-                directoryContents.erase(directoryContents.begin(), directoryContents.end());
-            }
-        }
-
-        return directoryContents;
-    }
-
-signals:
-    void itemsAdded(const QVector<QFileInfo> &files);
-    void workerFinished();
-
-private:
-    void add(const QString &pathName, QDir::Filter filter, const bool isRecursive, QVector<QFileInfo> directoryContents) const;
-    QString       mPathName;
-    QDir::Filter  mFilter;
-    bool       mIsRecursive;
-};
 
 DirModel::DirModel(QObject *parent)
     : QAbstractListModel(parent)
+    , mFilterDirectories(false)
     , mShowDirectories(true)
     , mAwaitingResults(false)
+    , mIsRecursive(false)
+    , mReadsMediaMetadata(false)
     , mShowHiddenFiles(false)
     , mSortBy(SortByName)
     , mSortOrder(SortAscending)
     , mCompareFunction(0)
+    , mExternalFSWatcherTimer(NO_EXT_FS_WATCHER_TIMER)
+    , mEnableExternalFSWatcher(false)
+    , mLastModifiedCurrentPath(QDateTime::currentDateTime())
     , m_fsAction(new FileSystemAction(this) )
-    , mFilterDirectories(false)
-    , mIsRecursive(false)
-    , mReadsMediaMetadata(false)
 {
     mNameFilters = QStringList() << "*";
 
@@ -254,6 +142,7 @@ DirModel::DirModel(QObject *parent)
 
 DirModel::~DirModel()
 {
+    stoptExternalFsWatcher();
 }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
@@ -478,9 +367,7 @@ void DirModel::setPath(const QString &pathName)
     mDirectoryContents.clear();
     endResetModel();
 
-    QDir::Filter dirFilter = currentDirFilter();
-    // TODO: we need to set a spinner active before we start getting results from DirListWorker
-    DirListWorker *dlw = new DirListWorker(pathName, dirFilter, mIsRecursive);
+    DirListWorker *dlw  = createWorkerRequest(IORequest::DirList, pathName);
     connect(dlw, SIGNAL(itemsAdded(QVector<QFileInfo>)), SLOT(onItemsAdded(QVector<QFileInfo>)));
     connect(dlw, SIGNAL(workerFinished()), SLOT(onResultsFetched()));
     ioWorkerThread()->addRequest(dlw);
@@ -498,6 +385,7 @@ void DirModel::onResultsFetched() {
         mAwaitingResults = false;
         emit awaitingResultsChanged();
     }
+    startExternalFsWatcher();
 }
 
 void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
@@ -507,8 +395,6 @@ void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
 #endif
 
     foreach (const QFileInfo &fi, newFiles) {
-        if (!mShowDirectories && fi.isDir())
-            continue;
 
         bool doAdd = false;
         foreach (const QString &nameFilter, mNameFilters) {
@@ -801,13 +687,21 @@ bool  DirModel::cdIntoPath(const QString &filename)
 bool  DirModel::cdInto(const QFileInfo &fi)
 {
     bool ret = false;
-    if (fi.exists() && fi.isDir() && fi.isReadable())
+    if (fi.exists() && fi.isDir() && fi.isReadable() && fi.isExecutable())
     {
-        QDir childDir(mCurrentDir);
-        if ( childDir.cd(fi.fileName()) )
+        if (fi.isRelative())
         {
-            setPath(childDir.absolutePath());
+            QDir childDir(mCurrentDir);
+            if ( childDir.cd(fi.fileName()) )
+            {
+                setPath(childDir.absolutePath());
+                ret = true;
+            }
+        }
+        else
+        {
             ret = true;
+            setPath(fi.absoluteFilePath());
         }
     }
     return ret;
@@ -826,7 +720,10 @@ void DirModel::onItemRemoved(const QString &pathname)
 
 void DirModel::onItemRemoved(const QFileInfo &fi)
 {  
-    int row = rowOfItem(fi);   
+    int row = rowOfItem(fi);
+#if DEBUG_MESSAGES
+    qDebug() <<  Q_FUNC_INFO << "row" << row;
+#endif
     if (row >= 0)
     {
         beginRemoveRows(QModelIndex(), row, row);
@@ -834,6 +731,7 @@ void DirModel::onItemRemoved(const QFileInfo &fi)
         endRemoveRows();
     }
 }
+
 
 /*!
  * \brief DirModel::onItemAdded()
@@ -901,7 +799,7 @@ QString DirModel::fileSize(qint64 size) const
     static UnitSizes m_unitBytes[5] =
     {
         { 1,           "Bytes" }
-       ,{1024,         "KB"}
+       ,{1024,         "kB"}
         // got it from http://wiki.answers.com/Q/How_many_bytes_are_in_a_megabyte
        ,{1000 * 1000,  "MB"}
        ,{1000 *  m_unitBytes[2].bytes,   "GB"}
@@ -1032,18 +930,32 @@ int DirModel::getClipboardUrlsCounter() const
 
 int DirModel::rowOfItem(const QFileInfo& fi)
 {
-    QVector<QFileInfo>::Iterator it = qBinaryFind(mDirectoryContents.begin(),
-                                                  mDirectoryContents.end(),
-                                                  fi,
-                                                  fileCompareExists);
-    int row;
-    if (it == mDirectoryContents.end())
-    {       
-        row = -1;
-    }
-    else
+    int row = -1;
+    //to use qBinaryFind() the array needs to be ordered ascending
+    if (mCompareFunction == fileCompareAscending)
     {
-        row = it - mDirectoryContents.begin();
+        QVector<QFileInfo>::Iterator it = qBinaryFind(mDirectoryContents.begin(),
+                                                      mDirectoryContents.end(),
+                                                      fi,
+                                                      fileCompareExists);
+        if (it != mDirectoryContents.end())
+        {
+            row = it - mDirectoryContents.begin();
+        }
+    }
+    else //walk through whole array
+    {
+       //TODO improve this search
+       int counter = mDirectoryContents.count();
+       while (counter--)
+       {
+           if ( 0 == QString::localeAwareCompare(fi.absoluteFilePath(),
+                              mDirectoryContents.at(counter).absoluteFilePath()) )
+           {
+               row = counter;
+               break;
+           }
+       }
     }
     return row;
 }
@@ -1100,24 +1012,20 @@ bool DirModel::openIndex(int row)
 
 bool DirModel::openPath(const QString &filename)
 {
-    QFileInfo fi(filename);
-    if (fi.isRelative())
-    {
-        fi.setFile(mCurrentDir, filename);
-    }
+    QFileInfo fi(setParentIfRelative(filename));
     return openItem(fi);
 }
 
 bool DirModel::openItem(const QFileInfo &fi)
 {
-    bool ret = false;
-    if (fi.exists())
+    bool ret = false;  
+    if (canReadDir(fi))
     {
-        if (fi.isDir())
-        {
-            ret = cdInto(fi);
-        }
-        else
+        ret = cdInto(fi);
+    }
+    else
+    {
+        if (canReadFile(fi))
         {
             ret = QDesktopServices::openUrl(QUrl::fromLocalFile(fi.absoluteFilePath()));
         }
@@ -1125,5 +1033,240 @@ bool DirModel::openItem(const QFileInfo &fi)
     return ret;
 }
 
-// for dirlistworker
-#include "dirmodel.moc"
+/*!
+ * \brief DirModel::createWorkerRequest() create a request for IORequestWorker
+ * \param requestType the common IORequest::DirList to fill a directory content
+ *                    or IORequest::DirAutoRefresh that will verify any external File System modification
+ * \param pathName  the path to get content
+ * \return          the thread object
+ */
+DirListWorker * DirModel::createWorkerRequest(IORequest::RequestType requestType,
+                                              const QString& pathName)
+{
+    DirListWorker * reqThread = 0;
+    QDir::Filter dirFilter = currentDirFilter();
+    if (requestType == IORequest::DirList)
+    {
+        // TODO: we need to set a spinner active before we start getting results from DirListWorker
+        reqThread = new DirListWorker(pathName, dirFilter, mIsRecursive);
+    }
+    else
+    {
+         reqThread = new ExternalFileSystemChangesWorker(mDirectoryContents,
+                                                  pathName,
+                                                  dirFilter, mIsRecursive);
+    }
+    return reqThread;
+}
+
+
+void DirModel::startExternalFsWatcher()
+{
+    if (     mEnableExternalFSWatcher
+         && !IS_EXT_FS_WATCHER_TIMER_ACTIVE()
+         &&  IS_FILE_MANAGER_IDLE() )
+    {
+        mLastModifiedCurrentPath = pathModifiedDate();
+        mExternalFSWatcherTimer = startTimer(1800);
+    }
+}
+
+
+void DirModel::stoptExternalFsWatcher()
+{
+   if (IS_EXT_FS_WATCHER_TIMER_ACTIVE())
+   {
+     killTimer(mExternalFSWatcherTimer);
+     mExternalFSWatcherTimer = NO_EXT_FS_WATCHER_TIMER;
+   }
+}
+
+
+void DirModel::timerEvent(QTimerEvent *)
+{
+    if (     mEnableExternalFSWatcher
+          && IS_FILE_MANAGER_IDLE()
+             && mLastModifiedCurrentPath > pathModifiedDate() )
+    {
+        DirListWorker *w =
+                createWorkerRequest(IORequest::DirListExternalFSChanges,
+                                    mCurrentDir
+                                   );
+        ExternalFileSystemChangesWorker *fsWatcher =
+                static_cast<ExternalFileSystemChangesWorker*> (w);
+
+        connect(fsWatcher,    SIGNAL(added(QFileInfo)),
+                this,         SLOT(onItemAddedOutsideFm(QFileInfo&)));
+        connect(fsWatcher,    SIGNAL(removed(QFileInfo)),
+                this,         SLOT(onItemRemovedOutSideFm(QFileInfo&)));
+        connect(fsWatcher,    SIGNAL(changed(QFileInfo)),
+                this,         SLOT(onItemChangedOutSideFm(QFileInfo&)));
+        connect(fsWatcher,    SIGNAL(finished()),
+                this,         SLOT(onExternalFsWatcherFinihed()));
+    }
+}
+
+/*!
+ * \brief DirModel::onItemAddedOutsideFm() It receives a  signal saying an item was added by other application
+ * \param fi
+ */
+void DirModel::onItemAddedOutsideFm(QFileInfo& fi)
+{
+    if (mEnableExternalFSWatcher && IS_FILE_MANAGER_IDLE())
+    {
+        int row = rowOfItem(fi);
+        if (row == -1)
+        {
+            onItemAdded(fi);;
+        }
+    }
+}
+
+/*!
+ * \brief DirModel::onItemRemovedOutSideFm() It receives a  signal saying an item was removed by other application
+ *
+ * Just calls \ref onItemRemoved() which already checks if the item exists
+ *
+ * \param fi
+ */
+void DirModel::onItemRemovedOutSideFm(QFileInfo& fi)
+{
+    if (mEnableExternalFSWatcher && IS_FILE_MANAGER_IDLE())
+    {
+        onItemRemoved(fi);
+    }
+}
+
+/*!
+ * \brief DirModel::onItemChangedOutSideFm()
+ *
+ * A File or a Dir modified by other applications: size,date, permissions
+ */
+void DirModel::onItemChangedOutSideFm(QFileInfo& fi)
+{
+    if (mEnableExternalFSWatcher && IS_FILE_MANAGER_IDLE())
+    {
+        int row = rowOfItem(fi);
+        if (row >= 0)
+        {
+            QModelIndex first = index(row,0);
+            QModelIndex last  = index(row, roleMapping.count() -1);
+            emit dataChanged(first, last);
+        }
+    }
+}
+
+void DirModel::onExternalFsWatcherFinihed()
+{
+    mLastModifiedCurrentPath = pathModifiedDate();
+}
+
+
+bool DirModel::existsDir(const QString &folderName) const
+{
+    QFileInfo d(setParentIfRelative(folderName));
+    return d.exists() && d.isDir();
+}
+
+
+bool  DirModel::canReadDir(const QString &folderName) const
+{
+    QFileInfo d(setParentIfRelative(folderName));
+    return canReadDir(d);
+}
+
+bool  DirModel::canReadDir(const QFileInfo& d) const
+{
+    return d.exists() && d.isDir() && d.isReadable() && d.isExecutable();
+}
+
+bool DirModel::existsFile(const QString &fileName) const
+{
+     QFileInfo f(setParentIfRelative(fileName));
+     return f.exists() && f.isFile();
+}
+
+bool DirModel::canReadFile(const QString &fileName) const
+{
+    QFileInfo  f(setParentIfRelative(fileName));
+    return canReadFile(f);
+}
+
+bool DirModel::canReadFile(const QFileInfo &f) const
+{
+    return f.exists() && f.isFile() && f.isReadable();
+}
+
+bool DirModel::getEnabledExternalFSWatcher() const
+{
+   return mEnableExternalFSWatcher;
+}
+
+void DirModel::setEnabledExternalFSWatcher(bool enable)
+{
+    mEnableExternalFSWatcher = enable;
+}
+
+QDateTime DirModel::pathCreatedDate() const
+{
+   QDateTime d;
+   QFileInfo f(mCurrentDir);
+   if (f.exists())
+   {
+       d = f.created();
+   }
+   return d;
+}
+
+
+QDateTime DirModel::pathModifiedDate() const
+{
+    QDateTime d;
+    QFileInfo f(mCurrentDir);
+    if (f.exists())
+    {
+        d = f.lastModified();
+    }
+    return d;
+}
+
+
+bool  DirModel::pathIsWritable() const
+{
+    QFileInfo f(mCurrentDir);
+    return f.exists() && f.isWritable();
+}
+
+QString DirModel::pathCreatedDateLocaleShort() const
+{
+    QString date;
+    QDateTime d(pathCreatedDate());
+    if (!d.isNull())
+    {
+        date = d.toString(Qt::SystemLocaleShortDate);
+    }
+    return date;
+}
+
+
+QString DirModel::pathModifiedDateLocaleShort() const
+{
+    QString date;
+    QDateTime d(pathModifiedDate());
+    if (!d.isNull())
+    {
+        date = d.toString(Qt::SystemLocaleShortDate);
+    }
+    return date;
+}
+
+
+QFileInfo  DirModel::setParentIfRelative(const QString &fileOrDir) const
+{
+    QFileInfo myFi(fileOrDir);
+    if (myFi.isRelative())
+    {
+        myFi.setFile(mCurrentDir, fileOrDir);
+    }
+    return myFi;
+}

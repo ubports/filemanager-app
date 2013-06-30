@@ -1456,3 +1456,13 @@ void FileSystemAction::moveDirToTempAndRemoveItLater(const QString& dir)
         addEntry(m_curAction->auxAction, tempDir);
     }
 }
+
+//================================================================================
+/*!
+ * \brief FileSystemAction::isBusy() just inform if there is any Action going on
+ * \return  true when there is any Action going on
+ */
+bool FileSystemAction::isBusy() const
+{
+    return m_busy;
+}

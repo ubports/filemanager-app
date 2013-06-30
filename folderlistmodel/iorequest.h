@@ -33,19 +33,77 @@
 #define IOREQUEST_H
 
 #include <QObject>
+#include <QDir>
+#include <QFileInfo>
+#include <QVector>
 
 class IORequest : public QObject
 {
     Q_OBJECT
-public:
+public:   
     explicit IORequest();
     
 public:
+    enum RequestType
+    {
+        DirList,
+        DirListExternalFSChanges
+    };
     virtual void run() = 0;
+    RequestType  type() const;
     
 private:
     // hide this because IORequest should *NOT* be parented directly
     using QObject::setParent;
+
+protected:
+    RequestType  m_type;
 };
+
+
+
+class DirListWorker : public IORequest
+{
+    Q_OBJECT
+public:
+    explicit DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive);
+    void run();
+signals:
+    void itemsAdded(const QVector<QFileInfo> &files);
+    void workerFinished();
+
+protected:
+    QVector<QFileInfo>     getContents();
+
+private:
+    QVector<QFileInfo> add(const QString &pathName, QDir::Filter filter,
+                           const bool isRecursive, QVector<QFileInfo> directoryContents);
+private:
+    QString       mPathName;
+    QDir::Filter  mFilter;
+    bool          mIsRecursive;
+};
+
+
+
+class  ExternalFileSystemChangesWorker : public DirListWorker
+{
+    Q_OBJECT
+public:
+    explicit ExternalFileSystemChangesWorker(const QVector<QFileInfo>& content,
+                                      const QString &pathName,
+                                      QDir::Filter filter,
+                                      const bool isRecursive);
+    void     run();
+signals:
+    void     removed(const QFileInfo&);
+    void     changed(const QFileInfo&);
+    void     added(const QFileInfo& );
+    void     finished();
+private:
+    QVector<QFileInfo> m_curContent;
+};
+
+
 
 #endif // IOREQUEST_H

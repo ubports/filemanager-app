@@ -68,6 +68,12 @@ SimpleList::SimpleList(QWidget *parent) :
     connect(ui->checkBoxShowDirs, SIGNAL(clicked(bool)), this, SLOT(onShowDirs(bool)));
     connect(ui->checkBoxShowHidden, SIGNAL(clicked(bool)), this, SLOT(onShowHidden(bool)));
 
+    connect(ui->pushButtonOpen,   SIGNAL(clicked()),
+            this,                 SLOT(onOpen()));
+
+    connect(ui->lineEditOpen,   SIGNAL(returnPressed()),
+            this,                 SLOT(onOpen()));
+
     ui->checkBoxShowDirs->setChecked( m_model->showDirectories() );
 
     resize(800,600);
@@ -195,7 +201,7 @@ void SimpleList::setSort(int col, Qt::SortOrder order)
 
 void SimpleList::clipboardChanged()
 {   
-    ui->lcdNumber->display(m_model->getClipboardUrlsCounter());
+    ui->clipboardNumber->setText( QString::number(m_model->getClipboardUrlsCounter()));
 }
 
 void SimpleList::progress(int cur, int total, int percent)
@@ -253,4 +259,13 @@ void SimpleList::pathChanged(QString path)
 void SimpleList::resizeColumnForName(int)
 {
     ui->tableView->resizeColumnToContents(0);
+}
+
+
+void SimpleList::onOpen()
+{
+    if ( ! m_model->openPath(ui->lineEditOpen->text()) )
+    {
+          QMessageBox::critical(this, "DirModel::openIndex() failed to open" , ui->lineEditOpen->text());
+    }
 }
