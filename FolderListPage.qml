@@ -108,6 +108,12 @@ Page {
             return "/usr/share/icons/Humanity/places/48/folder-music.svg"
         } else if (file === i18n.tr("~/Pictures")) {
             return "/usr/share/icons/Humanity/places/48/folder-pictures.svg"
+        } else if (file === i18n.tr("~/Public")) {
+            return "/usr/share/icons/Humanity/places/48/folder-publicshare.svg"
+        } else if (file === i18n.tr("~/Programs")) {
+            return "/usr/share/icons/Humanity/places/48/folder-system.svg"
+        } else if (file === i18n.tr("~/Templates")) {
+            return "/usr/share/icons/Humanity/places/48/folder-templates.svg"
         } else if (file === i18n.tr("~/Videos")) {
             return "/usr/share/icons/Humanity/places/48/folder-videos.svg"
         } else if (file === "/") {
@@ -342,7 +348,7 @@ Page {
     }
 
     Column {
-        anchors.centerIn: root
+        anchors.centerIn: parent
         Label {
             text: i18n.tr("No files")
             fontSize: "large"
