@@ -76,6 +76,10 @@ Page {
         // Since the FolderListModel returns paths using the actual
         // home folder, this replaces with ~ before actually going
         // to the specified folder
+        while (location !== '/' && location.substring(location.lastIndexOf('/')+1) === "") {
+            location = location.substring(0, location.length - 1)
+        }
+
         root.folder = location.replace(pageModel.homePath(), "~")
         refresh()
     }
@@ -84,7 +88,48 @@ Page {
         pageModel.refresh()
     }
 
+    // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
+    // Nemo mobile has icon provider. Have to figure out what's the proper way
+    // to get "system wide" icons in Ubuntu Touch, or if we have to use
+    // icons packaged into the application. Both folder and individual
+    // files will need an icon.
+    // TODO: Remove isDir parameter and use new model functions
+    function fileIcon(file, isDir) {
+        file = file.replace(pageModel.homePath(), "~")
+        if (file === "~") {
+            return "/usr/share/icons/ubuntu-mono-dark/places/48/folder-home.svg"
+        } else if (file === i18n.tr("~/Desktop")) {
+            return "/usr/share/icons/Humanity/places/48/user-desktop.svg"
+        } else if (file === i18n.tr("~/Documents")) {
+            return "/usr/share/icons/Humanity/places/48/folder-documents.svg"
+        } else if (file === i18n.tr("~/Downloads")) {
+            return "/usr/share/icons/Humanity/places/48/folder-downloads.svg"
+        } else if (file === i18n.tr("~/Music")) {
+            return "/usr/share/icons/Humanity/places/48/folder-music.svg"
+        } else if (file === i18n.tr("~/Pictures")) {
+            return "/usr/share/icons/Humanity/places/48/folder-pictures.svg"
+        } else if (file === i18n.tr("~/Public")) {
+            return "/usr/share/icons/Humanity/places/48/folder-publicshare.svg"
+        } else if (file === i18n.tr("~/Programs")) {
+            return "/usr/share/icons/Humanity/places/48/folder-system.svg"
+        } else if (file === i18n.tr("~/Templates")) {
+            return "/usr/share/icons/Humanity/places/48/folder-templates.svg"
+        } else if (file === i18n.tr("~/Videos")) {
+            return "/usr/share/icons/Humanity/places/48/folder-videos.svg"
+        } else if (file === "/") {
+            return "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
+        }
+
+        if (isDir) {
+            return "/usr/share/icons/Humanity/places/48/folder.svg"
+        } else {
+            return "/usr/share/icons/Humanity/mimes/48/empty.svg"
+        }
+    }
+
     function folderName(folder) {
+        folder = folder.replace(pageModel.homePath(), "~")
+
         if (folder === root.homeFolder) {
             return i18n.tr("Home")
         } else if (folder === "/") {
@@ -94,12 +139,61 @@ Page {
         }
     }
 
+    function pathName(folder) {
+        if (folder === "/") {
+            return "/"
+        } else {
+            return folder.substr(folder.lastIndexOf('/') + 1)
+        }
+    }
+
+    function pathExists(path) {
+        path = path.replace("~", pageModel.homePath())
+
+        if (path === '/')
+            return true
+
+        if(path.charAt(0) === '/') {
+            console.log("Directory: " + path.substring(0, path.lastIndexOf('/')+1))
+            repeaterModel.path = path.substring(0, path.lastIndexOf('/')+1)
+            console.log("Sub dir: " + path.substring(path.lastIndexOf('/')+1))
+            if (path.substring(path.lastIndexOf('/')+1) !== "" && !repeaterModel.cdIntoPath(path.substring(path.lastIndexOf('/')+1))) {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return false
+        }
+    }
+
     property bool loading: pageModel.awaitingResults
 
     FolderListModel {
         id: pageModel
 
         path: root.path
+
+        // Properties to emulate a model entry for use by FileDetailsPopover
+        property bool isDir: true
+        property string fileName: pathName(pageModel.path)
+        property string fileSize: (folderListView.count === 1
+                                   ? i18n.tr("1 file")
+                                   : i18n.tr("%1 files").arg(folderListView.count))
+        property date creationDate: pageModel.pathCreatedDate
+        property date modifiedDate: pageModel.pathModifiedDate
+        property bool isWriteable: pageModel.pathIsWriteable
+        property bool isReadable: true
+        property bool isExecutable: true
+    }
+
+    FolderListModel {
+        id: repeaterModel
+        path: root.folder
+
+        onPathChanged: {
+            console.log("Path: " + repeaterModel.path)
+        }
     }
 
     ActionSelectionPopover {
@@ -152,18 +246,17 @@ Page {
                 enabled: pageModel.clipboardUrlsCounter > 0
             }
 
-            // FIXME: Doesn't work!
-//            Action {
-//                text: i18n.tr("Properties")
-//                onTriggered: {
-//                    print(text)
-//                    PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
-//                                    root,
-//                                        { "model": pageModel
-//                                        }
-//                                    )
-//                }
-//            }
+            Action {
+                text: i18n.tr("Properties")
+                onTriggered: {
+                    print(text)
+                    PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
+                                    root,
+                                        { "model": pageModel
+                                        }
+                                    )
+                }
+            }
         }
 
         // Without this the popover jumps up at the start of the application. SDK bug?
@@ -255,7 +348,7 @@ Page {
     }
 
     Column {
-        anchors.centerIn: root
+        anchors.centerIn: parent
         Label {
             text: i18n.tr("No files")
             fontSize: "large"
