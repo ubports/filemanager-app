@@ -307,7 +307,7 @@ Page {
 
         back: ToolbarButton {
             text: "Up"
-            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/keyboard-caps.svg"
+            iconSource: "icons/up.png"
             visible: folder != "/"
             onTriggered: {
                 goTo(pageModel.parentPath)
@@ -316,7 +316,7 @@ Page {
 
         ToolbarButton {
             text: i18n.tr("Actions")
-            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/edit.svg"
+            iconSource: "icons/edit.png"
 
             onTriggered: {
                 print(text)
@@ -327,7 +327,7 @@ Page {
 
         ToolbarButton {
             text: i18n.tr("Settings")
-            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
+            iconSource: "icons/settings.png"
 
             onTriggered: {
                 print(text)
@@ -338,7 +338,7 @@ Page {
 
         ToolbarButton {
             text: i18n.tr("Places")
-            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/location.svg"
+            iconSource: "icons/location.png"
             onTriggered: {
                 print(text)
 
