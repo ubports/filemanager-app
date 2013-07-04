@@ -28,10 +28,11 @@ ListView {
     property string folderPath: folderListModel.path
     model: folderListModel
 
-    header: Caption {
+    header: Header {
         objectName: "directoryHeader"
-        text: (root.count == 1 ? i18n.tr("%1 (%2 file)").arg(root.folderPath).arg(root.count) :
-                                 i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))
+        text: (root.count == 1
+               ? i18n.tr("%1 (1 file)").arg(root.folderPath)
+               : i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))
     }
 
     Component {
@@ -71,7 +72,7 @@ ListView {
             // the filesystem, but may be a problem in the future.
             property int modelRow
 
-            title: i18n.tr("Rename?")
+            title: i18n.tr("Rename")
             text: i18n.tr("Enter a new name")
 
             onAccepted: {
@@ -100,16 +101,16 @@ ListView {
         property var model
         actions: ActionList {
             Action {
-                text: i18n.tr("Show details")
+                text: i18n.tr("Cut")
+                // TODO: temporary
+                iconSource: "/usr/share/icons/Humanity/actions/48/edit-cut.svg"
                 onTriggered: {
-                    print(text)
-                    PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
-                                    actionSelectionPopover.caller,
-                                        { "model": actionSelectionPopover.model
-                                        }
-                                    )
+                    console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
+                    model.cutIndex(actionSelectionPopover.model.index)
+                    console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
                 }
             }
+
             Action {
                 text: i18n.tr("Copy")
                 // TODO: temporary.
@@ -121,16 +122,7 @@ ListView {
                     console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
                 }
             }
-            Action {
-                text: i18n.tr("Cut")
-                // TODO: temporary
-                iconSource: "/usr/share/icons/Humanity/actions/48/edit-cut.svg"
-                onTriggered: {
-                    console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
-                    model.cutIndex(actionSelectionPopover.model.index)
-                    console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
-                }
-            }
+
             Action {
                 text: i18n.tr("Delete")
                 // TODO: temporary
@@ -142,7 +134,8 @@ ListView {
                                       "fileName" : actionSelectionPopover.model.fileName }
                                     )
                 }
-            }            
+            }
+
             Action {
                 text: i18n.tr("Rename")
                 // TODO: temporary
@@ -156,6 +149,17 @@ ListView {
                 }
             }
 
+            Action {
+                text: i18n.tr("Properties")
+                onTriggered: {
+                    print(text)
+                    PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
+                                    actionSelectionPopover.caller,
+                                        { "model": actionSelectionPopover.model
+                                        }
+                                    )
+                }
+            }
         }
         // TODO: problem: clicking outside popup makes the click go through to the
         // folder listview, so for example you'd change directory while only trying

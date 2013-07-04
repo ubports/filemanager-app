@@ -24,17 +24,146 @@ Page {
     id: root
     anchors.fill: parent
 
+    title: folderName(folder)
+
+    property variant fileView: root
+
+    property bool showHiddenFiles: false
+
+    onShowHiddenFilesChanged: {
+        pageModel.showHiddenFiles = root.showHiddenFiles
+    }
+
+    property string sortingMethod: "Name"
+
+    onSortingMethodChanged: {
+        console.log("Sorting by: " + sortingMethod)
+        if (sortingMethod === "Name") {
+            pageModel.sortBy = FolderListModel.SortByName
+        } else if (sortingMethod === "Date") {
+            pageModel.sortBy = FolderListModel.SortByDate
+        } else {
+            // Something fatal happened!
+            console.log("ERROR: Invalid sort type:", sortingMethod)
+        }
+    }
+
+    property bool sortAccending: true
+
+    onSortAccendingChanged: {
+        console.log("Sorting accending: " + sortAccending)
+
+        if (sortAccending) {
+            pageModel.sortOrder = FolderListModel.SortAscending
+        } else {
+            pageModel.sortOrder = FolderListModel.SortDescending
+        }
+    }
+
+    // This stores the location using ~ to represent home
     property string folder
-    title: folderName(pageModel.path)
-    property string homeFolder: pageModel.homePath()
+    property string homeFolder: "~"
+
+    // This replaces ~ with the actual home folder, since the
+    // plugin doesn't recognize the ~
+    property string path: folder.replace("~", pageModel.homePath())
+
+    function goHome() {
+        goTo(root.homeFolder)
+    }
+
+    function goTo(location) {
+        // Since the FolderListModel returns paths using the actual
+        // home folder, this replaces with ~ before actually going
+        // to the specified folder
+        while (location !== '/' && location.substring(location.lastIndexOf('/')+1) === "") {
+            location = location.substring(0, location.length - 1)
+        }
+
+        root.folder = location.replace(pageModel.homePath(), "~")
+        refresh()
+    }
+
+    function refresh() {
+        pageModel.refresh()
+    }
+
+    // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
+    // Nemo mobile has icon provider. Have to figure out what's the proper way
+    // to get "system wide" icons in Ubuntu Touch, or if we have to use
+    // icons packaged into the application. Both folder and individual
+    // files will need an icon.
+    // TODO: Remove isDir parameter and use new model functions
+    function fileIcon(file, isDir) {
+        file = file.replace(pageModel.homePath(), "~")
+        if (file === "~") {
+            return "/usr/share/icons/ubuntu-mono-dark/places/48/folder-home.svg"
+        } else if (file === i18n.tr("~/Desktop")) {
+            return "/usr/share/icons/Humanity/places/48/user-desktop.svg"
+        } else if (file === i18n.tr("~/Documents")) {
+            return "/usr/share/icons/Humanity/places/48/folder-documents.svg"
+        } else if (file === i18n.tr("~/Downloads")) {
+            return "/usr/share/icons/Humanity/places/48/folder-downloads.svg"
+        } else if (file === i18n.tr("~/Music")) {
+            return "/usr/share/icons/Humanity/places/48/folder-music.svg"
+        } else if (file === i18n.tr("~/Pictures")) {
+            return "/usr/share/icons/Humanity/places/48/folder-pictures.svg"
+        } else if (file === i18n.tr("~/Public")) {
+            return "/usr/share/icons/Humanity/places/48/folder-publicshare.svg"
+        } else if (file === i18n.tr("~/Programs")) {
+            return "/usr/share/icons/Humanity/places/48/folder-system.svg"
+        } else if (file === i18n.tr("~/Templates")) {
+            return "/usr/share/icons/Humanity/places/48/folder-templates.svg"
+        } else if (file === i18n.tr("~/Videos")) {
+            return "/usr/share/icons/Humanity/places/48/folder-videos.svg"
+        } else if (file === "/") {
+            return "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
+        }
+
+        if (isDir) {
+            return "/usr/share/icons/Humanity/places/48/folder.svg"
+        } else {
+            return "/usr/share/icons/Humanity/mimes/48/empty.svg"
+        }
+    }
 
     function folderName(folder) {
-        if (folder === pageModel.homePath()) {
-            return "Home"
+        folder = folder.replace(pageModel.homePath(), "~")
+
+        if (folder === root.homeFolder) {
+            return i18n.tr("Home")
         } else if (folder === "/") {
-            return folder
+            return i18n.tr("File System")
         } else {
             return folder.substr(folder.lastIndexOf('/') + 1)
+        }
+    }
+
+    function pathName(folder) {
+        if (folder === "/") {
+            return "/"
+        } else {
+            return folder.substr(folder.lastIndexOf('/') + 1)
+        }
+    }
+
+    function pathExists(path) {
+        path = path.replace("~", pageModel.homePath())
+
+        if (path === '/')
+            return true
+
+        if(path.charAt(0) === '/') {
+            console.log("Directory: " + path.substring(0, path.lastIndexOf('/')+1))
+            repeaterModel.path = path.substring(0, path.lastIndexOf('/')+1)
+            console.log("Sub dir: " + path.substring(path.lastIndexOf('/')+1))
+            if (path.substring(path.lastIndexOf('/')+1) !== "" && !repeaterModel.cdIntoPath(path.substring(path.lastIndexOf('/')+1))) {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return false
         }
     }
 
@@ -42,13 +171,103 @@ Page {
 
     FolderListModel {
         id: pageModel
+
+        path: root.path
+
+        // Properties to emulate a model entry for use by FileDetailsPopover
+        property bool isDir: true
+        property string fileName: pathName(pageModel.path)
+        property string fileSize: (folderListView.count === 1
+                                   ? i18n.tr("1 file")
+                                   : i18n.tr("%1 files").arg(folderListView.count))
+        property date creationDate: pageModel.pathCreatedDate
+        property date modifiedDate: pageModel.pathModifiedDate
+        property bool isWriteable: pageModel.pathIsWriteable
+        property bool isReadable: true
+        property bool isExecutable: true
+    }
+
+    FolderListModel {
+        id: repeaterModel
         path: root.folder
+
+        onPathChanged: {
+            console.log("Path: " + repeaterModel.path)
+        }
+    }
+
+    ActionSelectionPopover {
+        id: folderActionsPopover
+        objectName: "folderActionsPopover"
+
+        actions: ActionList {
+            Action {
+                text: i18n.tr("Create New Folder")
+                onTriggered: {
+                    print(text)
+
+                    PopupUtils.open(createFolderDialog, root)
+                }
+            }
+
+            // TODO: Disabled until backend supports creating files
+//            Action {
+//                text: i18n.tr("Create New File")
+//                onTriggered: {
+//                    print(text)
+
+//                    PopupUtils.open(createFileDialog, root)
+//                }
+//            }
+
+            Action {
+                text: pageModel.clipboardUrlsCounter === 0
+                      ? i18n.tr("Paste")
+                      : pageModel.clipboardUrlsCounter === 1
+                        ? i18n.tr("Paste %1 File").arg(pageModel.clipboardUrlsCounter)
+                        : i18n.tr("Paste %1 Files").arg(pageModel.clipboardUrlsCounter)
+                onTriggered: {
+                    console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
+                    PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
+                                    root,
+                                    {
+                                        title: i18n.tr("Paste files"),
+                                        folderListModel: pageModel
+                                     }
+                                    )
+
+
+                    pageModel.paste()
+                }
+
+                // FIXME: This property is depreciated and doesn't seem to work!
+                //visible: pageModel.clipboardUrlsCounter > 0
+
+                enabled: pageModel.clipboardUrlsCounter > 0
+            }
+
+            Action {
+                text: i18n.tr("Properties")
+                onTriggered: {
+                    print(text)
+                    PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
+                                    root,
+                                        { "model": pageModel
+                                        }
+                                    )
+                }
+            }
+        }
+
+        // Without this the popover jumps up at the start of the application. SDK bug?
+        // Bug report has been made of these https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1152270
+        visible: false
     }
 
     Component {
         id: createFolderDialog
         ConfirmDialogWithInput {
-            title: i18n.tr("Create folder?")
+            title: i18n.tr("Create folder")
             text: i18n.tr("Enter name for new folder")
 
             onAccepted: {
@@ -62,6 +281,25 @@ Page {
         }
     }
 
+    Component {
+        id: createFileDialog
+        ConfirmDialogWithInput {
+            title: i18n.tr("Create file")
+            text: i18n.tr("Enter name for new file")
+
+            onAccepted: {
+                console.log("Create file accepted", inputText)
+                if (inputText !== '') {
+                    //FIXME: Actually create a new file!
+                } else {
+                    console.log("Empty file name, ignored")
+                }
+            }
+        }
+    }
+
+
+
     tools: ToolbarItems {
         id: toolbar
         locked: true
@@ -69,7 +307,7 @@ Page {
 
         back: ToolbarButton {
             text: "Up"
-            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/keyboard-caps.svg"
+            iconSource: "icons/up.png"
             visible: folder != "/"
             onTriggered: {
                 goTo(pageModel.parentPath)
@@ -77,52 +315,40 @@ Page {
         }
 
         ToolbarButton {
-            text: i18n.tr("Paste" + " (" + pageModel.clipboardUrlsCounter + ")")
-            // TODO: temporary
-            iconSource: "/usr/share/icons/Humanity/actions/48/edit-paste.svg"
-            onTriggered: {
-                console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
-                PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
-                                root,
-                                {
-                                    title: i18n.tr("Paste files"),
-                                    folderListModel: pageModel
-                                 }
-                                )
+            text: i18n.tr("Actions")
+            iconSource: "icons/edit.png"
 
-
-                pageModel.paste()
-            }
-            visible: pageModel.clipboardUrlsCounter > 0
-        }
-
-        // IMPROVE: would rather have this as more hidden, in a separate menu that has
-        // file manipulation operations
-        ToolbarButton {
-            text: i18n.tr("Create folder")
-            // TODO: temporary
-            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/add.svg"
             onTriggered: {
                 print(text)
-                PopupUtils.open(createFolderDialog, root)
+                folderActionsPopover.caller = caller
+                folderActionsPopover.show();
             }
         }
 
         ToolbarButton {
-            text: i18n.tr("Home")
-            // TODO: temporary
-            iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/go-to.svg"
-            onTriggered: {
-                goHome()
+            text: i18n.tr("Settings")
+            iconSource: "icons/settings.png"
 
-                //pageModel.path = pageModel.homePath()
-                console.log("Home triggered")
+            onTriggered: {
+                print(text)
+
+                PopupUtils.open(Qt.resolvedUrl("SettingsPopover.qml"), caller)
+            }
+        }
+
+        ToolbarButton {
+            text: i18n.tr("Places")
+            iconSource: "icons/location.png"
+            onTriggered: {
+                print(text)
+
+                PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), caller)
             }
         }
     }
 
     Column {
-        anchors.centerIn: root
+        anchors.centerIn: parent
         Label {
             text: i18n.tr("No files")
             fontSize: "large"

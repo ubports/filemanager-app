@@ -36,8 +36,17 @@ class TestMainWindow(FileManagerTestCase):
         patcher.start()
         self.addCleanup(patcher.stop)
 
-    def test_toolbar_shows(self):
-        """Dragging from the bottom reveals the hidden toolbar."""
+    def _get_place(self, name):
+        """Returns the place/bookmark with index number."""
+        self.ubuntusdk.click_toolbar_button('Places')
+        places_popover = self.app.select_single('Popover', objectName='placesPopover')
+        places = places_popover.select_many('Standard')
+        for place in places:
+            if place.text == name:
+                return place
+
+    def test_file_actions_shows(self):
+        """Checks to make sure that the file actions popover is shown."""
         self._make_directory_in_home()
 
         first_folder = self.main_window.get_folder(0)
@@ -50,10 +59,12 @@ class TestMainWindow(FileManagerTestCase):
         path = tempfile.mkdtemp(dir=os.environ['HOME'])
         # Currently, we need to open again the home folder to show the newly
         # created one. See bug #1190676.
-        # TODO when the bug is fixed, remove the next line.
-        self.ubuntusdk.click_toolbar_button('Home')
-        while self.app.select_single('FolderListPage').loading:
-            pass
+        # TODO when the bug is fixed, remove the following lines up to the assert line
+        home_place = self._get_place("Home")
+        self.pointing_device.click_object(home_place)
+
+        self.assertThat(self.main_window.get_folder_count, Eventually(Equals(1)))
+
         return path
 
     def test_open_directory(self):
@@ -64,3 +75,21 @@ class TestMainWindow(FileManagerTestCase):
         self.assertThat(
             self.main_window.get_current_folder_name,
             Eventually(Equals(sub_dir)))
+
+    def test_going_home(self):
+        home_place = self._get_place("Home")
+        self.pointing_device.click_object(home_place)
+
+        self._check_location("Home", os.environ['HOME'])
+
+    def test_going_to_root(self):
+        root_place = self._get_place("File System")
+        self.pointing_device.click_object(root_place)
+
+        self._check_location("File System", "/")
+
+    def _check_location(self,title,location):
+        self.assertThat(self.main_window.get_page_title, Eventually(Equals(title)))
+
+        self.assertThat(self.main_window.get_current_folder_name,
+            Eventually(Equals(location)))

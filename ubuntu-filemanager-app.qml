@@ -26,29 +26,22 @@ import org.nemomobile.folderlistmodel 1.0
 */
 
 MainView {
+    id: root
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
     applicationName: "ubuntu-filemanager-app"
     
     width: units.gu(50)
     height: units.gu(75)
-    
+
+    property alias filemanager: root
+
+    property bool wideAspect: width >= units.gu(80)
+
     FolderListPage {
-        objectName: "folderPage"
         id: folderPage
+        objectName: "folderPage"
 
         folder: homeFolder
-
-        function goHome() {
-            // FIXME: Get the user's home folder without requiring an instance
-            // of a FolderListModel
-            goTo(homeFolder)
-        }
-
-        function goTo(location) {
-            // FIXME: Why is this needed? Folder doesn't seem to refresh without it
-            folder = ""
-            folder = location
-        }
     }
 }

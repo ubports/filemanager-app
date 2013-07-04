@@ -29,10 +29,14 @@ Dialog {
     TextField {
         id: input
         focus: true
+        validator: RegExpValidator {
+            regExp: /.+/
+        }
     }
 
     Button {
         text: i18n.tr("Ok")
+        enabled: input.acceptableInput
         onClicked: {
             accepted()
             PopupUtils.close(root)
@@ -41,6 +45,19 @@ Dialog {
 
     Button {
         text: i18n.tr("Cancel")
+
+        gradient: Gradient {
+            GradientStop {
+                position: 0
+                color: "gray"
+            }
+
+            GradientStop {
+                position: 1
+                color: "lightgray"
+            }
+        }
+
         onClicked: {
             rejected()
             PopupUtils.close(root)
