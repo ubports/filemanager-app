@@ -23,11 +23,13 @@ Dialog {
     id: root
 
     property alias inputText: input.text
+    property alias placeholderText: input.placeholderText
     signal accepted
     signal rejected
 
     TextField {
         id: input
+        objectName: "inputField"
         focus: true
         validator: RegExpValidator {
             regExp: /.+/
@@ -35,6 +37,7 @@ Dialog {
     }
 
     Button {
+        objectName: "okButton"
         text: i18n.tr("Ok")
         enabled: input.acceptableInput
         onClicked: {
@@ -44,6 +47,7 @@ Dialog {
     }
 
     Button {
+        objectName: "cancelButton"
         text: i18n.tr("Cancel")
 
         gradient: Gradient {

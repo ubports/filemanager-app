@@ -68,7 +68,7 @@ class ubuntusdk(object):
         toolbar = self.get_toolbar()
         if not toolbar.opened:
             self.open_toolbar()
-        row = toolbar.select_single("QQuickRow")
+        row = toolbar.select_single("ToolbarItems")
         buttonList = row.select_many("ActionItem")
         for button in buttonList:
             if button.text == buttonLabel:

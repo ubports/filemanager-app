@@ -26,6 +26,7 @@ Dialog {
     signal rejected
 
     Button {
+        objectName: "okButton"
         text: i18n.tr("Ok")
         onClicked: {
             accepted()
@@ -34,6 +35,7 @@ Dialog {
     }
 
     Button {
+        objectName: "cancelButton"
         text: i18n.tr("Cancel")
 
         gradient: Gradient {

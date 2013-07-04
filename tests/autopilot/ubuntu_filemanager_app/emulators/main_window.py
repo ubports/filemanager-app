@@ -16,12 +16,12 @@ class MainWindow(object):
     def __init__(self, app):
         self.app = app
 
-    def get_folder(self, index):
+    def get_file_item(self, index):
         """Returns the list view folder with index number."""
-        return self.app.select_single('FolderListPage').select_many("Subtitled")[index]
+        return self.app.select_single('FolderListPage').select_many("FolderListDelegate")[index]
 
-    def get_folder_count(self):
-        return len(self.app.select_single('FolderListPage').select_many("Subtitled"))
+    def get_file_count(self):
+        return len(self.app.select_single('FolderListPage').select_many("FolderListDelegate"))
 
     def get_action_popover(self):
         # Returns all instances, but with current one as first index
@@ -29,6 +29,13 @@ class MainWindow(object):
 
     def get_current_folder_name(self):
         return self.app.select_single('FolderListView').folderPath
+
+    def get_filenames(self):
+        folders = self.app.select_single('FolderListPage').select_many("FolderListDelegate")
+        names = []
+        for folder in folders:
+            names += [folder.fileName]
+        return names
 
     def get_page_title(self):
         return self.app.select_single('FolderListPage').title
