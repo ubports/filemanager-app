@@ -37,7 +37,7 @@ TempFiles::TempFiles() : m_content(QByteArray(4*4096, 'z'))
 
 bool TempFiles::addSubDirLevel(const QString &dir)
 {
-    QFileInfo d( m_dir + QDir::separator() + dir);
+    QFileInfo d( m_dir + QDir::separator() + QFileInfo(dir).fileName() );
     if (d.exists()  || QDir().mkpath(d.absoluteFilePath()))
     {
         m_dir = d.absoluteFilePath();

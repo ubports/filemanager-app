@@ -3,12 +3,14 @@
 #include "tempfiles.h"
 #include <stdio.h>
 
+#ifndef DO_NOT_USE_TAG_LIB
 #include <taglib/attachedpictureframe.h>
 #include <taglib/id3v2tag.h>
 #include <taglib/fileref.h>
 #include <taglib/mpegfile.h>
 #include <taglib/tag.h>
 #include <taglib/audioproperties.h>
+#endif
 
 #include <QApplication>
 #include <QtCore/QString>
@@ -23,6 +25,7 @@
 #include <QMimeType>
 #include <QCryptographicHash>
 #include <QDesktopServices>
+#include <QFile>
 
 //files to generate
 #include "testonly_pdf.h"
@@ -31,7 +34,7 @@
 #include "media_xspf.h"
 
 #define TIME_TO_PROCESS       2300
-#define TIME_TO_REFRESH_DIR   80
+#define TIME_TO_REFRESH_DIR   90
 
 #if QT_VERSION  >= 0x050000
 #define  QSKIP_ALL_TESTS(statement)   QSKIP(statement)
@@ -39,6 +42,9 @@
 #define  QSKIP_ALL_TESTS(statement)   QSKIP(statement,SkipAll)
 #endif
 
+#if  QT_VERSION < 0x050000
+# define QFileDevice   QFile
+#endif
 
 QByteArray md5FromIcon(const QIcon& icon);
 QString createFileInTempDir(const QString& name, const char *content, qint64 size);
@@ -91,11 +97,14 @@ private Q_SLOTS:
     void  modelCopyAndPasteInTheSamePlace();
     void  getThemeIcons();
     void  fileIconProvider();
+#ifndef DO_NOT_USE_TAG_LIB
     void  verifyMP3Metadata();
+#endif
     void  openPathAbsouluteAndRelative();
     void  existsDirAnCanReadDir();
     void  existsFileAndCanReadFile();
     void  pathProperties();
+    void  watchExternalChanges();
 
     //define TEST_OPENFILES to test QDesktopServices::openUrl() for some files
 #if defined(TEST_OPENFILES)
@@ -336,6 +345,7 @@ void TestDirModel::cleanModels()
 void TestDirModel::initTestCase()
 {
    qRegisterMetaType<QVector<QFileInfo> >("QVector<QFileInfo>");
+   qRegisterMetaType<QFileInfo>("QFileInfo");
 }
 
 
@@ -1328,6 +1338,88 @@ void TestDirModel::pathProperties()
 
 }
 
+
+/** description:
+ *
+ *  1.  2 file managers in /tmp/watchExternalChanges, m_dirModel_01 and m_dirModel_02
+ *  2.  level_01 will be created under  /tmp/watchExternalChanges,
+ *       so both m_dirModel_01 and m_dirModel_02 start with 1 item
+ *  3. Under /tmp/watchExternalChanges/level_01 10 items "from_level_01.cut_nn" are created
+ *  4  A third File manager is created pointing to /tmp/watchExternalChanges/level_01
+ *  5  A loop is created to move all files under /tmp/watchExternalChanges/level_01
+ *     to /tmp/watchExternalChanges where there are the 2 File Manager instances /tmp/watchExternalChanges/level_01
+ *  inside the loop:
+ *     5.1  files are created using createdOutsideName which is a TemFiles object
+ *     5.2  from m_dirModel_01 a file can be removed depending on the current time
+ */
+void TestDirModel::watchExternalChanges()
+{
+    QString orig("watchExternalChanges");
+    m_deepDir_01  = new DeepDir(orig, 0);
+    TempFiles       tempUnderFirstLevel;
+    tempUnderFirstLevel.addSubDirLevel(orig);
+    tempUnderFirstLevel.addSubDirLevel(QLatin1String("level_01"));
+    const int cut_items = 10;
+    tempUnderFirstLevel.create("from_level_01.cut", cut_items);
+
+    DirModel  thirdFM;
+    thirdFM.setPath(tempUnderFirstLevel.lastPath());
+
+    m_dirModel_01  = new DirModel();
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    m_dirModel_01->setEnabledExternalFSWatcher(true);
+
+    m_dirModel_02  = new DirModel();
+    m_dirModel_02->setPath(m_deepDir_01->path());
+    m_dirModel_02->setEnabledExternalFSWatcher(true);
+
+    QTest::qWait(TIME_TO_REFRESH_DIR+30);
+
+    QCOMPARE(thirdFM.rowCount(),  cut_items);
+    QCOMPARE(m_dirModel_01->rowCount(), 1);
+    QCOMPARE(m_dirModel_02->rowCount(), 1);
+
+    //modification loop
+    int pieceTime = EX_FS_WATCHER_TIMER_INTERVAL/cut_items;
+    int odd = 0;
+    QString    createdOutsideName;
+    TempFiles  createdOutsideFiles;
+    createdOutsideFiles.addSubDirLevel(orig);
+    int        total_removed = 0;
+    for ( int counter = 0; counter < cut_items; ++counter )
+    {
+        thirdFM.cutIndex(0);
+        if ( (odd ^= 1))
+        {
+            m_dirModel_01->paste();
+        }
+        else
+        {
+            m_dirModel_02->paste();
+        }
+        QTest::qWait(TIME_TO_PROCESS);
+        //at least one file is removed
+        if (m_dirModel_01->rowCount() > 1 &&
+            (!total_removed || (QDateTime::currentDateTime().time().msec() % 100) == 0))
+        {
+            //using index 1 because 0 is a directory and the items are being moved up
+            m_dirModel_01->removeIndex(1);
+            ++total_removed;
+        }
+        QTest::qWait(pieceTime + TIME_TO_PROCESS);
+        createdOutsideName.sprintf("created_%d", counter);
+        createdOutsideFiles.create(createdOutsideName);
+    }
+
+    int total_created = 1 + cut_items + createdOutsideFiles.created() - total_removed;
+    QTest::qWait(EX_FS_WATCHER_TIMER_INTERVAL);
+
+    qWarning("using 2 instances [created outside]=%d, [removed outside]=%d", createdOutsideFiles.created(),  total_removed);
+    QCOMPARE(m_dirModel_01->rowCount(),    total_created);
+    QCOMPARE(m_dirModel_02->rowCount(),    total_created);
+}
+
+
 void TestDirModel::getThemeIcons()
 {
     QStringList mimesToTest = QStringList()
@@ -1439,6 +1531,7 @@ void TestDirModel::fileIconProvider()
     createFileAndCheckIfIconIsExclisive("xspf", media_xspf, media_xspf_len);
 }
 
+#ifndef DO_NOT_USE_TAG_LIB
 //generate mp3 and verify its metadata
 void TestDirModel::verifyMP3Metadata()
 {
@@ -1460,6 +1553,8 @@ void TestDirModel::verifyMP3Metadata()
 
     QFile::remove(mp3File);
 }
+#endif
+
 
 #if defined(TEST_OPENFILES)
 void TestDirModel::TestDirModel::openMP3()

@@ -54,7 +54,8 @@ void NemoFolderListModelPlugin::initializeEngine(QmlEngine *engine, const char *
 void NemoFolderListModelPlugin::registerTypes(const char *uri)
 {
     Q_ASSERT(uri == QLatin1String(QUOTES(PLUGIN_URI)));
-    qRegisterMetaType<QVector<QFileInfo> >();
+    qRegisterMetaType< QVector<QFileInfo> >();
+    qRegisterMetaType<QFileInfo>("QFileInfo");
     qmlRegisterType<DirModel>(uri, 1, 0, "FolderListModel");
 }
 

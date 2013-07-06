@@ -68,6 +68,7 @@ private slots:
     void   pathChanged(QString path);
     void   resizeColumnForName(int);
     void   onOpen();
+    void   onExtFsWatcherEnabled(bool);
 };
 
 #endif // SIMPLELIST_H

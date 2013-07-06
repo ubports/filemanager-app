@@ -44,6 +44,13 @@
 
 class FileSystemAction;
 
+/*!
+ *  When the External File System Wathcer is enabled,
+ *  this is the interval used to check if there has been any change in the current path
+ *
+ *  \sa setEnabledExternalFSWatcher()
+ */
+#define EX_FS_WATCHER_TIMER_INTERVAL   3100
 
 class DirModel : public QAbstractListModel
 {
@@ -171,8 +178,9 @@ public:
     //[0] new stuff Ubuntu File Manager
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
     //make this work with tables
-    virtual int columnCount(const QModelIndex &) const
+    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const
     {
+        Q_UNUSED(parent);
         return IsExecutableRole - FileNameRole + 1;
     }
     virtual QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
@@ -373,9 +381,10 @@ private:
     void          startExternalFsWatcher();
     void          stoptExternalFsWatcher();
 private slots:
-    void          onItemAddedOutsideFm(QFileInfo&fi);
-    void          onItemRemovedOutSideFm(QFileInfo&);
-    void          onItemChangedOutSideFm(QFileInfo&fi);
+    void          onFetchingContents(QDateTime);
+    void          onItemAddedOutsideFm(const QFileInfo&fi);
+    void          onItemRemovedOutSideFm(const QFileInfo&);
+    void          onItemChangedOutSideFm(const QFileInfo&fi);
     void          onExternalFsWatcherFinihed();
 protected:
    virtual void   timerEvent(QTimerEvent *);

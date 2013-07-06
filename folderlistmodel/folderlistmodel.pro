@@ -29,7 +29,6 @@ else {
     else {
        QT += declarative
     }
-    LIBS += -ltag
     target.path = $$[QT_INSTALL_QML]/$$PLUGIN_IMPORT_PATH
     INSTALLS += target
     qmldir.files += $$PWD/qmldir

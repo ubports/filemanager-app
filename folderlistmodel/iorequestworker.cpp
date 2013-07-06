@@ -33,6 +33,7 @@
 #include "iorequest.h"
 
 #include <QMutexLocker>
+#include <QDateTime>
 #include <QDebug>
 
 /*!
@@ -49,6 +50,11 @@ IORequestWorker::IORequestWorker()
 
 void IORequestWorker::addRequest(IORequest *request)
 {
+#if DEBUG_EXT_FS_WATCHER
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                 << Q_FUNC_INFO;
+#endif
+
     request->moveToThread(this);
 
     // TODO: queue requests so we run the most important one first

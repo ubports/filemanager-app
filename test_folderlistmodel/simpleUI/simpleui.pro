@@ -13,8 +13,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 else {
    include(../regression/mimetypes/mimetypes-src.pri)
 }
-
-LIBS += -ltag
    
 TEMPLATE = app
 
@@ -31,7 +29,7 @@ include (../../folderlistmodel/folderlistmodel.pri)
 
 #DEFINES += DEBUG_REMOVE
 
-DEFINES += SIMULATE_LONG_ACTION
+DEFINES += SIMULATE_LONG_ACTION DEBUG_EXT_FS_WATCHER
 
 
 

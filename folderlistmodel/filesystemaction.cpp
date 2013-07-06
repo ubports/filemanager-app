@@ -799,7 +799,7 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
             m_cancelCurrentAction = !QFile::remove(fi.absoluteFilePath());
         }
 #if DEBUG_REMOVE
-        qDebug() << "remove ret=" << !m_cancelCurrentAction << fi.absoluteFilePath();
+        qDebug() << Q_FUNC_INFO << "remove ret=" << !m_cancelCurrentAction << fi.absoluteFilePath();
 #endif
         if (m_cancelCurrentAction)
         {
