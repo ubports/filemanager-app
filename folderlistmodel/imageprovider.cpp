@@ -40,9 +40,11 @@
 
 #include "imageprovider.h"
 
+#ifndef DO_NOT_USE_TAG_LIB
 #include <taglib/attachedpictureframe.h>
 #include <taglib/id3v2tag.h>
 #include <taglib/mpegfile.h>
+#endif
 
 #include <QtGlobal>
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
@@ -51,17 +53,18 @@ CoverArtImageProvider::CoverArtImageProvider() : QQuickImageProvider(QQuickImage
 
 QImage CoverArtImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
 {
-    Q_UNUSED(size);
+    Q_UNUSED(size);    
     Q_UNUSED(requestedSize);
-    TagLib::MPEG::File mp3(id.toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
-    TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];
-
     QImage img;
+#ifndef DO_NOT_USE_TAG_LIB
+    TagLib::MPEG::File mp3(id.toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
+    TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];   
     if(!list.isEmpty()) {
         TagLib::ID3v2::AttachedPictureFrame *Pic = static_cast<TagLib::ID3v2::AttachedPictureFrame *>(list.front());
         img.loadFromData((const uchar *) Pic->picture().data(), Pic->picture().size());
         img = img.scaled(45,45);
     }
+#endif
     return img;
 }
 
@@ -72,15 +75,16 @@ QImage CoverArtFullImageProvider::requestImage(const QString &id, QSize *size, c
 {
     Q_UNUSED(size);
     Q_UNUSED(requestedSize);
-    TagLib::MPEG::File mp3(id.toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
-    TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];
-
     QImage img;
+#ifndef DO_NOT_USE_TAG_LIB
+    TagLib::MPEG::File mp3(id.toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
+    TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];   
     if(!list.isEmpty()) {
         TagLib::ID3v2::AttachedPictureFrame *Pic = static_cast<TagLib::ID3v2::AttachedPictureFrame *>(list.front());
         img.loadFromData((const uchar *) Pic->picture().data(), Pic->picture().size());
         img = img.scaled(300,300);
     }
+#endif
     return img;
 }
 

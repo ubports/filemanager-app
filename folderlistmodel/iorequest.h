@@ -35,6 +35,7 @@
 #include <QHash>
 #include <QDir>
 #include <QFileInfo>
+#include <QDateTime>
 #include <QVector>
 
 class IORequest : public QObject
@@ -69,6 +70,7 @@ public:
     explicit DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive);
     void run();
 signals:
+    void fetchingContents(QDateTime);
     void itemsAdded(const QVector<QFileInfo> &files);
     void workerFinished();
 

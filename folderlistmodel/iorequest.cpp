@@ -32,8 +32,8 @@
 #include "iorequest.h"
 
 #include <QDirIterator>
-#include <QFileInfo>
 #include <QDebug>
+
 
 IORequest::IORequest() : QObject(), m_type(DirList)
 {
@@ -70,7 +70,12 @@ void DirListWorker::run()
 
 QVector<QFileInfo> DirListWorker::getContents()
 {
+#if DEBUG_EXT_FS_WATCHER
+    qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                  << Q_FUNC_INFO;
+#endif
     QVector<QFileInfo> directoryContents;
+    emit fetchingContents(QFileInfo(mPathName).lastModified());
     directoryContents = add(mPathName, mFilter, mIsRecursive, directoryContents);
     return directoryContents;
 }
@@ -124,30 +129,42 @@ ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const QVector<Q
 void ExternalFileSystemChangesWorker::run()
 {
     QVector<QFileInfo> directoryContents = getContents();
+#if DEBUG_EXT_FS_WATCHER
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                  << Q_FUNC_INFO << "checking added and changed files";
+#endif
     int counter = directoryContents.count();
     while (counter--)
     {
         const QFileInfo& originalItem = directoryContents.at(counter);
         const QFileInfo  existItem    = m_curContent.value(originalItem.absoluteFilePath());
         if ( existItem.exists() )
-        {
+        {           
             //it may have changed
-            if ( originalItem != existItem )
-            {
+            if (   originalItem.size()         != existItem.size()
+                || originalItem.lastModified() != existItem.lastModified()
+                || originalItem.permissions()  != existItem.permissions()
+               )
+            {           
                 emit changed(originalItem);
             }
             //remove this item
             m_curContent.remove(originalItem.absoluteFilePath());
         }
         else // originalItem was added
-        {
+        {           
             emit added(originalItem);
         }
     }
+#if DEBUG_EXT_FS_WATCHER
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                  << Q_FUNC_INFO << "checking for removed files";
+#endif
     QHash<QString, QFileInfo>::iterator  i = m_curContent.begin();
     while ( i != m_curContent.end() )
     {
         emit removed(i.value());
         ++i;
     }
+    emit finished();
 }

@@ -28,3 +28,7 @@ else {
     QT += declarative    
 }
 
+
+!contains (DEFINES, DO_NOT_USE_TAG_LIB) {
+   LIBS += -ltag
+}

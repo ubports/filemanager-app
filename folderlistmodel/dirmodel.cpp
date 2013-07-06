@@ -36,12 +36,14 @@
 #include "ioworkerthread.h"
 #include "filesystemaction.h"
 
+#ifndef DO_NOT_USE_TAG_LIB
 #include <taglib/attachedpictureframe.h>
 #include <taglib/id3v2tag.h>
 #include <taglib/fileref.h>
 #include <taglib/mpegfile.h>
 #include <taglib/tag.h>
 #include <taglib/audioproperties.h>
+#endif
 
 #include <QDirIterator>
 #include <QDir>
@@ -83,9 +85,6 @@ static CompareFunction availableCompareFunctions[2][2] =
     {fileCompareAscending, fileCompareDescending}
    ,{dateCompareAscending, dateCompareDescending}
 };
-
-
-
 
 
 DirModel::DirModel(QObject *parent)
@@ -286,6 +285,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             return fi.isWritable();
         case IsExecutableRole:
             return fi.isExecutable();
+#ifndef DO_NOT_USE_TAG_LIB
         case TrackTitleRole:
         case TrackArtistRole:
         case TrackAlbumRole:
@@ -327,6 +327,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
                         } else {
                             return "";
                         }
+
                     default:
                         // this should not happen, ever
                         Q_ASSERT(false);
@@ -336,6 +337,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             } else {
                 return "";
             }
+#endif
         default:
 #if !defined(REGRESSION_TEST_FOLDERLISTMODEL)
             // this should not happen, ever
@@ -349,7 +351,13 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
 void DirModel::setPath(const QString &pathName)
 {
     if (pathName.isEmpty())
+        return;   
+
+    if (!canReadDir(pathName))
+    {
+        emit error(tr("cannot read path"), pathName);
         return;
+    }
 
     if (mAwaitingResults) {
         // TODO: handle the case where pathName != our current path, cancel old
@@ -357,6 +365,17 @@ void DirModel::setPath(const QString &pathName)
         qDebug() << Q_FUNC_INFO << "Ignoring path change request, request already running";
         return;
     }
+
+#if DEBUG_EXT_FS_WATCHER
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                  << Q_FUNC_INFO
+                  << "changing current path to:" << pathName;
+#endif
+
+    /*
+     *  if active the External File System Watcher is stopped
+     */
+    stoptExternalFsWatcher();
 
     mAwaitingResults = true;
     emit awaitingResultsChanged();
@@ -384,8 +403,7 @@ void DirModel::onResultsFetched() {
 #endif
         mAwaitingResults = false;
         emit awaitingResultsChanged();
-    }
-    startExternalFsWatcher();
+    }    
 }
 
 void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
@@ -687,7 +705,7 @@ bool  DirModel::cdIntoPath(const QString &filename)
 bool  DirModel::cdInto(const QFileInfo &fi)
 {
     bool ret = false;
-    if (fi.exists() && fi.isDir() && fi.isReadable() && fi.isExecutable())
+    if (canReadDir(fi))
     {
         if (fi.isRelative())
         {
@@ -1016,6 +1034,11 @@ bool DirModel::openPath(const QString &filename)
     return openItem(fi);
 }
 
+/*!
+ * \brief DirModel::openItem() opens a directory/file
+ * \param fi
+ * \return  true it could open the item
+ */
 bool DirModel::openItem(const QFileInfo &fi)
 {
     bool ret = false;  
@@ -1025,6 +1048,7 @@ bool DirModel::openItem(const QFileInfo &fi)
     }
     else
     {
+        //TODO open executables
         if (canReadFile(fi))
         {
             ret = QDesktopServices::openUrl(QUrl::fromLocalFile(fi.absoluteFilePath()));
@@ -1052,32 +1076,74 @@ DirListWorker * DirModel::createWorkerRequest(IORequest::RequestType requestType
     }
     else
     {
-         reqThread = new ExternalFileSystemChangesWorker(mDirectoryContents,
+        reqThread = new ExternalFileSystemChangesWorker(mDirectoryContents,
                                                   pathName,
                                                   dirFilter, mIsRecursive);
     }
+    connect(reqThread,  SIGNAL(fetchingContents(QDateTime)),
+            this,       SLOT(onFetchingContents(QDateTime)));
     return reqThread;
 }
 
 
-void DirModel::startExternalFsWatcher()
+/*!
+ * \brief DirModel::onFetchingContents() slot that is called before any fetch directory operation
+ *
+ *  It can be called in two situations:
+ *  \li 1. When a user change the current directory, then new content needs be fetched
+ *         in this case the timer should be inactive
+ *  \li 2. When the external File System Watcher is active and was requested to get the contents
+ *         in order to compare and then notify changes. In this case the timer should be already active
+ *
+ *  \sa startExternalFsWatcher(), stoptExternalFsWatcher()
+ */
+void DirModel::onFetchingContents(QDateTime lastModifiedPath)
 {
-    if (     mEnableExternalFSWatcher
-         && !IS_EXT_FS_WATCHER_TIMER_ACTIVE()
-         &&  IS_FILE_MANAGER_IDLE() )
+    if (mEnableExternalFSWatcher)
     {
-        mLastModifiedCurrentPath = pathModifiedDate();
-        mExternalFSWatcherTimer = startTimer(1800);
+        mLastModifiedCurrentPath = lastModifiedPath;
+        startExternalFsWatcher();
+#if DEBUG_EXT_FS_WATCHER
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                  << Q_FUNC_INFO
+                  << "setting modified path" << mLastModifiedCurrentPath.toString("hh:mm:ss.zzz");
+#endif
     }
 }
 
 
+/*!
+ * \brief DirModel::startExternalFsWatcher() starts the External File System Watcher
+ */
+void DirModel::startExternalFsWatcher()
+{
+    if (!IS_EXT_FS_WATCHER_TIMER_ACTIVE() && mEnableExternalFSWatcher)
+    {
+        mExternalFSWatcherTimer = startTimer(EX_FS_WATCHER_TIMER_INTERVAL);
+#if DEBUG_EXT_FS_WATCHER
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                  << Q_FUNC_INFO << "timerID" << mExternalFSWatcherTimer;
+
+#endif
+
+    }
+}
+
+
+
+/*!
+ * \brief DirModel::stoptExternalFsWatcher() stops the External File System Watcher
+ */
 void DirModel::stoptExternalFsWatcher()
 {
+#if DEBUG_EXT_FS_WATCHER
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                  << Q_FUNC_INFO;
+#endif
    if (IS_EXT_FS_WATCHER_TIMER_ACTIVE())
    {
-     killTimer(mExternalFSWatcherTimer);
-     mExternalFSWatcherTimer = NO_EXT_FS_WATCHER_TIMER;
+       killTimer(mExternalFSWatcherTimer);
+       mExternalFSWatcherTimer = NO_EXT_FS_WATCHER_TIMER;
    }
 }
 
@@ -1086,8 +1152,12 @@ void DirModel::timerEvent(QTimerEvent *)
 {
     if (     mEnableExternalFSWatcher
           && IS_FILE_MANAGER_IDLE()
-             && mLastModifiedCurrentPath > pathModifiedDate() )
+             && mLastModifiedCurrentPath < pathModifiedDate() )
     {
+#if DEBUG_EXT_FS_WATCHER
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                 << Q_FUNC_INFO << "File System modified";
+#endif
         DirListWorker *w =
                 createWorkerRequest(IORequest::DirListExternalFSChanges,
                                     mCurrentDir
@@ -1096,28 +1166,41 @@ void DirModel::timerEvent(QTimerEvent *)
                 static_cast<ExternalFileSystemChangesWorker*> (w);
 
         connect(fsWatcher,    SIGNAL(added(QFileInfo)),
-                this,         SLOT(onItemAddedOutsideFm(QFileInfo&)));
+                this,         SLOT(onItemAddedOutsideFm(QFileInfo)));
         connect(fsWatcher,    SIGNAL(removed(QFileInfo)),
-                this,         SLOT(onItemRemovedOutSideFm(QFileInfo&)));
+                this,         SLOT(onItemRemovedOutSideFm(QFileInfo)));
         connect(fsWatcher,    SIGNAL(changed(QFileInfo)),
-                this,         SLOT(onItemChangedOutSideFm(QFileInfo&)));
+                this,         SLOT(onItemChangedOutSideFm(QFileInfo)));
         connect(fsWatcher,    SIGNAL(finished()),
                 this,         SLOT(onExternalFsWatcherFinihed()));
+
+        ioWorkerThread()->addRequest(fsWatcher);
     }
+#if DEBUG_EXT_FS_WATCHER
+    else
+    {
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                  << Q_FUNC_INFO << "nothing to do";
+    }
+#endif
 }
 
 /*!
  * \brief DirModel::onItemAddedOutsideFm() It receives a  signal saying an item was added by other application
  * \param fi
  */
-void DirModel::onItemAddedOutsideFm(QFileInfo& fi)
+void DirModel::onItemAddedOutsideFm(const QFileInfo &fi)
 {
     if (mEnableExternalFSWatcher && IS_FILE_MANAGER_IDLE())
     {
         int row = rowOfItem(fi);
         if (row == -1)
         {
-            onItemAdded(fi);;
+#if DEBUG_EXT_FS_WATCHER
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                 << Q_FUNC_INFO << "added" << fi.absoluteFilePath();
+#endif
+            onItemAdded(fi);
         }
     }
 }
@@ -1129,10 +1212,14 @@ void DirModel::onItemAddedOutsideFm(QFileInfo& fi)
  *
  * \param fi
  */
-void DirModel::onItemRemovedOutSideFm(QFileInfo& fi)
+void DirModel::onItemRemovedOutSideFm(const QFileInfo &fi)
 {
     if (mEnableExternalFSWatcher && IS_FILE_MANAGER_IDLE())
     {
+#if DEBUG_EXT_FS_WATCHER
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                 << Q_FUNC_INFO << "removed" << fi.absoluteFilePath();
+#endif
         onItemRemoved(fi);
     }
 }
@@ -1142,23 +1229,75 @@ void DirModel::onItemRemovedOutSideFm(QFileInfo& fi)
  *
  * A File or a Dir modified by other applications: size,date, permissions
  */
-void DirModel::onItemChangedOutSideFm(QFileInfo& fi)
-{
+void DirModel::onItemChangedOutSideFm(const QFileInfo &fi)
+{   
     if (mEnableExternalFSWatcher && IS_FILE_MANAGER_IDLE())
     {
         int row = rowOfItem(fi);
+#if DEBUG_EXT_FS_WATCHER
+        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+                 << Q_FUNC_INFO << "changed" << fi.absoluteFilePath()
+                 << "from row" << row;
+#endif
         if (row >= 0)
         {
+            mDirectoryContents[row] = fi;
             QModelIndex first = index(row,0);
-            QModelIndex last  = index(row, roleMapping.count() -1);
+
+#if REGRESSION_TEST_FOLDERLISTMODEL
+            QModelIndex last  = index(row, columnCount()); //Table only when testing
+#else
+            QModelIndex last  = first; //QML uses Listview, just one column
+#endif
             emit dataChanged(first, last);
         }
     }
 }
 
+
+/*!
+ * \brief DirModel::onExternalFsWatcherFinihed()
+ */
 void DirModel::onExternalFsWatcherFinihed()
 {
     mLastModifiedCurrentPath = pathModifiedDate();
+#if DEBUG_EXT_FS_WATCHER
+    qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+             << Q_FUNC_INFO
+             << "path modfied" << mLastModifiedCurrentPath.toString("hh:mm:ss.zzz");
+#endif
+}
+
+
+/*!
+ * \brief DirModel::getEnabledExternalFSWatcher()
+ * \return true if the External File System Watcher is enabled
+ */
+bool DirModel::getEnabledExternalFSWatcher() const
+{
+   return mEnableExternalFSWatcher;
+}
+
+
+/*!
+ * \brief DirModel::setEnabledExternalFSWatcher() enable/disable External File Sysmte Watcher
+ * \param enable
+ */
+void DirModel::setEnabledExternalFSWatcher(bool enable)
+{
+    mEnableExternalFSWatcher = enable;
+    if (enable)
+    {
+        //if a directory is already and the timer is not acive, start the timer
+        if (canReadDir(mCurrentDir))
+        {
+            startExternalFsWatcher();
+        }
+    }
+    else
+    {
+        stoptExternalFsWatcher();
+    }
 }
 
 
@@ -1197,15 +1336,7 @@ bool DirModel::canReadFile(const QFileInfo &f) const
     return f.exists() && f.isFile() && f.isReadable();
 }
 
-bool DirModel::getEnabledExternalFSWatcher() const
-{
-   return mEnableExternalFSWatcher;
-}
 
-void DirModel::setEnabledExternalFSWatcher(bool enable)
-{
-    mEnableExternalFSWatcher = enable;
-}
 
 QDateTime DirModel::pathCreatedDate() const
 {

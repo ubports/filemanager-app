@@ -13,8 +13,6 @@ else {
 
 #------------------------------------------------
 
-LIBS += -ltag
-
 DEFINES += REGRESSION_TEST_FOLDERLISTMODEL
 
 SOURCES += tst_folderlistmodel.cpp
@@ -30,3 +28,4 @@ SOURCES += \
 INCLUDEPATH += $$PWD
 
 # DEFINES += DEBUG_REMOVE
+
