@@ -1099,9 +1099,9 @@ DirListWorker * DirModel::createWorkerRequest(IORequest::RequestType requestType
  */
 void DirModel::onFetchingContents(QDateTime lastModifiedPath)
 {
+    mLastModifiedCurrentPath = lastModifiedPath;
     if (mEnableExternalFSWatcher)
-    {
-        mLastModifiedCurrentPath = lastModifiedPath;
+    {        
         startExternalFsWatcher();
 #if DEBUG_EXT_FS_WATCHER
         qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
