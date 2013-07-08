@@ -28,7 +28,7 @@ Popover {
     contentHeight: contents.height + 2 * contents.anchors.margins
 
     function dateTimeFormat(dateTime) {
-        return Qt.formatDateTime(dateTime, Qt.DefaultLocaleShortDate) || "Uknown"
+        return Qt.formatDateTime(dateTime, Qt.DefaultLocaleShortDate) || "Unknown"
     }
 
     function permissionsToString(model) {
