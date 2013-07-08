@@ -174,6 +174,8 @@ Page {
 
         path: root.path
 
+        enableExternalFSWatcher: true
+
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
         property string fileName: pathName(pageModel.path)
