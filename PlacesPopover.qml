@@ -63,23 +63,6 @@ Popover {
             top: parent.top
         }
 
-        Repeater {
-            id: placesList
-            objectName: "placesList"
-
-            model: places
-
-            delegate: Standard {
-                text: folderName(path)
-                icon: model.icon || fileIcon(model.path, true)
-
-                onClicked: {
-                    PopupUtils.close(root)
-                    goTo(model.path)
-                }
-            }
-        }
-
         Empty {
 
             TextField {
@@ -130,6 +113,23 @@ Popover {
                     print("User switched to:", locationField.text)
                     goTo(locationField.text)
                     PopupUtils.close(root)
+                }
+            }
+        }
+
+        Repeater {
+            id: placesList
+            objectName: "placesList"
+
+            model: places
+
+            delegate: Standard {
+                text: folderName(path)
+                icon: model.icon || fileIcon(model.path, true)
+
+                onClicked: {
+                    PopupUtils.close(root)
+                    goTo(model.path)
                 }
             }
         }
