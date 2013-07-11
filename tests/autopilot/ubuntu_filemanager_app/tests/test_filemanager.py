@@ -48,6 +48,16 @@ class TestMainWindow(FileManagerTestCase):
 
     def test_file_context_menu_shows(self):
         """Checks to make sure that the file actions popover is shown."""
+        self._make_file_in_home()
+
+        first_file = self.main_window.get_file_item(0)
+        self.tap_item(first_file)
+
+        action_popover = self.main_window.get_action_popover()
+        self.assertThat(lambda: action_popover.opacity, Eventually(Equals(1)))
+
+    def test_folder_context_menu_shows(self):
+        """Checks to make sure that the folder actions popover is shown."""
         self._make_directory_in_home()
 
         first_folder = self.main_window.get_file_item(0)

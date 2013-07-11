@@ -174,6 +174,8 @@ Page {
 
         path: root.path
 
+        enableExternalFSWatcher: true
+
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
         property string fileName: pathName(pageModel.path)
@@ -182,7 +184,7 @@ Page {
                                    : i18n.tr("%1 files").arg(folderListView.count))
         property date creationDate: pageModel.pathCreatedDate
         property date modifiedDate: pageModel.pathModifiedDate
-        property bool isWriteable: pageModel.pathIsWritable
+        property bool isWritable: pageModel.pathIsWritable
         property bool isReadable: true
         property bool isExecutable: true
     }
