@@ -182,7 +182,7 @@ Page {
                                    : i18n.tr("%1 files").arg(folderListView.count))
         property date creationDate: pageModel.pathCreatedDate
         property date modifiedDate: pageModel.pathModifiedDate
-        property bool isWriteable: pageModel.pathIsWriteable
+        property bool isWriteable: pageModel.pathIsWritable
         property bool isReadable: true
         property bool isExecutable: true
     }

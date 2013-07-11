@@ -26,6 +26,7 @@ Dialog {
     signal rejected
 
     Button {
+        id: okButton
         objectName: "okButton"
         text: i18n.tr("Ok")
         onClicked: {
@@ -35,6 +36,7 @@ Dialog {
     }
 
     Button {
+        id: cancelButton
         objectName: "cancelButton"
         text: i18n.tr("Cancel")
 

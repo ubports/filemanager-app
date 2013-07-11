@@ -46,7 +46,7 @@ class TestMainWindow(FileManagerTestCase):
             if place.text == name:
                 return place
 
-    def test_file_actions_shows(self):
+    def test_file_context_menu_shows(self):
         """Checks to make sure that the file actions popover is shown."""
         self._make_directory_in_home()
 
@@ -77,6 +77,22 @@ class TestMainWindow(FileManagerTestCase):
         self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
 
         return path
+
+    def test_file_action_dialog(self):
+        file_name = self._make_file_in_home()
+
+        first_file = self.main_window.get_file_item(0)
+        self.assertThat(first_file.fileName,
+            Eventually(Equals(os.path.split(file_name)[1])))
+
+        self.pointing_device.click_object(first_file)
+
+        self.assertThat(lambda: self.app.select_single('FileActionDialog'),
+            Eventually(DoesNotEqual(None)))
+
+        dialog = self.app.select_single('FileActionDialog')
+        cancelButton = dialog.select_single('Button',objectName='cancelButton')
+        self.pointing_device.click_object(cancelButton)
 
     def test_open_directory(self):
         sub_dir = self._make_directory_in_home()
