@@ -233,6 +233,21 @@ class TestMainWindow(FileManagerTestCase):
 
         self.assertThat(lambda: self.main_window.get_filenames()[0], Eventually(Equals(name)))
 
+    def test_showing_directory_properties(self):
+        """Checks to make sure that the file actions popover is shown."""
+        path = self._make_directory_in_home()
+
+        first_folder = self.main_window.get_file_item(0)
+        self.tap_item(first_folder)
+
+        popover = self.app.select_single("ActionSelectionPopover", objectName='fileActionsPopover')
+        self._run_action(popover, 'Properties')
+
+        properties_popover = self.app.select_single('FileDetailsPopover')
+        self.assertThat(lambda: properties_popover.opacity, Eventually(Equals(1)))
+        path_label = properties_popover.select_single('Label', objectName='pathLabel')
+        self.assertThat(lambda: path_label.text, Eventually(Equals(path)))
+
     def test_going_up(self):
         upDir = os.path.split(os.environ['HOME'])[0]
         upName = os.path.split(upDir)[1]
