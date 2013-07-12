@@ -31,6 +31,7 @@ Dialog {
     text: i18n.tr("For file: %1").arg(fileName)
 
     Button {
+        objectName: "openButton"
         text: i18n.tr("Open")
         onClicked: {
             console.log("Opening file", filePath)
@@ -40,6 +41,7 @@ Dialog {
     }
 
     Button {
+        objectName: "cancelButton"
         text: i18n.tr("Cancel")
         onClicked: PopupUtils.close(root)
 

@@ -18,6 +18,7 @@ import shutil
 
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals
+from testtools.matchers import NotEquals
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
 
@@ -68,10 +69,6 @@ class TestMainWindow(FileManagerTestCase):
 
     def _make_directory_in_home(self):
         path = tempfile.mkdtemp(dir=os.environ['HOME'])
-        # Currently, we need to open again the home folder to show the newly
-        # created one. See bug #1190676.
-        # TODO when the bug is fixed, remove the following line
-        self._go_to_place('Home')
 
         self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
 
@@ -79,10 +76,6 @@ class TestMainWindow(FileManagerTestCase):
 
     def _make_file_in_home(self):
         path = tempfile.mkstemp(dir=os.environ['HOME'])[1]
-        # Currently, we need to open again the home folder to show the newly
-        # created one. See bug #1190676.
-        # TODO when the bug is fixed, remove the following line
-        self._go_to_place('Home')
 
         self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
 
@@ -97,12 +90,20 @@ class TestMainWindow(FileManagerTestCase):
 
         self.pointing_device.click_object(first_file)
 
-        self.assertThat(lambda: self.app.select_single('FileActionDialog'),
-            Eventually(DoesNotEqual(None)))
-
         dialog = self.app.select_single('FileActionDialog')
         cancelButton = dialog.select_single('Button',objectName='cancelButton')
         self.pointing_device.click_object(cancelButton)
+
+        first_file = self.main_window.get_file_item(0)
+        self.assertThat(first_file.fileName,
+            Eventually(Equals(os.path.split(file_name)[1])))
+
+        self.pointing_device.click_object(first_file)
+
+        dialog = self.app.select_single('FileActionDialog')
+
+        openButton = dialog.select_single('Button',objectName='openButton')
+        self.pointing_device.click_object(openButton)
 
     def test_open_directory(self):
         sub_dir = self._make_directory_in_home()
