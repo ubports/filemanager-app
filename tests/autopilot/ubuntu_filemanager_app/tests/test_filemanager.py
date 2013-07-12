@@ -67,17 +67,31 @@ class TestMainWindow(FileManagerTestCase):
         action_popover = self.main_window.get_action_popover()
         self.assertThat(lambda: action_popover.opacity, Eventually(Equals(1)))
 
+    def test_list_folder_contents(self):
+        sub_dir = self._make_directory_in_home()
+        fileName = self._make_file_in_home()
+
+        first_folder = self.main_window.get_file_item(0)
+        self.assertThat(first_folder.fileName,
+            Eventually(Equals(os.path.split(sub_dir)[1])))
+
+        first_file = self.main_window.get_file_item(1)
+        self.assertThat(first_file.fileName,
+            Eventually(Equals(os.path.split(fileName)[1])))
+
     def _make_directory_in_home(self):
+        count = self.main_window.get_file_count()
         path = tempfile.mkdtemp(dir=os.environ['HOME'])
 
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(count + 1)))
 
         return path
 
     def _make_file_in_home(self):
+        count = self.main_window.get_file_count()
         path = tempfile.mkstemp(dir=os.environ['HOME'])[1]
 
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(count + 1)))
 
         return path
 
