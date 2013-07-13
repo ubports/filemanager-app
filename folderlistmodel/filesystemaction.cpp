@@ -186,23 +186,18 @@ DirModelMimeData::gnomeUrls(const QMimeData * mime,
     if (mime->hasFormat(GNOME_COPIED_MIME_TYPE))
     {
        QByteArray  bytes = mime->data(GNOME_COPIED_MIME_TYPE);
-       QList<QString>  d = QString(bytes).split(QLatin1String("\r\n"),
+       QList<QString>  d = QString(bytes).split(QLatin1String("\n"),
                                                 QString::SkipEmptyParts);
-       for (int counter= 0; counter < d.count(); counter++)
+       operation = ClipboardCopy;
+       if (d.count() > 0)
        {
-           if (counter==0)
+           if (d.at(0).trimmed().startsWith(QLatin1String("cut")))
            {
-               QStringList couple = d.at(0).split(QLatin1Char('\n'));
-               urls.append(couple[1]);
-               if (couple[0] == QLatin1String("cut"))  {
-                   operation = ClipboardCut;
-               }
-               else  {
-                   operation = ClipboardCopy;
-               }
-           }
-           else {
-               urls.append(d.at(counter));
+               operation = ClipboardCut;
+           }       
+           for (int counter= 1; counter < d.count(); counter++)
+           {
+               urls.append(d.at(counter).trimmed());
            }
        }
     }
@@ -316,8 +311,8 @@ bool DirModelMimeData::fillClipboard(const QStringList& files, const QString &pa
     QFileInfo fi;
     gnomeData.clear();
     gnomeData += operation == ClipboardCut ?
-                                    QLatin1String("cut\n") :
-                                    QLatin1String("copy\n");
+                                    QLatin1String("cut") :
+                                    QLatin1String("copy");
     for(int counter = 0; counter < files.count(); counter++)
     {
         const QString& item = files.at(counter);
@@ -330,7 +325,7 @@ bool DirModelMimeData::fillClipboard(const QStringList& files, const QString &pa
         {
             QUrl item = QUrl::fromLocalFile(fi.absoluteFilePath());
             urls.append(item);
-            gnomeData += item.toEncoded() + QLatin1String("\r\n");
+            gnomeData += QLatin1Char('\n') + item.toEncoded() ;
         }
         else
         {

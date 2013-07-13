@@ -1412,7 +1412,7 @@ void TestDirModel::watchExternalChanges()
     }
 
     int total_created = 1 + cut_items + createdOutsideFiles.created() - total_removed;
-    QTest::qWait(EX_FS_WATCHER_TIMER_INTERVAL);
+    QTest::qWait(EX_FS_WATCHER_TIMER_INTERVAL + TIME_TO_PROCESS);
 
     qWarning("using 2 instances [created outside]=%d, [removed outside]=%d", createdOutsideFiles.created(),  total_removed);
     QCOMPARE(m_dirModel_01->rowCount(),    total_created);
