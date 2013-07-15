@@ -40,7 +40,8 @@ class TestMainWindow(FileManagerTestCase):
     def _get_place(self, name):
         """Returns the place/bookmark with index number."""
         self.ubuntusdk.click_toolbar_button('Places')
-        places_popover = self.app.select_single('Popover', objectName='placesPopover')
+        places_popover = self.app.select_single(
+            'Popover', objectName='placesPopover')
         places = places_popover.select_many('Standard')
         for place in places:
             if place.text == name:
@@ -92,7 +93,8 @@ class TestMainWindow(FileManagerTestCase):
         sub_dir = self._make_directory_in_home()
 
         first_folder = self.main_window.get_file_item(0)
-        self.assertThat(first_folder.fileName,
+        self.assertThat(
+            first_folder.fileName,
             Eventually(Equals(os.path.split(sub_dir)[1])))
 
         self.pointing_device.click_object(first_folder)
@@ -114,7 +116,9 @@ class TestMainWindow(FileManagerTestCase):
 
         self._cancel_action()
 
-        self.assertThat(lambda: self.main_window.get_filenames()[0], Eventually(Equals(dir_name)))
+        self.assertThat(
+            lambda: self.main_window.get_filenames()[0], Eventually(
+                Equals(dir_name)))
 
         self.tap_item(first_folder)
         action_popover = self.main_window.get_action_popover()
@@ -122,7 +126,9 @@ class TestMainWindow(FileManagerTestCase):
 
         self._provide_input(new_name)
 
-        self.assertThat(lambda: self.main_window.get_filenames()[0], Eventually(Equals(new_name)))
+        self.assertThat(
+            lambda: self.main_window.get_filenames()[0], Eventually(
+                Equals(new_name)))
 
     def test_rename_file(self):
         path = self._make_file_in_home()
@@ -137,7 +143,9 @@ class TestMainWindow(FileManagerTestCase):
 
         self._cancel_action()
 
-        self.assertThat(lambda: self.main_window.get_filenames()[0], Eventually(Equals(name)))
+        self.assertThat(
+            lambda: self.main_window.get_filenames()[0], Eventually(
+                Equals(name)))
 
         self.tap_item(first_file)
         action_popover = self.main_window.get_action_popover()
@@ -145,8 +153,9 @@ class TestMainWindow(FileManagerTestCase):
 
         self._provide_input(new_name)
 
-        self.assertThat(lambda: self.main_window.get_filenames()[0], Eventually(Equals(new_name)))
-
+        self.assertThat(
+            lambda: self.main_window.get_filenames()[0], Eventually(
+                Equals(new_name)))
 
     def test_delete_directory(self):
         sub_dir = self._make_directory_in_home()
@@ -194,13 +203,16 @@ class TestMainWindow(FileManagerTestCase):
         #self._go_to_place('Home')
         self.ubuntusdk.click_toolbar_button('Actions')
 
-        popover = self.app.select_single("ActionSelectionPopover", objectName='folderActionsPopover')
+        popover = self.app.select_single(
+            "ActionSelectionPopover", objectName='folderActionsPopover')
         self._run_action(popover, 'Create New Folder')
         self._provide_input(name)
 
         self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
 
-        self.assertThat(lambda: self.main_window.get_filenames()[0], Eventually(Equals(name)))
+        self.assertThat(
+            lambda: self.main_window.get_filenames()[0], Eventually(
+                Equals(name)))
 
     def test_going_up(self):
         upDir = os.path.split(os.environ['HOME'])[0]
@@ -227,10 +239,12 @@ class TestMainWindow(FileManagerTestCase):
         place = self._get_place(name)
         self.pointing_device.click_object(place)
 
-    def _check_location(self,title,location):
-        self.assertThat(self.main_window.get_page_title, Eventually(Equals(title)))
+    def _check_location(self, title, location):
+        self.assertThat(
+            self.main_window.get_page_title, Eventually(Equals(title)))
 
-        self.assertThat(self.main_window.get_current_folder_name,
+        self.assertThat(
+            self.main_window.get_current_folder_name,
             Eventually(Equals(location)))
 
     def _run_action(self, popover, name):
@@ -243,16 +257,17 @@ class TestMainWindow(FileManagerTestCase):
 
     def _confirm_action(self):
         dialog = self.app.select_single('ConfirmDialog')
-        if dialog == None:
+        if dialog is None:
             dialog = self.app.select_single('ConfirmDialogWithInput')
-        okButton = dialog.select_single('Button',objectName='okButton')
+        okButton = dialog.select_single('Button', objectName='okButton')
         self.pointing_device.click_object(okButton)
 
     def _cancel_action(self):
         dialog = self.app.select_single('ConfirmDialog')
-        if dialog == None:
+        if dialog is None:
             dialog = self.app.select_single('ConfirmDialogWithInput')
-        cancelButton = dialog.select_single('Button',objectName='cancelButton')
+        cancelButton = dialog.select_single(
+            'Button', objectName='cancelButton')
         self.pointing_device.click_object(cancelButton)
 
     def _provide_input(self, text):
@@ -271,8 +286,7 @@ class TestMainWindow(FileManagerTestCase):
         self.pointing_device.click_object(field)
 
         self.keyboard.type(text)
-        self.assertThat(field.text,
-            Eventually(Equals(text)))
+        self.assertThat(field.text, Eventually(Equals(text)))
 
-        okButton = dialog.select_single('Button',objectName='okButton')
+        okButton = dialog.select_single('Button', objectName='okButton')
         self.pointing_device.click_object(okButton)
