@@ -16,9 +16,6 @@
 #
 # Authored by: Nicholas Skaggs <nicholas.skaggs@canonical.com>
 
-from testtools.matchers import Equals, NotEquals, Not, Is
-from autopilot.matchers import Eventually
-
 
 class ubuntusdk(object):
     """An emulator class that makes it easy to interact with the ubuntu sdk

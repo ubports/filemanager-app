@@ -158,7 +158,7 @@ class TestMainWindow(FileManagerTestCase):
                 Equals(new_name)))
 
     def test_delete_directory(self):
-        sub_dir = self._make_directory_in_home()
+        self._make_directory_in_home()
         first_folder = self.main_window.get_file_item(0)
 
         self.tap_item(first_folder)
@@ -178,7 +178,7 @@ class TestMainWindow(FileManagerTestCase):
         self.assertThat(self.main_window.get_file_count, Eventually(Equals(0)))
 
     def test_delete_file(self):
-        sub_dir = self._make_file_in_home()
+        self._make_file_in_home()
         first_folder = self.main_window.get_file_item(0)
 
         self.tap_item(first_folder)
