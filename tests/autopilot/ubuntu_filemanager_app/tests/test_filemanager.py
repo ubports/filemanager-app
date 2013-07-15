@@ -268,12 +268,105 @@ class TestMainWindow(FileManagerTestCase):
         path_label = properties_popover.select_single('Label', objectName='pathLabel')
         self.assertThat(lambda: path_label.text, Eventually(Equals(path)))
 
-    def test_copy_file(self):
+    def test_copy_folder(self):
+        # Set up a folder to copy and a folder to copy it into
+        sub_dir = os.environ['HOME'] + '/Destination'
+        os.mkdir(sub_dir)
+        copy_dir = os.environ['HOME'] + '/Folder to Copy'
+        os.mkdir(copy_dir)
+
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
+
+        # Copy the folder
+        first_file = self.main_window.get_file_item(1)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(copy_dir)[1])))
+        self._run_file_action(first_file, 'Copy')
+
+        # Go to the destination folder
+        first_folder = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_folder.fileName,
+            Eventually(Equals(os.path.split(sub_dir)[1])))
+
+        self.pointing_device.click_object(first_folder)
+
+        # Paste it in
+        self._run_folder_action('Paste 1 File')
+
+        # Check that the folder is there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+        first_file = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(copy_dir)[1])))
+
+        # Go back
+        self._go_up()
+
+        # Check that the file is still there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
+        first_file = self.main_window.get_file_item(1)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(copy_dir)[1])))
+
+    def test_cut_folder(self):
+        # Set up a folder to cut and a folder to move it into
+        sub_dir = os.environ['HOME'] + '/Destination'
+        os.mkdir(sub_dir)
+        copy_dir = os.environ['HOME'] + '/Folder to Cut'
+        os.mkdir(copy_dir)
+
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
+
+        # Cut the folder
+        first_file = self.main_window.get_file_item(1)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(copy_dir)[1])))
+        self._run_file_action(first_file, 'Cut')
+
+        # Go to the destination folder
+        first_folder = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_folder.fileName,
+            Eventually(Equals(os.path.split(sub_dir)[1])))
+
+        self.pointing_device.click_object(first_folder)
+
+        # Paste it in
+        self._run_folder_action('Paste 1 File')
+
+        # Check that the folder is there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+        first_file = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(copy_dir)[1])))
+
+        # Go back
+        self._go_up()
+
+        # Check that the folder is not there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+
+    def test_copy_file(self): pass
         # Set up a file to copy and a folder to copy it into
+        # Copy the file
+        # Go to the destination folder
+        # Paste it in
+        # Check that the file is there
+        # Go back
+        # Check that the folder is not there
+
+    def test_cut_file(self):
+        # Set up a file to cut and a folder to copy it into
         sub_dir = self._make_directory_in_home()
         fileName = self._make_file_in_home()
 
-        # Copy the file
+        # Cut the file
         first_file = self.main_window.get_file_item(1)
         self.assertThat(
             first_file.fileName,
@@ -282,7 +375,7 @@ class TestMainWindow(FileManagerTestCase):
 
         popover = self.app.select_single(
             "ActionSelectionPopover", objectName='fileActionsPopover')
-        self._run_action(popover, 'Copy')
+        self._run_action(popover, 'Cut')
 
         # Go to the folder
         first_folder = self.main_window.get_file_item(0)
@@ -305,12 +398,8 @@ class TestMainWindow(FileManagerTestCase):
         # Go back
         self._go_up()
 
-        # Check that the file is still there
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
-        first_file = self.main_window.get_file_item(1)
-        self.assertThat(
-            first_file.fileName,
-            Eventually(Equals(os.path.split(fileName)[1])))
+        # Check that the file is not there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
 
     def _go_up(self):
         self.ubuntusdk.click_toolbar_button('Up')
@@ -347,6 +436,13 @@ class TestMainWindow(FileManagerTestCase):
         self.assertThat(
             self.main_window.get_current_folder_name,
             Eventually(Equals(location)))
+
+    def _run_file_action(self, item, name):
+        self.tap_item(item)
+
+        popover = self.app.select_single(
+            "ActionSelectionPopover", objectName='fileActionsPopover')
+        self._run_action(popover, name)
 
     def _run_folder_action(self, name):
         self.ubuntusdk.click_toolbar_button('Actions')
