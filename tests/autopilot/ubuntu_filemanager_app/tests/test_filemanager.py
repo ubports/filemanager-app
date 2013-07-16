@@ -74,17 +74,18 @@ class TestMainWindow(FileManagerTestCase):
 
         first_folder = self.main_window.get_file_item(0)
         self.assertThat(first_folder.fileName,
-            Eventually(Equals(os.path.split(sub_dir)[1])))
+                        Eventually(Equals(os.path.split(sub_dir)[1])))
 
         first_file = self.main_window.get_file_item(1)
         self.assertThat(first_file.fileName,
-            Eventually(Equals(os.path.split(fileName)[1])))
+                        Eventually(Equals(os.path.split(fileName)[1])))
 
     def _make_directory_in_home(self):
         count = self.main_window.get_file_count()
         path = tempfile.mkdtemp(dir=os.environ['HOME'])
 
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(count + 1)))
+        self.assertThat(self.main_window.get_file_count,
+                        Eventually(Equals(count + 1)))
 
         return path
 
@@ -92,7 +93,8 @@ class TestMainWindow(FileManagerTestCase):
         count = self.main_window.get_file_count()
         path = tempfile.mkstemp(dir=os.environ['HOME'])[1]
 
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(count + 1)))
+        self.assertThat(self.main_window.get_file_count,
+                        Eventually(Equals(count + 1)))
 
         return path
 
@@ -101,23 +103,26 @@ class TestMainWindow(FileManagerTestCase):
 
         first_file = self.main_window.get_file_item(0)
         self.assertThat(first_file.fileName,
-            Eventually(Equals(os.path.split(file_name)[1])))
+                        Eventually(Equals(os.path.split(file_name)[1])))
 
         self.pointing_device.click_object(first_file)
 
         dialog = self.app.select_single('FileActionDialog')
-        cancelButton = dialog.select_single('Button',objectName='cancelButton')
+        cancelButton = dialog.select_single(
+            'Button',
+            objectName='cancelButton')
         self.pointing_device.click_object(cancelButton)
 
         first_file = self.main_window.get_file_item(0)
         self.assertThat(first_file.fileName,
-            Eventually(Equals(os.path.split(file_name)[1])))
+                        Eventually(Equals(os.path.split(file_name)[1])))
 
         self.pointing_device.click_object(first_file)
 
         dialog = self.app.select_single('FileActionDialog')
 
-        openButton = dialog.select_single('Button',objectName='openButton')
+        openButton = dialog.select_single(
+            'Button', objectName='openButton')
         self.pointing_device.click_object(openButton)
 
     def test_open_directory(self):
@@ -250,9 +255,12 @@ class TestMainWindow(FileManagerTestCase):
         self._run_action(popover, 'Properties')
 
         properties_popover = self.app.select_single('FileDetailsPopover')
-        self.assertThat(lambda: properties_popover.opacity, Eventually(Equals(1)))
-        path_label = properties_popover.select_single('Label', objectName='pathLabel')
-        self.assertThat(lambda: path_label.text, Eventually(Equals(path)))
+        self.assertThat(lambda: properties_popover.opacity,
+                        Eventually(Equals(1)))
+        path_label = properties_popover.select_single(
+            'Label', objectName='pathLabel')
+        self.assertThat(lambda: path_label.text,
+                        Eventually(Equals(path)))
 
     def test_showing_file_properties(self):
         path = self._make_file_in_home()
@@ -260,12 +268,16 @@ class TestMainWindow(FileManagerTestCase):
         first_file = self.main_window.get_file_item(0)
         self.tap_item(first_file)
 
-        popover = self.app.select_single("ActionSelectionPopover", objectName='fileActionsPopover')
+        popover = self.app.select_single(
+            "ActionSelectionPopover", objectName='fileActionsPopover')
         self._run_action(popover, 'Properties')
 
-        properties_popover = self.app.select_single('FileDetailsPopover')
-        self.assertThat(lambda: properties_popover.opacity, Eventually(Equals(1)))
-        path_label = properties_popover.select_single('Label', objectName='pathLabel')
+        properties_popover = self.app.select_single(
+            'FileDetailsPopover')
+        self.assertThat(lambda: properties_popover.opacity,
+                        Eventually(Equals(1)))
+        path_label = properties_popover.select_single(
+            'Label', objectName='pathLabel')
         self.assertThat(lambda: path_label.text, Eventually(Equals(path)))
 
     def test_copy_folder(self):
@@ -352,7 +364,8 @@ class TestMainWindow(FileManagerTestCase):
         # Check that the folder is not there
         self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
 
-    def test_copy_file(self): pass
+    def test_copy_file(self):
+        pass
         # Set up a file to copy and a folder to copy it into
         # Copy the file
         # Go to the destination folder
