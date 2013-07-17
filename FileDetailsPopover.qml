@@ -91,6 +91,7 @@ Popover {
             }
 
             Label {
+                objectName: "pathLabel"
                 text: root.path
             }
 

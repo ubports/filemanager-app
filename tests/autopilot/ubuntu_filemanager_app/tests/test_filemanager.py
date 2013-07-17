@@ -18,6 +18,7 @@ import shutil
 
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals
+#from testtools.matchers import NotEquals
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
 
@@ -47,7 +48,7 @@ class TestMainWindow(FileManagerTestCase):
             if place.text == name:
                 return place
 
-    def test_file_actions_shows(self):
+    def test_file_context_menu_shows(self):
         """Checks to make sure that the file actions popover is shown."""
         self._make_file_in_home()
 
@@ -57,7 +58,7 @@ class TestMainWindow(FileManagerTestCase):
         action_popover = self.main_window.get_action_popover()
         self.assertThat(lambda: action_popover.opacity, Eventually(Equals(1)))
 
-    def test_folder_actions_shows(self):
+    def test_folder_context_menu_shows(self):
         """Checks to make sure that the folder actions popover is shown."""
         self._make_directory_in_home()
 
@@ -67,27 +68,62 @@ class TestMainWindow(FileManagerTestCase):
         action_popover = self.main_window.get_action_popover()
         self.assertThat(lambda: action_popover.opacity, Eventually(Equals(1)))
 
-    def _make_directory_in_home(self):
-        path = tempfile.mkdtemp(dir=os.environ['HOME'])
-        # Currently, we need to open again the home folder to show the newly
-        # created one. See bug #1190676.
-        # TODO when the bug is fixed, remove the following line
-        self._go_to_place('Home')
+    def test_list_folder_contents(self):
+        sub_dir = self._make_directory_in_home()
+        fileName = self._make_file_in_home()
 
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+        first_folder = self.main_window.get_file_item(0)
+        self.assertThat(first_folder.fileName,
+                        Eventually(Equals(os.path.split(sub_dir)[1])))
+
+        first_file = self.main_window.get_file_item(1)
+        self.assertThat(first_file.fileName,
+                        Eventually(Equals(os.path.split(fileName)[1])))
+
+    def _make_directory_in_home(self):
+        count = self.main_window.get_file_count()
+        path = tempfile.mkdtemp(dir=os.environ['HOME'])
+
+        self.assertThat(self.main_window.get_file_count,
+                        Eventually(Equals(count + 1)))
 
         return path
 
     def _make_file_in_home(self):
+        count = self.main_window.get_file_count()
         path = tempfile.mkstemp(dir=os.environ['HOME'])[1]
-        # Currently, we need to open again the home folder to show the newly
-        # created one. See bug #1190676.
-        # TODO when the bug is fixed, remove the following line
-        self._go_to_place('Home')
 
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+        self.assertThat(self.main_window.get_file_count,
+                        Eventually(Equals(count + 1)))
 
         return path
+
+    def test_file_action_dialog(self):
+        file_name = self._make_file_in_home()
+
+        first_file = self.main_window.get_file_item(0)
+        self.assertThat(first_file.fileName,
+                        Eventually(Equals(os.path.split(file_name)[1])))
+
+        self.pointing_device.click_object(first_file)
+
+        dialog = self.app.select_single('FileActionDialog')
+        cancelButton = dialog.select_single(
+            'Button',
+            objectName='cancelButton')
+        self.pointing_device.click_object(cancelButton)
+
+        first_file = self.main_window.get_file_item(0)
+        self.assertThat(first_file.fileName,
+                        Eventually(Equals(os.path.split(file_name)[1])))
+
+        self.pointing_device.click_object(first_file)
+
+        dialog = self.app.select_single('FileActionDialog')
+
+        openButton = dialog.select_single(
+            'Button', objectName='openButton')
+        self.pointing_device.click_object(openButton)
 
     def test_open_directory(self):
         sub_dir = self._make_directory_in_home()
@@ -200,12 +236,7 @@ class TestMainWindow(FileManagerTestCase):
     def test_create_directory(self):
         name = 'Test Directory'
 
-        #self._go_to_place('Home')
-        self.ubuntusdk.click_toolbar_button('Actions')
-
-        popover = self.app.select_single(
-            "ActionSelectionPopover", objectName='folderActionsPopover')
-        self._run_action(popover, 'Create New Folder')
+        self._run_folder_action('Create New Folder')
         self._provide_input(name)
 
         self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
@@ -213,6 +244,178 @@ class TestMainWindow(FileManagerTestCase):
         self.assertThat(
             lambda: self.main_window.get_filenames()[0], Eventually(
                 Equals(name)))
+
+    def test_showing_directory_properties(self):
+        path = self._make_directory_in_home()
+
+        first_folder = self.main_window.get_file_item(0)
+        self.tap_item(first_folder)
+
+        popover = self.main_window.get_action_popover()
+        self._run_action(popover, 'Properties')
+
+        properties_popover = self.app.select_single('FileDetailsPopover')
+        self.assertThat(lambda: properties_popover.opacity,
+                        Eventually(Equals(1)))
+        path_label = properties_popover.select_single(
+            'Label', objectName='pathLabel')
+        self.assertThat(lambda: path_label.text,
+                        Eventually(Equals(path)))
+
+    def test_showing_file_properties(self):
+        path = self._make_file_in_home()
+
+        first_file = self.main_window.get_file_item(0)
+        self.tap_item(first_file)
+
+        popover = self.app.select_single(
+            "ActionSelectionPopover", objectName='fileActionsPopover')
+        self._run_action(popover, 'Properties')
+
+        properties_popover = self.app.select_single(
+            'FileDetailsPopover')
+        self.assertThat(lambda: properties_popover.opacity,
+                        Eventually(Equals(1)))
+        path_label = properties_popover.select_single(
+            'Label', objectName='pathLabel')
+        self.assertThat(lambda: path_label.text, Eventually(Equals(path)))
+
+    def test_copy_folder(self):
+        # Set up a folder to copy and a folder to copy it into
+        sub_dir = os.environ['HOME'] + '/Destination'
+        os.mkdir(sub_dir)
+        copy_dir = os.environ['HOME'] + '/Folder to Copy'
+        os.mkdir(copy_dir)
+
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
+
+        # Copy the folder
+        first_file = self.main_window.get_file_item(1)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(copy_dir)[1])))
+        self._run_file_action(first_file, 'Copy')
+
+        # Go to the destination folder
+        first_folder = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_folder.fileName,
+            Eventually(Equals(os.path.split(sub_dir)[1])))
+
+        self.pointing_device.click_object(first_folder)
+
+        # Paste it in
+        self._run_folder_action('Paste 1 File')
+
+        # Check that the folder is there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+        first_file = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(copy_dir)[1])))
+
+        # Go back
+        self._go_up()
+
+        # Check that the file is still there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
+        first_file = self.main_window.get_file_item(1)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(copy_dir)[1])))
+
+    def test_cut_folder(self):
+        # Set up a folder to cut and a folder to move it into
+        sub_dir = os.environ['HOME'] + '/Destination'
+        os.mkdir(sub_dir)
+        copy_dir = os.environ['HOME'] + '/Folder to Cut'
+        os.mkdir(copy_dir)
+
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
+
+        # Cut the folder
+        first_file = self.main_window.get_file_item(1)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(copy_dir)[1])))
+        self._run_file_action(first_file, 'Cut')
+
+        # Go to the destination folder
+        first_folder = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_folder.fileName,
+            Eventually(Equals(os.path.split(sub_dir)[1])))
+
+        self.pointing_device.click_object(first_folder)
+
+        # Paste it in
+        self._run_folder_action('Paste 1 File')
+
+        # Check that the folder is there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+        first_file = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(copy_dir)[1])))
+
+        # Go back
+        self._go_up()
+
+        # Check that the folder is not there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+
+    def test_copy_file(self):
+        pass
+        # Set up a file to copy and a folder to copy it into
+        # Copy the file
+        # Go to the destination folder
+        # Paste it in
+        # Check that the file is there
+        # Go back
+        # Check that the folder is not there
+
+    def test_cut_file(self):
+        # Set up a file to cut and a folder to copy it into
+        sub_dir = self._make_directory_in_home()
+        fileName = self._make_file_in_home()
+
+        # Cut the file
+        first_file = self.main_window.get_file_item(1)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(fileName)[1])))
+        self.tap_item(first_file)
+
+        popover = self.app.select_single(
+            "ActionSelectionPopover", objectName='fileActionsPopover')
+        self._run_action(popover, 'Cut')
+
+        # Go to the folder
+        first_folder = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_folder.fileName,
+            Eventually(Equals(os.path.split(sub_dir)[1])))
+
+        self.pointing_device.click_object(first_folder)
+
+        # Paste it in
+        self._run_folder_action('Paste 1 File')
+
+        # Check that the file is there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+        first_file = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(fileName)[1])))
+
+        # Go back
+        self._go_up()
+
+        # Check that the file is not there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+
+    def _go_up(self):
+        self.ubuntusdk.click_toolbar_button('Up')
 
     def test_going_up(self):
         upDir = os.path.split(os.environ['HOME'])[0]
@@ -246,6 +449,19 @@ class TestMainWindow(FileManagerTestCase):
         self.assertThat(
             self.main_window.get_current_folder_name,
             Eventually(Equals(location)))
+
+    def _run_file_action(self, item, name):
+        self.tap_item(item)
+
+        popover = self.app.select_single(
+            "ActionSelectionPopover", objectName='fileActionsPopover')
+        self._run_action(popover, name)
+
+    def _run_folder_action(self, name):
+        self.ubuntusdk.click_toolbar_button('Actions')
+        popover = self.app.select_single(
+            "ActionSelectionPopover", objectName='folderActionsPopover')
+        self._run_action(popover, name)
 
     def _run_action(self, popover, name):
         actions = popover.select_many('Empty')

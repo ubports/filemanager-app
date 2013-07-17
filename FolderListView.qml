@@ -195,7 +195,7 @@ ListView {
                                     fileName: model.fileName,
                                     filePath: model.filePath,
                                     folderListModel: root.folderListModel
-                                 })
+                                })
             }
         }
 
