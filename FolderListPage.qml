@@ -328,13 +328,13 @@ Page {
         }
 
         ToolbarButton {
-            text: i18n.tr("Settings")
+            text: i18n.tr("Options")
             iconSource: "icons/settings.png"
 
             onTriggered: {
                 print(text)
 
-                PopupUtils.open(Qt.resolvedUrl("SettingsPopover.qml"), caller)
+                PopupUtils.open(Qt.resolvedUrl("OptionsPopover.qml"), caller)
             }
         }
 
@@ -373,7 +373,7 @@ Page {
         // IMPROVE: this should work (?), but it doesn't. Height is undefined. Anyway in previous
         // SDK version the parent size was properly initialized. Now the size of toolbar is not taken into
         // account and apparently you can't even query toolbar's height.
-     // anchors.bottomMargin: toolbar.height
+        // anchors.bottomMargin: toolbar.height
         // So hard-code it. Not nice at all:
         anchors.bottomMargin: units.gu(8)
     }

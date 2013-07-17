@@ -47,11 +47,11 @@ Popover {
         }
 
         ValueSelector {
-            text: "Sort By"
+            text: i18n.tr("Sort By")
             selectedIndex: values.indexOf(fileView.sortingMethod)
             values: [
-                "Name",
-                "Date"
+                i18n.tr("Name"),
+                i18n.tr("Date")
             ]
 
             onSelectedIndexChanged: {
@@ -60,15 +60,38 @@ Popover {
         }
 
         ValueSelector {
-            text: "Sort Order"
+            text: i18n.tr("Sort Order")
             selectedIndex: sortAccending ? 0 : 1
             values: [
-                "Ascending",
-                "Descending"
+                i18n.tr("Ascending"),
+                i18n.tr("Descending")
             ]
 
             onSelectedIndexChanged: {
-                fileView.sortAccending = (values[selectedIndex] === "Ascending")
+                fileView.sortAccending = (values[selectedIndex] === i18n.tr("Ascending"))
+            }
+        }
+
+        Standard {
+            text: i18n.tr("Filter")
+
+            TextField {
+                id: filterField
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    right: parent.right
+                    margins: units.gu(1)
+                }
+
+                inputMethodHints: Qt.ImhNoAutoUppercase
+
+                text: pageModel.nameFilters
+
+                onAccepted: goButton.clicked()
+                onTextChanged: {
+                    if (text !== pageModel.nameFilters)
+                        pageModel.nameFilters = [text]
+                }
             }
         }
     }

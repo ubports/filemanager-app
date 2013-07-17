@@ -30,7 +30,7 @@ MainView {
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
     applicationName: "ubuntu-filemanager-app"
-    
+
     width: units.gu(50)
     height: units.gu(75)
 
