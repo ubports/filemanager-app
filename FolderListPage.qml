@@ -378,8 +378,10 @@ Page {
         // account in some fashion, but the extra space left to the bottom without this
         // bottomMargin definition seems to be exactly what is the height of Header's gray
         // separator bar. This ugly workaround seems to give correct height for view at least on desktop.
-        // Bug reports that might affect how to best solve this:
-        // https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1202277
+        // Bug report on this:
+        // https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1202881
+        // This bug report also affects this, as if the toolbar is hidden by default
+        // then there is no problem:
         // https://bugs.launchpad.net/ubuntu-filemanager-app/+bug/1198861
         // Hard-code it for now. Not nice at all:
         anchors.bottomMargin: units.gu(-2)
