@@ -73,6 +73,7 @@ Popover {
         }
 
         Standard {
+            visible: showAdvancedFeatures
             text: i18n.tr("Filter")
 
             TextField {

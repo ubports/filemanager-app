@@ -347,6 +347,16 @@ Page {
                 PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), caller)
             }
         }
+
+        ToolbarButton {
+            text: i18n.tr("Settings")
+            iconSource: "icons/settings.png"
+            onTriggered: {
+                print(text)
+
+                showSettings()
+            }
+        }
     }
 
     Column {
