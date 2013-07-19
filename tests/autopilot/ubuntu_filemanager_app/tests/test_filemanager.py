@@ -317,7 +317,7 @@ class TestMainWindow(FileManagerTestCase):
         # Go back
         self._go_up()
 
-        # Check that the file is still there
+        # Check that the folder is still there
         self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
         first_file = self.main_window.get_file_item(1)
         self.assertThat(
@@ -367,12 +367,47 @@ class TestMainWindow(FileManagerTestCase):
     def test_copy_file(self):
         pass
         # Set up a file to copy and a folder to copy it into
+        sub_dir = self._make_directory_in_home()
+        fileName = self._make_file_in_home()
+
         # Copy the file
+        first_file = self.main_window.get_file_item(1)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(fileName)[1])))
+        self.tap_item(first_file)
+
+        popover = self.app.select_single(
+            "ActionSelectionPopover", objectName='fileActionsPopover')
+        self._run_action(popover, 'Copy')
+
         # Go to the destination folder
+        first_folder = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_folder.fileName,
+            Eventually(Equals(os.path.split(sub_dir)[1])))
+
+        self.pointing_device.click_object(first_folder)
+
         # Paste it in
+        self._run_folder_action('Paste 1 File')
+
         # Check that the file is there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+        first_file = self.main_window.get_file_item(0)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(fileName)[1])))
+
         # Go back
-        # Check that the folder is not there
+        self._go_up()
+
+        # Check that the file is still there
+        self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
+        first_file = self.main_window.get_file_item(1)
+        self.assertThat(
+            first_file.fileName,
+            Eventually(Equals(os.path.split(fileName)[1])))
 
     def test_cut_file(self):
         # Set up a file to cut and a folder to copy it into
