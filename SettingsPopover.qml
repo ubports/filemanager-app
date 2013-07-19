@@ -35,7 +35,17 @@ Popover {
             id: showHiddenFileCheckBox
             objectName: "showHiddenFileCheckBox"
 
-            text: i18n.tr("Show Hidden Files")
+            Label {
+                text: i18n.tr("Show Hidden Files")
+                fontSize: "medium"
+                color: "grey"
+                anchors.left: parent.left
+                anchors.leftMargin: units.gu(2)
+                anchors.top: parent.top
+                anchors.topMargin: units.gu(1)
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
             control: CheckBox {
                 anchors.verticalCenter: parent.verticalCenter
 
@@ -47,7 +57,17 @@ Popover {
         }
 
         ValueSelector {
-            text: "Sort By"
+            Label {
+                text: i18n.tr("Sort By")
+                fontSize: "medium"
+                color: "grey"
+                anchors.left: parent.left
+                anchors.leftMargin: units.gu(2)
+                anchors.top: parent.top
+                anchors.topMargin: units.gu(1)
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
             selectedIndex: values.indexOf(fileView.sortingMethod)
             values: [
                 "Name",
@@ -60,7 +80,17 @@ Popover {
         }
 
         ValueSelector {
-            text: "Sort Order"
+            Label {
+                text: i18n.tr("Sort Order")
+                fontSize: "medium"
+                color: "grey"
+                anchors.left: parent.left
+                anchors.leftMargin: units.gu(2)
+                anchors.top: parent.top
+                anchors.topMargin: units.gu(1)
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
             selectedIndex: sortAccending ? 0 : 1
             values: [
                 "Ascending",

@@ -38,6 +38,10 @@ MainView {
 
     property bool wideAspect: width >= units.gu(80)
 
+    headerColor: "#57365E"
+    backgroundColor: "#A55263"
+    footerColor: "#D75669"
+
     FolderListPage {
         id: folderPage
         objectName: "folderPage"
