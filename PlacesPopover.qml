@@ -129,7 +129,7 @@ Popover {
                     anchors.leftMargin: units.gu(8)
                     anchors.verticalCenter: parent.verticalCenter
                     text: folderName(path)
-                    color: "grey"
+                    color: UbuntuColors.coolGrey
                 }
 
                 icon: model.icon || fileIcon(model.path, true)

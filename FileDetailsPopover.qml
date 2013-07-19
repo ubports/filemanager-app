@@ -78,7 +78,7 @@ Popover {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: folderName(root.path)
-                color: "grey"
+                color: UbuntuColors.coolGrey
                 font.bold: true
             }
         }
@@ -89,50 +89,50 @@ Popover {
 
             Label {
                 text: i18n.tr("Path:")
-                color: "grey"
+                color: UbuntuColors.coolGrey
             }
 
             Label {
                 objectName: "pathLabel"
                 text: root.path
-                color: "grey"
+                color: UbuntuColors.coolGrey
             }
 
             Label {
                 text: model.isDir ? i18n.tr("Contents:")
                                   : i18n.tr("Size:")
-                color: "grey"
+                color: UbuntuColors.coolGrey
             }
             Label {
                 text: model.fileSize
-                color: "grey"
+                color: UbuntuColors.coolGrey
             }
 
             Label {
                 text: i18n.tr("Created:")
-                color: "grey"
+                color: UbuntuColors.coolGrey
             }
             Label {
                 text: dateTimeFormat(model.creationDate)
-                color: "grey"
+                color: UbuntuColors.coolGrey
             }
 
             Label {
                 text: i18n.tr("Modified:")
-                color: "grey"
+                color: UbuntuColors.coolGrey
             }
             Label {
                 text: dateTimeFormat(model.modifiedDate)
-                color: "grey"
+                color: UbuntuColors.coolGrey
             }
 
             Label {
                 text: i18n.tr("Permissions:")
-                color: "grey"
+                color: UbuntuColors.coolGrey
             }
             Label {
                 text: permissionsToString(model)
-                color: "grey"
+                color: UbuntuColors.coolGrey
             }
 
         }
