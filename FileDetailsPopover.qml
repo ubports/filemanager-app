@@ -78,7 +78,7 @@ Popover {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: folderName(root.path)
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
                 font.bold: true
             }
         }
@@ -89,50 +89,50 @@ Popover {
 
             Label {
                 text: i18n.tr("Path:")
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
             }
 
             Label {
                 objectName: "pathLabel"
                 text: root.path
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
             }
 
             Label {
                 text: model.isDir ? i18n.tr("Contents:")
                                   : i18n.tr("Size:")
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
             }
             Label {
                 text: model.fileSize
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
             }
 
             Label {
                 text: i18n.tr("Created:")
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
             }
             Label {
                 text: dateTimeFormat(model.creationDate)
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
             }
 
             Label {
                 text: i18n.tr("Modified:")
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
             }
             Label {
                 text: dateTimeFormat(model.modifiedDate)
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
             }
 
             Label {
                 text: i18n.tr("Permissions:")
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
             }
             Label {
                 text: permissionsToString(model)
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
             }
 
         }

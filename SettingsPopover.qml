@@ -38,11 +38,10 @@ Popover {
             Label {
                 text: i18n.tr("Show Hidden Files")
                 fontSize: "medium"
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
-                anchors.top: parent.top
-                anchors.topMargin: units.gu(1)
+                anchors.verticalCenter: parent.verticalCenter
             }
 
             control: CheckBox {
@@ -59,11 +58,11 @@ Popover {
             Label {
                 text: i18n.tr("Sort By")
                 fontSize: "medium"
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
                 anchors.top: parent.top
-                anchors.topMargin: units.gu(1)
+                anchors.topMargin: units.gu(1.5)
             }
 
             selectedIndex: values.indexOf(fileView.sortingMethod)
@@ -81,11 +80,11 @@ Popover {
             Label {
                 text: i18n.tr("Sort Order")
                 fontSize: "medium"
-                color: UbuntuColors.coolGrey
+                color: Theme.palette.normal.overlayText
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
                 anchors.top: parent.top
-                anchors.topMargin: units.gu(1)
+                anchors.topMargin: units.gu(1.5)
             }
 
             selectedIndex: sortAccending ? 0 : 1
