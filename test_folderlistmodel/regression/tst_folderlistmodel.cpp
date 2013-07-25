@@ -83,6 +83,7 @@ private Q_SLOTS:
     void  modelRemoveMultiItemsByName();
     void  modelCopyDirPasteIntoAnotherModel();
     void  modelCopyManyItemsPasteIntoAnotherModel();
+    void  modelCopyTwoEmptyFiles();
     void  modelCutManyItemsPasteIntoAnotherModel();
     void  fsActionMoveItemsForcingCopyAndThenRemove();
     void  modelCancelRemoveAction();
@@ -635,6 +636,42 @@ void TestDirModel::modelCopyManyItemsPasteIntoAnotherModel()
     QCOMPARE(m_progressPercentDone, 100);
     QCOMPARE(compareDirectories(m_deepDir_01->path(), m_deepDir_02->path()), true);
     QCOMPARE(m_receivedClipboardChangesSignal,   true);
+}
+
+
+void TestDirModel::modelCopyTwoEmptyFiles()
+{
+    QString orig("modelCopyTwoEmptyFiles_orig");
+    const int itemsCreated = 2;
+    m_deepDir_01  = new DeepDir(orig, 0);
+    TempFiles empty;
+    empty.addSubDirLevel(orig);
+    empty.touch(itemsCreated);
+
+
+    m_dirModel_01 = new DirModel();
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
+
+    QString target("modelCopyTwoEmptyFiles_target");
+    m_deepDir_02 = new DeepDir(target, 0);
+    m_dirModel_02 = new DirModel();
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
+            this,          SLOT(progress(int,int,int)));
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+
+
+    m_dirModel_01->copyPaths(empty.createdList());
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QCOMPARE(m_dirModel_02->rowCount(),  itemsCreated);
+    QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
+    QCOMPARE(m_progressPercentDone, 100);
+    QCOMPARE(m_progressCurrentItem, itemsCreated);
+    QCOMPARE(compareDirectories(m_deepDir_01->path(), m_deepDir_02->path()), true);
 }
 
 void TestDirModel::modelCutManyItemsPasteIntoAnotherModel()

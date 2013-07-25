@@ -1318,14 +1318,19 @@ bool FileSystemAction::processCopySingleFile()
 int FileSystemAction::percentWorkDone()
 {
     int percent = 0;
-    if (m_curAction->type != ActionCopy && m_curAction->type != ActionHardMoveCopy)
+
+    //copying empty files will have totalBytes==0
+    if ( m_curAction->totalBytes > 0 &&
+         (m_curAction->type == ActionCopy || m_curAction->type == ActionHardMoveCopy)
+       )
     {
-         percent = (m_curAction->currItem * 100) / m_curAction->totalItems;
+        percent = (m_curAction->bytesWritten * 100) / m_curAction->totalBytes ;
     }
     else
-    {
-         percent = (m_curAction->bytesWritten * 100) / m_curAction->totalBytes ;
+    {   //percentage based on number of items performed
+        percent = (m_curAction->currItem * 100) / m_curAction->totalItems;
     }
+
     if (percent > 100)
     {
         percent = 100;
