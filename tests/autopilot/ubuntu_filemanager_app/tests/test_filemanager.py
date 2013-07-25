@@ -18,7 +18,6 @@ import shutil
 
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals
-#from testtools.matchers import NotEquals
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
 
