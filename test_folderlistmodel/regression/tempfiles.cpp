@@ -91,6 +91,21 @@ bool TempFiles::create(int counter)
 
 bool TempFiles::create(const QString& name, int counter )
 {
+    return createPrivate(name, counter, true);
+}
+
+bool TempFiles::touch(int counter)
+{
+    return  touch(QLatin1String("emptyfile"), counter);
+}
+
+bool TempFiles::touch(const QString& name, int counter )
+{
+    return createPrivate(name, counter, false);
+}
+
+bool TempFiles::createPrivate(const QString& name, int counter, bool putContent)
+{
     QString myName;
     while(counter--)
     {
@@ -101,22 +116,31 @@ bool TempFiles::create(const QString& name, int counter )
         QFile file(myName);
         if (file.open(QFile::WriteOnly))
         {
-            if (file.write(m_content) == (qint64)m_content.size())
+            m_filesCreated.append(myName);
+            if(putContent)
             {
-                m_filesCreated.append(myName);
-                m_content += QByteArray(1024, 'z');
-            }
-            else {
-                return false;
+                if (file.write(m_content) == (qint64)m_content.size())
+                {
+                    m_content += QByteArray(1024, 'z');
+                }
+                else {
+                    return false;
+                }
             }
         }
-        else {
+        else
+        {
             return false;
         }
 
     }
     return true;
 }
+
+
+
+
+
 
 QString TempFiles::lastFileCreated()
 {

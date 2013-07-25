@@ -43,6 +43,8 @@ public:
     bool addSubDirLevel(const QString&dir);
     bool create(int counter =1);
     bool create(const QString& name, int counter = 1);
+    bool touch(int counter =1);
+    bool touch(const QString& name, int counter = 1);
     QString lastFileCreated();
     QString lastNameCreated();
     QStringList createdList() const   { return m_filesCreated; }
@@ -51,6 +53,8 @@ public:
     void removeAll();
     QStringList createdNames();
     QString   lastPath()       const { return m_dir; }
+private:
+    bool    createPrivate(const QString& name, int counter, bool putContent) ;
 private:
     QString       m_dir;
     QStringList   m_filesCreated;
