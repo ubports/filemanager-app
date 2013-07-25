@@ -224,7 +224,7 @@ void SimpleList::progress(int cur, int total, int percent)
             QTimer::singleShot(200, m_pbar, SLOT(hide()));
         }
     p.sprintf("progress(cur=%d, total=%d, percent=%d)", cur,total,percent);
-  //  qDebug() << p;
+    qDebug() << p;
 }
 
 
