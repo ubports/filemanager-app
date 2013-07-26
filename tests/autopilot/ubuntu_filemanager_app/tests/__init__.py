@@ -58,9 +58,3 @@ class FileManagerTestCase(AutopilotTestCase):
     @property
     def main_view(self):
         return self.app.select_single(emulators.MainView)
-
-    def tap_item(self, item):
-        self.pointing_device.move_to_object(item)
-        self.pointing_device.press()
-        sleep(1)
-        self.pointing_device.release()
