@@ -41,6 +41,17 @@ class MainView(toolkit_emulators.MainView):
         return self.select_single(
             ActionSelectionPopover, objectName='folderActionsPopover')
 
+    def get_places_popover(self):
+        """Return the Places popover."""
+        # XXX It would be easier if the places popover was an object that
+        # inherits from Popover, like the ActionSelectionPopover does.
+        # --elopio - 2013-07-25
+        return self.select_single('Popover', objectName='placesPopover')
+
+    def get_file_details_popover(self):
+        """Return the FileDetailsPopover emulator."""
+        return self.select_single(FileDetailsPopover)
+
     def get_file_action_dialog(self):
         """Return the FileActionDialog emulator."""
         return self.select_single(FileActionDialog)
@@ -62,10 +73,23 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     def get_file_by_index(self, index):
         """Return the FolderListDelegate emulator of the file or folder.
 
-        :parameter index: The index of file.
+        :parameter index: The index of file or folder.
 
         """
         return self.select_many(FolderListDelegate)[index]
+
+    def get_file_by_name(self, name):
+        """Return the FolderListDelegate emulator of the file or folder.
+
+        :parameter name: The name of the file or folder.
+
+        """
+        files = self.select_many(FolderListDelegate)
+        for file_ in files:
+            if file_.fileName == name:
+                return file_
+        raise ValueError(
+            'File with name "{0}" not found.'.format(name))
 
     def get_current_path(self):
         return self.select_single(FolderListView).get_current_path()
@@ -101,12 +125,30 @@ class FolderListView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
 
 class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
-    """FolderListPage Autopilot emulator."""
+    """FolderListPage Autopilot emulator.
+
+    This is a file or folder on the FolderListPage.
+
+    """
 
     def __init__(self, *args):
         super(FolderListDelegate, self).__init__(*args)
         self.pointing_device = toolkit_emulators.get_pointing_device()
 
+    def open_directory(self):
+        """Open the directory."""
+        # TODO Check if it is a directory. If not, raise an error.
+        # --elopio - 2013-07-25
+        self.pointing_device.click_object(self)
+
+    def open_file(self):
+        # TODO For this we would need to access the FileActionDialog that's
+        # child of the MainView, but that's not currently possible with
+        # autopilot. Reported on
+        # bug https://bugs.launchpad.net/autopilot/+bug/1195141
+        # --elopio - 2013-07-25
+        raise NotImplementedError()
+        
     def open_actions_popover(self):
         """Open the actions popover of the file or folder."""
         self.pointing_device.move_to_object(self)
@@ -211,3 +253,10 @@ class ConfirmDialogWithInput(ConfirmDialog):
 
     def _select_text_field(self):
         return self.select_single('TextField', objectName='inputField')
+
+
+class FileDetailsPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
+    """FileDetailsPopover Autopilot emulator."""
+
+    def get_path(self):
+        return self.select_single('Label', objectName='pathLabel').text

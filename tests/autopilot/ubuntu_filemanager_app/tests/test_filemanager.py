@@ -46,17 +46,6 @@ class TestFolderListPage(FileManagerTestCase):
         patcher.start()
         self.addCleanup(patcher.stop)
 
-    def _get_place(self, name):
-        """Returns the place/bookmark with index number."""
-        self.main_view.open_toolbar()
-        self.main_view.get_toolbar().click_button('places')
-        places_popover = self.app.select_single(
-            'Popover', objectName='placesPopover')
-        places = places_popover.select_many('Standard')
-        for place in places:
-            if place.text == name:
-                return place
-
     def test_file_context_menu_shows(self):
         """Checks to make sure that the file actions popover is shown."""
         self._make_file_in_home()
@@ -75,15 +64,24 @@ class TestFolderListPage(FileManagerTestCase):
         if type_ != 'file' and type_ != 'directory':
             raise ValueError('Unknown content type: "{0}"', type_)
         folder_list_page = self.main_view.get_folder_list_page()
-        get_file_count = folder_list_page.get_number_of_files_from_list
-        original_count = get_file_count()
+        original_count = (
+            folder_list_page.get_number_of_files_from_list())
         if type_ == 'file':
             _, path = tempfile.mkstemp(dir=os.environ['HOME'])
         else:
             path = tempfile.mkdtemp(dir=os.environ['HOME'])
 
-        self.assertThat(get_file_count, Eventually(Equals(original_count + 1)))
+        self._assert_number_of_files(original_count + 1)
         return path
+
+    def _assert_number_of_files(self, expected_number_of_files):
+        folder_list_page = self.main_view.get_folder_list_page()
+        self.assertThat(
+            folder_list_page.get_number_of_files_from_list,
+            Eventually(Equals(expected_number_of_files)))
+        self.assertThat(
+            folder_list_page.get_number_of_files_from_header,
+            Eventually(Equals(expected_number_of_files)))
 
     def _get_file_by_index(self, index):
         folder_list_page = self.main_view.get_folder_list_page()
@@ -109,8 +107,7 @@ class TestFolderListPage(FileManagerTestCase):
         file_path = self._make_file_in_home()
         file_name = os.path.basename(file_path)
 
-        folder_list_page = self.main_view.get_folder_list_page()
-        self.assertEqual(folder_list_page.get_number_of_files_from_header(), 2)
+        self._assert_number_of_files(2)
 
         dir_ = self._get_file_by_index(0)
         self.assertThat(dir_.fileName, Eventually(Equals(dir_name)))
@@ -166,17 +163,12 @@ class TestFolderListPage(FileManagerTestCase):
         dir_path = self._make_directory_in_home()
         first_dir = self._get_file_by_index(0)
 
-        self.pointing_device.click_object(first_dir)
+        first_dir.open_directory()
 
         folder_list_page = self.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_current_path, Eventually(Equals(dir_path)))
-        self.assertThat(
-            folder_list_page.get_number_of_files_from_list,
-            Eventually(Equals(0)))
-        self.assertThat(
-            folder_list_page.get_number_of_files_from_header,
-            Eventually(Equals(0)))
+        self._assert_number_of_files(0)
         # TODO check the label that says the directory is empty.
         # --elopio - 2013-07-25
 
@@ -253,12 +245,8 @@ class TestFolderListPage(FileManagerTestCase):
         
         self._do_action_on_file(first_dir, 'Delete')
         self._cancel_confirm_dialog()
-        
-        folder_list_page = self.main_view.get_folder_list_page()
-        self.assertThat(
-            folder_list_page.get_number_of_files_from_list,
-            Eventually(Equals(1)))
-        self.assertEqual(folder_list_page.get_number_of_files_from_header(), 1)
+
+        self._assert_number_of_files(1)
 
     def test_delete_directory(self):
         self._make_directory_in_home()
@@ -267,11 +255,7 @@ class TestFolderListPage(FileManagerTestCase):
         self._do_action_on_file(first_dir, 'Delete')
         self._confirm_dialog()
         
-        folder_list_page = self.main_view.get_folder_list_page()
-        self.assertThat(
-            folder_list_page.get_number_of_files_from_list,
-            Eventually(Equals(0)))
-        self.assertEqual(folder_list_page.get_number_of_files_from_header(), 0)
+        self._assert_number_of_files(0)
 
     def test_cancel_delete_file(self):
         self._make_file_in_home()
@@ -279,12 +263,8 @@ class TestFolderListPage(FileManagerTestCase):
         
         self._do_action_on_file(first_file, 'Delete')
         self._cancel_confirm_dialog()
-        
-        folder_list_page = self.main_view.get_folder_list_page()
-        self.assertThat(
-            folder_list_page.get_number_of_files_from_list,
-            Eventually(Equals(1)))
-        self.assertEqual(folder_list_page.get_number_of_files_from_header(), 1)
+
+        self._assert_number_of_files(1)
 
     def test_delete_file(self):
         self._make_file_in_home()
@@ -292,12 +272,8 @@ class TestFolderListPage(FileManagerTestCase):
         
         self._do_action_on_file(first_file, 'Delete')
         self._confirm_dialog()
-        
-        folder_list_page = self.main_view.get_folder_list_page()
-        self.assertThat(
-            folder_list_page.get_number_of_files_from_list,
-            Eventually(Equals(0)))
-        self.assertEqual(folder_list_page.get_number_of_files_from_header(), 0)
+
+        self._assert_number_of_files(0)
 
     def test_create_directory(self):
         dir_name = 'Test Directory'
@@ -309,274 +285,217 @@ class TestFolderListPage(FileManagerTestCase):
         folder_actions_popover.click_button('Create New Folder')
         self._confirm_dialog(dir_name)
 
-        folder_list_page = self.main_view.get_folder_list_page()
-        self.assertThat(
-            folder_list_page.get_number_of_files_from_list,
-            Eventually(Equals(1)))
-        self.assertEqual(folder_list_page.get_number_of_files_from_header(), 1)
+        self._assert_number_of_files(1)
 
         dir_ = self._get_file_by_index(0)
         self.assertThat(dir_.fileName, Eventually(Equals(dir_name)))
         # TODO missing test, cancel create directory. --elopio - 2013-07-25
 
-    def test_showing_directory_properties(self):
-        path = self._make_directory_in_home()
+    def test_show_directory_properties_from_list(self):
+        dir_path = self._make_directory_in_home()
+        first_dir = self._get_file_by_index(0)
 
-        first_folder = self.main_window.get_file_item(0)
-        self.tap_item(first_folder)
-
-        popover = self.main_window.get_action_popover()
-        self._run_action(popover, 'Properties')
-
-        properties_popover = self.app.select_single('FileDetailsPopover')
-        self.assertThat(lambda: properties_popover.opacity,
-                        Eventually(Equals(1)))
-        path_label = properties_popover.select_single(
-            'Label', objectName='pathLabel')
-        self.assertThat(lambda: path_label.text,
-                        Eventually(Equals(path)))
-
-    def test_showing_file_properties(self):
-        path = self._make_file_in_home()
-
-        first_file = self.main_window.get_file_item(0)
-        self.tap_item(first_file)
-
-        popover = self.app.select_single(
-            "ActionSelectionPopover", objectName='fileActionsPopover')
-        self._run_action(popover, 'Properties')
-
-        properties_popover = self.app.select_single(
-            'FileDetailsPopover')
-        self.assertThat(lambda: properties_popover.opacity,
-                        Eventually(Equals(1)))
-        path_label = properties_popover.select_single(
-            'Label', objectName='pathLabel')
-        self.assertThat(lambda: path_label.text, Eventually(Equals(path)))
-
-    def test_copy_folder(self):
-        # Set up a folder to copy and a folder to copy it into
-        sub_dir = os.environ['HOME'] + '/Destination'
-        os.mkdir(sub_dir)
-        copy_dir = os.environ['HOME'] + '/Folder to Copy'
-        os.mkdir(copy_dir)
-
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
-
-        # Copy the folder
-        first_file = self.main_window.get_file_item(1)
+        self._do_action_on_file(first_dir, 'Properties')
+        file_details_popover = self.main_view.get_file_details_popover()
+        self.assertThat(file_details_popover.visible, Eventually(Equals(True)))
         self.assertThat(
-            first_file.fileName,
-            Eventually(Equals(os.path.split(copy_dir)[1])))
-        self._run_file_action(first_file, 'Copy')
+            file_details_popover.get_path, Eventually(Equals(dir_path)))
+        # TODO check the rest of the fields. --elopio - 2013-07-25
+        # TODO missing test, show directory properties from toolbar.
+        # --elopio - 2013-07-25
 
-        # Go to the destination folder
-        first_folder = self.main_window.get_file_item(0)
+    def test_show_file_properties(self):
+        file_path = self._make_file_in_home()
+        first_file = self._get_file_by_index(0)
+
+        self._do_action_on_file(first_file, 'Properties')
+        file_details_popover = self.main_view.get_file_details_popover()
+        self.assertThat(file_details_popover.visible, Eventually(Equals(True)))
         self.assertThat(
-            first_folder.fileName,
-            Eventually(Equals(os.path.split(sub_dir)[1])))
+            file_details_popover.get_path, Eventually(Equals(file_path)))
+        # TODO check the rest of the fields. --elopio - 2013-07-25
 
-        self.pointing_device.click_object(first_folder)
+    def test_copy_directory(self):
+        # Set up a directory to copy and a directory to copy it into.
+        destination_dir_path = os.path.join(os.environ['HOME'], 'destination')
+        destination_dir_name = os.path.basename(destination_dir_path)
+        os.mkdir(destination_dir_path)
+        dir_to_copy_path = os.path.join(os.environ['HOME'], 'to_copy')
+        dir_to_copy_name = os.path.basename(dir_to_copy_path)
+        os.mkdir(dir_to_copy_path)
 
-        # Paste it in
-        self._run_folder_action('Paste 1 File')
+        folder_list_page = self.main_view.get_folder_list_page()
+        self._assert_number_of_files(2)
 
-        # Check that the folder is there
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
-        first_file = self.main_window.get_file_item(0)
+        # Copy the directory.
+        dir_to_copy = folder_list_page.get_file_by_name(dir_to_copy_name)
+        self._do_action_on_file(dir_to_copy, 'Copy')
+
+        # Go to the destination directory.
+        destination_dir = folder_list_page.get_file_by_name(
+            destination_dir_name)
+        destination_dir.open_directory()
+
+        # Paste the directory.
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('actions')
+
+        folder_actions_popover = self.main_view.get_folder_actions_popover()
+        folder_actions_popover.click_button('Paste 1 File')
+
+        # Check that the directory is there.
+        self._assert_number_of_files(1)
+        first_dir = self._get_file_by_index(0)
         self.assertThat(
-            first_file.fileName,
-            Eventually(Equals(os.path.split(copy_dir)[1])))
+            first_dir.fileName, Eventually(Equals(dir_to_copy_name)))
 
-        # Go back
-        self._go_up()
+        # Go back.
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('up')
 
-        # Check that the file is still there
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
-        first_file = self.main_window.get_file_item(1)
+        # Check that the directory is still there.
+        self._assert_number_of_files(2)
+
+    def test_cut_directory(self):
+        # Set up a directory to cut and a directory to move it into.
+        destination_dir_path = os.path.join(os.environ['HOME'], 'destination')
+        destination_dir_name = os.path.basename(destination_dir_path)
+        os.mkdir(destination_dir_path)
+        dir_to_cut_path = os.path.join(os.environ['HOME'], 'to_cut')
+        dir_to_cut_name = os.path.basename(dir_to_cut_path)
+        os.mkdir(dir_to_cut_path)
+
+        folder_list_page = self.main_view.get_folder_list_page()
+        self._assert_number_of_files(2)
+
+        # Cut the directory.
+        dir_to_cut = folder_list_page.get_file_by_name(dir_to_cut_name)
+        self._do_action_on_file(dir_to_cut, 'Cut')
+
+        # Go to the destination directory.
+        destination_dir = folder_list_page.get_file_by_name(
+            destination_dir_name)
+        destination_dir.open_directory()
+
+        # Paste the directory.
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('actions')
+
+        folder_actions_popover = self.main_view.get_folder_actions_popover()
+        folder_actions_popover.click_button('Paste 1 File')
+
+        # Check that the directory is there.
+        self._assert_number_of_files(1)
+        first_dir = self._get_file_by_index(0)
         self.assertThat(
-            first_file.fileName,
-            Eventually(Equals(os.path.split(copy_dir)[1])))
+            first_dir.fileName, Eventually(Equals(dir_to_cut_name)))
 
-    def test_cut_folder(self):
-        # Set up a folder to cut and a folder to move it into
-        sub_dir = os.environ['HOME'] + '/Destination'
-        os.mkdir(sub_dir)
-        copy_dir = os.environ['HOME'] + '/Folder to Cut'
-        os.mkdir(copy_dir)
+        # Go back.
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('up')
 
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(2)))
-
-        # Cut the folder
-        first_file = self.main_window.get_file_item(1)
+        # Check that the directory is not there.
+        self._assert_number_of_files(1)
+        first_dir = self._get_file_by_index(0)
         self.assertThat(
-            first_file.fileName,
-            Eventually(Equals(os.path.split(copy_dir)[1])))
-        self._run_file_action(first_file, 'Cut')
-
-        # Go to the destination folder
-        first_folder = self.main_window.get_file_item(0)
-        self.assertThat(
-            first_folder.fileName,
-            Eventually(Equals(os.path.split(sub_dir)[1])))
-
-        self.pointing_device.click_object(first_folder)
-
-        # Paste it in
-        self._run_folder_action('Paste 1 File')
-
-        # Check that the folder is there
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
-        first_file = self.main_window.get_file_item(0)
-        self.assertThat(
-            first_file.fileName,
-            Eventually(Equals(os.path.split(copy_dir)[1])))
-
-        # Go back
-        self._go_up()
-
-        # Check that the folder is not there
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+            first_dir.fileName, Eventually(Equals(destination_dir_name)))
 
     def test_copy_file(self):
-        pass
-        # Set up a file to copy and a folder to copy it into
-        # Copy the file
-        # Go to the destination folder
-        # Paste it in
-        # Check that the file is there
-        # Go back
-        # Check that the folder is not there
+        # Set up a file to copy and a directory to copy it into.
+        # Copy the file.
+        # Go to the destination directory.
+        # Paste it in.
+        # Check that the file is there.
+        # Go back.
+        # Check that the flie is there.
+        self.skipTest('Not yet implemented.')
 
     def test_cut_file(self):
-        # Set up a file to cut and a folder to copy it into
-        sub_dir = self._make_directory_in_home()
-        fileName = self._make_file_in_home()
+        # Set up a file to cut and a directory to move it into.
+        destination_dir_path = self._make_directory_in_home()
+        destination_dir_name = os.path.basename(destination_dir_path)
+        file_to_cut_path = self._make_file_in_home()
+        file_to_cut_name = os.path.basename(file_to_cut_path)
 
-        # Cut the file
-        first_file = self.main_window.get_file_item(1)
+        folder_list_page = self.main_view.get_folder_list_page()
+        self._assert_number_of_files(2)
+
+        # Cut the file.
+        file_to_cut = folder_list_page.get_file_by_name(file_to_cut_name)
+        self._do_action_on_file(file_to_cut, 'Cut')
+
+        # Go to the destination directory.
+        destination_dir = folder_list_page.get_file_by_name(
+            destination_dir_name)
+        destination_dir.open_directory()
+
+        # Paste the file.
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('actions')
+
+        folder_actions_popover = self.main_view.get_folder_actions_popover()
+        folder_actions_popover.click_button('Paste 1 File')
+
+        # Check that the file is there.
+        self._assert_number_of_files(1)
+        first_dir = self._get_file_by_index(0)
         self.assertThat(
-            first_file.fileName,
-            Eventually(Equals(os.path.split(fileName)[1])))
-        self.tap_item(first_file)
+            first_dir.fileName, Eventually(Equals(file_to_cut_name)))
 
-        popover = self.app.select_single(
-            "ActionSelectionPopover", objectName='fileActionsPopover')
-        self._run_action(popover, 'Cut')
+        # Go back.
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('up')
 
-        # Go to the folder
-        first_folder = self.main_window.get_file_item(0)
+        # Check that the file is not there.
+        self._assert_number_of_files(1)
+        first_dir = self._get_file_by_index(0)
         self.assertThat(
-            first_folder.fileName,
-            Eventually(Equals(os.path.split(sub_dir)[1])))
+            first_dir.fileName, Eventually(Equals(destination_dir_name)))
 
-        self.pointing_device.click_object(first_folder)
+    def test_go_up(self):
+        self._make_directory_in_home()
+        first_dir = self._get_file_by_index(0)
+        first_dir.open_directory()
 
-        # Paste it in
-        self._run_folder_action('Paste 1 File')
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('up')
 
-        # Check that the file is there
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
-        first_file = self.main_window.get_file_item(0)
+        folder_list_page = self.main_view.get_folder_list_page()
         self.assertThat(
-            first_file.fileName,
-            Eventually(Equals(os.path.split(fileName)[1])))
+            folder_list_page.get_current_path,
+            Eventually(Equals(os.environ['HOME'])))
 
-        # Go back
-        self._go_up()
-
-        # Check that the file is not there
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
-
-    def _go_up(self):
-        self.ubuntusdk.click_toolbar_button('Up')
-
-    def test_going_up(self):
-        upDir = os.path.split(os.environ['HOME'])[0]
-        upName = os.path.split(upDir)[1]
-
-        #home_place = self._go_to_place("Home")
-
-        self._check_location("Home", os.environ['HOME'])
-
-        self.ubuntusdk.click_toolbar_button('Up')
-        self._check_location(upName, upDir)
-
-    def test_going_home(self):
+    def test_go_home(self):
         self._go_to_place('Home')
 
-        self._check_location("Home", os.environ['HOME'])
+        folder_list_page = self.main_view.get_folder_list_page()
+        self.assertThat(
+            folder_list_page.get_current_path,
+            Eventually(Equals(os.environ['HOME'])))
 
     def test_going_to_root(self):
         self._go_to_place('File System')
 
-        self._check_location("File System", "/")
+        folder_list_page = self.main_view.get_folder_list_page()
+        self.assertThat(
+            folder_list_page.get_current_path,
+            Eventually(Equals('/')))
 
-    def _go_to_place(self, name):
-        place = self._get_place(name)
+    def _go_to_place(self, text):
+        # XXX We are receiving the text because there's no way to set the
+        # objectName on the ListElement. This is reported at
+        # https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205201
+        # --elopio - 2013-07-25
+        self.main_view.open_toolbar()
+        self.main_view.get_toolbar().click_button('places')
+        place = self._get_place(text)
         self.pointing_device.click_object(place)
 
-    def _check_location(self, title, location):
-        self.assertThat(
-            self.main_window.get_page_title, Eventually(Equals(title)))
-
-        self.assertThat(
-            self.main_window.get_current_folder_name,
-            Eventually(Equals(location)))
-
-    def _run_file_action(self, item, name):
-        self.tap_item(item)
-
-        popover = self.app.select_single(
-            "ActionSelectionPopover", objectName='fileActionsPopover')
-        self._run_action(popover, name)
-
-    def _run_folder_action(self, name):
-        self.ubuntusdk.click_toolbar_button('Actions')
-        popover = self.app.select_single(
-            "ActionSelectionPopover", objectName='folderActionsPopover')
-        self._run_action(popover, name)
-
-    def _run_action(self, popover, name):
-        actions = popover.select_many('Empty')
-        requested = None
-        for action in actions:
-            if action.text == name:
-                requested = action
-        self.pointing_device.click_object(requested)
-
-    def _confirm_action(self):
-        dialog = self.app.select_single('ConfirmDialog')
-        if dialog is None:
-            dialog = self.app.select_single('ConfirmDialogWithInput')
-        okButton = dialog.select_single('Button', objectName='okButton')
-        self.pointing_device.click_object(okButton)
-
-    def _cancel_action(self):
-        dialog = self.app.select_single('ConfirmDialog')
-        if dialog is None:
-            dialog = self.app.select_single('ConfirmDialogWithInput')
-        cancelButton = dialog.select_single(
-            'Button', objectName='cancelButton')
-        self.pointing_device.click_object(cancelButton)
-
-    def _provide_input(self, text):
-        """Fill in the input dialog"""
-        dialog = self.app.select_single('ConfirmDialogWithInput')
-        field = dialog.select_single('TextField')
-
-        self.pointing_device.click_object(field)
-
-        clearButton = field.select_single('AbstractButton')
-        #if clearButton:
-        self.pointing_device.click_object(clearButton)
-
-        self.assertThat(field.text, Eventually(Equals("")))
-
-        self.pointing_device.click_object(field)
-
-        self.keyboard.type(text)
-        self.assertThat(field.text, Eventually(Equals(text)))
-
-        okButton = dialog.select_single('Button', objectName='okButton')
-        self.pointing_device.click_object(okButton)
+    def _get_place(self, text):
+        places_popover = self.main_view.get_places_popover()
+        places = places_popover.select_many('Standard')
+        for place in places:
+            if place.text == text:
+                return place
+        raise ValueError(
+            'Place "{0}" not found.'.format(text))

@@ -308,6 +308,7 @@ Page {
         opened: true
 
         back: ToolbarButton {
+            objectName: 'up'
             text: "Up"
             iconSource: "icons/up.png"
             visible: folder != "/"
