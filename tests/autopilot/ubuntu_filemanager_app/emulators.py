@@ -138,6 +138,9 @@ class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     def open_directory(self):
         """Open the directory."""
         # TODO Check if it is a directory. If not, raise an error.
+        # This is not currently possible because Autopilot is overwriting the
+        # path attribute. Reported on
+        # https://bugs.launchpad.net/autopilot/+bug/1205204 
         # --elopio - 2013-07-25
         self.pointing_device.click_object(self)
 
@@ -157,7 +160,7 @@ class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         self.pointing_device.release()
         # TODO wait for the popover to be opened. For this we would need to
         # access the MainView, but that's not currently possible with
-        # autopilot. Reported on bug
+        # autopilot. Reported on
         # https://bugs.launchpad.net/autopilot/+bug/1195141
         # --elopio - 2013-07-25
 
