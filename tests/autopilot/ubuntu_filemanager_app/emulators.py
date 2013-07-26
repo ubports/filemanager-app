@@ -248,7 +248,9 @@ class ConfirmDialogWithInput(ConfirmDialog):
 
     def clear_text(self):
         text_field = self._select_text_field()
-        # XXX assign an objectName to the clear button. --elopio - 2013-07-25
+        # XXX The clear button doesn't have an objectName. Reported on
+        # https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205208
+        # --elopio - 2013-07-25
         clear_button = text_field.select_single('AbstractButton')
         # XXX for some reason, we need to click the button twice.
         # More investigation is needed. --elopio - 2013-07-25
