@@ -105,7 +105,7 @@ class FolderListView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     # Regular expression to split the header text. The header text has the form
     # /path/to/dir (# files). So with this expression, we can split the header
     # in two groups, (.+) will match the path and (\d+) the number of files.
-    
+
     def get_current_path(self):
         path, _ = self._split_header_text()
         return path
@@ -148,7 +148,7 @@ class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         # bug https://bugs.launchpad.net/autopilot/+bug/1195141
         # --elopio - 2013-07-25
         raise NotImplementedError()
-        
+
     def open_actions_popover(self):
         """Open the actions popover of the file or folder."""
         self.pointing_device.move_to_object(self)
@@ -172,7 +172,7 @@ class FileActionDialog(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     def open(self):
         open_button = self.select_single('Button', objectName='openButton')
         self.pointing_device.click_object(open_button)
-        
+
     def cancel(self):
         cancel_button = self.select_single('Button', objectName='cancelButton')
         self.pointing_device.click_object(cancel_button)
@@ -188,12 +188,12 @@ class ActionSelectionPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
     def click_button(self, text):
         """Click a button on the popover.
-        
+
         XXX We are receiving the text because there's no way to set the
         objectName on the action. This is reported at
         https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205144
         --elopio - 2013-07-25
-        
+
         :parameter text: The text of the button.
 
         """
@@ -202,7 +202,7 @@ class ActionSelectionPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
             raise ValueError(
                 'Button with text "{0}" not found.'.format(text))
         self.pointing_device.click_object(button)
-    
+
     def _get_button(self, text):
         buttons = self.select_many('Empty')
         for button in buttons:

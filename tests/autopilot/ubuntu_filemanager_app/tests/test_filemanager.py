@@ -86,7 +86,7 @@ class TestFolderListPage(FileManagerTestCase):
     def _get_file_by_index(self, index):
         folder_list_page = self.main_view.get_folder_list_page()
         return folder_list_page.get_file_by_index(index)
-        
+
     def test_folder_context_menu_shows(self):
         """Checks to make sure that the folder actions popover is shown."""
         self._make_directory_in_home()
@@ -151,14 +151,14 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertEqual(len(new_apps), 1)
         new_app = new_apps[0]
         self.assertEqual(len(new_app.get_windows()), 1)
-            
+
         # TODO assert that the file was opened on the right application. This
         # depends on what's the default application to open a text file. Maybe
         # we can get this information with XDG. --elopio - 2013-07-25
         # Close the opened window.
         window = new_app.get_windows()[0]
         window.close()
-        
+
     def test_open_directory(self):
         dir_path = self._make_directory_in_home()
         first_dir = self._get_file_by_index(0)
@@ -192,7 +192,7 @@ class TestFolderListPage(FileManagerTestCase):
 
     def _cancel_confirm_dialog(self):
         confirm_dialog = self.main_view.get_confirm_dialog()
-        confirm_dialog.cancel()            
+        confirm_dialog.cancel()
 
     def test_rename_directory(self):
         self._make_directory_in_home()
@@ -242,7 +242,7 @@ class TestFolderListPage(FileManagerTestCase):
     def test_cancel_delete_directory(self):
         self._make_directory_in_home()
         first_dir = self._get_file_by_index(0)
-        
+
         self._do_action_on_file(first_dir, 'Delete')
         self._cancel_confirm_dialog()
 
@@ -251,16 +251,16 @@ class TestFolderListPage(FileManagerTestCase):
     def test_delete_directory(self):
         self._make_directory_in_home()
         first_dir = self._get_file_by_index(0)
-        
+
         self._do_action_on_file(first_dir, 'Delete')
         self._confirm_dialog()
-        
+
         self._assert_number_of_files(0)
 
     def test_cancel_delete_file(self):
         self._make_file_in_home()
         first_file = self._get_file_by_index(0)
-        
+
         self._do_action_on_file(first_file, 'Delete')
         self._cancel_confirm_dialog()
 
@@ -269,7 +269,7 @@ class TestFolderListPage(FileManagerTestCase):
     def test_delete_file(self):
         self._make_file_in_home()
         first_file = self._get_file_by_index(0)
-        
+
         self._do_action_on_file(first_file, 'Delete')
         self._confirm_dialog()
 
