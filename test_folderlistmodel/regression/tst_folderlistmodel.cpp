@@ -64,6 +64,7 @@ protected slots:
     void slotFileRemoved(const QFileInfo& f) {m_filesRemoved.append(f.absoluteFilePath()); }
     void slotPathChamged(QString path)       { m_currentPath = path;}
     void progress(int, int, int);
+    void slotRemoveFileWhenProgressArrive(int,int,int);
     void cancel(int index, int, int percent);
     void slotclipboardChanged();
     void slotError(QString title, QString message);
@@ -84,6 +85,8 @@ private Q_SLOTS:
     void  modelCopyDirPasteIntoAnotherModel();
     void  modelCopyManyItemsPasteIntoAnotherModel();
     void  modelCopyTwoEmptyFiles();
+    void  modelCopyFileAndRemoveBeforePaste();
+    void  modelCopyPasteFileAndRemoveWhenFirstProgressSignalArrives();
     void  modelCutManyItemsPasteIntoAnotherModel();
     void  fsActionMoveItemsForcingCopyAndThenRemove();
     void  modelCancelRemoveAction();
@@ -153,6 +156,7 @@ private:
     QHash<QByteArray, QString>  m_md5IconsTable;
     QFileIconProvider           m_provider;
     QString        m_currentPath;
+    QString        m_fileToRemoveInProgressSignal;
 
 };
 
@@ -185,6 +189,12 @@ void TestDirModel::progress(int cur, int total, int percent)
  //   qWarning() << "progress()" << cur << total << percent;
 }
 
+void TestDirModel::slotRemoveFileWhenProgressArrive(int cur, int total, int percent)
+{
+    qDebug() << "removing file" << m_fileToRemoveInProgressSignal
+                << "ret" << QFile::remove(m_fileToRemoveInProgressSignal);
+    progress(cur,total,percent);
+}
 
 bool TestDirModel::createLink(const QString &fullSouce, const QString &link, bool fullLink)
 {
@@ -385,6 +395,7 @@ void TestDirModel::cleanup()
     m_progressPercentDone = 0;
     m_receivedClipboardChangesSignal     = false;
     m_receivedErrorSignal                = false;
+    m_fileToRemoveInProgressSignal.clear();
 }
 
 
@@ -673,6 +684,86 @@ void TestDirModel::modelCopyTwoEmptyFiles()
     QCOMPARE(m_progressCurrentItem, itemsCreated);
     QCOMPARE(compareDirectories(m_deepDir_01->path(), m_deepDir_02->path()), true);
 }
+
+/*!
+ * \brief TestDirModel::modelCopyFileAndRemoveBeforePaste()
+ *
+ *  The file is removed before paste, that means at the moment of building the list of files
+ *  it does not exist anymore, so the list of items must be empty and no files are going to be performed
+ */
+void TestDirModel::modelCopyFileAndRemoveBeforePaste()
+{
+    QString orig("modelCopyFileAndRemoveBeforePaste_orig");
+    m_deepDir_01  = new DeepDir(orig, 0);
+    TempFiles tempFile;
+    tempFile.addSubDirLevel(orig);
+    tempFile.create();
+
+    m_dirModel_01 = new DirModel();
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(),  1);
+
+    QString target("modelCopyFileAndRemoveBeforePaste_target");
+    m_deepDir_02 = new DeepDir(target, 0);
+    m_dirModel_02 = new DirModel();
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
+            this,          SLOT(progress(int,int,int)));
+    connect(m_dirModel_02, SIGNAL(error(QString,QString)),
+            this,          SLOT(slotError(QString,QString)));
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+
+    m_dirModel_01->copyPaths(tempFile.createdList());
+    tempFile.removeAll();
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QCOMPARE(m_dirModel_02->rowCount(),  0);
+    QCOMPARE(m_receivedErrorSignal,      true);
+}
+
+/*!
+ * \brief TestDirModel::modelCopyPasteFileAndRemoveWhenFirstProgressSignalArrives()
+ *
+ *  The file is removed after pasting and before the copy itself starts.
+ *  That means, the list of files to be copied is built, but at the moment of the open
+ *  the file does not exist.
+ */
+void TestDirModel::modelCopyPasteFileAndRemoveWhenFirstProgressSignalArrives()
+{
+    QString orig("modelCopyPasteFileAndRemoveWhenFirstProgressSignalArrives_orig");
+    m_deepDir_01  = new DeepDir(orig, 0);
+    TempFiles tempFile;
+    tempFile.addSubDirLevel(orig);
+    tempFile.create();
+
+    m_dirModel_01 = new DirModel();
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(),  1);
+
+    QString target("modelCopyPasteFileAndRemoveWhenFirstProgressSignalArrives_target");
+    m_deepDir_02 = new DeepDir(target, 0);
+    m_dirModel_02 = new DirModel();
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
+            this,          SLOT(slotRemoveFileWhenProgressArrive(int,int,int)));
+    connect(m_dirModel_02, SIGNAL(error(QString,QString)),
+            this,          SLOT(slotError(QString,QString)));
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+
+    m_fileToRemoveInProgressSignal = tempFile.lastFileCreated();
+    m_dirModel_01->copyPaths(tempFile.createdList());
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QCOMPARE(m_dirModel_02->rowCount(),  0);
+    QCOMPARE(m_receivedErrorSignal,      true);
+    QCOMPARE(m_progressTotalItems,       1);
+    QCOMPARE(m_progressCurrentItem,      0);
+}
+
 
 void TestDirModel::modelCutManyItemsPasteIntoAnotherModel()
 {
@@ -1449,7 +1540,7 @@ void TestDirModel::watchExternalChanges()
     }
 
     int total_created = 1 + cut_items + createdOutsideFiles.created() - total_removed;
-    QTest::qWait(EX_FS_WATCHER_TIMER_INTERVAL + TIME_TO_PROCESS);
+    QTest::qWait(EX_FS_WATCHER_TIMER_INTERVAL + TIME_TO_PROCESS + TIME_TO_PROCESS);
 
     qWarning("using 2 instances [created outside]=%d, [removed outside]=%d", createdOutsideFiles.created(),  total_removed);
     QCOMPARE(m_dirModel_01->rowCount(),    total_created);

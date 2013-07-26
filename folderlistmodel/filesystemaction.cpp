@@ -1053,28 +1053,39 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
     myAction->operation          = operation;
     myAction->origPath           = QFileInfo(paths.at(0)).absolutePath();
     myAction->baseOrigSize       = myAction->origPath.length();
-    Action * saveAction          = m_curAction;
+    Action * saveAction          = m_curAction;    
     m_curAction                  = myAction;
     for (int counter=0; counter < paths.count(); counter++)
     {
         //targetFom() uses m_curAction and is called inside addEntry()
         addEntry(myAction, paths.at(counter));
     }
-    m_curAction    = saveAction;
-    if (actionType == ActionHardMoveCopy)
+    if (myAction->totalItems > 0)
     {
-        myAction->totalItems *= 2; //duplicate this
-        myAction->totalBytes *= 2;
+        m_curAction    = saveAction;
+        if (actionType == ActionHardMoveCopy)
+        {
+            myAction->totalItems *= 2; //duplicate this
+            myAction->totalBytes *= 2;
+        }
+        if (operation == ClipboardCut)
+        {
+            //this must still be false when cut finishes to change the clipboard to the target
+            m_clipboardModifiedByOther = false;
+        }
+        m_queuedActions.append(myAction);
+        if (!m_busy)
+        {
+            processAction();
+        }
     }
-    if (operation == ClipboardCut)
-    {
-        //this must still be false when cut finishes to change the clipboard to the target
-        m_clipboardModifiedByOther = false;
-    }
-    m_queuedActions.append(myAction);
-    if (!m_busy)
-    {
-        processAction();
+    else
+    {   // no items were added into the Action, maybe items were removed
+        //addEntry() emits error() sigbnal when items do not exist
+        delete myAction;
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO << "Action is empty, no work to do";
+#endif
     }
 }
 
