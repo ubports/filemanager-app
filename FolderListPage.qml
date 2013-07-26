@@ -317,6 +317,7 @@ Page {
         }
 
         ToolbarButton {
+            objectName: 'actions'
             text: i18n.tr("Actions")
             iconSource: "icons/edit.png"
 

@@ -1,9 +1,18 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
-# Copyright 2013 Canonical
 #
-# This program is free software: you can redistribute it and/or modify it
-# under the terms of the GNU General Public License version 3, as published
-# by the Free Software Foundation.
+# Copyright (C) 2013 Canonical Ltd.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; version 3.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 """File Manager app autopilot tests."""
 
@@ -22,11 +31,11 @@ from testtools.matchers import Equals
 from ubuntu_filemanager_app.tests import FileManagerTestCase
 
 
-class TestMainWindow(FileManagerTestCase):
+class TestFolderListPage(FileManagerTestCase):
 
     def setUp(self):
         self._patch_home()
-        super(TestMainWindow, self).setUp()
+        super(TestFolderListPage, self).setUp()
         self.assertThat(
             self.main_view.visible, Eventually(Equals(True)))
 
@@ -96,9 +105,9 @@ class TestMainWindow(FileManagerTestCase):
 
     def test_list_folder_contents(self):
         dir_path = self._make_directory_in_home()
-        dir_name = os.path.split(dir_path)[1]
+        dir_name = os.path.basename(dir_path)
         file_path = self._make_file_in_home()
-        file_name = os.path.split(file_path)[1]
+        file_name = os.path.basename(file_path)
 
         folder_list_page = self.main_view.get_folder_list_page()
         self.assertEqual(folder_list_page.get_number_of_files_from_header(), 2)
@@ -173,115 +182,142 @@ class TestMainWindow(FileManagerTestCase):
 
     def test_cancel_rename_directory(self):
         dir_path = self._make_directory_in_home()
-        dir_name = os.path.split(dir_path)[1]
+        dir_name = os.path.basename(dir_path)
 
         first_dir = self._get_file_by_index(0)
-        first_dir.open_actions_popover()
-        file_actions_popover = self.main_view.get_file_actions_popover()
-        file_actions_popover.click_button('Rename')
-        confirm_dialog = self.main_view.get_confirm_dialog()
-        confirm_dialog.cancel()
+        self._do_action_on_file(first_dir, action='Rename')
+        self._cancel_confirm_dialog()
 
         self.assertThat(
             self.main_view.get_confirm_dialog, Eventually(Equals(None)))
         self.assertThat(
             lambda: first_dir.fileName, Eventually(Equals(dir_name)))
 
+    def _do_action_on_file(self, file_, action):
+        file_.open_actions_popover()
+        file_actions_popover = self.main_view.get_file_actions_popover()
+        file_actions_popover.click_button(action)
+
+    def _cancel_confirm_dialog(self):
+        confirm_dialog = self.main_view.get_confirm_dialog()
+        confirm_dialog.cancel()            
+
     def test_rename_directory(self):
         self._make_directory_in_home()
         new_name = 'Renamed directory'
 
         first_dir = self._get_file_by_index(0)
-        first_dir.open_actions_popover()
-        file_actions_popover = self.main_view.get_file_actions_popover()
-        file_actions_popover.click_button('Rename')
-        confirm_dialog = self.main_view.get_confirm_dialog()
-        confirm_dialog.enter_text(new_name)
-        confirm_dialog.ok()
+        self._do_action_on_file(first_dir, action='Rename')
+        self._confirm_dialog(new_name)
 
         self.assertThat(
             self.main_view.get_confirm_dialog, Eventually(Equals(None)))
         self.assertThat(
             lambda: first_dir.fileName, Eventually(Equals(new_name)))
 
+    def _confirm_dialog(self, text=None):
+        confirm_dialog = self.main_view.get_confirm_dialog()
+        if text:
+            confirm_dialog.enter_text(text)
+        confirm_dialog.ok()
+
     def test_cancel_rename_file(self):
-        path = self._make_file_in_home()
-        name = os.path.split(path)[1]
-        new_name = 'New Test File'
+        file_path = self._make_file_in_home()
+        file_name = os.path.basename(file_path)
 
-        first_file = self.main_window.get_file_item(0)
-
-        self.tap_item(first_file)
-        action_popover = self.main_window.get_action_popover()
-        action_popover.click_button('Rename')
-
-        self._cancel_action()
+        first_file = self._get_file_by_index(0)
+        self._do_action_on_file(first_file, action='Rename')
+        self._cancel_confirm_dialog()
 
         self.assertThat(
-            lambda: self.main_window.get_filenames()[0], Eventually(
-                Equals(name)))
+            self.main_view.get_confirm_dialog, Eventually(Equals(None)))
+        self.assertThat(
+            lambda: first_file.fileName, Eventually(Equals(file_name)))
 
-        self.tap_item(first_file)
-        action_popover = self.main_window.get_action_popover()
-        self._run_action(action_popover, 'Rename')
+    def test_rename_file(self):
+        self._make_file_in_home()
+        new_name = 'Renamed file'
 
-        self._provide_input(new_name)
+        first_file = self._get_file_by_index(0)
+        self._do_action_on_file(first_file, action='Rename')
+        self._confirm_dialog(new_name)
 
         self.assertThat(
-            lambda: self.main_window.get_filenames()[0], Eventually(
-                Equals(new_name)))
+            self.main_view.get_confirm_dialog, Eventually(Equals(None)))
+        self.assertThat(
+            lambda: first_file.fileName, Eventually(Equals(new_name)))
+
+    def test_cancel_delete_directory(self):
+        self._make_directory_in_home()
+        first_dir = self._get_file_by_index(0)
+        
+        self._do_action_on_file(first_dir, 'Delete')
+        self._cancel_confirm_dialog()
+        
+        folder_list_page = self.main_view.get_folder_list_page()
+        self.assertThat(
+            folder_list_page.get_number_of_files_from_list,
+            Eventually(Equals(1)))
+        self.assertEqual(folder_list_page.get_number_of_files_from_header(), 1)
 
     def test_delete_directory(self):
         self._make_directory_in_home()
-        first_folder = self.main_window.get_file_item(0)
+        first_dir = self._get_file_by_index(0)
+        
+        self._do_action_on_file(first_dir, 'Delete')
+        self._confirm_dialog()
+        
+        folder_list_page = self.main_view.get_folder_list_page()
+        self.assertThat(
+            folder_list_page.get_number_of_files_from_list,
+            Eventually(Equals(0)))
+        self.assertEqual(folder_list_page.get_number_of_files_from_header(), 0)
 
-        self.tap_item(first_folder)
-        action_popover = self.main_window.get_action_popover()
-        self._run_action(action_popover, 'Delete')
-
-        self._cancel_action()
-
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
-
-        self.tap_item(first_folder)
-        action_popover = self.main_window.get_action_popover()
-        self._run_action(action_popover, 'Delete')
-
-        self._confirm_action()
-
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(0)))
+    def test_cancel_delete_file(self):
+        self._make_file_in_home()
+        first_file = self._get_file_by_index(0)
+        
+        self._do_action_on_file(first_file, 'Delete')
+        self._cancel_confirm_dialog()
+        
+        folder_list_page = self.main_view.get_folder_list_page()
+        self.assertThat(
+            folder_list_page.get_number_of_files_from_list,
+            Eventually(Equals(1)))
+        self.assertEqual(folder_list_page.get_number_of_files_from_header(), 1)
 
     def test_delete_file(self):
         self._make_file_in_home()
-        first_folder = self.main_window.get_file_item(0)
-
-        self.tap_item(first_folder)
-        action_popover = self.main_window.get_action_popover()
-        self._run_action(action_popover, 'Delete')
-
-        self._cancel_action()
-
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
-
-        self.tap_item(first_folder)
-        action_popover = self.main_window.get_action_popover()
-        self._run_action(action_popover, 'Delete')
-
-        self._confirm_action()
-
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(0)))
+        first_file = self._get_file_by_index(0)
+        
+        self._do_action_on_file(first_file, 'Delete')
+        self._confirm_dialog()
+        
+        folder_list_page = self.main_view.get_folder_list_page()
+        self.assertThat(
+            folder_list_page.get_number_of_files_from_list,
+            Eventually(Equals(0)))
+        self.assertEqual(folder_list_page.get_number_of_files_from_header(), 0)
 
     def test_create_directory(self):
-        name = 'Test Directory'
+        dir_name = 'Test Directory'
 
-        self._run_folder_action('Create New Folder')
-        self._provide_input(name)
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('actions')
 
-        self.assertThat(self.main_window.get_file_count, Eventually(Equals(1)))
+        folder_actions_popover = self.main_view.get_folder_actions_popover()
+        folder_actions_popover.click_button('Create New Folder')
+        self._confirm_dialog(dir_name)
 
+        folder_list_page = self.main_view.get_folder_list_page()
         self.assertThat(
-            lambda: self.main_window.get_filenames()[0], Eventually(
-                Equals(name)))
+            folder_list_page.get_number_of_files_from_list,
+            Eventually(Equals(1)))
+        self.assertEqual(folder_list_page.get_number_of_files_from_header(), 1)
+
+        dir_ = self._get_file_by_index(0)
+        self.assertThat(dir_.fileName, Eventually(Equals(dir_name)))
+        # TODO missing test, cancel create directory. --elopio - 2013-07-25
 
     def test_showing_directory_properties(self):
         path = self._make_directory_in_home()

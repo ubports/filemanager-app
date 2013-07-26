@@ -36,6 +36,11 @@ class MainView(toolkit_emulators.MainView):
         return self.select_single(
             ActionSelectionPopover, objectName='fileActionsPopover')
 
+    def get_folder_actions_popover(self):
+        """Return the ActionSelectionPopover emulator of the folder actions."""
+        return self.select_single(
+            ActionSelectionPopover, objectName='folderActionsPopover')
+
     def get_file_action_dialog(self):
         """Return the FileActionDialog emulator."""
         return self.select_single(FileActionDialog)
