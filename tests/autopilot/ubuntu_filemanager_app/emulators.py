@@ -21,7 +21,7 @@ import time
 
 from autopilot import input
 
-from UbuntuUiToolkit import emulators as toolkit_emulators
+from ubuntuuitoolkit import emulators as toolkit_emulators
 
 
 class MainView(toolkit_emulators.MainView):

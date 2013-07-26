@@ -13,7 +13,7 @@ from autopilot.input import Mouse, Touch, Pointer
 from autopilot.platform import model
 from autopilot.testcase import AutopilotTestCase
 
-from UbuntuUiToolkit import emulators as toolkit_emulators
+from ubuntuuitoolkit import emulators as toolkit_emulators
 from ubuntu_filemanager_app import emulators
 
 
