@@ -140,7 +140,7 @@ class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         # TODO Check if it is a directory. If not, raise an error.
         # This is not currently possible because Autopilot is overwriting the
         # path attribute. Reported on
-        # https://bugs.launchpad.net/autopilot/+bug/1205204 
+        # https://bugs.launchpad.net/autopilot/+bug/1205204
         # --elopio - 2013-07-25
         self.pointing_device.click_object(self)
 

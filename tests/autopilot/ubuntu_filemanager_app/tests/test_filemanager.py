@@ -402,13 +402,42 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_copy_file(self):
         # Set up a file to copy and a directory to copy it into.
+        destination_dir_path = self._make_directory_in_home()
+        destination_dir_name = os.path.basename(destination_dir_path)
+        file_to_copy_path = self._make_file_in_home()
+        file_to_copy_name = os.path.basename(file_to_copy_path)
+
+        folder_list_page = self.main_view.get_folder_list_page()
+        self._assert_number_of_files(2)
+
         # Copy the file.
+        file_to_copy = folder_list_page.get_file_by_name(file_to_copy_name)
+        self._do_action_on_file(file_to_copy, 'Copy')
+
         # Go to the destination directory.
-        # Paste it in.
+        destination_dir = folder_list_page.get_file_by_name(
+            destination_dir_name)
+        destination_dir.open_directory()
+
+        # Paste the file.
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('actions')
+
+        folder_actions_popover = self.main_view.get_folder_actions_popover()
+        folder_actions_popover.click_button('Paste 1 File')
+
         # Check that the file is there.
+        self._assert_number_of_files(1)
+        first_dir = self._get_file_by_index(0)
+        self.assertThat(
+            first_dir.fileName, Eventually(Equals(file_to_copy_name)))
+
         # Go back.
-        # Check that the flie is there.
-        self.skipTest('Not yet implemented.')
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('up')
+
+        # Check that the file is still there.
+        self._assert_number_of_files(2)
 
     def test_cut_file(self):
         # Set up a file to cut and a directory to move it into.
