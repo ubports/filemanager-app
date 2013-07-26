@@ -506,7 +506,7 @@ class TestFolderListPage(FileManagerTestCase):
             folder_list_page.get_current_path,
             Eventually(Equals(os.environ['HOME'])))
 
-    def test_going_to_root(self):
+    def test_go_to_root(self):
         self._go_to_place('File System')
 
         folder_list_page = self.main_view.get_folder_list_page()
