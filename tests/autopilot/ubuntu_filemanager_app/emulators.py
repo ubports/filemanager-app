@@ -183,7 +183,9 @@ class FileActionDialog(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
 class ActionSelectionPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """ActionSelectionPopover Autopilot emulator."""
-    # TODO Move this to the ubuntu-ui-toolkit. --elopio - 2013-07-25
+    # TODO Move this to the ubuntu-ui-toolkit. Reported on
+    # https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205205
+    # --elopio - 2013-07-25
 
     def __init__(self, *args):
         super(ActionSelectionPopover, self).__init__(*args)
