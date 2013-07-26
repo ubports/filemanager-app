@@ -58,6 +58,7 @@ class DirModel : public QAbstractListModel
 public:
     enum Roles {
         FileNameRole = Qt::UserRole,
+        AccessedDateRole,
         CreationDateRole,
         ModifiedDateRole,
         FileSizeRole,
@@ -104,11 +105,17 @@ public:
     inline QString path() const { return mCurrentDir; }
     void setPath(const QString &pathName);
 
+    Q_PROPERTY(QDateTime pathAccessedDate  READ pathAccessedDate)
+    QDateTime pathAccessedDate() const;
+
     Q_PROPERTY(QDateTime pathCreatedDate  READ pathCreatedDate)
     QDateTime pathCreatedDate() const;
 
     Q_PROPERTY(QDateTime pathModifiedDate READ  pathModifiedDate)
     QDateTime   pathModifiedDate() const;
+
+    Q_PROPERTY(QString pathAccessedDateLocaleShort  READ  pathAccessedDateLocaleShort)
+    QString     pathAccessedDateLocaleShort() const;
 
     Q_PROPERTY(QString pathCreatedDateLocaleShort  READ  pathCreatedDateLocaleShort)
     QString     pathCreatedDateLocaleShort() const;

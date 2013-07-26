@@ -162,6 +162,7 @@ QHash<int, QByteArray> DirModel::buildRoleNames() const
 {
     QHash<int, QByteArray> roles;
         roles.insert(FileNameRole, QByteArray("fileName"));
+        roles.insert(AccessedDateRole, QByteArray("accessedDate"));
         roles.insert(CreationDateRole, QByteArray("creationDate"));
         roles.insert(ModifiedDateRole, QByteArray("modifiedDate"));
         roles.insert(FileSizeRole, QByteArray("fileSize"));
@@ -249,6 +250,8 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
     switch (role) {
         case FileNameRole:
             return fi.fileName();
+        case AccessedDateRole:
+            return fi.lastRead();
         case CreationDateRole:
             return fi.created();
         case ModifiedDateRole:
@@ -1362,6 +1365,18 @@ QDateTime DirModel::pathModifiedDate() const
 }
 
 
+QDateTime DirModel::pathAccessedDate() const
+{
+    QDateTime d;
+    QFileInfo f(mCurrentDir);
+    if (f.exists())
+    {
+        d = f.lastRead();
+    }
+    return d;
+}
+
+
 bool  DirModel::pathIsWritable() const
 {
     QFileInfo f(mCurrentDir);
@@ -1384,6 +1399,18 @@ QString DirModel::pathModifiedDateLocaleShort() const
 {
     QString date;
     QDateTime d(pathModifiedDate());
+    if (!d.isNull())
+    {
+        date = d.toString(Qt::SystemLocaleShortDate);
+    }
+    return date;
+}
+
+
+QString DirModel::pathAccessedDateLocaleShort() const
+{
+    QString date;
+    QDateTime d(pathAccessedDate());
     if (!d.isNull())
     {
         date = d.toString(Qt::SystemLocaleShortDate);
