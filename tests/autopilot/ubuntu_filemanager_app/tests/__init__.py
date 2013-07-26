@@ -8,7 +8,6 @@
 """Filemanager app autopilot tests."""
 
 import os.path
-from time import sleep
 
 from autopilot.input import Mouse, Touch, Pointer
 from autopilot.platform import model
