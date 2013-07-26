@@ -104,10 +104,10 @@ Popover {
             }
 
             Label {
-                text: i18n.tr("Created:")
+                text: i18n.tr("Accessed:")
             }
             Label {
-                text: dateTimeFormat(model.creationDate)
+                text: dateTimeFormat(model.accessedDate)
             }
 
             Label {

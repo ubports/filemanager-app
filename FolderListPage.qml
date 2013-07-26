@@ -182,7 +182,7 @@ Page {
         property string fileSize: (folderListView.count === 1
                                    ? i18n.tr("1 file")
                                    : i18n.tr("%1 files").arg(folderListView.count))
-        property date creationDate: pageModel.pathCreatedDate
+        property date accessedDate: pageModel.pathAccessedDate
         property date modifiedDate: pageModel.pathModifiedDate
         property bool isWritable: pageModel.pathIsWritable
         property bool isReadable: true
