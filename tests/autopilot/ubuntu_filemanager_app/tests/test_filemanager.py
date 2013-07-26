@@ -342,6 +342,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
+        self.main_view.get_folder_actions_popover().visible.wait_for(False)
 
         # Check that the directory is there.
         self._assert_number_of_files(1)
@@ -383,6 +384,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
+        self.main_view.get_folder_actions_popover().visible.wait_for(False)
 
         # Check that the directory is there.
         self._assert_number_of_files(1)
@@ -425,6 +427,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
+        self.main_view.get_folder_actions_popover().visible.wait_for(False)
 
         # Check that the file is there.
         self._assert_number_of_files(1)
@@ -464,6 +467,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
+        self.main_view.get_folder_actions_popover().visible.wait_for(False)
 
         # Check that the file is there.
         self._assert_number_of_files(1)
