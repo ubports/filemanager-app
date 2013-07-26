@@ -339,6 +339,7 @@ Page {
         }
 
         ToolbarButton {
+            objectName: "places"
             text: i18n.tr("Places")
             iconSource: "icons/location.png"
             onTriggered: {

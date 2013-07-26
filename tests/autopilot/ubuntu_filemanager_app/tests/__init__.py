@@ -8,15 +8,14 @@
 """Filemanager app autopilot tests."""
 
 import os.path
+from time import sleep
 
 from autopilot.input import Mouse, Touch, Pointer
 from autopilot.platform import model
 from autopilot.testcase import AutopilotTestCase
 
-from time import sleep
-
-from ubuntu_filemanager_app.emulators.main_window import MainWindow
-from ubuntu_filemanager_app.emulators.ubuntusdk import ubuntusdk
+from UbuntuUiToolkit import emulators as toolkit_emulators
+from ubuntu_filemanager_app import emulators
 
 
 class FileManagerTestCase(AutopilotTestCase):
@@ -44,7 +43,8 @@ class FileManagerTestCase(AutopilotTestCase):
         self.app = self.launch_test_application(
             "qmlscene",
             self.local_location,
-            app_type='qt')
+            app_type='qt',
+            emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
     def launch_test_installed(self):
         self.app = self.launch_test_application(
@@ -52,18 +52,15 @@ class FileManagerTestCase(AutopilotTestCase):
             "/usr/share/ubuntu-filemanager-app/ubuntu-filemanager-app.qml",
             "--desktop_file_hint="
             "/usr/share/applications/ubuntu-filemanager-app.desktop",
-            app_type='qt')
+            app_type='qt',
+            emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
+
+    @property
+    def main_view(self):
+        return self.app.select_single(emulators.MainView)
 
     def tap_item(self, item):
         self.pointing_device.move_to_object(item)
         self.pointing_device.press()
         sleep(1)
         self.pointing_device.release()
-
-    @property
-    def main_window(self):
-        return MainWindow(self.app)
-
-    @property
-    def ubuntusdk(self):
-        return ubuntusdk(self, self.app)
