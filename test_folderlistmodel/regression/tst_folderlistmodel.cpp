@@ -98,7 +98,8 @@ private Q_SLOTS:
     void  modelCopyFileAndDirectoryLinks();
     void  modelCopyAndPaste3Times();
     void  modelCutAndPaste3Times();
-    void  modelCopyAndPasteInTheSamePlace();
+    void  modelCutAndPasteInTheSamePlace();
+    void  modelCopyAndPasteToBackupFiles();
     void  getThemeIcons();
     void  fileIconProvider();
 #ifndef DO_NOT_USE_TAG_LIB
@@ -153,6 +154,8 @@ private:
     int            m_progressPercentDone;
     bool           m_receivedClipboardChangesSignal;
     bool           m_receivedErrorSignal;
+    int            m_progressNotificationsCounter;
+    bool           m_visibleProgressMessages;
     QHash<QByteArray, QString>  m_md5IconsTable;
     QFileIconProvider           m_provider;
     QString        m_currentPath;
@@ -186,7 +189,12 @@ void TestDirModel::progress(int cur, int total, int percent)
     m_progressCurrentItem = cur;
     m_progressTotalItems  = total;
     m_progressPercentDone = percent;
- //   qWarning() << "progress()" << cur << total << percent;
+    if (m_visibleProgressMessages)
+    {
+        QString p;
+        p.sprintf("progress(cur=%d, total=%d, percent=%d)", cur,total,percent);
+        qDebug() << p;
+    }
 }
 
 void TestDirModel::slotRemoveFileWhenProgressArrive(int cur, int total, int percent)
@@ -379,6 +387,8 @@ void TestDirModel::init()
    m_progressPercentDone = 0;
    m_receivedClipboardChangesSignal     = false;
    m_receivedErrorSignal = false;
+   m_progressNotificationsCounter = 0;
+   m_visibleProgressMessages      = false;
 }
 
 
@@ -396,6 +406,8 @@ void TestDirModel::cleanup()
     m_receivedClipboardChangesSignal     = false;
     m_receivedErrorSignal                = false;
     m_fileToRemoveInProgressSignal.clear();
+    m_progressNotificationsCounter      = 0;
+    m_visibleProgressMessages           = false;
 }
 
 
@@ -1027,9 +1039,9 @@ void TestDirModel::modelCopyFileAndDirectoryLinks()
 }
 
 
-void TestDirModel::modelCopyAndPasteInTheSamePlace()
+void TestDirModel::modelCutAndPasteInTheSamePlace()
 {
-    QString orig("modelCopyAndPasteInTheSamePlace_orig");
+    QString orig("modelCutAndPasteInTheSamePlace_orig");
     m_deepDir_01 = new DeepDir (orig,0);  // just to be removed
     const int files_to_create = 4;
 
@@ -1052,16 +1064,17 @@ void TestDirModel::modelCopyAndPasteInTheSamePlace()
     connect(m_dirModel_01, SIGNAL(error(QString,QString)),
             this,          SLOT(slotError(QString,QString)));
 
-
-
-
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_01->rowCount(), files_to_create);
 
-    m_dirModel_01->copyPaths(created_files);
+    m_dirModel_01->cutPaths(created_files);
     m_dirModel_01->paste();
     QTest::qWait(TIME_TO_PROCESS);
+    m_dirModel_01->refresh();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
 
+
+    QCOMPARE(m_dirModel_01->rowCount(), files_to_create);
     for(counter=0; counter < files_to_create; counter++)
     {
         //files exist and did not were touched
@@ -1071,6 +1084,49 @@ void TestDirModel::modelCopyAndPasteInTheSamePlace()
 
     QCOMPARE(m_receivedErrorSignal,  true);
 }
+
+
+void TestDirModel::modelCopyAndPasteToBackupFiles()
+{
+    QString orig("modelBackupFiles_orig");
+    m_deepDir_01 = new DeepDir (orig,5);  // just to be removed
+    const int files_to_create = 12;
+
+    TempFiles  files;
+    files.addSubDirLevel(orig);
+    files.create(files_to_create);
+
+    QStringList created_files(files.createdList());
+    QCOMPARE(created_files.count(), files_to_create);
+
+    m_dirModel_01 = new DirModel();
+    m_dirModel_01->setPath(files.lastPath());
+
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(), files_to_create + 1);
+    created_files.append(m_deepDir_01->firstLevel());
+
+    m_dirModel_01->copyPaths(created_files);
+    m_dirModel_02 = new DirModel();
+    connect(m_dirModel_02, SIGNAL(error(QString,QString)),
+            this,          SLOT(slotError(QString,QString)));
+
+    m_dirModel_02->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QCOMPARE(m_dirModel_02->rowCount(), (files_to_create + 1) * 2);
+    QCOMPARE(m_receivedErrorSignal,  false);
+
+    m_dirModel_02->paste();
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QCOMPARE(m_dirModel_02->rowCount(), (files_to_create + 1) * 3);
+    QCOMPARE(m_receivedErrorSignal,  false);
+ }
+
+
 
 void TestDirModel::modelCopyAndPaste3Times()
 {

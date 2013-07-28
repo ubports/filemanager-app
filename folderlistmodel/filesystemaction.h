@@ -82,8 +82,8 @@ enum ClipboardOperation
  * \li Paste operations are made as single move using QFile::rename()
  * \li After pasting from a Cut operation, if no other application has changed the clipboard,
  *     the destination becomes source in the clipboard as Copy for further paste operations
- * \li Pasting in the same place where the Copy or Cut was made is not allowed, an \ref error() signal is emitted,
- *     in the future a rename can implemented
+ * \li Pasting in the same place where Cut was made is not allowed, an \ref error() signal is emitted
+ * \li Pasting in the same place where Copy was made causes an automatic rename to identify it as backuped item
  * \li Paste from Copy when the destination already exists: individual files are overwritten
  *     and both signals \ref added() and \ref removed() are emitted, directories are not touched.
  * \li Paste  from Cut when the destination already exists: existent items (files or directories) are removed first,
@@ -192,7 +192,8 @@ private:
        QString             targetPath;
        quint64             totalBytes;
        quint64             bytesWritten;
-       int                 currEntry;
+       int                 currEntryIndex;
+       ActionEntry  *      currEntry;
        ClipboardOperation  operation;
        CopyFile            copyFile;
        bool                done;
@@ -217,7 +218,7 @@ private:
    void     removeEntry(ActionEntry *);   
    void     moveEntry(ActionEntry *entry);
    bool     moveUsingSameFileSystem(const QString& itemToMovePathname);
-   QString  targetFom(const QString& origItem);
+   QString  targetFom(const QString& origItem, const Action * const action);
    void     endCurrentAction();
    int      percentWorkDone();
    int      notifyProgress(int forcePercent = 0);
@@ -225,6 +226,7 @@ private:
    bool     copySymLink(const QString& target, const QFileInfo& orig);
    void     scheduleSlot(const char *slot);
    void     moveDirToTempAndRemoveItLater(const QString& dir);
+   bool     makeBackupNameForCurrentItem(Action *action);
 };
     
 
