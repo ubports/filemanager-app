@@ -308,6 +308,7 @@ Page {
         opened: true
 
         back: ToolbarButton {
+            objectName: "up"
             text: "Up"
             iconSource: "icons/up.png"
             visible: folder != "/"
@@ -317,6 +318,7 @@ Page {
         }
 
         ToolbarButton {
+            objectName: "actions"
             text: i18n.tr("Actions")
             iconSource: "icons/edit.png"
 
@@ -339,6 +341,7 @@ Page {
         }
 
         ToolbarButton {
+            objectName: "places"
             text: i18n.tr("Places")
             iconSource: "icons/location.png"
             onTriggered: {
