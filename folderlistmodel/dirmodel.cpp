@@ -29,8 +29,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
  */
 
-#include <errno.h>
-#include <string.h>
 #include "dirmodel.h"
 #include "iorequest.h"
 #include "ioworkerthread.h"
@@ -45,6 +43,8 @@
 #include <taglib/audioproperties.h>
 #endif
 
+#include <errno.h>
+#include <string.h>
 #include <QDirIterator>
 #include <QDir>
 #include <QDebug>

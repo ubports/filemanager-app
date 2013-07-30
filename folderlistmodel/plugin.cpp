@@ -29,10 +29,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
  */
 
+#include "plugin.h"
+
 #include <QVector>
 #include <QFileInfo>
 
-#include "plugin.h"
 
 NemoFolderListModelPlugin::NemoFolderListModelPlugin() { }
 
