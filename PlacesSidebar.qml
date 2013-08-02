@@ -17,12 +17,13 @@
  */
 import QtQuick 2.0
 import Ubuntu.Components 0.1
-import Ubuntu.Components.Popups 0.1
 import Ubuntu.Components.ListItems 0.1
+import Ubuntu.Components.Popups 0.1
 
-Popover {
+Sidebar {
     id: root
-    objectName: "placesPopover"
+
+    width: units.gu(25)
 
     ListModel {
         id: places
@@ -63,59 +64,38 @@ Popover {
             top: parent.top
         }
 
-        Empty {
-
-            TextField {
-                id: locationField
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    left: parent.left
-                    right: goButton.left
-                    margins: units.gu(1)
-                }
-
-                inputMethodHints: Qt.ImhNoAutoUppercase
-
-                property bool valid: pathExists(text)
-
-                text: fileView.path
-
-                placeholderText: i18n.tr("Location...")
-
-                onAccepted: goButton.clicked()
-            }
-
-            Button {
-                id: goButton
-                anchors {
-                    top: locationField.top
-                    bottom: locationField.bottom
-                    right: parent.right
-                    rightMargin: units.gu(1)
-                }
-
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0
-                        color: "green"//Qt.rgba(0,0.7,0,1)
-                    }
-
-                    GradientStop {
-                        position: 1
-                        color: Qt.rgba(0.3,0.7,0.3,1)
-                    }
-                }
-
-                text: i18n.tr("Go")
-                enabled: locationField.acceptableInput && locationField.valid
-
-                onClicked: {
-                    print("User switched to:", locationField.text)
-                    goTo(locationField.text)
-                    PopupUtils.close(root)
-                }
-            }
+        Header {
+            text: i18n.tr("Places")
         }
+
+//        Empty {
+
+//            TextField {
+//                id: locationField
+//                anchors {
+//                    verticalCenter: parent.verticalCenter
+//                    left: parent.left
+//                    right: parent.right
+//                    margins: units.gu(1)
+//                }
+
+//                inputMethodHints: Qt.ImhNoAutoUppercase
+
+//                property bool valid: pathExists(text)
+
+//                text: fileView.path
+
+//                placeholderText: i18n.tr("Location...")
+
+//                onAccepted: {
+//                    goTo(text)
+//                }
+//            }
+
+//            onClicked: {
+//                goTo(locationField.text)
+//            }
+//        }
 
         Repeater {
             id: placesList
@@ -128,9 +108,10 @@ Popover {
                 icon: model.icon || fileIcon(model.path, true)
 
                 onClicked: {
-                    PopupUtils.close(root)
                     goTo(model.path)
                 }
+
+                height: units.gu(5)
 
                 selected: folder === path
             }

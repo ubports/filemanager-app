@@ -31,7 +31,7 @@ MainView {
     objectName: "filemanager"
     applicationName: "ubuntu-filemanager-app"
     
-    width: units.gu(50)
+    width: units.gu(100)
     height: units.gu(75)
 
     property alias filemanager: root
