@@ -330,13 +330,25 @@ Page {
         }
 
         ToolbarButton {
-            text: i18n.tr("Settings")
+            text: i18n.tr("Options")
             iconSource: "icons/settings.png"
 
             onTriggered: {
                 print(text)
 
                 PopupUtils.open(Qt.resolvedUrl("SettingsPopover.qml"), caller)
+            }
+        }
+
+        ToolbarButton {
+            visible: wideAspect
+            objectName: "goTo"
+            text: i18n.tr("Go To")
+            iconSource: "icons/location.png"
+            onTriggered: {
+                print(text)
+
+                PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), caller)
             }
         }
 

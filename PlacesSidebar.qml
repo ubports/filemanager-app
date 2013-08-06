@@ -68,35 +68,6 @@ Sidebar {
             text: i18n.tr("Places")
         }
 
-//        Empty {
-
-//            TextField {
-//                id: locationField
-//                anchors {
-//                    verticalCenter: parent.verticalCenter
-//                    left: parent.left
-//                    right: parent.right
-//                    margins: units.gu(1)
-//                }
-
-//                inputMethodHints: Qt.ImhNoAutoUppercase
-
-//                property bool valid: pathExists(text)
-
-//                text: fileView.path
-
-//                placeholderText: i18n.tr("Location...")
-
-//                onAccepted: {
-//                    goTo(text)
-//                }
-//            }
-
-//            onClicked: {
-//                goTo(locationField.text)
-//            }
-//        }
-
         Repeater {
             id: placesList
             objectName: "placesList"
