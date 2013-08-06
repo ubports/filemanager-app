@@ -95,9 +95,10 @@ ListView {
     }
 
     Component {
-        id: actionSelectionPopover
+        id: actionSelectionPopoverComponent
 
         ActionSelectionPopover {
+            id: actionSelectionPopover
             objectName: "fileActionsPopover"
 
             grabDismissAreaEvents: true
@@ -122,7 +123,7 @@ ListView {
 
                     onTriggered: {
                         console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
-                        model.copyIndex(actionSelectionPopover.model.index)
+                        actionSelectionPopover.model.copyIndex(actionSelectionPopover.model.index)
                         console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
                     }
                 }
@@ -197,7 +198,7 @@ ListView {
 
         onPressAndHold: {
             console.log("FolderListDelegate onPressAndHold")
-            PopupUtils.open(actionSelectionPopover, delegate,
+            PopupUtils.open(actionSelectionPopoverComponent, delegate,
                             {
                                 model: model
                             })
