@@ -25,16 +25,30 @@ Rectangle {
 
     property bool expanded: true
 
-    Rectangle {
-        color: "lightgray"
+    Item {
+        ThinDivider {
+            rotation: 90
+
+        //Rectangle {
+            //color: "lightgray"
+
+            //width: 1
+            width: parent.height
+            height: 2
+            anchors {
+                left: undefined
+                right: undefined
+                centerIn: parent
+            }
+        }
+        width: 2
 
         anchors {
             top: parent.top
             bottom: parent.bottom
             right: parent.right
+            rightMargin: 0
         }
-
-        width: 1
     }
 
     width: units.gu(35)

@@ -78,6 +78,7 @@ Popover {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: folderName(root.path)
+                color: Theme.palette.normal.overlayText
                 font.bold: true
             }
         }
@@ -88,40 +89,50 @@ Popover {
 
             Label {
                 text: i18n.tr("Path:")
+                color: Theme.palette.normal.overlayText
             }
 
             Label {
                 objectName: "pathLabel"
                 text: root.path
+                color: Theme.palette.normal.overlayText
             }
 
             Label {
                 text: model.isDir ? i18n.tr("Contents:")
                                   : i18n.tr("Size:")
+                color: Theme.palette.normal.overlayText
             }
             Label {
                 text: model.fileSize
+                color: Theme.palette.normal.overlayText
             }
 
             Label {
                 text: i18n.tr("Accessed:")
+                color: Theme.palette.normal.overlayText
             }
             Label {
                 text: dateTimeFormat(model.accessedDate)
+                color: Theme.palette.normal.overlayText
             }
 
             Label {
                 text: i18n.tr("Modified:")
+                color: Theme.palette.normal.overlayText
             }
             Label {
                 text: dateTimeFormat(model.modifiedDate)
+                color: Theme.palette.normal.overlayText
             }
 
             Label {
                 text: i18n.tr("Permissions:")
+                color: Theme.palette.normal.overlayText
             }
             Label {
                 text: permissionsToString(model)
+                color: Theme.palette.normal.overlayText
             }
 
         }

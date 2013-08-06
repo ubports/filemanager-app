@@ -23,6 +23,8 @@ import Ubuntu.Components.Popups 0.1
 Sidebar {
     id: root
 
+    color: "gray"
+
     width: units.gu(25)
 
     ListModel {
@@ -65,7 +67,13 @@ Sidebar {
         }
 
         Header {
-            text: i18n.tr("Places")
+//            Label {
+//                anchors.left: parent.left
+//                anchors.leftMargin: units.gu(1)
+//                anchors.verticalCenter: parent.verticalCenter
+                text: i18n.tr("Places")
+//                color: Theme.palette.normal.overlayText
+//            }
         }
 
         Repeater {
@@ -75,7 +83,13 @@ Sidebar {
             model: places
 
             delegate: Standard {
-                text: folderName(path)
+//                Label {
+//                    anchors.left: parent.left
+//                    anchors.leftMargin: units.gu(8)
+//                    anchors.verticalCenter: parent.verticalCenter
+                    text: folderName(path)
+//                    color: Theme.palette.normal.overlayText
+//                }
                 icon: model.icon || fileIcon(model.path, true)
 
                 onClicked: {
