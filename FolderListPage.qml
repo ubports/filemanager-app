@@ -411,7 +411,7 @@ Page {
 
     PlacesSidebar {
         id: sidebar
-        objectName: "sidebar"
+        objectName: "placesSidebar"
 
         anchors {
             top: parent.top

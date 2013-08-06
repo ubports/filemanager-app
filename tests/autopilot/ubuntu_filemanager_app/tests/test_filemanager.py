@@ -519,9 +519,13 @@ class TestFolderListPage(FileManagerTestCase):
         # objectName on the ListElement. This is reported at
         # https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205201
         # --elopio - 2013-07-25
-        self.main_view.open_toolbar()
-        self.main_view.get_toolbar().click_button('places')
-        place = self._get_place(text)
+        place = None
+        if self.main_view.wideAspect:
+            place = self.main_view.get_folder_list_page().get_sidebar().get_place(text)
+        else:
+            self.main_view.open_toolbar()
+            self.main_view.get_toolbar().click_button('places')
+            place = self._get_place(text)
         self.pointing_device.click_object(place)
 
     def _get_place(self, text):

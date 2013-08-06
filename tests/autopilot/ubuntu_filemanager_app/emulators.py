@@ -20,16 +20,20 @@ import re
 import time
 
 from autopilot import input
+from autopilot.testcase import AutopilotTestCase
+from autopilot.matchers import Eventually
+from testtools.matchers import Equals
 
 from ubuntuuitoolkit import emulators as toolkit_emulators
-
 
 class MainView(toolkit_emulators.MainView):
     """File Manager MainView Autopilot emulator."""
 
     def get_folder_list_page(self):
         """Return the FolderListPage emulator of the MainView."""
-        return self.select_single(FolderListPage)
+        page = self.select_single(FolderListPage)
+        page.main_view = self
+        return page
 
     def get_file_actions_popover(self):
         """Return the ActionSelectionPopover emulator of the file actions."""
@@ -43,10 +47,16 @@ class MainView(toolkit_emulators.MainView):
 
     def get_places_popover(self):
         """Return the Places popover."""
-        # XXX It would be easier if the places popover was an object that
-        # inherits from Popover, like the ActionSelectionPopover does.
-        # --elopio - 2013-07-25
-        return self.select_single('Popover', objectName='placesPopover')
+        if not(self.wideAspect):
+            # XXX It would be easier if the places popover was an object
+            # that inherits from Popover, like the
+            # ActionSelectionPopover does.
+            # --elopio - 2013-07-25
+            return self.select_single('Popover',
+                    objectName='placesPopover')
+        else:
+            raise ValueError(
+                'Places sidebar is hidden in wide mode.')
 
     def get_file_details_popover(self):
         """Return the FileDetailsPopover emulator."""
@@ -62,10 +72,20 @@ class MainView(toolkit_emulators.MainView):
             dialog = self.select_single(ConfirmDialogWithInput)
         return dialog
 
+class Sidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
+    """PlacesSidebar Autopilot emulator."""
+    
+    def get_place(self, text):
+        places = self.select_many('Standard')
+        for place in places:
+            if place.text == text:
+                return place
+        raise ValueError(
+            'Place "{0}" not found.'.format(text))
 
 class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderListPage Autopilot emulator."""
-
+    
     def get_number_of_files_from_list(self):
         """Return the number of files shown on the folder."""
         return len(self.select_many(FolderListDelegate))
@@ -76,7 +96,9 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         :parameter index: The index of file or folder.
 
         """
-        return self.select_many(FolderListDelegate)[index]
+        file_ = self.select_many(FolderListDelegate)[index]
+        file_.list_view = self.select_single(FolderListView)
+        return file_
 
     def get_file_by_name(self, name):
         """Return the FolderListDelegate emulator of the file or folder.
@@ -87,6 +109,7 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         files = self.select_many(FolderListDelegate)
         for file_ in files:
             if file_.fileName == name:
+                file_.list_view = self.select_single(FolderListView)
                 return file_
         raise ValueError(
             'File with name "{0}" not found.'.format(name))
@@ -96,6 +119,14 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
     def get_number_of_files_from_header(self):
         return self.select_single(FolderListView).get_number_of_files()
+        
+    def get_sidebar(self):
+        if self.main_view.wideAspect:
+            print('Getting sidebar in wide aspect mode!')
+            return self.select_single(Sidebar)
+        else:
+            raise ValueError(
+                'Places sidebar is hidden in wide mode.')
 
 
 class FolderListView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
@@ -143,6 +174,9 @@ class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         # https://bugs.launchpad.net/autopilot/+bug/1205204
         # --elopio - 2013-07-25
         self.pointing_device.click_object(self)
+        
+        #AutopilotTestCase.assertThat(
+        #    self.list_view.get_current_path, Eventually(Equals(self.path)))
 
     def open_file(self):
         # TODO For this we would need to access the FileActionDialog that's
