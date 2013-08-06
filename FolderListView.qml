@@ -111,7 +111,7 @@ ListView {
                     iconSource: "/usr/share/icons/Humanity/actions/48/edit-cut.svg"
                     onTriggered: {
                         console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
-                        model.cutIndex(actionSelectionPopover.model.index)
+                        pageModel.cutIndex(actionSelectionPopover.model.index)
                         console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
                     }
                 }
@@ -123,7 +123,7 @@ ListView {
 
                     onTriggered: {
                         console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
-                        actionSelectionPopover.model.copyIndex(actionSelectionPopover.model.index)
+                        pageModel.copyIndex(actionSelectionPopover.model.index)
                         console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
                     }
                 }

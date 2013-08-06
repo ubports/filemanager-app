@@ -200,9 +200,9 @@ Page {
     }
 
     Component {
-        id: folderActionsPopover
+        id: folderActionsPopoverComponent
         ActionSelectionPopover {
-            //id: folderActionsPopover
+            id: folderActionsPopover
             objectName: "folderActionsPopover"
 
             grabDismissAreaEvents: true
@@ -292,7 +292,7 @@ Page {
                 }
 
                 /*! \internal */
-                onTriggered: popover.hide()
+                onTriggered: folderActionsPopover.hide()
                 visible: listItem.enabled
                 height: visible ? implicitHeight : 0
             }
@@ -357,9 +357,7 @@ Page {
 
             onTriggered: {
                 print(text)
-                //folderActionsPopover.caller = caller
-                //folderActionsPopover.show();
-                PopupUtils.open(folderActionsPopover, caller)
+                PopupUtils.open(folderActionsPopoverComponent, caller)
             }
         }
 
