@@ -28,9 +28,10 @@ Dialog {
     property FolderListModel folderListModel
 
     title: i18n.tr("Choose action")
-    text: i18n.tr("For file: ") + fileName
+    text: i18n.tr("For file: %1").arg(fileName)
 
     Button {
+        objectName: "openButton"
         text: i18n.tr("Open")
         onClicked: {
             console.log("Opening file", filePath)
@@ -40,7 +41,20 @@ Dialog {
     }
 
     Button {
+        objectName: "cancelButton"
         text: i18n.tr("Cancel")
         onClicked: PopupUtils.close(root)
+
+        gradient: Gradient {
+            GradientStop {
+                position: 0
+                color: "gray"
+            }
+
+            GradientStop {
+                position: 1
+                color: "lightgray"
+            }
+        }
     }
 }

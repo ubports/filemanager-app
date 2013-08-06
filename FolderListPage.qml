@@ -182,7 +182,7 @@ Page {
         property string fileSize: (folderListView.count === 1
                                    ? i18n.tr("1 file")
                                    : i18n.tr("%1 files").arg(folderListView.count))
-        property date creationDate: pageModel.pathCreatedDate
+        property date accessedDate: pageModel.pathAccessedDate
         property date modifiedDate: pageModel.pathModifiedDate
         property bool isWritable: pageModel.pathIsWritable
         property bool isReadable: true
@@ -308,6 +308,7 @@ Page {
         opened: true
 
         back: ToolbarButton {
+            objectName: "up"
             text: "Up"
             iconSource: "icons/up.png"
             visible: folder != "/"
@@ -317,6 +318,7 @@ Page {
         }
 
         ToolbarButton {
+            objectName: "actions"
             text: i18n.tr("Actions")
             iconSource: "icons/edit.png"
 
@@ -339,6 +341,7 @@ Page {
         }
 
         ToolbarButton {
+            objectName: "places"
             text: i18n.tr("Places")
             iconSource: "icons/location.png"
             onTriggered: {
@@ -384,8 +387,17 @@ Page {
         // SDK version the parent size was properly initialized. Now the size of toolbar is not taken into
         // account and apparently you can't even query toolbar's height.
         // anchors.bottomMargin: toolbar.height
-        // So hard-code it. Not nice at all:
-        anchors.bottomMargin: units.gu(8)
+        // Now in newer SDK (raring 19.07.2013) locked&opened toolbar is taken into
+        // account in some fashion, but the extra space left to the bottom without this
+        // bottomMargin definition seems to be exactly what is the height of Header's gray
+        // separator bar. This ugly workaround seems to give correct height for view at least on desktop.
+        // Bug report on this:
+        // https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1202881
+        // This bug report also affects this, as if the toolbar is hidden by default
+        // then there is no problem:
+        // https://bugs.launchpad.net/ubuntu-filemanager-app/+bug/1198861
+        // Hard-code it for now. Not nice at all:
+        anchors.bottomMargin: units.gu(-2)
     }
 
     // Errors from model
