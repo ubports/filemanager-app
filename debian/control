@@ -23,6 +23,7 @@ Architecture: all
 Depends: libautopilot-qt,
          libqt5test5,
          python-mock,
+         ubuntu-ui-toolkit-autopilot,
          ubuntu-filemanager-app (= ${source:Version})
 Description: Autopilot tests for File Manager Application
  This package contains the autopilot tests for the File Manager
