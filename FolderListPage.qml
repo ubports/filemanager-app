@@ -205,6 +205,8 @@ Page {
             //id: folderActionsPopover
             objectName: "folderActionsPopover"
 
+            grabDismissAreaEvents: true
+
             actions: ActionList {
                 Action {
                     text: i18n.tr("Create New Folder")
