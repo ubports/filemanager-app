@@ -14,7 +14,11 @@ ComposerSheet {
 
     title: i18n.tr("Settings")
 
-    contentsHeight: parent.height
+    Binding {
+        target: root.__foreground
+        property: "minHeight"
+        value: Math.max(units.gu(75), root.contentsHeight)
+    }
 
     Column {
         anchors.fill: parent

@@ -18,6 +18,7 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.Popups 0.1
+import Ubuntu.Components.ListItems 0.1
 import org.nemomobile.folderlistmodel 1.0
 
 Page {
@@ -198,72 +199,102 @@ Page {
         }
     }
 
-    ActionSelectionPopover {
+    Component {
         id: folderActionsPopover
-        objectName: "folderActionsPopover"
+        ActionSelectionPopover {
+            //id: folderActionsPopover
+            objectName: "folderActionsPopover"
 
-        actions: ActionList {
-            Action {
-                text: i18n.tr("Create New Folder")
-                onTriggered: {
-                    print(text)
+            actions: ActionList {
+                Action {
+                    text: i18n.tr("Create New Folder")
+                    onTriggered: {
+                        print(text)
 
-                    PopupUtils.open(createFolderDialog, root)
+                        PopupUtils.open(createFolderDialog, root)
+                    }
+                }
+
+                // TODO: Disabled until backend supports creating files
+    //            Action {
+    //                text: i18n.tr("Create New File")
+    //                onTriggered: {
+    //                    print(text)
+
+    //                    PopupUtils.open(createFileDialog, root)
+    //                }
+    //            }
+
+                Action {
+                    text: pageModel.clipboardUrlsCounter === 0
+                          ? i18n.tr("Paste")
+                          : pageModel.clipboardUrlsCounter === 1
+                            ? i18n.tr("Paste %1 File").arg(pageModel.clipboardUrlsCounter)
+                            : i18n.tr("Paste %1 Files").arg(pageModel.clipboardUrlsCounter)
+                    onTriggered: {
+                        console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
+                        PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
+                                        root,
+                                        {
+                                            title: i18n.tr("Paste files"),
+                                            folderListModel: pageModel
+                                         }
+                                        )
+
+
+                        pageModel.paste()
+                    }
+
+                    // FIXME: This property is depreciated and doesn't seem to work!
+                    //visible: pageModel.clipboardUrlsCounter > 0
+
+                    enabled: pageModel.clipboardUrlsCounter > 0
+                }
+
+                // TODO: Disabled until support for opening apps is added
+                Action {
+                    text: i18n.tr("Open in Terminal")
+                    onTriggered: {
+                        print(text)
+
+                        // Is this the way it will work??
+                        Qt.openUrlExternally("app://terminal")
+                    }
+
+                    enabled: showAdvancedFeatures && false
+                }
+
+                Action {
+                    text: i18n.tr("Properties")
+                    onTriggered: {
+                        print(text)
+                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
+                                        root,
+                                            { "model": pageModel
+                                            }
+                                        )
+                    }
                 }
             }
 
-            // TODO: Disabled until backend supports creating files
-//            Action {
-//                text: i18n.tr("Create New File")
-//                onTriggered: {
-//                    print(text)
-
-//                    PopupUtils.open(createFileDialog, root)
-//                }
-//            }
-
-            Action {
-                text: pageModel.clipboardUrlsCounter === 0
-                      ? i18n.tr("Paste")
-                      : pageModel.clipboardUrlsCounter === 1
-                        ? i18n.tr("Paste %1 File").arg(pageModel.clipboardUrlsCounter)
-                        : i18n.tr("Paste %1 Files").arg(pageModel.clipboardUrlsCounter)
-                onTriggered: {
-                    console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
-                    PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
-                                    root,
-                                    {
-                                        title: i18n.tr("Paste files"),
-                                        folderListModel: pageModel
-                                     }
-                                    )
-
-
-                    pageModel.paste()
+            delegate: Empty {
+                id: listItem
+                Label {
+                    text: listItem.text
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                    wrapMode: Text.Wrap
+                    color: Theme.palette.normal.overlayText
                 }
 
-                // FIXME: This property is depreciated and doesn't seem to work!
-                //visible: pageModel.clipboardUrlsCounter > 0
-
-                enabled: pageModel.clipboardUrlsCounter > 0
-            }
-
-            Action {
-                text: i18n.tr("Properties")
-                onTriggered: {
-                    print(text)
-                    PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
-                                    root,
-                                        { "model": pageModel
-                                        }
-                                    )
-                }
+                /*! \internal */
+                onTriggered: popover.hide()
+                visible: listItem.enabled
+                height: visible ? implicitHeight : 0
             }
         }
-
-        // Without this the popover jumps up at the start of the application. SDK bug?
-        // Bug report has been made of these https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1152270
-        visible: false
     }
 
     Component {
@@ -324,8 +355,9 @@ Page {
 
             onTriggered: {
                 print(text)
-                folderActionsPopover.caller = caller
-                folderActionsPopover.show();
+                //folderActionsPopover.caller = caller
+                //folderActionsPopover.show();
+                PopupUtils.open(folderActionsPopover, caller)
             }
         }
 
