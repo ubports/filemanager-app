@@ -18,6 +18,7 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
 import org.nemomobile.folderlistmodel 1.0
+import Ubuntu.Components.Popups 0.1
 
 /*!
     \brief MainView with Tabs element.
@@ -30,7 +31,7 @@ MainView {
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
     applicationName: "ubuntu-filemanager-app"
-    
+
     width: units.gu(100)
     height: units.gu(75)
 
@@ -38,10 +39,65 @@ MainView {
 
     property bool wideAspect: width >= units.gu(80)
 
+    // Default settings
+    property var settings: {"showAdvancedFeatures": false}
+
+    property bool needsRefreshSettings: true
+
+    // Individual settings, used for bindings
+    property bool showAdvancedFeatures: false
+
     FolderListPage {
         id: folderPage
         objectName: "folderPage"
 
         folder: homeFolder
     }
+
+    Component {
+        id: settingsSheet
+
+        SettingsSheet {
+            objectName: "settingsSheet"
+        }
+    }
+
+    Storage {
+        id: storage
+    }
+
+    function showSettings() {
+        PopupUtils.open(settingsSheet)
+    }
+
+    function reloadSettings() {
+        showAdvancedFeatures = settings["showAdvancedFeatures"] === "true" ? true : false
+        print("showAdvancedFeatures <=", showAdvancedFeatures)
+    }
+
+    function refreshSettings() {
+        if (needsRefreshSettings) {
+            storage.getSettings(function(storedSettings) {
+                for(var settingName in storedSettings) {
+                    print(settingName, "=", storedSettings[settingName])
+                    settings[settingName] = storedSettings[settingName]
+                }
+
+                reloadSettings()
+            })
+
+            needsRefreshSettings = false
+        }
+    }
+
+    function saveSetting(name, value) {
+        // Check if the setting was changed
+        if(settings[name] !== value) {
+            print(name, "=>", value)
+            storage.saveSetting(name, value)
+            needsRefreshSettings = true
+        }
+    }
+
+    Component.onCompleted: refreshSettings();
 }
