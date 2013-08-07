@@ -20,11 +20,9 @@ import re
 import time
 
 from autopilot import input
-from autopilot.testcase import AutopilotTestCase
-from autopilot.matchers import Eventually
-from testtools.matchers import Equals
 
 from ubuntuuitoolkit import emulators as toolkit_emulators
+
 
 class MainView(toolkit_emulators.MainView):
     """File Manager MainView Autopilot emulator."""
@@ -52,8 +50,7 @@ class MainView(toolkit_emulators.MainView):
             # that inherits from Popover, like the
             # ActionSelectionPopover does.
             # --elopio - 2013-07-25
-            return self.select_single('Popover',
-                    objectName='placesPopover')
+            return self.select_single('Popover', objectName='placesPopover')
         else:
             raise ValueError(
                 'Places sidebar is hidden in wide mode.')
@@ -72,9 +69,10 @@ class MainView(toolkit_emulators.MainView):
             dialog = self.select_single(ConfirmDialogWithInput)
         return dialog
 
+
 class Sidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """PlacesSidebar Autopilot emulator."""
-    
+
     def get_place(self, text):
         places = self.select_many('Standard')
         for place in places:
@@ -83,9 +81,10 @@ class Sidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         raise ValueError(
             'Place "{0}" not found.'.format(text))
 
+
 class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderListPage Autopilot emulator."""
-    
+
     def get_number_of_files_from_list(self):
         """Return the number of files shown on the folder."""
         return len(self.select_many(FolderListDelegate))
@@ -119,7 +118,7 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
     def get_number_of_files_from_header(self):
         return self.select_single(FolderListView).get_number_of_files()
-        
+
     def get_sidebar(self):
         if self.main_view.wideAspect:
             print('Getting sidebar in wide aspect mode!')
@@ -174,9 +173,6 @@ class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         # https://bugs.launchpad.net/autopilot/+bug/1205204
         # --elopio - 2013-07-25
         self.pointing_device.click_object(self)
-        
-        #AutopilotTestCase.assertThat(
-        #    self.list_view.get_current_path, Eventually(Equals(self.path)))
 
     def open_file(self):
         # TODO For this we would need to access the FileActionDialog that's
