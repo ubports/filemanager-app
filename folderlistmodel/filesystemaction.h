@@ -142,9 +142,6 @@ private slots:
    };
    void     createAndProcessAction(ActionType actionType, const QStringList& paths,
                                    ClipboardOperation operation=NoClipboard);
-
-private:
-
    struct CopyFile
    {
      public:
@@ -199,6 +196,7 @@ private:
        bool                done;
        Action *            auxAction;
        bool                isAux;
+       int                 steps;
    };
 
    QVector<Action*>        m_queuedActions;  //!< work always at item 0, after finishing taking item 0 out

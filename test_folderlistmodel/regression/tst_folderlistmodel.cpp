@@ -593,13 +593,16 @@ void TestDirModel::modelCopyDirPasteIntoAnotherModel()
     QCOMPARE(m_dirModel_02->rowCount(),  0);
 
     m_dirModel_01->copyIndex(0);
+    m_visibleProgressMessages = true;
     m_dirModel_02->paste();
+    int steps = m_dirModel_02->m_fsAction->m_curAction->steps;
     QTest::qWait(TIME_TO_PROCESS);
 
     QCOMPARE(m_dirModel_02->rowCount(),  1);
     QCOMPARE(m_progressPercentDone, 100);   
     QCOMPARE(compareDirectories(m_deepDir_01->path(), m_deepDir_02->path()), true);
     QCOMPARE(m_receivedClipboardChangesSignal,      true);
+    QCOMPARE(steps,          m_progressCounter);
 }
 
 
@@ -651,7 +654,10 @@ void TestDirModel::modelCopyManyItemsPasteIntoAnotherModel()
     allFiles.append(big.fileName());
 
     m_dirModel_01->copyPaths(allFiles);
+    m_visibleProgressMessages = true;
     m_dirModel_02->paste();
+    int steps = m_dirModel_02->m_fsAction->m_curAction->steps;
+
     QTest::qWait(TIME_TO_PROCESS);
 
     QCOMPARE(m_dirModel_02->rowCount(),  itemsCreated);
@@ -659,6 +665,8 @@ void TestDirModel::modelCopyManyItemsPasteIntoAnotherModel()
     QCOMPARE(m_progressPercentDone, 100);
     QCOMPARE(compareDirectories(m_deepDir_01->path(), m_deepDir_02->path()), true);
     QCOMPARE(m_receivedClipboardChangesSignal,   true);
+
+    QCOMPARE(steps,     m_progressCounter);
 }
 
 
@@ -798,6 +806,10 @@ void TestDirModel::modelCutManyItemsPasteIntoAnotherModel()
     QString target("modelCutManyItemsPasteIntoAnotherModel_target");
     m_deepDir_02 = new DeepDir(target, 0);
     m_dirModel_02 = new DirModel();
+    connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
+            this,          SLOT(progress(int,int,int)));
+    connect(m_dirModel_02, SIGNAL(error(QString,QString)),
+            this,          SLOT(slotError(QString,QString)));
     m_dirModel_02->setPath(m_deepDir_02->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
 
@@ -808,12 +820,15 @@ void TestDirModel::modelCutManyItemsPasteIntoAnotherModel()
     allFiles.append(tempFiles.createdList());
 
     m_dirModel_01->cutPaths(allFiles);
+    m_visibleProgressMessages = true;
     m_dirModel_02->paste();
+    int steps = m_dirModel_02->m_fsAction->m_curAction->steps;
     QTest::qWait(TIME_TO_PROCESS);
 
     QCOMPARE(m_dirModel_02->rowCount(),  itemsCreated); //pasted into
     QCOMPARE(m_dirModel_01->rowCount(),  0);  //cut from
     QCOMPARE(m_receivedClipboardChangesSignal,  true);
+    QCOMPARE(steps,        m_progressCounter);
 }
 
 void  TestDirModel::fsActionMoveItemsForcingCopyAndThenRemove()
