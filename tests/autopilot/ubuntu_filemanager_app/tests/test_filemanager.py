@@ -27,6 +27,7 @@ import shutil
 from autopilot import process
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals
+from testtools.matchers import NotEquals
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
 
@@ -133,10 +134,8 @@ class TestFolderListPage(FileManagerTestCase):
 
         #item.open_directory()
         self.pointing_device.click_object(item)
-        print('Opened!')
         self.assertThat(
             list_view.get_current_path, Eventually(Equals(expected_path)))
-        print('Finished!')
 
     def test_open_file(self):
         self._make_file_in_home()
@@ -198,8 +197,14 @@ class TestFolderListPage(FileManagerTestCase):
 
     def _do_action_on_file(self, file_, action):
         file_.open_actions_popover()
+        self.assertThat(
+            self.main_view.get_file_actions_popover,
+            Eventually(NotEquals(None)))
         file_actions_popover = self.main_view.get_file_actions_popover()
         file_actions_popover.click_button(action)
+        self.assertThat(
+            self.main_view.get_file_actions_popover,
+            Eventually(Equals(None)))
 
     def _cancel_confirm_dialog(self):
         confirm_dialog = self.main_view.get_confirm_dialog()
@@ -233,9 +238,11 @@ class TestFolderListPage(FileManagerTestCase):
         self._cancel_confirm_dialog()
 
         self.assertThat(
-            self.main_view.get_confirm_dialog, Eventually(Equals(None)))
+            self.main_view.get_confirm_dialog,
+            Eventually(Equals(None)))
         self.assertThat(
-            lambda: first_file.fileName, Eventually(Equals(file_name)))
+            lambda: first_file.fileName,
+            Eventually(Equals(file_name)))
 
     def test_rename_file(self):
         self._make_file_in_home()
@@ -353,7 +360,9 @@ class TestFolderListPage(FileManagerTestCase):
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
-        self.main_view.get_folder_actions_popover().visible.wait_for(False)
+        self.assertThat(
+            self.main_view.get_folder_actions_popover,
+            Eventually(Equals(None)))
 
         # Check that the directory is there.
         self._assert_number_of_files(1)
@@ -395,7 +404,9 @@ class TestFolderListPage(FileManagerTestCase):
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
-        self.main_view.get_folder_actions_popover().visible.wait_for(False)
+        self.assertThat(
+            self.main_view.get_folder_actions_popover,
+            Eventually(Equals(None)))
 
         # Check that the directory is there.
         self._assert_number_of_files(1)
@@ -439,8 +450,9 @@ class TestFolderListPage(FileManagerTestCase):
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
 
-        # FIXME: This doesn't work for some reason.
-        # self.main_view.get_folder_actions_popover().visible.wait_for(False)
+        self.assertThat(
+            self.main_view.get_folder_actions_popover,
+            Eventually(Equals(None)))
 
         # Check that the file is there.
         self._assert_number_of_files(1)
@@ -480,7 +492,9 @@ class TestFolderListPage(FileManagerTestCase):
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
-        self.main_view.get_folder_actions_popover().visible.wait_for(False)
+        self.assertThat(
+            self.main_view.get_folder_actions_popover,
+            Eventually(Equals(None)))
 
         # Check that the file is there.
         self._assert_number_of_files(1)

@@ -121,7 +121,6 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
     def get_sidebar(self):
         if self.main_view.wideAspect:
-            print('Getting sidebar in wide aspect mode!')
             return self.select_single(Sidebar)
         else:
             raise ValueError(
