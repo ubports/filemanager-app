@@ -330,13 +330,13 @@ Page {
         }
 
         ToolbarButton {
-            text: i18n.tr("Settings")
+            text: i18n.tr("Options")
             iconSource: "icons/settings.png"
 
             onTriggered: {
                 print(text)
 
-                PopupUtils.open(Qt.resolvedUrl("SettingsPopover.qml"), caller)
+                PopupUtils.open(Qt.resolvedUrl("OptionsPopover.qml"), caller)
             }
         }
 
@@ -348,6 +348,16 @@ Page {
                 print(text)
 
                 PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), caller)
+            }
+        }
+
+        ToolbarButton {
+            text: i18n.tr("Settings")
+            iconSource: "icons/settings.png"
+            onTriggered: {
+                print(text)
+
+                showSettings()
             }
         }
     }
