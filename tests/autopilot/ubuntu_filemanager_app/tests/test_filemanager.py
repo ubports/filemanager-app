@@ -26,11 +26,9 @@ import shutil
 
 from autopilot import process
 from autopilot.matchers import Eventually
-from testtools.matchers import Equals
-from testtools.matchers import NotEquals
+from testtools.matchers import Equals, NotEquals
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
-
 
 class TestFolderListPage(FileManagerTestCase):
 
