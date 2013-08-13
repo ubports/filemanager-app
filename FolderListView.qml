@@ -94,82 +94,79 @@ ListView {
         }
     }
 
-    ActionSelectionPopover {
-        id: actionSelectionPopover
-        objectName: "fileActionsPopover"
+    Component {
+        id: actionSelectionPopoverComponent
 
-        property var model
-        actions: ActionList {
-            Action {
-                text: i18n.tr("Cut")
-                // TODO: temporary
-                iconSource: "/usr/share/icons/Humanity/actions/48/edit-cut.svg"
-                onTriggered: {
-                    console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
-                    model.cutIndex(actionSelectionPopover.model.index)
-                    console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
+        ActionSelectionPopover {
+            id: actionSelectionPopover
+            objectName: "fileActionsPopover"
+
+            grabDismissAreaEvents: true
+
+            property var model
+            actions: ActionList {
+                Action {
+                    text: i18n.tr("Cut")
+                    // TODO: temporary
+                    iconSource: "/usr/share/icons/Humanity/actions/48/edit-cut.svg"
+                    onTriggered: {
+                        console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
+                        pageModel.cutIndex(actionSelectionPopover.model.index)
+                        console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
+                    }
                 }
-            }
 
-            Action {
-                text: i18n.tr("Copy")
-                // TODO: temporary.
-                iconSource: "/usr/share/icons/Humanity/actions/48/edit-copy.svg"
+                Action {
+                    text: i18n.tr("Copy")
+                    // TODO: temporary.
+                    iconSource: "/usr/share/icons/Humanity/actions/48/edit-copy.svg"
 
-                onTriggered: {
-                    console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
-                    model.copyIndex(actionSelectionPopover.model.index)
-                    console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
+                    onTriggered: {
+                        console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
+                        pageModel.copyIndex(actionSelectionPopover.model.index)
+                        console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
+                    }
                 }
-            }
 
-            Action {
-                text: i18n.tr("Delete")
-                // TODO: temporary
-                iconSource: "/usr/share/icons/Humanity/actions/48/edit-delete.svg"
-                onTriggered: {
-                    print(text)
-                    PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller,
-                                    { "filePath" : actionSelectionPopover.model.filePath,
-                                      "fileName" : actionSelectionPopover.model.fileName }
-                                    )
+                Action {
+                    text: i18n.tr("Delete")
+                    // TODO: temporary
+                    iconSource: "/usr/share/icons/Humanity/actions/48/edit-delete.svg"
+                    onTriggered: {
+                        print(text)
+                        PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller,
+                                        { "filePath" : actionSelectionPopover.model.filePath,
+                                          "fileName" : actionSelectionPopover.model.fileName }
+                                        )
+                    }
                 }
-            }
 
-            Action {
-                text: i18n.tr("Rename")
-                // TODO: temporary
-                iconSource: "/usr/share/icons/Humanity/actions/48/rotate.svg"
-                onTriggered: {
-                    print(text)
-                    PopupUtils.open(confirmRenameDialog, actionSelectionPopover.caller,
-                                    { "modelRow"  : actionSelectionPopover.model.index,
-                                      "inputText" : actionSelectionPopover.model.fileName
-                                    })
+                Action {
+                    text: i18n.tr("Rename")
+                    // TODO: temporary
+                    iconSource: "/usr/share/icons/Humanity/actions/48/rotate.svg"
+                    onTriggered: {
+                        print(text)
+                        PopupUtils.open(confirmRenameDialog, actionSelectionPopover.caller,
+                                        { "modelRow"  : actionSelectionPopover.model.index,
+                                          "inputText" : actionSelectionPopover.model.fileName
+                                        })
+                    }
                 }
-            }
 
-            Action {
-                text: i18n.tr("Properties")
-                onTriggered: {
-                    print(text)
-                    PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
-                                    actionSelectionPopover.caller,
-                                        { "model": actionSelectionPopover.model
-                                        }
-                                    )
+                Action {
+                    text: i18n.tr("Properties")
+                    onTriggered: {
+                        print(text)
+                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
+                                        actionSelectionPopover.caller,
+                                            { "model": actionSelectionPopover.model
+                                            }
+                                        )
+                    }
                 }
             }
         }
-        // TODO: problem: clicking outside popup makes the click go through to the
-        // folder listview, so for example you'd change directory while only trying
-        // to dismiss the popup. Maybe SDK bug, if not have to do workarounds.
-        // grabDismissAreaEvents seemed promising, but at least with onPressAndHold
-        // makes background view scroll when moving mouse as if mouse button was still down.
-        // grabDismissAreaEvents: false
-        // Without this the popover jumps up at the start of the application. SDK bug?
-        // Bug report has been made of these https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1152270
-        visible: false
     }
 
     delegate: FolderListDelegate {
@@ -201,9 +198,10 @@ ListView {
 
         onPressAndHold: {
             console.log("FolderListDelegate onPressAndHold")
-            actionSelectionPopover.caller = delegate
-            actionSelectionPopover.model = model
-            actionSelectionPopover.show();
+            PopupUtils.open(actionSelectionPopoverComponent, delegate,
+                            {
+                                model: model
+                            })
         }
     }
 

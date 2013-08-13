@@ -32,7 +32,7 @@ MainView {
     objectName: "filemanager"
     applicationName: "ubuntu-filemanager-app"
 
-    width: units.gu(50)
+    width: units.gu(100)
     height: units.gu(75)
 
     property alias filemanager: root
@@ -46,6 +46,10 @@ MainView {
 
     // Individual settings, used for bindings
     property bool showAdvancedFeatures: false
+
+    headerColor: "#303030"
+    backgroundColor: "#505050"
+    footerColor: "#707070"
 
     FolderListPage {
         id: folderPage

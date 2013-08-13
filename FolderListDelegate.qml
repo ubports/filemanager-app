@@ -24,6 +24,7 @@ ListItem.Subtitled {
     objectName: "folder" + index
 
     property string fileName: model.fileName
+    property string filePath: path
 
     text: model.fileName
     subText: Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate) + (!model.isDir ? ", " + fileSize : "")

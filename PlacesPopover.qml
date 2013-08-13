@@ -124,13 +124,22 @@ Popover {
             model: places
 
             delegate: Standard {
-                text: folderName(path)
+                Label {
+                    anchors.left: parent.left
+                    anchors.leftMargin: units.gu(8)
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: folderName(path)
+                    color: selected ? UbuntuColors.orange : Theme.palette.normal.overlayText
+                }
+
                 icon: model.icon || fileIcon(model.path, true)
 
                 onClicked: {
                     PopupUtils.close(root)
                     goTo(model.path)
                 }
+
+                selected: folder === path
             }
         }
     }

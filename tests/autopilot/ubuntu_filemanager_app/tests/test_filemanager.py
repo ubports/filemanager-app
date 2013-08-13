@@ -27,6 +27,7 @@ import shutil
 from autopilot import process
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals
+from testtools.matchers import NotEquals
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
 
@@ -127,6 +128,15 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             self.main_view.get_file_action_dialog, Eventually(Equals(None)))
 
+    def _open_directory(self, item):
+        expected_path = item.filePath
+        list_view = item.list_view
+
+        #item.open_directory()
+        self.pointing_device.click_object(item)
+        self.assertThat(
+            list_view.get_current_path, Eventually(Equals(expected_path)))
+
     def test_open_file(self):
         self._make_file_in_home()
 
@@ -163,7 +173,7 @@ class TestFolderListPage(FileManagerTestCase):
         dir_path = self._make_directory_in_home()
         first_dir = self._get_file_by_index(0)
 
-        first_dir.open_directory()
+        self._open_directory(first_dir)
 
         folder_list_page = self.main_view.get_folder_list_page()
         self.assertThat(
@@ -187,8 +197,14 @@ class TestFolderListPage(FileManagerTestCase):
 
     def _do_action_on_file(self, file_, action):
         file_.open_actions_popover()
+        self.assertThat(
+            self.main_view.get_file_actions_popover,
+            Eventually(NotEquals(None)))
         file_actions_popover = self.main_view.get_file_actions_popover()
         file_actions_popover.click_button(action)
+        self.assertThat(
+            self.main_view.get_file_actions_popover,
+            Eventually(Equals(None)))
 
     def _cancel_confirm_dialog(self):
         confirm_dialog = self.main_view.get_confirm_dialog()
@@ -222,9 +238,11 @@ class TestFolderListPage(FileManagerTestCase):
         self._cancel_confirm_dialog()
 
         self.assertThat(
-            self.main_view.get_confirm_dialog, Eventually(Equals(None)))
+            self.main_view.get_confirm_dialog,
+            Eventually(Equals(None)))
         self.assertThat(
-            lambda: first_file.fileName, Eventually(Equals(file_name)))
+            lambda: first_file.fileName,
+            Eventually(Equals(file_name)))
 
     def test_rename_file(self):
         self._make_file_in_home()
@@ -334,7 +352,7 @@ class TestFolderListPage(FileManagerTestCase):
         # Go to the destination directory.
         destination_dir = folder_list_page.get_file_by_name(
             destination_dir_name)
-        destination_dir.open_directory()
+        self._open_directory(destination_dir)
 
         # Paste the directory.
         toolbar = self.main_view.open_toolbar()
@@ -342,7 +360,9 @@ class TestFolderListPage(FileManagerTestCase):
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
-        self.main_view.get_folder_actions_popover().visible.wait_for(False)
+        self.assertThat(
+            self.main_view.get_folder_actions_popover,
+            Eventually(Equals(None)))
 
         # Check that the directory is there.
         self._assert_number_of_files(1)
@@ -376,7 +396,7 @@ class TestFolderListPage(FileManagerTestCase):
         # Go to the destination directory.
         destination_dir = folder_list_page.get_file_by_name(
             destination_dir_name)
-        destination_dir.open_directory()
+        self._open_directory(destination_dir)
 
         # Paste the directory.
         toolbar = self.main_view.open_toolbar()
@@ -384,7 +404,9 @@ class TestFolderListPage(FileManagerTestCase):
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
-        self.main_view.get_folder_actions_popover().visible.wait_for(False)
+        self.assertThat(
+            self.main_view.get_folder_actions_popover,
+            Eventually(Equals(None)))
 
         # Check that the directory is there.
         self._assert_number_of_files(1)
@@ -419,7 +441,7 @@ class TestFolderListPage(FileManagerTestCase):
         # Go to the destination directory.
         destination_dir = folder_list_page.get_file_by_name(
             destination_dir_name)
-        destination_dir.open_directory()
+        self._open_directory(destination_dir)
 
         # Paste the file.
         toolbar = self.main_view.open_toolbar()
@@ -427,7 +449,10 @@ class TestFolderListPage(FileManagerTestCase):
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
-        self.main_view.get_folder_actions_popover().visible.wait_for(False)
+
+        self.assertThat(
+            self.main_view.get_folder_actions_popover,
+            Eventually(Equals(None)))
 
         # Check that the file is there.
         self._assert_number_of_files(1)
@@ -459,7 +484,7 @@ class TestFolderListPage(FileManagerTestCase):
         # Go to the destination directory.
         destination_dir = folder_list_page.get_file_by_name(
             destination_dir_name)
-        destination_dir.open_directory()
+        self._open_directory(destination_dir)
 
         # Paste the file.
         toolbar = self.main_view.open_toolbar()
@@ -467,7 +492,9 @@ class TestFolderListPage(FileManagerTestCase):
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
-        self.main_view.get_folder_actions_popover().visible.wait_for(False)
+        self.assertThat(
+            self.main_view.get_folder_actions_popover,
+            Eventually(Equals(None)))
 
         # Check that the file is there.
         self._assert_number_of_files(1)
@@ -488,7 +515,7 @@ class TestFolderListPage(FileManagerTestCase):
     def test_go_up(self):
         self._make_directory_in_home()
         first_dir = self._get_file_by_index(0)
-        first_dir.open_directory()
+        self._open_directory(first_dir)
 
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('up')
@@ -519,9 +546,14 @@ class TestFolderListPage(FileManagerTestCase):
         # objectName on the ListElement. This is reported at
         # https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205201
         # --elopio - 2013-07-25
-        self.main_view.open_toolbar()
-        self.main_view.get_toolbar().click_button('places')
-        place = self._get_place(text)
+        place = None
+        if self.main_view.wideAspect:
+            place = (self.main_view.get_folder_list_page().get_sidebar()
+                     .get_place(text))
+        else:
+            self.main_view.open_toolbar()
+            self.main_view.get_toolbar().click_button('places')
+            place = self._get_place(text)
         self.pointing_device.click_object(place)
 
     def _get_place(self, text):

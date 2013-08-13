@@ -18,6 +18,7 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.Popups 0.1
+import Ubuntu.Components.ListItems 0.1
 import org.nemomobile.folderlistmodel 1.0
 
 Page {
@@ -198,72 +199,104 @@ Page {
         }
     }
 
-    ActionSelectionPopover {
-        id: folderActionsPopover
-        objectName: "folderActionsPopover"
+    Component {
+        id: folderActionsPopoverComponent
+        ActionSelectionPopover {
+            id: folderActionsPopover
+            objectName: "folderActionsPopover"
 
-        actions: ActionList {
-            Action {
-                text: i18n.tr("Create New Folder")
-                onTriggered: {
-                    print(text)
+            grabDismissAreaEvents: true
 
-                    PopupUtils.open(createFolderDialog, root)
+            actions: ActionList {
+                Action {
+                    text: i18n.tr("Create New Folder")
+                    onTriggered: {
+                        print(text)
+
+                        PopupUtils.open(createFolderDialog, root)
+                    }
+                }
+
+                // TODO: Disabled until backend supports creating files
+    //            Action {
+    //                text: i18n.tr("Create New File")
+    //                onTriggered: {
+    //                    print(text)
+
+    //                    PopupUtils.open(createFileDialog, root)
+    //                }
+    //            }
+
+                Action {
+                    text: pageModel.clipboardUrlsCounter === 0
+                          ? i18n.tr("Paste")
+                          : pageModel.clipboardUrlsCounter === 1
+                            ? i18n.tr("Paste %1 File").arg(pageModel.clipboardUrlsCounter)
+                            : i18n.tr("Paste %1 Files").arg(pageModel.clipboardUrlsCounter)
+                    onTriggered: {
+                        console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
+                        PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
+                                        root,
+                                        {
+                                            title: i18n.tr("Paste files"),
+                                            folderListModel: pageModel
+                                         }
+                                        )
+
+
+                        pageModel.paste()
+                    }
+
+                    // FIXME: This property is depreciated and doesn't seem to work!
+                    //visible: pageModel.clipboardUrlsCounter > 0
+
+                    enabled: pageModel.clipboardUrlsCounter > 0
+                }
+
+                // TODO: Disabled until support for opening apps is added
+                Action {
+                    text: i18n.tr("Open in Terminal")
+                    onTriggered: {
+                        print(text)
+
+                        // Is this the way it will work??
+                        Qt.openUrlExternally("app://terminal")
+                    }
+
+                    enabled: showAdvancedFeatures && false
+                }
+
+                Action {
+                    text: i18n.tr("Properties")
+                    onTriggered: {
+                        print(text)
+                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
+                                        root,
+                                            { "model": pageModel
+                                            }
+                                        )
+                    }
                 }
             }
 
-            // TODO: Disabled until backend supports creating files
-//            Action {
-//                text: i18n.tr("Create New File")
-//                onTriggered: {
-//                    print(text)
-
-//                    PopupUtils.open(createFileDialog, root)
-//                }
-//            }
-
-            Action {
-                text: pageModel.clipboardUrlsCounter === 0
-                      ? i18n.tr("Paste")
-                      : pageModel.clipboardUrlsCounter === 1
-                        ? i18n.tr("Paste %1 File").arg(pageModel.clipboardUrlsCounter)
-                        : i18n.tr("Paste %1 Files").arg(pageModel.clipboardUrlsCounter)
-                onTriggered: {
-                    console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
-                    PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
-                                    root,
-                                    {
-                                        title: i18n.tr("Paste files"),
-                                        folderListModel: pageModel
-                                     }
-                                    )
-
-
-                    pageModel.paste()
+            delegate: Empty {
+                id: listItem
+                Label {
+                    text: listItem.text
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                    wrapMode: Text.Wrap
+                    color: Theme.palette.normal.overlayText
                 }
 
-                // FIXME: This property is depreciated and doesn't seem to work!
-                //visible: pageModel.clipboardUrlsCounter > 0
-
-                enabled: pageModel.clipboardUrlsCounter > 0
-            }
-
-            Action {
-                text: i18n.tr("Properties")
-                onTriggered: {
-                    print(text)
-                    PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
-                                    root,
-                                        { "model": pageModel
-                                        }
-                                    )
-                }
+                /*! \internal */
+                onTriggered: folderActionsPopover.hide()
+                visible: listItem.enabled
+                height: visible ? implicitHeight : 0
             }
         }
-
-        // Without this the popover jumps up at the start of the application. SDK bug?
-        // Bug report has been made of these https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1152270
-        visible: false
     }
 
     Component {
@@ -324,8 +357,7 @@ Page {
 
             onTriggered: {
                 print(text)
-                folderActionsPopover.caller = caller
-                folderActionsPopover.show();
+                PopupUtils.open(folderActionsPopoverComponent, caller)
             }
         }
 
@@ -341,6 +373,19 @@ Page {
         }
 
         ToolbarButton {
+            visible: wideAspect
+            objectName: "goTo"
+            text: i18n.tr("Go To")
+            iconSource: "icons/location.png"
+            onTriggered: {
+                print(text)
+
+                PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), caller)
+            }
+        }
+
+        ToolbarButton {
+            visible: !wideAspect
             objectName: "places"
             text: i18n.tr("Places")
             iconSource: "icons/location.png"
@@ -362,43 +407,108 @@ Page {
         }
     }
 
-    Column {
-        anchors.centerIn: parent
-        Label {
-            text: i18n.tr("No files")
-            fontSize: "large"
-            visible: folderListView.count == 0 && !pageModel.awaitingResults
+    flickable: !wideAspect ? folderListView : null
+
+    PlacesSidebar {
+        id: sidebar
+        objectName: "placesSidebar"
+
+        anchors {
+            top: parent.top
+            topMargin: units.gu(9.5)
+            bottom: parent.bottom
+            bottomMargin: units.gu(-2)
         }
-        ActivityIndicator {
-            running: pageModel.awaitingResults
-            width: units.gu(8)
-            height: units.gu(8)
+
+        expanded: wideAspect
+    }
+
+    Item {
+        id: contents
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            left: sidebar.right
+            right: parent.right
+
+            // IMPROVE: this should work (?), but it doesn't. Height is undefined. Anyway in previous
+            // SDK version the parent size was properly initialized. Now the size of toolbar is not taken into
+            // account and apparently you can't even query toolbar's height.
+            // anchors.bottomMargin: toolbar.height
+            // Now in newer SDK (raring 19.07.2013) locked&opened toolbar is taken into
+            // account in some fashion, but the extra space left to the bottom without this
+            // bottomMargin definition seems to be exactly what is the height of Header's gray
+            // separator bar. This ugly workaround seems to give correct height for view at least on desktop.
+            // Bug report on this:
+            // https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1202881
+            // This bug report also affects this, as if the toolbar is hidden by default
+            // then there is no problem:
+            // https://bugs.launchpad.net/ubuntu-filemanager-app/+bug/1198861
+            // Hard-code it for now. Not nice at all:
+            bottomMargin: units.gu(-2)
+        }
+
+        Column {
+            anchors.centerIn: parent
+            Label {
+                text: i18n.tr("No files")
+                fontSize: "large"
+                visible: folderListView.count == 0 && !pageModel.awaitingResults
+            }
+            ActivityIndicator {
+                running: pageModel.awaitingResults
+                width: units.gu(8)
+                height: units.gu(8)
+            }
+        }
+
+        FolderListView {
+            id: folderListView
+
+            clip: true
+
+            folderListModel: pageModel
+            anchors.fill: parent
         }
     }
 
-    FolderListView {
-        id: folderListView
+    states: [
+        State {
+            name: "wide"
+            when: wideAspect
+            PropertyChanges {
+                target: tools
+                locked: true
+                opened: true
+            }
 
-        clip: true
+            PropertyChanges {
+                target: folderListView
 
-        folderListModel: pageModel
-        anchors.fill: parent
-        // IMPROVE: this should work (?), but it doesn't. Height is undefined. Anyway in previous
-        // SDK version the parent size was properly initialized. Now the size of toolbar is not taken into
-        // account and apparently you can't even query toolbar's height.
-        // anchors.bottomMargin: toolbar.height
-        // Now in newer SDK (raring 19.07.2013) locked&opened toolbar is taken into
-        // account in some fashion, but the extra space left to the bottom without this
-        // bottomMargin definition seems to be exactly what is the height of Header's gray
-        // separator bar. This ugly workaround seems to give correct height for view at least on desktop.
-        // Bug report on this:
-        // https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1202881
-        // This bug report also affects this, as if the toolbar is hidden by default
-        // then there is no problem:
-        // https://bugs.launchpad.net/ubuntu-filemanager-app/+bug/1198861
-        // Hard-code it for now. Not nice at all:
-        anchors.bottomMargin: units.gu(-2)
-    }
+                anchors.top: contents.top
+                anchors.topMargin: units.gu(9.5)
+                topMargin: 0
+            }
+
+            PropertyChanges {
+                target: contents
+                anchors.top: root.top
+                anchors.topMargin: 0
+            }
+        },
+
+        //FIXME: This should automatically be calculated - is there a way to remove it?
+        State {
+            name: ""
+
+            PropertyChanges {
+                target: folderListView
+
+                topMargin: units.gu(9.5)
+            }
+        }
+
+    ]
 
     // Errors from model
     Connections {
