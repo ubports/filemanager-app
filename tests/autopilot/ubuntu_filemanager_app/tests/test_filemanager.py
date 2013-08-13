@@ -30,6 +30,7 @@ from testtools.matchers import Equals, NotEquals
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
 
+
 class TestFolderListPage(FileManagerTestCase):
 
     def setUp(self):
