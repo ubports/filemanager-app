@@ -559,7 +559,7 @@ class TestFolderListPage(FileManagerTestCase):
         places_popover = self.main_view.get_places_popover()
         places = places_popover.select_many('Standard')
         for place in places:
-            if place.text == text:
+            if place.name == text:
                 return place
         raise ValueError(
             'Place "{0}" not found.'.format(text))
