@@ -137,10 +137,10 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             list_view.get_current_path, Eventually(Equals(expected_path)))
 
-    # We can't do this testcase on phablet devices because of a lack of 
+    # We can't do this testcase on phablet devices because of a lack of
     # Mir backend in autopilot
     # see https://bugs.launchpad.net/autopilot/+bug/1209004
-	if model() == "Desktop":
+    if model() == "Desktop":
         def test_open_file(self):
             self._make_file_in_home()
 
@@ -155,7 +155,8 @@ class TestFolderListPage(FileManagerTestCase):
 
             dialog.open()
             self.assertThat(
-                self.main_view.get_file_action_dialog, Eventually(Equals(None)))
+                self.main_view.get_file_action_dialog,
+                Eventually(Equals(None)))
             # Filtering copied from
             # AutopilotTestCase._compare_system_with_app_snapshot.
             current_apps = self.process_manager.get_running_applications()
@@ -166,9 +167,11 @@ class TestFolderListPage(FileManagerTestCase):
             new_app = new_apps[0]
             self.assertEqual(len(new_app.get_windows()), 1)
 
-            # TODO assert that the file was opened on the right application. This
-            # depends on what's the default application to open a text file. Maybe
-            # we can get this information with XDG. --elopio - 2013-07-25
+            # TODO assert that the file was opened on the right
+            # application. This depends on what's the default application
+            # to open a text file. Maybe we can get this information
+            # with XDG. --elopio - 2013-07-25
+
             # Close the opened window.
             window = new_app.get_windows()[0]
             window.close()
