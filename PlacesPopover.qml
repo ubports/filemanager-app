@@ -124,6 +124,8 @@ Popover {
             model: places
 
             delegate: Standard {
+			    property string name: folderName(path)
+            
                 Label {
                     anchors.left: parent.left
                     anchors.leftMargin: units.gu(8)
