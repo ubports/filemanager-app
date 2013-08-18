@@ -1428,3 +1428,9 @@ QFileInfo  DirModel::setParentIfRelative(const QString &fileOrDir) const
     }
     return myFi;
 }
+
+
+int DirModel::getProgressCounter() const
+{
+    return m_fsAction->getProgressCounter();
+}

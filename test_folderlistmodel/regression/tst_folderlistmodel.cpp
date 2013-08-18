@@ -529,16 +529,20 @@ void TestDirModel::modelRemoveMultiItemsByFullPathname()
     items.append(files.lastPath());
 
     m_dirModel_01 = new DirModel();
+    connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
+            this,          SLOT(progress(int,int,int)));
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
-
     QCOMPARE(m_dirModel_01->rowCount(), itemsToCreate);
+
     m_dirModel_01->rm(items);
+    int steps = m_dirModel_01->getProgressCounter();
     QTest::qWait(500);
 
     QCOMPARE(m_filesRemoved.count() , itemsToCreate);
     QCOMPARE(m_dirModel_01->rowCount(), 0);
     QCOMPARE(files.howManyExist(), 0);
+    QCOMPARE(steps,        m_progressCounter);
 }
 
 
@@ -595,7 +599,7 @@ void TestDirModel::modelCopyDirPasteIntoAnotherModel()
     m_dirModel_01->copyIndex(0);
     m_visibleProgressMessages = true;
     m_dirModel_02->paste();
-    int steps = m_dirModel_02->m_fsAction->m_curAction->steps;
+    int steps = m_dirModel_02->getProgressCounter();
     QTest::qWait(TIME_TO_PROCESS);
 
     QCOMPARE(m_dirModel_02->rowCount(),  1);
@@ -822,7 +826,7 @@ void TestDirModel::modelCutManyItemsPasteIntoAnotherModel()
     m_dirModel_01->cutPaths(allFiles);
     m_visibleProgressMessages = true;
     m_dirModel_02->paste();
-    int steps = m_dirModel_02->m_fsAction->m_curAction->steps;
+    int steps = m_dirModel_02->getProgressCounter();
     QTest::qWait(TIME_TO_PROCESS);
 
     QCOMPARE(m_dirModel_02->rowCount(),  itemsCreated); //pasted into

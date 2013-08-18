@@ -1586,3 +1586,18 @@ bool FileSystemAction::makeBackupNameForCurrentItem(Action *action)
     }
     return ret;
 }
+
+//==================================================================
+/*!
+ * \brief FileSystemAction::getProgressCounter
+ * \return number of progress notification from current Action
+ */
+int FileSystemAction::getProgressCounter() const
+{
+    int steps = 0;
+    if (m_curAction)
+    {
+        steps = m_curAction->steps;
+    }
+    return steps;
+}

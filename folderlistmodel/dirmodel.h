@@ -290,6 +290,19 @@ public:
      */
     Q_INVOKABLE bool  openPath(const QString& filename);
 
+    /*!
+     *   \brief getProgressCounter() returns the number of \ref progress() notifications an Action will perform
+     *
+     *   It may be useful to decide about showing or not a progress dialog for Remove/Copy/Cut/Paste Actions
+     *
+     *   This function can be called just after receiving first \ref progress() notification
+     *
+     *   \note In the future this \ref getProgressCounter() and \ref progress() will merge to single signal that
+     *         will send the Action full information, it will allow to have multi thread Actions.
+     *         Also \ref cancelAction() needs to  change
+     */
+    Q_INVOKABLE int   getProgressCounter() const;
+
     // some helper functions that can be useful to other QML applications than File Manager
     Q_INVOKABLE  bool  existsDir(const QString&  folderName) const;
     Q_INVOKABLE  bool  canReadDir(const QString& folderName) const;
