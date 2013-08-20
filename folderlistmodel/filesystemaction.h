@@ -99,11 +99,16 @@ public:
 
 public:
     bool     isBusy() const;
+    int      getProgressCounter() const;
+    int      clipboardLocalUrlsConunter();
 
 public slots:
     void     cancel();
-    void     remove(const QStringList & filePaths);
-    int      clipboardLocalUrlsConunter();
+    void     remove(const QStringList& filePaths);
+    void     pathChanged(const QString& path);
+    void     paste();
+    void     cut(const QStringList&);
+    void     copy(const QStringList&);
 
 signals:
     void     error(const QString& errorTitle, const QString &errorMessage);
@@ -113,12 +118,6 @@ signals:
     void     added(const QFileInfo& );
     void     progress(int curItem, int totalItems, int percent);
     void     clipboardChanged();
-
-public slots:
-    void     pathChanged(const QString& path);
-    void     paste();
-    void     cut(const QStringList& );
-    void     copy(const QStringList&);
 
 private slots:
     void     processAction();
@@ -142,9 +141,6 @@ private slots:
    };
    void     createAndProcessAction(ActionType actionType, const QStringList& paths,
                                    ClipboardOperation operation=NoClipboard);
-
-private:
-
    struct CopyFile
    {
      public:
@@ -199,6 +195,7 @@ private:
        bool                done;
        Action *            auxAction;
        bool                isAux;
+       int                 steps;
    };
 
    QVector<Action*>        m_queuedActions;  //!< work always at item 0, after finishing taking item 0 out

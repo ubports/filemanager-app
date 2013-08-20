@@ -56,6 +56,11 @@
 #define  STEP_FILES               5
 
 /*!
+  * buffer size to to single read/write operation
+ */
+#define  COPY_BUFFER_SIZE         4096
+
+/*!
  *  Auxiliar Actions do not emit progress() signal
  *  \sa moveDirToTempAndRemoveItLater()
  */
@@ -510,6 +515,7 @@ FileSystemAction::Action* FileSystemAction::createAction(ActionType type, int  o
     action->auxAction    = 0;
     action->isAux        = false;
     action->currEntry    = 0;
+    action->steps        = 1;
 
     return action;
 }
@@ -537,49 +543,62 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
                   );
         return;
     }
-    ActionEntry * entry = new ActionEntry();
-    QFileInfo   item;
+    ActionEntry * entry = new ActionEntry();    
+    //this is the item being handled
+    entry->reversedOrder.append(info);
+    // verify if the destination item already exists
+    if (action->type == ActionCopy ||
+        action->type == ActionMove ||
+        action->type == ActionHardMoveCopy)
+    {
+        QFileInfo destination(targetFom(info.absoluteFilePath(), action));
+        entry->alreadyExists = destination.exists();
+    }
     //ActionMove will perform a rename, so no Directory expanding is necessary
     if (action->type != ActionMove && info.isDir() && !info.isSymLink())
     {
         QDirIterator it(info.absoluteFilePath(),
                         QDir::AllEntries | QDir::System |
                               QDir::NoDotAndDotDot | QDir::Hidden,
-                        QDirIterator::Subdirectories);
+                        QDirIterator::Subdirectories);        
         while (it.hasNext() &&  !it.next().isEmpty())
+        {           
+            entry->reversedOrder.prepend(it.fileInfo());           
+        }
+    }
+    //set steps and total bytes considering all items in the Entry
+    int counter = entry->reversedOrder.count();
+    qint64 size = 0;
+    int sizeSteps = 0;
+    int bufferSize = (COPY_BUFFER_SIZE * STEP_FILES);
+    while (counter--)
+    {
+        const QFileInfo & item =  entry->reversedOrder.at(counter);
+        size =  (item.isFile() && !item.isDir() && !item.isSymLink()) ?
+                 item.size() :   COMMON_SIZE_ITEM;
+        action->totalBytes +=  size;
+        if (action->type == ActionCopy || action->type == ActionHardMoveCopy)
         {
-            item = it.fileInfo();
-            entry->reversedOrder.prepend(it.fileInfo());
-            if (item.isFile() && !item.isDir() && !item.isSymLink())
+            if ( (sizeSteps = size / bufferSize) )
             {
-                action->totalBytes += item.size();
-            }
-            else
-            {
-                action->totalBytes += COMMON_SIZE_ITEM;
+                if ( !(size % bufferSize) )
+                {
+                    --sizeSteps;
+                }
+                action->steps      += sizeSteps ;
             }
         }
     }
-    //this is the item being handled
-    entry->reversedOrder.append(info);
-
-    // verify if the destination item already exists
-    if (action->type == ActionCopy || action->type == ActionMove ||
-            action->type == ActionHardMoveCopy)
-    {
-        QFileInfo destination(targetFom(info.absoluteFilePath(), action));
-        entry->alreadyExists = destination.exists();
-    }
-
+    //set final steps for the Entry based on Items number
+    int entrySteps = entry->reversedOrder.count() / STEP_FILES;
+    if ( entry->reversedOrder.count() % STEP_FILES) entrySteps++;
+    action->steps      += entrySteps;
     action->totalItems += entry->reversedOrder.count();
-    if (info.isFile() && !info.isDir() && !info.isSymLink())
-    {
-        action->totalBytes += info.size();
-    }
-    else
-    {
-        action->totalBytes += COMMON_SIZE_ITEM;
-    }
+#if DEBUG_MESSAGES
+    qDebug() << "entrySteps" << entrySteps << "from entry counter" << entry->reversedOrder.count()
+             << "total steps" << action->steps;
+#endif
+    //now put the Entry in the Action
     action->entries.append(entry);
 }
 
@@ -1076,17 +1095,23 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
     myAction->origPath           = QFileInfo(paths.at(0)).absolutePath();
     myAction->baseOrigSize       = myAction->origPath.length();  
     for (int counter=0; counter < paths.count(); counter++)
-    {
-        //targetFom() uses m_curAction and is called inside addEntry()
+    {      
         addEntry(myAction, paths.at(counter));
     }
     if (myAction->totalItems > 0)
-    {     
+    {             
         if (actionType == ActionHardMoveCopy)
         {
-            myAction->totalItems *= 2; //duplicate this
-            myAction->totalBytes *= 2;
+            myAction->totalItems *= 2; //duplicate this           
         }
+        /*
+        if (actionType == ActionHardMoveCopy || actionType == ActionCopy)
+        {
+            //if a file size is less than (COPY_BUFFER_SIZE * STEP_FILES) a single step does that
+            //and it is already computed
+            myAction->steps +=  myAction->totalBytes / (COPY_BUFFER_SIZE * STEP_FILES);
+        }
+        */
         if (operation == ClipboardCut)
         {
             //this must still be false when cut finishes to change the clipboard to the target
@@ -1100,7 +1125,7 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
     }
     else
     {   // no items were added into the Action, maybe items were removed
-        //addEntry() emits error() sigbnal when items do not exist
+        //addEntry() emits error() signal when items do not exist
         delete myAction;
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << "Action is empty, no work to do";
@@ -1228,7 +1253,7 @@ bool FileSystemAction::processCopySingleFile()
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO;
 #endif
-    char block[4096];
+    char block[COPY_BUFFER_SIZE];
     int  step = 0;
     bool copySingleFileDone = false;
     bool scheduleAnySlot    = true;
@@ -1560,4 +1585,19 @@ bool FileSystemAction::makeBackupNameForCurrentItem(Action *action)
         }
     }
     return ret;
+}
+
+//==================================================================
+/*!
+ * \brief FileSystemAction::getProgressCounter
+ * \return number of progress notification from current Action
+ */
+int FileSystemAction::getProgressCounter() const
+{
+    int steps = 0;
+    if (m_curAction)
+    {
+        steps = m_curAction->steps;
+    }
+    return steps;
 }
