@@ -52,7 +52,7 @@
 #include <QUrl>
 #include <QDesktopServices>
 
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL) || QT_VERSION >= 0x050000
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL) && QT_VERSION >= 0x050000
 # include <QMimeType>
 # include <QMimeDatabase>
 #endif
@@ -212,22 +212,19 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
     {
         return QVariant();
     }
-    if (role == Qt::DecorationRole)
-    {
-        if (index.column() == 0)
-        {
-            QMimeDatabase database;
-            QIcon icon;
-            QMimeType mime = database.mimeTypeForFile(mDirectoryContents.at(index.row()));
-            if (mime.isValid()) {               
-                icon = QIcon::fromTheme(mime.iconName());                
-            }
-            if (icon.isNull()) {
-                icon = QFileIconProvider().icon(mDirectoryContents.at(index.row()));             
-            }           
-            return icon;
+    if (role == Qt::DecorationRole && index.column() == 0)
+    {             
+#if QT_VERSION >= 0x050000
+        QIcon icon;
+        QMimeDatabase database;
+        QMimeType mime = database.mimeTypeForFile(mDirectoryContents.at(index.row()));
+        if (mime.isValid()) {
+            icon = QIcon::fromTheme(mime.iconName());
         }
-        return QVariant();
+#else
+        QIcon icon =  QFileIconProvider().icon(mDirectoryContents.at(index.row()));
+#endif
+        return icon;
     }
     role = FileNameRole + index.column();
 #else
@@ -297,49 +294,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         case TrackGenreRole:
         case TrackLengthRole:
         case TrackCoverRole:
-            if (!fi.isDir() && mReadsMediaMetadata) {
-                TagLib::FileRef f(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::AudioProperties::Fast);
-                TagLib::MPEG::File mp3(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
-                TagLib::Tag *tag = f.tag();
-                TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];
-                switch (role) {
-                    case TrackTitleRole:
-                        return QString::fromUtf8(tag->title().toCString(true));
-                    case TrackArtistRole:
-                        return QString::fromUtf8(tag->artist().toCString(true));
-                    case TrackAlbumRole:
-                        return QString::fromUtf8(tag->album().toCString(true));
-                    case TrackYearRole:
-                        return QString::number(tag->year());
-                    case TrackNumberRole:
-                        return QString::number(tag->track());
-                    case TrackGenreRole:
-                        return QString::fromUtf8(tag->genre().toCString(true));
-                    case TrackLengthRole:
-                        if(!f.isNull() && f.audioProperties()) {
-                            return QString::number(f.audioProperties()->length());
-                        } else {
-                            return QString::number(0);
-                        }
-                    case TrackCoverRole:
-                        if(!list.isEmpty()) {
-                            TagLib::ID3v2::AttachedPictureFrame *Pic = static_cast<TagLib::ID3v2::AttachedPictureFrame *>(list.front());
-                            QImage img;
-                            img.loadFromData((const uchar *) Pic->picture().data(), Pic->picture().size());
-                            return img;
-                        } else {
-                            return "";
-                        }
-
-                    default:
-                        // this should not happen, ever
-                        Q_ASSERT(false);
-                        qWarning() << Q_FUNC_INFO << "Got an unknown role: " << role;
-                        return QVariant();
-                }
-            } else {
-                return "";
-            }
+            return getAudioMetaData(fi, role);
 #endif
         default:
 #if !defined(REGRESSION_TEST_FOLDERLISTMODEL)
@@ -1434,3 +1389,48 @@ int DirModel::getProgressCounter() const
 {
     return m_fsAction->getProgressCounter();
 }
+
+
+
+#ifndef DO_NOT_USE_TAG_LIB
+QVariant DirModel::getAudioMetaData(const QFileInfo& fi, int role) const
+{
+    QVariant empty;
+    if (!fi.isDir() && mReadsMediaMetadata) {
+        TagLib::FileRef f(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::AudioProperties::Fast);
+        TagLib::MPEG::File mp3(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
+        TagLib::Tag *tag = f.tag();
+        TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];
+        switch (role) {
+            case TrackTitleRole:
+                return QString::fromUtf8(tag->title().toCString(true));
+            case TrackArtistRole:
+                return QString::fromUtf8(tag->artist().toCString(true));
+            case TrackAlbumRole:
+                return QString::fromUtf8(tag->album().toCString(true));
+            case TrackYearRole:
+                return QString::number(tag->year());
+            case TrackNumberRole:
+                return QString::number(tag->track());
+            case TrackGenreRole:
+                return QString::fromUtf8(tag->genre().toCString(true));
+            case TrackLengthRole:
+                if(!f.isNull() && f.audioProperties()) {
+                    return QString::number(f.audioProperties()->length());
+                } else {
+                    return QString::number(0);
+                }
+            case TrackCoverRole:
+                if(!list.isEmpty()) {
+                    TagLib::ID3v2::AttachedPictureFrame *Pic = static_cast<TagLib::ID3v2::AttachedPictureFrame *>(list.front());
+                    QImage img;
+                    img.loadFromData((const uchar *) Pic->picture().data(), Pic->picture().size());
+                    return img;
+                }
+            default:
+                break;
+        } //switch
+    }
+    return empty;
+}
+#endif

@@ -21,8 +21,12 @@
 #include <QIcon>
 #include <QPixmap>
 #include <QFileIconProvider>
-#include <QMimeDatabase>
+
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL) && QT_VERSION >= 0x050000
 #include <QMimeType>
+#include <QMimeDatabase>
+#endif
+
 #include <QCryptographicHash>
 #include <QDesktopServices>
 #include <QFile>
@@ -100,8 +104,10 @@ private Q_SLOTS:
     void  modelCutAndPaste3Times();
     void  modelCutAndPasteInTheSamePlace();
     void  modelCopyAndPasteToBackupFiles();
-    void  getThemeIcons();
     void  fileIconProvider();
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL) && QT_VERSION >= 0x050000
+    void  getThemeIcons();
+#endif
 #ifndef DO_NOT_USE_TAG_LIB
     void  verifyMP3Metadata();
 #endif
@@ -1623,6 +1629,7 @@ void TestDirModel::watchExternalChanges()
 }
 
 
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL) && QT_VERSION >= 0x050000
 void TestDirModel::getThemeIcons()
 {
     QStringList mimesToTest = QStringList()
@@ -1683,6 +1690,7 @@ void TestDirModel::getThemeIcons()
         md5IconsTable.insert(md5, mimesToTest.at(counter));
     }
 }
+#endif
 
 
 bool TestDirModel::createFileAndCheckIfIconIsExclisive(const QString& termination,
@@ -1742,19 +1750,26 @@ void TestDirModel::verifyMP3Metadata()
                                           reinterpret_cast<const char*>(sound_44100_mp3_data),
                                           sound_44100_mp3_data_len);
     QCOMPARE(mp3File.isEmpty(),   false);
-    QUrl mp3Url = QUrl::fromLocalFile(mp3File);
 
-    TagLib::FileRef f(mp3File.toStdString().c_str(), true, TagLib::AudioProperties::Fast);
-    TagLib::Tag *tag = f.tag();
+    m_dirModel_01 = new DirModel();
+    m_dirModel_01->setReadsMediaMetadata(true);
+    QFileInfo fi(mp3File);
 
-    QCOMPARE(TStringToQString(tag->title()), QString("TitleTest"));
-    QCOMPARE(TStringToQString(tag->artist()), QString("ArtistTest"));
-    QCOMPARE(TStringToQString(tag->album()), QString("AlbumTest"));
-    QCOMPARE(QString::number(tag->year()), QString::number(2013));
-    QCOMPARE(QString::number(tag->track()), QString::number(99));
-    QCOMPARE(TStringToQString(tag->genre()), QString("GenreTest"));
+    QString title  = m_dirModel_01->getAudioMetaData(fi, DirModel::TrackTitleRole).toString();
+    QString artist = m_dirModel_01->getAudioMetaData(fi, DirModel::TrackArtistRole).toString();
+    QString album  = m_dirModel_01->getAudioMetaData(fi, DirModel::TrackAlbumRole).toString();
+    QString year   = m_dirModel_01->getAudioMetaData(fi, DirModel::TrackYearRole).toString();
+    QString track  = m_dirModel_01->getAudioMetaData(fi, DirModel::TrackNumberRole).toString();
+    QString genre  = m_dirModel_01->getAudioMetaData(fi, DirModel::TrackGenreRole).toString();
 
     QFile::remove(mp3File);
+
+    QCOMPARE(title,     QString("TitleTest"));
+    QCOMPARE(artist,    QString("ArtistTest"));
+    QCOMPARE(album,     QString("AlbumTest"));
+    QCOMPARE(year,      QString::number(2013));
+    QCOMPARE(track,     QString::number(99));
+    QCOMPARE(genre,     QString("GenreTest"));
 }
 #endif
 

@@ -424,7 +424,10 @@ public:
 private:
 #endif
     FileSystemAction  *  m_fsAction;  //!< it does file system recursive remove/copy/move
-    QString fileSize(qint64 size)  const;
+    QString  fileSize(qint64 size)  const;
+#ifndef DO_NOT_USE_TAG_LIB
+    QVariant getAudioMetaData(const QFileInfo& fi, int role) const;
+#endif
 //[0]
 };
 
