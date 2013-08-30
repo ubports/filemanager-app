@@ -94,18 +94,6 @@ Popover {
                     rightMargin: units.gu(1)
                 }
 
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0
-                        color: "green"//Qt.rgba(0,0.7,0,1)
-                    }
-
-                    GradientStop {
-                        position: 1
-                        color: Qt.rgba(0.3,0.7,0.3,1)
-                    }
-                }
-
                 text: i18n.tr("Go")
                 enabled: locationField.acceptableInput && locationField.valid
 

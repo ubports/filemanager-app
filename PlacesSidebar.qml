@@ -23,9 +23,8 @@ import Ubuntu.Components.Popups 0.1
 Sidebar {
     id: root
 
-    color: "gray"
-
-    width: units.gu(25)
+    color: Qt.rgba(0.5,0.5,0.5,0.3)
+    width: units.gu(30)
 
     ListModel {
         id: places
