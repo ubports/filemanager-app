@@ -42,6 +42,9 @@ class TestFolderListPage(FileManagerTestCase):
 
     def _patch_home(self):
         temp_dir = tempfile.mkdtemp()
+        shutil.copyfile(
+                os.path.expanduser(os.path.join('~', '.Xauthority')),
+                os.path.join(temp_dir, '.Xauthority'))
         self.addCleanup(shutil.rmtree, temp_dir)
         patcher = mock.patch.dict('os.environ', {'HOME': temp_dir})
         patcher.start()
