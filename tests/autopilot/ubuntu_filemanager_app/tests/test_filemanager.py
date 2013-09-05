@@ -57,7 +57,8 @@ class TestFolderListPage(FileManagerTestCase):
         first_file = self._get_file_by_index(0)
         first_file.open_actions_popover()
 
-        self.assertThat(self.main_view.get_file_actions_popover, Eventually(Not(Is(None))))
+        self.assertThat(self.main_view.get_file_actions_popover,
+             Eventually(Not(Is(None))))
         file_actions_popover = self.main_view.get_file_actions_popover()
         self.assertThat(
             lambda: file_actions_popover.visible, Eventually(Equals(True)))
@@ -99,7 +100,8 @@ class TestFolderListPage(FileManagerTestCase):
         first_file = self._get_file_by_index(0)
         first_file.open_actions_popover()
 
-        self.assertThat(self.main_view.get_file_actions_popover, Eventually(Not(Is(None))))
+        self.assertThat(self.main_view.get_file_actions_popover,
+             Eventually(Not(Is(None))))
         file_actions_popover = self.main_view.get_file_actions_popover()
         self.assertThat(
             lambda: file_actions_popover.visible, Eventually(Equals(True)))
@@ -311,7 +313,8 @@ class TestFolderListPage(FileManagerTestCase):
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('actions')
 
-        self.assertThat(self.main_view.get_folder_actions_popover, Eventually(Not(Is(None))))
+        self.assertThat(self.main_view.get_folder_actions_popover,
+             Eventually(Not(Is(None))))
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Create New Folder')
         self._confirm_dialog(dir_name)
@@ -371,7 +374,8 @@ class TestFolderListPage(FileManagerTestCase):
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('actions')
 
-        self.assertThat(self.main_view.get_folder_actions_popover, Eventually(Not(Is(None))))
+        self.assertThat(self.main_view.get_folder_actions_popover,
+             Eventually(Not(Is(None))))
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
         self.assertThat(
@@ -416,7 +420,8 @@ class TestFolderListPage(FileManagerTestCase):
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('actions')
 
-        self.assertThat(self.main_view.get_folder_actions_popover, Eventually(Not(Is(None))))
+        self.assertThat(self.main_view.get_folder_actions_popover,
+             Eventually(Not(Is(None))))
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
         self.assertThat(
@@ -462,7 +467,8 @@ class TestFolderListPage(FileManagerTestCase):
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('actions')
 
-        self.assertThat(self.main_view.get_folder_actions_popover, Eventually(Not(Is(None))))
+        self.assertThat(self.main_view.get_folder_actions_popover,
+             Eventually(Not(Is(None))))
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
 
@@ -505,7 +511,8 @@ class TestFolderListPage(FileManagerTestCase):
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('actions')
 
-        self.assertThat(self.main_view.get_folder_actions_popover, Eventually(Not(Is(None))))
+        self.assertThat(self.main_view.get_folder_actions_popover,
+             Eventually(Not(Is(None))))
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
         self.assertThat(
