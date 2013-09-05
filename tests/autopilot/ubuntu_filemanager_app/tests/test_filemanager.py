@@ -19,6 +19,7 @@
 from __future__ import absolute_import
 
 import tempfile
+import unittest
 
 import mock
 import os
