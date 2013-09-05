@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Authored by: Michael Spencer <spencers1993@gmail.com>
+ * Authored by: Michael Spencer <sonrisesoftware@gmail.com>
  */
 import QtQuick 2.0
 import Ubuntu.Components 0.1
@@ -23,9 +23,8 @@ import Ubuntu.Components.Popups 0.1
 Sidebar {
     id: root
 
-    color: "gray"
-
-    width: units.gu(25)
+    color: Qt.rgba(0.5,0.5,0.5,0.3)
+    width: units.gu(30)
 
     ListModel {
         id: places

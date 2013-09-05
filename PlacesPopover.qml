@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Authored by: Michael Spencer <spencers1993@gmail.com>
+ * Authored by: Michael Spencer <sonrisesoftware@gmail.com>
  */
 import QtQuick 2.0
 import Ubuntu.Components 0.1
@@ -92,18 +92,6 @@ Popover {
                     bottom: locationField.bottom
                     right: parent.right
                     rightMargin: units.gu(1)
-                }
-
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0
-                        color: "green"//Qt.rgba(0,0.7,0,1)
-                    }
-
-                    GradientStop {
-                        position: 1
-                        color: Qt.rgba(0.3,0.7,0.3,1)
-                    }
                 }
 
                 text: i18n.tr("Go")

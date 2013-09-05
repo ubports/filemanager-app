@@ -23,7 +23,6 @@ import org.nemomobile.folderlistmodel 1.0
 
 Page {
     id: root
-    anchors.fill: parent
 
     title: folderName(folder)
 
@@ -351,28 +350,31 @@ Page {
         }
 
         ToolbarButton {
+            id: actionsButton
             objectName: "actions"
             text: i18n.tr("Actions")
             iconSource: "icons/edit.png"
 
             onTriggered: {
                 print(text)
-                PopupUtils.open(folderActionsPopoverComponent, caller)
+                PopupUtils.open(folderActionsPopoverComponent, actionsButton)
             }
         }
 
         ToolbarButton {
             text: i18n.tr("Options")
             iconSource: "icons/settings.png"
+            id: optionsButton
 
             onTriggered: {
                 print(text)
 
-                PopupUtils.open(Qt.resolvedUrl("OptionsPopover.qml"), caller)
+                PopupUtils.open(Qt.resolvedUrl("OptionsPopover.qml"), optionsButton)
             }
         }
 
         ToolbarButton {
+            id: goToButton
             visible: wideAspect
             objectName: "goTo"
             text: i18n.tr("Go To")
@@ -380,11 +382,12 @@ Page {
             onTriggered: {
                 print(text)
 
-                PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), caller)
+                PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), goToButton)
             }
         }
 
         ToolbarButton {
+            id: placesButton
             visible: !wideAspect
             objectName: "places"
             text: i18n.tr("Places")
@@ -392,17 +395,7 @@ Page {
             onTriggered: {
                 print(text)
 
-                PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), caller)
-            }
-        }
-
-        ToolbarButton {
-            text: i18n.tr("Settings")
-            iconSource: "icons/settings.png"
-            onTriggered: {
-                print(text)
-
-                showSettings()
+                PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), placesButton)
             }
         }
     }
@@ -415,7 +408,6 @@ Page {
 
         anchors {
             top: parent.top
-            topMargin: units.gu(9.5)
             bottom: parent.bottom
             bottomMargin: units.gu(-2)
         }
@@ -425,6 +417,7 @@ Page {
 
     Item {
         id: contents
+
         anchors {
             top: parent.top
             bottom: parent.bottom
@@ -486,7 +479,7 @@ Page {
                 target: folderListView
 
                 anchors.top: contents.top
-                anchors.topMargin: units.gu(9.5)
+                //anchors.topMargin: units.gu(9.5)
                 topMargin: 0
             }
 
@@ -495,18 +488,18 @@ Page {
                 anchors.top: root.top
                 anchors.topMargin: 0
             }
-        },
-
-        //FIXME: This should automatically be calculated - is there a way to remove it?
-        State {
-            name: ""
-
-            PropertyChanges {
-                target: folderListView
-
-                topMargin: units.gu(9.5)
-            }
         }
+
+//        //FIXME: This should automatically be calculated - is there a way to remove it?
+//        State {
+//            name: ""
+
+//            PropertyChanges {
+//                target: folderListView
+
+//                topMargin: units.gu(9.5)
+//            }
+//        }
 
     ]
 

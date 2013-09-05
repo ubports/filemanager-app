@@ -19,6 +19,7 @@ import QtQuick 2.0
 import Ubuntu.Components 0.1
 import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 0.1
+import U1db 1.0 as U1db
 
 /*!
     \brief MainView with Tabs element.
@@ -32,76 +33,99 @@ MainView {
     objectName: "filemanager"
     applicationName: "ubuntu-filemanager-app"
 
-    width: units.gu(50)
+    width: units.gu(100)
     height: units.gu(75)
 
     property alias filemanager: root
 
     property bool wideAspect: width >= units.gu(80)
 
-    // Default settings
-    property var settings: {"showAdvancedFeatures": false}
-
-    property bool needsRefreshSettings: true
-
-    // Individual settings, used for bindings
-    property bool showAdvancedFeatures: false
-
     headerColor: "#303030"
     backgroundColor: "#505050"
     footerColor: "#707070"
 
-    FolderListPage {
-        id: folderPage
-        objectName: "folderPage"
+    property var pageStack: pageStack
 
-        folder: homeFolder
-    }
+    PageStack {
+        id: pageStack
 
-    Component {
-        id: settingsSheet
+        Tabs {
+            id: tabs
 
-        SettingsSheet {
-            objectName: "settingsSheet"
-        }
-    }
+            Tab {
+                title: page.title
+                page: FolderListPage {
+                    id: folderPage
+                    objectName: "folderPage"
 
-    Storage {
-        id: storage
-    }
-
-    function showSettings() {
-        PopupUtils.open(settingsSheet)
-    }
-
-    function reloadSettings() {
-        showAdvancedFeatures = settings["showAdvancedFeatures"] === "true" ? true : false
-        print("showAdvancedFeatures <=", showAdvancedFeatures)
-    }
-
-    function refreshSettings() {
-        if (needsRefreshSettings) {
-            storage.getSettings(function(storedSettings) {
-                for(var settingName in storedSettings) {
-                    print(settingName, "=", storedSettings[settingName])
-                    settings[settingName] = storedSettings[settingName]
+                    folder: homeFolder
                 }
+            }
 
-                reloadSettings()
-            })
-
-            needsRefreshSettings = false
+            Tab {
+                title: page.title
+                page: SettingsPage {
+                    id: settingsPage
+                }
+            }
         }
+
+        Component.onCompleted: {
+            pageStack.push(tabs)
+            pageStack.push(Qt.resolvedUrl("FolderListPage.qml"))
+            pageStack.pop()
+        }
+    }
+
+    /* Settings Storage */
+
+    U1db.Database {
+        id: storage
+        path: "ubuntu-filemanager-app.db"
+    }
+
+    U1db.Document {
+        id: settings
+
+        database: storage
+        docId: 'settings'
+        create: true
+
+        defaults: {
+            showAdvancedFeatures: false
+        }
+    }
+
+    // Individual settings, used for bindings
+    property bool showAdvancedFeatures: false
+
+    function getSetting(name, def) {
+        var tempContents = {};
+        tempContents = settings.contents
+        var value = tempContents.hasOwnProperty(name)
+                ? tempContents[name]
+                : settings.defaults.hasOwnProperty(name)
+                  ? settings.defaults[name]
+                  : def
+        //print(name, JSON.stringify(def), JSON.stringify(value))
+        return value
     }
 
     function saveSetting(name, value) {
-        // Check if the setting was changed
-        if(settings[name] !== value) {
-            print(name, "=>", value)
-            storage.saveSetting(name, value)
-            needsRefreshSettings = true
+        if (getSetting(name) !== value) {
+            //print(name, "=>", value)
+            var tempContents = {}
+            tempContents = settings.contents
+            tempContents[name] = value
+            settings.contents = tempContents
+
+            reloadSettings()
         }
     }
 
-    Component.onCompleted: refreshSettings();
+    function reloadSettings() {
+        showAdvancedFeatures = getSetting("showAdvancedFeatures", false)
+    }
+
+    Component.onCompleted: reloadSettings()
 }
