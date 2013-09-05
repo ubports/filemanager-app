@@ -68,6 +68,9 @@ class TestFolderListPage(FileManagerTestCase):
         return path
 
     def _assert_number_of_files(self, expected_number_of_files):
+        self.assertThat(
+            self.main_view.get_folder_list_page,
+            Eventually(Not(Is(None))))
         folder_list_page = self.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_number_of_files_from_list,
@@ -77,6 +80,9 @@ class TestFolderListPage(FileManagerTestCase):
             Eventually(Equals(expected_number_of_files)))
 
     def _get_file_by_index(self, index):
+        self.assertThat(
+            self.main_view.get_folder_list_page,
+            Eventually(Not(Is(None))))
         folder_list_page = self.main_view.get_folder_list_page()
         return folder_list_page.get_file_by_index(index)
 
