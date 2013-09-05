@@ -27,7 +27,7 @@ import shutil
 from autopilot import process
 from autopilot.platform import model
 from autopilot.matchers import Eventually
-from testtools.matchers import Equals, NotEquals
+from testtools.matchers import Equals, NotEquals, Not, Is
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
 
