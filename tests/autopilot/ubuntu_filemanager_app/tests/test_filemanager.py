@@ -113,7 +113,6 @@ class TestFolderListPage(FileManagerTestCase):
     def _make_directory_in_home(self):
         return self._make_content_in_home('directory')
 
-
     def _open_directory(self, item):
         expected_path = item.filePath
         list_view = item.list_view
@@ -469,7 +468,7 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             first_dir.fileName, Eventually(Equals(destination_dir_name)))
 
-    @unittest.skip("Test randomly fails in jenkins vm, despite being a clone of cut; disabling for now")
+    @unittest.skip("Test randomly fails in jenkins vm, skip for now")
     def test_copy_file(self):
         # Set up a file to copy and a directory to copy it into.
         destination_dir_path = self._make_directory_in_home()
@@ -611,4 +610,3 @@ class TestFolderListPage(FileManagerTestCase):
         file_actions_popover = self.main_view.get_file_actions_popover()
         self.assertThat(
             lambda: file_actions_popover.visible, Eventually(Equals(True)))
-
