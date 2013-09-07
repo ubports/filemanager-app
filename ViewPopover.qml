@@ -22,7 +22,7 @@ import Ubuntu.Components.ListItems 0.1
 
 Popover {
     id: root
-    objectName: "settingsPopover"
+    objectName: "viewPopover"
 
     Column {
         anchors {

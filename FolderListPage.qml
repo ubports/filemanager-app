@@ -362,14 +362,14 @@ Page {
         }
 
         ToolbarButton {
-            text: i18n.tr("Options")
+            text: i18n.tr("View")
             iconSource: "icons/settings.png"
             id: optionsButton
 
             onTriggered: {
                 print(text)
 
-                PopupUtils.open(Qt.resolvedUrl("OptionsPopover.qml"), optionsButton)
+                PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), optionsButton)
             }
         }
 
