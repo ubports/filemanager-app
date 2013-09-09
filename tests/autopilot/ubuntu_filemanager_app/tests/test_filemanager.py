@@ -46,7 +46,8 @@ class TestFolderListPage(FileManagerTestCase):
         temp_dir = tempfile.mkdtemp()
         #if the Xauthority file is in home directory
         #make sure we copy it to temp home, otherwise do nothing
-        if os.path.isfile('~/.Xauthority'):
+        xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
+        if os.path.isfile(xauth):
             shutil.copyfile(
                 os.path.expanduser(os.path.join('~', '.Xauthority')),
                 os.path.join(temp_dir, '.Xauthority'))
