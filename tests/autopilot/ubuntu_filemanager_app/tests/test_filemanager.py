@@ -42,8 +42,12 @@ class TestFolderListPage(FileManagerTestCase):
             self.main_view.visible, Eventually(Equals(True)))
 
     def _patch_home(self):
+        #create a temporary home for testing purposes
         temp_dir = tempfile.mkdtemp()
-        shutil.copyfile(
+        #if the Xauthority file is in home directory
+        #make sure we copy it to temp home, otherwise do nothing
+        if os.path.isfile('~/.Xauthority'):
+            shutil.copyfile(
             os.path.expanduser(os.path.join('~', '.Xauthority')),
             os.path.join(temp_dir, '.Xauthority'))
         self.addCleanup(shutil.rmtree, temp_dir)
