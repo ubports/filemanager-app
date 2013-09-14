@@ -421,7 +421,7 @@ private:
     virtual int columnCount(const QModelIndex &parent = QModelIndex()) const
     {
         Q_UNUSED(parent);
-        return IsExecutableRole - FileNameRole + 1;
+        return TrackCoverRole - FileNameRole + 1;
     }
     virtual QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
     friend class TestDirModel;

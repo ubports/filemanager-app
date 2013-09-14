@@ -1403,10 +1403,12 @@ QVariant DirModel::getAudioMetaData(const QFileInfo& fi, int role) const
     QVariant empty;
     if (!fi.isDir()) {
         TagLib::FileRef f(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::AudioProperties::Fast);
-        TagLib::MPEG::File mp3(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
+        TagLib::MPEG::File mp3(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);        
         TagLib::Tag *tag = f.tag();
-        TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];
-        switch (role) {
+        if (tag)
+        {
+            TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];
+            switch (role) {
             case TrackTitleRole:
                 return QString::fromUtf8(tag->title().toCString(true));
             case TrackArtistRole:
@@ -1434,7 +1436,8 @@ QVariant DirModel::getAudioMetaData(const QFileInfo& fi, int role) const
                 }
             default:
                 break;
-        } //switch
+            } //switch
+        }//if (tag)
     }
     return empty;
 }
