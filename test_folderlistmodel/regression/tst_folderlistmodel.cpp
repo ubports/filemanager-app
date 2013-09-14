@@ -79,6 +79,7 @@ private Q_SLOTS:
     void init();               //before every test
     void cleanup();            //after every test
 
+private Q_SLOTS: // test cases
     void  fsActionRemoveSingleFile();
     void  fsActionRemoveSingleDir();
     void  fsActionRemoveOneFileOneDir();

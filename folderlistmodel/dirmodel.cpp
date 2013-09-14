@@ -294,7 +294,11 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         case TrackGenreRole:
         case TrackLengthRole:
         case TrackCoverRole:
-            return getAudioMetaData(fi, role);
+             if (mReadsMediaMetadata)
+             {
+                 return getAudioMetaData(fi, role);
+             }
+             break;
 #endif
         default:
 #if !defined(REGRESSION_TEST_FOLDERLISTMODEL)
@@ -302,8 +306,10 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             Q_ASSERT(false);
             qWarning() << Q_FUNC_INFO << "Got an unknown role: " << role;
 #endif
-            return QVariant();
+            break;
     }
+
+    return QVariant();
 }
 
 void DirModel::setPath(const QString &pathName)
@@ -1265,7 +1271,6 @@ bool DirModel::existsDir(const QString &folderName) const
     return d.exists() && d.isDir();
 }
 
-
 bool  DirModel::canReadDir(const QString &folderName) const
 {
     QFileInfo d(setParentIfRelative(folderName));
@@ -1396,7 +1401,7 @@ int DirModel::getProgressCounter() const
 QVariant DirModel::getAudioMetaData(const QFileInfo& fi, int role) const
 {
     QVariant empty;
-    if (!fi.isDir() && mReadsMediaMetadata) {
+    if (!fi.isDir()) {
         TagLib::FileRef f(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::AudioProperties::Fast);
         TagLib::MPEG::File mp3(fi.absoluteFilePath().toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
         TagLib::Tag *tag = f.tag();
