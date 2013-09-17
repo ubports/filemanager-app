@@ -145,4 +145,8 @@ MainView {
     }
 
     Component.onCompleted: reloadSettings()
+
+    function getIcon(name) {
+        return Qt.resolvedUrl("icons/" + name + ".png")
+    }
 }

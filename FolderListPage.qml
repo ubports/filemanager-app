@@ -336,7 +336,7 @@ Page {
         back: ToolbarButton {
             objectName: "up"
             text: "Up"
-            iconSource: "icons/up.png"
+            iconSource: getIcon("up")
             visible: folder != "/"
             onTriggered: {
                 goTo(pageModel.parentPath)
@@ -347,7 +347,7 @@ Page {
             id: actionsButton
             objectName: "actions"
             text: i18n.tr("Actions")
-            iconSource: "icons/edit.png"
+            iconSource: getIcon("edit")
 
             onTriggered: {
                 print(text)
@@ -357,7 +357,7 @@ Page {
 
         ToolbarButton {
             text: i18n.tr("View")
-            iconSource: "icons/settings.png"
+            iconSource: getIcon("settings")
             id: optionsButton
 
             onTriggered: {
@@ -372,7 +372,7 @@ Page {
             visible: wideAspect
             objectName: "goTo"
             text: i18n.tr("Go To")
-            iconSource: "icons/location.png"
+            iconSource: getIcon("location")
             onTriggered: {
                 print(text)
 
@@ -385,7 +385,7 @@ Page {
             visible: !wideAspect
             objectName: "places"
             text: i18n.tr("Places")
-            iconSource: "icons/location.png"
+            iconSource: getIcon("location")
             onTriggered: {
                 print(text)
 
