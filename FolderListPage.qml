@@ -22,16 +22,16 @@ import Ubuntu.Components.ListItems 0.1
 import org.nemomobile.folderlistmodel 1.0
 
 Page {
-    id: root
+    id: folderListPage
 
     title: folderName(folder)
 
-    property variant fileView: root
+    property variant fileView: folderListPage
 
     property bool showHiddenFiles: false
 
     onShowHiddenFilesChanged: {
-        pageModel.showHiddenFiles = root.showHiddenFiles
+        pageModel.showHiddenFiles = folderListPage.showHiddenFiles
     }
 
     property string sortingMethod: "Name"
@@ -69,7 +69,7 @@ Page {
     property string path: folder.replace("~", pageModel.homePath())
 
     function goHome() {
-        goTo(root.homeFolder)
+        goTo(folderListPage.homeFolder)
     }
 
     function goTo(location) {
@@ -80,7 +80,7 @@ Page {
             location = location.substring(0, location.length - 1)
         }
 
-        root.folder = location.replace(pageModel.homePath(), "~")
+        folderListPage.folder = location.replace(pageModel.homePath(), "~")
         refresh()
     }
 
@@ -130,7 +130,7 @@ Page {
     function folderName(folder) {
         folder = folder.replace(pageModel.homePath(), "~")
 
-        if (folder === root.homeFolder) {
+        if (folder === folderListPage.homeFolder) {
             return i18n.tr("Home")
         } else if (folder === "/") {
             return i18n.tr("File System")
@@ -172,7 +172,7 @@ Page {
     FolderListModel {
         id: pageModel
 
-        path: root.path
+        path: folderListPage.path
 
         enableExternalFSWatcher: true
 
@@ -191,7 +191,7 @@ Page {
 
     FolderListModel {
         id: repeaterModel
-        path: root.folder
+        path: folderListPage.folder
 
         onPathChanged: {
             console.log("Path: " + repeaterModel.path)
@@ -212,7 +212,7 @@ Page {
                     onTriggered: {
                         print(text)
 
-                        PopupUtils.open(createFolderDialog, root)
+                        PopupUtils.open(createFolderDialog, folderListPage)
                     }
                 }
 
@@ -234,15 +234,7 @@ Page {
                             : i18n.tr("Paste %1 Files").arg(pageModel.clipboardUrlsCounter)
                     onTriggered: {
                         console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
-                        PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
-                                        root,
-                                        {
-                                            title: i18n.tr("Paste files"),
-                                            folderListModel: pageModel
-                                         }
-                                        )
-
-
+                        fileOperationDialog.startOperation(i18n.tr("Paste files"))
                         pageModel.paste()
                     }
 
@@ -270,7 +262,7 @@ Page {
                     onTriggered: {
                         print(text)
                         PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
-                                        root,
+                                        folderListPage,
                                             { "model": pageModel
                                             }
                                         )
@@ -469,7 +461,7 @@ Page {
         target: pageModel
         onError: {
             console.log("FolderListModel Error Title/Description", errorTitle, errorMessage)
-            PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), root,
+            PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
                             {
                                 // Unfortunately title can not handle too long texts. TODO: bug report
                                 // title: i18n.tr(errorTitle),
@@ -477,5 +469,12 @@ Page {
                                 text: errorTitle + ": " + errorMessage
                             })
         }
+    }
+
+    FileOperationProgressDialog {
+        id: fileOperationDialog
+
+        page: folderListPage
+        model: pageModel
     }
 }
