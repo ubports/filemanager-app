@@ -336,8 +336,10 @@ Page {
 
     tools: ToolbarItems {
         id: toolbar
-        locked: true
-        opened: true
+        locked: wideAspect
+        opened: wideAspect
+
+        onLockedChanged: opened = Qt.binding(function() { return wideAspect })
 
         back: ToolbarButton {
             objectName: "up"
@@ -402,17 +404,39 @@ Page {
 
     flickable: !wideAspect ? folderListView : null
 
+    onFlickableChanged: {
+        if (wideAspect) {
+            folderListView.topMargin = 0
+        } else {
+            folderListView.topMargin = units.gu(9.5)
+        }
+    }
+
     PlacesSidebar {
         id: sidebar
         objectName: "placesSidebar"
 
+//        anchors {
+//            top: parent.top
+//            bottom: parent.bottom
+//            bottomMargin: units.gu(-2)
+//        }
+
+        expanded: wideAspect
+    }
+
+    FolderListView {
+        id: folderListView
+
+        clip: true
+
+        folderListModel: pageModel
         anchors {
             top: parent.top
             bottom: parent.bottom
-            bottomMargin: units.gu(-2)
+            left: sidebar.right
+            right: parent.right
         }
-
-        expanded: wideAspect
     }
 
     Item {
@@ -423,22 +447,6 @@ Page {
             bottom: parent.bottom
             left: sidebar.right
             right: parent.right
-
-            // IMPROVE: this should work (?), but it doesn't. Height is undefined. Anyway in previous
-            // SDK version the parent size was properly initialized. Now the size of toolbar is not taken into
-            // account and apparently you can't even query toolbar's height.
-            // anchors.bottomMargin: toolbar.height
-            // Now in newer SDK (raring 19.07.2013) locked&opened toolbar is taken into
-            // account in some fashion, but the extra space left to the bottom without this
-            // bottomMargin definition seems to be exactly what is the height of Header's gray
-            // separator bar. This ugly workaround seems to give correct height for view at least on desktop.
-            // Bug report on this:
-            // https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1202881
-            // This bug report also affects this, as if the toolbar is hidden by default
-            // then there is no problem:
-            // https://bugs.launchpad.net/ubuntu-filemanager-app/+bug/1198861
-            // Hard-code it for now. Not nice at all:
-            bottomMargin: units.gu(-2)
         }
 
         Column {
@@ -454,54 +462,7 @@ Page {
                 height: units.gu(8)
             }
         }
-
-        FolderListView {
-            id: folderListView
-
-            clip: true
-
-            folderListModel: pageModel
-            anchors.fill: parent
-        }
     }
-
-    states: [
-        State {
-            name: "wide"
-            when: wideAspect
-            PropertyChanges {
-                target: tools
-                locked: true
-                opened: true
-            }
-
-            PropertyChanges {
-                target: folderListView
-
-                anchors.top: contents.top
-                //anchors.topMargin: units.gu(9.5)
-                topMargin: 0
-            }
-
-            PropertyChanges {
-                target: contents
-                anchors.top: root.top
-                anchors.topMargin: 0
-            }
-        }
-
-//        //FIXME: This should automatically be calculated - is there a way to remove it?
-//        State {
-//            name: ""
-
-//            PropertyChanges {
-//                target: folderListView
-
-//                topMargin: units.gu(9.5)
-//            }
-//        }
-
-    ]
 
     // Errors from model
     Connections {
