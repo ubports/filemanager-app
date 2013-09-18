@@ -22,16 +22,16 @@ import Ubuntu.Components.ListItems 0.1
 import org.nemomobile.folderlistmodel 1.0
 
 Page {
-    id: root
+    id: folderListPage
 
     title: folderName(folder)
 
-    property variant fileView: root
+    property variant fileView: folderListPage
 
     property bool showHiddenFiles: false
 
     onShowHiddenFilesChanged: {
-        pageModel.showHiddenFiles = root.showHiddenFiles
+        pageModel.showHiddenFiles = folderListPage.showHiddenFiles
     }
 
     property string sortingMethod: "Name"
@@ -69,7 +69,7 @@ Page {
     property string path: folder.replace("~", pageModel.homePath())
 
     function goHome() {
-        goTo(root.homeFolder)
+        goTo(folderListPage.homeFolder)
     }
 
     function goTo(location) {
@@ -80,7 +80,7 @@ Page {
             location = location.substring(0, location.length - 1)
         }
 
-        root.folder = location.replace(pageModel.homePath(), "~")
+        folderListPage.folder = location.replace(pageModel.homePath(), "~")
         refresh()
     }
 
@@ -130,7 +130,7 @@ Page {
     function folderName(folder) {
         folder = folder.replace(pageModel.homePath(), "~")
 
-        if (folder === root.homeFolder) {
+        if (folder === folderListPage.homeFolder) {
             return i18n.tr("Home")
         } else if (folder === "/") {
             return i18n.tr("File System")
@@ -172,7 +172,7 @@ Page {
     FolderListModel {
         id: pageModel
 
-        path: root.path
+        path: folderListPage.path
 
         enableExternalFSWatcher: true
 
@@ -191,7 +191,7 @@ Page {
 
     FolderListModel {
         id: repeaterModel
-        path: root.folder
+        path: folderListPage.folder
 
         onPathChanged: {
             console.log("Path: " + repeaterModel.path)
@@ -212,7 +212,7 @@ Page {
                     onTriggered: {
                         print(text)
 
-                        PopupUtils.open(createFolderDialog, root)
+                        PopupUtils.open(createFolderDialog, folderListPage)
                     }
                 }
 
@@ -234,15 +234,7 @@ Page {
                             : i18n.tr("Paste %1 Files").arg(pageModel.clipboardUrlsCounter)
                     onTriggered: {
                         console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
-                        PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
-                                        root,
-                                        {
-                                            title: i18n.tr("Paste files"),
-                                            folderListModel: pageModel
-                                         }
-                                        )
-
-
+                        fileOperationDialog.startOperation(i18n.tr("Paste files"))
                         pageModel.paste()
                     }
 
@@ -270,7 +262,7 @@ Page {
                     onTriggered: {
                         print(text)
                         PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
-                                        root,
+                                        folderListPage,
                                             { "model": pageModel
                                             }
                                         )
@@ -336,13 +328,15 @@ Page {
 
     tools: ToolbarItems {
         id: toolbar
-        locked: true
-        opened: true
+        locked: wideAspect
+        opened: wideAspect
+
+        onLockedChanged: opened = Qt.binding(function() { return wideAspect })
 
         back: ToolbarButton {
             objectName: "up"
             text: "Up"
-            iconSource: "icons/up.png"
+            iconSource: getIcon("up")
             visible: folder != "/"
             onTriggered: {
                 goTo(pageModel.parentPath)
@@ -353,7 +347,7 @@ Page {
             id: actionsButton
             objectName: "actions"
             text: i18n.tr("Actions")
-            iconSource: "icons/edit.png"
+            iconSource: getIcon("edit")
 
             onTriggered: {
                 print(text)
@@ -363,7 +357,7 @@ Page {
 
         ToolbarButton {
             text: i18n.tr("View")
-            iconSource: "icons/settings.png"
+            iconSource: getIcon("settings")
             id: optionsButton
 
             onTriggered: {
@@ -378,7 +372,7 @@ Page {
             visible: wideAspect
             objectName: "goTo"
             text: i18n.tr("Go To")
-            iconSource: "icons/location.png"
+            iconSource: getIcon("location")
             onTriggered: {
                 print(text)
 
@@ -391,7 +385,7 @@ Page {
             visible: !wideAspect
             objectName: "places"
             text: i18n.tr("Places")
-            iconSource: "icons/location.png"
+            iconSource: getIcon("location")
             onTriggered: {
                 print(text)
 
@@ -402,17 +396,39 @@ Page {
 
     flickable: !wideAspect ? folderListView : null
 
+    onFlickableChanged: {
+        if (wideAspect) {
+            folderListView.topMargin = 0
+        } else {
+            folderListView.topMargin = units.gu(9.5)
+        }
+    }
+
     PlacesSidebar {
         id: sidebar
         objectName: "placesSidebar"
 
+//        anchors {
+//            top: parent.top
+//            bottom: parent.bottom
+//            bottomMargin: units.gu(-2)
+//        }
+
+        expanded: wideAspect
+    }
+
+    FolderListView {
+        id: folderListView
+
+        clip: true
+
+        folderListModel: pageModel
         anchors {
             top: parent.top
             bottom: parent.bottom
-            bottomMargin: units.gu(-2)
+            left: sidebar.right
+            right: parent.right
         }
-
-        expanded: wideAspect
     }
 
     Item {
@@ -423,22 +439,6 @@ Page {
             bottom: parent.bottom
             left: sidebar.right
             right: parent.right
-
-            // IMPROVE: this should work (?), but it doesn't. Height is undefined. Anyway in previous
-            // SDK version the parent size was properly initialized. Now the size of toolbar is not taken into
-            // account and apparently you can't even query toolbar's height.
-            // anchors.bottomMargin: toolbar.height
-            // Now in newer SDK (raring 19.07.2013) locked&opened toolbar is taken into
-            // account in some fashion, but the extra space left to the bottom without this
-            // bottomMargin definition seems to be exactly what is the height of Header's gray
-            // separator bar. This ugly workaround seems to give correct height for view at least on desktop.
-            // Bug report on this:
-            // https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1202881
-            // This bug report also affects this, as if the toolbar is hidden by default
-            // then there is no problem:
-            // https://bugs.launchpad.net/ubuntu-filemanager-app/+bug/1198861
-            // Hard-code it for now. Not nice at all:
-            bottomMargin: units.gu(-2)
         }
 
         Column {
@@ -454,61 +454,14 @@ Page {
                 height: units.gu(8)
             }
         }
-
-        FolderListView {
-            id: folderListView
-
-            clip: true
-
-            folderListModel: pageModel
-            anchors.fill: parent
-        }
     }
-
-    states: [
-        State {
-            name: "wide"
-            when: wideAspect
-            PropertyChanges {
-                target: tools
-                locked: true
-                opened: true
-            }
-
-            PropertyChanges {
-                target: folderListView
-
-                anchors.top: contents.top
-                //anchors.topMargin: units.gu(9.5)
-                topMargin: 0
-            }
-
-            PropertyChanges {
-                target: contents
-                anchors.top: root.top
-                anchors.topMargin: 0
-            }
-        }
-
-//        //FIXME: This should automatically be calculated - is there a way to remove it?
-//        State {
-//            name: ""
-
-//            PropertyChanges {
-//                target: folderListView
-
-//                topMargin: units.gu(9.5)
-//            }
-//        }
-
-    ]
 
     // Errors from model
     Connections {
         target: pageModel
         onError: {
             console.log("FolderListModel Error Title/Description", errorTitle, errorMessage)
-            PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), root,
+            PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
                             {
                                 // Unfortunately title can not handle too long texts. TODO: bug report
                                 // title: i18n.tr(errorTitle),
@@ -516,5 +469,12 @@ Page {
                                 text: errorTitle + ": " + errorMessage
                             })
         }
+    }
+
+    FileOperationProgressDialog {
+        id: fileOperationDialog
+
+        page: folderListPage
+        model: pageModel
     }
 }

@@ -40,9 +40,13 @@ MainView {
 
     property bool wideAspect: width >= units.gu(80)
 
-    headerColor: "#303030"
-    backgroundColor: "#505050"
-    footerColor: "#707070"
+    headerColor: "#464646"
+    backgroundColor: "#797979"
+    footerColor: "#808080"
+
+//    headerColor: "#303030"
+//    backgroundColor: "#505050"
+//    footerColor: "#707070"
 
     property var pageStack: pageStack
 
@@ -76,6 +80,19 @@ MainView {
             pageStack.pop()
         }
     }
+
+    property var showToolbar: wideAspect ? true : undefined
+
+    states: [
+        State {
+            when: showToolbar && toolbar.tools.opened && toolbar.tools.locked
+
+            PropertyChanges {
+                target: pageStack
+                anchors.bottomMargin: -root.toolbar.triggerSize
+            }
+        }
+    ]
 
     /* Settings Storage */
 
@@ -128,4 +145,8 @@ MainView {
     }
 
     Component.onCompleted: reloadSettings()
+
+    function getIcon(name) {
+        return Qt.resolvedUrl("icons/" + name + ".png")
+    }
 }

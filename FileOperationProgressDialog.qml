@@ -22,11 +22,16 @@ import org.nemomobile.folderlistmodel 1.0
 
 Dialog {
     id: root
-    property FolderListModel folderListModel
+    property FolderListModel model
+    property Page page
     property string descriptionPrepend: i18n.tr("Operation in progress")
 
     title: "File operation"
     text: descriptionPrepend
+
+    function startOperation(name) {
+        root.title = name
+    }
 
     ProgressBar {
         id: progress
@@ -39,21 +44,34 @@ Dialog {
         text: i18n.tr("Cancel")
         onClicked: {
             console.log("Cancelling file progress action")
-            folderListModel.cancelAction()
+            model.cancelAction()
             PopupUtils.close(root)
         }
     }
 
     Connections {
-        target: folderListModel
+        target: model
         onProgress: {
+            // curItem == 0 && percent == 0 means the Action has just been created, check getProgressCounter() before
+            if (curItem == 0 && percent == 0) {
+                console.log("Creating dialog:", model.getProgressCounter())
+                if (model.getProgressCounter()  > 20) {
+                    // show/activate/make visible    the dialog here
+                    print("Showing dialog...")
+                    PopupUtils.open(root, page)
+                    root.show()
+                }
+            }
+
             console.log("On progress ", curItem, totalItems, percent)
+
             progress.value = percent
-            if (curItem == totalItems) {
+            if (percent == 100 && curItem == totalItems) {
                 console.log("All files processed, closing progress dialog")
-                PopupUtils.close(root)
+                //PopupUtils.close(root)
+                root.hide()
             } else {
-                root.text = descriptionPrepend + " " + curItem + "/" + totalItems
+                root.text = descriptionPrepend + " (" + curItem + "/" + totalItems + ")"
             }
         }
     }

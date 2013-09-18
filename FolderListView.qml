@@ -46,15 +46,7 @@ ListView {
             onAccepted: {
                 console.log("Delete accepted for filePath, fileName", filePath, fileName)
 
-                PopupUtils.open(Qt.resolvedUrl("FileOperationProgressDialog.qml"),
-                                root,
-                                {
-                                    title: i18n.tr("Deleting files"),
-                                    // descriptionPrepend: i18n.tr("Operation in progress"),
-                                    folderListModel: folderListModel
-                                 }
-                                )
-
+                fileOperationDialog.startOperation("Deleting files")
                 console.log("Doing delete")
                 folderListModel.rm(filePath)
             }
