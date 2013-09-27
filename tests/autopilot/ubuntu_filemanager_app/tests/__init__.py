@@ -29,8 +29,8 @@ class FileManagerTestCase(AutopilotTestCase):
         scenarios = [('with touch', dict(input_device_class=Touch))]
 
     local_location = "../../ubuntu-filemanager-app.qml"
-    installed_location = "/usr/share/ubuntu-filemanager-app/"
-    "ubuntu-filemanager-app.qml"
+    installed_location = "/usr/share/ubuntu-filemanager-app/" \
+                         "ubuntu-filemanager-app.qml"
 
     def setUp(self):
         self.pointing_device = Pointer(self.input_device_class.create())
