@@ -36,7 +36,7 @@ Popover {
         if (model.isReadable) {
             permissions.push(i18n.tr("Readable"))
         }
-        if (model.isWritable) {
+        if (pathIsWritable()) {
             permissions.push(i18n.tr("Writable"))
         }
         if (model.isExecutable) {
@@ -113,7 +113,7 @@ Popover {
                 color: Theme.palette.normal.overlayText
             }
             Label {
-                text: dateTimeFormat(model.accessedDate)
+                text: dateTimeFormat(pathAccessedDate())
                 color: Theme.palette.normal.overlayText
             }
 
@@ -122,7 +122,7 @@ Popover {
                 color: Theme.palette.normal.overlayText
             }
             Label {
-                text: dateTimeFormat(model.modifiedDate)
+                text: dateTimeFormat(pathModifiedDate())
                 color: Theme.palette.normal.overlayText
             }
 
