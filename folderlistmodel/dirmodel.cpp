@@ -396,6 +396,7 @@ void DirModel::setPath(const QString &pathName)
 
     mCurrentDir = pathName;
     emit pathChanged(pathName);
+    updateCurrentPathProperties();
 }
 
 
@@ -1178,6 +1179,7 @@ void DirModel::timerEvent(QTimerEvent *)
                 this,         SLOT(onExternalFsWatcherFinihed()));
 
         ioWorkerThread()->addRequest(fsWatcher);
+        updateCurrentPathProperties();
     }
 #if DEBUG_EXT_FS_WATCHER
     else
@@ -1433,4 +1435,17 @@ QFileInfo  DirModel::setParentIfRelative(const QString &fileOrDir) const
 int DirModel::getProgressCounter() const
 {
     return m_fsAction->getProgressCounter();
+}
+
+/*!
+ * \brief DirModel::updateCurrentPathProperties() emits all signal related to Path Properties
+ *
+ * It is a working around to notify those properties
+ */
+void DirModel::updateCurrentPathProperties()
+{
+    emit pathCreatedDateChanged();
+    emit pathAccessedDateChanged();
+    emit pathModifiedDateChanged();
+    emit pathIsWritableChanged();
 }
