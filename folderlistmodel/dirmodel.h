@@ -104,22 +104,15 @@ public:
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
     inline QString path() const { return mCurrentDir; }
     void setPath(const QString &pathName);
-
-    Q_PROPERTY(QDateTime pathAccessedDate  READ pathAccessedDate NOTIFY pathAccessedDateChanged)
-    QDateTime pathAccessedDate() const;
-
-    Q_PROPERTY(QDateTime pathCreatedDate  READ pathCreatedDate NOTIFY pathCreatedDateChanged)
-    QDateTime pathCreatedDate() const;
-
-    Q_PROPERTY(QDateTime pathModifiedDate READ  pathModifiedDate NOTIFY pathModifiedDateChanged)
-    QDateTime   pathModifiedDate() const;
-
-    Q_INVOKABLE QString     pathAccessedDateLocaleShort() const;
-    Q_INVOKABLE QString     pathCreatedDateLocaleShort() const;
-    Q_INVOKABLE QString     pathModifiedDateLocaleShort() const;
-
-    Q_PROPERTY(bool pathIsWritable  READ pathIsWritable NOTIFY pathIsWritableChanged)
-    bool pathIsWritable() const;
+    
+    Q_INVOKABLE QDateTime   curPathAccessedDate() const;
+    Q_INVOKABLE QDateTime   curPathCreatedDate()  const;
+    Q_INVOKABLE QDateTime   curPathModifiedDate() const;
+    Q_INVOKABLE QString     curPathAccessedDateLocaleShort() const;
+    Q_INVOKABLE QString     curPathCreatedDateLocaleShort()  const;
+    Q_INVOKABLE QString     curPathModifiedDateLocaleShort() const;
+    Q_INVOKABLE bool        curPathIsWritable() const;
+    
 
     Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
     bool awaitingResults() const;
@@ -159,12 +152,6 @@ signals:
     void showDirectoriesChanged();
     void pathChanged(const QString& newPath);
     void error(const QString &errorTitle, const QString &errorMessage);
-
-signals: //related to path properties which might not be properties, they would be Q_INVOKABLE only
-    void pathCreatedDateChanged();
-    void pathAccessedDateChanged();
-    void pathModifiedDateChanged();
-    void pathIsWritableChanged();
 
 private:
     QHash<int, QByteArray> buildRoleNames() const;
@@ -396,9 +383,7 @@ private:
                                                   const QString& pathName);
     bool          canReadDir(const QFileInfo& d)   const;
     bool          canReadFile(const QFileInfo& f)  const;
-    QFileInfo     setParentIfRelative(const QString &fileOrDir) const;
-
-    void          updateCurrentPathProperties(); //this is a work around
+    QFileInfo     setParentIfRelative(const QString &fileOrDir) const;  
 
 private:
     void          startExternalFsWatcher();
