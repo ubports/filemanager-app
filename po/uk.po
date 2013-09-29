@@ -1,0 +1,315 @@
+# Ukrainian translation for ubuntu-filemanager-app
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the ubuntu-filemanager-app package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ubuntu-filemanager-app\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-09-27 06:56+0200\n"
+"PO-Revision-Date: 2013-09-28 11:02+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@gmail.com>\n"
+"Language-Team: Ukrainian <uk@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2013-09-29 05:46+0000\n"
+"X-Generator: Launchpad (build 16774)\n"
+
+#: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
+#: ../NotifyDialog.qml:25
+msgid "Ok"
+msgstr "Гаразд"
+
+#: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
+#: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
+#: ../GoToDialog.qml:59
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: ../FileActionDialog.qml:30
+msgid "Choose action"
+msgstr "Виберіть дію"
+
+#: ../FileActionDialog.qml:31
+#, qt-format
+msgid "For file: %1"
+msgstr "Для файла: %1"
+
+#: ../FileActionDialog.qml:35
+msgid "Open"
+msgstr "Відкрити"
+
+#: ../FileDetailsPopover.qml:37
+msgid "Readable"
+msgstr "Придатний до читання"
+
+#: ../FileDetailsPopover.qml:40
+msgid "Writable"
+msgstr "Придатний до запису"
+
+#: ../FileDetailsPopover.qml:43
+msgid "Executable"
+msgstr "Виконуваний"
+
+#: ../FileDetailsPopover.qml:91
+msgid "Path:"
+msgstr "Тека:"
+
+#: ../FileDetailsPopover.qml:102
+msgid "Contents:"
+msgstr "Вміст:"
+
+#: ../FileDetailsPopover.qml:103
+msgid "Size:"
+msgstr "Розмір:"
+
+#: ../FileDetailsPopover.qml:112
+msgid "Accessed:"
+msgstr "Час доступу:"
+
+#: ../FileDetailsPopover.qml:121
+msgid "Modified:"
+msgstr "Остання зміна:"
+
+#: ../FileDetailsPopover.qml:130
+msgid "Permissions:"
+msgstr "Права доступу:"
+
+#: ../FileOperationProgressDialog.qml:27
+msgid "Operation in progress"
+msgstr "Виконується дія"
+
+#: ../FolderListPage.qml:101
+msgid "~/Desktop"
+msgstr "~/Стільниця"
+
+#: ../FolderListPage.qml:103
+msgid "~/Documents"
+msgstr "~/Документи"
+
+#: ../FolderListPage.qml:105
+msgid "~/Downloads"
+msgstr "~/Завантаження"
+
+#: ../FolderListPage.qml:107
+msgid "~/Music"
+msgstr "~/Музика"
+
+#: ../FolderListPage.qml:109
+msgid "~/Pictures"
+msgstr "~/Картинки"
+
+#: ../FolderListPage.qml:111
+msgid "~/Public"
+msgstr "~/Спільне"
+
+#: ../FolderListPage.qml:113
+msgid "~/Programs"
+msgstr "~/Програми"
+
+#: ../FolderListPage.qml:115
+msgid "~/Templates"
+msgstr "~/Шаблони"
+
+#: ../FolderListPage.qml:117
+msgid "~/Videos"
+msgstr "~/Відео"
+
+#: ../FolderListPage.qml:134
+msgid "Home"
+msgstr "Домівка"
+
+#: ../FolderListPage.qml:136
+msgid "File System"
+msgstr "Файлова система"
+
+#: ../FolderListPage.qml:182
+#, qt-format
+msgid "%1 file"
+msgid_plural "%1 files"
+msgstr[0] "%1 файл"
+msgstr[1] "%1 файли"
+msgstr[2] "%1 файлів"
+
+#: ../FolderListPage.qml:212
+msgid "Create New Folder"
+msgstr "Створити теку"
+
+#: ../FolderListPage.qml:232
+msgid "Paste"
+msgstr "Вставка"
+
+#: ../FolderListPage.qml:233
+#, qt-format
+msgid "Paste %1 file"
+msgid_plural "Paste %1 files"
+msgstr[0] "Вставити %1 файл"
+msgstr[1] "Вставити %1 файли"
+msgstr[2] "Вставити %1 файлів"
+
+#: ../FolderListPage.qml:238
+msgid "Paste files"
+msgstr "Вставити файли"
+
+#: ../FolderListPage.qml:250
+msgid "Open in Terminal"
+msgstr "Відкрити у терміналі"
+
+#: ../FolderListPage.qml:262 ../FolderListView.qml:152
+msgid "Properties"
+msgstr "Властивості"
+
+#: ../FolderListPage.qml:297
+msgid "Create folder"
+msgstr "Створити теку"
+
+#: ../FolderListPage.qml:298
+msgid "Enter name for new folder"
+msgstr "Вкажіть назву нової теки"
+
+#: ../FolderListPage.qml:314
+msgid "Create file"
+msgstr "Створити файл"
+
+#: ../FolderListPage.qml:315
+msgid "Enter name for new file"
+msgstr "Вкажіть назву нового файла"
+
+#: ../FolderListPage.qml:350
+msgid "Actions"
+msgstr "Дії"
+
+#: ../FolderListPage.qml:360
+msgid "View"
+msgstr "Переглянути"
+
+#: ../FolderListPage.qml:375
+msgid "Go To"
+msgstr "Перейти"
+
+#: ../FolderListPage.qml:388 ../PlacesSidebar.qml:73
+msgid "Places"
+msgstr "Місця"
+
+#: ../FolderListPage.qml:448
+msgid "No files"
+msgstr "Немає файлів"
+
+#: ../FolderListPage.qml:469
+msgid "File operation error"
+msgstr "Помилка при роботі з файлом"
+
+#. TRANSLATORS: this refers to the header shown for a folder
+#. %1 is the folder path and %2 the number of files it contains
+#: ../FolderListView.qml:35
+#, qt-format
+msgid "%1 (%2 file)"
+msgid_plural "%1 (%2 files)"
+msgstr[0] "%1 (%2 файл)"
+msgstr[1] "%1 (%2 файли)"
+msgstr[2] "%1 (%2 файлів)"
+
+#: ../FolderListView.qml:45 ../FolderListView.qml:126
+msgid "Delete"
+msgstr "Вилучити"
+
+#: ../FolderListView.qml:46
+#, qt-format
+msgid "Are you sure you want to permanently delete '%1'?"
+msgstr "Ви справді хочете остаточно вилучити «%1»?"
+
+#: ../FolderListView.qml:69 ../FolderListView.qml:139
+msgid "Rename"
+msgstr "Перейменувати"
+
+#: ../FolderListView.qml:70
+msgid "Enter a new name"
+msgstr "Введіть нове ім’я"
+
+#: ../FolderListView.qml:79
+msgid "Could not rename"
+msgstr "Не вдалося перейменувати"
+
+#: ../FolderListView.qml:80
+msgid "Insufficient permissions or name already exists?"
+msgstr "Недостатньо прав доступу або запис з такою назвою вже існує?"
+
+#: ../FolderListView.qml:103
+msgid "Cut"
+msgstr "Вирізати"
+
+#: ../FolderListView.qml:114
+msgid "Copy"
+msgstr "Копіювати"
+
+#: ../FolderListView.qml:177
+msgid "Folder not accessible"
+msgstr "Немає доступу до теки"
+
+#: ../FolderListView.qml:178
+msgid "Can not access "
+msgstr "Не вдалося отримати доступ до "
+
+#: ../GoToDialog.qml:25
+msgid "Go To Location"
+msgstr "Перехід за адресою"
+
+#: ../GoToDialog.qml:27
+msgid "Enter a location to go to:"
+msgstr "Вкажіть адресу, за якою слід перейти:"
+
+#: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
+msgid "Location..."
+msgstr "Місце…"
+
+#: ../GoToDialog.qml:47 ../PlacesPopover.qml:97
+msgid "Go"
+msgstr "Перейти"
+
+#: ../SettingsPage.qml:32
+msgid "Settings"
+msgstr "Параметри"
+
+#: ../SettingsPage.qml:38
+msgid "Show Advanced Features"
+msgstr "Показати додаткові пункти"
+
+#: ../ViewPopover.qml:39
+msgid "Show Hidden Files"
+msgstr "Показати приховані файли"
+
+#: ../ViewPopover.qml:59
+msgid "Sort By"
+msgstr "Критерій впорядкування"
+
+#: ../ViewPopover.qml:70
+msgid "Name"
+msgstr "Назва"
+
+#: ../ViewPopover.qml:71
+msgid "Date"
+msgstr "Дата"
+
+#: ../ViewPopover.qml:81
+msgid "Sort Order"
+msgstr "Порядок"
+
+#: ../ViewPopover.qml:92 ../ViewPopover.qml:97
+msgid "Ascending"
+msgstr "За зростанням"
+
+#: ../ViewPopover.qml:93
+msgid "Descending"
+msgstr "За спаданням"
+
+#: ../ViewPopover.qml:105
+msgid "Filter"
+msgstr "Фільтр"
+
+#: ../.build/filemanager-app.desktop.js:1
+msgid "File Manager"
+msgstr "Керування файлами"

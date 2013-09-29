@@ -1,0 +1,318 @@
+# Slovenian translation for ubuntu-filemanager-app
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the ubuntu-filemanager-app package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ubuntu-filemanager-app\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-09-27 06:56+0200\n"
+"PO-Revision-Date: 2013-09-28 08:37+0000\n"
+"Last-Translator: Damir Jerovšek <Unknown>\n"
+"Language-Team: Slovenian <sl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
+"X-Launchpad-Export-Date: 2013-09-29 05:46+0000\n"
+"X-Generator: Launchpad (build 16774)\n"
+
+#: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
+#: ../NotifyDialog.qml:25
+msgid "Ok"
+msgstr "V redu"
+
+#: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
+#: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
+#: ../GoToDialog.qml:59
+msgid "Cancel"
+msgstr "Prekliči"
+
+#: ../FileActionDialog.qml:30
+msgid "Choose action"
+msgstr "Izberite dejanje"
+
+#: ../FileActionDialog.qml:31
+#, qt-format
+msgid "For file: %1"
+msgstr "Za datoteko: %1"
+
+#: ../FileActionDialog.qml:35
+msgid "Open"
+msgstr "Odpri"
+
+#: ../FileDetailsPopover.qml:37
+msgid "Readable"
+msgstr "Berljivo"
+
+#: ../FileDetailsPopover.qml:40
+msgid "Writable"
+msgstr "Zapisljivo"
+
+#: ../FileDetailsPopover.qml:43
+msgid "Executable"
+msgstr "Izvedljivo"
+
+#: ../FileDetailsPopover.qml:91
+msgid "Path:"
+msgstr "Pot:"
+
+#: ../FileDetailsPopover.qml:102
+msgid "Contents:"
+msgstr "Vsebina:"
+
+#: ../FileDetailsPopover.qml:103
+msgid "Size:"
+msgstr "Velikost:"
+
+#: ../FileDetailsPopover.qml:112
+msgid "Accessed:"
+msgstr "Zadnji dostop:"
+
+#: ../FileDetailsPopover.qml:121
+msgid "Modified:"
+msgstr "Spremenjeno:"
+
+#: ../FileDetailsPopover.qml:130
+msgid "Permissions:"
+msgstr "Dovoljenja:"
+
+#: ../FileOperationProgressDialog.qml:27
+msgid "Operation in progress"
+msgstr "Dejanje se izvaja"
+
+#: ../FolderListPage.qml:101
+msgid "~/Desktop"
+msgstr "~/Namizje"
+
+#: ../FolderListPage.qml:103
+msgid "~/Documents"
+msgstr "~/Dokumenti"
+
+#: ../FolderListPage.qml:105
+msgid "~/Downloads"
+msgstr "~/Prejemi"
+
+#: ../FolderListPage.qml:107
+msgid "~/Music"
+msgstr "~/Glasba"
+
+#: ../FolderListPage.qml:109
+msgid "~/Pictures"
+msgstr "~/Slike"
+
+#: ../FolderListPage.qml:111
+msgid "~/Public"
+msgstr "~/Javno"
+
+#: ../FolderListPage.qml:113
+msgid "~/Programs"
+msgstr "~/Programi"
+
+#: ../FolderListPage.qml:115
+msgid "~/Templates"
+msgstr "~/Predloge"
+
+#: ../FolderListPage.qml:117
+msgid "~/Videos"
+msgstr "~/Videi"
+
+#: ../FolderListPage.qml:134
+msgid "Home"
+msgstr "Domača mapa"
+
+#: ../FolderListPage.qml:136
+msgid "File System"
+msgstr "Datotečni sistem"
+
+#: ../FolderListPage.qml:182
+#, qt-format
+msgid "%1 file"
+msgid_plural "%1 files"
+msgstr[0] "%1 datotek"
+msgstr[1] "%1 datoteka"
+msgstr[2] "%1 datoteki"
+msgstr[3] "%1 datoteke"
+
+#: ../FolderListPage.qml:212
+msgid "Create New Folder"
+msgstr "Ustvari novo mapo"
+
+#: ../FolderListPage.qml:232
+msgid "Paste"
+msgstr "Prilepi"
+
+#: ../FolderListPage.qml:233
+#, qt-format
+msgid "Paste %1 file"
+msgid_plural "Paste %1 files"
+msgstr[0] "Prilepi %1 datotek"
+msgstr[1] "Prilepi %1 datoteko"
+msgstr[2] "Prilepi %1 datoteki"
+msgstr[3] "Prilepi %1 datoteke"
+
+#: ../FolderListPage.qml:238
+msgid "Paste files"
+msgstr "Prilepi datoteke"
+
+#: ../FolderListPage.qml:250
+msgid "Open in Terminal"
+msgstr "Odpri v terminalu"
+
+#: ../FolderListPage.qml:262 ../FolderListView.qml:152
+msgid "Properties"
+msgstr "Lastnosti"
+
+#: ../FolderListPage.qml:297
+msgid "Create folder"
+msgstr "Ustvari mapo"
+
+#: ../FolderListPage.qml:298
+msgid "Enter name for new folder"
+msgstr "Vnesite ime za novo mapo"
+
+#: ../FolderListPage.qml:314
+msgid "Create file"
+msgstr "Ustvari datoteko"
+
+#: ../FolderListPage.qml:315
+msgid "Enter name for new file"
+msgstr "Vnesite ime za novo datoteko"
+
+#: ../FolderListPage.qml:350
+msgid "Actions"
+msgstr "Dejanja"
+
+#: ../FolderListPage.qml:360
+msgid "View"
+msgstr "Pogled"
+
+#: ../FolderListPage.qml:375
+msgid "Go To"
+msgstr "Pojdi na"
+
+#: ../FolderListPage.qml:388 ../PlacesSidebar.qml:73
+msgid "Places"
+msgstr "Mesta"
+
+#: ../FolderListPage.qml:448
+msgid "No files"
+msgstr "Ni datotek"
+
+#: ../FolderListPage.qml:469
+msgid "File operation error"
+msgstr "Napaka med datotečnim opravilom"
+
+#. TRANSLATORS: this refers to the header shown for a folder
+#. %1 is the folder path and %2 the number of files it contains
+#: ../FolderListView.qml:35
+#, qt-format
+msgid "%1 (%2 file)"
+msgid_plural "%1 (%2 files)"
+msgstr[0] "%1 (%2 datotek)"
+msgstr[1] "%1 (%2 datoteka)"
+msgstr[2] "%1 (%2 datoteki)"
+msgstr[3] "%1 (%2 datoteke)"
+
+#: ../FolderListView.qml:45 ../FolderListView.qml:126
+msgid "Delete"
+msgstr "Izbriši"
+
+#: ../FolderListView.qml:46
+#, qt-format
+msgid "Are you sure you want to permanently delete '%1'?"
+msgstr "Ali ste prepričani, da želite trajno izbrisati '%1'?"
+
+#: ../FolderListView.qml:69 ../FolderListView.qml:139
+msgid "Rename"
+msgstr "Preimenuj"
+
+#: ../FolderListView.qml:70
+msgid "Enter a new name"
+msgstr "Vnesite novo ime"
+
+#: ../FolderListView.qml:79
+msgid "Could not rename"
+msgstr "Ni mogoče preimenovati"
+
+#: ../FolderListView.qml:80
+msgid "Insufficient permissions or name already exists?"
+msgstr "Ni dovoljenj ali pa ime že obstaja?"
+
+#: ../FolderListView.qml:103
+msgid "Cut"
+msgstr "Izreži"
+
+#: ../FolderListView.qml:114
+msgid "Copy"
+msgstr "Kopiraj"
+
+#: ../FolderListView.qml:177
+msgid "Folder not accessible"
+msgstr "Mapa ni dostopna"
+
+#: ../FolderListView.qml:178
+msgid "Can not access "
+msgstr "Ni mogoče dostopati do "
+
+#: ../GoToDialog.qml:25
+msgid "Go To Location"
+msgstr "Pojdi do mesta"
+
+#: ../GoToDialog.qml:27
+msgid "Enter a location to go to:"
+msgstr "Vnesite mesto za dostop:"
+
+#: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
+msgid "Location..."
+msgstr "Mesto ..."
+
+#: ../GoToDialog.qml:47 ../PlacesPopover.qml:97
+msgid "Go"
+msgstr "Pojdi"
+
+#: ../SettingsPage.qml:32
+msgid "Settings"
+msgstr "Nastavitve"
+
+#: ../SettingsPage.qml:38
+msgid "Show Advanced Features"
+msgstr "Pokaži napredne zmožnosti"
+
+#: ../ViewPopover.qml:39
+msgid "Show Hidden Files"
+msgstr "Prikaži skrite datoteke"
+
+#: ../ViewPopover.qml:59
+msgid "Sort By"
+msgstr "Razvrsti po"
+
+#: ../ViewPopover.qml:70
+msgid "Name"
+msgstr "Ime"
+
+#: ../ViewPopover.qml:71
+msgid "Date"
+msgstr "Datum"
+
+#: ../ViewPopover.qml:81
+msgid "Sort Order"
+msgstr "Zaporedje razvrščanja"
+
+#: ../ViewPopover.qml:92 ../ViewPopover.qml:97
+msgid "Ascending"
+msgstr "Naraščajoče"
+
+#: ../ViewPopover.qml:93
+msgid "Descending"
+msgstr "Padajoče"
+
+#: ../ViewPopover.qml:105
+msgid "Filter"
+msgstr "Filter"
+
+#: ../.build/filemanager-app.desktop.js:1
+msgid "File Manager"
+msgstr "Upravljalnik datotek"

@@ -1,0 +1,324 @@
+# Arabic translation for ubuntu-filemanager-app
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the ubuntu-filemanager-app package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ubuntu-filemanager-app\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-09-27 06:56+0200\n"
+"PO-Revision-Date: 2013-09-28 17:13+0000\n"
+"Last-Translator: Ibrahim Saed <ibraheem5000@gmail.com>\n"
+"Language-Team: Arabic <ar@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n % 100 >= "
+"3 && n % 100 <= 10 ? 3 : n % 100 >= 11 && n % 100 <= 99 ? 4 : 5;\n"
+"X-Launchpad-Export-Date: 2013-09-29 05:46+0000\n"
+"X-Generator: Launchpad (build 16774)\n"
+
+#: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
+#: ../NotifyDialog.qml:25
+msgid "Ok"
+msgstr "حسنا"
+
+#: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
+#: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
+#: ../GoToDialog.qml:59
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: ../FileActionDialog.qml:30
+msgid "Choose action"
+msgstr "اختيار إجراء"
+
+#: ../FileActionDialog.qml:31
+#, qt-format
+msgid "For file: %1"
+msgstr "للملف: %1"
+
+#: ../FileActionDialog.qml:35
+msgid "Open"
+msgstr "افتح"
+
+#: ../FileDetailsPopover.qml:37
+msgid "Readable"
+msgstr "قابل للقراءة"
+
+#: ../FileDetailsPopover.qml:40
+msgid "Writable"
+msgstr "قابل للكتابة"
+
+#: ../FileDetailsPopover.qml:43
+msgid "Executable"
+msgstr "تنفيذي"
+
+#: ../FileDetailsPopover.qml:91
+msgid "Path:"
+msgstr "المسار:"
+
+#: ../FileDetailsPopover.qml:102
+msgid "Contents:"
+msgstr "المحتويات:"
+
+#: ../FileDetailsPopover.qml:103
+msgid "Size:"
+msgstr "الحجم:"
+
+#: ../FileDetailsPopover.qml:112
+msgid "Accessed:"
+msgstr "نُفِذ إليه:"
+
+#: ../FileDetailsPopover.qml:121
+msgid "Modified:"
+msgstr "آخر تعديل:"
+
+#: ../FileDetailsPopover.qml:130
+msgid "Permissions:"
+msgstr "الصلاحيات:"
+
+#: ../FileOperationProgressDialog.qml:27
+msgid "Operation in progress"
+msgstr "العملية قيد التنفيذ"
+
+#: ../FolderListPage.qml:101
+msgid "~/Desktop"
+msgstr "~/سطح المكتب"
+
+#: ../FolderListPage.qml:103
+msgid "~/Documents"
+msgstr "~/المستندات"
+
+#: ../FolderListPage.qml:105
+msgid "~/Downloads"
+msgstr "~/التنزيلات"
+
+#: ../FolderListPage.qml:107
+msgid "~/Music"
+msgstr "~/الموسيقى"
+
+#: ../FolderListPage.qml:109
+msgid "~/Pictures"
+msgstr "~/الصور"
+
+#: ../FolderListPage.qml:111
+msgid "~/Public"
+msgstr "~/عام"
+
+#: ../FolderListPage.qml:113
+msgid "~/Programs"
+msgstr "~/البرامج"
+
+#: ../FolderListPage.qml:115
+msgid "~/Templates"
+msgstr "~/القوالب"
+
+#: ../FolderListPage.qml:117
+msgid "~/Videos"
+msgstr "~/الفيديوهات"
+
+#: ../FolderListPage.qml:134
+msgid "Home"
+msgstr "المنزل"
+
+#: ../FolderListPage.qml:136
+msgid "File System"
+msgstr "نظام الملفات"
+
+#: ../FolderListPage.qml:182
+#, qt-format
+msgid "%1 file"
+msgid_plural "%1 files"
+msgstr[0] "لا ملفات (%1)"
+msgstr[1] "ملف واحد (%1)"
+msgstr[2] "ملفان (%1)"
+msgstr[3] "%1 ملفات"
+msgstr[4] "%1 ملفا"
+msgstr[5] "%1 ملف"
+
+#: ../FolderListPage.qml:212
+msgid "Create New Folder"
+msgstr "إنشاء مجلد جديد"
+
+#: ../FolderListPage.qml:232
+msgid "Paste"
+msgstr "ألصق"
+
+#: ../FolderListPage.qml:233
+#, qt-format
+msgid "Paste %1 file"
+msgid_plural "Paste %1 files"
+msgstr[0] "لا ملفات لإلصاقها (%1)"
+msgstr[1] "إلصاق ملف واحد (%1)"
+msgstr[2] "إلصاق ملفين (%1)"
+msgstr[3] "إلصاق %1 ملفات"
+msgstr[4] "إلصاق %1 ملفا"
+msgstr[5] "إلصاق %1 ملف"
+
+#: ../FolderListPage.qml:238
+msgid "Paste files"
+msgstr "ألصق الملفات"
+
+#: ../FolderListPage.qml:250
+msgid "Open in Terminal"
+msgstr "فتح في الطرفية"
+
+#: ../FolderListPage.qml:262 ../FolderListView.qml:152
+msgid "Properties"
+msgstr "الخصائص"
+
+#: ../FolderListPage.qml:297
+msgid "Create folder"
+msgstr "إنشاء مجلد"
+
+#: ../FolderListPage.qml:298
+msgid "Enter name for new folder"
+msgstr "أدخل اسما للمجلد الجديد"
+
+#: ../FolderListPage.qml:314
+msgid "Create file"
+msgstr "إنشاء ملف"
+
+#: ../FolderListPage.qml:315
+msgid "Enter name for new file"
+msgstr "أدخل اسما للملف الجديد"
+
+#: ../FolderListPage.qml:350
+msgid "Actions"
+msgstr "الإجراءات"
+
+#: ../FolderListPage.qml:360
+msgid "View"
+msgstr "عرض"
+
+#: ../FolderListPage.qml:375
+msgid "Go To"
+msgstr "اذهب إلى"
+
+#: ../FolderListPage.qml:388 ../PlacesSidebar.qml:73
+msgid "Places"
+msgstr "الأماكن"
+
+#: ../FolderListPage.qml:448
+msgid "No files"
+msgstr "لا ملفات"
+
+#: ../FolderListPage.qml:469
+msgid "File operation error"
+msgstr "خطأ في عملية الملف"
+
+#. TRANSLATORS: this refers to the header shown for a folder
+#. %1 is the folder path and %2 the number of files it contains
+#: ../FolderListView.qml:35
+#, qt-format
+msgid "%1 (%2 file)"
+msgid_plural "%1 (%2 files)"
+msgstr[0] "%1 (%2 ملف)"
+msgstr[1] "%1 (ملف واحد %2)"
+msgstr[2] "%1 (ملفان %2)"
+msgstr[3] "%1 (%2 ملفات)"
+msgstr[4] "%1 (%2 ملفا)"
+msgstr[5] "%1 (%2 ملف)"
+
+#: ../FolderListView.qml:45 ../FolderListView.qml:126
+msgid "Delete"
+msgstr "احذف"
+
+#: ../FolderListView.qml:46
+#, qt-format
+msgid "Are you sure you want to permanently delete '%1'?"
+msgstr "هل أنت متأكد من أنك ترغب في حذف '%1' نهائيا؟"
+
+#: ../FolderListView.qml:69 ../FolderListView.qml:139
+msgid "Rename"
+msgstr "تغيير التسمية"
+
+#: ../FolderListView.qml:70
+msgid "Enter a new name"
+msgstr "أدخل اسما جديدا"
+
+#: ../FolderListView.qml:79
+msgid "Could not rename"
+msgstr "لا يمكن تغيير الاسم"
+
+#: ../FolderListView.qml:80
+msgid "Insufficient permissions or name already exists?"
+msgstr "الصلاحيات غير كافية أو الاسم موجود بالفعل؟"
+
+#: ../FolderListView.qml:103
+msgid "Cut"
+msgstr "قص"
+
+#: ../FolderListView.qml:114
+msgid "Copy"
+msgstr "انسخ"
+
+#: ../FolderListView.qml:177
+msgid "Folder not accessible"
+msgstr "لا يمكن الوصول للمجلد"
+
+#: ../FolderListView.qml:178
+msgid "Can not access "
+msgstr "لا يمكن الوصول لـ "
+
+#: ../GoToDialog.qml:25
+msgid "Go To Location"
+msgstr "اذهب إلى المكان"
+
+#: ../GoToDialog.qml:27
+msgid "Enter a location to go to:"
+msgstr "أدخِل مكانا للذهاب إلى:"
+
+#: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
+msgid "Location..."
+msgstr "المكان..."
+
+#: ../GoToDialog.qml:47 ../PlacesPopover.qml:97
+msgid "Go"
+msgstr "اذهب"
+
+#: ../SettingsPage.qml:32
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: ../SettingsPage.qml:38
+msgid "Show Advanced Features"
+msgstr "اعرض ميزات متقدمة"
+
+#: ../ViewPopover.qml:39
+msgid "Show Hidden Files"
+msgstr "أظهر الملفات المخفية"
+
+#: ../ViewPopover.qml:59
+msgid "Sort By"
+msgstr "ترتيب حسب"
+
+#: ../ViewPopover.qml:70
+msgid "Name"
+msgstr "الاسم"
+
+#: ../ViewPopover.qml:71
+msgid "Date"
+msgstr "التاريخ"
+
+#: ../ViewPopover.qml:81
+msgid "Sort Order"
+msgstr "نوع الترتيب"
+
+#: ../ViewPopover.qml:92 ../ViewPopover.qml:97
+msgid "Ascending"
+msgstr "تصاعدي"
+
+#: ../ViewPopover.qml:93
+msgid "Descending"
+msgstr "تنازلي"
+
+#: ../ViewPopover.qml:105
+msgid "Filter"
+msgstr "تصفية"
+
+#: ../.build/filemanager-app.desktop.js:1
+msgid "File Manager"
+msgstr "مدير الملفات"
