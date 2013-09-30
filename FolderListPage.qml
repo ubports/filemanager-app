@@ -88,6 +88,47 @@ Page {
         pageModel.refresh()
     }
 
+    // For these 3 functions: pathAccessedDate(), pathModifiedDate() and pathModifiedDate()
+    // we are using a temporary construction to ask if a such property exists in the model
+    //
+    // Right now all properties exist: "pathAccessedDate", "pathModifiedDate" and "pathIsWritable"
+    // but they will be removed and the corresponding READ functions: pathAccessedDate(),
+    // pathModifiedDate() and pathIsWritable() will become Q_INVOKABLE() replacing the prefix "path" for
+    // "curPath".
+    // This construction will allow the File Manager to keep working while we change the model
+    // after changing the model, this construction can be removed
+
+    function pathAccessedDate() {
+        if ("pathAccessedDate" in pageModel) {
+            console.log("using property pathAccessedDate")
+            return pageModel.pathAccessedDate
+        }
+        else {
+            console.log("calling method pageModel.curPathAccessedDate()")
+            return pageModel.curPathAccessedDate()
+        }
+    }
+    function pathModifiedDate() {
+        if ("pathModifiedDate" in pageModel) {
+            console.log("using property pathModifiedDate")
+            return pageModel.pathModifiedDate
+        }
+        else {
+            console.log("calling method pageModel.curPathModifiedDate()")
+            return pageModel.curPathModifiedDate()
+        }
+    }
+    function pathIsWritable() {
+        if ("pathIsWritable" in pageModel) {
+            console.log("using property pathIsWritable");
+            return pageModel.pathIsWritable
+        }
+        else {
+            console.log("calling method pageModel.curPathIsWritable()")
+            return pageModel.curPathIsWritable()
+        }
+    }
+
     // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
     // Nemo mobile has icon provider. Have to figure out what's the proper way
     // to get "system wide" icons in Ubuntu Touch, or if we have to use
@@ -181,10 +222,7 @@ Page {
         property string fileName: pathName(pageModel.path)
         property string fileSize: (folderListView.count === 1
                                    ? i18n.tr("1 file")
-                                   : i18n.tr("%1 files").arg(folderListView.count))
-        property date accessedDate: pageModel.pathAccessedDate
-        property date modifiedDate: pageModel.pathModifiedDate
-        property bool isWritable: pageModel.pathIsWritable
+                                   : i18n.tr("%1 files").arg(folderListView.count))       
         property bool isReadable: true
         property bool isExecutable: true
     }
