@@ -1,4 +1,4 @@
-# Latvian translation for ubuntu-filemanager-app
+# Czech translation for ubuntu-filemanager-app
 # Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
 # This file is distributed under the same license as the ubuntu-filemanager-app package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
@@ -8,198 +8,197 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-09-27 06:56+0200\n"
-"PO-Revision-Date: 2013-09-29 10:41+0000\n"
-"Last-Translator: Klavs Anson <anson.klavs@gmail.com>\n"
-"Language-Team: Latvian <lv@li.org>\n"
+"PO-Revision-Date: 2013-09-29 09:56+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2013-09-30 05:43+0000\n"
 "X-Generator: Launchpad (build 16774)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
 msgid "Ok"
-msgstr "Labi"
+msgstr ""
 
 #: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
 #: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
 #: ../GoToDialog.qml:59
 msgid "Cancel"
-msgstr "Atcelt"
+msgstr ""
 
 #: ../FileActionDialog.qml:30
 msgid "Choose action"
-msgstr "Izvelieties darbību"
+msgstr ""
 
 #: ../FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr "Datnei %1"
+msgstr ""
 
 #: ../FileActionDialog.qml:35
 msgid "Open"
-msgstr "Atvērt"
+msgstr ""
 
 #: ../FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr "Lasāms"
+msgstr ""
 
 #: ../FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr "Rediģējams"
+msgstr ""
 
 #: ../FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr "Izpildāma datne"
+msgstr ""
 
 #: ../FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr "Ceļš:"
+msgstr ""
 
 #: ../FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr "Saturs:"
+msgstr ""
 
 #: ../FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr "Izmērs:"
+msgstr ""
 
 #: ../FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr "Skatīts:"
+msgstr ""
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr "Mainīts:"
+msgstr ""
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr "Tiesības:"
+msgstr ""
 
 #: ../FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr "Operācija notiek"
+msgstr ""
 
 #: ../FolderListPage.qml:101
 msgid "~/Desktop"
-msgstr "~/Darbvirsma"
+msgstr ""
 
 #: ../FolderListPage.qml:103
 msgid "~/Documents"
-msgstr "~/Dokumenti"
+msgstr ""
 
 #: ../FolderListPage.qml:105
 msgid "~/Downloads"
-msgstr "~/Lejupielādes"
+msgstr ""
 
 #: ../FolderListPage.qml:107
 msgid "~/Music"
-msgstr "~/Mūzika"
+msgstr ""
 
 #: ../FolderListPage.qml:109
 msgid "~/Pictures"
-msgstr "~/Attēli"
+msgstr ""
 
 #: ../FolderListPage.qml:111
 msgid "~/Public"
-msgstr "~/Koplietots"
+msgstr ""
 
 #: ../FolderListPage.qml:113
 msgid "~/Programs"
-msgstr "~/Aplikācijas"
+msgstr ""
 
 #: ../FolderListPage.qml:115
 msgid "~/Templates"
-msgstr "~/Piemēri"
+msgstr ""
 
 #: ../FolderListPage.qml:117
 msgid "~/Videos"
-msgstr "~/Video"
+msgstr ""
 
 #: ../FolderListPage.qml:134
 msgid "Home"
-msgstr "Mājas"
+msgstr ""
 
 #: ../FolderListPage.qml:136
 msgid "File System"
-msgstr "Datņu sistēma"
+msgstr ""
 
 #: ../FolderListPage.qml:182
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] "%1 datni"
-msgstr[1] "%1 datnes"
-msgstr[2] "%1 datnu"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../FolderListPage.qml:212
 msgid "Create New Folder"
-msgstr "Izveidot Jaunu Mapi"
+msgstr ""
 
 #: ../FolderListPage.qml:232
 msgid "Paste"
-msgstr "Ievietot"
+msgstr ""
 
 #: ../FolderListPage.qml:233
 #, qt-format
 msgid "Paste %1 file"
 msgid_plural "Paste %1 files"
-msgstr[0] "Ielīmē %1 failu"
-msgstr[1] "Ielīmē %1 failus"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../FolderListPage.qml:238
 msgid "Paste files"
-msgstr "Ielīmēt datnes"
+msgstr ""
 
 #: ../FolderListPage.qml:250
 msgid "Open in Terminal"
-msgstr "Atvērt terminālā"
+msgstr ""
 
 #: ../FolderListPage.qml:262 ../FolderListView.qml:152
 msgid "Properties"
-msgstr "Īpašības"
+msgstr ""
 
 #: ../FolderListPage.qml:297
 msgid "Create folder"
-msgstr "Izveidot mapi"
+msgstr ""
 
 #: ../FolderListPage.qml:298
 msgid "Enter name for new folder"
-msgstr "Ievadiet nosaukumu jaunai mapei"
+msgstr ""
 
 #: ../FolderListPage.qml:314
 msgid "Create file"
-msgstr "Izveidot datni"
+msgstr ""
 
 #: ../FolderListPage.qml:315
 msgid "Enter name for new file"
-msgstr "Ievadiet nosaukumu jaunai datnei"
+msgstr ""
 
 #: ../FolderListPage.qml:350
 msgid "Actions"
-msgstr "Darbības"
+msgstr ""
 
 #: ../FolderListPage.qml:360
 msgid "View"
-msgstr "Skats"
+msgstr ""
 
 #: ../FolderListPage.qml:375
 msgid "Go To"
-msgstr "Doties uz"
+msgstr ""
 
 #: ../FolderListPage.qml:388 ../PlacesSidebar.qml:73
 msgid "Places"
-msgstr "Vietas"
+msgstr ""
 
 #: ../FolderListPage.qml:448
 msgid "No files"
-msgstr "Nav datņu"
+msgstr ""
 
 #: ../FolderListPage.qml:469
 msgid "File operation error"
-msgstr "Failu operācijas kļūda"
+msgstr ""
 
 #. TRANSLATORS: this refers to the header shown for a folder
 #. %1 is the folder path and %2 the number of files it contains
@@ -207,106 +206,106 @@ msgstr "Failu operācijas kļūda"
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] "%1 (%2 faila)"
-msgstr[1] "%1 (%2 faila)"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../FolderListView.qml:45 ../FolderListView.qml:126
 msgid "Delete"
-msgstr "Dzēst"
+msgstr ""
 
 #: ../FolderListView.qml:46
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "Vai esat pārliecināts ka gribat pilnībā izdzēst '%1'?"
+msgstr ""
 
 #: ../FolderListView.qml:69 ../FolderListView.qml:139
 msgid "Rename"
-msgstr "Pārsaukt"
+msgstr ""
 
 #: ../FolderListView.qml:70
 msgid "Enter a new name"
-msgstr "Ievadīt jaunu nosaukumu"
+msgstr ""
 
 #: ../FolderListView.qml:79
 msgid "Could not rename"
-msgstr "Nespēja pārsaukt"
+msgstr ""
 
 #: ../FolderListView.qml:80
 msgid "Insufficient permissions or name already exists?"
-msgstr "Nepietiekamas atļaujas, vai vārds jau eskistē?"
+msgstr ""
 
 #: ../FolderListView.qml:103
 msgid "Cut"
-msgstr "Nogriezt"
+msgstr ""
 
 #: ../FolderListView.qml:114
 msgid "Copy"
-msgstr "Kopēt"
+msgstr ""
 
 #: ../FolderListView.qml:177
 msgid "Folder not accessible"
-msgstr "Mape nav aizsniedzama"
+msgstr ""
 
 #: ../FolderListView.qml:178
 msgid "Can not access "
-msgstr "Nevarēja piekļūt "
+msgstr ""
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
-msgstr "Iet Uz Atrašanas Vietu"
+msgstr ""
 
 #: ../GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr "Ievadiet Atrašanas Vietu uz kuru doties:"
+msgstr ""
 
 #: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
 msgid "Location..."
-msgstr "Atrašanas Vietu..."
+msgstr ""
 
 #: ../GoToDialog.qml:47 ../PlacesPopover.qml:97
 msgid "Go"
-msgstr "Iet"
+msgstr ""
 
 #: ../SettingsPage.qml:32
 msgid "Settings"
-msgstr "Iestatījumi"
+msgstr ""
 
 #: ../SettingsPage.qml:38
 msgid "Show Advanced Features"
-msgstr "Radīt Paplašinātās Iespējas"
+msgstr ""
 
 #: ../ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr "Rādīt slēptās datnes"
+msgstr ""
 
 #: ../ViewPopover.qml:59
 msgid "Sort By"
-msgstr "Kārtot pēc"
+msgstr ""
 
 #: ../ViewPopover.qml:70
 msgid "Name"
-msgstr "Nosaukums"
+msgstr ""
 
 #: ../ViewPopover.qml:71
 msgid "Date"
-msgstr "Datums"
+msgstr ""
 
 #: ../ViewPopover.qml:81
 msgid "Sort Order"
-msgstr "Kārtošanas secība"
+msgstr ""
 
 #: ../ViewPopover.qml:92 ../ViewPopover.qml:97
 msgid "Ascending"
-msgstr "Augoši"
+msgstr ""
 
 #: ../ViewPopover.qml:93
 msgid "Descending"
-msgstr "Dilstoši"
+msgstr ""
 
 #: ../ViewPopover.qml:105
 msgid "Filter"
-msgstr "Filtrēt"
+msgstr ""
 
 #: ../.build/filemanager-app.desktop.js:1
 msgid "File Manager"
-msgstr "Datņu Pārvaldnieks"
+msgstr ""
