@@ -29,14 +29,18 @@ class FileManagerTestCase(AutopilotTestCase):
         scenarios = [('with touch', dict(input_device_class=Touch))]
 
     local_location = "../../ubuntu-filemanager-app.qml"
+    installed_location = "/usr/share/ubuntu-filemanager-app/" \
+                         "ubuntu-filemanager-app.qml"
 
     def setUp(self):
         self.pointing_device = Pointer(self.input_device_class.create())
         super(FileManagerTestCase, self).setUp()
         if os.path.exists(self.local_location):
             self.launch_test_local()
-        else:
+        elif os.path.exists(self.installed_location):
             self.launch_test_installed()
+        else:
+            self.launch_test_click()
 
     def launch_test_local(self):
         self.app = self.launch_test_application(
@@ -48,10 +52,15 @@ class FileManagerTestCase(AutopilotTestCase):
     def launch_test_installed(self):
         self.app = self.launch_test_application(
             "qmlscene",
-            "/usr/share/ubuntu-filemanager-app/ubuntu-filemanager-app.qml",
+            self.installed_location,
             "--desktop_file_hint="
             "/usr/share/applications/ubuntu-filemanager-app.desktop",
             app_type='qt',
+            emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
+
+    def launch_test_click(self):
+        self.app = self.launch_click_package(
+            "com.ubuntu.ubuntu-filemanager-app",
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
     @property
