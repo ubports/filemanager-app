@@ -8,197 +8,197 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-09-27 06:56+0200\n"
-"PO-Revision-Date: 2013-09-27 10:44+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2013-10-01 13:35+0000\n"
+"Last-Translator: Volkan Gezer <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2013-09-28 05:54+0000\n"
+"X-Launchpad-Export-Date: 2013-10-02 05:37+0000\n"
 "X-Generator: Launchpad (build 16774)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
 msgid "Ok"
-msgstr ""
+msgstr "Tamam"
 
 #: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
 #: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
 #: ../GoToDialog.qml:59
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
 #: ../FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Eylem seç"
 
 #: ../FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "Şu dosya için: %1"
 
 #: ../FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "Aç"
 
 #: ../FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "Okunabilir"
 
 #: ../FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "Yazılabilir"
 
 #: ../FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "Çalıştırılabilir"
 
 #: ../FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "Yol:"
 
 #: ../FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "İçerikler:"
 
 #: ../FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "Boyut:"
 
 #: ../FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "Erişim:"
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "Değiştirme:"
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "İzinler:"
 
 #: ../FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "İşlem sürüyor"
 
 #: ../FolderListPage.qml:101
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Masaüstü"
 
 #: ../FolderListPage.qml:103
 msgid "~/Documents"
-msgstr ""
+msgstr "~/Belgeler"
 
 #: ../FolderListPage.qml:105
 msgid "~/Downloads"
-msgstr ""
+msgstr "~/İndirilenler"
 
 #: ../FolderListPage.qml:107
 msgid "~/Music"
-msgstr ""
+msgstr "~/Müzik"
 
 #: ../FolderListPage.qml:109
 msgid "~/Pictures"
-msgstr ""
+msgstr "~/Resimler"
 
 #: ../FolderListPage.qml:111
 msgid "~/Public"
-msgstr ""
+msgstr "~/Genel"
 
 #: ../FolderListPage.qml:113
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Uygulamalar"
 
 #: ../FolderListPage.qml:115
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Şablonlar"
 
 #: ../FolderListPage.qml:117
 msgid "~/Videos"
-msgstr ""
+msgstr "~/Videolar"
 
 #: ../FolderListPage.qml:134
 msgid "Home"
-msgstr ""
+msgstr "Ev Dizini"
 
 #: ../FolderListPage.qml:136
 msgid "File System"
-msgstr ""
+msgstr "Dosya Sistemi"
 
 #: ../FolderListPage.qml:182
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 dosya"
+msgstr[1] "%1 dosya"
 
 #: ../FolderListPage.qml:212
 msgid "Create New Folder"
-msgstr ""
+msgstr "Yeni Dizin Oluştur"
 
 #: ../FolderListPage.qml:232
 msgid "Paste"
-msgstr ""
+msgstr "Yapıştır"
 
 #: ../FolderListPage.qml:233
 #, qt-format
 msgid "Paste %1 file"
 msgid_plural "Paste %1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 dosya yapıştır"
+msgstr[1] "%1 dosya yapıştır"
 
 #: ../FolderListPage.qml:238
 msgid "Paste files"
-msgstr ""
+msgstr "Dosyaları yapıştır"
 
 #: ../FolderListPage.qml:250
 msgid "Open in Terminal"
-msgstr ""
+msgstr "Uçbirimde Aç"
 
 #: ../FolderListPage.qml:262 ../FolderListView.qml:152
 msgid "Properties"
-msgstr ""
+msgstr "Özellikler"
 
 #: ../FolderListPage.qml:297
 msgid "Create folder"
-msgstr ""
+msgstr "Dizin oluştur"
 
 #: ../FolderListPage.qml:298
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Yeni dizin için isim girin"
 
 #: ../FolderListPage.qml:314
 msgid "Create file"
-msgstr ""
+msgstr "Dosya oluştur"
 
 #: ../FolderListPage.qml:315
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Yeni dosya için isim girin"
 
 #: ../FolderListPage.qml:350
 msgid "Actions"
-msgstr ""
+msgstr "Eylemler"
 
 #: ../FolderListPage.qml:360
 msgid "View"
-msgstr ""
+msgstr "Görüntüle"
 
 #: ../FolderListPage.qml:375
 msgid "Go To"
-msgstr ""
+msgstr "Git"
 
 #: ../FolderListPage.qml:388 ../PlacesSidebar.qml:73
 msgid "Places"
-msgstr ""
+msgstr "Konumlar"
 
 #: ../FolderListPage.qml:448
 msgid "No files"
-msgstr ""
+msgstr "Dosya yok"
 
 #: ../FolderListPage.qml:469
 msgid "File operation error"
-msgstr ""
+msgstr "Dosya işlemi hatası"
 
 #. TRANSLATORS: this refers to the header shown for a folder
 #. %1 is the folder path and %2 the number of files it contains
@@ -206,106 +206,106 @@ msgstr ""
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 dosya)"
+msgstr[1] "%1 (%2 dosya)"
 
 #: ../FolderListView.qml:45 ../FolderListView.qml:126
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #: ../FolderListView.qml:46
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "'%1' dosyasını kalıcı olarak silmek istediğinizden emin misiniz?"
 
 #: ../FolderListView.qml:69 ../FolderListView.qml:139
 msgid "Rename"
-msgstr ""
+msgstr "Yeniden adlandır"
 
 #: ../FolderListView.qml:70
 msgid "Enter a new name"
-msgstr ""
+msgstr "Yeni bir ad girin"
 
 #: ../FolderListView.qml:79
 msgid "Could not rename"
-msgstr ""
+msgstr "Adlandırılamadı"
 
 #: ../FolderListView.qml:80
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Yetersiz yetkiler veya isim zaten mevcut!"
 
 #: ../FolderListView.qml:103
 msgid "Cut"
-msgstr ""
+msgstr "Kes"
 
 #: ../FolderListView.qml:114
 msgid "Copy"
-msgstr ""
+msgstr "Kopyala"
 
 #: ../FolderListView.qml:177
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Klasör erişilebilir değil"
 
 #: ../FolderListView.qml:178
 msgid "Can not access "
-msgstr ""
+msgstr "Erişilemiyor: "
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Konuma Git"
 
 #: ../GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Gidilecek bir konum girin:"
 
 #: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
 msgid "Location..."
-msgstr ""
+msgstr "Konum..."
 
 #: ../GoToDialog.qml:47 ../PlacesPopover.qml:97
 msgid "Go"
-msgstr ""
+msgstr "Git"
 
 #: ../SettingsPage.qml:32
 msgid "Settings"
-msgstr ""
+msgstr "Ayarlar"
 
 #: ../SettingsPage.qml:38
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Gelişmiş Özellikleri Göster"
 
 #: ../ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Gizli Dosyaları Göster"
 
 #: ../ViewPopover.qml:59
 msgid "Sort By"
-msgstr ""
+msgstr "Buna Göre Sırala"
 
 #: ../ViewPopover.qml:70
 msgid "Name"
-msgstr ""
+msgstr "Adı"
 
 #: ../ViewPopover.qml:71
 msgid "Date"
-msgstr ""
+msgstr "Tarih"
 
 #: ../ViewPopover.qml:81
 msgid "Sort Order"
-msgstr ""
+msgstr "Sıralama Düzeni"
 
 #: ../ViewPopover.qml:92 ../ViewPopover.qml:97
 msgid "Ascending"
-msgstr ""
+msgstr "Artan"
 
 #: ../ViewPopover.qml:93
 msgid "Descending"
-msgstr ""
+msgstr "Azalan"
 
 #: ../ViewPopover.qml:105
 msgid "Filter"
-msgstr ""
+msgstr "Süzgeç"
 
 #: ../.build/filemanager-app.desktop.js:1
 msgid "File Manager"
-msgstr ""
+msgstr "Dosya Yöneticisi"
