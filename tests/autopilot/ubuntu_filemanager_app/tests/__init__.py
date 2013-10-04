@@ -60,7 +60,7 @@ class FileManagerTestCase(AutopilotTestCase):
 
     def launch_test_click(self):
         self.app = self.launch_click_package(
-            "com.ubuntu.ubuntu-filemanager-app",
+            "com.ubuntu.filemanager",
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
     @property
