@@ -1,4 +1,4 @@
-# German translation for ubuntu-filemanager-app
+# Asturian translation for ubuntu-filemanager-app
 # Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
 # This file is distributed under the same license as the ubuntu-filemanager-app package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-09-27 06:56+0200\n"
-"PO-Revision-Date: 2013-10-03 12:05+0000\n"
-"Last-Translator: Phillip Sz <Unknown>\n"
-"Language-Team: German <de@li.org>\n"
+"PO-Revision-Date: 2013-10-03 14:27+0000\n"
+"Last-Translator: ivarela <ivarela@ubuntu.com>\n"
+"Language-Team: Asturian <ast@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,184 +21,184 @@ msgstr ""
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
 msgid "Ok"
-msgstr "Ok"
+msgstr "Aceutar"
 
 #: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
 #: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
 #: ../GoToDialog.qml:59
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Encaboxar"
 
 #: ../FileActionDialog.qml:30
 msgid "Choose action"
-msgstr "Aktion auswählen"
+msgstr "Elexir aición"
 
 #: ../FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "Pa ficheru: %1"
 
 #: ../FileActionDialog.qml:35
 msgid "Open"
-msgstr "Öffnen"
+msgstr "Abrir"
 
 #: ../FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr "Lesbar"
+msgstr "Llexible"
 
 #: ../FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr "Beschreibbar"
+msgstr "Escribible"
 
 #: ../FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr "Ausführbare Datei"
+msgstr "Executable"
 
 #: ../FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr "Verzeichnis:"
+msgstr "Camín:"
 
 #: ../FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr "Inhalte:"
+msgstr "Conteníos:"
 
 #: ../FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr "Größe:"
+msgstr "Tamañu:"
 
 #: ../FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr "Letzter Zugriff:"
+msgstr "Accedíu:"
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr "Geändert:"
+msgstr "Modificáu:"
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr "Zugriffsrechte:"
+msgstr "Permisos:"
 
 #: ../FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr "Vorgang läuft"
+msgstr "Operación en cursu"
 
 #: ../FolderListPage.qml:101
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Escritoriu"
 
 #: ../FolderListPage.qml:103
 msgid "~/Documents"
-msgstr "~/Dokumente"
+msgstr "~/Documentos"
 
 #: ../FolderListPage.qml:105
 msgid "~/Downloads"
-msgstr "~/Downloads"
+msgstr "~/Descargues"
 
 #: ../FolderListPage.qml:107
 msgid "~/Music"
-msgstr "~/Musik"
+msgstr "~/Música"
 
 #: ../FolderListPage.qml:109
 msgid "~/Pictures"
-msgstr "~/Bilder"
+msgstr "~/Imáxenes"
 
 #: ../FolderListPage.qml:111
 msgid "~/Public"
-msgstr "~/Öffentlich"
+msgstr "~/Públicu"
 
 #: ../FolderListPage.qml:113
 msgid "~/Programs"
-msgstr "~/Programme"
+msgstr "~/Programes"
 
 #: ../FolderListPage.qml:115
 msgid "~/Templates"
-msgstr "~/Vorlagen"
+msgstr "~/Plantíes"
 
 #: ../FolderListPage.qml:117
 msgid "~/Videos"
-msgstr "~/Videos"
+msgstr "~/Vídeos"
 
 #: ../FolderListPage.qml:134
 msgid "Home"
-msgstr ""
+msgstr "Aniciu"
 
 #: ../FolderListPage.qml:136
 msgid "File System"
-msgstr "Dateisystem"
+msgstr "Sistema de Ficheros"
 
 #: ../FolderListPage.qml:182
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] "%1 Datei"
-msgstr[1] "%1 Dateien"
+msgstr[0] "%1 ficheru"
+msgstr[1] "%1 ficheros"
 
 #: ../FolderListPage.qml:212
 msgid "Create New Folder"
-msgstr "Neuen Ordner erstellen"
+msgstr "Crear carpeta nueva"
 
 #: ../FolderListPage.qml:232
 msgid "Paste"
-msgstr "Einfügen"
+msgstr "Apegar"
 
 #: ../FolderListPage.qml:233
 #, qt-format
 msgid "Paste %1 file"
 msgid_plural "Paste %1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Apegar %1 ficheru"
+msgstr[1] "Apegar %1 ficheros"
 
 #: ../FolderListPage.qml:238
 msgid "Paste files"
-msgstr "Dateien einfügen"
+msgstr "Apegar ficheros"
 
 #: ../FolderListPage.qml:250
 msgid "Open in Terminal"
-msgstr "Im Terminal öffnen"
+msgstr "Abrir na terminal"
 
 #: ../FolderListPage.qml:262 ../FolderListView.qml:152
 msgid "Properties"
-msgstr "Eigenschaften"
+msgstr "Propiedaes"
 
 #: ../FolderListPage.qml:297
 msgid "Create folder"
-msgstr "Ordner anlegen"
+msgstr "Crear carpeta"
 
 #: ../FolderListPage.qml:298
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Escribi'l nome pa la carpeta nueva"
 
 #: ../FolderListPage.qml:314
 msgid "Create file"
-msgstr "Datei erstellen"
+msgstr "Crear ficheru"
 
 #: ../FolderListPage.qml:315
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Escribi'l nome pal ficheru nuevu"
 
 #: ../FolderListPage.qml:350
 msgid "Actions"
-msgstr ""
+msgstr "Aiciones"
 
 #: ../FolderListPage.qml:360
 msgid "View"
-msgstr "Ansicht"
+msgstr "Ver"
 
 #: ../FolderListPage.qml:375
 msgid "Go To"
-msgstr "Gehe zu"
+msgstr "Dir a"
 
 #: ../FolderListPage.qml:388 ../PlacesSidebar.qml:73
 msgid "Places"
-msgstr "Orte"
+msgstr "Llugares"
 
 #: ../FolderListPage.qml:448
 msgid "No files"
-msgstr "Keine Dateien"
+msgstr "Nun hai ficheros"
 
 #: ../FolderListPage.qml:469
 msgid "File operation error"
-msgstr "Dateiverarbeitungsfehler"
+msgstr "Fallu d'operación de ficheru"
 
 #. TRANSLATORS: this refers to the header shown for a folder
 #. %1 is the folder path and %2 the number of files it contains
@@ -206,106 +206,106 @@ msgstr "Dateiverarbeitungsfehler"
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 ficheru)"
+msgstr[1] "%1 (%2 ficheros)"
 
 #: ../FolderListView.qml:45 ../FolderListView.qml:126
 msgid "Delete"
-msgstr "Löschen"
+msgstr "Desaniciar"
 
 #: ../FolderListView.qml:46
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "¿Daveres que quies desaniciar «%1»?"
 
 #: ../FolderListView.qml:69 ../FolderListView.qml:139
 msgid "Rename"
-msgstr "Umbenennen"
+msgstr "Renomar"
 
 #: ../FolderListView.qml:70
 msgid "Enter a new name"
-msgstr "Geben Sie einen neuen Namen ein"
+msgstr "Introducir un nome nuevu"
 
 #: ../FolderListView.qml:79
 msgid "Could not rename"
-msgstr ""
+msgstr "Nun pudo renomase"
 
 #: ../FolderListView.qml:80
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Permisos insuficienes o yá esiste'l nome"
 
 #: ../FolderListView.qml:103
 msgid "Cut"
-msgstr "Ausschneiden"
+msgstr "Cortar"
 
 #: ../FolderListView.qml:114
 msgid "Copy"
-msgstr "Kopieren"
+msgstr "Copiar"
 
 #: ../FolderListView.qml:177
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Carpeta non accesible"
 
 #: ../FolderListView.qml:178
 msgid "Can not access "
-msgstr ""
+msgstr "Nun pue accedese a "
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Dir al allugamientu"
 
 #: ../GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Introduz l'allugamientu:"
 
 #: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
 msgid "Location..."
-msgstr ""
+msgstr "Allugamientu..."
 
 #: ../GoToDialog.qml:47 ../PlacesPopover.qml:97
 msgid "Go"
-msgstr "Los"
+msgstr "Dir"
 
 #: ../SettingsPage.qml:32
 msgid "Settings"
-msgstr "Einstellungen"
+msgstr "Axustes"
 
 #: ../SettingsPage.qml:38
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Amosar opciones avanzaes"
 
 #: ../ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr "Versteckte Dateien anzeigen"
+msgstr "Amosar ficheros anubríos"
 
 #: ../ViewPopover.qml:59
 msgid "Sort By"
-msgstr "Sortieren nach"
+msgstr "Ordenar por"
 
 #: ../ViewPopover.qml:70
 msgid "Name"
-msgstr "Name"
+msgstr "Nome"
 
 #: ../ViewPopover.qml:71
 msgid "Date"
-msgstr "Datum"
+msgstr "Data"
 
 #: ../ViewPopover.qml:81
 msgid "Sort Order"
-msgstr "Sortierungsreihenfolge"
+msgstr "Ordenación"
 
 #: ../ViewPopover.qml:92 ../ViewPopover.qml:97
 msgid "Ascending"
-msgstr "Aufsteigend"
+msgstr "Ascendente"
 
 #: ../ViewPopover.qml:93
 msgid "Descending"
-msgstr "Absteigend"
+msgstr "Descendente"
 
 #: ../ViewPopover.qml:105
 msgid "Filter"
-msgstr ""
+msgstr "Filtru"
 
 #: ../.build/filemanager-app.desktop.js:1
 msgid "File Manager"
-msgstr "Dateimanager"
+msgstr "Xestor de ficheros"
