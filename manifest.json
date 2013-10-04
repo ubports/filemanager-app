@@ -1,0 +1,16 @@
+{
+    "architecture": "armhf", 
+    "description": "File Manager application", 
+    "framework": "ubuntu-sdk-13.10", 
+    "hooks": {
+        "filemanager": {
+            "apparmor": "apparmor/filemanager.json", 
+            "desktop": "ubuntu-filemanager-app.desktop"
+        }
+    }, 
+    "icon": "filemanager64.png", 
+    "maintainer": "Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>", 
+    "name": "com.ubuntu.filemanager", 
+    "title": "filemanager", 
+    "version": "0.1.1"
+}
