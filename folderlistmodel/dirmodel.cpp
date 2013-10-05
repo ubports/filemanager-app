@@ -395,7 +395,7 @@ void DirModel::setPath(const QString &pathName)
     ioWorkerThread()->addRequest(dlw);
 
     mCurrentDir = pathName;
-    emit pathChanged(pathName);
+    emit pathChanged(pathName); 
 }
 
 
@@ -1155,7 +1155,7 @@ void DirModel::timerEvent(QTimerEvent *)
 {
     if (     mEnableExternalFSWatcher
           && IS_FILE_MANAGER_IDLE()
-             && mLastModifiedCurrentPath < pathModifiedDate() )
+             && mLastModifiedCurrentPath < curPathModifiedDate() )
     {
 #if DEBUG_EXT_FS_WATCHER
         qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
@@ -1177,7 +1177,7 @@ void DirModel::timerEvent(QTimerEvent *)
         connect(fsWatcher,    SIGNAL(finished()),
                 this,         SLOT(onExternalFsWatcherFinihed()));
 
-        ioWorkerThread()->addRequest(fsWatcher);
+        ioWorkerThread()->addRequest(fsWatcher);       
     }
 #if DEBUG_EXT_FS_WATCHER
     else
@@ -1263,7 +1263,7 @@ void DirModel::onItemChangedOutSideFm(const QFileInfo &fi)
  */
 void DirModel::onExternalFsWatcherFinihed()
 {
-    mLastModifiedCurrentPath = pathModifiedDate();
+    mLastModifiedCurrentPath = curPathModifiedDate();
 #if DEBUG_EXT_FS_WATCHER
     qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
              << Q_FUNC_INFO
@@ -1341,7 +1341,7 @@ bool DirModel::canReadFile(const QFileInfo &f) const
 
 
 
-QDateTime DirModel::pathCreatedDate() const
+QDateTime DirModel::curPathCreatedDate() const
 {
    QDateTime d;
    QFileInfo f(mCurrentDir);
@@ -1353,7 +1353,7 @@ QDateTime DirModel::pathCreatedDate() const
 }
 
 
-QDateTime DirModel::pathModifiedDate() const
+QDateTime DirModel::curPathModifiedDate() const
 {
     QDateTime d;
     QFileInfo f(mCurrentDir);
@@ -1365,7 +1365,7 @@ QDateTime DirModel::pathModifiedDate() const
 }
 
 
-QDateTime DirModel::pathAccessedDate() const
+QDateTime DirModel::curPathAccessedDate() const
 {
     QDateTime d;
     QFileInfo f(mCurrentDir);
@@ -1377,16 +1377,16 @@ QDateTime DirModel::pathAccessedDate() const
 }
 
 
-bool  DirModel::pathIsWritable() const
+bool  DirModel::curPathIsWritable() const
 {
     QFileInfo f(mCurrentDir);
     return f.exists() && f.isWritable();
 }
 
-QString DirModel::pathCreatedDateLocaleShort() const
+QString DirModel::curPathCreatedDateLocaleShort() const
 {
     QString date;
-    QDateTime d(pathCreatedDate());
+    QDateTime d(curPathCreatedDate());
     if (!d.isNull())
     {
         date = d.toString(Qt::SystemLocaleShortDate);
@@ -1395,10 +1395,10 @@ QString DirModel::pathCreatedDateLocaleShort() const
 }
 
 
-QString DirModel::pathModifiedDateLocaleShort() const
+QString DirModel::curPathModifiedDateLocaleShort() const
 {
     QString date;
-    QDateTime d(pathModifiedDate());
+    QDateTime d(curPathModifiedDate());
     if (!d.isNull())
     {
         date = d.toString(Qt::SystemLocaleShortDate);
@@ -1407,10 +1407,10 @@ QString DirModel::pathModifiedDateLocaleShort() const
 }
 
 
-QString DirModel::pathAccessedDateLocaleShort() const
+QString DirModel::curPathAccessedDateLocaleShort() const
 {
     QString date;
-    QDateTime d(pathAccessedDate());
+    QDateTime d(curPathAccessedDate());
     if (!d.isNull())
     {
         date = d.toString(Qt::SystemLocaleShortDate);

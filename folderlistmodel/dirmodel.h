@@ -104,27 +104,15 @@ public:
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
     inline QString path() const { return mCurrentDir; }
     void setPath(const QString &pathName);
-
-    Q_PROPERTY(QDateTime pathAccessedDate  READ pathAccessedDate)
-    QDateTime pathAccessedDate() const;
-
-    Q_PROPERTY(QDateTime pathCreatedDate  READ pathCreatedDate)
-    QDateTime pathCreatedDate() const;
-
-    Q_PROPERTY(QDateTime pathModifiedDate READ  pathModifiedDate)
-    QDateTime   pathModifiedDate() const;
-
-    Q_PROPERTY(QString pathAccessedDateLocaleShort  READ  pathAccessedDateLocaleShort)
-    QString     pathAccessedDateLocaleShort() const;
-
-    Q_PROPERTY(QString pathCreatedDateLocaleShort  READ  pathCreatedDateLocaleShort)
-    QString     pathCreatedDateLocaleShort() const;
-
-    Q_PROPERTY(QString  pathModifiedDateLocaleShort READ pathModifiedDateLocaleShort)
-    QString     pathModifiedDateLocaleShort() const;
-
-    Q_PROPERTY(bool pathIsWritable  READ pathIsWritable)
-    bool pathIsWritable() const;
+    
+    Q_INVOKABLE QDateTime   curPathAccessedDate() const;
+    Q_INVOKABLE QDateTime   curPathCreatedDate()  const;
+    Q_INVOKABLE QDateTime   curPathModifiedDate() const;
+    Q_INVOKABLE QString     curPathAccessedDateLocaleShort() const;
+    Q_INVOKABLE QString     curPathCreatedDateLocaleShort()  const;
+    Q_INVOKABLE QString     curPathModifiedDateLocaleShort() const;
+    Q_INVOKABLE bool        curPathIsWritable() const;
+    
 
     Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
     bool awaitingResults() const;
@@ -395,7 +383,7 @@ private:
                                                   const QString& pathName);
     bool          canReadDir(const QFileInfo& d)   const;
     bool          canReadFile(const QFileInfo& f)  const;
-    QFileInfo     setParentIfRelative(const QString &fileOrDir) const;
+    QFileInfo     setParentIfRelative(const QString &fileOrDir) const;  
 
 private:
     void          startExternalFsWatcher();
