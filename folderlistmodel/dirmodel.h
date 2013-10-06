@@ -171,16 +171,6 @@ private:
 
 public:
     //[0] new stuff Ubuntu File Manager
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL)
-    //make this work with tables
-    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const
-    {
-        Q_UNUSED(parent);
-        return IsExecutableRole - FileNameRole + 1;
-    }
-    virtual QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
-#endif
-
     Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
     QString parentPath() const;
 
@@ -406,14 +396,24 @@ private:
     bool               mEnableExternalFSWatcher;
     QDateTime          mLastModifiedCurrentPath;
 
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
-public:
-#else
 private:
-#endif
     FileSystemAction  *  m_fsAction;  //!< it does file system recursive remove/copy/move
-    QString fileSize(qint64 size)  const;
+    QString  fileSize(qint64 size)  const;
+#ifndef DO_NOT_USE_TAG_LIB
+    QVariant getAudioMetaData(const QFileInfo& fi, int role) const;
+#endif
 //[0]
+
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL)
+    //make this work with tables
+    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const
+    {
+        Q_UNUSED(parent);
+        return TrackCoverRole - FileNameRole + 1;
+    }
+    virtual QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
+    friend class TestDirModel;
+#endif
 };
 
 

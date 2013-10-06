@@ -101,6 +101,7 @@ SimpleList::SimpleList(QWidget *parent) :
     m_pbar->setMaximum(100);
     m_pbar->setMinimum(0);
 
+    m_model->setReadsMediaMetadata(true);
     ui->checkBoxExtFsWatcher->click();
     m_model->goHome();
 
