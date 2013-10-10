@@ -88,45 +88,19 @@ Page {
         pageModel.refresh()
     }
 
-    // For these 3 functions: pathAccessedDate(), pathModifiedDate() and pathModifiedDate()
-    // we are using a temporary construction to ask if a such property exists in the model
-    //
-    // Right now all properties exist: "pathAccessedDate", "pathModifiedDate" and "pathIsWritable"
-    // but they will be removed and the corresponding READ functions: pathAccessedDate(),
-    // pathModifiedDate() and pathIsWritable() will become Q_INVOKABLE() replacing the prefix "path" for
-    // "curPath".
-    // This construction will allow the File Manager to keep working while we change the model
-    // after changing the model, this construction can be removed
-
     function pathAccessedDate() {
-        if ("pathAccessedDate" in pageModel) {
-            console.log("using property pathAccessedDate")
-            return pageModel.pathAccessedDate
-        }
-        else {
-            console.log("calling method pageModel.curPathAccessedDate()")
-            return pageModel.curPathAccessedDate()
-        }
+        console.log("calling method pageModel.curPathAccessedDate()")
+        return pageModel.curPathAccessedDate()
     }
+
     function pathModifiedDate() {
-        if ("pathModifiedDate" in pageModel) {
-            console.log("using property pathModifiedDate")
-            return pageModel.pathModifiedDate
-        }
-        else {
-            console.log("calling method pageModel.curPathModifiedDate()")
-            return pageModel.curPathModifiedDate()
-        }
+        console.log("calling method pageModel.curPathModifiedDate()")
+        return pageModel.curPathModifiedDate()
     }
+
     function pathIsWritable() {
-        if ("pathIsWritable" in pageModel) {
-            console.log("using property pathIsWritable");
-            return pageModel.pathIsWritable
-        }
-        else {
-            console.log("calling method pageModel.curPathIsWritable()")
-            return pageModel.curPathIsWritable()
-        }
+        console.log("calling method pageModel.curPathIsWritable()")
+        return pageModel.curPathIsWritable()
     }
 
     // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
