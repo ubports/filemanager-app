@@ -1532,19 +1532,19 @@ void TestDirModel::pathProperties()
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
 
-    QCOMPARE(m_dirModel_01->pathIsWritable(), true);
+    QCOMPARE(m_dirModel_01->curPathIsWritable(), true);
     bool ok =  QFile::setPermissions(m_deepDir_01->path(),
                                       QFileDevice::ReadOwner | QFileDevice::ExeOwner );
 
     QCOMPARE(ok,   true);
-    QCOMPARE(m_dirModel_01->pathIsWritable(), false);
+    QCOMPARE(m_dirModel_01->curPathIsWritable(), false);
 
     ok =  QFile::setPermissions(m_deepDir_01->path(),
                                 QFileDevice::ReadOwner | QFileDevice::ExeOwner | QFileDevice::WriteOwner);
 
     QCOMPARE(ok,   true);
-    qWarning("created  %s", m_dirModel_01->pathCreatedDateLocaleShort().toLatin1().constData());
-    qWarning("modified %s", m_dirModel_01->pathModifiedDateLocaleShort().toLatin1().constData());
+    qWarning("created  %s", m_dirModel_01->curPathCreatedDateLocaleShort().toLatin1().constData());
+    qWarning("modified %s", m_dirModel_01->curPathModifiedDateLocaleShort().toLatin1().constData());
 
 }
 
