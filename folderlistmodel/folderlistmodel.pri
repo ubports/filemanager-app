@@ -5,6 +5,7 @@ SOURCES += $$PWD/dirmodel.cpp \
            $$PWD/filesystemaction.cpp \
            $$PWD/imageprovider.cpp \
            $$PWD/filecompare.cpp \
+           $$PWD/externalfswatcher.cpp
 
 
 
@@ -16,6 +17,7 @@ HEADERS += $$PWD/dirmodel.h \
            $$PWD/filesystemaction.h \
            $$PWD/imageprovider.h \
            $$PWD/filecompare.h \
+           $$PWD/externalfswatcher.h
 
 
 

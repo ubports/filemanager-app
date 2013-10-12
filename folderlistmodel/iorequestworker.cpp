@@ -76,35 +76,11 @@ void IORequestWorker::run()
         if (mRequests.empty())
             mWaitCondition.wait(&mMutex);
 
-        int counter = 0;
-        while (!mRequests.isEmpty())
-        {
-           /* If there are more than one thread in the queue and there is at least one
-            * of the type Auto Refresh, do:
-            *  1. if all threads are type Auto Refresh (leave just one) it might not happen but we check it here
-            *  2. if there is at least one type DirList, remove all type Auto Refresh, the user might have changed
-            *      the current dir when the Auto Refresh was already in the queue
-            */
-            if ( (counter=mRequests.count()) > 1)
-            {
-               int autoRefreshCounter = 0;
-               for(int aux=0; aux < counter; aux++)
-               {
-                   if (mRequests.at(aux)->type() == IORequest::DirListExternalFSChanges)
-                   {
-                       autoRefreshCounter++;
-                   }
-               }
-               if (autoRefreshCounter)
-               {
-                   removeAutoRefreshThread( (autoRefreshCounter == counter)
-                                            ? counter -1
-                                            : autoRefreshCounter
-                                              );
-               }
-            }
-            IORequest *request = mRequests.takeFirst();            
+        while (!mRequests.isEmpty()) {
+            IORequest *request = mRequests.takeFirst();
+
             lock.unlock();
+
             request->run();
             request->deleteLater();
             lock.relock();
@@ -121,20 +97,4 @@ void IORequestWorker::exit()
     QMutexLocker lock(&mMutex);
     mTimeToQuit = true;
     mWaitCondition.wakeOne();
-}
-
-
-
-void IORequestWorker::removeAutoRefreshThread(int toRemoveCounter)
-{
-    int counter = mRequests.count();
-    while(counter-- && toRemoveCounter)
-    {
-       if (mRequests.at(counter)->type() == IORequest::DirListExternalFSChanges)
-       {
-           --toRemoveCounter;
-           IORequest *request = mRequests.takeAt(counter);
-           delete request;
-       }
-    }
 }

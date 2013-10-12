@@ -68,11 +68,9 @@
 
 #define   COMMON_SIZE_ITEM       120
 
-RemoveNotifier   FileSystemAction::m_removeNotifier;
 
 static  QLatin1String GNOME_COPIED_MIME_TYPE  ("x-special/gnome-copied-files");
 static  QLatin1String KDE_CUT_MIME_TYPE       ("application/x-kde-cutselection");
-
 
 
 class DirModelMimeData : public QMimeData
@@ -411,41 +409,6 @@ DirModelMimeData::localUrls(ClipboardOperation& operation)
      return paths;
 }
 
-/*!
- * \brief RemoveNotifier::RemoveNotifier
- * \param parent
- */
-RemoveNotifier::RemoveNotifier(QObject *parent) :
-    QObject(parent)
-{
-}
-
-//===============================================================================================
-/*!
- * \brief RemoveNotifier::notifyRemoved
- * \param fi
- */
-void RemoveNotifier::notifyRemoved(const QFileInfo &fi)
-{
-#if DEBUG_MESSAGES
-    qDebug() << Q_FUNC_INFO << "emit removed(QFileInfo)" << fi.absoluteFilePath();
-#endif
-    emit removed(fi);
-}
-
-//===============================================================================================
-/*!
- * \brief RemoveNotifier::notifyRemoved
- * \param item
- */
-void RemoveNotifier::notifyRemoved(const QString &item)
-{
-#if DEBUG_MESSAGES
-    qDebug() << Q_FUNC_INFO << "emit removed(QString)" << item;
-#endif
-    emit removed(item);
-}
-
 
 //===============================================================================================
 /*!
@@ -460,14 +423,6 @@ FileSystemAction::FileSystemAction(QObject *parent) :
   , m_mimeData ( new DirModelMimeData() )
   , m_clipboardModifiedByOther(false)
 {
-  //as m_removeNotifier is static it will send signals to all instances of
-  //the model
-    connect(&m_removeNotifier, SIGNAL(removed(QFileInfo)),
-            this,              SIGNAL(removed(QFileInfo)));
-
-    connect(&m_removeNotifier, SIGNAL(removed(QString)),
-            this,              SIGNAL(removed(QString)));
-
     QClipboard *clipboard = QApplication::clipboard();
 
     connect(clipboard, SIGNAL(dataChanged()), this,    SIGNAL(clipboardChanged()));
@@ -540,10 +495,10 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
     {
         emit error(QObject::tr("File or Directory does not exist"),
                    pathname + QObject::tr(" does not exist")
-                  );
+                  );       
         return;
     }
-    ActionEntry * entry = new ActionEntry();    
+    ActionEntry * entry = new ActionEntry();
     //this is the item being handled
     entry->reversedOrder.append(info);
     // verify if the destination item already exists
@@ -560,11 +515,11 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
         QDirIterator it(info.absoluteFilePath(),
                         QDir::AllEntries | QDir::System |
                               QDir::NoDotAndDotDot | QDir::Hidden,
-                        QDirIterator::Subdirectories);        
+                        QDirIterator::Subdirectories);
         while (it.hasNext() &&  !it.next().isEmpty())
-        {           
-            entry->reversedOrder.prepend(it.fileInfo());           
-        }
+        {
+            entry->reversedOrder.prepend(it.fileInfo());
+            }
     }
     //set steps and total bytes considering all items in the Entry
     int counter = entry->reversedOrder.count();
@@ -572,7 +527,7 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
     int sizeSteps = 0;
     int bufferSize = (COPY_BUFFER_SIZE * STEP_FILES);
     while (counter--)
-    {
+            {
         const QFileInfo & item =  entry->reversedOrder.at(counter);
         size =  (item.isFile() && !item.isDir() && !item.isSymLink()) ?
                  item.size() :   COMMON_SIZE_ITEM;
@@ -584,10 +539,10 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
                 if ( !(size % bufferSize) )
                 {
                     --sizeSteps;
-                }
-                action->steps      += sizeSteps ;
             }
+                action->steps      += sizeSteps ;
         }
+    }
     }
     //set final steps for the Entry based on Items number
     int entrySteps = entry->reversedOrder.count() / STEP_FILES;
@@ -720,17 +675,33 @@ void FileSystemAction::endActionEntry()
         if (m_curAction->type == ActionRemove || m_curAction->type == ActionMove ||
                 m_curAction->type == ActionHardMoveRemove)
         {
-            m_removeNotifier.notifyRemoved(mainItem); // notify all instances
+            emit removed(mainItem);
         }
         if (m_curAction->type == ActionCopy || m_curAction->type == ActionMove ||
-                m_curAction->type == ActionHardMoveCopy)
+            m_curAction->type == ActionHardMoveCopy)
         {
+            bool toAdd = true;
             QString addedItem = targetFom(mainItem.absoluteFilePath(), m_curAction);
             if (curEntry->alreadyExists)
             {
-                m_removeNotifier.notifyRemoved(addedItem);
+                //if an item already exists, even we remove the original item and then add
+                //the same item again (maybe a new content),
+                //BUT:  we want to notify it as a change to NOT give a chance to External File System Watcher
+                //to get it during the time it is (removed + added)
+                if (m_curAction->type == ActionHardMoveCopy)
+                {
+                    emit removed(addedItem);
+                }
+                else
+                {   //ActionCopy ActionMove
+                    emit removedThenAdded(QFileInfo(addedItem));
+                    toAdd = false;
+                }
             }
-            emit added(addedItem);
+            if(toAdd)
+            {
+                emit added(addedItem);
+            }
         }
         m_curAction->currEntryIndex++;
         //check if is doing a hard move and the copy part has finished
@@ -1048,29 +1019,29 @@ void FileSystemAction::cut(const QStringList &pathnames)
 void FileSystemAction::paste()
 {
     ClipboardOperation  operation;
-    QStringList paths = m_mimeData->localUrls(operation);
+    QStringList paths     = m_mimeData->localUrls(operation);
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << paths;
 #endif
     if (paths.count())
-    {                      
+    {
        ActionType actionType  = ActionCopy; // start with Copy and check for Cut
        if (operation == ClipboardCut)
        {
            //we allow Copy to backup items, but Cut must Fail
-           if (QFileInfo(m_path).absoluteFilePath() == QFileInfo(paths.at(0)).absolutePath())
-           {
-               emit error(tr("Cannot paste"),
-                          tr("origin and destination folder are the same"));
-               return;
-           }
-           //so far it always returns true since on Linux it is possible to rename
-           // between different file systems
-           if ( moveUsingSameFileSystem(paths.at(0)) ) {
-               actionType = ActionMove;
-           } else {
-               actionType = ActionHardMoveCopy; // first step
-           }
+       if (QFileInfo(m_path).absoluteFilePath() == QFileInfo(paths.at(0)).absolutePath())
+       {
+           emit error(tr("Cannot paste"),
+                      tr("origin and destination folder are the same"));
+           return;
+       }
+            //so far it always returns true since on Linux it is possible to rename
+            // between different file systems
+            if ( moveUsingSameFileSystem(paths.at(0)) ) {
+                actionType = ActionMove;
+            } else {
+                actionType = ActionHardMoveCopy; // first step
+            }
        }
        createAndProcessAction(actionType, paths, operation);
     }
@@ -1093,17 +1064,17 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
     myAction                     = createAction(actionType, origPathLen);
     myAction->operation          = operation;
     myAction->origPath           = QFileInfo(paths.at(0)).absolutePath();
-    myAction->baseOrigSize       = myAction->origPath.length();  
+    myAction->baseOrigSize       = myAction->origPath.length();
     for (int counter=0; counter < paths.count(); counter++)
-    {      
+    {
         addEntry(myAction, paths.at(counter));
     }
     if (myAction->totalItems > 0)
     {             
-        if (actionType == ActionHardMoveCopy)
-        {
-            myAction->totalItems *= 2; //duplicate this           
-        }
+    if (actionType == ActionHardMoveCopy)
+    {
+        myAction->totalItems *= 2; //duplicate this
+    }
         /*
         if (actionType == ActionHardMoveCopy || actionType == ActionCopy)
         {
@@ -1112,17 +1083,17 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
             myAction->steps +=  myAction->totalBytes / (COPY_BUFFER_SIZE * STEP_FILES);
         }
         */
-        if (operation == ClipboardCut)
-        {
-            //this must still be false when cut finishes to change the clipboard to the target
-            m_clipboardModifiedByOther = false;
-        }
-        m_queuedActions.append(myAction);
-        if (!m_busy)
-        {
-            processAction();
-        }
+    if (operation == ClipboardCut)
+    {
+        //this must still be false when cut finishes to change the clipboard to the target
+        m_clipboardModifiedByOther = false;
     }
+    m_queuedActions.append(myAction);
+    if (!m_busy)
+    {
+        processAction();
+    }
+}
     else
     {   // no items were added into the Action, maybe items were removed
         //addEntry() emits error() signal when items do not exist
@@ -1141,7 +1112,7 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
  * \return full pathname of target
  */
 QString FileSystemAction::targetFom(const QString& origItem, const Action* const action)
-{  
+{
     QString destinationUnderTarget(origItem.mid(action->baseOrigSize));
     if (action->currEntry  && action->currEntry->newName)
     {
@@ -1351,7 +1322,7 @@ bool FileSystemAction::processCopySingleFile()
         endActionEntry();
     }
     else
-    {       
+    {
         if (copySingleFileDone)
         {
             m_curAction->copyFile.clear();

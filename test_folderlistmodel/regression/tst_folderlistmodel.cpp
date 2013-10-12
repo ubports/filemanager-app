@@ -1,6 +1,7 @@
 #include "filesystemaction.h"
 #include "dirmodel.h"
 #include "tempfiles.h"
+#include "externalfswatcher.h"
 #include <stdio.h>
 
 #ifndef DO_NOT_USE_TAG_LIB
@@ -72,6 +73,7 @@ protected slots:
     void cancel(int index, int, int percent);
     void slotclipboardChanged();
     void slotError(QString title, QString message);
+    void slotExtFsWatcherPathModified()     { ++m_extFSWatcherPathModifiedCounter; }
 
 private Q_SLOTS:
     void initTestCase();       //before all tests
@@ -117,6 +119,9 @@ private Q_SLOTS: // test cases
     void  existsFileAndCanReadFile();
     void  pathProperties();
     void  watchExternalChanges();
+    void  extFsWatcherChangePathManyTimesModifyAllPathsLessLast();             // no notification
+    void  extFsWatcherModifySamePathManyTimesWithInInterval();  // just one notification
+    void  extFsWatcherSetPathAndModifyManyTimesWithInInterval();// just one notification
 
     //define TEST_OPENFILES to test QDesktopServices::openUrl() for some files
 #if defined(TEST_OPENFILES)
@@ -167,6 +172,7 @@ private:
     QFileIconProvider           m_provider;
     QString        m_currentPath;
     QString        m_fileToRemoveInProgressSignal;
+    int            m_extFSWatcherPathModifiedCounter;
 
 };
 
@@ -357,6 +363,29 @@ void TestDirModel::cleanDeepDirs()
 void TestDirModel::initModels()
 {
     cleanModels();
+    m_dirModel_01 = new DirModel();
+    m_dirModel_02 = new DirModel();
+
+    connect(m_dirModel_01->m_fsAction, SIGNAL(added(QString)),
+            this,      SLOT(slotFileAdded(QString)) );
+    connect(m_dirModel_01->m_fsAction, SIGNAL(removed(QString)),
+            this,      SLOT(slotFileRemoved(QString)) );
+    connect(m_dirModel_01->m_fsAction, SIGNAL(added(QFileInfo)),
+            this,      SLOT(slotFileAdded(QFileInfo)));
+    connect(m_dirModel_01->m_fsAction, SIGNAL(removed(QFileInfo)),
+            this,      SLOT(slotFileRemoved(QFileInfo)));
+
+    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QString)),
+            this,      SLOT(slotFileAdded(QString)) );
+    connect(m_dirModel_02->m_fsAction, SIGNAL(removed(QString)),
+            this,      SLOT(slotFileRemoved(QString)) );
+    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QFileInfo)),
+            this,      SLOT(slotFileAdded(QFileInfo)));
+    connect(m_dirModel_02->m_fsAction, SIGNAL(removed(QFileInfo)),
+            this,      SLOT(slotFileRemoved(QFileInfo)));
+
+    m_dirModel_01->setEnabledExternalFSWatcher(true);
+    m_dirModel_02->setEnabledExternalFSWatcher(true);
 }
 
 
@@ -396,6 +425,7 @@ void TestDirModel::init()
    m_receivedErrorSignal = false;
    m_progressNotificationsCounter = 0;
    m_visibleProgressMessages      = false;
+   m_extFSWatcherPathModifiedCounter = 0;
 }
 
 
@@ -415,6 +445,7 @@ void TestDirModel::cleanup()
     m_fileToRemoveInProgressSignal.clear();
     m_progressNotificationsCounter      = 0;
     m_visibleProgressMessages           = false;
+    m_extFSWatcherPathModifiedCounter   = 0;
 }
 
 
@@ -504,7 +535,6 @@ void TestDirModel::modelRemoveRecursiveDirByIndex()
     m_deepDir_01 = new DeepDir("modelRemoveRecursiveDirByIndex", level);
     QCOMPARE( QFileInfo(m_deepDir_01->path()).exists(),  true);
 
-    m_dirModel_01 = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
 
@@ -535,7 +565,6 @@ void TestDirModel::modelRemoveMultiItemsByFullPathname()
     files.create(1);
     items.append(files.lastPath());
 
-    m_dirModel_01 = new DirModel();
     connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
             this,          SLOT(progress(int,int,int)));
     m_dirModel_01->setPath(m_deepDir_01->path());
@@ -563,7 +592,6 @@ void TestDirModel::modelRemoveMultiItemsByName()
      files.create(4);
      QCOMPARE(files.howManyExist(), filesToCreate);
 
-     m_dirModel_01 = new DirModel();
      m_dirModel_01->setPath(files.lastPath());
      QTest::qWait(TIME_TO_REFRESH_DIR);
 
@@ -583,8 +611,7 @@ void TestDirModel::modelCopyDirPasteIntoAnotherModel()
 {
     QString orig("modelCopyDirToAnotherModel_orig");
 
-    m_deepDir_01 = new DeepDir(orig, 1);
-    m_dirModel_01 = new DirModel();
+    m_deepDir_01 = new DeepDir(orig, 1);  
     m_dirModel_01->setPath(m_deepDir_01->path());
     connect(m_dirModel_01,  SIGNAL(clipboardChanged()),
             this,           SLOT(slotclipboardChanged()));
@@ -593,7 +620,6 @@ void TestDirModel::modelCopyDirPasteIntoAnotherModel()
 
     QString target("modelCopyDirToAnotherModel_target");
     m_deepDir_02 = new DeepDir(target, 0);
-    m_dirModel_02 = new DirModel();
     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
             this,          SLOT(progress(int,int,int)));
     m_dirModel_02->setPath(m_deepDir_02->path());    
@@ -621,8 +647,7 @@ void TestDirModel::modelCopyManyItemsPasteIntoAnotherModel()
 {
     QString orig("modelCopyManyItemstoAnotherModel_orig");
 
-    m_deepDir_01  = new DeepDir(orig, 5);
-    m_dirModel_01 = new DirModel();
+    m_deepDir_01  = new DeepDir(orig, 5);  
     connect(m_dirModel_01,  SIGNAL(clipboardChanged()),
             this,           SLOT(slotclipboardChanged()));
     const int  filesCreated = 10;
@@ -650,8 +675,7 @@ void TestDirModel::modelCopyManyItemsPasteIntoAnotherModel()
     QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
 
     QString target("modelCopyManyItemstoAnotherModel_target");
-    m_deepDir_02 = new DeepDir(target, 0);
-    m_dirModel_02 = new DirModel();
+    m_deepDir_02 = new DeepDir(target, 0); 
     m_dirModel_02->setPath(m_deepDir_02->path());
     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
             this,          SLOT(progress(int,int,int)));
@@ -690,15 +714,12 @@ void TestDirModel::modelCopyTwoEmptyFiles()
     empty.addSubDirLevel(orig);
     empty.touch(itemsCreated);
 
-
-    m_dirModel_01 = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
 
     QString target("modelCopyTwoEmptyFiles_target");
     m_deepDir_02 = new DeepDir(target, 0);
-    m_dirModel_02 = new DirModel();
     m_dirModel_02->setPath(m_deepDir_02->path());
     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
             this,          SLOT(progress(int,int,int)));
@@ -730,14 +751,12 @@ void TestDirModel::modelCopyFileAndRemoveBeforePaste()
     tempFile.addSubDirLevel(orig);
     tempFile.create();
 
-    m_dirModel_01 = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_01->rowCount(),  1);
 
     QString target("modelCopyFileAndRemoveBeforePaste_target");
-    m_deepDir_02 = new DeepDir(target, 0);
-    m_dirModel_02 = new DirModel();
+    m_deepDir_02 = new DeepDir(target, 0); 
     m_dirModel_02->setPath(m_deepDir_02->path());
     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
             this,          SLOT(progress(int,int,int)));
@@ -769,14 +788,12 @@ void TestDirModel::modelCopyPasteFileAndRemoveWhenFirstProgressSignalArrives()
     tempFile.addSubDirLevel(orig);
     tempFile.create();
 
-    m_dirModel_01 = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_01->rowCount(),  1);
 
     QString target("modelCopyPasteFileAndRemoveWhenFirstProgressSignalArrives_target");
     m_deepDir_02 = new DeepDir(target, 0);
-    m_dirModel_02 = new DirModel();
     m_dirModel_02->setPath(m_deepDir_02->path());
     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
             this,          SLOT(slotRemoveFileWhenProgressArrive(int,int,int)));
@@ -800,8 +817,7 @@ void TestDirModel::modelCutManyItemsPasteIntoAnotherModel()
 {
     QString orig("modelCutManyItemsPasteIntoAnotherModel_orig");
 
-    m_deepDir_01 = new DeepDir(orig, 5);
-    m_dirModel_01 = new DirModel();
+    m_deepDir_01 = new DeepDir(orig, 5);  
     connect(m_dirModel_01,  SIGNAL(clipboardChanged()),
             this,           SLOT(slotclipboardChanged()));
     const int  filesCreated = 10;
@@ -815,8 +831,7 @@ void TestDirModel::modelCutManyItemsPasteIntoAnotherModel()
     QCOMPARE(m_dirModel_01->rowCount(),  itemsCreated);
 
     QString target("modelCutManyItemsPasteIntoAnotherModel_target");
-    m_deepDir_02 = new DeepDir(target, 0);
-    m_dirModel_02 = new DirModel();
+    m_deepDir_02 = new DeepDir(target, 0); 
     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
             this,          SLOT(progress(int,int,int)));
     connect(m_dirModel_02, SIGNAL(error(QString,QString)),
@@ -832,7 +847,7 @@ void TestDirModel::modelCutManyItemsPasteIntoAnotherModel()
 
     m_dirModel_01->cutPaths(allFiles);
     m_visibleProgressMessages = true;
-    m_dirModel_02->paste();
+    m_dirModel_02->paste();   
     int steps = m_dirModel_02->getProgressCounter();
     QTest::qWait(TIME_TO_PROCESS);
 
@@ -847,7 +862,7 @@ void  TestDirModel::fsActionMoveItemsForcingCopyAndThenRemove()
      QString orig("fsActionMoveItemsForcingCopyAndThenRemove_orig");
 
      m_deepDir_01 = new DeepDir(orig, 1);
-     m_dirModel_01 = new DirModel();
+
      const int  filesCreated = 4;
      const int  itemsCreated = filesCreated +1;
 
@@ -860,12 +875,10 @@ void  TestDirModel::fsActionMoveItemsForcingCopyAndThenRemove()
 
      QString target("fsActionMoveItemsForcingCopyAndThenRemove_target");
      m_deepDir_02 = new DeepDir(target, 0);
-     m_dirModel_02 = new DirModel();
+
      m_dirModel_02->setPath(m_deepDir_02->path());
      QTest::qWait(TIME_TO_REFRESH_DIR);
 
-     connect(m_dirModel_02->m_fsAction, SIGNAL(added(QString)),
-             this, SLOT(slotFileAdded(QString)));
      connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
              this,          SLOT(progress(int,int,int)));
 
@@ -894,7 +907,6 @@ void TestDirModel::modelCancelRemoveAction()
      m_deepDir_01 = new DeepDir("modelCancelRemoveAction", level);
      QCOMPARE( QFileInfo(m_deepDir_01->path()).exists(),  true);
 
-     m_dirModel_01 = new DirModel();
      m_dirModel_01->setPath(m_deepDir_01->path());
      QTest::qWait(TIME_TO_REFRESH_DIR);
 
@@ -915,9 +927,7 @@ void TestDirModel::modelCancelRemoveAction()
 }
 
 void TestDirModel::modelTestFileSize()
-{
-     m_dirModel_01 = new DirModel();
-
+{  
      QCOMPARE(m_dirModel_01->fileSize(0),      QString("0 Bytes"));
      QCOMPARE(m_dirModel_01->fileSize(1023),   QString("1023 Bytes"));
      QCOMPARE(m_dirModel_01->fileSize(1024),   QString("1.0 kB"));
@@ -935,7 +945,6 @@ void TestDirModel::modelRemoveDirWithHiddenFilesAndLinks()
      m_deepDir_01 = new DeepDir("modelRemoveDirWithHiddenFilesAndLinks", level);
      QCOMPARE( QFileInfo(m_deepDir_01->path()).exists(),  true);
 
-     m_dirModel_01 = new DirModel();
      m_dirModel_01->setShowHiddenFiles(true);
      m_dirModel_01->setPath(m_deepDir_01->path());
      QTest::qWait(TIME_TO_REFRESH_DIR);
@@ -995,14 +1004,13 @@ void TestDirModel::modelCancelCopyAction()
     }
     big.close();
 
-    m_dirModel_01 = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_01->rowCount(), 1);
 
     QString target("modelCancelCopyAction_target");
     m_deepDir_02 = new DeepDir(target, 0);
-    m_dirModel_02 = new DirModel();
+
     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
             this,          SLOT(progress(int,int,int)));
     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
@@ -1034,7 +1042,6 @@ void TestDirModel::modelCopyFileAndDirectoryLinks()
     QVERIFY(files.count() > 0);
     QCOMPARE(createLink(files.at(0).absoluteFilePath(), QLatin1String("link_to_file")),  true);
 
-    m_dirModel_01 = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_01->rowCount(), 2);
@@ -1042,7 +1049,6 @@ void TestDirModel::modelCopyFileAndDirectoryLinks()
 
     QString target("modelCopyFileAndDirectoryLinks_target");
     m_deepDir_02 = new DeepDir(target, 0);
-    m_dirModel_02 = new DirModel();
     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
             this,           SLOT(progress(int,int,int)));
 
@@ -1085,7 +1091,6 @@ void TestDirModel::modelCutAndPasteInTheSamePlace()
         info_before[counter] = QFileInfo(created_files.at(counter));
     }
 
-    m_dirModel_01 = new DirModel();
     m_dirModel_01->setPath(files.lastPath());
     connect(m_dirModel_01, SIGNAL(error(QString,QString)),
             this,          SLOT(slotError(QString,QString)));
@@ -1125,7 +1130,6 @@ void TestDirModel::modelCopyAndPasteToBackupFiles()
     QStringList created_files(files.createdList());
     QCOMPARE(created_files.count(), files_to_create);
 
-    m_dirModel_01 = new DirModel();
     m_dirModel_01->setPath(files.lastPath());
 
     QTest::qWait(TIME_TO_REFRESH_DIR);
@@ -1133,7 +1137,6 @@ void TestDirModel::modelCopyAndPasteToBackupFiles()
     created_files.append(m_deepDir_01->firstLevel());
 
     m_dirModel_01->copyPaths(created_files);
-    m_dirModel_02 = new DirModel();
     connect(m_dirModel_02, SIGNAL(error(QString,QString)),
             this,          SLOT(slotError(QString,QString)));
 
@@ -1174,7 +1177,6 @@ void TestDirModel::modelCopyAndPaste3Times()
     DeepDir t2(target2,0);
     DeepDir t3(target3,0);
 
-    m_dirModel_01  = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(items.count(), m_dirModel_01->rowCount());
@@ -1229,10 +1231,9 @@ void TestDirModel::modelCutAndPaste3Times()
     DeepDir t2(target2,0);
     DeepDir t3(target3,0);
 
-    m_dirModel_01  = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
-    QCOMPARE(items.count(), m_dirModel_01->rowCount());
+    QCOMPARE(items.count(), m_dirModel_01->rowCount());  
     m_dirModel_01->cutPaths(items);
 
     DirModel  model1;
@@ -1266,7 +1267,6 @@ void TestDirModel::modelCopyPasteAndPasteAgain()
 {
     QString orig("modelCopyPasteAndPasteAgain_orig");
     m_deepDir_01  = new DeepDir(orig, 1);
-    m_dirModel_01  = new DirModel();
     connect(m_dirModel_01,  SIGNAL(error(QString,QString)),
             this,           SLOT(slotError(QString,QString)));
 
@@ -1277,25 +1277,10 @@ void TestDirModel::modelCopyPasteAndPasteAgain()
 
     QString target("modelCopyPasteAndPasteAgain_target");
     m_deepDir_02  = new DeepDir(target, 0);
-    m_dirModel_02  = new DirModel();
     connect(m_dirModel_02,  SIGNAL(error(QString,QString)),
             this,           SLOT(slotError(QString,QString)));
 
-    m_dirModel_02->setPath(m_deepDir_02->path());
-    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QFileInfo)),
-            this,                      SLOT(slotFileAdded(QFileInfo)));
-    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QString)),
-            this,                      SLOT(slotFileAdded(QString)));
-
-#if 0  /* it is not necessary to connect this signal because it is already handled
-        * by fsAction member, since the RemoveNotifier is static, the signal is emitted to
-        * fsAction even it is not being used here
-        */
-      connect(m_dirModel_02->m_fsAction, SIGNAL(removed(QFileInfo)),
-              this,                      SLOT(slotFileRemoved(QFileInfo)));
-      connect(m_dirModel_02->m_fsAction, SIGNAL(removed(QString)),
-              this,                      SLOT(slotFileRemoved(QString)));
-#endif
+    m_dirModel_02->setPath(m_deepDir_02->path());  
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_02->rowCount(), 0);
 
@@ -1313,9 +1298,10 @@ void TestDirModel::modelCopyPasteAndPasteAgain()
 
     QCOMPARE(compareDirectories(m_deepDir_01->path(), m_deepDir_02->path()), true);
     QCOMPARE(m_receivedErrorSignal,   false);   
-    //same item was removed from view and added again
-    QCOMPARE(m_filesRemoved.count(),  1);
-    QCOMPARE(m_filesAdded.count(),    2);
+
+    //when items already exist, changed signal is emitted
+    QCOMPARE(m_filesRemoved.count(),  0);
+    QCOMPARE(m_filesAdded.count(),    1);
 }
 
 
@@ -1327,20 +1313,20 @@ void TestDirModel::modelCutPasteIntoExistentItems()
     TempFiles tempFiles_01;
     TempFiles tempDir_01;
 
-    const int createCounter = 8;
+    const int createCounterTopLevel = 8;
+    const int createCounterSubLevel = 2;
 
     tempFiles_01.addSubDirLevel(orig);
-    tempFiles_01.create(createCounter - 1);
+    tempFiles_01.create(createCounterTopLevel);
     tempDir_01.addSubDirLevel(orig);
     tempDir_01.addSubDirLevel(moreOneLevel);
     tempDir_01.create(2);
 
-    m_dirModel_01  = new DirModel();
     connect(m_dirModel_01,  SIGNAL(error(QString,QString)),
             this,           SLOT(slotError(QString,QString)));
     m_dirModel_01->setPath(tempFiles_01.lastPath());
     QTest::qWait(TIME_TO_REFRESH_DIR);
-    QCOMPARE(m_dirModel_01->rowCount(), createCounter);
+    QCOMPARE(m_dirModel_01->rowCount(), createCounterTopLevel+1); //those created top level plus the subfolder
 
     QString target("modelCutPasteIntoExistentItems_target");
     m_deepDir_02  = new DeepDir(target, 0);
@@ -1348,25 +1334,21 @@ void TestDirModel::modelCutPasteIntoExistentItems()
     TempFiles tempDir_02;
 
     tempFiles_02.addSubDirLevel(target);
-    tempFiles_02.create(createCounter -1);
+    tempFiles_02.create(createCounterTopLevel);
     tempDir_02.addSubDirLevel(target);
     tempDir_02.addSubDirLevel(moreOneLevel);
-    tempDir_02.create(2);
-    m_dirModel_02  = new DirModel();
+    tempDir_02.create(createCounterSubLevel);
+
     connect(m_dirModel_02,  SIGNAL(error(QString,QString)),
             this,           SLOT(slotError(QString,QString)));
     connect(m_dirModel_02, SIGNAL(progress(int,int,int)),
             this,          SLOT(progress(int,int,int)));
     m_dirModel_02->setPath(tempFiles_02.lastPath());
     QTest::qWait(TIME_TO_REFRESH_DIR);
-    QCOMPARE(m_dirModel_02->rowCount(), createCounter);
 
-    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QFileInfo)),
-            this,                      SLOT(slotFileAdded(QFileInfo)));
-    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QString)),
-            this,                      SLOT(slotFileAdded(QString)));
+    QCOMPARE(m_dirModel_02->rowCount(), createCounterTopLevel+1); //those created top level plus the subfolder
 
-    //both directories have the same content
+   //both directories have the same content
     QCOMPARE(compareDirectories(tempFiles_01.lastPath(), tempFiles_02.lastPath()), true);
 
     //cut from first Model
@@ -1378,10 +1360,10 @@ void TestDirModel::modelCutPasteIntoExistentItems()
     QTest::qWait(TIME_TO_PROCESS *2);
 
     QCOMPARE(m_receivedErrorSignal,   false);
-   // same item removed from model_01 (cut) and from model_02 because it already exists there
-   // for temp directory removed() signal is also emitted, so there is one more
-    QCOMPARE(m_filesRemoved.count(),  createCounter *2 + 1);
-    QCOMPARE(m_filesAdded.count(),    createCounter );
+
+    QCOMPARE(m_filesRemoved.count(),  createCounterTopLevel + createCounterSubLevel);
+    //when items being copied from COPY or renamed from CUT already exist, they are not added
+    QCOMPARE(m_filesAdded.count(),    0 );
 }
 
 
@@ -1389,7 +1371,7 @@ void TestDirModel::openPathAbsouluteAndRelative()
 {
     QString orig("openPathAbsouluteAndRelative");
     m_deepDir_01  = new DeepDir(orig, 1);
-    m_dirModel_01  = new DirModel();
+
     connect(m_dirModel_01,  SIGNAL(error(QString,QString)),
             this,           SLOT(slotError(QString,QString)));
 
@@ -1425,7 +1407,6 @@ void TestDirModel::existsDirAnCanReadDir()
 {
     QString orig("existsDirAnCanReadDir");
     m_deepDir_01  = new DeepDir(orig, 1);
-    m_dirModel_01  = new DirModel();
 
     connect(m_dirModel_01,  SIGNAL(error(QString,QString)),
             this,           SLOT(slotError(QString,QString)));
@@ -1471,7 +1452,7 @@ void TestDirModel::existsFileAndCanReadFile()
 {
     QString orig("existsFileAndCanReadFile");
     m_deepDir_01  = new DeepDir(orig, 1);
-    m_dirModel_01  = new DirModel();
+
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
 
@@ -1528,7 +1509,6 @@ void TestDirModel::pathProperties()
     temp.addSubDirLevel(orig);
     temp.create(1);
 
-    m_dirModel_01  = new DirModel();
     m_dirModel_01->setPath(m_deepDir_01->path());
     QTest::qWait(TIME_TO_REFRESH_DIR);
 
@@ -1575,31 +1555,37 @@ void TestDirModel::watchExternalChanges()
     DirModel  thirdFM;
     thirdFM.setPath(tempUnderFirstLevel.lastPath());
 
-    m_dirModel_01  = new DirModel();
+
+    connect(m_dirModel_01, SIGNAL(error(QString,QString)),
+            this,          SLOT(slotError(QString,QString)));
     m_dirModel_01->setPath(m_deepDir_01->path());
-    m_dirModel_01->setEnabledExternalFSWatcher(true);
 
-    m_dirModel_02  = new DirModel();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+
+    connect(m_dirModel_02, SIGNAL(error(QString,QString)),
+            this,          SLOT(slotError(QString,QString)));
     m_dirModel_02->setPath(m_deepDir_01->path());
-    m_dirModel_02->setEnabledExternalFSWatcher(true);
 
-    QTest::qWait(TIME_TO_REFRESH_DIR+30);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
 
     QCOMPARE(thirdFM.rowCount(),  cut_items);
     QCOMPARE(m_dirModel_01->rowCount(), 1);
     QCOMPARE(m_dirModel_02->rowCount(), 1);
 
-    //modification loop
-    int pieceTime = EX_FS_WATCHER_TIMER_INTERVAL/cut_items;
-    int odd = 0;
+    qDebug() << "dirModelObjs:" << m_dirModel_01 << m_dirModel_02 << &thirdFM;
+
     QString    createdOutsideName;
     TempFiles  createdOutsideFiles;
     createdOutsideFiles.addSubDirLevel(orig);
     int        total_removed = 0;
+    int        odd=0;  
+
+    thirdFM.setEnabledExternalFSWatcher(true);
+
     for ( int counter = 0; counter < cut_items; ++counter )
     {
         thirdFM.cutIndex(0);
-        if ( (odd ^= 1))
+        if ( (odd^=1) )
         {
             m_dirModel_01->paste();
         }
@@ -1609,24 +1595,26 @@ void TestDirModel::watchExternalChanges()
         }
         QTest::qWait(TIME_TO_PROCESS);
         //at least one file is removed
-        if (m_dirModel_01->rowCount() > 1 &&
+        if (m_dirModel_02->rowCount() > 1 &&
             (!total_removed || (QDateTime::currentDateTime().time().msec() % 100) == 0))
         {
             //using index 1 because 0 is a directory and the items are being moved up
-            m_dirModel_01->removeIndex(1);
+           m_dirModel_02->removeIndex(1);
+           QTest::qWait(TIME_TO_PROCESS);
             ++total_removed;
-        }
-        QTest::qWait(pieceTime + TIME_TO_PROCESS);
+        }       
         createdOutsideName.sprintf("created_%d", counter);
         createdOutsideFiles.create(createdOutsideName);
     }
-
     int total_created = 1 + cut_items + createdOutsideFiles.created() - total_removed;
-    QTest::qWait(EX_FS_WATCHER_TIMER_INTERVAL + TIME_TO_PROCESS + TIME_TO_PROCESS);
+    QTest::qWait(EX_FS_WATCHER_TIMER_INTERVAL * 2);
+    qWarning("using 2 instances [cut_items]=%d [created outside]=%d, [removed outside]=%d", cut_items, createdOutsideFiles.created(),  total_removed);
 
-    qWarning("using 2 instances [created outside]=%d, [removed outside]=%d", createdOutsideFiles.created(),  total_removed);
     QCOMPARE(m_dirModel_01->rowCount(),    total_created);
-    QCOMPARE(m_dirModel_02->rowCount(),    total_created);
+    if (m_dirModel_02->getEnabledExternalFSWatcher())
+    {
+        QCOMPARE(m_dirModel_02->rowCount(),    total_created);
+    }
 }
 
 
@@ -1752,7 +1740,6 @@ void TestDirModel::verifyMP3Metadata()
                                           sound_44100_mp3_data_len);
     QCOMPARE(mp3File.isEmpty(),   false);
 
-    m_dirModel_01 = new DirModel();
     m_dirModel_01->setReadsMediaMetadata(true);
     QFileInfo fi(mp3File);
 
@@ -1834,6 +1821,105 @@ void  TestDirModel::openPDF()
     QCOMPARE(QFile::remove(pdfFile),  true);
 }
 #endif
+
+
+/*!
+ * \brief TestDirModel::extFsWatcherChangePathManyTimesModifyAllPathsLessLast() expects no Notification
+ *
+ *  As the current path changes in a small interval of the time and the last path set
+ *  is not modified, the signal pathModified() MUST NOT be fired.
+ */
+void TestDirModel::extFsWatcherChangePathManyTimesModifyAllPathsLessLast()
+{
+    ExternalFSWatcher  watcher;
+    connect(&watcher, SIGNAL(pathModified()),
+            this,     SLOT(slotExtFsWatcherPathModified()));
+
+    const int items = 5;
+    QList<DeepDir *>  deepDirs;
+
+    for (int counter=1; counter <= items ; ++counter)
+    {
+        QString dirName(QString("extModifyAllLessLast") + QString::number(counter));
+        DeepDir *d =  new DeepDir(dirName,0);
+        watcher.setCurrentPath(d->path());
+        if (counter < items) // last dir does not receive a file
+        {
+            TempFiles  file;
+            file.addSubDirLevel(dirName);
+            file.create();
+            QTest::qWait(10);
+        }
+        deepDirs.append(d);
+    }
+    QTest::qWait(TIME_TO_PROCESS);
+    qDeleteAll(deepDirs);
+
+    QCOMPARE(m_extFSWatcherPathModifiedCounter,    0);
+}
+
+
+/*!
+ * \brief TestDirModel::extFsWatcherModifySamePathManyTimesWithInInterval() expects just one Notification
+ *
+ * A path is modified many times in a small time interval than ExternalFSWatcher class notifies changes,
+ * so only one Notification is expected.
+ */
+void TestDirModel::extFsWatcherModifySamePathManyTimesWithInInterval()
+{
+    ExternalFSWatcher  watcher;
+    connect(&watcher, SIGNAL(pathModified()),
+            this,     SLOT(slotExtFsWatcherPathModified()));
+
+    QString dirName("extFsWatcher_expects_just_one_signal");
+    m_deepDir_01 = new DeepDir(dirName,0);
+    watcher.setCurrentPath(m_deepDir_01->path());
+    int  loop = 4;
+    int   waitTime  = watcher.getIntervalToNotifyChanges() / loop  - 5;
+    while (loop--)
+    {
+        TempFiles file;
+        file.addSubDirLevel(dirName);
+        file.create(QString("file_") + QString::number(loop), 1);
+        QTest::qWait(waitTime);
+    }
+
+    QTest::qWait(TIME_TO_PROCESS);
+    QCOMPARE(m_extFSWatcherPathModifiedCounter,    1);
+}
+
+
+/*!
+ * \brief TestDirModel::extFsWatcherSetPathAndModifyManyTimesWithInInterval() expects just one Notification
+ */
+void TestDirModel::extFsWatcherSetPathAndModifyManyTimesWithInInterval()
+{
+    ExternalFSWatcher  watcher;
+    connect(&watcher, SIGNAL(pathModified()),
+            this,     SLOT(slotExtFsWatcherPathModified()));
+
+    QList<DeepDir *>  deepDirs;
+
+    int  loop = 5;
+    int   waitTime  = watcher.getIntervalToNotifyChanges() / loop  - 5;
+
+    for (int counter=1; counter <= loop ; ++counter)
+    {
+        QString dirName(QString("extModifyAll") + QString::number(counter));
+        DeepDir *d =  new DeepDir(dirName,0);
+        watcher.setCurrentPath(d->path());
+        TempFiles  file;
+        file.addSubDirLevel(dirName);
+        file.create();
+        QTest::qWait(waitTime);
+        deepDirs.append(d);
+    }
+    QTest::qWait(TIME_TO_PROCESS);
+    qDeleteAll(deepDirs);
+
+    QCOMPARE(m_extFSWatcherPathModifiedCounter,    1);
+}
+
 
 
 int main(int argc, char *argv[])
