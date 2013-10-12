@@ -1,0 +1,308 @@
+# Khmer translation for ubuntu-filemanager-app
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the ubuntu-filemanager-app package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ubuntu-filemanager-app\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-09-27 06:56+0200\n"
+"PO-Revision-Date: 2013-10-11 08:30+0000\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <km@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Launchpad-Export-Date: 2013-10-12 05:54+0000\n"
+"X-Generator: Launchpad (build 16799)\n"
+
+#: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
+#: ../NotifyDialog.qml:25
+msgid "Ok"
+msgstr "យល់ព្រម"
+
+#: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
+#: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
+#: ../GoToDialog.qml:59
+msgid "Cancel"
+msgstr "បោះ​បង់"
+
+#: ../FileActionDialog.qml:30
+msgid "Choose action"
+msgstr "ជ្រើស​កម្មភាព"
+
+#: ../FileActionDialog.qml:31
+#, qt-format
+msgid "For file: %1"
+msgstr "សម្រាប់​ឯកសារ៖ %1"
+
+#: ../FileActionDialog.qml:35
+msgid "Open"
+msgstr "បើក"
+
+#: ../FileDetailsPopover.qml:37
+msgid "Readable"
+msgstr "អាច​អាន​បាន"
+
+#: ../FileDetailsPopover.qml:40
+msgid "Writable"
+msgstr "អាច​សរសេរ​បាន"
+
+#: ../FileDetailsPopover.qml:43
+msgid "Executable"
+msgstr "អាច​អនុវត្ត​បាន"
+
+#: ../FileDetailsPopover.qml:91
+msgid "Path:"
+msgstr "ផ្លូវ​៖"
+
+#: ../FileDetailsPopover.qml:102
+msgid "Contents:"
+msgstr "មាតិកា៖"
+
+#: ../FileDetailsPopover.qml:103
+msgid "Size:"
+msgstr "ទំហំ​៖"
+
+#: ../FileDetailsPopover.qml:112
+msgid "Accessed:"
+msgstr "បាន​ដំណើរការ៖"
+
+#: ../FileDetailsPopover.qml:121
+msgid "Modified:"
+msgstr "បាន​កែប្រែ៖"
+
+#: ../FileDetailsPopover.qml:130
+msgid "Permissions:"
+msgstr "សិទ្ធិ៖"
+
+#: ../FileOperationProgressDialog.qml:27
+msgid "Operation in progress"
+msgstr "ប្រតិបត្តិការ​កំពុង​ដំណើរការ"
+
+#: ../FolderListPage.qml:101
+msgid "~/Desktop"
+msgstr "~/Desktop"
+
+#: ../FolderListPage.qml:103
+msgid "~/Documents"
+msgstr "~/Documents"
+
+#: ../FolderListPage.qml:105
+msgid "~/Downloads"
+msgstr "~/Downloads"
+
+#: ../FolderListPage.qml:107
+msgid "~/Music"
+msgstr "~/Music"
+
+#: ../FolderListPage.qml:109
+msgid "~/Pictures"
+msgstr "~/Pictures"
+
+#: ../FolderListPage.qml:111
+msgid "~/Public"
+msgstr "~/Public"
+
+#: ../FolderListPage.qml:113
+msgid "~/Programs"
+msgstr "~/Programs"
+
+#: ../FolderListPage.qml:115
+msgid "~/Templates"
+msgstr "~/Templates"
+
+#: ../FolderListPage.qml:117
+msgid "~/Videos"
+msgstr "~/Videos"
+
+#: ../FolderListPage.qml:134
+msgid "Home"
+msgstr "ផ្ទះ"
+
+#: ../FolderListPage.qml:136
+msgid "File System"
+msgstr "ប្រព័ន្ធ​ឯកសារ"
+
+#: ../FolderListPage.qml:182
+#, qt-format
+msgid "%1 file"
+msgid_plural "%1 files"
+msgstr[0] "ឯកសារ %1"
+
+#: ../FolderListPage.qml:212
+msgid "Create New Folder"
+msgstr "បង្កើត​ថត​ថ្មី"
+
+#: ../FolderListPage.qml:232
+msgid "Paste"
+msgstr "បិទភ្ជាប់"
+
+#: ../FolderListPage.qml:233
+#, qt-format
+msgid "Paste %1 file"
+msgid_plural "Paste %1 files"
+msgstr[0] "បិទភ្ជាប់​ឯកសារ %1"
+
+#: ../FolderListPage.qml:238
+msgid "Paste files"
+msgstr "បិទភ្ជាប់​ឯកសារ"
+
+#: ../FolderListPage.qml:250
+msgid "Open in Terminal"
+msgstr "បើក​ក្នុង​ស្ថានីយ"
+
+#: ../FolderListPage.qml:262 ../FolderListView.qml:152
+msgid "Properties"
+msgstr "លក្ខណ​សម្បត្តិ"
+
+#: ../FolderListPage.qml:297
+msgid "Create folder"
+msgstr "បង្កើត​ថត"
+
+#: ../FolderListPage.qml:298
+msgid "Enter name for new folder"
+msgstr "បញ្ចូល​ឈ្មោះ​ថត​ថ្មី"
+
+#: ../FolderListPage.qml:314
+msgid "Create file"
+msgstr "បង្កើត​ឯកសារ"
+
+#: ../FolderListPage.qml:315
+msgid "Enter name for new file"
+msgstr "បញ្ចូល​ឈ្មោះ​ឯកសារ​ថ្មី"
+
+#: ../FolderListPage.qml:350
+msgid "Actions"
+msgstr "សកម្មភាព"
+
+#: ../FolderListPage.qml:360
+msgid "View"
+msgstr "មើល"
+
+#: ../FolderListPage.qml:375
+msgid "Go To"
+msgstr "ទៅកាន់"
+
+#: ../FolderListPage.qml:388 ../PlacesSidebar.qml:73
+msgid "Places"
+msgstr "ទីកន្លែង"
+
+#: ../FolderListPage.qml:448
+msgid "No files"
+msgstr "គ្មាន​ឯកសារ"
+
+#: ../FolderListPage.qml:469
+msgid "File operation error"
+msgstr "កំហុស​ក្នុងកា​រប្រតិបត្តិ​ឯកសារ"
+
+#. TRANSLATORS: this refers to the header shown for a folder
+#. %1 is the folder path and %2 the number of files it contains
+#: ../FolderListView.qml:35
+#, qt-format
+msgid "%1 (%2 file)"
+msgid_plural "%1 (%2 files)"
+msgstr[0] "%1 (%2 ឯកសារ)"
+
+#: ../FolderListView.qml:45 ../FolderListView.qml:126
+msgid "Delete"
+msgstr "លុប"
+
+#: ../FolderListView.qml:46
+#, qt-format
+msgid "Are you sure you want to permanently delete '%1'?"
+msgstr "តើ​អ្នក​ប្រាកដ​ជា​ចង់​លុប '%1' ជាអចិន្ត្រៃយ៍?"
+
+#: ../FolderListView.qml:69 ../FolderListView.qml:139
+msgid "Rename"
+msgstr "ប្ដូរ​ឈ្មោះ"
+
+#: ../FolderListView.qml:70
+msgid "Enter a new name"
+msgstr "បញ្ចូល​ឈ្មោះ​ថ្មី"
+
+#: ../FolderListView.qml:79
+msgid "Could not rename"
+msgstr "មិន​អាច​ប្ដូរឈ្មោះ"
+
+#: ../FolderListView.qml:80
+msgid "Insufficient permissions or name already exists?"
+msgstr "សិទ្ធិ​មិន​គ្រប់គ្រាន់ ឬ​មាន​ឈ្មោះ​រួច​ហើយ?"
+
+#: ../FolderListView.qml:103
+msgid "Cut"
+msgstr "កាត់"
+
+#: ../FolderListView.qml:114
+msgid "Copy"
+msgstr "ចម្លង"
+
+#: ../FolderListView.qml:177
+msgid "Folder not accessible"
+msgstr "មិន​អាច​ចូល​ដំណើរការ​ថត"
+
+#: ../FolderListView.qml:178
+msgid "Can not access "
+msgstr "មិន​អាច​ចូលដំណើរការ "
+
+#: ../GoToDialog.qml:25
+msgid "Go To Location"
+msgstr "ទៅទីតាំង"
+
+#: ../GoToDialog.qml:27
+msgid "Enter a location to go to:"
+msgstr "បញ្ចូល​ទីតាំង​ត្រូវ​ទៅ៖"
+
+#: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
+msgid "Location..."
+msgstr "ទីតាំង..."
+
+#: ../GoToDialog.qml:47 ../PlacesPopover.qml:97
+msgid "Go"
+msgstr "ទៅ"
+
+#: ../SettingsPage.qml:32
+msgid "Settings"
+msgstr "ការកំណត់"
+
+#: ../SettingsPage.qml:38
+msgid "Show Advanced Features"
+msgstr "បង្ហាញ​លក្ខណៈ​កម្រិត​ខ្ពស់"
+
+#: ../ViewPopover.qml:39
+msgid "Show Hidden Files"
+msgstr "បង្ហាញ​ឯកសារ​ដែល​លាក់"
+
+#: ../ViewPopover.qml:59
+msgid "Sort By"
+msgstr "តម្រៀប​តាម"
+
+#: ../ViewPopover.qml:70
+msgid "Name"
+msgstr "ឈ្មោះ"
+
+#: ../ViewPopover.qml:71
+msgid "Date"
+msgstr "កាលបរិច្ឆេទ"
+
+#: ../ViewPopover.qml:81
+msgid "Sort Order"
+msgstr "លំដាប់​តម្រៀប"
+
+#: ../ViewPopover.qml:92 ../ViewPopover.qml:97
+msgid "Ascending"
+msgstr "ឡើង"
+
+#: ../ViewPopover.qml:93
+msgid "Descending"
+msgstr "ចុះ"
+
+#: ../ViewPopover.qml:105
+msgid "Filter"
+msgstr "តម្រង"
+
+#: ../.build/filemanager-app.desktop.js:1
+msgid "File Manager"
+msgstr "កម្មវិធី​គ្រប់គ្រង​ឯកសារ"
