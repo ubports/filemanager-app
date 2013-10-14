@@ -31,7 +31,7 @@ MainView {
     id: root
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
-    applicationName: "ubuntu-filemanager-app"
+    applicationName: "com.ubuntu.filemanager"
 
     width: units.gu(100)
     height: units.gu(75)
