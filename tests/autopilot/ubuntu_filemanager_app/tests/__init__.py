@@ -7,7 +7,10 @@
 
 """Filemanager app autopilot tests."""
 
+import mock
 import os.path
+import shutil
+import tempfile
 
 from autopilot.input import Mouse, Touch, Pointer
 from autopilot.platform import model
@@ -32,15 +35,43 @@ class FileManagerTestCase(AutopilotTestCase):
     installed_location = "/usr/share/ubuntu-filemanager-app/" \
                          "ubuntu-filemanager-app.qml"
 
+    def setup_environment(self):
+        if os.path.exists(self.local_location):
+            launch = self.launch_test_local
+            test_type = 'local'
+        elif os.path.exists(self.installed_location):
+            launch = self.launch_test_installed
+            test_type = 'deb'
+        else:
+            launch = self.launch_test_click
+            test_type = 'click'
+        return launch, test_type
+
     def setUp(self):
+        launch, self.test_type = self.setup_environment()
+        if self.test_type != 'click':
+            self._patch_home()
         self.pointing_device = Pointer(self.input_device_class.create())
         super(FileManagerTestCase, self).setUp()
-        if os.path.exists(self.local_location):
-            self.launch_test_local()
-        elif os.path.exists(self.installed_location):
-            self.launch_test_installed()
-        else:
-            self.launch_test_click()
+        self.original_file_count = \
+            len([i for i in os.listdir(os.environ['HOME'])
+                 if not i.startswith('.')])
+        launch()
+
+    def _patch_home(self):
+        #create a temporary home for testing purposes
+        temp_dir = tempfile.mkdtemp()
+        #if the Xauthority file is in home directory
+        #make sure we copy it to temp home, otherwise do nothing
+        xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
+        if os.path.isfile(xauth):
+            shutil.copyfile(
+                os.path.expanduser(os.path.join('~', '.Xauthority')),
+                os.path.join(temp_dir, '.Xauthority'))
+        self.addCleanup(shutil.rmtree, temp_dir)
+        patcher = mock.patch.dict('os.environ', {'HOME': temp_dir})
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
     def launch_test_local(self):
         self.app = self.launch_test_application(
