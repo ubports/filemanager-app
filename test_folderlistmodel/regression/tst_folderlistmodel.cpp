@@ -122,6 +122,7 @@ private Q_SLOTS: // test cases
     void  extFsWatcherChangePathManyTimesModifyAllPathsLessLast();             // no notification
     void  extFsWatcherModifySamePathManyTimesWithInInterval();  // just one notification
     void  extFsWatcherSetPathAndModifyManyTimesWithInInterval();// just one notification
+    void  extFsWatcherChangePathManyTimesModifyManyTimes();     // many notifications
 
     //define TEST_OPENFILES to test QDesktopServices::openUrl() for some files
 #if defined(TEST_OPENFILES)
@@ -1835,20 +1836,22 @@ void TestDirModel::extFsWatcherChangePathManyTimesModifyAllPathsLessLast()
     connect(&watcher, SIGNAL(pathModified()),
             this,     SLOT(slotExtFsWatcherPathModified()));
 
-    const int items = 5;
-    QList<DeepDir *>  deepDirs;
+    const int items = 150;
+    QVector<DeepDir *>  deepDirs;
+    deepDirs.reserve(items);
 
     for (int counter=1; counter <= items ; ++counter)
     {
         QString dirName(QString("extModifyAllLessLast") + QString::number(counter));
         DeepDir *d =  new DeepDir(dirName,0);
+        QTest::qWait(1);
         watcher.setCurrentPath(d->path());
         if (counter < items) // last dir does not receive a file
         {
             TempFiles  file;
             file.addSubDirLevel(dirName);
             file.create();
-            QTest::qWait(10);
+            QTest::qWait(1);
         }
         deepDirs.append(d);
     }
@@ -1858,6 +1861,39 @@ void TestDirModel::extFsWatcherChangePathManyTimesModifyAllPathsLessLast()
     QCOMPARE(m_extFSWatcherPathModifiedCounter,    0);
 }
 
+
+/*!
+ * \brief TestDirModel::extFsWatcherChangePathManyTimesModifyManyTimes
+ *
+ *  Change path many times, force one notification at each path
+ */
+void TestDirModel::extFsWatcherChangePathManyTimesModifyManyTimes()
+{
+    ExternalFSWatcher  watcher;
+    connect(&watcher, SIGNAL(pathModified()),
+            this,     SLOT(slotExtFsWatcherPathModified()));
+
+    const int items = 50;
+    QVector<DeepDir *>  deepDirs;
+    deepDirs.reserve(items);
+
+    for (int counter=0; counter < items ; ++counter)
+    {
+        QString dirName(QString("extFsWatcherChangePathManyTimesModifyManyTimes")
+                        + QString::number(counter));
+        DeepDir *d =  new DeepDir(dirName,0);
+        watcher.setCurrentPath(d->path());
+        TempFiles  file;
+        file.addSubDirLevel(dirName);
+        file.create(20);
+        QTest::qWait(watcher.getIntervalToNotifyChanges() + 20);
+        deepDirs.append(d);
+    }
+    QTest::qWait(TIME_TO_PROCESS);
+    qDeleteAll(deepDirs);
+
+    QCOMPARE(m_extFSWatcherPathModifiedCounter,    items);
+}
 
 /*!
  * \brief TestDirModel::extFsWatcherModifySamePathManyTimesWithInInterval() expects just one Notification
@@ -1874,8 +1910,8 @@ void TestDirModel::extFsWatcherModifySamePathManyTimesWithInInterval()
     QString dirName("extFsWatcher_expects_just_one_signal");
     m_deepDir_01 = new DeepDir(dirName,0);
     watcher.setCurrentPath(m_deepDir_01->path());
-    int  loop = 4;
-    int   waitTime  = watcher.getIntervalToNotifyChanges() / loop  - 5;
+    int  loop = 10;
+    int   waitTime  = watcher.getIntervalToNotifyChanges() / loop  - 10;
     while (loop--)
     {
         TempFiles file;
@@ -1884,8 +1920,8 @@ void TestDirModel::extFsWatcherModifySamePathManyTimesWithInInterval()
         QTest::qWait(waitTime);
     }
 
-    QTest::qWait(TIME_TO_PROCESS);
-    QCOMPARE(m_extFSWatcherPathModifiedCounter,    1);
+    QTest::qWait(TIME_TO_PROCESS);    
+    QCOMPARE(m_extFSWatcherPathModifiedCounter,  1 );
 }
 
 

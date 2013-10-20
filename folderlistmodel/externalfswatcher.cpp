@@ -30,7 +30,7 @@
     qDebug() << "[extFsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz") \
              << Q_FUNC_INFO << "m_setPath:" << m_setPath \
              << "m_changedPath:" << m_changedPath        \
-             << "m_waitingEmit:" << m_waitingEmit
+             << "m_waitingEmit:" << m_waitingEmitCounter
 #else
 # define DEBUG_FSWATCHER()  /**/
 #endif //
@@ -38,7 +38,7 @@
 
 ExternalFSWatcher::ExternalFSWatcher(QObject *parent) :
     QFileSystemWatcher(parent)
-  , m_waitingEmit(false)
+  , m_waitingEmitCounter(0)
   , m_msWaitTime(DEFAULT_NOTICATION_PERIOD)
 {
     connect(this,   SIGNAL(directoryChanged(QString)),
@@ -67,28 +67,32 @@ void ExternalFSWatcher::setCurrentPath(const QString &curPath)
 void ExternalFSWatcher::slotDirChanged(const QString &dir)
 {
     DEBUG_FSWATCHER();
-    m_changedPath = dir;
-    if (!m_waitingEmit && m_setPath == m_changedPath)
+    if (    (m_setPath == dir)
+         && ( m_waitingEmitCounter == 0 || m_setPath != m_changedPath )
+       )
     {
-        m_waitingEmit = true;
+        ++m_waitingEmitCounter;
+        m_changedPath = m_setPath;
         QTimer::singleShot(m_msWaitTime, this, SLOT(slotFireChanges()));       
     }
 }
 
 
 /*!
- * \brief ExternalFSWatcher::slotFireChanges() emits \ref pathModified() only when is sure
+ * \brief ExternalFSWatcher::slotFireChanges() emits \ref pathModified() only when it is sure
+ *  that the  current path was changed.
+ *
+ *  A change for the current path (the last current) MUST be notified at least once.
  */
 void ExternalFSWatcher::slotFireChanges()
 {
-   if (m_setPath == m_changedPath)
+   if (--m_waitingEmitCounter == 0 && m_setPath == m_changedPath)
    {     
        emit pathModified();
 #if DEBUG_EXT_FS_WATCHER
        DEBUG_FSWATCHER() << "emit pathModified()";
 #endif
-   }
-   m_waitingEmit = false;
+   }  
 }
 
 

@@ -60,8 +60,8 @@ private slots:
 
  private:
      QString   m_setPath;
-     QString   m_changedPath;
-     bool      m_waitingEmit;
+     QString   m_changedPath;   
+     unsigned  m_waitingEmitCounter;
      int       m_msWaitTime;
 };
 

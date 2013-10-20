@@ -114,9 +114,6 @@ public:
     Q_INVOKABLE QString     curPathModifiedDateLocaleShort() const;
     Q_INVOKABLE bool        curPathIsWritable() const;
 
-    Q_PROPERTY(bool pathIsWritable  READ pathIsWritable)
-    bool pathIsWritable() const;
-
     Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
     bool awaitingResults() const;
 
