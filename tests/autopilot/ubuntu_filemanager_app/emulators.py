@@ -20,6 +20,7 @@ import re
 import time
 
 from autopilot import input
+from autopilot.introspection import dbus
 
 from ubuntuuitoolkit import emulators as toolkit_emulators
 
@@ -35,12 +36,18 @@ class MainView(toolkit_emulators.MainView):
 
     def get_file_actions_popover(self):
         """Return the ActionSelectionPopover emulator of the file actions."""
-        return self.select_single(
+        return self.wait_select_single(
             ActionSelectionPopover, objectName='fileActionsPopover')
 
     def get_folder_actions_popover(self):
         """Return the ActionSelectionPopover emulator of the folder actions."""
-        return self.select_single(
+        return self.wait_select_single(
+            ActionSelectionPopover, objectName='folderActionsPopover')
+
+    #Come up with a better name for this function
+    def get_many_folder_actions_popover(self):
+        """Return the ActionSelectionPopover emulator of the folder actions."""
+        return self.select_many(
             ActionSelectionPopover, objectName='folderActionsPopover')
 
     def get_places_popover(self):
@@ -57,16 +64,29 @@ class MainView(toolkit_emulators.MainView):
 
     def get_file_details_popover(self):
         """Return the FileDetailsPopover emulator."""
-        return self.select_single(FileDetailsPopover)
+        return self.wait_select_single(FileDetailsPopover)
 
     def get_file_action_dialog(self):
         """Return the FileActionDialog emulator."""
-        return self.select_single(FileActionDialog)
+        return self.wait_select_single(FileActionDialog)
+
+    #Come up with a better name for this function
+    def get_many_file_action_dialog(self):
+        """Return the FileActionDialog emulator."""
+        return self.select_many(FileActionDialog)
 
     def get_confirm_dialog(self):
-        dialog = self.select_single(ConfirmDialog)
-        if dialog is None:
+        try:
+            dialog = self.select_single(ConfirmDialog)
+        except dbus.StateNotFoundError:
             dialog = self.select_single(ConfirmDialogWithInput)
+        return dialog
+
+    #Come up with a better name for this function
+    def get_many_confirm_dialog(self):
+        dialog = self.select_many(ConfirmDialog)
+        if dialog == '[]':
+            dialog = self.select_many(ConfirmDialogWithInput)
         return dialog
 
 
@@ -232,9 +252,6 @@ class ActionSelectionPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
         """
         button = self._get_button(text)
-        if button is None:
-            raise ValueError(
-                'Button with text "{0}" not found.'.format(text))
         self.pointing_device.click_object(button)
 
     def _get_button(self, text):
