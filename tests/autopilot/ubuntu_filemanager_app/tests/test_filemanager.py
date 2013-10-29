@@ -381,6 +381,7 @@ class TestFolderListPage(FileManagerTestCase):
             file_details_popover.get_path, Eventually(Equals(file_path)))
         # TODO check the rest of the fields. --elopio - 2013-07-25
 
+    @unittest.skip("Critical bug #1217971")
     def test_copy_directory(self):
         # Set up a directory to copy and a directory to copy it into.
         destination_dir_path = os.path.join(os.environ['HOME'], 'destination')
@@ -431,6 +432,7 @@ class TestFolderListPage(FileManagerTestCase):
         # Check that the directory is still there.
         self._assert_number_of_files(2)
 
+    @unittest.skip("Critical bug #1217971")
     def test_cut_directory(self):
         # Set up a directory to cut and a directory to move it into.
         destination_dir_path = os.path.join(os.environ['HOME'], 'destination')
@@ -484,7 +486,7 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             first_dir.fileName, Eventually(Equals(destination_dir_name)))
 
-    @unittest.skip("Test randomly fails in jenkins vm, skip for now")
+    @unittest.skip("Critical bug #1217971")
     def test_copy_file(self):
         # Set up a file to copy and a directory to copy it into.
         destination_dir_path = self._make_directory_in_home()
@@ -535,6 +537,7 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             first_dir.fileName, Eventually(Equals(destination_dir_name)))
 
+    @unittest.skip("Critical bug #1217971")
     def test_cut_file(self):
         # Set up a file to cut and a directory to move it into.
         destination_dir_path = self._make_directory_in_home()
