@@ -49,8 +49,7 @@ class FileManagerTestCase(AutopilotTestCase):
 
     def setUp(self):
         launch, self.test_type = self.setup_environment()
-        if self.test_type != 'click':
-            self._patch_home()
+        self._patch_home()
         self.pointing_device = Pointer(self.input_device_class.create())
         super(FileManagerTestCase, self).setUp()
         self.original_file_count = \
@@ -60,7 +59,8 @@ class FileManagerTestCase(AutopilotTestCase):
 
     def _patch_home(self):
         #create a temporary home for testing purposes
-        temp_dir = tempfile.mkdtemp()
+        #due to security lockdowns, make it under /home always
+        temp_dir = tempfile.mkdtemp(dir=os.path.expanduser("~"))
         #if the Xauthority file is in home directory
         #make sure we copy it to temp home, otherwise do nothing
         xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
