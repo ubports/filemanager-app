@@ -11,6 +11,7 @@ import mock
 import os.path
 import shutil
 import tempfile
+import logging
 
 from autopilot.input import Mouse, Touch, Pointer
 from autopilot.platform import model
@@ -18,6 +19,8 @@ from autopilot.testcase import AutopilotTestCase
 
 from ubuntuuitoolkit import emulators as toolkit_emulators
 from ubuntu_filemanager_app import emulators
+
+logger = logging.getLogger(__name__)
 
 
 class FileManagerTestCase(AutopilotTestCase):
@@ -37,12 +40,15 @@ class FileManagerTestCase(AutopilotTestCase):
 
     def setup_environment(self):
         if os.path.exists(self.local_location):
+            logger.debug("Running via local installation")
             launch = self.launch_test_local
             test_type = 'local'
         elif os.path.exists(self.installed_location):
+            logger.debug("Running via installed debian package")
             launch = self.launch_test_installed
             test_type = 'deb'
         else:
+            logger.debug("Running via click package")
             launch = self.launch_test_click
             test_type = 'click'
         return launch, test_type
@@ -55,23 +61,28 @@ class FileManagerTestCase(AutopilotTestCase):
         self.original_file_count = \
             len([i for i in os.listdir(os.environ['HOME'])
                  if not i.startswith('.')])
+        logger.debug("File count in HOME is %s" % self.original_file_count)
         launch()
 
     def _patch_home(self):
         #create a temporary home for testing purposes
         #due to security lockdowns, make it under /home always
         temp_dir = tempfile.mkdtemp(dir=os.path.expanduser("~"))
+        logger.debug("Created fake home directory " + temp_dir)
+        self.addCleanup(shutil.rmtree, temp_dir)
         #if the Xauthority file is in home directory
         #make sure we copy it to temp home, otherwise do nothing
         xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
         if os.path.isfile(xauth):
+            logger.debug("Copying .Xauthority to fake home " + temp_dir)
             shutil.copyfile(
                 os.path.expanduser(os.path.join('~', '.Xauthority')),
                 os.path.join(temp_dir, '.Xauthority'))
-        self.addCleanup(shutil.rmtree, temp_dir)
         patcher = mock.patch.dict('os.environ', {'HOME': temp_dir})
         patcher.start()
+        logger.debug("Patched home to fake home directory " + temp_dir)
         self.addCleanup(patcher.stop)
+        return temp_dir
 
     def launch_test_local(self):
         self.app = self.launch_test_application(

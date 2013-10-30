@@ -20,6 +20,7 @@ from __future__ import absolute_import
 
 import tempfile
 import unittest
+import logging
 
 import os
 import shutil
@@ -30,6 +31,8 @@ from autopilot.matchers import Eventually
 from testtools.matchers import Equals, NotEquals, Not, Is
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
+
+logger = logging.getLogger(__name__)
 
 
 class TestFolderListPage(FileManagerTestCase):
@@ -46,10 +49,12 @@ class TestFolderListPage(FileManagerTestCase):
         if type_ != 'file' and type_ != 'directory':
             raise ValueError('Unknown content type: "{0}"', type_)
         if type_ == 'file':
-            _, path = tempfile.mkstemp(dir=os.environ['HOME'])
+            _, path = tempfile.mkstemp(prefix='tmpfm', dir=os.environ['HOME'])
+            logger.debug("Created %s, a file in HOME" % path)
             self.addCleanup(self._unlink_cleanup, path)
         else:
-            path = tempfile.mkdtemp(dir=os.environ['HOME'])
+            path = tempfile.mkdtemp(prefix='tmpfm', dir=os.environ['HOME'])
+            logger.debug("Created %s, a directory in HOME" % path)
             self.addCleanup(self._rmdir_cleanup, path)
 
         self._assert_number_of_files(1)
@@ -120,6 +125,7 @@ class TestFolderListPage(FileManagerTestCase):
             list_view.get_current_path, Eventually(Equals(expected_path)))
 
     def _do_action_on_file(self, file_, action):
+        logger.debug("Performing %s on file %s" % (action, file_))
         file_.open_actions_popover()
         self.assertThat(
             self.main_view.get_file_actions_popover,
@@ -141,11 +147,15 @@ class TestFolderListPage(FileManagerTestCase):
         confirm_dialog.ok()
 
     def _unlink_cleanup(self, filename):
+        logger.debug("Cleanup; checking to remove % file" % filename)
         if os.path.exists(filename):
+            logger.debug("Removing % file" % filename)
             os.unlink(filename)
 
     def _rmdir_cleanup(self, directory):
+        logger.debug("Cleanup; checking to remove % directory" % directory)
         if os.path.exists(directory):
+            logger.debug("Removing % directory" % directory)
             shutil.rmtree(directory)
 
     # We can't do this testcase on phablet devices because of a lack of
