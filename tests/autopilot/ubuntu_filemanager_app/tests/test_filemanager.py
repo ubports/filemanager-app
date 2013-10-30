@@ -147,15 +147,15 @@ class TestFolderListPage(FileManagerTestCase):
         confirm_dialog.ok()
 
     def _unlink_cleanup(self, filename):
-        logger.debug("Cleanup; checking to remove % file" % filename)
+        logger.debug("Cleanup; checking to remove %s file" % filename)
         if os.path.exists(filename):
-            logger.debug("Removing % file" % filename)
+            logger.debug("Removing %s file" % filename)
             os.unlink(filename)
 
     def _rmdir_cleanup(self, directory):
-        logger.debug("Cleanup; checking to remove % directory" % directory)
+        logger.debug("Cleanup; checking to remove %s directory" % directory)
         if os.path.exists(directory):
-            logger.debug("Removing % directory" % directory)
+            logger.debug("Removing %s directory" % directory)
             shutil.rmtree(directory)
 
     # We can't do this testcase on phablet devices because of a lack of
