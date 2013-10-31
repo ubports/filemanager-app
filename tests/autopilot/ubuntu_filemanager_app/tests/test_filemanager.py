@@ -235,10 +235,9 @@ class TestFolderListPage(FileManagerTestCase):
         dialog.visible.wait_for(True)
         dialog.cancel()
 
-        ## I need to come up with a better name for get_many_file...
         self.assertThat(
-            self.main_view.get_many_file_action_dialog,
-            Eventually(Equals([])))
+            self.main_view.file_action_dialog_exists,
+            Eventually(Equals(False)))
 
     def test_cancel_rename_directory(self):
         dir_path = self._make_directory_in_home()
@@ -249,7 +248,7 @@ class TestFolderListPage(FileManagerTestCase):
         self._cancel_confirm_dialog()
 
         self.assertThat(
-            self.main_view.get_many_confirm_dialog, Eventually(Equals([])))
+            self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
         self.assertThat(
             lambda: first_dir.fileName, Eventually(Equals(dir_name)))
 
@@ -262,8 +261,7 @@ class TestFolderListPage(FileManagerTestCase):
         self._cancel_confirm_dialog()
 
         self.assertThat(
-            self.main_view.get_many_confirm_dialog,
-            Eventually(Equals([])))
+            self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
         self.assertThat(
             lambda: first_file.fileName,
             Eventually(Equals(file_name)))
@@ -278,7 +276,7 @@ class TestFolderListPage(FileManagerTestCase):
         self._confirm_dialog(new_name)
 
         self.assertThat(
-            self.main_view.get_many_confirm_dialog, Eventually(Equals([])))
+            self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
         self.assertThat(
             lambda: first_file.fileName, Eventually(Equals(new_name)))
 
@@ -392,8 +390,8 @@ class TestFolderListPage(FileManagerTestCase):
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
         self.assertThat(
-            self.main_view.get_many_folder_actions_popover,
-            Eventually(Equals([])))
+            self.main_view.folder_actions_popover_exists,
+            Eventually(Equals(False)))
 
         # Check that the directory is there.
         self._assert_number_of_files(1, home=False)
@@ -438,8 +436,8 @@ class TestFolderListPage(FileManagerTestCase):
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
         self.assertThat(
-            self.main_view.get_many_folder_actions_popover,
-            Eventually(Equals([])))
+            self.main_view.folder_actions_popover_exists,
+            Eventually(Equals(False)))
 
         # Check that the directory is there.
         self._assert_number_of_files(1, home=False)
@@ -485,8 +483,8 @@ class TestFolderListPage(FileManagerTestCase):
         folder_actions_popover.click_button('Paste 1 File')
 
         self.assertThat(
-            self.main_view.get_many_folder_actions_popover,
-            Eventually(Equals([])))
+            self.main_view.folder_actions_popover_exists,
+            Eventually(Equals(False)))
 
         # Check that the file is there.
         self._assert_number_of_files(1)
@@ -530,8 +528,8 @@ class TestFolderListPage(FileManagerTestCase):
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Paste 1 File')
         self.assertThat(
-            self.main_view.get_many_folder_actions_popover,
-            Eventually(Equals([])))
+            self.main_view.folder_actions_popover_exists,
+            Eventually(Equals(False)))
 
         # Check that the file is there.
         self._assert_number_of_files(1, home=False)

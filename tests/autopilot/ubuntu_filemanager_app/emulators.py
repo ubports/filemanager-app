@@ -44,11 +44,13 @@ class MainView(toolkit_emulators.MainView):
         return self.wait_select_single(
             ActionSelectionPopover, objectName='folderActionsPopover')
 
-    #Come up with a better name for this function
-    def get_many_folder_actions_popover(self):
-        """Return the ActionSelectionPopover emulator of the folder actions."""
-        return self.select_many(
+    def folder_actions_popover_exists(self):
+        """Boolean, checks if the Actions Popover exists."""
+        popover = self.select_many(
             ActionSelectionPopover, objectName='folderActionsPopover')
+        if popover == '[]':
+            return True
+        return False
 
     def get_places_popover(self):
         """Return the Places popover."""
@@ -70,24 +72,29 @@ class MainView(toolkit_emulators.MainView):
         """Return the FileActionDialog emulator."""
         return self.wait_select_single(FileActionDialog)
 
-    #Come up with a better name for this function
-    def get_many_file_action_dialog(self):
-        """Return the FileActionDialog emulator."""
-        return self.select_many(FileActionDialog)
+    def file_action_dialog_exists(self):
+        """Boolean checks if the FileActionDialog exists."""
+        dialog = self.select_many(FileActionDialog)
+        if dialog == '[]':
+            return True
+        return False
 
     def get_confirm_dialog(self):
+        """Return a confirm dialog emulator"""
         try:
             dialog = self.select_single(ConfirmDialog)
         except dbus.StateNotFoundError:
             dialog = self.select_single(ConfirmDialogWithInput)
         return dialog
 
-    #Come up with a better name for this function
-    def get_many_confirm_dialog(self):
+    def confirm_dialog_exists(self):
+        """Boolean checks if a confirm dialog exists"""
         dialog = self.select_many(ConfirmDialog)
         if dialog == '[]':
             dialog = self.select_many(ConfirmDialogWithInput)
-        return dialog
+        if dialog == '[]':
+            return True
+        return False
 
 
 class Sidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
