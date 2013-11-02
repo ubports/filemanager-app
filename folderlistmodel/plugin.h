@@ -63,6 +63,9 @@ typedef QQmlEngine QmlEngine;
 #endif
 
 #include "dirmodel.h"
+#ifndef DO_NOT_USE_TAG_LIB
+#include "imageprovider.h"
+#endif
 
 #define QUOTES(x)  #x
 
