@@ -38,6 +38,7 @@
 #include <QFileInfo>
 #include <QString>
 #include <QDateTime>
+#include <QDebug>
 
 
 

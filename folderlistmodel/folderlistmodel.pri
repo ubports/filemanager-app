@@ -3,7 +3,6 @@ SOURCES += $$PWD/dirmodel.cpp \
            $$PWD/iorequestworker.cpp \
            $$PWD/ioworkerthread.cpp \
            $$PWD/filesystemaction.cpp \
-           $$PWD/imageprovider.cpp \
            $$PWD/filecompare.cpp \
 
 
@@ -14,7 +13,6 @@ HEADERS += $$PWD/dirmodel.h \
            $$PWD/iorequestworker.h \
            $$PWD/ioworkerthread.h \
            $$PWD/filesystemaction.h \
-           $$PWD/imageprovider.h \
            $$PWD/filecompare.h \
 
 
@@ -31,4 +29,6 @@ else {
 
 !contains (DEFINES, DO_NOT_USE_TAG_LIB) {
    LIBS += -ltag
+   SOURCES += $$PWD/imageprovider.cpp 
+   HEADERS += $$PWD/imageprovider.h 
 }
