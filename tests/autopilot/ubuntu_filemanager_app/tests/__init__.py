@@ -61,6 +61,7 @@ class FileManagerTestCase(AutopilotTestCase):
         self.original_file_count = \
             len([i for i in os.listdir(os.environ['HOME'])
                  if not i.startswith('.')])
+        logger.debug("Directory Listing for HOME\n%s" % os.listdir(os.environ['HOME']))
         logger.debug("File count in HOME is %s" % self.original_file_count)
         launch()
 

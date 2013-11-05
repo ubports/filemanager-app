@@ -57,6 +57,7 @@ class TestFolderListPage(FileManagerTestCase):
             logger.debug("Created %s, a directory in HOME" % path)
             self.addCleanup(self._rmdir_cleanup, path)
 
+        logger.debug("Directory Listing for HOME\n%s" % os.listdir(os.environ['HOME']))
         self._assert_number_of_files(1)
         return path
 
@@ -137,10 +138,16 @@ class TestFolderListPage(FileManagerTestCase):
             Eventually(Equals(None)))
 
     def _cancel_confirm_dialog(self):
+        self.assertThat(
+            self.main_view.get_confirm_dialog,
+            Eventually(NotEquals(None)))
         confirm_dialog = self.main_view.get_confirm_dialog()
         confirm_dialog.cancel()
 
     def _confirm_dialog(self, text=None):
+        self.assertThat(
+            self.main_view.get_confirm_dialog,
+            Eventually(NotEquals(None)))
         confirm_dialog = self.main_view.get_confirm_dialog()
         if text:
             confirm_dialog.enter_text(text)
@@ -363,7 +370,20 @@ class TestFolderListPage(FileManagerTestCase):
 
         dir_ = self._get_file_by_name(dir_name)
         self.assertThat(dir_.fileName, Eventually(Equals(dir_name)))
-        # TODO missing test, cancel create directory. --elopio - 2013-07-25
+
+    def test_cancel_create_directory(self):
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('actions')
+
+        self.assertThat(
+            self.main_view.get_folder_actions_popover,
+            Eventually(Not(Is(None))))
+
+        folder_actions_popover = self.main_view.get_folder_actions_popover()
+        folder_actions_popover.click_button('Create New Folder')
+        self._cancel_confirm_dialog()
+
+        self._assert_number_of_files(0)
 
     def test_show_directory_properties_from_list(self):
         dir_path = self._make_directory_in_home()
