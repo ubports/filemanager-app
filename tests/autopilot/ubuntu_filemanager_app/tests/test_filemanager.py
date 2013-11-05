@@ -57,7 +57,8 @@ class TestFolderListPage(FileManagerTestCase):
             logger.debug("Created %s, a directory in HOME" % path)
             self.addCleanup(self._rmdir_cleanup, path)
 
-        logger.debug("Directory Listing for HOME\n%s" % os.listdir(os.environ['HOME']))
+        logger.debug("Directory Listing for HOME\n%s" %
+                     os.listdir(os.environ['HOME']))
         self._assert_number_of_files(1)
         return path
 
