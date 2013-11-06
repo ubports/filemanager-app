@@ -20,6 +20,7 @@ import re
 import time
 
 from autopilot import input
+from autopilot.introspection import dbus
 
 from ubuntuuitoolkit import emulators as toolkit_emulators
 
@@ -35,13 +36,21 @@ class MainView(toolkit_emulators.MainView):
 
     def get_file_actions_popover(self):
         """Return the ActionSelectionPopover emulator of the file actions."""
-        return self.select_single(
+        return self.wait_select_single(
             ActionSelectionPopover, objectName='fileActionsPopover')
 
     def get_folder_actions_popover(self):
         """Return the ActionSelectionPopover emulator of the folder actions."""
-        return self.select_single(
+        return self.wait_select_single(
             ActionSelectionPopover, objectName='folderActionsPopover')
+
+    def folder_actions_popover_exists(self):
+        """Boolean, checks if the Actions Popover exists."""
+        popover = self.select_many(
+            ActionSelectionPopover, objectName='folderActionsPopover')
+        if popover == '[]':
+            return True
+        return False
 
     def get_places_popover(self):
         """Return the Places popover."""
@@ -57,17 +66,35 @@ class MainView(toolkit_emulators.MainView):
 
     def get_file_details_popover(self):
         """Return the FileDetailsPopover emulator."""
-        return self.select_single(FileDetailsPopover)
+        return self.wait_select_single(FileDetailsPopover)
 
     def get_file_action_dialog(self):
         """Return the FileActionDialog emulator."""
-        return self.select_single(FileActionDialog)
+        return self.wait_select_single(FileActionDialog)
+
+    def file_action_dialog_exists(self):
+        """Boolean checks if the FileActionDialog exists."""
+        dialog = self.select_many(FileActionDialog)
+        if dialog == '[]':
+            return True
+        return False
 
     def get_confirm_dialog(self):
-        dialog = self.select_single(ConfirmDialog)
-        if dialog is None:
+        """Return a confirm dialog emulator"""
+        try:
+            dialog = self.select_single(ConfirmDialog)
+        except dbus.StateNotFoundError:
             dialog = self.select_single(ConfirmDialogWithInput)
         return dialog
+
+    def confirm_dialog_exists(self):
+        """Boolean checks if a confirm dialog exists"""
+        dialog = self.select_many(ConfirmDialog)
+        if dialog == '[]':
+            dialog = self.select_many(ConfirmDialogWithInput)
+        if dialog == '[]':
+            return True
+        return False
 
 
 class Sidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
@@ -232,9 +259,6 @@ class ActionSelectionPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
         """
         button = self._get_button(text)
-        if button is None:
-            raise ValueError(
-                'Button with text "{0}" not found.'.format(text))
         self.pointing_device.click_object(button)
 
     def _get_button(self, text):
