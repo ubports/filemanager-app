@@ -16,9 +16,11 @@ import logging
 from autopilot.input import Mouse, Touch, Pointer
 from autopilot.platform import model
 from autopilot.testcase import AutopilotTestCase
-
-from ubuntuuitoolkit import emulators as toolkit_emulators
 from ubuntu_filemanager_app import emulators
+from ubuntuuitoolkit import (
+    base,
+    emulators as toolkit_emulators
+)
 
 logger = logging.getLogger(__name__)
 
@@ -88,14 +90,14 @@ class FileManagerTestCase(AutopilotTestCase):
 
     def launch_test_local(self):
         self.app = self.launch_test_application(
-            "qmlscene",
+            base.get_qmlscene_launch_command(),
             self.local_location,
             app_type='qt',
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
     def launch_test_installed(self):
         self.app = self.launch_test_application(
-            "qmlscene",
+            base.get_qmlscene_launch_command(),
             self.installed_location,
             "--desktop_file_hint="
             "/usr/share/applications/ubuntu-filemanager-app.desktop",
