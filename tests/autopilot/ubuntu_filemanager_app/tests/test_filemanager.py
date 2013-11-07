@@ -18,7 +18,7 @@
 
 from __future__ import absolute_import
 
-import tempfile
+#import tempfile
 import logging
 
 import os
@@ -27,7 +27,7 @@ import shutil
 from autopilot import process
 from autopilot.platform import model
 from autopilot.matchers import Eventually
-from testtools.matchers import Equals
+from testtools.matchers import Equals, NotEquals, Is, Not
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
 
