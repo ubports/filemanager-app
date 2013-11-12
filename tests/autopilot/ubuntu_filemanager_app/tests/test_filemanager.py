@@ -18,14 +18,14 @@
 
 from __future__ import absolute_import
 
-#import tempfile
+import tempfile
+import unittest
 import logging
 
 import os
 import shutil
 
 from autopilot import process
-from autopilot.platform import model
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals, NotEquals, Is, Not
 
@@ -48,17 +48,15 @@ class TestFolderListPage(FileManagerTestCase):
         if type_ != 'file' and type_ != 'directory':
             raise ValueError('Unknown content type: "{0}"', type_)
         if type_ == 'file':
-            #_, path = tempfile.mkstemp(prefix='tmpfm', dir=os.environ['HOME'])
+            _, path = tempfile.mkstemp(prefix='tmpfm', dir=os.environ['HOME'])
             path = os.environ['HOME'] + "/tmpfmFile"
-            os.system("rm " + path)
-            os.system("touch " + path)
+            #os.system("touch " + path)
             logger.debug("Created %s, a file in HOME" % path)
             self.addCleanup(self._unlink_cleanup, path)
         else:
-            #path = tempfile.mkdtemp(prefix='tmpfm', dir=os.environ['HOME'])
+            path = tempfile.mkdtemp(prefix='tmpfm', dir=os.environ['HOME'])
             path = os.environ['HOME'] + "/tmpfmDir"
-            os.system("rm -rf " + path)
-            os.system("mkdir " + path)
+            #os.system("mkdir " + path)
             logger.debug("Created %s, a directory in HOME" % path)
             self.addCleanup(self._rmdir_cleanup, path)
 
@@ -159,40 +157,40 @@ class TestFolderListPage(FileManagerTestCase):
     # We can't do this testcase on phablet devices because of a lack of
     # Mir backend in autopilot
     # see https://bugs.launchpad.net/autopilot/+bug/1209004
-    if model() == "Desktop":
-        def test_open_file(self):
-            self._make_file_in_home()
+    @unittest.skip("Can't do this properly on desktop or phablet")
+    def test_open_file(self):
+        self._make_file_in_home()
 
-            first_file = self._get_file_by_index(0)
-            self.pointing_device.click_object(first_file)
+        first_file = self._get_file_by_index(0)
+        self.pointing_device.click_object(first_file)
 
-            dialog = self.main_view.get_file_action_dialog()
-            dialog.visible.wait_for(True)
+        dialog = self.main_view.get_file_action_dialog()
+        dialog.visible.wait_for(True)
 
-            process_manager = process.ProcessManager.create()
-            original_apps = process_manager.get_running_applications()
+        process_manager = process.ProcessManager.create()
+        original_apps = process_manager.get_running_applications()
 
-            dialog.open()
-            #make sure the dialog is open
-            self.main_view.get_file_action_dialog()
-            # Filtering copied from
-            # AutopilotTestCase._compare_system_with_app_snapshot.
-            current_apps = self.process_manager.get_running_applications()
-            new_apps = filter(
-                lambda i: i not in original_apps, current_apps)
-            # Assert that only one window was opened.
-            self.assertEqual(len(new_apps), 1)
-            new_app = new_apps[0]
-            self.assertEqual(len(new_app.get_windows()), 1)
+        dialog.open()
+        #make sure the dialog is open
+        self.main_view.get_file_action_dialog()
+        # Filtering copied from
+        # AutopilotTestCase._compare_system_with_app_snapshot.
+        current_apps = self.process_manager.get_running_applications()
+        new_apps = filter(
+            lambda i: i not in original_apps, current_apps)
+        # Assert that only one window was opened.
+        self.assertEqual(len(new_apps), 1)
+        new_app = new_apps[0]
+        self.assertEqual(len(new_app.get_windows()), 1)
 
-            # TODO assert that the file was opened on the right
-            # application. This depends on what's the default application
-            # to open a text file. Maybe we can get this information
-            # with XDG. --elopio - 2013-07-25
+        # TODO assert that the file was opened on the right
+        # application. This depends on what's the default application
+        # to open a text file. Maybe we can get this information
+        # with XDG. --elopio - 2013-07-25
 
-            # Close the opened window.
-            window = new_app.get_windows()[0]
-            window.close()
+        # Close the opened window.
+        window = new_app.get_windows()[0]
+        window.close()
 
     def test_rename_directory(self):
         orig_dir = os.path.basename(self._make_directory_in_home())
