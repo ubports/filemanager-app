@@ -429,7 +429,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Check that the directory is there.
         self._assert_number_of_files(1, home=False)
-        first_dir = self._get_file_by_index(0)
+        first_dir = self._get_file_by_name(dir_to_copy_name)
         self.assertThat(
             first_dir.fileName, Eventually(Equals(dir_to_copy_name)))
 
@@ -475,7 +475,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Check that the directory is there.
         self._assert_number_of_files(1, home=False)
-        first_dir = self._get_file_by_index(0)
+        first_dir = self._get_file_by_name(dir_to_cut_name)
         self.assertThat(
             first_dir.fileName, Eventually(Equals(dir_to_cut_name)))
 
@@ -521,7 +521,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Check that the file is there.
         self._assert_number_of_files(1)
-        first_dir = self._get_file_by_index(0)
+        first_dir = self._get_file_by_name(file_to_copy_name)
         self.assertThat(
             first_dir.fileName, Eventually(Equals(file_to_copy_name)))
 
@@ -531,7 +531,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Check that the file is still there.
         self._assert_number_of_files(2)
-        first_dir = self._get_file_by_index(0)
+        first_dir = self._get_file_by_name(destination_dir_name)
         self.assertThat(
             first_dir.fileName, Eventually(Equals(destination_dir_name)))
 
@@ -566,7 +566,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Check that the file is there.
         self._assert_number_of_files(1, home=False)
-        first_dir = self._get_file_by_index(0)
+        first_dir = self._get_file_by_name(file_to_cut_name)
         self.assertThat(
             first_dir.fileName, Eventually(Equals(file_to_cut_name)))
 
