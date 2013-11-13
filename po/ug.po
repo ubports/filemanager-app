@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-09-27 06:56+0200\n"
-"PO-Revision-Date: 2013-10-14 09:29+0000\n"
+"PO-Revision-Date: 2013-11-13 01:49+0000\n"
 "Last-Translator: Gheyret T.Kenji <Unknown>\n"
 "Language-Team: Uyghur <ug@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2013-10-15 05:18+0000\n"
-"X-Generator: Launchpad (build 16799)\n"
+"X-Launchpad-Export-Date: 2013-11-13 06:09+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
@@ -31,7 +31,7 @@ msgstr "ئەمەلدىن قالدۇر"
 
 #: ../FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "مەشغۇلاتنى تاللاڭ"
 
 #: ../FileActionDialog.qml:31
 #, qt-format
@@ -44,15 +44,15 @@ msgstr "ئاچ"
 
 #: ../FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "ئوقۇغىلى بولىدۇ"
 
 #: ../FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "يازغىلى بولىدۇ"
 
 #: ../FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "ئىجرا قىلغىلى بولىدۇ"
 
 #: ../FileDetailsPopover.qml:91
 msgid "Path:"
@@ -68,55 +68,55 @@ msgstr "چوڭلۇقى:"
 
 #: ../FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "زىيارەت قىلىنغان ۋاقتى:"
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "ئۆزگەرتىلگەن ۋاقتى:"
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "ئىمتىيازلار:"
 
 #: ../FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "مەشغۇلات ئىشلىنىۋاتىدۇ"
 
 #: ../FolderListPage.qml:101
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/ئۈستەلئۈستى"
 
 #: ../FolderListPage.qml:103
 msgid "~/Documents"
-msgstr ""
+msgstr "~/پۈتۈكلەر"
 
 #: ../FolderListPage.qml:105
 msgid "~/Downloads"
-msgstr ""
+msgstr "~/چۈشۈرۈلمىلەر~/مۇزىكىلار"
 
 #: ../FolderListPage.qml:107
 msgid "~/Music"
-msgstr ""
+msgstr "~/مۇزىكىلار"
 
 #: ../FolderListPage.qml:109
 msgid "~/Pictures"
-msgstr ""
+msgstr "~/سۈرەتلەر"
 
 #: ../FolderListPage.qml:111
 msgid "~/Public"
-msgstr ""
+msgstr "~/ئورتاق"
 
 #: ../FolderListPage.qml:113
 msgid "~/Programs"
-msgstr ""
+msgstr "~/پروگراممىلار"
 
 #: ../FolderListPage.qml:115
 msgid "~/Templates"
-msgstr ""
+msgstr "~/قېلىپلار"
 
 #: ../FolderListPage.qml:117
 msgid "~/Videos"
-msgstr ""
+msgstr "~/سىنلار"
 
 #: ../FolderListPage.qml:134
 msgid "Home"
@@ -144,16 +144,15 @@ msgstr "چاپلا"
 #, qt-format
 msgid "Paste %1 file"
 msgid_plural "Paste %1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 ھۆججەت چاپلا"
 
 #: ../FolderListPage.qml:238
 msgid "Paste files"
-msgstr ""
+msgstr "ھۆججەتلەرنى چاپلا"
 
 #: ../FolderListPage.qml:250
 msgid "Open in Terminal"
-msgstr ""
+msgstr "تېرمىنالدا ئاچ"
 
 #: ../FolderListPage.qml:262 ../FolderListView.qml:152
 msgid "Properties"
@@ -165,15 +164,15 @@ msgstr "قىسقۇچ قۇر"
 
 #: ../FolderListPage.qml:298
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "يېڭى قىسقۇچنىڭ ئاتىنى كىرگۈزۈڭ"
 
 #: ../FolderListPage.qml:314
 msgid "Create file"
-msgstr ""
+msgstr "ھوججەت قۇر"
 
 #: ../FolderListPage.qml:315
 msgid "Enter name for new file"
-msgstr ""
+msgstr "يېڭى ھۆججەتنىڭ ئاتىنى كىرگۈزۈڭ"
 
 #: ../FolderListPage.qml:350
 msgid "Actions"
@@ -197,7 +196,7 @@ msgstr "ھۆججەت يوق"
 
 #: ../FolderListPage.qml:469
 msgid "File operation error"
-msgstr ""
+msgstr "ھۆججەت مەشغۇلاتىدا خاتالىق كۆرۈلدى"
 
 #. TRANSLATORS: this refers to the header shown for a folder
 #. %1 is the folder path and %2 the number of files it contains
@@ -205,8 +204,7 @@ msgstr ""
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 ھۆججەت)"
 
 #: ../FolderListView.qml:45 ../FolderListView.qml:126
 msgid "Delete"
@@ -215,7 +213,7 @@ msgstr "ئۆچۈر"
 #: ../FolderListView.qml:46
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "راستلا ھۆججەت ‹%1› نى ئۆچۈرەمسىز؟"
 
 #: ../FolderListView.qml:69 ../FolderListView.qml:139
 msgid "Rename"
@@ -227,7 +225,7 @@ msgstr "بىر يېڭى ئات كىرگۈزۈڭ"
 
 #: ../FolderListView.qml:79
 msgid "Could not rename"
-msgstr ""
+msgstr "ئاتىنى ئۆزگەرتەلمىدى"
 
 #: ../FolderListView.qml:80
 msgid "Insufficient permissions or name already exists?"
@@ -243,11 +241,11 @@ msgstr "كۆچۈر"
 
 #: ../FolderListView.qml:177
 msgid "Folder not accessible"
-msgstr ""
+msgstr "قىسقۇچنى زىيارەت قىلغىلى بولمايدىكەن"
 
 #: ../FolderListView.qml:178
 msgid "Can not access "
-msgstr ""
+msgstr "زىيارەت قىلغىلى بولمىدى "
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
@@ -259,7 +257,7 @@ msgstr ""
 
 #: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
 msgid "Location..."
-msgstr ""
+msgstr "ئورۇن…"
 
 #: ../GoToDialog.qml:47 ../PlacesPopover.qml:97
 msgid "Go"
@@ -271,7 +269,7 @@ msgstr "تەڭشەكلەر"
 
 #: ../SettingsPage.qml:38
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "ئالىي ئىقتىدارلىرىنى كۆرسەت"
 
 #: ../ViewPopover.qml:39
 msgid "Show Hidden Files"
