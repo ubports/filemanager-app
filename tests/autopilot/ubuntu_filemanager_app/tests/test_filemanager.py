@@ -20,16 +20,18 @@ from __future__ import absolute_import
 
 import tempfile
 import unittest
+import logging
 
 import os
 import shutil
 
 from autopilot import process
-from autopilot.platform import model
 from autopilot.matchers import Eventually
-from testtools.matchers import Equals
+from testtools.matchers import Equals, NotEquals, Is, Not
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
+
+logger = logging.getLogger(__name__)
 
 
 class TestFolderListPage(FileManagerTestCase):
@@ -46,12 +48,20 @@ class TestFolderListPage(FileManagerTestCase):
         if type_ != 'file' and type_ != 'directory':
             raise ValueError('Unknown content type: "{0}"', type_)
         if type_ == 'file':
-            _, path = tempfile.mkstemp(dir=os.environ['HOME'])
+            _, path = tempfile.mkstemp(prefix='tmpfm', dir=os.environ['HOME'])
+            #path = os.environ['HOME'] + "/tmpfmFile"
+            #os.system("touch " + path)
+            logger.debug("Created %s, a file in HOME" % path)
             self.addCleanup(self._unlink_cleanup, path)
         else:
-            path = tempfile.mkdtemp(dir=os.environ['HOME'])
+            path = tempfile.mkdtemp(prefix='tmpfm', dir=os.environ['HOME'])
+            #path = os.environ['HOME'] + "/tmpfmDir"
+            #os.system("mkdir " + path)
+            logger.debug("Created %s, a directory in HOME" % path)
             self.addCleanup(self._rmdir_cleanup, path)
 
+        logger.debug("Directory Listing for HOME\n%s" %
+                     os.listdir(os.environ['HOME']))
         self._assert_number_of_files(1)
         return path
 
@@ -61,17 +71,25 @@ class TestFolderListPage(FileManagerTestCase):
         folder_list_page = self.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_number_of_files_from_list,
-            Eventually(Equals(expected_number_of_files)))
+            Eventually(Equals(expected_number_of_files), timeout=60))
         self.assertThat(
             folder_list_page.get_number_of_files_from_header,
-            Eventually(Equals(expected_number_of_files)))
+            Eventually(Equals(expected_number_of_files), timeout=60))
 
     def _get_file_by_name(self, name):
         folder_list_page = self.main_view.get_folder_list_page()
+        fileDelegate = lambda: folder_list_page.get_file_by_name(name)
+        self.assertThat(
+            fileDelegate,
+            Eventually(NotEquals(None)))
         return folder_list_page.get_file_by_name(name)
 
     def _get_file_by_index(self, index):
         folder_list_page = self.main_view.get_folder_list_page()
+        fileDelegate = lambda: folder_list_page.get_file_by_index(index)
+        self.assertThat(
+            fileDelegate,
+            Eventually(NotEquals(None)))
         return folder_list_page.get_file_by_index(index)
 
     def _go_to_place(self, text):
@@ -111,65 +129,76 @@ class TestFolderListPage(FileManagerTestCase):
             list_view.get_current_path, Eventually(Equals(expected_path)))
 
     def _do_action_on_file(self, file_, action):
+        logger.debug("Performing %s on file %s" % (action, file_))
         file_.open_actions_popover()
         file_actions_popover = self.main_view.get_file_actions_popover()
         file_actions_popover.click_button(action)
 
     def _cancel_confirm_dialog(self):
+        self.assertThat(
+            self.main_view.get_confirm_dialog,
+            Eventually(NotEquals(None)))
         confirm_dialog = self.main_view.get_confirm_dialog()
         confirm_dialog.cancel()
 
     def _confirm_dialog(self, text=None):
+        self.assertThat(
+            self.main_view.get_confirm_dialog,
+            Eventually(NotEquals(None)))
         confirm_dialog = self.main_view.get_confirm_dialog()
         if text:
             confirm_dialog.enter_text(text)
         confirm_dialog.ok()
 
     def _unlink_cleanup(self, filename):
+        logger.debug("Cleanup; checking to remove %s file" % filename)
         if os.path.exists(filename):
+            logger.debug("Removing %s file" % filename)
             os.unlink(filename)
 
     def _rmdir_cleanup(self, directory):
+        logger.debug("Cleanup; checking to remove %s directory" % directory)
         if os.path.exists(directory):
+            logger.debug("Removing %s directory" % directory)
             shutil.rmtree(directory)
 
     # We can't do this testcase on phablet devices because of a lack of
     # Mir backend in autopilot
     # see https://bugs.launchpad.net/autopilot/+bug/1209004
-    if model() == "Desktop":
-        def test_open_file(self):
-            self._make_file_in_home()
+    @unittest.skip("Can't do this properly on desktop or phablet")
+    def test_open_file(self):
+        self._make_file_in_home()
 
-            first_file = self._get_file_by_index(0)
-            self.pointing_device.click_object(first_file)
+        first_file = self._get_file_by_index(0)
+        self.pointing_device.click_object(first_file)
 
-            dialog = self.main_view.get_file_action_dialog()
-            dialog.visible.wait_for(True)
+        dialog = self.main_view.get_file_action_dialog()
+        dialog.visible.wait_for(True)
 
-            process_manager = process.ProcessManager.create()
-            original_apps = process_manager.get_running_applications()
+        process_manager = process.ProcessManager.create()
+        original_apps = process_manager.get_running_applications()
 
-            dialog.open()
-            #make sure the dialog is open
-            self.main_view.get_file_action_dialog()
-            # Filtering copied from
-            # AutopilotTestCase._compare_system_with_app_snapshot.
-            current_apps = self.process_manager.get_running_applications()
-            new_apps = filter(
-                lambda i: i not in original_apps, current_apps)
-            # Assert that only one window was opened.
-            self.assertEqual(len(new_apps), 1)
-            new_app = new_apps[0]
-            self.assertEqual(len(new_app.get_windows()), 1)
+        dialog.open()
+        #make sure the dialog is open
+        self.main_view.get_file_action_dialog()
+        # Filtering copied from
+        # AutopilotTestCase._compare_system_with_app_snapshot.
+        current_apps = self.process_manager.get_running_applications()
+        new_apps = filter(
+            lambda i: i not in original_apps, current_apps)
+        # Assert that only one window was opened.
+        self.assertEqual(len(new_apps), 1)
+        new_app = new_apps[0]
+        self.assertEqual(len(new_app.get_windows()), 1)
 
-            # TODO assert that the file was opened on the right
-            # application. This depends on what's the default application
-            # to open a text file. Maybe we can get this information
-            # with XDG. --elopio - 2013-07-25
+        # TODO assert that the file was opened on the right
+        # application. This depends on what's the default application
+        # to open a text file. Maybe we can get this information
+        # with XDG. --elopio - 2013-07-25
 
-            # Close the opened window.
-            window = new_app.get_windows()[0]
-            window.close()
+        # Close the opened window.
+        window = new_app.get_windows()[0]
+        window.close()
 
     def test_rename_directory(self):
         orig_dir = os.path.basename(self._make_directory_in_home())
@@ -332,7 +361,20 @@ class TestFolderListPage(FileManagerTestCase):
 
         dir_ = self._get_file_by_name(dir_name)
         self.assertThat(dir_.fileName, Eventually(Equals(dir_name)))
-        # TODO missing test, cancel create directory. --elopio - 2013-07-25
+
+    def test_cancel_create_directory(self):
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('actions')
+
+        self.assertThat(
+            self.main_view.get_folder_actions_popover,
+            Eventually(Not(Is(None))))
+
+        folder_actions_popover = self.main_view.get_folder_actions_popover()
+        folder_actions_popover.click_button('Create New Folder')
+        self._cancel_confirm_dialog()
+
+        self._assert_number_of_files(0)
 
     def test_show_directory_properties_from_list(self):
         dir_path = self._make_directory_in_home()
@@ -395,7 +437,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Check that the directory is there.
         self._assert_number_of_files(1, home=False)
-        first_dir = self._get_file_by_index(0)
+        first_dir = self._get_file_by_name(dir_to_copy_name)
         self.assertThat(
             first_dir.fileName, Eventually(Equals(dir_to_copy_name)))
 
@@ -441,7 +483,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Check that the directory is there.
         self._assert_number_of_files(1, home=False)
-        first_dir = self._get_file_by_index(0)
+        first_dir = self._get_file_by_name(dir_to_cut_name)
         self.assertThat(
             first_dir.fileName, Eventually(Equals(dir_to_cut_name)))
 
@@ -455,7 +497,6 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             first_dir.fileName, Eventually(Equals(destination_dir_name)))
 
-    @unittest.skip("Test randomly fails in jenkins vm, skip for now")
     def test_copy_file(self):
         # Set up a file to copy and a directory to copy it into.
         destination_dir_path = self._make_directory_in_home()
@@ -488,7 +529,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Check that the file is there.
         self._assert_number_of_files(1)
-        first_dir = self._get_file_by_index(0)
+        first_dir = self._get_file_by_name(file_to_copy_name)
         self.assertThat(
             first_dir.fileName, Eventually(Equals(file_to_copy_name)))
 
@@ -498,7 +539,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Check that the file is still there.
         self._assert_number_of_files(2)
-        first_dir = self._get_file_by_index(0)
+        first_dir = self._get_file_by_name(destination_dir_name)
         self.assertThat(
             first_dir.fileName, Eventually(Equals(destination_dir_name)))
 
@@ -533,7 +574,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Check that the file is there.
         self._assert_number_of_files(1, home=False)
-        first_dir = self._get_file_by_index(0)
+        first_dir = self._get_file_by_name(file_to_cut_name)
         self.assertThat(
             first_dir.fileName, Eventually(Equals(file_to_cut_name)))
 
