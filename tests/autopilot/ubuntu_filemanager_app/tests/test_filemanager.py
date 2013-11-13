@@ -49,13 +49,13 @@ class TestFolderListPage(FileManagerTestCase):
             raise ValueError('Unknown content type: "{0}"', type_)
         if type_ == 'file':
             _, path = tempfile.mkstemp(prefix='tmpfm', dir=os.environ['HOME'])
-            path = os.environ['HOME'] + "/tmpfmFile"
+            #path = os.environ['HOME'] + "/tmpfmFile"
             #os.system("touch " + path)
             logger.debug("Created %s, a file in HOME" % path)
             self.addCleanup(self._unlink_cleanup, path)
         else:
             path = tempfile.mkdtemp(prefix='tmpfm', dir=os.environ['HOME'])
-            path = os.environ['HOME'] + "/tmpfmDir"
+            #path = os.environ['HOME'] + "/tmpfmDir"
             #os.system("mkdir " + path)
             logger.debug("Created %s, a directory in HOME" % path)
             self.addCleanup(self._rmdir_cleanup, path)
