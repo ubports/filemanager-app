@@ -78,10 +78,18 @@ class TestFolderListPage(FileManagerTestCase):
 
     def _get_file_by_name(self, name):
         folder_list_page = self.main_view.get_folder_list_page()
+        fileDelegate = lambda: folder_list_page.get_file_by_name(name)
+        self.assertThat(
+            fileDelegate,
+            Eventually(NotEquals(None)))
         return folder_list_page.get_file_by_name(name)
 
     def _get_file_by_index(self, index):
         folder_list_page = self.main_view.get_folder_list_page()
+        fileDelegate = lambda: folder_list_page.get_file_by_index(index)
+        self.assertThat(
+            fileDelegate,
+            Eventually(NotEquals(None)))
         return folder_list_page.get_file_by_index(index)
 
     def _go_to_place(self, text):
