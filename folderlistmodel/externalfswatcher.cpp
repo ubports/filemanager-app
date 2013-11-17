@@ -71,6 +71,7 @@ void ExternalFSWatcher::slotDirChanged(const QString &dir)
          && ( m_waitingEmitCounter == 0 || m_setPath != m_changedPath )
        )
     {
+        removePath(m_setPath);
         ++m_waitingEmitCounter;
         m_changedPath = m_setPath;
         QTimer::singleShot(m_msWaitTime, this, SLOT(slotFireChanges()));       
@@ -86,12 +87,16 @@ void ExternalFSWatcher::slotDirChanged(const QString &dir)
  */
 void ExternalFSWatcher::slotFireChanges()
 {
-   if (--m_waitingEmitCounter == 0 && m_setPath == m_changedPath)
-   {     
-       emit pathModified();
+   if (--m_waitingEmitCounter == 0)
+   {
+       addPath(m_setPath);
+       if (m_setPath == m_changedPath)
+       {
+           emit pathModified();
 #if DEBUG_EXT_FS_WATCHER
        DEBUG_FSWATCHER() << "emit pathModified()";
 #endif
+       }
    }  
 }
 
