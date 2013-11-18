@@ -57,7 +57,8 @@ class FileManagerTestCase(AutopilotTestCase):
 
     def setUp(self):
         launch, self.test_type = self.setup_environment()
-        self._patch_home()
+        if self.test_type != 'click':
+            self._patch_home()
         self.pointing_device = Pointer(self.input_device_class.create())
         super(FileManagerTestCase, self).setUp()
         self.original_file_count = \
