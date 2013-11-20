@@ -51,7 +51,7 @@ class ExternalFSWatcher;
  *
  *  \sa setEnabledExternalFSWatcher()
  */
-#define EX_FS_WATCHER_TIMER_INTERVAL   2100
+#define EX_FS_WATCHER_TIMER_INTERVAL   900
 
 class DirModel : public QAbstractListModel
 {
