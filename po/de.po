@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-09-27 06:56+0200\n"
-"PO-Revision-Date: 2013-10-26 18:29+0000\n"
-"Last-Translator: SaGrLand <sg@samuel-greef.de>\n"
+"PO-Revision-Date: 2013-11-20 13:26+0000\n"
+"Last-Translator: Phillip Sz <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2013-11-13 06:09+0000\n"
-"X-Generator: Launchpad (build 16820)\n"
+"X-Launchpad-Export-Date: 2013-11-21 06:39+0000\n"
+"X-Generator: Launchpad (build 16831)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
@@ -84,7 +84,7 @@ msgstr "Vorgang läuft"
 
 #: ../FolderListPage.qml:101
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Schreibtisch"
 
 #: ../FolderListPage.qml:103
 msgid "~/Documents"
@@ -145,8 +145,8 @@ msgstr "Einfügen"
 #, qt-format
 msgid "Paste %1 file"
 msgid_plural "Paste %1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Datei %1 einfügen"
+msgstr[1] "Dateien %1 einfügen"
 
 #: ../FolderListPage.qml:238
 msgid "Paste files"
@@ -166,7 +166,7 @@ msgstr "Ordner anlegen"
 
 #: ../FolderListPage.qml:298
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Geben Sie einen Namen für einen neuen Ordner ein"
 
 #: ../FolderListPage.qml:314
 msgid "Create file"
@@ -174,11 +174,11 @@ msgstr "Datei erstellen"
 
 #: ../FolderListPage.qml:315
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Geben Sie einen Namen für eine neue Datei ein"
 
 #: ../FolderListPage.qml:350
 msgid "Actions"
-msgstr ""
+msgstr "Aktionen"
 
 #: ../FolderListPage.qml:360
 msgid "View"
@@ -228,11 +228,11 @@ msgstr "Geben Sie einen neuen Namen ein"
 
 #: ../FolderListView.qml:79
 msgid "Could not rename"
-msgstr ""
+msgstr "Umbenennen nicht möglich"
 
 #: ../FolderListView.qml:80
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Berechtigung unzureichend oder existiert der Name bereits?"
 
 #: ../FolderListView.qml:103
 msgid "Cut"
@@ -244,19 +244,19 @@ msgstr "Kopieren"
 
 #: ../FolderListView.qml:177
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Ordner nicht zugänglich"
 
 #: ../FolderListView.qml:178
 msgid "Can not access "
-msgstr ""
+msgstr "Kein Zugriff "
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Gehe zu Ort"
 
 #: ../GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Geben Sie einen Ort ein zudem Sie gehen wollen"
 
 #: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
 msgid "Location..."
