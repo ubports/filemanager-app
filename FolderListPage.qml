@@ -211,6 +211,36 @@ Page {
     }
 
     Component {
+        id: tabsPopover
+        ActionSelectionPopover {
+            objectName: "tabsPopover"
+
+            property var tab
+
+            grabDismissAreaEvents: true
+
+            actions: ActionList {
+                Action {
+                    text: i18n.tr("Open in a new tab")
+                    onTriggered: {
+                        var newTab = tabs.insertTab(tab.index + 1, "", folderListPageComponent)
+                        newTab.folder = folderListPage.folder
+                    }
+                }
+
+                // The current tab can be closed as long as there is at least one tab remaining
+                Action {
+                    text: i18n.tr("Close this tab")
+                    onTriggered: {
+                        tabs.removeTab(tab.index)
+                    }
+                    enabled: tabs.count > 1
+                }
+            }
+        }
+    }
+
+    Component {
         id: folderActionsPopoverComponent
         ActionSelectionPopover {
             id: folderActionsPopover
@@ -281,24 +311,6 @@ Page {
                     }
                 }
             }
-
-            delegate: Empty {
-                id: listItem
-                Label {
-                    text: listItem.text
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        horizontalCenter: parent.horizontalCenter
-                    }
-                    wrapMode: Text.Wrap
-                    color: Theme.palette.normal.overlayText
-                }
-
-                /*! \internal */
-                onTriggered: folderActionsPopover.hide()
-                visible: listItem.enabled
-                height: visible ? implicitHeight : 0
-            }
         }
     }
 
@@ -348,7 +360,7 @@ Page {
         back: ToolbarButton {
             objectName: "up"
             text: "Up"
-            iconSource: getIcon("up")
+            iconSource: getIcon("keyboard-caps")
             visible: folder != "/"
             onTriggered: {
                 goTo(pageModel.parentPath)
@@ -404,15 +416,32 @@ Page {
                 PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), placesButton)
             }
         }
+
+        ToolbarButton {
+            id: tabsButton
+            objectName: "tabs"
+            text: i18n.tr("Tabs")
+            iconSource: getIcon("browser-tabs")
+
+            onTriggered: {
+                print(text)
+
+                PopupUtils.open(tabsPopover, tabsButton, {
+                                    tab: folderListPage.parent
+                                })
+            }
+        }
     }
 
-    flickable: !wideAspect ? folderListView : null
+    flickable: !wideAspect ? folderListView.visible ? folderListView : folderIconView.flickable : null
 
     onFlickableChanged: {
         if (wideAspect) {
             folderListView.topMargin = 0
+            folderIconView.flickable.topMargin = 0
         } else {
             folderListView.topMargin = units.gu(9.5)
+            folderIconView.flickable.topMargin = units.gu(9.5)
         }
     }
 
@@ -429,6 +458,22 @@ Page {
         expanded: wideAspect
     }
 
+    FolderIconView {
+        id: folderIconView
+
+        clip: true
+
+        folderListModel: pageModel
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            left: sidebar.right
+            right: parent.right
+        }
+        smallMode: !sidebar.expanded
+        visible: viewMethod === i18n.tr("Icons")
+    }
+
     FolderListView {
         id: folderListView
 
@@ -441,6 +486,7 @@ Page {
             left: sidebar.right
             right: parent.right
         }
+        visible: viewMethod === i18n.tr("List")
     }
 
     Item {
@@ -468,6 +514,132 @@ Page {
         }
     }
 
+    Component {
+        id: confirmSingleDeleteDialog
+        ConfirmDialog {
+            property string filePath
+            property string fileName
+            title: i18n.tr("Delete")
+            text: i18n.tr("Are you sure you want to permanently delete '%1'?").arg(fileName)
+
+            onAccepted: {
+                console.log("Delete accepted for filePath, fileName", filePath, fileName)
+
+                fileOperationDialog.startOperation("Deleting files")
+                console.log("Doing delete")
+                folderListModel.rm(filePath)
+            }
+        }
+    }
+
+    Component {
+        id: confirmRenameDialog
+        ConfirmDialogWithInput {
+            // IMPROVE: this does not seem good: the backend excepts row and new name.
+            // But what if new files are added/deleted in the background while user is
+            // entering the new name? The indices change and wrong file is renamed.
+            // Perhaps the backend should take as parameters the "old name" and "new name"?
+            // This is not currently a problem since the backend does not poll changes in
+            // the filesystem, but may be a problem in the future.
+            property int modelRow
+
+            title: i18n.tr("Rename")
+            text: i18n.tr("Enter a new name")
+
+            onAccepted: {
+                console.log("Rename accepted", inputText)
+                if (inputText !== '') {
+                    console.log("Rename commensed, modelRow/inputText", modelRow, inputText)
+                    if (pageModel.rename(modelRow, inputText) === false) {
+                        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
+                                        {
+                                            title: i18n.tr("Could not rename"),
+                                            text: i18n.tr("Insufficient permissions or name already exists?")
+                                         })
+
+                    }
+                } else {
+                    console.log("Empty new name given, ignored")
+                }
+            }
+        }
+    }
+
+    Component {
+        id: actionSelectionPopoverComponent
+
+        ActionSelectionPopover {
+            id: actionSelectionPopover
+            objectName: "fileActionsPopover"
+
+            grabDismissAreaEvents: true
+
+            property var model
+            actions: ActionList {
+                Action {
+                    text: i18n.tr("Cut")
+                    // TODO: temporary
+                    iconSource: "/usr/share/icons/Humanity/actions/48/edit-cut.svg"
+                    onTriggered: {
+                        console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
+                        pageModel.cutIndex(actionSelectionPopover.model.index)
+                        console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
+                    }
+                }
+
+                Action {
+                    text: i18n.tr("Copy")
+                    // TODO: temporary.
+                    iconSource: "/usr/share/icons/Humanity/actions/48/edit-copy.svg"
+
+                    onTriggered: {
+                        console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
+                        pageModel.copyIndex(actionSelectionPopover.model.index)
+                        console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
+                    }
+                }
+
+                Action {
+                    text: i18n.tr("Delete")
+                    // TODO: temporary
+                    iconSource: "/usr/share/icons/Humanity/actions/48/edit-delete.svg"
+                    onTriggered: {
+                        print(text)
+                        PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller,
+                                        { "filePath" : actionSelectionPopover.model.filePath,
+                                          "fileName" : actionSelectionPopover.model.fileName }
+                                        )
+                    }
+                }
+
+                Action {
+                    text: i18n.tr("Rename")
+                    // TODO: temporary
+                    iconSource: "/usr/share/icons/Humanity/actions/48/rotate.svg"
+                    onTriggered: {
+                        print(text)
+                        PopupUtils.open(confirmRenameDialog, actionSelectionPopover.caller,
+                                        { "modelRow"  : actionSelectionPopover.model.index,
+                                          "inputText" : actionSelectionPopover.model.fileName
+                                        })
+                    }
+                }
+
+                Action {
+                    text: i18n.tr("Properties")
+                    onTriggered: {
+                        print(text)
+                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
+                                        actionSelectionPopover.caller,
+                                            { "model": actionSelectionPopover.model
+                                            }
+                                        )
+                    }
+                }
+            }
+        }
+    }
+
     // Errors from model
     Connections {
         target: pageModel
@@ -488,5 +660,37 @@ Page {
 
         page: folderListPage
         model: pageModel
+    }
+
+    function itemClicked(model) {
+        if (model.isDir) {
+            if (model.isReadable && model.isExecutable) {
+                console.log("Changing to dir", model.filePath)
+                goTo(model.filePath)
+            } else {
+                PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
+                                {
+                                    title: i18n.tr("Folder not accessible"),
+                                    text: i18n.tr("Can not access ") + model.fileName
+
+                                 })
+            }
+        } else {
+            console.log("Non dir clicked")
+            PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
+                            {
+                                fileName: model.fileName,
+                                filePath: model.filePath,
+                                folderListModel: root.folderListModel
+                            })
+        }
+    }
+
+    function itemLongPress(delegate, model) {
+        console.log("FolderListDelegate onPressAndHold")
+        PopupUtils.open(actionSelectionPopoverComponent, delegate,
+                        {
+                            model: model
+                        })
     }
 }

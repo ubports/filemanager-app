@@ -66,18 +66,16 @@ MainView {
                 }
             }
 
-            Tab {
-                title: page.title
-                page: SettingsPage {
-                    id: settingsPage
-                }
-            }
+//            Tab {
+//                title: page.title
+//                page: SettingsPage {
+//                    id: settingsPage
+//                }
+//            }
         }
 
         Component.onCompleted: {
             pageStack.push(tabs)
-            pageStack.push(Qt.resolvedUrl("FolderListPage.qml"))
-            pageStack.pop()
         }
     }
 
@@ -116,6 +114,8 @@ MainView {
     // Individual settings, used for bindings
     property bool showAdvancedFeatures: false
 
+    property var viewMethod
+
     function getSetting(name, def) {
         var tempContents = {};
         tempContents = settings.contents
@@ -141,12 +141,27 @@ MainView {
     }
 
     function reloadSettings() {
-        showAdvancedFeatures = getSetting("showAdvancedFeatures", false)
+        //showAdvancedFeatures = getSetting("showAdvancedFeatures", false)
+        viewMethod = getSetting("viewMethod", width > units.gu(40) ? i18n.tr("Icons") : i18n.tr("List"))
     }
 
-    Component.onCompleted: reloadSettings()
+    Component.onCompleted: {
+        reloadSettings()
+    }
 
     function getIcon(name) {
-        return Qt.resolvedUrl("icons/" + name + ".png")
+        return /*"/usr/share/icons/ubuntu-mobile/actions/scalable/" + name + ".svg" */Qt.resolvedUrl("icons/" + name + ".png")
+    }
+
+    Component {
+        id: folderListPageComponent
+
+        Tab {
+            property alias folder: pageFolder.folder
+            title: page.title
+            page: FolderListPage {
+                id: pageFolder
+            }
+        }
     }
 }

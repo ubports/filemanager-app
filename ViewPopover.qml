@@ -56,6 +56,28 @@ Popover {
 
         ValueSelector {
             Label {
+                text: i18n.tr("View As")
+                fontSize: "medium"
+                color: Theme.palette.normal.overlayText
+                anchors.left: parent.left
+                anchors.leftMargin: units.gu(2)
+                anchors.top: parent.top
+                anchors.topMargin: units.gu(1.6)
+            }
+
+            selectedIndex: values.indexOf(viewMethod)
+            values: [
+                i18n.tr("Icons"),
+                i18n.tr("List")
+            ]
+
+            onSelectedIndexChanged: {
+                saveSetting("viewMethod", values[selectedIndex])
+            }
+        }
+
+        ValueSelector {
+            Label {
                 text: i18n.tr("Sort By")
                 fontSize: "medium"
                 color: Theme.palette.normal.overlayText
