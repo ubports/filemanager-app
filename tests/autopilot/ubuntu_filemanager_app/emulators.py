@@ -170,6 +170,7 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
             raise ValueError(
                 'Places sidebar is hidden in wide mode.')
 
+
 class FolderListView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderListView Autopilot emulator."""
 
@@ -195,6 +196,7 @@ class FolderListView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         _, number_of_files = self._split_header_text()
         return int(number_of_files)
 
+
 class FolderIconView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderListView Autopilot emulator."""
 
@@ -219,6 +221,7 @@ class FolderIconView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     def get_number_of_files(self):
         _, number_of_files = self._split_header_text()
         return int(number_of_files)
+
 
 class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderListPage Autopilot emulator.
@@ -259,6 +262,7 @@ class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         # autopilot. Reported on
         # https://bugs.launchpad.net/autopilot/+bug/1195141
         # --elopio - 2013-07-25
+
 
 class FolderIconDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderIconPage Autopilot emulator.
