@@ -179,12 +179,13 @@ ListView {
                 }
             } else {
                 console.log("Non dir clicked")
-                PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
-                                {
-                                    fileName: model.fileName,
-                                    filePath: model.filePath,
-                                    folderListModel: root.folderListModel
-                                })
+                openFile(model.filePath)
+//                PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
+//                                {
+//                                    fileName: model.fileName,
+//                                    filePath: model.filePath,
+//                                    folderListModel: root.folderListModel
+//                                })
             }
         }
 

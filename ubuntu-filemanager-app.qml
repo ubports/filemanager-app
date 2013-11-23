@@ -149,4 +149,18 @@ MainView {
     function getIcon(name) {
         return Qt.resolvedUrl("icons/" + name + ".png")
     }
+
+    function openFile(filePath) {
+        if (!folderListModel.openPath(filePath)) {
+            error(i18n.tr("File operation error"), i18n.tr("Unable to open '%11").arg(filePath))
+        }
+    }
+
+    function error(title, message) {
+        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), root,
+                        {
+                            title: title,
+                            text: message
+                        })
+    }
 }
