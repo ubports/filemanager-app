@@ -98,6 +98,7 @@ Sidebar {
                 height: units.gu(5)
 
                 selected: folder === path
+                iconFrame: false
             }
         }
     }
