@@ -172,7 +172,6 @@ class TestFolderListPage(FileManagerTestCase):
         first_file = self._get_file_by_index(0)
         self.pointing_device.click_object(first_file)
 
-
         process_manager = process.ProcessManager.create()
         original_apps = process_manager.get_running_applications()
 
