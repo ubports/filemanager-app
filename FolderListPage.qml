@@ -30,6 +30,8 @@ Page {
 
     property bool showHiddenFiles: false
 
+    property bool showingListView: folderListView.visible
+
     onShowHiddenFilesChanged: {
         pageModel.showHiddenFiles = folderListPage.showHiddenFiles
     }
@@ -527,7 +529,7 @@ Page {
 
                 fileOperationDialog.startOperation("Deleting files")
                 console.log("Doing delete")
-                folderListModel.rm(filePath)
+                pageModel.rm(filePath)
             }
         }
     }
@@ -583,7 +585,7 @@ Page {
                     onTriggered: {
                         console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
                         pageModel.cutIndex(actionSelectionPopover.model.index)
-                        console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
+                        console.log("CliboardUrlsCounter after copy", pageModel.clipboardUrlsCounter)
                     }
                 }
 
@@ -595,7 +597,7 @@ Page {
                     onTriggered: {
                         console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
                         pageModel.copyIndex(actionSelectionPopover.model.index)
-                        console.log("CliboardUrlsCounter after copy", folderListModel.clipboardUrlsCounter)
+                        console.log("CliboardUrlsCounter after copy", pageModel.clipboardUrlsCounter)
                     }
                 }
 

@@ -172,15 +172,10 @@ class TestFolderListPage(FileManagerTestCase):
         first_file = self._get_file_by_index(0)
         self.pointing_device.click_object(first_file)
 
-        dialog = self.main_view.get_file_action_dialog()
-        dialog.visible.wait_for(True)
 
         process_manager = process.ProcessManager.create()
         original_apps = process_manager.get_running_applications()
 
-        dialog.open()
-        #make sure the dialog is open
-        self.main_view.get_file_action_dialog()
         # Filtering copied from
         # AutopilotTestCase._compare_system_with_app_snapshot.
         current_apps = self.process_manager.get_running_applications()
@@ -253,20 +248,6 @@ class TestFolderListPage(FileManagerTestCase):
 
         file_ = self._get_file_by_name(file_name)
         self.assertThat(file_.fileName, Eventually(Equals(file_name)))
-
-    def test_cancel_file_action_dialog(self):
-        file_name = os.path.basename(self._make_file_in_home())
-
-        first_file = self._get_file_by_name(file_name)
-        self.pointing_device.click_object(first_file)
-
-        dialog = self.main_view.get_file_action_dialog()
-        dialog.visible.wait_for(True)
-        dialog.cancel()
-
-        self.assertThat(
-            self.main_view.file_action_dialog_exists,
-            Eventually(Equals(False)))
 
     def test_cancel_rename_directory(self):
         dir_path = self._make_directory_in_home()

@@ -36,7 +36,7 @@ Item {
             right: parent.right
         }
 
-        objectName: "directoryHeader"
+        objectName: "iconViewHeader"
         text: (root.count == 1
                ? i18n.tr("%1 (1 file)").arg(root.folderPath)
                : i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))
@@ -65,7 +65,7 @@ Item {
                     right: parent.right
                 }
 
-                objectName: "directoryHeader"
+                objectName: "iconViewSmallHeader"
                 text: (root.count == 1
                        ? i18n.tr("%1 (1 file)").arg(root.folderPath)
                        : i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))

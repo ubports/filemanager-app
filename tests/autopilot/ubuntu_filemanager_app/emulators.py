@@ -114,7 +114,10 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
     def get_number_of_files_from_list(self):
         """Return the number of files shown on the folder."""
-        return len(self.select_many(FolderListDelegate))
+        if self.showingListView:
+            return len(self.select_many(FolderListDelegate))
+        else:
+            return len(self.select_many(FolderIconDelegate))
 
     def get_file_by_index(self, index):
         """Return the FolderListDelegate emulator of the file or folder.
@@ -122,7 +125,10 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         :parameter index: The index of file or folder.
 
         """
-        file_ = self.select_many(FolderListDelegate)[index]
+        if self.showingListView:
+            file_ = self.select_many(FolderListDelegate)[index]
+        else:
+            file_ = self.select_many(FolderIconDelegate)[index]
         file_.list_view = self.select_single(FolderListView)
         return file_
 
@@ -133,18 +139,29 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
         """
         files = self.select_many(FolderListDelegate)
+        if not(self.showingListView):
+            files = self.select_many(FolderIconDelegate)
         for file_ in files:
             if file_.fileName == name:
-                file_.list_view = self.select_single(FolderListView)
+                if self.showingListView:
+                    file_.list_view = self.select_single(FolderListView)
+                else:
+                    file_.list_view = self.select_single(FolderIconView)
                 return file_
         raise ValueError(
             'File with name "{0}" not found.'.format(name))
 
     def get_current_path(self):
-        return self.select_single(FolderListView).get_current_path()
+        if self.showingListView:
+            return self.select_single(FolderListView).get_current_path()
+        else:
+            return self.select_single(FolderIconView).get_current_path()
 
     def get_number_of_files_from_header(self):
-        return self.select_single(FolderListView).get_number_of_files()
+        if self.showingListView:
+            return self.select_single(FolderListView).get_number_of_files()
+        else:
+            return self.select_single(FolderIconView).get_number_of_files()
 
     def get_sidebar(self):
         if self.main_view.wideAspect:
@@ -152,7 +169,6 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         else:
             raise ValueError(
                 'Places sidebar is hidden in wide mode.')
-
 
 class FolderListView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderListView Autopilot emulator."""
@@ -179,6 +195,30 @@ class FolderListView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         _, number_of_files = self._split_header_text()
         return int(number_of_files)
 
+class FolderIconView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
+    """FolderListView Autopilot emulator."""
+
+    SPLIT_HEADER_REGEX = '(.+) \((\d+) \w+\)$'
+    # Regular expression to split the header text. The header text has the form
+    # /path/to/dir (# files). So with this expression, we can split the header
+    # in two groups, (.+) will match the path and (\d+) the number of files.
+
+    def get_current_path(self):
+        path, _ = self._split_header_text()
+        return path
+
+    def _split_header_text(self):
+        header_text = self.select_single(
+            'Header', objectName='iconViewHeader').text
+        match = re.match(self.SPLIT_HEADER_REGEX, header_text)
+        if match:
+            path = match.group(1)
+            number_of_files = match.group(2)
+            return path, number_of_files
+
+    def get_number_of_files(self):
+        _, number_of_files = self._split_header_text()
+        return int(number_of_files)
 
 class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderListPage Autopilot emulator.
@@ -189,6 +229,46 @@ class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
     def __init__(self, *args):
         super(FolderListDelegate, self).__init__(*args)
+        self.pointing_device = toolkit_emulators.get_pointing_device()
+
+    def open_directory(self):
+        """Open the directory."""
+        # TODO Check if it is a directory. If not, raise an error.
+        # This is not currently possible because Autopilot is overwriting the
+        # path attribute. Reported on
+        # https://bugs.launchpad.net/autopilot/+bug/1205204
+        # --elopio - 2013-07-25
+        self.pointing_device.click_object(self)
+
+    def open_file(self):
+        # TODO For this we would need to access the FileActionDialog that's
+        # child of the MainView, but that's not currently possible with
+        # autopilot. Reported on
+        # bug https://bugs.launchpad.net/autopilot/+bug/1195141
+        # --elopio - 2013-07-25
+        raise NotImplementedError()
+
+    def open_actions_popover(self):
+        """Open the actions popover of the file or folder."""
+        self.pointing_device.move_to_object(self)
+        self.pointing_device.press()
+        time.sleep(1)
+        self.pointing_device.release()
+        # TODO wait for the popover to be opened. For this we would need to
+        # access the MainView, but that's not currently possible with
+        # autopilot. Reported on
+        # https://bugs.launchpad.net/autopilot/+bug/1195141
+        # --elopio - 2013-07-25
+
+class FolderIconDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
+    """FolderIconPage Autopilot emulator.
+
+    This is a file or folder on the FolderListPage.
+
+    """
+
+    def __init__(self, *args):
+        super(FolderIconDelegate, self).__init__(*args)
         self.pointing_device = toolkit_emulators.get_pointing_device()
 
     def open_directory(self):
