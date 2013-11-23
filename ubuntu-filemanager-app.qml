@@ -166,7 +166,7 @@ MainView {
     }
 
     function openFile(filePath) {
-        if (!folderListModel.openPath(filePath)) {
+        if (!folderPage.model.openPath(filePath)) {
             error(i18n.tr("File operation error"), i18n.tr("Unable to open '%11").arg(filePath))
         }
     }

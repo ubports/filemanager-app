@@ -27,6 +27,7 @@ Page {
     title: folderName(folder)
 
     property variant fileView: folderListPage
+    property alias model: pageModel
 
     property bool showHiddenFiles: false
 
