@@ -55,9 +55,11 @@ Item {
         }
 
         contentWidth: width
-        contentHeight: grid.height
+        contentHeight: column.height
 
         Column {
+            id: column
+
             width: flickable.contentWidth
             ListItem.Header {
                 anchors {
@@ -78,9 +80,9 @@ Item {
                 width: root.width
 
                 cellCount: repeater.count
-                cellWidth: units.gu(8)
-                cellHeight: units.gu(10)
-                minSpacing: units.gu(5)
+                cellWidth: units.gu(11)
+                cellHeight: units.gu(11)
+                minSpacing: units.gu(2)
                 ySpacing: 1/2 * spacing
 
                 Repeater {

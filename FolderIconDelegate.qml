@@ -21,16 +21,16 @@ import Ubuntu.Components 0.1
 
 Item {
     id: delegate
-    height: units.gu(10)
-    width: units.gu(8)
+    height: units.gu(11)
+    width: units.gu(11)
 
     property bool selected
     property alias mouseOver: mouseArea.containsMouse
 
     Rectangle {
         anchors.centerIn: parent
-        anchors.verticalCenterOffset: units.gu(0.5)
-        height: parent.height + units.gu(1)
+       // anchors.verticalCenterOffset: units.gu(0.5)
+        height: parent.height// + units.gu(1)
         width: height
 
         radius: units.gu(2)
@@ -60,6 +60,7 @@ Item {
             right: parent.right
             top: parent.top
             bottom: label.top
+            topMargin: units.gu(0.5)
             bottomMargin: units.gu(1)
             leftMargin: units.gu(1)
             rightMargin: units.gu(1)
@@ -68,7 +69,7 @@ Item {
         Image {
             id: image
             anchors.centerIn: parent
-            width: Math.min(parent.width, parent.height)
+            width: units.gu(6)
             height: width
 
             source: delegate.icon
@@ -92,8 +93,9 @@ Item {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            leftMargin: units.gu(-1.25)
-            rightMargin: units.gu(-1.25)
+            bottomMargin: units.gu(0.75)
+            leftMargin: units.gu(0.25)
+            rightMargin: units.gu(0.25)
         }
 
         horizontalAlignment: Text.AlignHCenter

@@ -130,6 +130,8 @@ Popover {
                 }
 
                 selected: folder === path
+                iconFrame: false
+                showDivider: index < (placesList.count - 1)
             }
         }
     }

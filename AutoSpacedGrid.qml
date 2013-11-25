@@ -37,7 +37,7 @@ Item {
         return count
     }
 
-    height: yCount * cellHeight + (yCount) * ySpacing
+    height: yCount * cellHeight + (yCount - 1) * ySpacing + 2 * outerSpacing
 
     property int cellCount
 
@@ -81,6 +81,11 @@ Item {
     property real ySpacing: spacing
 
     default property alias children: grid.children
+
+//    Rectangle {
+//        color: "gray"
+//        anchors.fill: grid
+//    }
 
     Grid {
         id: grid
