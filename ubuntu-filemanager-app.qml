@@ -178,4 +178,9 @@ MainView {
                             text: message
                         })
     }
+
+    Keys.onPressed: {
+        print("Key pressed!")
+        event.accepted = tabs.currentPage.keyPressed(event.key, event.modifiers)
+    }
 }

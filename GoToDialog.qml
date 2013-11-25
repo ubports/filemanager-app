@@ -26,6 +26,11 @@ Dialog {
 
     text: i18n.tr("Enter a location to go to:")
 
+    Component.onCompleted: {
+        locationField.forceActiveFocus()
+        locationField.cursorPosition = locationField.text.length
+    }
+
     TextField {
         id: locationField
 

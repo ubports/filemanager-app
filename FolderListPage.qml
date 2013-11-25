@@ -502,18 +502,20 @@ Page {
             right: parent.right
         }
 
-        Column {
+
+        Label {
+            text: i18n.tr("No files")
+            fontSize: "large"
+            opacity: 0.5
             anchors.centerIn: parent
-            Label {
-                text: i18n.tr("No files")
-                fontSize: "large"
-                visible: folderListView.count == 0 && !pageModel.awaitingResults
-            }
-            ActivityIndicator {
-                running: pageModel.awaitingResults
-                width: units.gu(8)
-                height: units.gu(8)
-            }
+            visible: folderListView.count == 0 && !pageModel.awaitingResults
+        }
+
+        ActivityIndicator {
+            running: pageModel.awaitingResults
+            width: units.gu(8)
+            height: units.gu(8)
+            anchors.centerIn: parent
         }
     }
 
@@ -691,4 +693,15 @@ Page {
                             model: model
                         })
     }
+
+    function keyPressed(key, modifiers) {
+        if (key === Qt.Key_L && modifiers & Qt.ControlModifier) {
+            PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), goToButton)
+            return true;
+        }
+
+        return false;
+    }
+
+    Component.onCompleted: forceActiveFocus()
 }
