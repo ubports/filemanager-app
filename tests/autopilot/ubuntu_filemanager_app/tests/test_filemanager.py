@@ -52,13 +52,13 @@ class TestFolderListPage(FileManagerTestCase):
         if type_ == 'file':
             _, path = tempfile.mkstemp(prefix='tmpfm',
                                        dir=os.environ['TESTHOME'])
-            #path = os.environ['HOME'] + "/tmpfmFile"
+            #path = os.environ['TESTHOME'] + "/tmpfmFile"
             #os.system("touch " + path)
             logger.debug("Created %s, a file in TESTHOME" % path)
             self.addCleanup(self._unlink_cleanup, path)
         else:
             path = tempfile.mkdtemp(prefix='tmpfm', dir=os.environ['TESTHOME'])
-            #path = os.environ['HOME'] + "/tmpfmDir"
+            #path = os.environ['TESTHOME'] + "/tmpfmDir"
             #os.system("mkdir " + path)
             logger.debug("Created %s, a directory in TESTHOME" % path)
             self.addCleanup(self._rmdir_cleanup, path)
@@ -217,7 +217,7 @@ class TestFolderListPage(FileManagerTestCase):
         orig_dir = os.path.basename(self._make_directory_in_testhome())
         new_name = 'Renamed directory'
         self.addCleanup(self._rmdir_cleanup,
-                        os.path.join(os.environ['HOME'], new_name))
+                        os.path.join(os.environ['TESTHOME'], new_name))
 
         first_dir = self._get_file_by_name(orig_dir)
         self._do_action_on_file(first_dir, action='Rename')
@@ -361,7 +361,7 @@ class TestFolderListPage(FileManagerTestCase):
     def test_create_directory(self):
         dir_name = 'Test Directory'
         self.addCleanup(self._rmdir_cleanup,
-                        os.path.join(os.environ['HOME'], dir_name))
+                        os.path.join(os.environ['TESTHOME'], dir_name))
 
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('actions')
@@ -417,11 +417,11 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_copy_directory(self):
         # Set up a directory to copy and a directory to copy it into.
-        destination_dir_path = os.path.join(os.environ['HOME'], 'destination')
+        destination_dir_path = os.path.join(os.environ['TESTHOME'], 'destination')
         destination_dir_name = os.path.basename(destination_dir_path)
         os.mkdir(destination_dir_path)
         self.addCleanup(self._rmdir_cleanup, destination_dir_path)
-        dir_to_copy_path = os.path.join(os.environ['HOME'], 'to_copy')
+        dir_to_copy_path = os.path.join(os.environ['TESTHOME'], 'to_copy')
         dir_to_copy_name = os.path.basename(dir_to_copy_path)
         os.mkdir(dir_to_copy_path)
         self.addCleanup(self._rmdir_cleanup, dir_to_copy_path)
@@ -463,11 +463,11 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_cut_directory(self):
         # Set up a directory to cut and a directory to move it into.
-        destination_dir_path = os.path.join(os.environ['HOME'], 'destination')
+        destination_dir_path = os.path.join(os.environ['TESTHOME'], 'destination')
         destination_dir_name = os.path.basename(destination_dir_path)
         os.mkdir(destination_dir_path)
         self.addCleanup(self._rmdir_cleanup, destination_dir_path)
-        dir_to_cut_path = os.path.join(os.environ['HOME'], 'to_cut')
+        dir_to_cut_path = os.path.join(os.environ['TESTHOME'], 'to_cut')
         dir_to_cut_name = os.path.basename(dir_to_cut_path)
         os.mkdir(dir_to_cut_path)
         self.addCleanup(self._rmdir_cleanup, dir_to_cut_path)
