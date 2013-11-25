@@ -50,7 +50,8 @@ class TestFolderListPage(FileManagerTestCase):
         if type_ != 'file' and type_ != 'directory':
             raise ValueError('Unknown content type: "{0}"', type_)
         if type_ == 'file':
-            _, path = tempfile.mkstemp(prefix='tmpfm', dir=os.environ['TESTHOME'])
+            _, path = tempfile.mkstemp(prefix='tmpfm',
+                                       dir=os.environ['TESTHOME'])
             #path = os.environ['HOME'] + "/tmpfmFile"
             #os.system("touch " + path)
             logger.debug("Created %s, a file in TESTHOME" % path)

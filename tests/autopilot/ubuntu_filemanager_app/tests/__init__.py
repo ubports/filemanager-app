@@ -7,7 +7,6 @@
 
 """Filemanager app autopilot tests."""
 
-import mock
 import os.path
 import shutil
 import tempfile
