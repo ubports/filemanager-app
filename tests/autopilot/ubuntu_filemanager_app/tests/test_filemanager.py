@@ -417,7 +417,8 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_copy_directory(self):
         # Set up a directory to copy and a directory to copy it into.
-        destination_dir_path = os.path.join(os.environ['TESTHOME'], 'destination')
+        destination_dir_path = os.path.join(os.environ['TESTHOME'],
+                                            'destination')
         destination_dir_name = os.path.basename(destination_dir_path)
         os.mkdir(destination_dir_path)
         self.addCleanup(self._rmdir_cleanup, destination_dir_path)
@@ -463,7 +464,8 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_cut_directory(self):
         # Set up a directory to cut and a directory to move it into.
-        destination_dir_path = os.path.join(os.environ['TESTHOME'], 'destination')
+        destination_dir_path = os.path.join(os.environ['TESTHOME'],
+                                            'destination')
         destination_dir_name = os.path.basename(destination_dir_path)
         os.mkdir(destination_dir_path)
         self.addCleanup(self._rmdir_cleanup, destination_dir_path)
