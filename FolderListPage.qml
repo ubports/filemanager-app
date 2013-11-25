@@ -111,35 +111,34 @@ Page {
     // TODO: Remove isDir parameter and use new model functions
     function fileIcon(file, isDir) {
         file = file.replace(pageModel.homePath(), "~")
+        var iconPath = isDir ? "/usr/share/icons/Humanity/places/48/folder.svg"
+                             : "/usr/share/icons/Humanity/mimes/48/empty.svg"
+
         if (file === "~") {
-            return "/usr/share/icons/ubuntu-mono-dark/places/48/folder-home.svg"
+            iconPath = "icons/folder-home.svg"
         } else if (file === i18n.tr("~/Desktop")) {
-            return "/usr/share/icons/Humanity/places/48/user-desktop.svg"
+            iconPath = "/usr/share/icons/Humanity/places/48/user-desktop.svg"
         } else if (file === i18n.tr("~/Documents")) {
-            return "/usr/share/icons/Humanity/places/48/folder-documents.svg"
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-documents.svg"
         } else if (file === i18n.tr("~/Downloads")) {
-            return "/usr/share/icons/Humanity/places/48/folder-downloads.svg"
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-downloads.svg"
         } else if (file === i18n.tr("~/Music")) {
-            return "/usr/share/icons/Humanity/places/48/folder-music.svg"
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-music.svg"
         } else if (file === i18n.tr("~/Pictures")) {
-            return "/usr/share/icons/Humanity/places/48/folder-pictures.svg"
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-pictures.svg"
         } else if (file === i18n.tr("~/Public")) {
-            return "/usr/share/icons/Humanity/places/48/folder-publicshare.svg"
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-publicshare.svg"
         } else if (file === i18n.tr("~/Programs")) {
-            return "/usr/share/icons/Humanity/places/48/folder-system.svg"
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-system.svg"
         } else if (file === i18n.tr("~/Templates")) {
-            return "/usr/share/icons/Humanity/places/48/folder-templates.svg"
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-templates.svg"
         } else if (file === i18n.tr("~/Videos")) {
-            return "/usr/share/icons/Humanity/places/48/folder-videos.svg"
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-videos.svg"
         } else if (file === "/") {
-            return "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
+            iconPath = "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
         }
 
-        if (isDir) {
-            return "/usr/share/icons/Humanity/places/48/folder.svg"
-        } else {
-            return "/usr/share/icons/Humanity/mimes/48/empty.svg"
-        }
+        return Qt.resolvedUrl(iconPath)
     }
 
     function folderName(folder) {
