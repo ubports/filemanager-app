@@ -40,6 +40,8 @@ class TestFolderListPage(FileManagerTestCase):
         super(TestFolderListPage, self).setUp()
         self.assertThat(
             self.main_view.visible, Eventually(Equals(True)))
+        #start in testhome everytime
+        self._go_to_location(os.environ['TESTHOME'])
 
     def _make_file_in_testhome(self):
         return self._make_content_in_testhome('file')
@@ -107,6 +109,16 @@ class TestFolderListPage(FileManagerTestCase):
             place = self._get_place(text)
         self.pointing_device.click_object(place)
 
+    def _go_to_location(self, location):
+        #go to specified location via the goto button
+        logger.debug("Opening goto dialog")
+        toolbar = self.main_view.open_toolbar()
+        toolbar.click_button('goTo')
+        logger.debug("Changing to %s" % location)
+        goto_dialog = self.main_view.get_dialog()
+        goto_dialog.enter_text(location)
+        goto_dialog.ok()
+
     def _get_place(self, text):
         places_popover = self.main_view.get_places_popover()
         places = places_popover.select_many('Standard')
@@ -116,7 +128,7 @@ class TestFolderListPage(FileManagerTestCase):
         raise ValueError(
             'Place "{0}" not found.'.format(text))
 
-    def _make_directory_in_home(self):
+    def _make_directory_in_testhome(self):
         return self._make_content_in_testhome('directory')
 
     def _open_directory(self, item):
@@ -201,7 +213,7 @@ class TestFolderListPage(FileManagerTestCase):
         window.close()
 
     def test_rename_directory(self):
-        orig_dir = os.path.basename(self._make_directory_in_home())
+        orig_dir = os.path.basename(self._make_directory_in_testhome())
         new_name = 'Renamed directory'
         self.addCleanup(self._rmdir_cleanup,
                         os.path.join(os.environ['HOME'], new_name))
@@ -217,7 +229,7 @@ class TestFolderListPage(FileManagerTestCase):
             lambda: first_dir.fileName, Eventually(Equals(new_name)))
 
     def test_open_directory(self):
-        dir_path = self._make_directory_in_home()
+        dir_path = self._make_directory_in_testhome()
         first_dir = self._get_file_by_name(os.path.basename(dir_path))
 
         self._open_directory(first_dir)
@@ -231,7 +243,7 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_folder_context_menu_shows(self):
         """Checks to make sure that the folder actions popover is shown."""
-        dir_path = os.path.basename(self._make_directory_in_home())
+        dir_path = os.path.basename(self._make_directory_in_testhome())
 
         first_file = self._get_file_by_name(dir_path)
         first_file.open_actions_popover()
@@ -241,7 +253,7 @@ class TestFolderListPage(FileManagerTestCase):
             lambda: file_actions_popover.visible, Eventually(Equals(True)))
 
     def test_list_folder_contents(self):
-        dir_path = self._make_directory_in_home()
+        dir_path = self._make_directory_in_testhome()
         dir_name = os.path.basename(dir_path)
         file_path = self._make_file_in_testhome()
         file_name = os.path.basename(file_path)
@@ -269,7 +281,7 @@ class TestFolderListPage(FileManagerTestCase):
             Eventually(Equals(False)))
 
     def test_cancel_rename_directory(self):
-        dir_path = self._make_directory_in_home()
+        dir_path = self._make_directory_in_testhome()
         dir_name = os.path.basename(dir_path)
 
         first_dir = self._get_file_by_name(dir_name)
@@ -310,7 +322,7 @@ class TestFolderListPage(FileManagerTestCase):
             lambda: first_file.fileName, Eventually(Equals(new_name)))
 
     def test_cancel_delete_directory(self):
-        dir_name = os.path.basename(self._make_directory_in_home())
+        dir_name = os.path.basename(self._make_directory_in_testhome())
         first_dir = self._get_file_by_name(dir_name)
 
         self._do_action_on_file(first_dir, 'Delete')
@@ -319,7 +331,7 @@ class TestFolderListPage(FileManagerTestCase):
         self._assert_number_of_files(1)
 
     def test_delete_directory(self):
-        dir_name = os.path.basename(self._make_directory_in_home())
+        dir_name = os.path.basename(self._make_directory_in_testhome())
         first_dir = self._get_file_by_name(dir_name)
 
         self._do_action_on_file(first_dir, 'Delete')
@@ -377,7 +389,7 @@ class TestFolderListPage(FileManagerTestCase):
         self._assert_number_of_files(0)
 
     def test_show_directory_properties_from_list(self):
-        dir_path = self._make_directory_in_home()
+        dir_path = self._make_directory_in_testhome()
         dir_name = os.path.basename(dir_path)
         first_dir = self._get_file_by_name(dir_name)
 
@@ -499,7 +511,7 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_copy_file(self):
         # Set up a file to copy and a directory to copy it into.
-        destination_dir_path = self._make_directory_in_home()
+        destination_dir_path = self._make_directory_in_testhome()
         destination_dir_name = os.path.basename(destination_dir_path)
         file_to_copy_path = self._make_file_in_testhome()
         file_to_copy_name = os.path.basename(file_to_copy_path)
@@ -545,7 +557,7 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_cut_file(self):
         # Set up a file to cut and a directory to move it into.
-        destination_dir_path = self._make_directory_in_home()
+        destination_dir_path = self._make_directory_in_testhome()
         destination_dir_name = os.path.basename(destination_dir_path)
         file_to_cut_path = self._make_file_in_testhome()
         file_to_cut_name = os.path.basename(file_to_cut_path)
@@ -589,7 +601,7 @@ class TestFolderListPage(FileManagerTestCase):
             first_dir.fileName, Eventually(Equals(destination_dir_name)))
 
     def test_go_up(self):
-        dir_name = os.path.basename(self._make_directory_in_home())
+        dir_name = os.path.basename(self._make_directory_in_testhome())
         first_dir = self._get_file_by_name(dir_name)
         self._open_directory(first_dir)
 

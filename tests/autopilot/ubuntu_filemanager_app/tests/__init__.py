@@ -60,6 +60,13 @@ class FileManagerTestCase(AutopilotTestCase):
         self._create_test_root()
         self.pointing_device = Pointer(self.input_device_class.create())
         super(FileManagerTestCase, self).setUp()
+        #turn off the OSK so it doesn't block screen elements
+        if model() != 'Desktop':
+            os.system("stop maliit-server")
+            #adding cleanup step seems to restart service immeadiately
+            #disabling for now
+            #self.addCleanup(os.system("start maliit-server"))
+
         self.original_file_count = \
             len([i for i in os.listdir(os.environ['TESTHOME'])
                  if not i.startswith('.')])
@@ -74,10 +81,8 @@ class FileManagerTestCase(AutopilotTestCase):
         temp_dir = tempfile.mkdtemp(dir=os.path.expanduser("~"))
         self.addCleanup(shutil.rmtree, temp_dir)
         logger.debug("Created root test directory " + temp_dir)
-        patcher = mock.patch.dict('os.environ', {'TESTHOME': temp_dir})
-        patcher.start()
+        self.patch_environment('TESTHOME', temp_dir)
         logger.debug("Patched root test directory " + temp_dir)
-        self.addCleanup(patcher.stop)
         return temp_dir
 
     def launch_test_local(self):
