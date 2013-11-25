@@ -57,35 +57,26 @@ class FileManagerTestCase(AutopilotTestCase):
 
     def setUp(self):
         launch, self.test_type = self.setup_environment()
-        if self.test_type != 'click':
-            self._patch_home()
+        self._create_test_root()
         self.pointing_device = Pointer(self.input_device_class.create())
         super(FileManagerTestCase, self).setUp()
         self.original_file_count = \
-            len([i for i in os.listdir(os.environ['HOME'])
+            len([i for i in os.listdir(os.environ['TESTHOME'])
                  if not i.startswith('.')])
-        logger.debug("Directory Listing for HOME\n%s" %
-                     os.listdir(os.environ['HOME']))
-        logger.debug("File count in HOME is %s" % self.original_file_count)
+        logger.debug("Directory Listing for TESTHOME\n%s" %
+                     os.listdir(os.environ['TESTHOME']))
+        logger.debug("File count in TESTHOME is %s" % self.original_file_count)
         launch()
 
-    def _patch_home(self):
-        #create a temporary home for testing purposes
+    def _create_test_root(self):
+        #create a temporary directory for testing purposes
         #due to security lockdowns, make it under /home always
         temp_dir = tempfile.mkdtemp(dir=os.path.expanduser("~"))
-        logger.debug("Created fake home directory " + temp_dir)
         self.addCleanup(shutil.rmtree, temp_dir)
-        #if the Xauthority file is in home directory
-        #make sure we copy it to temp home, otherwise do nothing
-        xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
-        if os.path.isfile(xauth):
-            logger.debug("Copying .Xauthority to fake home " + temp_dir)
-            shutil.copyfile(
-                os.path.expanduser(os.path.join('~', '.Xauthority')),
-                os.path.join(temp_dir, '.Xauthority'))
-        patcher = mock.patch.dict('os.environ', {'HOME': temp_dir})
+        logger.debug("Created root test directory " + temp_dir)
+        patcher = mock.patch.dict('os.environ', {'TESTHOME': temp_dir})
         patcher.start()
-        logger.debug("Patched home to fake home directory " + temp_dir)
+        logger.debug("Patched root test directory " + temp_dir)
         self.addCleanup(patcher.stop)
         return temp_dir
 
