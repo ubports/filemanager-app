@@ -612,7 +612,7 @@ class TestFolderListPage(FileManagerTestCase):
         folder_list_page = self.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_current_path,
-            Eventually(Equals(os.environ['HOME'])))
+            Eventually(Equals(os.environ['TESTHOME'])))
 
     def test_go_home(self):
         self._go_to_place('Home')
