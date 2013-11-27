@@ -108,6 +108,7 @@ MainView {
 
         defaults: {
             showAdvancedFeatures: false
+            collapsedSidebar: false
         }
     }
 
@@ -115,6 +116,8 @@ MainView {
     property bool showAdvancedFeatures: false
 
     property var viewMethod
+
+    property bool collapsedSidebar: false
 
     function getSetting(name, def) {
         var tempContents = {};
@@ -143,6 +146,7 @@ MainView {
     function reloadSettings() {
         //showAdvancedFeatures = getSetting("showAdvancedFeatures", false)
         viewMethod = getSetting("viewMethod", width > units.gu(40) ? i18n.tr("Icons") : i18n.tr("List"))
+        collapsedSidebar = getSetting("collapsedSidebar", false)
     }
 
     Component.onCompleted: {

@@ -117,6 +117,9 @@ Item {
             else
                 itemClicked(model)
         }
+
+        propagateComposedEvents: true
+
         onPressAndHold: itemLongPress(delegate, model)
 
     }

@@ -24,7 +24,16 @@ Sidebar {
     id: root
 
     //color: Qt.rgba(0.5,0.5,0.5,0.3)
-    width: units.gu(30)
+    width: collapsedSidebar ? units.gu(8) : units.gu(30)
+
+    Behavior on width {
+        UbuntuNumberAnimation {}
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: saveSetting("collapsedSidebar", !collapsedSidebar)
+    }
 
     ListModel {
         id: places
@@ -66,13 +75,7 @@ Sidebar {
         }
 
         Header {
-//            Label {
-//                anchors.left: parent.left
-//                anchors.leftMargin: units.gu(1)
-//                anchors.verticalCenter: parent.verticalCenter
-                text: i18n.tr("Places")
-//                color: Theme.palette.normal.overlayText
-//            }
+            text: i18n.tr("Places")
         }
 
         Repeater {
@@ -96,6 +99,7 @@ Sidebar {
                 }
 
                 height: units.gu(5)
+                showDivider: !collapsedSidebar
 
                 selected: folder === path
                 iconFrame: false
