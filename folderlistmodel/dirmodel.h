@@ -43,6 +43,7 @@
 #include "filecompare.h"
 
 class FileSystemAction;
+class ExternalFSWatcher;
 
 /*!
  *  When the External File System Wathcer is enabled,
@@ -50,7 +51,7 @@ class FileSystemAction;
  *
  *  \sa setEnabledExternalFSWatcher()
  */
-#define EX_FS_WATCHER_TIMER_INTERVAL   3100
+#define EX_FS_WATCHER_TIMER_INTERVAL   900
 
 class DirModel : public QAbstractListModel
 {
@@ -104,7 +105,7 @@ public:
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
     inline QString path() const { return mCurrentDir; }
     void setPath(const QString &pathName);
-    
+
     Q_INVOKABLE QDateTime   curPathAccessedDate() const;
     Q_INVOKABLE QDateTime   curPathCreatedDate()  const;
     Q_INVOKABLE QDateTime   curPathModifiedDate() const;
@@ -112,7 +113,6 @@ public:
     Q_INVOKABLE QString     curPathCreatedDateLocaleShort()  const;
     Q_INVOKABLE QString     curPathModifiedDateLocaleShort() const;
     Q_INVOKABLE bool        curPathIsWritable() const;
-    
 
     Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
     bool awaitingResults() const;
@@ -373,28 +373,27 @@ private:
                                                   const QString& pathName);
     bool          canReadDir(const QFileInfo& d)   const;
     bool          canReadFile(const QFileInfo& f)  const;
-    QFileInfo     setParentIfRelative(const QString &fileOrDir) const;  
+    QFileInfo     setParentIfRelative(const QString &fileOrDir) const;
 
 private:
     void          startExternalFsWatcher();
     void          stoptExternalFsWatcher();
+    void          clear();
 private slots:
-    void          onFetchingContents(QDateTime);
     void          onItemAddedOutsideFm(const QFileInfo&fi);
     void          onItemRemovedOutSideFm(const QFileInfo&);
     void          onItemChangedOutSideFm(const QFileInfo&fi);
-    void          onExternalFsWatcherFinihed();
-protected:
-   virtual void   timerEvent(QTimerEvent *);
+    void          onThereAreExternalChanges();
+    void          onExternalFsWorkerFinished(int);
+
 
 private:
-    bool               mShowHiddenFiles;
-    SortBy             mSortBy;
-    SortOrder          mSortOrder;
-    CompareFunction    mCompareFunction;
-    int                mExternalFSWatcherTimer;
-    bool               mEnableExternalFSWatcher;
-    QDateTime          mLastModifiedCurrentPath;
+    bool                mShowHiddenFiles;
+    SortBy              mSortBy;
+    SortOrder           mSortOrder;
+    CompareFunction     mCompareFunction;
+    ExternalFSWatcher*  mExtFSWatcher;
+
 
 private:
     FileSystemAction  *  m_fsAction;  //!< it does file system recursive remove/copy/move

@@ -43,7 +43,6 @@
 #include <QVector>
 
 class DirModelMimeData;
-class RemoveNotifier;
 class QFile;
 class QTemporaryFile;
 
@@ -104,7 +103,7 @@ public:
 
 public slots:
     void     cancel();
-    void     remove(const QStringList& filePaths);
+    void     remove(const QStringList & filePaths);
     void     pathChanged(const QString& path);
     void     paste();
     void     cut(const QStringList&);
@@ -116,6 +115,7 @@ signals:
     void     removed(const QFileInfo&);
     void     added(const QString& );
     void     added(const QFileInfo& );
+    void     removedThenAdded(const QFileInfo&);
     void     progress(int curItem, int totalItems, int percent);
     void     clipboardChanged();
 
@@ -201,8 +201,7 @@ private slots:
    QVector<Action*>        m_queuedActions;  //!< work always at item 0, after finishing taking item 0 out
    Action            *     m_curAction;
    bool                    m_cancelCurrentAction;
-   bool                    m_busy;
-   static RemoveNotifier   m_removeNotifier;
+   bool                    m_busy; 
    QString                 m_path;
    DirModelMimeData  *     m_mimeData;
    QString                 m_errorTitle;

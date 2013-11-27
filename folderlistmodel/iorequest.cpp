@@ -75,10 +75,9 @@ QVector<QFileInfo> DirListWorker::getContents()
 {
 #if DEBUG_EXT_FS_WATCHER
     qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
-                  << Q_FUNC_INFO;
+             << Q_FUNC_INFO;
 #endif
-    QVector<QFileInfo> directoryContents;
-    emit fetchingContents(QFileInfo(mPathName).lastModified());
+    QVector<QFileInfo> directoryContents;  
     directoryContents = add(mPathName, mFilter, mIsRecursive, directoryContents);
     return directoryContents;
 }
@@ -132,42 +131,52 @@ ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const QVector<Q
 void ExternalFileSystemChangesWorker::run()
 {
     QVector<QFileInfo> directoryContents = getContents();
+    int   addedCounter=0;
+    int   removedCounter=0;
 #if DEBUG_EXT_FS_WATCHER
         qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
-                  << Q_FUNC_INFO << "checking added and changed files";
+                 << Q_FUNC_INFO
+                 << "m_curContent.count():"      << m_curContent.count()
+                 << "directoryContents.count():" << directoryContents.count();
 #endif
     int counter = directoryContents.count();
-    while (counter--)
+    if (counter > 0)
     {
-        const QFileInfo& originalItem = directoryContents.at(counter);
-        const QFileInfo  existItem    = m_curContent.value(originalItem.absoluteFilePath());
-        if ( existItem.exists() )
-        {           
-            //it may have changed
-            if (   originalItem.size()         != existItem.size()
-                || originalItem.lastModified() != existItem.lastModified()
-                || originalItem.permissions()  != existItem.permissions()
-               )
-            {           
-                emit changed(originalItem);
+        while (counter--)
+        {
+            const QFileInfo& originalItem = directoryContents.at(counter);
+            const QFileInfo  existItem    = m_curContent.value(originalItem.absoluteFilePath());
+            if ( existItem.exists() )
+            {
+                //it may have changed
+                if (   originalItem.size()         != existItem.size()
+                       || originalItem.lastModified() != existItem.lastModified()
+                       || originalItem.permissions()  != existItem.permissions()
+                       )
+                {
+                    emit changed(originalItem);
+                }
+                //remove this item
+                m_curContent.remove(originalItem.absoluteFilePath());
             }
-            //remove this item
-            m_curContent.remove(originalItem.absoluteFilePath());
+            else // originalItem was added
+            {
+                emit added(originalItem);
+                ++addedCounter;
+            }
         }
-        else // originalItem was added
-        {           
-            emit added(originalItem);
+
+        QHash<QString, QFileInfo>::iterator  i = m_curContent.begin();
+        for ( ;  i != m_curContent.end();  ++removedCounter, ++i )
+        {
+            emit removed(i.value());
         }
     }
 #if DEBUG_EXT_FS_WATCHER
         qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
-                  << Q_FUNC_INFO << "checking for removed files";
+                 << Q_FUNC_INFO
+                 << "addedCounter:"   << addedCounter
+                 << "removedCounter:" << removedCounter;
 #endif
-    QHash<QString, QFileInfo>::iterator  i = m_curContent.begin();
-    while ( i != m_curContent.end() )
-    {
-        emit removed(i.value());
-        ++i;
-    }
-    emit finished();
+    emit finished(counter);
 }

@@ -70,7 +70,6 @@ public:
     explicit DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive);
     void run();
 signals:
-    void fetchingContents(QDateTime);
     void itemsAdded(const QVector<QFileInfo> &files);
     void workerFinished();
 
@@ -101,7 +100,7 @@ signals:
     void     removed(const QFileInfo&);
     void     changed(const QFileInfo&);
     void     added(const QFileInfo& );
-    void     finished();
+    void     finished(int);
 private:
     QHash<QString, QFileInfo>    m_curContent;   //!< using hash because the vector can be in any order
 };
