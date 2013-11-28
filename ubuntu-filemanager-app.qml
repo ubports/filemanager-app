@@ -28,7 +28,7 @@ import U1db 1.0 as U1db
 */
 
 MainView {
-    id: root
+    id: mainView
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
     applicationName: "com.ubuntu.filemanager"
@@ -36,9 +36,20 @@ MainView {
     width: units.gu(100)
     height: units.gu(75)
 
-    property alias filemanager: root
+    property alias filemanager: mainView
 
-    property bool wideAspect: width >= units.gu(80)
+    //property bool wideAspect: width >= units.gu(80)
+
+    property bool allowSidebarExpanded: width >= units.gu(80)
+
+    onAllowSidebarExpandedChanged: {
+        if (!allowSidebarExpanded)
+            saveSetting("collapsedSidebar", true)
+    }
+
+    property bool showSidebar: width >= units.gu(50)
+
+    property bool showToolbar: width >= units.gu(80)
 
     headerColor: "#464646"
     backgroundColor: "#797979"
@@ -52,6 +63,8 @@ MainView {
 
     PageStack {
         id: pageStack
+
+        anchors.bottomMargin: toolbar.tools.opened && toolbar.tools.locked ? -mainView.toolbar.triggerSize : 0
 
         Tabs {
             id: tabs
@@ -78,19 +91,6 @@ MainView {
             pageStack.push(tabs)
         }
     }
-
-    property var showToolbar: wideAspect ? true : undefined
-
-    states: [
-        State {
-            when: showToolbar && toolbar.tools.opened && toolbar.tools.locked
-
-            PropertyChanges {
-                target: pageStack
-                anchors.bottomMargin: -root.toolbar.triggerSize
-            }
-        }
-    ]
 
     /* Settings Storage */
 
@@ -176,7 +176,7 @@ MainView {
     }
 
     function error(title, message) {
-        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), root,
+        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), mainView,
                         {
                             title: title,
                             text: message

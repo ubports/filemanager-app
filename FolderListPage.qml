@@ -354,26 +354,37 @@ Page {
 
     tools: ToolbarItems {
         id: toolbar
-        locked: wideAspect
-        opened: wideAspect
+        locked: showToolbar
+        opened: showToolbar
 
-        onLockedChanged: opened = Qt.binding(function() { return wideAspect })
+        onLockedChanged: opened = locked
 
         back: ToolbarButton {
             objectName: "up"
             text: "Up"
             iconSource: getIcon("keyboard-caps")
-            visible: folder != "/"
+            enabled: folder != "/"
             onTriggered: {
                 goTo(pageModel.parentPath)
             }
+        }
+
+        PathBar {
+            height: units.gu(5)
+            width: folderListPage.width - units.gu(31)
+            visible: sidebar.expanded
+        }
+
+        Item {
+            width: units.gu(1)
+            height: parent.height
         }
 
         ToolbarButton {
             id: actionsButton
             objectName: "actions"
             text: i18n.tr("Actions")
-            iconSource: getIcon("edit")
+            iconSource: getIcon("properties")
 
             onTriggered: {
                 print(text)
@@ -395,7 +406,7 @@ Page {
 
         ToolbarButton {
             id: goToButton
-            visible: wideAspect
+            visible: false//sidebar.expanded
             objectName: "goTo"
             text: i18n.tr("Go To")
             iconSource: getIcon("location")
@@ -408,7 +419,7 @@ Page {
 
         ToolbarButton {
             id: placesButton
-            visible: !wideAspect
+            visible: !sidebar.expanded
             objectName: "places"
             text: i18n.tr("Places")
             iconSource: getIcon("location")
@@ -435,10 +446,10 @@ Page {
         }
     }
 
-    flickable: !wideAspect ? folderListView.visible ? folderListView : folderIconView.flickable : null
+    flickable: !sidebar.expanded ? folderListView.visible ? folderListView : folderIconView.flickable : null
 
     onFlickableChanged: {
-        if (wideAspect) {
+        if (flickable === null) {
             folderListView.topMargin = 0
             folderIconView.flickable.topMargin = 0
         } else {
@@ -457,7 +468,7 @@ Page {
 //            bottomMargin: units.gu(-2)
 //        }
 
-        expanded: wideAspect
+        expanded: showSidebar
     }
 
     FolderIconView {

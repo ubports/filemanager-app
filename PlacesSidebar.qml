@@ -16,6 +16,7 @@
  * Authored by: Michael Spencer <sonrisesoftware@gmail.com>
  */
 import QtQuick 2.0
+import QtGraphicalEffects 1.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.ListItems 0.1
 import Ubuntu.Components.Popups 0.1
@@ -24,15 +25,21 @@ Sidebar {
     id: root
 
     //color: Qt.rgba(0.5,0.5,0.5,0.3)
-    width: collapsedSidebar ? units.gu(8) : units.gu(30)
+    width: collapsed ? units.gu(8) : units.gu(22)
 
-    Behavior on width {
-        UbuntuNumberAnimation {}
-    }
+    property bool collapsed: collapsedSidebar
 
     MouseArea {
         anchors.fill: parent
-        onClicked: saveSetting("collapsedSidebar", !collapsedSidebar)
+        onClicked: {
+            saveSetting("collapsedSidebar", !collapsedSidebar)
+        }
+    }
+
+    property bool tempExpanded: false
+
+    Behavior on width {
+        UbuntuNumberAnimation {}
     }
 
     ListModel {
@@ -85,21 +92,53 @@ Sidebar {
             model: places
 
             delegate: Standard {
-//                Label {
-//                    anchors.left: parent.left
-//                    anchors.leftMargin: units.gu(8)
-//                    anchors.verticalCenter: parent.verticalCenter
+                id: standard
+
+                Label {
+                    anchors.left: parent.left
+                    anchors.leftMargin: units.gu(8)
+                    anchors.verticalCenter: parent.verticalCenter
                     text: folderName(path)
-//                    color: Theme.palette.normal.overlayText
-//                }
-                icon: model.icon || fileIcon(model.path, true)
+                    color: selected ? UbuntuColors.orange : Theme.palette.selected.backgroundText
+                }
+
+                Image {
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left
+                    }
+
+                    height: units.gu(1.1)
+                    width: height
+
+                    source: getIcon("arrow")
+                    opacity: selected && collapsed ? 1 : 0
+
+                    Behavior on opacity {
+                        UbuntuNumberAnimation {}
+                    }
+                }
+
+                Image {
+                    id: image
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        horizontalCenterOffset: units.gu(4)
+                        horizontalCenter: parent.left
+                    }
+
+                    height: units.gu(4)
+                    width: height
+
+                    source: model.icon || fileIcon(model.path, true)
+                }
 
                 onClicked: {
                     goTo(model.path)
                 }
 
                 height: units.gu(5)
-                showDivider: !collapsedSidebar
+                showDivider: !collapsed
 
                 selected: folder === path
                 iconFrame: false

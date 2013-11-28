@@ -87,22 +87,49 @@ Item {
         }
     }
 
+    property bool expand: mouseOver && label.implicitWidth >= label.width
+    z: expand ? 1 : 0
+
+    Rectangle {
+        anchors {
+            fill: label
+            margins: units.gu(-0.5)
+            leftMargin: units.gu(-1)
+            rightMargin: units.gu(-1)
+        }
+        color: "white"
+        radius: height/2
+        border.color: UbuntuColors.warmGrey
+        antialiasing: true
+        opacity: expand ? 1 : 0
+
+        Behavior on opacity {
+            UbuntuNumberAnimation {}
+        }
+    }
+
     Label {
         id: label
         anchors {
-            left: parent.left
-            right: parent.right
+            horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
             bottomMargin: units.gu(0.75)
-            leftMargin: units.gu(0.25)
-            rightMargin: units.gu(0.25)
+        }
+
+        width: expand ? implicitWidth : (parent.width - units.gu(0.5))
+
+        Behavior on width {
+            UbuntuNumberAnimation {}
         }
 
         horizontalAlignment: Text.AlignHCenter
         elide: Text.ElideMiddle
 
         text: delegate.text
-        //font.bold: mouseOver
+        color: expand ? UbuntuColors.coolGrey : Theme.palette.selected.backgroundText
+        Behavior on color {
+            ColorAnimation { duration: 200 }
+        }
     }
 
     MouseArea {
@@ -121,6 +148,5 @@ Item {
         propagateComposedEvents: true
 
         onPressAndHold: itemLongPress(delegate, model)
-
     }
 }
