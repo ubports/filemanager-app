@@ -1962,7 +1962,18 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     TestDirModel tc;
-    int ret = QTest::qExec(&tc, argc, argv);
+    QStringList args = QCoreApplication::arguments();
+    int count = args.count();
+    while (count--)
+    {
+       //Ubuntu Touch parameter
+       if (args.at(count).startsWith(QLatin1String("--desktop_file_hint")))
+       {
+          args.removeAt(count);
+          break;
+       }
+    }
+    int ret = QTest::qExec(&tc, args);
 
     return ret;
 }

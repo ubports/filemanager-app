@@ -268,11 +268,14 @@ DirModelMimeData::setIntoClipboard(const QStringList &files, const QString& path
                                                   : new DirModelMimeData();
         if (mime->fillClipboard(files, path, operation))
         {
+           //it looks like clipboard lacks interface implementation
+           //use our own storage while Ubuntu guys provide a fix for that
+           const bool forceMyClipboardStorage = true;
            clipboard->setMimeData(mime);
            const QMimeData *data = clipboard->mimeData();
            //it looks like some mobile devices does not have X
            //in this case we simulate our own clipboard
-           if (!data && !m_globalMimeData)
+           if (forceMyClipboardStorage || (!data && !m_globalMimeData) )
            {
                m_globalMimeData = mime;
            }        

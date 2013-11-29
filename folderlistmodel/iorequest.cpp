@@ -34,6 +34,9 @@
 #include <QDirIterator>
 #include <QDebug>
 
+#ifdef DEBUG_MESSAGES
+#include <QThread>
+#endif
 
 IORequest::IORequest() : QObject(), m_type(DirList)
 {
