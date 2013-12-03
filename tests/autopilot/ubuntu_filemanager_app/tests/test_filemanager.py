@@ -116,6 +116,7 @@ class TestFolderListPage(FileManagerTestCase):
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('goTo')
         logger.debug("Changing to %s" % location)
+        self.main_view.print_tree('/home/phablet/dump.txt')
         goto_dialog = self.main_view.get_dialog()
         goto_dialog.enter_text(location)
         goto_dialog.ok()
