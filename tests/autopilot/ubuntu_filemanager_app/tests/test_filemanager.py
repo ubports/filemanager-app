@@ -26,6 +26,7 @@ import os
 import shutil
 
 from autopilot import process
+from autopilot.platform import model
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals, NotEquals, Is, Not
 
@@ -41,7 +42,10 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             self.main_view.visible, Eventually(Equals(True)))
         #start in testhome everytime
-        self._go_to_location(os.environ['TESTHOME'])
+        if model() == 'Desktop':
+            self._go_to_location(os.environ['TESTHOME'])
+        else
+            self._go_to_place(os.environ['TESTHOME'])
 
     def _make_file_in_testhome(self):
         return self._make_content_in_testhome('file')
@@ -116,7 +120,7 @@ class TestFolderListPage(FileManagerTestCase):
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('goTo')
         logger.debug("Changing to %s" % location)
-        self.main_view.print_tree('/home/phablet/dump.txt')
+        self.main_view.print_tree('/home/nskaggs/Desktop/dump_desktop.txt')
         goto_dialog = self.main_view.get_dialog()
         goto_dialog.enter_text(location)
         goto_dialog.ok()
