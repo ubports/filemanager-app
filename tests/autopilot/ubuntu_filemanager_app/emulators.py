@@ -329,6 +329,7 @@ class Dialog(ConfirmDialogWithInput):
     def __init__(self, *args):
         super(Dialog, self).__init__(*args)
 
+
 class Popover(ConfirmDialogWithInput):
     """Popover Autopilot emulator, containing buttons and an inputfield"""
 
@@ -354,6 +355,7 @@ class Popover(ConfirmDialogWithInput):
         for button in buttons:
             if button.text == text:
                 return button
+
 
 class FileDetailsPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FileDetailsPopover Autopilot emulator."""
