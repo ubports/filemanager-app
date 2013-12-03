@@ -235,6 +235,8 @@ class TestFolderListPage(FileManagerTestCase):
         self.main_view.get_confirm_dialog()
 
         self.assertThat(
+            self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
+        self.assertThat(
             lambda: first_dir.fileName, Eventually(Equals(new_name)))
 
     def test_open_directory(self):
