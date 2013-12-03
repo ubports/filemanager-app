@@ -42,9 +42,12 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             self.main_view.visible, Eventually(Equals(True)))
         #start in testhome everytime
-        if model() == 'Desktop':
+        device = model()
+        if device == 'Desktop':
+            logger.debug("Using goto to navigate to TESTHOME on %s" % device)
             self._go_to_location(os.environ['TESTHOME'])
-        else
+        else:
+            logger.debug("Using places to navigate to TESTHOME on %s" % device)
             self._go_to_place(os.environ['TESTHOME'])
 
     def _make_file_in_testhome(self):
@@ -120,7 +123,7 @@ class TestFolderListPage(FileManagerTestCase):
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('goTo')
         logger.debug("Changing to %s" % location)
-        self.main_view.print_tree('/home/nskaggs/Desktop/dump_desktop.txt')
+        #self.main_view.print_tree('/home/nskaggs/Desktop/dump_desktop.txt')
         goto_dialog = self.main_view.get_dialog()
         goto_dialog.enter_text(location)
         goto_dialog.ok()
