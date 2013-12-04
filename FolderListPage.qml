@@ -403,6 +403,18 @@ Page {
                 PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), placesButton)
             }
         }
+
+        ToolbarButton {
+            id: settingsButton
+            objectName: "settings"
+            text: i18n.tr("Settings")
+            iconSource: getIcon("settings")
+            onTriggered: {
+                print(text)
+
+                pageStack.push(settingsPage)
+            }
+        }
     }
 
     flickable: !wideAspect ? folderListView : null

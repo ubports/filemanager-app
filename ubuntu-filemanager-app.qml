@@ -65,18 +65,11 @@ MainView {
                     folder: homeFolder
                 }
             }
-
-            Tab {
-                title: page.title
-                page: SettingsPage {
-                    id: settingsPage
-                }
-            }
         }
 
         Component.onCompleted: {
             pageStack.push(tabs)
-            pageStack.push(Qt.resolvedUrl("FolderListPage.qml"))
+            pageStack.push(settingsPage)
             pageStack.pop()
         }
     }
@@ -111,6 +104,10 @@ MainView {
         defaults: {
             showAdvancedFeatures: false
         }
+    }
+
+    SettingsPage {
+        id: settingsPage
     }
 
     // Individual settings, used for bindings
