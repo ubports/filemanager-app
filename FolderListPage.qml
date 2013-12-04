@@ -368,7 +368,7 @@ Page {
 
         ToolbarButton {
             text: i18n.tr("View")
-            iconSource: getIcon("settings")
+            iconSource: getIcon("properties")
             id: optionsButton
 
             onTriggered: {
