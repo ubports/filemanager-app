@@ -26,6 +26,7 @@ import os
 import shutil
 
 from autopilot import process
+from autopilot.platform import model
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals, NotEquals, Is, Not
 
@@ -111,14 +112,21 @@ class TestFolderListPage(FileManagerTestCase):
         self.pointing_device.click_object(place)
 
     def _go_to_location(self, location):
-        #go to specified location via the goto button
-        logger.debug("Opening goto dialog")
+        #go to specified location
         toolbar = self.main_view.open_toolbar()
-        toolbar.click_button('goTo')
-        logger.debug("Changing to %s" % location)
-        goto_dialog = self.main_view.get_dialog()
-        goto_dialog.enter_text(location)
-        goto_dialog.ok()
+        #on wide UI display, we get the location dialog
+        #on phone UI display, we get places popover
+        device = model()
+        if self.main_view.wideAspect:
+            logger.debug("Using goto to goto %s on %s" % (location, device))
+            toolbar.click_button('goTo')
+            goto_location = self.main_view.get_dialog()
+        else:
+            logger.debug("Using places to goto %s on %s" % (location, device))
+            toolbar.click_button('places')
+            goto_location = self.main_view.get_popover()
+        goto_location.enter_text(location)
+        goto_location.ok()
 
     def _get_place(self, text):
         places_popover = self.main_view.get_places_popover()
@@ -226,6 +234,8 @@ class TestFolderListPage(FileManagerTestCase):
         #make sure confirm dialog is open
         self.main_view.get_confirm_dialog()
 
+        self.assertThat(
+            self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
         self.assertThat(
             lambda: first_dir.fileName, Eventually(Equals(new_name)))
 

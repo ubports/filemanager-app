@@ -100,6 +100,10 @@ class MainView(toolkit_emulators.MainView):
         """Return a dialog emulator"""
         return self.wait_select_single(Dialog)
 
+    def get_popover(self):
+        """Return a popover emulator"""
+        return self.wait_select_single(Popover)
+
 
 class Sidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """PlacesSidebar Autopilot emulator."""
@@ -324,7 +328,33 @@ class Dialog(ConfirmDialogWithInput):
 
     def __init__(self, *args):
         super(Dialog, self).__init__(*args)
-        self.keyboard = input.Keyboard.create()
+
+
+class Popover(ConfirmDialogWithInput):
+    """Popover Autopilot emulator, containing buttons and an inputfield"""
+
+    def __init__(self, *args):
+        super(Popover, self).__init__(*args)
+
+    def click_button(self, text):
+        """Click a button on the popover.
+
+        XXX We are receiving the text because there's no way to set the
+        objectName on the action. This is reported at
+        https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205144
+        --elopio - 2013-07-25
+
+        :parameter text: The text of the button.
+
+        """
+        button = self._get_button(text)
+        self.pointing_device.click_object(button)
+
+    def _get_button(self, text):
+        buttons = self.select_many('Empty')
+        for button in buttons:
+            if button.text == text:
+                return button
 
 
 class FileDetailsPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
