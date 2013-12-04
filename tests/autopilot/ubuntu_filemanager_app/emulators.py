@@ -216,8 +216,7 @@ class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         """Open the actions popover of the file or folder."""
         self.pointing_device.move_to_object(self)
         self.pointing_device.press()
-        self.wait_select_single(
-            ActionSelectionPopover, objectName='fileActionsPopover')
+        time.sleep(1)
         self.pointing_device.release()
         # TODO wait for the popover to be opened. For this we would need to
         # access the MainView, but that's not currently possible with
