@@ -3,6 +3,9 @@
 #include "tempfiles.h"
 #include "externalfswatcher.h"
 #include <stdio.h>
+#include <sys/types.h>
+#include <utime.h>
+#include <sys/time.h>
 
 #ifndef DO_NOT_USE_TAG_LIB
 #include <taglib/attachedpictureframe.h>
@@ -123,6 +126,7 @@ private Q_SLOTS: // test cases
     void  extFsWatcherModifySamePathManyTimesWithInInterval();  // just one notification
     void  extFsWatcherSetPathAndModifyManyTimesWithInInterval();// just one notification
     void  extFsWatcherChangePathManyTimesModifyManyTimes();     // many notifications
+    void  extFsWatcherNoticeChangesWithSameTimestamp();
 
     //define TEST_OPENFILES to test QDesktopServices::openUrl() for some files
 #if defined(TEST_OPENFILES)
@@ -1956,6 +1960,81 @@ void TestDirModel::extFsWatcherSetPathAndModifyManyTimesWithInInterval()
     QCOMPARE(m_extFSWatcherPathModifiedCounter,    1);
 }
 
+/*!
+ * \brief TestDirModel::extFsWatcherNoticeChangesWithSameTimestamp()
+ *
+ *  Test if it gets notification from \ref ExternalFSWatcher for a file changed/created that generates the same
+ *  timestamp as the last modification which had generated previous notification.
+ *
+ *  \note To do this the "last modification time" is forced with utimes(2) system call.
+ */
+void TestDirModel::extFsWatcherNoticeChangesWithSameTimestamp()
+{
+    bool updateAndSetModificationTime(const QString& filename, QDateTime& desiredTime);
+
+    connect( m_dirModel_01->mExtFSWatcher, SIGNAL(pathModified()),
+            this,     SLOT(slotExtFsWatcherPathModified()));
+
+    QString dirName("extFsWatcher_generate_fileswithsameTimeStamp");
+    m_deepDir_01 = new DeepDir(dirName,0);
+    //create 2 files
+    TempFiles  tmp1, tmp2;
+    tmp1.addSubDirLevel(dirName);
+    tmp2.addSubDirLevel(dirName);
+    tmp1.create(QLatin1String("first"), 1);
+    tmp2.create(QLatin1String("second"), 1);
+    QString   firstPathName  = tmp1.createdList().at(0);
+    QString   secondPathName = tmp2.createdList().at(0);
+
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    //make sure model has 2 files
+    QCOMPARE(m_dirModel_01->rowCount(),  2) ;
+
+    QDateTime timeStamp     = QDateTime::currentDateTime();
+    QTime     time          = timeStamp.time();
+    //set msecs to 0
+    time.setHMS(time.hour(), time.minute(), time.second());
+    timeStamp.setTime(time);
+
+    //wait some time to have a different timestamp
+    QTest::qWait(2200);
+
+    //update first time and set its modification time to timeStamp
+    bool ret = updateAndSetModificationTime(firstPathName, timeStamp);
+    QCOMPARE(ret,    true);
+    QFileInfo firstFile(firstPathName);
+    QCOMPARE(firstFile.lastModified(),  timeStamp);
+
+    const int maxWait   = m_dirModel_01->mExtFSWatcher->getIntervalToNotifyChanges() + 10;
+    int counter = 0;
+
+    //make sure ExternalFSWatcher has not notified any change
+    QCOMPARE(m_extFSWatcherPathModifiedCounter,  0);
+    //wait for notification on first file
+    for (counter = 0; m_extFSWatcherPathModifiedCounter == 0 && counter < maxWait; ++counter)
+    {
+       QTest::qWait(1);
+    }   
+    //make sure as notification was sent, it must be one
+    QCOMPARE(m_extFSWatcherPathModifiedCounter,   1);
+
+    //now update the second file and set the mofication time the same as the first file
+    //this second file is one what matters because the first change has just been notified
+    ret = updateAndSetModificationTime(secondPathName, timeStamp);
+    QCOMPARE(ret,    true);
+    QFileInfo secondFile(secondPathName);
+    QCOMPARE(secondFile.lastModified(),  timeStamp);
+    for (counter = 0; m_extFSWatcherPathModifiedCounter == 1 && counter < maxWait; ++counter)
+    {
+       QTest::qWait(1);
+    }
+    //make sure as notification was sent, it must be 2
+    QCOMPARE(m_extFSWatcherPathModifiedCounter,   2);
+
+    //this comparation is not necessary since both last modification files were compared to timeStamp
+    QCOMPARE(secondFile.lastModified(),  firstFile.lastModified());
+}
 
 
 int main(int argc, char *argv[])
@@ -2015,6 +2094,38 @@ QString createFileInTempDir(const QString& name, const char *content, qint64 siz
     return ret;
 }
 
-
+/*!
+ * \brief updateAndSetModificationTime()
+ *        updates the file content and sets its last modification time to another time
+ * \param filename
+ * \param desiredTime   some time less than current time
+ * \return true if it could be performed, false otherwise
+ */
+bool updateAndSetModificationTime(const QString& filename, QDateTime& desiredTime)
+{
+    bool ret = false;
+    QFile f(filename);
+    if (f.open(QFile::Append))
+    {
+        QByteArray data("1234");
+        if (f.write(data) == (qint64)data.size())
+        {
+            f.close();
+            struct timeval times[2] =
+            {
+              {(long)desiredTime.toTime_t(), (long)desiredTime.time().msec()},
+              {(long)desiredTime.toTime_t(), (long)desiredTime.time().msec()}
+            };
+            QFileInfo info(filename);
+            qDebug() << "last modification of" << info.fileName() << info.lastModified()
+                     << "forcing it to" << desiredTime;
+            if (utimes(filename.toLatin1().constData(), times) == 0)
+            {
+                ret = true;
+            }
+        }
+    }
+    return ret;
+}
 
 #include "tst_folderlistmodel.moc"
