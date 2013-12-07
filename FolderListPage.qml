@@ -409,12 +409,7 @@ Page {
             visible: wideAspect
             objectName: "settings"
             text: i18n.tr("Settings")
-            iconSource: getIcon("settings")
-            onTriggered: {
-                print(text)
-
-                pageStack.push(settingsPage)
-            }
+            action: settingsAction
         }
     }
 

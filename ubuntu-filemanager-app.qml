@@ -50,6 +50,7 @@ MainView {
         id: settingsAction
         text: i18n.tr("Settings")
         description: i18n.tr("Change app settings")
+        iconSource: getIcon("settings")
         onTriggered: pageStack.push(settingsPage)
     }
     actions: [settingsAction]
