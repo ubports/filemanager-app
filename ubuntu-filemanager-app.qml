@@ -39,7 +39,7 @@ MainView {
 
     property alias filemanager: mainView
 
-    //property bool wideAspect: width >= units.gu(80)
+    property bool wideAspect: width >= units.gu(80)
 
     property bool allowSidebarExpanded: width >= units.gu(80)
 
