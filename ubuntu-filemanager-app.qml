@@ -19,6 +19,7 @@ import QtQuick 2.0
 import Ubuntu.Components 0.1
 import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 0.1
+import Ubuntu.Unity.Action 1.0 as UnityActions
 import U1db 1.0 as U1db
 
 /*!
@@ -44,9 +45,14 @@ MainView {
     backgroundColor: "#797979"
     footerColor: "#808080"
 
-//    headerColor: "#303030"
-//    backgroundColor: "#505050"
-//    footerColor: "#707070"
+    // HUD Actions
+    Action {
+        id: settingsAction
+        text: i18n.tr("Settings")
+        description: i18n.tr("Change app settings")
+        onTriggered: pageStack.push(settingsPage)
+    }
+    actions: [settingsAction]
 
     property var pageStack: pageStack
 

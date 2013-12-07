@@ -406,6 +406,7 @@ Page {
 
         ToolbarButton {
             id: settingsButton
+            visible: wideAspect
             objectName: "settings"
             text: i18n.tr("Settings")
             iconSource: getIcon("settings")
