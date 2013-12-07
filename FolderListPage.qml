@@ -408,7 +408,6 @@ Page {
             id: settingsButton
             visible: wideAspect
             objectName: "settings"
-            text: i18n.tr("Settings")
             action: settingsAction
         }
     }
