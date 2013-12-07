@@ -96,6 +96,10 @@ class MainView(toolkit_emulators.MainView):
             return True
         return False
 
+    def get_dialog(self):
+        """Return a dialog emulator"""
+        return self.wait_select_single(Dialog)
+
 
 class Sidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """PlacesSidebar Autopilot emulator."""
@@ -397,6 +401,14 @@ class ConfirmDialogWithInput(ConfirmDialog):
 
     def _select_text_field(self):
         return self.select_single('TextField', objectName='inputField')
+
+
+class Dialog(ConfirmDialogWithInput):
+    """Dialog Autopilot emulator."""
+
+    def __init__(self, *args):
+        super(Dialog, self).__init__(*args)
+        self.keyboard = input.Keyboard.create()
 
 
 class FileDetailsPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):

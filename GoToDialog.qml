@@ -33,6 +33,7 @@ Dialog {
 
     TextField {
         id: locationField
+        objectName: "inputField"
 
         inputMethodHints: Qt.ImhNoAutoUppercase
 
@@ -47,7 +48,7 @@ Dialog {
 
     Button {
         id: goButton
-        objectName: "goButton"
+        objectName: "okButton"
 
         text: i18n.tr("Go")
         enabled: locationField.acceptableInput && locationField.valid
@@ -60,6 +61,7 @@ Dialog {
     }
 
     Button {
+        id: cancelButton
         objectName: "cancelButton"
         text: i18n.tr("Cancel")
 

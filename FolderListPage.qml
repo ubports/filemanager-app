@@ -27,7 +27,6 @@ Page {
     title: folderName(folder)
 
     property variant fileView: folderListPage
-    property alias model: pageModel
 
     property bool showHiddenFiles: false
 
@@ -225,8 +224,7 @@ Page {
                 Action {
                     text: i18n.tr("Open in a new tab")
                     onTriggered: {
-                        var newTab = tabs.insertTab(tab.index + 1, "", folderListPageComponent)
-                        newTab.folder = folderListPage.folder
+                        openTab(folderListPage.folder)
                     }
                 }
 
@@ -234,7 +232,7 @@ Page {
                 Action {
                     text: i18n.tr("Close this tab")
                     onTriggered: {
-                        tabs.removeTab(tab.index)
+                        closeTab(tab.index)
                     }
                     enabled: tabs.count > 1
                 }
@@ -350,7 +348,11 @@ Page {
         }
     }
 
-
+    function openFile(filePath) {
+        if (!pageModel.openPath(filePath)) {
+            error(i18n.tr("File operation error"), i18n.tr("Unable to open '%11").arg(filePath))
+        }
+    }
 
     tools: ToolbarItems {
         id: toolbar
@@ -371,7 +373,7 @@ Page {
 
         PathBar {
             height: units.gu(5)
-            width: folderListPage.width - units.gu(25)
+            width: folderListPage.width - units.gu(37)
             visible: sidebar.expanded
         }
 
@@ -384,7 +386,7 @@ Page {
             id: actionsButton
             objectName: "actions"
             text: i18n.tr("Actions")
-            iconSource: getIcon("properties")
+            iconSource: getIcon("navigation-menu")
 
             onTriggered: {
                 print(text)
@@ -394,26 +396,13 @@ Page {
 
         ToolbarButton {
             text: i18n.tr("View")
-            iconSource: getIcon("settings")
+            iconSource: getIcon("properties")
             id: optionsButton
 
             onTriggered: {
                 print(text)
 
                 PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), optionsButton)
-            }
-        }
-
-        ToolbarButton {
-            id: goToButton
-            visible: false//sidebar.expanded
-            objectName: "goTo"
-            text: i18n.tr("Go To")
-            iconSource: getIcon("location")
-            onTriggered: {
-                print(text)
-
-                PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), goToButton)
             }
         }
 
@@ -430,20 +419,28 @@ Page {
             }
         }
 
-//        ToolbarButton {
-//            id: tabsButton
-//            objectName: "tabs"
-//            text: i18n.tr("Tabs")
-//            iconSource: getIcon("browser-tabs")
+        ToolbarButton {
+            id: tabsButton
+            objectName: "tabs"
+            text: i18n.tr("Tabs")
+            iconSource: getIcon("browser-tabs")
 
-//            onTriggered: {
-//                print(text)
+            onTriggered: {
+                print(text)
 
-//                PopupUtils.open(tabsPopover, tabsButton, {
-//                                    tab: folderListPage.parent
-//                                })
-//            }
-//        }
+                PopupUtils.open(tabsPopover, tabsButton, {
+                                    tab: folderListPage.parent
+                                })
+            }
+        }
+
+        ToolbarButton {
+            id: settingsButton
+            visible: sidebar.expanded
+            objectName: "settings"
+            text: i18n.tr("Settings")
+            action: settingsAction
+        }
     }
 
     flickable: !sidebar.expanded ? folderListView.visible ? folderListView : folderIconView.flickable : null

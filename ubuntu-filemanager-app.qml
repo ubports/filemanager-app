@@ -19,6 +19,7 @@ import QtQuick 2.0
 import Ubuntu.Components 0.1
 import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 0.1
+import Ubuntu.Unity.Action 1.0 as UnityActions
 import U1db 1.0 as U1db
 
 /*!
@@ -55,11 +56,32 @@ MainView {
     backgroundColor: "#797979"
     footerColor: "#808080"
 
-//    headerColor: "#303030"
-//    backgroundColor: "#505050"
-//    footerColor: "#707070"
+    // HUD Actions
+    Action {
+        id: settingsAction
+        text: i18n.tr("Settings")
+        description: i18n.tr("Change app settings")
+        iconSource: getIcon("settings")
+        onTriggered: pageStack.push(settingsPage)
+    }
+    actions: [settingsAction]
 
     property var pageStack: pageStack
+
+    property var folderTabs: ["~"]
+
+    function openTab(folder) {
+        var list = folderTabs
+        list.push(folder)
+        folderTabs = list
+    }
+
+    function closeTab(index) {
+        var list = folderTabs
+        list.splice(index, 1)
+        folderTabs = list
+        tabs.selectedTabIndex = 0
+    }
 
     PageStack {
         id: pageStack
@@ -69,27 +91,28 @@ MainView {
         Tabs {
             id: tabs
 
-            Tab {
-                title: page.title
-                page: FolderListPage {
-                    id: folderPage
-                    objectName: "folderPage"
+            Repeater {
+                model: folderTabs
+                delegate: Tab {
+                    title: page.title
+                    page: FolderListPage {
+                        objectName: "folderPage"
 
-                    folder: homeFolder
+                        folder: modelData
+                    }
                 }
             }
-
-//            Tab {
-//                title: page.title
-//                page: SettingsPage {
-//                    id: settingsPage
-//                }
-//            }
         }
 
         Component.onCompleted: {
             pageStack.push(tabs)
         }
+    }
+
+    SettingsPage {
+        id: settingsPage
+
+        visible: false
     }
 
     /* Settings Storage */
@@ -155,24 +178,6 @@ MainView {
 
     function getIcon(name) {
         return /*"/usr/share/icons/ubuntu-mobile/actions/scalable/" + name + ".svg" */Qt.resolvedUrl("icons/" + name + ".png")
-    }
-
-    Component {
-        id: folderListPageComponent
-
-        Tab {
-            property alias folder: pageFolder.folder
-            title: page.title
-            page: FolderListPage {
-                id: pageFolder
-            }
-        }
-    }
-
-    function openFile(filePath) {
-        if (!folderPage.model.openPath(filePath)) {
-            error(i18n.tr("File operation error"), i18n.tr("Unable to open '%11").arg(filePath))
-        }
     }
 
     function error(title, message) {
