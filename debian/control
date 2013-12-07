@@ -15,7 +15,8 @@ Depends: ${misc:Depends},
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-nemo-qml-plugin-folderlistmodel,
-         qtdeclarative5-u1db1.0
+         qtdeclarative5-u1db1.0,
+         qtdeclarative5-hud1.0
 Description: File Manager application
  Core File Manager application
 

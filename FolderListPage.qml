@@ -368,7 +368,7 @@ Page {
 
         ToolbarButton {
             text: i18n.tr("View")
-            iconSource: getIcon("settings")
+            iconSource: getIcon("properties")
             id: optionsButton
 
             onTriggered: {
@@ -402,6 +402,13 @@ Page {
 
                 PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), placesButton)
             }
+        }
+
+        ToolbarButton {
+            id: settingsButton
+            visible: wideAspect
+            objectName: "settings"
+            action: settingsAction
         }
     }
 
