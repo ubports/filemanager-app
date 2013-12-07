@@ -371,7 +371,7 @@ Page {
 
         PathBar {
             height: units.gu(5)
-            width: folderListPage.width - units.gu(31)
+            width: folderListPage.width - units.gu(25)
             visible: sidebar.expanded
         }
 
@@ -430,20 +430,20 @@ Page {
             }
         }
 
-        ToolbarButton {
-            id: tabsButton
-            objectName: "tabs"
-            text: i18n.tr("Tabs")
-            iconSource: getIcon("browser-tabs")
+//        ToolbarButton {
+//            id: tabsButton
+//            objectName: "tabs"
+//            text: i18n.tr("Tabs")
+//            iconSource: getIcon("browser-tabs")
 
-            onTriggered: {
-                print(text)
+//            onTriggered: {
+//                print(text)
 
-                PopupUtils.open(tabsPopover, tabsButton, {
-                                    tab: folderListPage.parent
-                                })
-            }
-        }
+//                PopupUtils.open(tabsPopover, tabsButton, {
+//                                    tab: folderListPage.parent
+//                                })
+//            }
+//        }
     }
 
     flickable: !sidebar.expanded ? folderListView.visible ? folderListView : folderIconView.flickable : null
