@@ -685,12 +685,11 @@ void FileSystemAction::endActionEntry()
         {
             bool toAdd = true;
             QString addedItem = targetFom(mainItem.absoluteFilePath(), m_curAction);
-            if (curEntry->alreadyExists)
+            if (curEntry->alreadyExists && !curEntry->newName)
             {
-                //if an item already exists, even we remove the original item and then add
-                //the same item again (maybe a new content),
-                //BUT:  we want to notify it as a change to NOT give a chance to External File System Watcher
-                //to get it during the time it is (removed + added)
+                //if an item already exists there are two possibilities:
+                //   1. emit removed(), then emit added()
+                //   2. emit removedThenAdded() which should be attached to a kind of change slot
                 if (m_curAction->type == ActionHardMoveCopy)
                 {
                     emit removed(addedItem);

@@ -136,6 +136,9 @@ DirModel::DirModel(QObject *parent)
     connect(m_fsAction, SIGNAL(clipboardChanged()),
             this,       SIGNAL(clipboardChanged()));
 
+    connect(m_fsAction,  SIGNAL(removedThenAdded(QFileInfo)),
+           this,        SLOT(onItemChanged(QFileInfo)));
+
     setCompareAndReorder();
 }
 
@@ -754,6 +757,22 @@ int DirModel::addItem(const QFileInfo &fi)
 }
 
 
+void DirModel::onItemChanged(const QFileInfo &fi)
+{
+    int row = rowOfItem(fi);
+    if (row >= 0)
+    {
+        mDirectoryContents[row] = fi;
+        QModelIndex first = index(row,0);
+#if REGRESSION_TEST_FOLDERLISTMODEL
+        QModelIndex last  = index(row, columnCount()); //Table only when testing
+#else
+        QModelIndex last  = first; //QML uses Listview, just one column
+#endif
+        emit dataChanged(first, last);
+    }
+}
+
 
 void DirModel::cancelAction()
 {
@@ -1172,25 +1191,13 @@ void DirModel::onItemRemovedOutSideFm(const QFileInfo &fi)
 void DirModel::onItemChangedOutSideFm(const QFileInfo &fi)
 {   
     if (IS_FILE_MANAGER_IDLE())
-    {
-        int row = rowOfItem(fi);
+    {       
+        onItemChanged(fi);
 #if DEBUG_EXT_FS_WATCHER
         qDebug() << "[extFsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
                  << Q_FUNC_INFO << this << "changed" << fi.absoluteFilePath()
-                 << "from row" << row;
+                 << "from row" << rowOfItem(fi);
 #endif
-        if (row >= 0)
-        {
-            mDirectoryContents[row] = fi;
-            QModelIndex first = index(row,0);
-
-#if REGRESSION_TEST_FOLDERLISTMODEL
-            QModelIndex last  = index(row, columnCount()); //Table only when testing
-#else
-            QModelIndex last  = first; //QML uses Listview, just one column
-#endif
-            emit dataChanged(first, last);
-        }
     }
 }
 
