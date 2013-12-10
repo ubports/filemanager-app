@@ -84,6 +84,7 @@ class MainView(toolkit_emulators.MainView):
         try:
             dialog = self.wait_select_single(ConfirmDialog)
         except dbus.StateNotFoundError:
+            time.sleep(1)
             dialog = self.wait_select_single(ConfirmDialogWithInput)
         return dialog
 
