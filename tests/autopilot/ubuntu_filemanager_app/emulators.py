@@ -82,9 +82,9 @@ class MainView(toolkit_emulators.MainView):
     def get_confirm_dialog(self):
         """Return a confirm dialog emulator"""
         try:
-            dialog = self.select_single(ConfirmDialog)
+            dialog = self.wait_select_single(ConfirmDialog)
         except dbus.StateNotFoundError:
-            dialog = self.select_single(ConfirmDialogWithInput)
+            dialog = self.wait_select_single(ConfirmDialogWithInput)
         return dialog
 
     def confirm_dialog_exists(self):
