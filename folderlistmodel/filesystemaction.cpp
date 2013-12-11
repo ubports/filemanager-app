@@ -522,7 +522,7 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
         while (it.hasNext() &&  !it.next().isEmpty())
         {
             entry->reversedOrder.prepend(it.fileInfo());
-            }
+        }
     }
     //set steps and total bytes considering all items in the Entry
     int counter = entry->reversedOrder.count();
@@ -685,7 +685,7 @@ void FileSystemAction::endActionEntry()
         {
             bool toAdd = true;
             QString addedItem = targetFom(mainItem.absoluteFilePath(), m_curAction);
-            if (curEntry->alreadyExists && !curEntry->newName)
+            if (curEntry->alreadyExists && curEntry->newName == 0)
             {
                 //if an item already exists there are two possibilities:
                 //   1. emit removed(), then emit added()
@@ -821,21 +821,32 @@ void  FileSystemAction::processCopyEntry()
      */
     bool scheduleAnySlot = false;
 
-    //first item from an Entry,
-    if (entry->currItem == 0 && entry->alreadyExists && !entry->newName)
+    //first item from an Entry,    
+    if (entry->currItem == 0 && entry->alreadyExists && entry->newName == 0)
     {
-        //it will check again if the target exists
-        //if so, sets the entry->newName
-        //then targetFom() will use entry->newName for
-        //  sub items in the Entry if the Entry is a directory
-        if (!makeBackupNameForCurrentItem(m_curAction) )
+        //making backup only if the targetpath == origPath, otherwise the item is overwritten
+        if (m_curAction->targetPath == m_curAction->origPath)
         {
-            m_cancelCurrentAction = true;
-            m_errorTitle = QObject::tr("Could not find a suitable name to backup");
-            m_errorMsg   = entry->reversedOrder.at(
-                                                    entry->reversedOrder.count() -1
-                                                  ).absoluteFilePath();
+            //it will check again if the target exists
+            //if so, sets the entry->newName
+            //then targetFom() will use entry->newName for
+            //  sub items in the Entry if the Entry is a directory
+            if (!makeBackupNameForCurrentItem(m_curAction) )
+            {
+                m_cancelCurrentAction = true;
+                m_errorTitle = QObject::tr("Could not find a suitable name to backup");
+                m_errorMsg   = entry->reversedOrder.at(
+                            entry->reversedOrder.count() -1
+                            ).absoluteFilePath();
+            }
         }
+#if DEBUG_MESSAGES
+        else
+        {
+            qDebug() <<  entry->reversedOrder.at(entry->reversedOrder.count() -1).absoluteFilePath();
+                    << " already exists and will be overwritten";
+        }
+#endif
     }
 
     for(; !m_cancelCurrentAction  && !scheduleAnySlot     &&
@@ -899,7 +910,7 @@ void  FileSystemAction::processCopyEntry()
                 m_errorTitle = QObject::tr("Could not open file");
                 m_errorMsg   = orig;
             }
-             m_curAction->copyFile.target = new QTemporaryFile();
+            m_curAction->copyFile.target = new QTemporaryFile();
             if (! m_curAction->copyFile.target->open())
             {
                 m_cancelCurrentAction = true;
@@ -1477,9 +1488,6 @@ void FileSystemAction::clipboardHasChanged()
  */
 void FileSystemAction::moveDirToTempAndRemoveItLater(const QString& dir)
 {
-#if DEBUG_MESSAGES
-    qDebug() << Q_FUNC_INFO << dir;
-#endif
     QString tempDir;
     {
         //create this temporary file just to get a unique name
@@ -1489,6 +1497,9 @@ void FileSystemAction::moveDirToTempAndRemoveItLater(const QString& dir)
         d.close();
         tempDir = d.fileName();
     }
+#if defined(DEBUG_MESSAGES) || defined(REGRESSION_TEST_FOLDERLISTMODEL)
+    qDebug() << Q_FUNC_INFO << dir <<  "being moved to" << tempDir;
+#endif
     if (QFile::rename(dir, tempDir))
     {
         if (!m_curAction->auxAction)

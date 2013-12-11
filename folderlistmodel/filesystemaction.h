@@ -61,7 +61,7 @@ enum ClipboardOperation
  * will be expanded to have the whole directory content recursively, so before performing an Action the whole list of items
  * are built.
  * After an item be performed (an \ref ActionEntry) the \ref endCurrentAction()  emits signals of:
- * \ref progress(), \ref added() and \ref removed().
+ * \ref progress(), \ref added() and \ref removed() or \ref removedThenAdded() for cases where an item is overwritten.
  * These signals are also emitted when processing a such number of files inside an entry, in the case an entry is
  * a directory, the define \ref STEP_FILES is used for that.
  *
