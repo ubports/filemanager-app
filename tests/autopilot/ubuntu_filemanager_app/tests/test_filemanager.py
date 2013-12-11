@@ -156,16 +156,10 @@ class TestFolderListPage(FileManagerTestCase):
         file_actions_popover.click_button(action)
 
     def _cancel_confirm_dialog(self):
-        self.assertThat(
-            self.main_view.get_confirm_dialog,
-            Eventually(NotEquals(None)))
         confirm_dialog = self.main_view.get_confirm_dialog()
         confirm_dialog.cancel()
 
     def _confirm_dialog(self, text=None):
-        self.assertThat(
-            self.main_view.get_confirm_dialog,
-            Eventually(NotEquals(None)))
         confirm_dialog = self.main_view.get_confirm_dialog()
         if text:
             confirm_dialog.enter_text(text)
@@ -230,9 +224,6 @@ class TestFolderListPage(FileManagerTestCase):
         first_dir = self._get_file_by_name(orig_dir)
         self._do_action_on_file(first_dir, action='Rename')
         self._confirm_dialog(new_name)
-
-        #make sure confirm dialog is open
-        self.main_view.get_confirm_dialog()
 
         self.assertThat(
             self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
@@ -389,10 +380,6 @@ class TestFolderListPage(FileManagerTestCase):
     def test_cancel_create_directory(self):
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('actions')
-
-        self.assertThat(
-            self.main_view.get_folder_actions_popover,
-            Eventually(Not(Is(None))))
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Create New Folder')
