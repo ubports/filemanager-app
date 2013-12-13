@@ -142,9 +142,10 @@ void ExternalFileSystemChangesWorker::run()
     int counter = directoryContents.count();
     if (counter > 0)
     {
-        while (counter--)
+        int tmpCounter = counter;
+        while (tmpCounter--)
         {
-            const QFileInfo& originalItem = directoryContents.at(counter);
+            const QFileInfo& originalItem = directoryContents.at(tmpCounter);
             const QFileInfo  existItem    = m_curContent.value(originalItem.absoluteFilePath());
             if ( existItem.exists() )
             {

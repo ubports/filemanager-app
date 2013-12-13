@@ -360,6 +360,7 @@ private slots:
     void onItemRemoved(const QFileInfo&);
     void onItemAdded(const QString&);
     void onItemAdded(const QFileInfo&);
+    void onItemChanged(const QFileInfo&);
 
 private:
     int           addItem(const QFileInfo& fi);

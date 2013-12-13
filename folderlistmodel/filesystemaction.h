@@ -61,7 +61,7 @@ enum ClipboardOperation
  * will be expanded to have the whole directory content recursively, so before performing an Action the whole list of items
  * are built.
  * After an item be performed (an \ref ActionEntry) the \ref endCurrentAction()  emits signals of:
- * \ref progress(), \ref added() and \ref removed().
+ * \ref progress(), \ref added() and \ref removed() or \ref removedThenAdded() for cases where an item is overwritten.
  * These signals are also emitted when processing a such number of files inside an entry, in the case an entry is
  * a directory, the define \ref STEP_FILES is used for that.
  *
@@ -111,7 +111,7 @@ public slots:
 
 signals:
     void     error(const QString& errorTitle, const QString &errorMessage);
-    void     removed(const QString& item);   //must be sent to all Model instances
+    void     removed(const QString& item);
     void     removed(const QFileInfo&);
     void     added(const QString& );
     void     added(const QFileInfo& );
@@ -126,11 +126,7 @@ private slots:
     bool     processCopySingleFile();
     void     clipboardHasChanged();
 
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
- public:
-#else
  private:
-#endif
    enum ActionType
    {
        ActionRemove,
@@ -172,7 +168,9 @@ private slots:
        int                currStep;
        int                currItem;
        bool               alreadyExists;
-       QString *          newName; //TODO:  allow to rename an existent file when it already exists
+       QString *          newName; //TODO:  allow to rename an existent file when it already exists.
+                                   //       So far it is possible to backup items when copy/paste in the
+                                   //       same place, in this case it is renamed to "<name> Copy (%d).termination"
    };
 
    struct Action
@@ -223,28 +221,11 @@ private:
    void     scheduleSlot(const char *slot);
    void     moveDirToTempAndRemoveItLater(const QString& dir);
    bool     makeBackupNameForCurrentItem(Action *action);
+
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
+   friend class TestDirModel;
+#endif
 };
-    
 
-/*!
- * \brief The RemoveNotifier is a utility class for \ref FileSystemAction to send
- *         notifications about removed files/dir
- *
- *  This class must have a unique instance to notify all instances of \ref FileSystemAction and \ref DirModel
- */
-class RemoveNotifier : public QObject
-{
-    Q_OBJECT
-
-    friend class FileSystemAction;
-private:
-    explicit RemoveNotifier(QObject *parent = 0);
-    void notifyRemoved(const QString& item);
-    void notifyRemoved(const QFileInfo& fi);
-
-signals:
-    void     removed(const QString& item);
-    void     removed(const QFileInfo&);
-};
 
 #endif // FILESYSTEMACTION_H
