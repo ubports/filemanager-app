@@ -97,6 +97,8 @@ private:
     static QList<QUrl>      gnomeUrls(const QMimeData *mime, ClipboardOperation& operation);
     ClipboardOperation      clipBoardOperation();
     bool                    fillClipboard(const QStringList& files, const QString &path, ClipboardOperation operation);
+    QStringList             makeFullPath(const QStringList& files, const QString &path);
+    bool                    testClipboardContent(const QStringList& files, const QString &path);
 private:
     QStringList              m_formats;
     const QMimeData *        m_appMime;
@@ -259,43 +261,46 @@ ClipboardOperation DirModelMimeData::clipBoardOperation()
 DirModelMimeData::ClipBoardDataOwner
 DirModelMimeData::setIntoClipboard(const QStringList &files, const QString& path, ClipboardOperation operation)
 {
-  DirModelMimeData::ClipBoardDataOwner  ret = Nobody;
-  QClipboard *clipboard = QApplication::clipboard();
-  if (clipboard)
-  {      
+    static bool firstTime = true;
+    DirModelMimeData::ClipBoardDataOwner  ret = Nobody;
+    QClipboard *clipboard = QApplication::clipboard();
+    if (clipboard)
+    {
         ret = Application;
         DirModelMimeData *mime = m_globalMimeData ? m_globalMimeData
                                                   : new DirModelMimeData();
         if (mime->fillClipboard(files, path, operation))
         {
-           //it looks like clipboard lacks interface implementation
-           //use our own storage while Ubuntu guys provide a fix for that
-           const bool forceMyClipboardStorage = true;
-           clipboard->setMimeData(mime);
-           const QMimeData *data = clipboard->mimeData();
-           //it looks like some mobile devices does not have X
-           //in this case we simulate our own clipboard
-           if (forceMyClipboardStorage || (!data && !m_globalMimeData) )
-           {
-               m_globalMimeData = mime;
-           }        
+            clipboard->setMimeData(mime);
+            //it looks like some mobile devices does not have X or Clipboard does work for other reason
+            //in this case we simulate our own clipboard, the QClipboard::dataChanged() signal is also
+            //checked in \ref FileSystemAction::storeOnClipboard()
+            if (firstTime)
+            {
+                firstTime = false;
+                if (!m_globalMimeData && !testClipboardContent(files, path))
+                {
+                    qWarning() << "QClipboard does not work,  using own QMimeData storage";
+                    m_globalMimeData = mime;
+                }
+            }
 #if DEBUG_MESSAGES
-           qDebug() << Q_FUNC_INFO << "mime" << mime << "clipboard->mimeData()" << data
-                    << "m_ownClipboardMimeData" << m_globalMimeData;
+            qDebug() << Q_FUNC_INFO << "mime" << mime
+                     << "own Clipboard Mime Data" << m_globalMimeData;
 #endif
         }
         else
-        if (m_globalMimeData != mime)
-        {
-            delete mime;
-        }
+            if (m_globalMimeData != mime)
+            {
+                delete mime;
+            }
         //check if it is necessary to send notification about Clipboard changed
         if (m_globalMimeData)
         {
-           ret = MySelf;
+            ret = MySelf;
         }
-  }
-  return ret;
+    }
+    return ret;
 }
 
 
@@ -312,39 +317,27 @@ bool DirModelMimeData::fillClipboard(const QStringList& files, const QString &pa
     {
         m_formats.append(KDE_CUT_MIME_TYPE);
     }
-
-    urls.clear();
-    QFileInfo fi;
+    urls.clear();  
     gnomeData.clear();
     gnomeData += operation == ClipboardCut ?
                                     QLatin1String("cut") :
                                     QLatin1String("copy");
-    for(int counter = 0; counter < files.count(); counter++)
+    QStringList fullPaths = makeFullPath(files, path);
+    for(int counter = 0; counter < fullPaths.count(); counter++)
     {
-        const QString& item = files.at(counter);
-        fi.setFile(item);
-        if (!fi.isAbsolute())
-        {
-            fi.setFile(path + QDir::separator() + item);
-        }
-        if (fi.exists())
-        {
-            QUrl item = QUrl::fromLocalFile(fi.absoluteFilePath());
-            urls.append(item);
-            gnomeData += QLatin1Char('\n') + item.toEncoded() ;
-        }
-        else
-        {
-         // emit error( QObject::tr("Item does not exist"), item);
-           urls.clear();
-           break;
-        }
+        QUrl item = QUrl::fromLocalFile(fullPaths.at((counter)));
+        urls.append(item);
+        gnomeData += QLatin1Char('\n') + item.toEncoded() ;
     }
     if (urls.count() > 0)
     {
         setData(GNOME_COPIED_MIME_TYPE, gnomeData);
         setUrls(urls);
         ret = true;
+    }
+    else
+    {
+     // emit error( QObject::tr("Item does not exist"), item);
     }
     return ret;
 }
@@ -410,6 +403,58 @@ DirModelMimeData::localUrls(ClipboardOperation& operation)
         qDebug() << Q_FUNC_INFO << paths;
 #endif
      return paths;
+}
+
+
+//===============================================================================================
+/*!
+ * \brief DirModelMimeData::testClipboardContent() Gets the clipboard content and compare with data previously stored
+ * \param files
+ * \param path
+ * \return true if clipboard has content and it matches data previously stored
+ */
+bool  DirModelMimeData::testClipboardContent(const QStringList &files, const QString &path)
+{
+    bool ret = false;
+    ClipboardOperation tmpOperation;
+    QStringList expectedList = makeFullPath(files,path);
+    QStringList realList     = localUrls(tmpOperation);
+    if (realList == expectedList)
+    {
+        ret = true;
+    }
+    else
+    {
+        qWarning() << Q_FUNC_INFO << "FAILED, Clipboard does not work";
+    }
+    return ret;
+}
+
+//===============================================================================================
+/*!
+ * \brief DirModelMimeData::makeFullPath() Just creates a fulpath file list when they do exist
+ * \param files
+ * \param path
+ * \return the list itself
+ */
+QStringList DirModelMimeData::makeFullPath(const QStringList& files, const QString &path)
+{
+    QStringList fullPathnameList;
+    QFileInfo fi;
+    for(int counter = 0; counter < files.count(); counter++)
+    {
+        const QString& item = files.at(counter);
+        fi.setFile(item);
+        if (!fi.isAbsolute())
+        {
+            fi.setFile(path + QDir::separator() + item);
+        }
+        if (fi.exists())
+        {
+            fullPathnameList.append(fi.absoluteFilePath());
+        }
+    }
+    return fullPathnameList;
 }
 
 
@@ -843,8 +888,8 @@ void  FileSystemAction::processCopyEntry()
 #if DEBUG_MESSAGES
         else
         {
-            qDebug() <<  entry->reversedOrder.at(entry->reversedOrder.count() -1).absoluteFilePath();
-                    << " already exists and will be overwritten";
+            qDebug() <<  entry->reversedOrder.at(entry->reversedOrder.count() -1).absoluteFilePath()
+                     << " already exists and will be overwritten";
         }
 #endif
     }
@@ -996,15 +1041,7 @@ void FileSystemAction::pathChanged(const QString &path)
  */
 void FileSystemAction::copy(const QStringList &pathnames)
 {
-#if DEBUG_MESSAGES
-        qDebug() << Q_FUNC_INFO << pathnames;
-#endif
-    DirModelMimeData::ClipBoardDataOwner owner =
-               m_mimeData->setIntoClipboard(pathnames, m_path, ClipboardCopy);
-    if (owner == DirModelMimeData::MySelf )
-    {
-        emit clipboardChanged();
-    }
+    storeOnClipboard(pathnames, ClipboardCopy);
 }
 
 //===============================================================================================
@@ -1014,15 +1051,7 @@ void FileSystemAction::copy(const QStringList &pathnames)
  */
 void FileSystemAction::cut(const QStringList &pathnames)
 {
-#if DEBUG_MESSAGES
-        qDebug() << Q_FUNC_INFO << pathnames;
-#endif
-     DirModelMimeData::ClipBoardDataOwner owner =
-         m_mimeData->setIntoClipboard(pathnames, m_path, ClipboardCut);
-     if (owner == DirModelMimeData::MySelf )
-     {
-         emit clipboardChanged();
-     }
+    storeOnClipboard(pathnames, ClipboardCut);
 }
 
 //===============================================================================================
@@ -1584,4 +1613,27 @@ int FileSystemAction::getProgressCounter() const
         steps = m_curAction->steps;
     }
     return steps;
+}
+
+//==================================================================
+/*!
+ * \brief FileSystemAction::storeOnClipboard() store data on Clipboard
+ * \param pathnames files list
+ * \param op \ref ClipboardOperation as  \ref ClipboardCopy or  \ref ClipboardCut
+ *
+ *  Stores data on clipboard by calling \ref DirModelMimeData::setIntoClipboard() which uses Qt class QClipboard
+ *  It is expected that QClipboard class emits the dataChanged() signal when a new content is set into it,
+ *  if it does we caught that signal in \ref clipboardHasChanged() which sets \ref m_clipboardModifiedByOther to true.
+ */
+void  FileSystemAction::storeOnClipboard(const QStringList &pathnames, ClipboardOperation op)
+{
+#if DEBUG_MESSAGES
+    qDebug() << Q_FUNC_INFO << pathnames << "ClipboardOperation" << op;
+#endif
+     DirModelMimeData::ClipBoardDataOwner owner =
+         m_mimeData->setIntoClipboard(pathnames, m_path, op);
+     if (owner == DirModelMimeData::MySelf || !m_clipboardModifiedByOther)
+     {
+         emit clipboardChanged();
+     }
 }

@@ -221,6 +221,7 @@ private:
    void     scheduleSlot(const char *slot);
    void     moveDirToTempAndRemoveItLater(const QString& dir);
    bool     makeBackupNameForCurrentItem(Action *action);
+   void     storeOnClipboard(const QStringList &pathnames, ClipboardOperation op);
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
    friend class TestDirModel;
