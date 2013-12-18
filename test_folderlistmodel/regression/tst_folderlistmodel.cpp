@@ -111,7 +111,7 @@ private Q_SLOTS: // test cases
     void  modelCutAndPasteInTheSamePlace();
     void  modelCopyAndPasteToBackupFiles();
     void  fileIconProvider();
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL) && QT_VERSION >= 0x050000
+#if QT_VERSION >= 0x050000
     void  getThemeIcons();
 #endif
 #ifndef DO_NOT_USE_TAG_LIB
@@ -1706,7 +1706,7 @@ bool TestDirModel::createFileAndCheckIfIconIsExclisive(const QString& terminatio
             QFile::remove(myFile);
             QByteArray  md5 = md5FromIcon(icon);
             ret = !m_md5IconsTable.contains(md5);
-            qWarning("%s icon from QFileIconProvide::icon() for  %s",  ret ? "GOOD" : "QFileIconProvider::File or a BAD", qPrintable(myFile));
+            qWarning("%s icon from QFileIconProvider::icon() for  %s",  ret ? "GOOD" : "QFileIconProvider::File or a BAD", qPrintable(myFile));
         }
     }
     if(!triedIcon)
