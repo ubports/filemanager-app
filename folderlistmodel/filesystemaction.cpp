@@ -1067,16 +1067,25 @@ void FileSystemAction::paste()
 #endif
     if (paths.count())
     {
-       ActionType actionType  = ActionCopy; // start with Copy and check for Cut
-       if (operation == ClipboardCut)
-       {
-           //we allow Copy to backup items, but Cut must Fail
-       if (QFileInfo(m_path).absoluteFilePath() == QFileInfo(paths.at(0)).absolutePath())
-       {
-           emit error(tr("Cannot paste"),
-                      tr("origin and destination folder are the same"));
-           return;
-       }
+        QFileInfo destination(m_path);
+        QFileInfo origin(QFileInfo(paths.at(0)).absolutePath());
+        ActionType actionType  = ActionCopy; // start with Copy and check for Cut
+        if (operation == ClipboardCut)
+        {
+            //we allow Copy to backup items, but Cut must Fail
+            if (destination.absoluteFilePath() == origin.absoluteFilePath())
+            {
+                emit error(tr("Cannot paste"),
+                           tr("origin and destination folder are the same"));
+                return;
+            }
+            // cut needs write permission on origin
+            if (!origin.isWritable())
+            {
+                emit error(tr("Cannot paste"),
+                           tr("no write permission on folder ") + origin.absoluteFilePath() );
+                return;
+            }
             //so far it always returns true since on Linux it is possible to rename
             // between different file systems
             if ( moveUsingSameFileSystem(paths.at(0)) ) {
@@ -1084,8 +1093,14 @@ void FileSystemAction::paste()
             } else {
                 actionType = ActionHardMoveCopy; // first step
             }
-       }
-       createAndProcessAction(actionType, paths, operation);
+        }
+        if (!destination.isWritable())
+        {
+            emit error(tr("Cannot paste"),
+                       tr("no write permission on folder ") + destination.absoluteFilePath() );
+            return;
+        }
+        createAndProcessAction(actionType, paths, operation);
     }
 }
 
@@ -1112,11 +1127,11 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
         addEntry(myAction, paths.at(counter));
     }
     if (myAction->totalItems > 0)
-    {             
-    if (actionType == ActionHardMoveCopy)
     {
-        myAction->totalItems *= 2; //duplicate this
-    }
+        if (actionType == ActionHardMoveCopy)
+        {
+            myAction->totalItems *= 2; //duplicate this
+        }
         /*
         if (actionType == ActionHardMoveCopy || actionType == ActionCopy)
         {
@@ -1125,17 +1140,17 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
             myAction->steps +=  myAction->totalBytes / (COPY_BUFFER_SIZE * STEP_FILES);
         }
         */
-    if (operation == ClipboardCut)
-    {
-        //this must still be false when cut finishes to change the clipboard to the target
-        m_clipboardModifiedByOther = false;
+        if (operation == ClipboardCut)
+        {
+            //this must still be false when cut finishes to change the clipboard to the target
+            m_clipboardModifiedByOther = false;
+        }
+        m_queuedActions.append(myAction);
+        if (!m_busy)
+        {
+            processAction();
+        }
     }
-    m_queuedActions.append(myAction);
-    if (!m_busy)
-    {
-        processAction();
-    }
-}
     else
     {   // no items were added into the Action, maybe items were removed
         //addEntry() emits error() signal when items do not exist
@@ -1179,17 +1194,18 @@ QString FileSystemAction::targetFom(const QString& origItem, const Action* const
  * \brief FileSystemAction::moveUsingSameFileSystem() Checks if the item being moved to
  *   current m_path belongs to the same File System
  *
+ *  It is used to set ActionHardMoveCopy or ActionMove for cut operations.
+ *
  * \param itemToMovePathname  first item being moved from a paste operation
  *
  * \return true if the item being moved to the current m_path belongs to the same file system as m_path
  */
 bool FileSystemAction::moveUsingSameFileSystem(const QString& itemToMovePathname)
 {
-#if 0 //disabled since on Linux it looks like renaming between different file systems works
     unsigned long targetFsId = 0xffff;
     unsigned long originFsId = 0xfffe;
+#if defined(Q_OS_UNIX)
     struct statvfs  vfs;
-
     if ( ::statvfs(m_path.toLatin1().constData(), &vfs) == 0 )
     {
         targetFsId = vfs.f_fsid;
@@ -1197,12 +1213,11 @@ bool FileSystemAction::moveUsingSameFileSystem(const QString& itemToMovePathname
     if ( ::statvfs(itemToMovePathname.toLatin1().constData(), &vfs) == 0)
     {
         originFsId = vfs.f_fsid;
-    }
-    return targetFsId == originFsId;
+    }   
 #else
-    Q_UNUSED(itemToMovePathname);
-    return true;
+    Q_UNUSED(itemToMovePathname); 
 #endif
+    return targetFsId == originFsId;
 }
 
 //=======================================================
