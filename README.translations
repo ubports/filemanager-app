@@ -32,5 +32,5 @@ language the app has got at least a translated message available for.
 
 Translations for core apps follow the standard [gettext format].
 
- [Launchpad Translations]: https://translations.launchpad.net/music-app
+ [Launchpad Translations]: https://translations.launchpad.net/ubuntu-filemanager-app
  [gettext format]: https://www.gnu.org/software/gettext/
