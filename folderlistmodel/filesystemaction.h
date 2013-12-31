@@ -42,6 +42,12 @@
 #include <QFileInfo>
 #include <QVector>
 
+/*!
+ *  used to inform any view that an item has been updated under a copy process
+ *  every amount of bytes saved it emits a signal with the current file information
+ */
+#define AMOUNT_COPIED_TO_REFRESH_ITEM_INFO  50000000
+
 class DirModelMimeData;
 class QFile;
 class QTemporaryFile;
@@ -61,7 +67,7 @@ enum ClipboardOperation
  * will be expanded to have the whole directory content recursively, so before performing an Action the whole list of items
  * are built.
  * After an item be performed (an \ref ActionEntry) the \ref endCurrentAction()  emits signals of:
- * \ref progress(), \ref added() and \ref removed() or \ref removedThenAdded() for cases where an item is overwritten.
+ * \ref progress(), \ref added() and \ref removed() or \ref changed() for cases where an item is overwritten.
  * These signals are also emitted when processing a such number of files inside an entry, in the case an entry is
  * a directory, the define \ref STEP_FILES is used for that.
  *
@@ -115,7 +121,7 @@ signals:
     void     removed(const QFileInfo&);
     void     added(const QString& );
     void     added(const QFileInfo& );
-    void     removedThenAdded(const QFileInfo&);
+    void     changed(const QFileInfo&);
     void     progress(int curItem, int totalItems, int percent);
     void     clipboardChanged();
 
@@ -140,14 +146,18 @@ private slots:
    struct CopyFile
    {
      public:
-       CopyFile() : bytesWritten(0), source(0), target(0) {}
+       CopyFile() : bytesWritten(0), source(0), target(0),
+                    isEntryItem(false) , amountSavedToRefresh(AMOUNT_COPIED_TO_REFRESH_ITEM_INFO)
+       {}
        ~CopyFile() { clear(); }
        void clear();
 
        qint64            bytesWritten;           // set 0 when reach  bytesToNotify, notify progress
        QFile          *  source;
-       QTemporaryFile *  target;
+       QFile          *  target;
        QString           targetName;
+       bool              isEntryItem;  //true when the file being copied is at toplevel of the copy/cut operation
+       qint64            amountSavedToRefresh;
    };
 
    /*!
@@ -158,7 +168,7 @@ private slots:
    struct ActionEntry
    {
      public:
-       ActionEntry(): currStep(0),currItem(0),alreadyExists(false), newName(0) {}
+       ActionEntry(): currStep(0),currItem(0),alreadyExists(false), newName(0), added(false) {}
        ~ActionEntry()
        {
            reversedOrder.clear();
@@ -171,6 +181,8 @@ private slots:
        QString *          newName; //TODO:  allow to rename an existent file when it already exists.
                                    //       So far it is possible to backup items when copy/paste in the
                                    //       same place, in this case it is renamed to "<name> Copy (%d).termination"
+
+       bool               added;   //!< signal added() already emitted for the current ActionEntry
    };
 
    struct Action
@@ -222,6 +234,8 @@ private:
    void     moveDirToTempAndRemoveItLater(const QString& dir);
    bool     makeBackupNameForCurrentItem(Action *action);
    void     storeOnClipboard(const QStringList &pathnames, ClipboardOperation op);
+   bool     endCopySingleFile();
+   bool     isThereDiskSpace(qint64 requiredSize);
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
    friend class TestDirModel;

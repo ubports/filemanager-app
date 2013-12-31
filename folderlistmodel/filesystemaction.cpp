@@ -35,7 +35,11 @@
  */
 
 #include "filesystemaction.h"
+
+#if defined(Q_OS_UNIX)
 #include <sys/statvfs.h>
+#endif
+
 #include <errno.h>
 
 #include <QDirIterator>
@@ -720,54 +724,49 @@ void FileSystemAction::endActionEntry()
     if (curEntry->currItem == curEntry->reversedOrder.count())
     {
         const QFileInfo & mainItem = curEntry->reversedOrder.at(curEntry->currItem -1);
-        if (m_curAction->type == ActionRemove || m_curAction->type == ActionMove ||
-                m_curAction->type == ActionHardMoveRemove)
-        {
-            emit removed(mainItem);
-        }
-        if (m_curAction->type == ActionCopy || m_curAction->type == ActionMove ||
-            m_curAction->type == ActionHardMoveCopy)
-        {
-            bool toAdd = true;
-            QString addedItem = targetFom(mainItem.absoluteFilePath(), m_curAction);
-            if (curEntry->alreadyExists && curEntry->newName == 0)
-            {
-                //if an item already exists there are two possibilities:
-                //   1. emit removed(), then emit added()
-                //   2. emit removedThenAdded() which should be attached to a kind of change slot
-                if (m_curAction->type == ActionHardMoveCopy)
-                {
-                    emit removed(addedItem);
-                }
-                else
-                {   //ActionCopy ActionMove
-                    emit removedThenAdded(QFileInfo(addedItem));
-                    toAdd = false;
-                }
-            }
-            if(toAdd)
-            {
-                emit added(addedItem);
-            }
-        }
         m_curAction->currEntryIndex++;
-        //check if is doing a hard move and the copy part has finished
-        //if so switch the action to remove
-        if (m_curAction->type == ActionHardMoveCopy &&
-                m_curAction->currEntryIndex == m_curAction->entries.count() )
+        switch(m_curAction->type)
         {
-            m_curAction->type      = ActionHardMoveRemove;
-            m_curAction->currEntryIndex = 0;
-            int entryCounter = m_curAction->entries.count();
-            ActionEntry * entry;
-            while (entryCounter--)
-            {
-                entry = m_curAction->entries.at(entryCounter);
-                entry->currItem = 0;
-                entry->currStep = 0;
-            }
-        }
-    }
+           case ActionRemove:           
+                emit removed(mainItem);
+                break;
+           case ActionHardMoveRemove: // nothing to do
+                break;
+           case ActionHardMoveCopy:
+                //check if is doing a hard move and the copy part has finished
+                //if so switch the action to remove
+                if (m_curAction->currEntryIndex == m_curAction->entries.count())
+                {
+                   m_curAction->type      = ActionHardMoveRemove;
+                   m_curAction->currEntryIndex = 0;
+                   int entryCounter = m_curAction->entries.count();
+                   ActionEntry * entry;
+                   while (entryCounter--)
+                   {
+                       entry = m_curAction->entries.at(entryCounter);
+                       entry->currItem = 0;
+                       entry->currStep = 0;
+                   }
+                }
+           case ActionCopy: // ActionHardMoveCopy is also checked here
+           case ActionMove:
+                {
+                    QString addedItem = targetFom(mainItem.absoluteFilePath(), m_curAction);
+                    if (!curEntry->added && !curEntry->alreadyExists)
+                    {
+                        emit added(addedItem);
+                        curEntry->added = true;
+                    }
+                    else
+                    {
+                        emit changed(QFileInfo(addedItem));
+                    }
+                }
+                break;
+        }//switch
+
+    }//end if (curEntry->currItem == curEntry->reversedOrder.count())
+
     if (curEntry->currStep == STEP_FILES)
     {
         curEntry->currStep = 0;
@@ -908,11 +907,26 @@ void  FileSystemAction::processCopyEntry()
         QString path(target);
         // do this here to allow progress send right item number, copySingleFile will emit progress()
         m_curAction->currItem++;
-
+        //--
         if (fi.isFile() || fi.isSymLink())
         {
             QFileInfo  t(target);
             path = t.path();
+        }
+        //check if the main item in the entry is a directory
+        //if so it needs to appear on any attached view
+        if (   m_curAction->currItem == 1
+            && entry->reversedOrder.last().isDir()
+            && !entry->reversedOrder.last().isSymLink()
+           )
+        {
+            QString entryDir = targetFom(entry->reversedOrder.last().absoluteFilePath(), m_curAction);
+            QDir entryDirObj(entryDir);
+            if (!entryDirObj.exists() && entryDirObj.mkpath(entryDir))
+            {
+                emit added(entryDir);
+                entry->added = true;
+            }
         }
         QDir d(path);
         if (!d.exists() && !d.mkpath(path))
@@ -947,24 +961,65 @@ void  FileSystemAction::processCopyEntry()
         else
         if (fi.isFile())
         {
+            qint64 needsSize = 0;
             m_curAction->copyFile.clear();
             m_curAction->copyFile.source = new QFile(orig);
-            if (!m_curAction->copyFile.source->open(QFile::ReadOnly))
-            {
-                m_cancelCurrentAction = true;
+            m_cancelCurrentAction = !m_curAction->copyFile.source->open(QFile::ReadOnly);
+            if (m_cancelCurrentAction)
+            {               
                 m_errorTitle = QObject::tr("Could not open file");
                 m_errorMsg   = orig;
             }
-            m_curAction->copyFile.target = new QTemporaryFile();
-            if (! m_curAction->copyFile.target->open())
+            else
             {
-                m_cancelCurrentAction = true;
-                m_errorTitle = QObject::tr("Could not create temporary file");
-                m_errorMsg   =  m_curAction->copyFile.target->fileName();
+                needsSize = m_curAction->copyFile.source->size();
+                //create destination
+                m_curAction->copyFile.target = new QFile(target);             
+                m_curAction->copyFile.targetName = target;
+                //first open it read-only to get its size if exists
+                if (m_curAction->copyFile.target->open(QFile::ReadOnly))
+                {
+                    needsSize -= m_curAction->copyFile.target->size();
+                    m_curAction->copyFile.target->close();
+                }
+                //check if there is disk space to copy source to target
+                if (needsSize > 0 && !isThereDiskSpace( needsSize ))
+                {
+                    m_cancelCurrentAction = true;
+                    m_errorTitle = QObject::tr("There is no space on disk to copy");
+                    m_errorMsg   =  m_curAction->copyFile.target->fileName();
+                }
             }
-            m_curAction->copyFile.targetName = target;
-            scheduleAnySlot =  processCopySingleFile();
-        }
+            if (!m_cancelCurrentAction)
+            {
+                m_cancelCurrentAction =
+                        !m_curAction->copyFile.target->open(QFile::WriteOnly | QFile::Truncate);
+                if (m_cancelCurrentAction)
+                {
+                    m_errorTitle = QObject::tr("Could not create file");
+                    m_errorMsg   =  m_curAction->copyFile.target->fileName();
+                }
+            }
+            if (!m_cancelCurrentAction)
+            {
+                m_curAction->copyFile.isEntryItem = entry->currItem  == (entry->reversedOrder.count() -1);
+                scheduleAnySlot =  processCopySingleFile();
+                //main item from the entry. notify views new item inserted,
+                //depending on the file size it may take longer, the view needs to be informed
+                if (m_curAction->copyFile.isEntryItem && !m_cancelCurrentAction)
+                {
+                    if (!entry->alreadyExists)
+                    {
+                       emit added(target);
+                       entry->added = true;
+                    }
+                    else
+                    {
+                        emit changed(QFileInfo(target));
+                    }
+                }
+            }
+        }//end isFile
     }//for
 
     //no copy going on
@@ -999,6 +1054,8 @@ void FileSystemAction::moveEntry(ActionEntry *entry)
         //rename will fail
         if (targetInfo.exists())
         {
+            //will not emit removed() neither added()
+            entry->added = true;
             if (targetInfo.isFile() || targetInfo.isSymLink())
             {
                 if (!QFile::remove(target))
@@ -1012,6 +1069,7 @@ void FileSystemAction::moveEntry(ActionEntry *entry)
             if (targetInfo.isDir())
             {
                //move target to /tmp and remove it later by creating an Remove action
+               //this will emit removed()
                moveDirToTempAndRemoveItLater(target);
             }
         }
@@ -1206,11 +1264,11 @@ bool FileSystemAction::moveUsingSameFileSystem(const QString& itemToMovePathname
     unsigned long originFsId = 0xfffe;
 #if defined(Q_OS_UNIX)
     struct statvfs  vfs;
-    if ( ::statvfs(m_path.toLatin1().constData(), &vfs) == 0 )
+    if ( ::statvfs( QFile::encodeName(m_path).constData(), &vfs) == 0 )
     {
         targetFsId = vfs.f_fsid;
     }
-    if ( ::statvfs(itemToMovePathname.toLatin1().constData(), &vfs) == 0)
+    if ( ::statvfs(QFile::encodeName(itemToMovePathname).constData(), &vfs) == 0)
     {
         originFsId = vfs.f_fsid;
     }   
@@ -1309,6 +1367,10 @@ bool FileSystemAction::processCopySingleFile()
             }
             m_curAction->bytesWritten          += in;
             m_curAction->copyFile.bytesWritten += in;
+            if (m_curAction->copyFile.isEntryItem)
+            {
+                m_curAction->copyFile.amountSavedToRefresh -= in;
+            }
         }
         else
         if (in < 0)
@@ -1328,52 +1390,21 @@ bool FileSystemAction::processCopySingleFile()
         && m_curAction->copyFile.source->isOpen()
        )
     {
-        m_curAction->copyFile.source->close();
-        m_curAction->copyFile.target->close();
-        m_curAction->copyFile.target->setAutoRemove(false);
-        m_cancelCurrentAction = !m_curAction->copyFile.target->setPermissions(
-                                     m_curAction->copyFile.source->permissions());
-        if (m_cancelCurrentAction)
-        {
-            m_errorTitle = QObject::tr("Set permissions error in ")
-                            + m_curAction->copyFile.targetName,
-            m_errorMsg   = ::strerror(errno);
-        }
-        else
-        {
-            QFile testExistTarget(m_curAction->copyFile.targetName);
-            if (testExistTarget.exists())
-            {
-                if ((m_cancelCurrentAction = ! testExistTarget.remove()))
-                {
-                    m_errorTitle = QObject::tr("Could not remove original file ")
-                                    + m_curAction->copyFile.targetName,
-                    m_errorMsg   = ::strerror(errno);
-                }
-            }
-            if (!m_cancelCurrentAction)
-            {
-                m_cancelCurrentAction = ! m_curAction->copyFile.target->
-                        rename(m_curAction->copyFile.targetName);
-                if (m_cancelCurrentAction)
-                {
-                    m_errorTitle = QObject::tr("Rename error: renaming to ")
-                            + m_curAction->copyFile.targetName,
-                            m_errorMsg   = ::strerror(errno);
-                }
-                else
-                {
-                    copySingleFileDone = true;
-                }
-            }
-        }
+        copySingleFileDone = endCopySingleFile();
     }
 
     if (m_cancelCurrentAction)
     {
         if (m_curAction->copyFile.target)
         {
-            m_curAction->copyFile.target->setAutoRemove(true);
+            if (m_curAction->copyFile.target->isOpen())
+            {
+                   m_curAction->copyFile.target->close();
+            }
+            if (m_curAction->copyFile.target->remove())
+            {               
+                emit removed(m_curAction->copyFile.targetName);
+            }
         }
         m_curAction->copyFile.clear();
         endActionEntry();
@@ -1398,6 +1429,11 @@ bool FileSystemAction::processCopySingleFile()
         else
         {
             notifyProgress();
+            if (m_curAction->copyFile.isEntryItem && m_curAction->copyFile.amountSavedToRefresh <= 0)
+            {
+                m_curAction->copyFile.amountSavedToRefresh = AMOUNT_COPIED_TO_REFRESH_ITEM_INFO;
+                emit changed(QFileInfo(m_curAction->copyFile.targetName));
+            }
             scheduleSlot(SLOT(processCopySingleFile()));
         }
     }
@@ -1651,4 +1687,38 @@ void  FileSystemAction::storeOnClipboard(const QStringList &pathnames, Clipboard
      {
          emit clipboardChanged();
      }
+}
+
+
+//==================================================================
+bool FileSystemAction::endCopySingleFile()
+{
+    bool ret = true;
+    m_curAction->copyFile.source->close();
+    m_curAction->copyFile.target->close();
+    m_cancelCurrentAction = !m_curAction->copyFile.target->setPermissions(
+                                 m_curAction->copyFile.source->permissions());
+    if (m_cancelCurrentAction)
+    {
+        m_errorTitle = QObject::tr("Set permissions error in ")
+                        + m_curAction->copyFile.targetName,
+        m_errorMsg   = ::strerror(errno);
+        ret          = false;
+    }
+    return ret;
+}
+
+//==================================================================
+bool FileSystemAction::isThereDiskSpace(qint64 requiredSize)
+{
+    bool ret = true;
+#if defined(Q_OS_UNIX)
+    struct statvfs  vfs;
+    if ( ::statvfs( QFile::encodeName(m_path).constData(), &vfs) == 0 )
+    {
+        qint64 free =  vfs.f_bsize * vfs.f_bfree;
+        ret = free > requiredSize;
+    }
+#endif
+   return ret;
 }
