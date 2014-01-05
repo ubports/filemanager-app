@@ -1,0 +1,311 @@
+# Hungarian translation for ubuntu-filemanager-app
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the ubuntu-filemanager-app package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ubuntu-filemanager-app\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-09-27 06:56+0200\n"
+"PO-Revision-Date: 2014-01-05 00:25+0000\n"
+"Last-Translator: Péter MÁTÓ <mato.peter@gmail.com>\n"
+"Language-Team: Hungarian <hu@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2014-01-05 05:48+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
+
+#: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
+#: ../NotifyDialog.qml:25
+msgid "Ok"
+msgstr "Ok"
+
+#: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
+#: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
+#: ../GoToDialog.qml:59
+msgid "Cancel"
+msgstr "Mégse"
+
+#: ../FileActionDialog.qml:30
+msgid "Choose action"
+msgstr "Válasszon műveletet"
+
+#: ../FileActionDialog.qml:31
+#, qt-format
+msgid "For file: %1"
+msgstr "A következő fájlhoz: %1"
+
+#: ../FileActionDialog.qml:35
+msgid "Open"
+msgstr "Megnyitás"
+
+#: ../FileDetailsPopover.qml:37
+msgid "Readable"
+msgstr "Olvasható"
+
+#: ../FileDetailsPopover.qml:40
+msgid "Writable"
+msgstr "Írható"
+
+#: ../FileDetailsPopover.qml:43
+msgid "Executable"
+msgstr "Futtatható"
+
+#: ../FileDetailsPopover.qml:91
+msgid "Path:"
+msgstr "Útvonal:"
+
+#: ../FileDetailsPopover.qml:102
+msgid "Contents:"
+msgstr "Tartalom:"
+
+#: ../FileDetailsPopover.qml:103
+msgid "Size:"
+msgstr ""
+
+#: ../FileDetailsPopover.qml:112
+msgid "Accessed:"
+msgstr "Hozzáférés:"
+
+#: ../FileDetailsPopover.qml:121
+msgid "Modified:"
+msgstr "Módosítás:"
+
+#: ../FileDetailsPopover.qml:130
+msgid "Permissions:"
+msgstr "Jogok:"
+
+#: ../FileOperationProgressDialog.qml:27
+msgid "Operation in progress"
+msgstr "A művelet folyamatban"
+
+#: ../FolderListPage.qml:101
+msgid "~/Desktop"
+msgstr "~/Asztal"
+
+#: ../FolderListPage.qml:103
+msgid "~/Documents"
+msgstr "~/Dokumentumok"
+
+#: ../FolderListPage.qml:105
+msgid "~/Downloads"
+msgstr "~/Letöltések"
+
+#: ../FolderListPage.qml:107
+msgid "~/Music"
+msgstr "~/Zenék"
+
+#: ../FolderListPage.qml:109
+msgid "~/Pictures"
+msgstr "~/Képek"
+
+#: ../FolderListPage.qml:111
+msgid "~/Public"
+msgstr "~/Nyilvános"
+
+#: ../FolderListPage.qml:113
+msgid "~/Programs"
+msgstr "~/Programok"
+
+#: ../FolderListPage.qml:115
+msgid "~/Templates"
+msgstr "~/Minták"
+
+#: ../FolderListPage.qml:117
+msgid "~/Videos"
+msgstr "~/Videók"
+
+#: ../FolderListPage.qml:134
+msgid "Home"
+msgstr "Saját mappa"
+
+#: ../FolderListPage.qml:136
+msgid "File System"
+msgstr "Fájlrendszer"
+
+#: ../FolderListPage.qml:182
+#, qt-format
+msgid "%1 file"
+msgid_plural "%1 files"
+msgstr[0] "%1 fájl"
+msgstr[1] "%1 fájl"
+
+#: ../FolderListPage.qml:212
+msgid "Create New Folder"
+msgstr "Új mappa létrehozása"
+
+#: ../FolderListPage.qml:232
+msgid "Paste"
+msgstr "Beillesztés"
+
+#: ../FolderListPage.qml:233
+#, qt-format
+msgid "Paste %1 file"
+msgid_plural "Paste %1 files"
+msgstr[0] "%1 fájl beillesztése"
+msgstr[1] "%1 fájl beillesztése"
+
+#: ../FolderListPage.qml:238
+msgid "Paste files"
+msgstr "Fájlok beillesztése"
+
+#: ../FolderListPage.qml:250
+msgid "Open in Terminal"
+msgstr "Megnyitás terminálban"
+
+#: ../FolderListPage.qml:262 ../FolderListView.qml:152
+msgid "Properties"
+msgstr "Tulajdonságok"
+
+#: ../FolderListPage.qml:297
+msgid "Create folder"
+msgstr "Mappa létrehozása"
+
+#: ../FolderListPage.qml:298
+msgid "Enter name for new folder"
+msgstr "Adja meg az új mappa nevét"
+
+#: ../FolderListPage.qml:314
+msgid "Create file"
+msgstr "Fájl létrehozása"
+
+#: ../FolderListPage.qml:315
+msgid "Enter name for new file"
+msgstr "Adja meg az új fájl nevét"
+
+#: ../FolderListPage.qml:350
+msgid "Actions"
+msgstr "Műveletek"
+
+#: ../FolderListPage.qml:360
+msgid "View"
+msgstr "Megjelenítés"
+
+#: ../FolderListPage.qml:375
+msgid "Go To"
+msgstr "Ugrás"
+
+#: ../FolderListPage.qml:388 ../PlacesSidebar.qml:73
+msgid "Places"
+msgstr "Helyek"
+
+#: ../FolderListPage.qml:448
+msgid "No files"
+msgstr "Nincs fájl"
+
+#: ../FolderListPage.qml:469
+msgid "File operation error"
+msgstr "Fájlművelethiba"
+
+#. TRANSLATORS: this refers to the header shown for a folder
+#. %1 is the folder path and %2 the number of files it contains
+#: ../FolderListView.qml:35
+#, qt-format
+msgid "%1 (%2 file)"
+msgid_plural "%1 (%2 files)"
+msgstr[0] "%1 (%2 fájl)"
+msgstr[1] "%1 (%2 fájl)"
+
+#: ../FolderListView.qml:45 ../FolderListView.qml:126
+msgid "Delete"
+msgstr "Törlés"
+
+#: ../FolderListView.qml:46
+#, qt-format
+msgid "Are you sure you want to permanently delete '%1'?"
+msgstr "Biztosan véglegesen törölni akarja a következőt: \"%1\"?"
+
+#: ../FolderListView.qml:69 ../FolderListView.qml:139
+msgid "Rename"
+msgstr "Átnevezés"
+
+#: ../FolderListView.qml:70
+msgid "Enter a new name"
+msgstr "Adja meg az új nevet"
+
+#: ../FolderListView.qml:79
+msgid "Could not rename"
+msgstr "Az átnevezés nem lehetséges"
+
+#: ../FolderListView.qml:80
+msgid "Insufficient permissions or name already exists?"
+msgstr "Jogosultsági probléma vagy a név már létezik?"
+
+#: ../FolderListView.qml:103
+msgid "Cut"
+msgstr "Kivágás"
+
+#: ../FolderListView.qml:114
+msgid "Copy"
+msgstr "Másolás"
+
+#: ../FolderListView.qml:177
+msgid "Folder not accessible"
+msgstr "A mappa nem elérhető"
+
+#: ../FolderListView.qml:178
+msgid "Can not access "
+msgstr "Nem hozzáférhető "
+
+#: ../GoToDialog.qml:25
+msgid "Go To Location"
+msgstr "Ugrás megadott helyre"
+
+#: ../GoToDialog.qml:27
+msgid "Enter a location to go to:"
+msgstr "Adja meg a helyet:"
+
+#: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
+msgid "Location..."
+msgstr "Hely..."
+
+#: ../GoToDialog.qml:47 ../PlacesPopover.qml:97
+msgid "Go"
+msgstr "Ugrás"
+
+#: ../SettingsPage.qml:32
+msgid "Settings"
+msgstr "Beállítások"
+
+#: ../SettingsPage.qml:38
+msgid "Show Advanced Features"
+msgstr "Mutassa a speciális beállításokat"
+
+#: ../ViewPopover.qml:39
+msgid "Show Hidden Files"
+msgstr "Rejtett fájlok megjelenítése"
+
+#: ../ViewPopover.qml:59
+msgid "Sort By"
+msgstr "Rendezés e szerint:"
+
+#: ../ViewPopover.qml:70
+msgid "Name"
+msgstr "Név"
+
+#: ../ViewPopover.qml:71
+msgid "Date"
+msgstr "Dátum"
+
+#: ../ViewPopover.qml:81
+msgid "Sort Order"
+msgstr "Rendezési sorrend"
+
+#: ../ViewPopover.qml:92 ../ViewPopover.qml:97
+msgid "Ascending"
+msgstr "Növekvő"
+
+#: ../ViewPopover.qml:93
+msgid "Descending"
+msgstr "Csökkenő"
+
+#: ../ViewPopover.qml:105
+msgid "Filter"
+msgstr "Szűrő"
+
+#: ../.build/filemanager-app.desktop.js:1
+msgid "File Manager"
+msgstr "Fájlkezelő"
