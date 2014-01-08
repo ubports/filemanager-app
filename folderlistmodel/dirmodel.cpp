@@ -122,10 +122,7 @@ DirModel::DirModel(QObject *parent)
             this,     SLOT(onItemRemoved(QFileInfo)));
 
     connect(m_fsAction, SIGNAL(removed(QString)),
-            this,     SLOT(onItemRemoved(QString)));
-
-    connect(m_fsAction, SIGNAL(removedThenAdded(QFileInfo)),
-            this,       SLOT(onItemChangedOutSideFm(QFileInfo)));
+            this,     SLOT(onItemRemoved(QString)));  
 
     connect(m_fsAction, SIGNAL(error(QString,QString)),
             this,     SIGNAL(error(QString,QString)));
@@ -136,7 +133,7 @@ DirModel::DirModel(QObject *parent)
     connect(m_fsAction, SIGNAL(clipboardChanged()),
             this,       SIGNAL(clipboardChanged()));
 
-    connect(m_fsAction,  SIGNAL(removedThenAdded(QFileInfo)),
+    connect(m_fsAction,  SIGNAL(changed(QFileInfo)),
            this,        SLOT(onItemChanged(QFileInfo)));
 
     setCompareAndReorder();
@@ -756,7 +753,13 @@ int DirModel::addItem(const QFileInfo &fi)
     return idx;
 }
 
-
+/*!
+ * \brief DirModel::onItemChanged() Changes an item data
+ *
+ * \note If the item does  not exist it is inserted
+ *
+ * \param fi QFileInfo of the item
+ */
 void DirModel::onItemChanged(const QFileInfo &fi)
 {
     int row = rowOfItem(fi);
@@ -770,6 +773,10 @@ void DirModel::onItemChanged(const QFileInfo &fi)
         QModelIndex last  = first; //QML uses Listview, just one column
 #endif
         emit dataChanged(first, last);
+    }
+    else
+    {   // it simplifies some logic outside, when removing and adding on the same operation
+        onItemAdded(fi);
     }
 }
 

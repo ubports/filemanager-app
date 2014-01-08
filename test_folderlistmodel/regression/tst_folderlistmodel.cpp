@@ -2,10 +2,13 @@
 #include "dirmodel.h"
 #include "tempfiles.h"
 #include "externalfswatcher.h"
+
+#if defined(Q_OS_UNIX)
 #include <stdio.h>
 #include <sys/types.h>
 #include <utime.h>
 #include <sys/time.h>
+#endif
 
 #ifndef DO_NOT_USE_TAG_LIB
 #include <taglib/attachedpictureframe.h>
@@ -126,7 +129,9 @@ private Q_SLOTS: // test cases
     void  extFsWatcherModifySamePathManyTimesWithInInterval();  // just one notification
     void  extFsWatcherSetPathAndModifyManyTimesWithInInterval();// just one notification
     void  extFsWatcherChangePathManyTimesModifyManyTimes();     // many notifications
+#if defined(Q_OS_UNIX)
     void  extFsWatcherNoticeChangesWithSameTimestamp();
+#endif
 
     //define TEST_OPENFILES to test QDesktopServices::openUrl() for some files
 #if defined(TEST_OPENFILES)
@@ -1362,13 +1367,14 @@ void TestDirModel::modelCutPasteIntoExistentItems()
     m_dirModel_01->cutPaths(items);
     //paste into the second model
     m_dirModel_02->paste();
-    QTest::qWait(TIME_TO_PROCESS *2);
+    QTest::qWait(TIME_TO_PROCESS *3);
 
     QCOMPARE(m_receivedErrorSignal,   false);
 
-    QCOMPARE(m_filesRemoved.count(),  createCounterTopLevel + createCounterSubLevel);
+    //only one directory that already exists will be removed using another Action
+    QCOMPARE(m_filesRemoved.count(),  1);
     //when items being copied from COPY or renamed from CUT already exist, they are not added
-    QCOMPARE(m_filesAdded.count(),    0 );
+    QCOMPARE(m_filesAdded.count(),  0);
 }
 
 
@@ -1960,6 +1966,7 @@ void TestDirModel::extFsWatcherSetPathAndModifyManyTimesWithInInterval()
     QCOMPARE(m_extFSWatcherPathModifiedCounter,    1);
 }
 
+#if defined(Q_OS_UNIX)
 /*!
  * \brief TestDirModel::extFsWatcherNoticeChangesWithSameTimestamp()
  *
@@ -2035,7 +2042,7 @@ void TestDirModel::extFsWatcherNoticeChangesWithSameTimestamp()
     //this comparation is not necessary since both last modification files were compared to timeStamp
     QCOMPARE(secondFile.lastModified(),  firstFile.lastModified());
 }
-
+#endif //Q_OS_UNIX
 
 int main(int argc, char *argv[])
 {
@@ -2094,6 +2101,7 @@ QString createFileInTempDir(const QString& name, const char *content, qint64 siz
     return ret;
 }
 
+#if defined(Q_OS_UNIX)
 /*!
  * \brief updateAndSetModificationTime()
  *        updates the file content and sets its last modification time to another time
@@ -2119,7 +2127,7 @@ bool updateAndSetModificationTime(const QString& filename, QDateTime& desiredTim
             QFileInfo info(filename);
             qDebug() << "last modification of" << info.fileName() << info.lastModified()
                      << "forcing it to" << desiredTime;
-            if (utimes(filename.toLatin1().constData(), times) == 0)
+            if (::utimes( QFile::encodeName(filename).constData(), times) == 0)
             {
                 ret = true;
             }
@@ -2127,5 +2135,6 @@ bool updateAndSetModificationTime(const QString& filename, QDateTime& desiredTim
     }
     return ret;
 }
+#endif //Q_OS_UNIX
 
 #include "tst_folderlistmodel.moc"
