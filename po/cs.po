@@ -8,197 +8,199 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-09-27 06:56+0200\n"
-"PO-Revision-Date: 2013-09-29 09:56+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-01-07 09:57+0000\n"
+"Last-Translator: Ondra Kadlec <o.kadlec@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2013-12-12 05:58+0000\n"
-"X-Generator: Launchpad (build 16869)\n"
+"X-Launchpad-Export-Date: 2014-01-08 05:40+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
 #: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
 #: ../GoToDialog.qml:59
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: ../FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Zvolte činnost"
 
 #: ../FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "Pro soubor: %1"
 
 #: ../FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "Otevřít"
 
 #: ../FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "Čitelný"
 
 #: ../FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "Zapisovatelný"
 
 #: ../FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "Spustitelný"
 
 #: ../FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "Umístění:"
 
 #: ../FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "Obsah:"
 
 #: ../FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "Velikost:"
 
 #: ../FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "Použitý:"
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "Změněný:"
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "Oprávnění:"
 
 #: ../FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "Probíhá operace"
 
 #: ../FolderListPage.qml:101
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Plocha"
 
 #: ../FolderListPage.qml:103
 msgid "~/Documents"
-msgstr ""
+msgstr "~/Dokumenty"
 
 #: ../FolderListPage.qml:105
 msgid "~/Downloads"
-msgstr ""
+msgstr "~/Stažené"
 
 #: ../FolderListPage.qml:107
 msgid "~/Music"
-msgstr ""
+msgstr "~/Hudba"
 
 #: ../FolderListPage.qml:109
 msgid "~/Pictures"
-msgstr ""
+msgstr "~/Obrázky"
 
 #: ../FolderListPage.qml:111
 msgid "~/Public"
-msgstr ""
+msgstr "~/Sdílené"
 
 #: ../FolderListPage.qml:113
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Programy"
 
 #: ../FolderListPage.qml:115
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Šablony"
 
 #: ../FolderListPage.qml:117
 msgid "~/Videos"
-msgstr ""
+msgstr "~/Videa"
 
 #: ../FolderListPage.qml:134
 msgid "Home"
-msgstr ""
+msgstr "Domů"
 
 #: ../FolderListPage.qml:136
 msgid "File System"
-msgstr ""
+msgstr "Souborový systém"
 
 #: ../FolderListPage.qml:182
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 soubor"
+msgstr[1] "%1 soubory"
+msgstr[2] "%1 souborů"
 
 #: ../FolderListPage.qml:212
 msgid "Create New Folder"
-msgstr ""
+msgstr "Vytvořit novou složku"
 
 #: ../FolderListPage.qml:232
 msgid "Paste"
-msgstr ""
+msgstr "Vložit"
 
 #: ../FolderListPage.qml:233
 #, qt-format
 msgid "Paste %1 file"
 msgid_plural "Paste %1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Vložit %1 soubor"
+msgstr[1] "Vložit %1 soubory"
+msgstr[2] "Vložit %1 souborů"
 
 #: ../FolderListPage.qml:238
 msgid "Paste files"
-msgstr ""
+msgstr "Vložit soubory"
 
 #: ../FolderListPage.qml:250
 msgid "Open in Terminal"
-msgstr ""
+msgstr "Otevřít v terminálu"
 
 #: ../FolderListPage.qml:262 ../FolderListView.qml:152
 msgid "Properties"
-msgstr ""
+msgstr "Vlastnosti"
 
 #: ../FolderListPage.qml:297
 msgid "Create folder"
-msgstr ""
+msgstr "Vytvořit složku"
 
 #: ../FolderListPage.qml:298
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Zadejte název nové složky"
 
 #: ../FolderListPage.qml:314
 msgid "Create file"
-msgstr ""
+msgstr "Vytvořit soubor"
 
 #: ../FolderListPage.qml:315
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Zadejte název nového souboru"
 
 #: ../FolderListPage.qml:350
 msgid "Actions"
-msgstr ""
+msgstr "Akce"
 
 #: ../FolderListPage.qml:360
 msgid "View"
-msgstr ""
+msgstr "Zobrazit"
 
 #: ../FolderListPage.qml:375
 msgid "Go To"
-msgstr ""
+msgstr "Přejít na"
 
 #: ../FolderListPage.qml:388 ../PlacesSidebar.qml:73
 msgid "Places"
-msgstr ""
+msgstr "Místa"
 
 #: ../FolderListPage.qml:448
 msgid "No files"
-msgstr ""
+msgstr "Žádné soubory"
 
 #: ../FolderListPage.qml:469
 msgid "File operation error"
-msgstr ""
+msgstr "Chyb a při práci se soubory"
 
 #. TRANSLATORS: this refers to the header shown for a folder
 #. %1 is the folder path and %2 the number of files it contains
@@ -206,106 +208,107 @@ msgstr ""
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 soubor)"
+msgstr[1] "%1 (%2 soubory)"
+msgstr[2] "%1 (%2 souborů)"
 
 #: ../FolderListView.qml:45 ../FolderListView.qml:126
 msgid "Delete"
-msgstr ""
+msgstr "Odstranit"
 
 #: ../FolderListView.qml:46
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "Jste si jisti, že chcete trvale smazat '%1'?"
 
 #: ../FolderListView.qml:69 ../FolderListView.qml:139
 msgid "Rename"
-msgstr ""
+msgstr "Přejmenovat"
 
 #: ../FolderListView.qml:70
 msgid "Enter a new name"
-msgstr ""
+msgstr "Zadejte nový název"
 
 #: ../FolderListView.qml:79
 msgid "Could not rename"
-msgstr ""
+msgstr "Nelze přejmenovat"
 
 #: ../FolderListView.qml:80
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Chybějící oprávnění, nebo název již existuje?"
 
 #: ../FolderListView.qml:103
 msgid "Cut"
-msgstr ""
+msgstr "Vyjmout"
 
 #: ../FolderListView.qml:114
 msgid "Copy"
-msgstr ""
+msgstr "Kopírovat"
 
 #: ../FolderListView.qml:177
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Složka je nepřístupná"
 
 #: ../FolderListView.qml:178
 msgid "Can not access "
-msgstr ""
+msgstr "Nelze získat přístup "
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Přejít na umístění"
 
 #: ../GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Zadejte umístění, do kterého chcete přejít:"
 
 #: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
 msgid "Location..."
-msgstr ""
+msgstr "Umístění..."
 
 #: ../GoToDialog.qml:47 ../PlacesPopover.qml:97
 msgid "Go"
-msgstr ""
+msgstr "Přejít"
 
 #: ../SettingsPage.qml:32
 msgid "Settings"
-msgstr ""
+msgstr "Nastavení"
 
 #: ../SettingsPage.qml:38
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Zobrazit pokročilé možnosti"
 
 #: ../ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Zobrazit skryté soubory"
 
 #: ../ViewPopover.qml:59
 msgid "Sort By"
-msgstr ""
+msgstr "Řadit dle"
 
 #: ../ViewPopover.qml:70
 msgid "Name"
-msgstr ""
+msgstr "Názvu"
 
 #: ../ViewPopover.qml:71
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: ../ViewPopover.qml:81
 msgid "Sort Order"
-msgstr ""
+msgstr "Pořadí řazení"
 
 #: ../ViewPopover.qml:92 ../ViewPopover.qml:97
 msgid "Ascending"
-msgstr ""
+msgstr "Vzestupné"
 
 #: ../ViewPopover.qml:93
 msgid "Descending"
-msgstr ""
+msgstr "Sestupné"
 
 #: ../ViewPopover.qml:105
 msgid "Filter"
-msgstr ""
+msgstr "Filtrovat"
 
 #: ../.build/filemanager-app.desktop.js:1
 msgid "File Manager"
-msgstr ""
+msgstr "Správce souborů"
