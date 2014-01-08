@@ -1,5 +1,7 @@
 *.qmlproject.user
 
+.build
+po/Makefile
 debian/files
 debian/app-template/
 debian/*.debhelper.log
