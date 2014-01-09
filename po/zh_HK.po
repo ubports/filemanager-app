@@ -7,16 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-09-27 06:56+0200\n"
+"POT-Creation-Date: 2013-12-30 14:24-0600\n"
 "PO-Revision-Date: 2013-10-26 07:22+0000\n"
 "Last-Translator: Walter Cheuk <wwycheuk@gmail.com>\n"
 "Language-Team: Chinese (Hong Kong) <zh_HK@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2013-12-12 05:59+0000\n"
-"X-Generator: Launchpad (build 16869)\n"
+"X-Launchpad-Export-Date: 2014-01-09 05:38+0000\n"
+"X-Generator: Launchpad (build 16884)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
@@ -25,7 +24,7 @@ msgstr "確定"
 
 #: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
 #: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
-#: ../GoToDialog.qml:59
+#: ../GoToDialog.qml:61
 msgid "Cancel"
 msgstr "取消"
 
@@ -82,168 +81,177 @@ msgstr "權限："
 msgid "Operation in progress"
 msgstr "正在進行操作"
 
-#: ../FolderListPage.qml:101
+#: ../FolderListPage.qml:119
 msgid "~/Desktop"
 msgstr "~/桌面"
 
-#: ../FolderListPage.qml:103
+#: ../FolderListPage.qml:121
 msgid "~/Documents"
 msgstr "~/文件"
 
-#: ../FolderListPage.qml:105
+#: ../FolderListPage.qml:123
 msgid "~/Downloads"
 msgstr "~/下載"
 
-#: ../FolderListPage.qml:107
+#: ../FolderListPage.qml:125
 msgid "~/Music"
 msgstr "~/音樂"
 
-#: ../FolderListPage.qml:109
+#: ../FolderListPage.qml:127
 msgid "~/Pictures"
 msgstr "~/圖片"
 
-#: ../FolderListPage.qml:111
+#: ../FolderListPage.qml:129
 msgid "~/Public"
 msgstr "~/公共"
 
-#: ../FolderListPage.qml:113
+#: ../FolderListPage.qml:131
 msgid "~/Programs"
 msgstr "~/程式"
 
-#: ../FolderListPage.qml:115
+#: ../FolderListPage.qml:133
 msgid "~/Templates"
 msgstr "~/模版"
 
-#: ../FolderListPage.qml:117
+#: ../FolderListPage.qml:135
 msgid "~/Videos"
 msgstr "~/影片"
 
-#: ../FolderListPage.qml:134
+#: ../FolderListPage.qml:148
 msgid "Home"
 msgstr "家目錄"
 
-#: ../FolderListPage.qml:136
+#: ../FolderListPage.qml:150
 msgid "File System"
 msgstr "檔案系統"
 
-#: ../FolderListPage.qml:182
-#, qt-format
-msgid "%1 file"
-msgid_plural "%1 files"
-msgstr[0] "%1 個檔案"
+#: ../FolderListPage.qml:197
+msgid "1 file"
+msgstr ""
 
-#: ../FolderListPage.qml:212
+#: ../FolderListPage.qml:198
+#, qt-format
+msgid "%1 files"
+msgstr ""
+
+#: ../FolderListPage.qml:222
 msgid "Create New Folder"
 msgstr "建立新資料夾"
 
-#: ../FolderListPage.qml:232
+#: ../FolderListPage.qml:242
 msgid "Paste"
 msgstr "貼上"
 
-#: ../FolderListPage.qml:233
+#: ../FolderListPage.qml:244
 #, qt-format
-msgid "Paste %1 file"
-msgid_plural "Paste %1 files"
-msgstr[0] "貼上 %1 個檔案"
+msgid "Paste %1 File"
+msgstr ""
 
-#: ../FolderListPage.qml:238
+#: ../FolderListPage.qml:245
+#, qt-format
+msgid "Paste %1 Files"
+msgstr ""
+
+#: ../FolderListPage.qml:248
 msgid "Paste files"
 msgstr "貼上檔案"
 
-#: ../FolderListPage.qml:250
+#: ../FolderListPage.qml:260
 msgid "Open in Terminal"
 msgstr "在終端機開啟"
 
-#: ../FolderListPage.qml:262 ../FolderListView.qml:152
+#: ../FolderListPage.qml:272 ../FolderListView.qml:150
 msgid "Properties"
 msgstr "屬性"
 
-#: ../FolderListPage.qml:297
+#: ../FolderListPage.qml:307
 msgid "Create folder"
 msgstr "建立資料夾"
 
-#: ../FolderListPage.qml:298
+#: ../FolderListPage.qml:308
 msgid "Enter name for new folder"
 msgstr "輸入新資料夾名稱"
 
-#: ../FolderListPage.qml:314
+#: ../FolderListPage.qml:324
 msgid "Create file"
 msgstr "建立檔案"
 
-#: ../FolderListPage.qml:315
+#: ../FolderListPage.qml:325
 msgid "Enter name for new file"
 msgstr "輸入新檔案名稱"
 
-#: ../FolderListPage.qml:350
+#: ../FolderListPage.qml:360
 msgid "Actions"
 msgstr "動作"
 
-#: ../FolderListPage.qml:360
+#: ../FolderListPage.qml:370
 msgid "View"
 msgstr "檢視"
 
-#: ../FolderListPage.qml:375
+#: ../FolderListPage.qml:385
 msgid "Go To"
 msgstr "前往"
 
-#: ../FolderListPage.qml:388 ../PlacesSidebar.qml:73
+#: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
 msgid "Places"
 msgstr "地點"
 
-#: ../FolderListPage.qml:448
+#: ../FolderListPage.qml:465
 msgid "No files"
 msgstr "無檔案"
 
-#: ../FolderListPage.qml:469
+#: ../FolderListPage.qml:486
 msgid "File operation error"
 msgstr "檔案操作出錯"
 
-#. TRANSLATORS: this refers to the header shown for a folder
-#. %1 is the folder path and %2 the number of files it contains
+#: ../FolderListView.qml:34
+#, qt-format
+msgid "%1 (1 file)"
+msgstr ""
+
 #: ../FolderListView.qml:35
 #, qt-format
-msgid "%1 (%2 file)"
-msgid_plural "%1 (%2 files)"
-msgstr[0] "%1 (%2 個檔案)"
+msgid "%1 (%2 files)"
+msgstr ""
 
-#: ../FolderListView.qml:45 ../FolderListView.qml:126
+#: ../FolderListView.qml:43 ../FolderListView.qml:124
 msgid "Delete"
 msgstr "刪除"
 
-#: ../FolderListView.qml:46
+#: ../FolderListView.qml:44
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "確定要永久刪除「%1」嗎？"
 
-#: ../FolderListView.qml:69 ../FolderListView.qml:139
+#: ../FolderListView.qml:67 ../FolderListView.qml:137
 msgid "Rename"
 msgstr "改名"
 
-#: ../FolderListView.qml:70
+#: ../FolderListView.qml:68
 msgid "Enter a new name"
 msgstr "輸入新名稱"
 
-#: ../FolderListView.qml:79
+#: ../FolderListView.qml:77
 msgid "Could not rename"
 msgstr "無法改名"
 
-#: ../FolderListView.qml:80
+#: ../FolderListView.qml:78
 msgid "Insufficient permissions or name already exists?"
 msgstr "權限不足，抑或名稱已經存在？"
 
-#: ../FolderListView.qml:103
+#: ../FolderListView.qml:101
 msgid "Cut"
 msgstr "剪下"
 
-#: ../FolderListView.qml:114
+#: ../FolderListView.qml:112
 msgid "Copy"
 msgstr "複製"
 
-#: ../FolderListView.qml:177
+#: ../FolderListView.qml:175
 msgid "Folder not accessible"
 msgstr "無法存取資料夾"
 
-#: ../FolderListView.qml:178
+#: ../FolderListView.qml:176
 msgid "Can not access "
 msgstr "無法存取 "
 
@@ -255,15 +263,15 @@ msgstr "前往位置"
 msgid "Enter a location to go to:"
 msgstr "請輸入要前往的位置："
 
-#: ../GoToDialog.qml:38 ../PlacesPopover.qml:83
+#: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
 msgid "Location..."
 msgstr "位置..."
 
-#: ../GoToDialog.qml:47 ../PlacesPopover.qml:97
+#: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
 msgid "Go"
 msgstr "前往"
 
-#: ../SettingsPage.qml:32
+#: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
 msgid "Settings"
 msgstr "設定"
 
@@ -303,6 +311,10 @@ msgstr "逆序"
 msgid "Filter"
 msgstr "篩選"
 
-#: ../.build/filemanager-app.desktop.js:1
+#: ../ubuntu-filemanager-app.qml:52
+msgid "Change app settings"
+msgstr ""
+
+#: ../.build/ubuntu-filemanager-app.desktop.js:1
 msgid "File Manager"
 msgstr "檔案管理員"
