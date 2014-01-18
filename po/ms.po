@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-12-30 14:24-0600\n"
-"PO-Revision-Date: 2013-12-14 05:16+0000\n"
+"PO-Revision-Date: 2014-01-17 09:37+0000\n"
 "Last-Translator: abuyop <Unknown>\n"
 "Language-Team: Malay <ms@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-09 05:38+0000\n"
-"X-Generator: Launchpad (build 16884)\n"
+"X-Launchpad-Export-Date: 2014-01-18 07:06+0000\n"
+"X-Generator: Launchpad (build 16901)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
@@ -127,12 +127,12 @@ msgstr "Sistem Fail"
 
 #: ../FolderListPage.qml:197
 msgid "1 file"
-msgstr ""
+msgstr "1 fail"
 
 #: ../FolderListPage.qml:198
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 fail"
 
 #: ../FolderListPage.qml:222
 msgid "Create New Folder"
@@ -145,12 +145,12 @@ msgstr "Tampal"
 #: ../FolderListPage.qml:244
 #, qt-format
 msgid "Paste %1 File"
-msgstr ""
+msgstr "Tampal %1 Fail"
 
 #: ../FolderListPage.qml:245
 #, qt-format
 msgid "Paste %1 Files"
-msgstr ""
+msgstr "Tampal %1 Fail"
 
 #: ../FolderListPage.qml:248
 msgid "Paste files"
@@ -207,12 +207,12 @@ msgstr "Ralat operasi fail"
 #: ../FolderListView.qml:34
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 fail)"
 
 #: ../FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 fail)"
 
 #: ../FolderListView.qml:43 ../FolderListView.qml:124
 msgid "Delete"
@@ -313,7 +313,7 @@ msgstr "Tapis"
 
 #: ../ubuntu-filemanager-app.qml:52
 msgid "Change app settings"
-msgstr ""
+msgstr "Ubah tetapan apl"
 
 #: ../.build/ubuntu-filemanager-app.desktop.js:1
 msgid "File Manager"
