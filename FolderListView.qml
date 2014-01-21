@@ -28,13 +28,6 @@ ListView {
     property string folderPath: folderListModel.path
     model: folderListModel
 
-    header: Header {
-        objectName: "directoryHeader"
-        text: (root.count == 1
-               ? i18n.tr("%1 (1 file)").arg(root.folderPath)
-               : i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))
-    }
-
     delegate: FolderListDelegate {
         id: delegate
 

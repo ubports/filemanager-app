@@ -49,8 +49,8 @@ Item {
     property string fileName: model.fileName
     property string filePath: fileView.path + '/' + fileName
 
-    property var text: fileName
-    property var subText: Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate) + (!model.isDir ? ", " + fileSize : "")
+    property string text: fileName
+    property string subText: Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate) + (!model.isDir ? ", " + fileSize : "")
 
     property var icon: fileIcon(filePath, model.isDir)
 

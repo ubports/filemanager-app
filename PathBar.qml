@@ -13,6 +13,10 @@ Rectangle {
 
     implicitWidth: goToButton.width + row.width
 
+    Behavior on width {
+        UbuntuNumberAnimation {}
+    }
+
     Rectangle {
         id: goToButton
         objectName: "goToButton"

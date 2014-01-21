@@ -29,27 +29,11 @@ Item {
     property Flickable flickable: flickable
     property bool smallMode: false
 
-    ListItem.Header {
-        id: header
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-
-        objectName: "iconViewHeader"
-        text: (root.count == 1
-               ? i18n.tr("%1 (1 file)").arg(root.folderPath)
-               : i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))
-        visible: !smallMode
-        height: visible ? units.gu(4) : 0
-    }
-
     Flickable {
         id: flickable
         clip: true
         anchors {
-            top: header.bottom
+            top: parent.top
             left: parent.left
             right: parent.right
             bottom: parent.bottom
