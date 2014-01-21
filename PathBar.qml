@@ -4,6 +4,7 @@ import Ubuntu.Components.Popups 0.1
 
 Rectangle {
     id: root
+    objectName: "pathbar"
     radius: units.gu(0.5)
     border.color: UbuntuColors.warmGrey
 
@@ -12,6 +13,7 @@ Rectangle {
 
     Rectangle {
         id: goToButton
+        objectName: "goToButton"
         anchors {
             top: parent.top
             bottom: parent.bottom

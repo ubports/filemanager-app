@@ -106,6 +106,8 @@ MainView {
 
         Component.onCompleted: {
             pageStack.push(tabs)
+            pageStack.push(settingsPage)
+            pageStack.pop()
         }
     }
 

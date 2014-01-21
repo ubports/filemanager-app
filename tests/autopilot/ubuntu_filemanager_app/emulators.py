@@ -172,7 +172,14 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
             return self.select_single(Sidebar)
         else:
             raise ValueError(
-                'Places sidebar is hidden in wide mode.')
+                'Places sidebar is hidden in small mode.')
+
+    def get_pathbar(self):
+        if self.main_view.wideAspect:
+            return self.main_view.get_toolbar().select_single(PathBar)
+        else:
+            raise ValueError(
+                'Path bar is hidden in small mode.')
 
 
 class FolderListView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
@@ -416,3 +423,9 @@ class FileDetailsPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
     def get_path(self):
         return self.select_single('Label', objectName='pathLabel').text
+
+class PathBar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
+
+    def go_to_location(self):
+        editButton = self.select_single('Rectangle', objectName='goToButton')
+        self.pointing_device.click_object(editButton)

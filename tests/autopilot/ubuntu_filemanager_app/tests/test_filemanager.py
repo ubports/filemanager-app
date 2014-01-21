@@ -113,8 +113,7 @@ class TestFolderListPage(FileManagerTestCase):
     def _go_to_location(self, location):
         #go to specified location via the goto button
         logger.debug("Opening goto dialog")
-        toolbar = self.main_view.open_toolbar()
-        toolbar.click_button('goTo')
+        button = self.main_view.get_folder_list_page().get_pathbar().go_to_location()
         logger.debug("Changing to %s" % location)
         goto_dialog = self.main_view.get_dialog()
         goto_dialog.enter_text(location)
