@@ -371,10 +371,16 @@ Page {
             }
         }
 
-        PathBar {
-            height: units.gu(5)
+        Item {
+            id: pathItem
             width: folderListPage.width - units.gu(37)
-            visible: sidebar.expanded
+            height: units.gu(5)
+            anchors.verticalCenter: parent.verticalCenter
+            PathBar {
+                height: units.gu(5)
+                width: Math.min(pathItem.width, implicitWidth)
+                visible: sidebar.expanded
+            }
         }
 
         Item {

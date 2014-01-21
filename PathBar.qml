@@ -11,6 +11,8 @@ Rectangle {
     antialiasing: true
     anchors.verticalCenter: parent.verticalCenter
 
+    implicitWidth: goToButton.width + row.width
+
     Rectangle {
         id: goToButton
         objectName: "goToButton"

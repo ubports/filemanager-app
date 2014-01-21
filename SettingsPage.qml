@@ -45,4 +45,11 @@ Page {
             }
         }
     }
+
+    tools: ToolbarItems {
+        locked: showToolbar
+        opened: showToolbar
+
+        onLockedChanged: opened = locked
+    }
 }
