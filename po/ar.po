@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-12-30 14:24-0600\n"
-"PO-Revision-Date: 2013-09-28 17:13+0000\n"
+"PO-Revision-Date: 2014-01-22 18:18+0000\n"
 "Last-Translator: Ibrahim Saed <ibraheem5000@gmail.com>\n"
 "Language-Team: Arabic <ar@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-09 05:38+0000\n"
-"X-Generator: Launchpad (build 16884)\n"
+"X-Launchpad-Export-Date: 2014-01-23 05:57+0000\n"
+"X-Generator: Launchpad (build 16901)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
@@ -127,12 +127,12 @@ msgstr "نظام الملفات"
 
 #: ../FolderListPage.qml:197
 msgid "1 file"
-msgstr ""
+msgstr "ملف واحد"
 
 #: ../FolderListPage.qml:198
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 ملف/ملفات"
 
 #: ../FolderListPage.qml:222
 msgid "Create New Folder"
@@ -145,12 +145,12 @@ msgstr "ألصق"
 #: ../FolderListPage.qml:244
 #, qt-format
 msgid "Paste %1 File"
-msgstr ""
+msgstr "لصق %1 ملف/ملفات"
 
 #: ../FolderListPage.qml:245
 #, qt-format
 msgid "Paste %1 Files"
-msgstr ""
+msgstr "لصق %1 ملف/ملفات"
 
 #: ../FolderListPage.qml:248
 msgid "Paste files"
@@ -207,12 +207,12 @@ msgstr "خطأ في عملية الملف"
 #: ../FolderListView.qml:34
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (ملف واحد)"
 
 #: ../FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 ملف/ملفات)"
 
 #: ../FolderListView.qml:43 ../FolderListView.qml:124
 msgid "Delete"
@@ -313,7 +313,7 @@ msgstr "تصفية"
 
 #: ../ubuntu-filemanager-app.qml:52
 msgid "Change app settings"
-msgstr ""
+msgstr "تغيير إعدادات التطبيق"
 
 #: ../.build/ubuntu-filemanager-app.desktop.js:1
 msgid "File Manager"
