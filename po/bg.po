@@ -1,16 +1,16 @@
-# Chinese (Hong Kong) translation for ubuntu-filemanager-app
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# Bulgarian translation for ubuntu-filemanager-app
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
 # This file is distributed under the same license as the ubuntu-filemanager-app package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-12-30 14:24-0600\n"
-"PO-Revision-Date: 2014-01-25 13:03+0000\n"
-"Last-Translator: Daniel Cheung <daniel.2345@hotmail.com>\n"
-"Language-Team: Chinese (Hong Kong) <zh_HK@li.org>\n"
+"PO-Revision-Date: 2014-01-25 16:50+0000\n"
+"Last-Translator: Gangov <Unknown>\n"
+"Language-Team: Bulgarian <bg@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,301 +20,301 @@ msgstr ""
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
 msgid "Ok"
-msgstr "確定"
+msgstr "ОК"
 
 #: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
 #: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
 #: ../GoToDialog.qml:61
 msgid "Cancel"
-msgstr "取消"
+msgstr "Отмени"
 
 #: ../FileActionDialog.qml:30
 msgid "Choose action"
-msgstr "選擇動作"
+msgstr "Избери действие"
 
 #: ../FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr "檔案：%1"
+msgstr "За файл: %1"
 
 #: ../FileActionDialog.qml:35
 msgid "Open"
-msgstr "開啟"
+msgstr "Отвoри"
 
 #: ../FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr "可讀取"
+msgstr "четим"
 
 #: ../FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr "可寫入"
+msgstr "записваем"
 
 #: ../FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr "可執行"
+msgstr "Изпълним"
 
 #: ../FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr "路徑："
+msgstr "Път:"
 
 #: ../FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr "內容："
+msgstr "Съдържание:"
 
 #: ../FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr "大小："
+msgstr "Размер:"
 
 #: ../FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr "存取時間："
+msgstr "Последен достъп:"
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr "修改時間："
+msgstr "Последна промяна:"
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr "權限："
+msgstr "Права:"
 
 #: ../FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr "正在進行操作"
+msgstr "Операцията се изпълнява"
 
 #: ../FolderListPage.qml:119
 msgid "~/Desktop"
-msgstr "~/桌面"
+msgstr "~/Работен плот"
 
 #: ../FolderListPage.qml:121
 msgid "~/Documents"
-msgstr "~/文件"
+msgstr "~/Документи"
 
 #: ../FolderListPage.qml:123
 msgid "~/Downloads"
-msgstr "~/下載"
+msgstr "~/Свалени"
 
 #: ../FolderListPage.qml:125
 msgid "~/Music"
-msgstr "~/音樂"
+msgstr "~/Музика"
 
 #: ../FolderListPage.qml:127
 msgid "~/Pictures"
-msgstr "~/圖片"
+msgstr "~/Изображения"
 
 #: ../FolderListPage.qml:129
 msgid "~/Public"
-msgstr "~/公共"
+msgstr "~/Публични"
 
 #: ../FolderListPage.qml:131
 msgid "~/Programs"
-msgstr "~/程式"
+msgstr "~/Програми"
 
 #: ../FolderListPage.qml:133
 msgid "~/Templates"
-msgstr "~/模版"
+msgstr "~/Шаблони"
 
 #: ../FolderListPage.qml:135
 msgid "~/Videos"
-msgstr "~/影片"
+msgstr "~/Видео"
 
 #: ../FolderListPage.qml:148
 msgid "Home"
-msgstr "家目錄"
+msgstr "Домашна папка"
 
 #: ../FolderListPage.qml:150
 msgid "File System"
-msgstr "檔案系統"
+msgstr "Файлова система"
 
 #: ../FolderListPage.qml:197
 msgid "1 file"
-msgstr "1 個檔案"
+msgstr "1 файл"
 
 #: ../FolderListPage.qml:198
 #, qt-format
 msgid "%1 files"
-msgstr "%1 個檔案"
+msgstr "%1 файл"
 
 #: ../FolderListPage.qml:222
 msgid "Create New Folder"
-msgstr "建立新資料夾"
+msgstr "Създай нова папка"
 
 #: ../FolderListPage.qml:242
 msgid "Paste"
-msgstr "貼上"
+msgstr "Постави"
 
 #: ../FolderListPage.qml:244
 #, qt-format
 msgid "Paste %1 File"
-msgstr "貼上 %1 個檔案"
+msgstr "Постави %1 файл"
 
 #: ../FolderListPage.qml:245
 #, qt-format
 msgid "Paste %1 Files"
-msgstr "貼上 %1 個檔案"
+msgstr "Постави %1 файлове"
 
 #: ../FolderListPage.qml:248
 msgid "Paste files"
-msgstr "貼上檔案"
+msgstr "Постави файлове"
 
 #: ../FolderListPage.qml:260
 msgid "Open in Terminal"
-msgstr "在終端機開啟"
+msgstr "Отваряне в терминал"
 
 #: ../FolderListPage.qml:272 ../FolderListView.qml:150
 msgid "Properties"
-msgstr "屬性"
+msgstr "Свойства"
 
 #: ../FolderListPage.qml:307
 msgid "Create folder"
-msgstr "建立資料夾"
+msgstr "Създай папка"
 
 #: ../FolderListPage.qml:308
 msgid "Enter name for new folder"
-msgstr "輸入新資料夾名稱"
+msgstr "Въведи име за папка"
 
 #: ../FolderListPage.qml:324
 msgid "Create file"
-msgstr "建立檔案"
+msgstr "Създай файл"
 
 #: ../FolderListPage.qml:325
 msgid "Enter name for new file"
-msgstr "輸入新檔案名稱"
+msgstr "Въведи име за файл"
 
 #: ../FolderListPage.qml:360
 msgid "Actions"
-msgstr "動作"
+msgstr "Действия"
 
 #: ../FolderListPage.qml:370
 msgid "View"
-msgstr "檢視"
+msgstr "Преглед"
 
 #: ../FolderListPage.qml:385
 msgid "Go To"
-msgstr "前往"
+msgstr "Отиди до"
 
 #: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
 msgid "Places"
-msgstr "地點"
+msgstr "Места"
 
 #: ../FolderListPage.qml:465
 msgid "No files"
-msgstr "無檔案"
+msgstr "Няма файлове"
 
 #: ../FolderListPage.qml:486
 msgid "File operation error"
-msgstr "檔案操作出錯"
+msgstr "Грешка при действието с файла"
 
 #: ../FolderListView.qml:34
 #, qt-format
 msgid "%1 (1 file)"
-msgstr "%1 (1 個檔案)"
+msgstr "%1 (1 файл)"
 
 #: ../FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr "%1 (%2 個檔案)"
+msgstr "%1 (%2 файла)"
 
 #: ../FolderListView.qml:43 ../FolderListView.qml:124
 msgid "Delete"
-msgstr "刪除"
+msgstr "Изтрий"
 
 #: ../FolderListView.qml:44
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "確定要永久刪除「%1」嗎？"
+msgstr "Сигурни ли сте, че искате перманентно да изтриете '%1'?"
 
 #: ../FolderListView.qml:67 ../FolderListView.qml:137
 msgid "Rename"
-msgstr "改名"
+msgstr "Преименувай"
 
 #: ../FolderListView.qml:68
 msgid "Enter a new name"
-msgstr "輸入新名稱"
+msgstr "Въведи ново име"
 
 #: ../FolderListView.qml:77
 msgid "Could not rename"
-msgstr "無法改名"
+msgstr "Не може да се преименува"
 
 #: ../FolderListView.qml:78
 msgid "Insufficient permissions or name already exists?"
-msgstr "權限不足，抑或名稱已經存在？"
+msgstr "Недостатъчно правомощия или името вече съществува?"
 
 #: ../FolderListView.qml:101
 msgid "Cut"
-msgstr "剪下"
+msgstr "Изрежи"
 
 #: ../FolderListView.qml:112
 msgid "Copy"
-msgstr "複製"
+msgstr "Копирай"
 
 #: ../FolderListView.qml:175
 msgid "Folder not accessible"
-msgstr "無法存取資料夾"
+msgstr "Папката не е достъпна"
 
 #: ../FolderListView.qml:176
 msgid "Can not access "
-msgstr "無法存取 "
+msgstr "Не може да се достигне "
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
-msgstr "前往位置"
+msgstr "Отиди на локация"
 
 #: ../GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr "請輸入要前往的位置："
+msgstr "Въведи локация, на която да се отиде"
 
 #: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
 msgid "Location..."
-msgstr "位置..."
+msgstr "Локация..."
 
 #: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
 msgid "Go"
-msgstr "前往"
+msgstr "Давай"
 
 #: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
 msgid "Settings"
-msgstr "設定"
+msgstr "Натройки"
 
 #: ../SettingsPage.qml:38
 msgid "Show Advanced Features"
-msgstr "顯示進階功能"
+msgstr "Покажи допълнителни екстри"
 
 #: ../ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr "顯示隱藏檔案"
+msgstr "Покажи скритите файлове"
 
 #: ../ViewPopover.qml:59
 msgid "Sort By"
-msgstr "排序根據"
+msgstr "Сортиране по"
 
 #: ../ViewPopover.qml:70
 msgid "Name"
-msgstr "名稱"
+msgstr "Име"
 
 #: ../ViewPopover.qml:71
 msgid "Date"
-msgstr "日期"
+msgstr "Дата"
 
 #: ../ViewPopover.qml:81
 msgid "Sort Order"
-msgstr "排列次序"
+msgstr "Ред на сортиране"
 
 #: ../ViewPopover.qml:92 ../ViewPopover.qml:97
 msgid "Ascending"
-msgstr "順序"
+msgstr "Възходящ"
 
 #: ../ViewPopover.qml:93
 msgid "Descending"
-msgstr "逆序"
+msgstr "Низходящ"
 
 #: ../ViewPopover.qml:105
 msgid "Filter"
-msgstr "篩選"
+msgstr "Филтър"
 
 #: ../ubuntu-filemanager-app.qml:52
 msgid "Change app settings"
-msgstr "更變應用設定"
+msgstr "Промени настройките на приложението"
 
 #: ../.build/ubuntu-filemanager-app.desktop.js:1
 msgid "File Manager"
-msgstr "檔案管理員"
+msgstr "Файлов мениджър"
