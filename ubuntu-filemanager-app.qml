@@ -39,7 +39,8 @@ MainView {
 
     property alias filemanager: root
 
-    property bool wideAspect: width >= units.gu(80)
+    property bool wideAspect: width >= units.gu(80) && loaded
+    property bool loaded: false
 
     headerColor: "#464646"
     backgroundColor: "#797979"
@@ -78,6 +79,7 @@ MainView {
             pageStack.push(tabs)
             pageStack.push(settingsPage)
             pageStack.pop()
+            loaded = true
         }
     }
 
