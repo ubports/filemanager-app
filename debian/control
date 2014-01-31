@@ -1,7 +1,7 @@
 Source: ubuntu-filemanager-app
 Priority: extra
 Maintainer: Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>
-Build-Depends: debhelper (>= 9), 
+Build-Depends: debhelper (>= 9),
 Standards-Version: 3.9.4
 Section: misc
 Homepage: https://launchpad.net/ubuntu-filemanager-app
@@ -12,6 +12,7 @@ Section: misc
 Architecture: all
 Depends: ${misc:Depends},
          qmlscene,
+         cmake,
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-nemo-qml-plugin-folderlistmodel,
