@@ -89,7 +89,7 @@ Sidebar {
                     text: folderName(path)
 //                    color: Theme.palette.normal.overlayText
 //                }
-                icon: model.icon || fileIcon(model.path, true)
+                iconSource: model.icon || fileIcon(model.path, true)
 
                 onClicked: {
                     goTo(model.path)

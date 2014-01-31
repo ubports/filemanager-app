@@ -30,7 +30,7 @@ ListItem.Subtitled {
     subText: Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate) + (!model.isDir ? ", " + fileSize : "")
 
     property string path: fileView.path + '/' + model.fileName
-    icon: fileIcon(path, model.isDir)
+    iconSource: fileIcon(path, model.isDir)
     progression: model.isDir
     iconFrame: false
 }
