@@ -4,7 +4,9 @@ SOURCES += $$PWD/dirmodel.cpp \
            $$PWD/ioworkerthread.cpp \
            $$PWD/filesystemaction.cpp \
            $$PWD/filecompare.cpp \
-           $$PWD/externalfswatcher.cpp
+           $$PWD/externalfswatcher.cpp \
+           $$PWD/clipboard.cpp \
+           $$PWD/fmutil.cpp
 
 
 
@@ -15,7 +17,9 @@ HEADERS += $$PWD/dirmodel.h \
            $$PWD/ioworkerthread.h \
            $$PWD/filesystemaction.h \
            $$PWD/filecompare.h \
-           $$PWD/externalfswatcher.h
+           $$PWD/externalfswatcher.h \
+           $$PWD/clipboard.h \
+           $$PWD/fmutil.h
 
 
 

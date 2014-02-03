@@ -29,7 +29,7 @@
 #include <QPixmap>
 #include <QFileIconProvider>
 
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL) && QT_VERSION >= 0x050000
+#if QT_VERSION >= 0x050000
 #include <QMimeType>
 #include <QMimeDatabase>
 #endif
@@ -1629,9 +1629,9 @@ void TestDirModel::watchExternalChanges()
 }
 
 
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL) && QT_VERSION >= 0x050000
+#if QT_VERSION >= 0x050000
 void TestDirModel::getThemeIcons()
-{
+{   
     QStringList mimesToTest = QStringList()
                              << "text/plain"
                              << "text/x-c++src"
@@ -1650,30 +1650,40 @@ void TestDirModel::getThemeIcons()
     QString msg;
     QHash<QByteArray, QString>     md5IconsTable;
 
+    qDebug() << "QIcon::themeSearchPaths()" << QIcon::themeSearchPaths();
+    qDebug() << "QIcon::themeName()"        << QIcon::themeName();
+
+
     for (int counter=0; counter < mimesToTest.count(); counter++)
     {
         QMimeType mimetype = mimeBase.mimeTypeForName(mimesToTest.at(counter));
+
         msg = QLatin1String("invalid mimetype ") + mimesToTest.at(counter);        
         if (!mimetype.isValid())
         {
               QSKIP_ALL_TESTS(qPrintable(msg));
         }
-        QIcon   icon = QIcon::fromTheme(mimetype.iconName());
-        msg = QLatin1String("invalid QIcon::fromTheme ") + mimetype.iconName();       
+        QString iconName = mimetype.iconName();
+        if (!QIcon::hasThemeIcon(iconName) && QIcon::hasThemeIcon(mimetype.genericIconName()))
+        {
+            iconName = mimetype.genericIconName();
+        }
+        QIcon   icon = QIcon::fromTheme(iconName);
+        msg = QLatin1String("invalid QIcon::fromTheme ") + iconName;
         if (icon.isNull())
         {
               QSKIP_ALL_TESTS(qPrintable(msg));
         }
 
         QPixmap pix = icon.pixmap(QSize(48,48));
-        msg = QLatin1String("invalid QPixmap from icon ") + mimetype.iconName();       
+        msg = QLatin1String("invalid QPixmap from icon ") + iconName;
         if (pix.isNull())
         {
               QSKIP_ALL_TESTS(qPrintable(msg));
         }
 
         QImage image = pix.toImage();
-        msg = QLatin1String("invalid QImage from QPixmap/QIcon ") + mimetype.iconName();       
+        msg = QLatin1String("invalid QImage from QPixmap/QIcon ") + iconName;
         if (image.isNull())
         {
               QSKIP_ALL_TESTS(qPrintable(msg));
@@ -2059,9 +2069,7 @@ int main(int argc, char *argv[])
           break;
        }
     }
-    int ret = QTest::qExec(&tc, args);
-
-    return ret;
+    return  QTest::qExec(&tc, args);
 }
 
 

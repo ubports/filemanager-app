@@ -44,6 +44,7 @@
 
 class FileSystemAction;
 class ExternalFSWatcher;
+class Clipboard;
 
 /*!
  *  When the External File System Wathcer is enabled,
@@ -394,6 +395,7 @@ private:
     SortOrder           mSortOrder;
     CompareFunction     mCompareFunction;
     ExternalFSWatcher*  mExtFSWatcher;
+    Clipboard *         mClipboard;
 
 
 private:

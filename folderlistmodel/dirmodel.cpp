@@ -34,6 +34,8 @@
 #include "ioworkerthread.h"
 #include "filesystemaction.h"
 #include "externalfswatcher.h"
+#include "clipboard.h"
+#include "fmutil.h"
 
 #ifndef DO_NOT_USE_TAG_LIB
 #include <taglib/attachedpictureframe.h>
@@ -53,7 +55,7 @@
 #include <QUrl>
 #include <QDesktopServices>
 
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL) && QT_VERSION >= 0x050000
+#if QT_VERSION >= 0x050000
 # include <QMimeType>
 # include <QMimeDatabase>
 #endif
@@ -98,7 +100,8 @@ DirModel::DirModel(QObject *parent)
     , mSortOrder(SortAscending)
     , mCompareFunction(0)  
     , mExtFSWatcher(0)
-    , m_fsAction(new FileSystemAction(this) )
+    , mClipboard(new Clipboard(this))
+    , m_fsAction(new FileSystemAction(this) )    
 {
     mNameFilters = QStringList() << "*";
 
@@ -130,19 +133,34 @@ DirModel::DirModel(QObject *parent)
     connect(this,     SIGNAL(pathChanged(QString)),
             m_fsAction, SLOT(pathChanged(QString)));
 
-    connect(m_fsAction, SIGNAL(clipboardChanged()),
+    connect(mClipboard, SIGNAL(clipboardChanged()),
             this,       SIGNAL(clipboardChanged()));
 
     connect(m_fsAction,  SIGNAL(changed(QFileInfo)),
            this,        SLOT(onItemChanged(QFileInfo)));
 
+    connect(mClipboard, SIGNAL(clipboardChanged()),
+            m_fsAction, SLOT(onClipboardChanged()));
+
+    connect(m_fsAction, SIGNAL(recopy(QStringList,QString)),
+            mClipboard, SLOT(copy(QStringList,QString)));
+
     setCompareAndReorder();
+
+    if (QIcon::themeName().isEmpty() && !FMUtil::hasTriedThemeName())
+    {
+        FMUtil::setThemeName();
+    }
 }
+
+
 
 DirModel::~DirModel()
 {
     stoptExternalFsWatcher();
 }
+
+
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 // roleNames has changed between Qt4 and Qt5. In Qt5 it is a virtual
@@ -157,6 +175,8 @@ QHash<int, QByteArray> DirModel::roleNames() const
     return roles;
 }
 #endif
+
+
 
 QHash<int, QByteArray> DirModel::buildRoleNames() const
 {
@@ -597,7 +617,7 @@ void DirModel::copyIndex(int row)
 
 void DirModel::copyPaths(const QStringList &items)
 {
-   m_fsAction->copy(items);
+   mClipboard->copy(items, mCurrentDir);
 }
 
 
@@ -607,7 +627,7 @@ void DirModel::cutIndex(int row)
     {
         const QFileInfo &fi = mDirectoryContents.at(row);
         QStringList list(fi.absoluteFilePath());
-        m_fsAction->cut(list);
+        this->cutPaths(list);
     }
     else
     {
@@ -618,13 +638,22 @@ void DirModel::cutIndex(int row)
 
 void DirModel::cutPaths(const QStringList &items)
 {
-     m_fsAction->cut(items);
+     mClipboard->cut(items, mCurrentDir);
 }
 
 
 void DirModel::paste()
 {
-   m_fsAction->paste();
+    ClipboardOperation operation;
+    QStringList items = mClipboard->paste(operation);
+    if (operation == ClipboardCut)
+    {
+         m_fsAction->moveIntoCurrentPath(items);
+    }
+    else
+    {
+        m_fsAction->copyIntoCurrentPath(items);
+    }
 }
 
 
@@ -923,7 +952,7 @@ void DirModel::setCompareAndReorder()
 
 int DirModel::getClipboardUrlsCounter() const
 {
-    return m_fsAction->clipboardLocalUrlsConunter();
+    return mClipboard->clipboardLocalUrlsCounter();
 }
 
 

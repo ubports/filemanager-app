@@ -52,10 +52,6 @@ class DirModelMimeData;
 class QFile;
 class QTemporaryFile;
 
-enum ClipboardOperation
-{
-    NoClipboard, ClipboardCopy, ClipboardCut
-};
 
 /*!
  * \brief The FileSystemAction class does file system operations copy/cut/paste/remove items
@@ -104,16 +100,16 @@ public:
 
 public:
     bool     isBusy() const;
-    int      getProgressCounter() const;
-    int      clipboardLocalUrlsConunter();
+    int      getProgressCounter() const;   
 
 public slots:
     void     cancel();
     void     remove(const QStringList & filePaths);
-    void     pathChanged(const QString& path);
-    void     paste();
-    void     cut(const QStringList&);
-    void     copy(const QStringList&);
+    void     pathChanged(const QString& path);   
+    void     copyIntoCurrentPath(const QStringList& items);
+    void     moveIntoCurrentPath(const QStringList& items);
+    void     onClipboardChanged();
+
 
 signals:
     void     error(const QString& errorTitle, const QString &errorMessage);
@@ -123,14 +119,13 @@ signals:
     void     added(const QFileInfo& );
     void     changed(const QFileInfo&);
     void     progress(int curItem, int totalItems, int percent);
-    void     clipboardChanged();
+    void     recopy(const QStringList &names, const QString& path);
 
 private slots:
     void     processAction();
     void     processActionEntry();   
     void     processCopyEntry();
     bool     processCopySingleFile();
-    void     clipboardHasChanged();
 
  private:
    enum ActionType
@@ -141,8 +136,9 @@ private slots:
        ActionHardMoveCopy,
        ActionHardMoveRemove
    };
-   void     createAndProcessAction(ActionType actionType, const QStringList& paths,
-                                   ClipboardOperation operation=NoClipboard);
+
+   void     createAndProcessAction(ActionType actionType, const QStringList& paths);
+
    struct CopyFile
    {
      public:
@@ -199,8 +195,7 @@ private slots:
        quint64             totalBytes;
        quint64             bytesWritten;
        int                 currEntryIndex;
-       ActionEntry  *      currEntry;
-       ClipboardOperation  operation;
+       ActionEntry  *      currEntry;     
        CopyFile            copyFile;
        bool                done;
        Action *            auxAction;
@@ -213,10 +208,11 @@ private slots:
    bool                    m_cancelCurrentAction;
    bool                    m_busy; 
    QString                 m_path;
-   DirModelMimeData  *     m_mimeData;
+
    QString                 m_errorTitle;
    QString                 m_errorMsg;
-   bool                    m_clipboardModifiedByOther;
+   bool                    m_clipboardChanged; //!< this is set to false in \ref moveIntoCurrentPath() and \ref copyIntoCurrentPath();
+
 
 private:  
    Action * createAction(ActionType, int origBase = 0);
@@ -232,8 +228,7 @@ private:
    bool     copySymLink(const QString& target, const QFileInfo& orig);
    void     scheduleSlot(const char *slot);
    void     moveDirToTempAndRemoveItLater(const QString& dir);
-   bool     makeBackupNameForCurrentItem(Action *action);
-   void     storeOnClipboard(const QStringList &pathnames, ClipboardOperation op);
+   bool     makeBackupNameForCurrentItem(Action *action);   
    bool     endCopySingleFile();
    bool     isThereDiskSpace(qint64 requiredSize);
 
