@@ -46,8 +46,12 @@
 #include <taglib/mpegfile.h>
 #endif
 
+#include <QQmlEngine>
 #include <QtGlobal>
+#include <QPainter>
+
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+
 
 CoverArtImageProvider::CoverArtImageProvider() : QQuickImageProvider(QQuickImageProvider::Image) {}
 

@@ -32,11 +32,10 @@
 #ifndef IOREQUEST_H
 #define IOREQUEST_H
 
+#include "diriteminfo.h"
+
 #include <QHash>
 #include <QDir>
-#include <QFileInfo>
-#include <QDateTime>
-#include <QVector>
 
 class IORequest : public QObject
 {
@@ -70,15 +69,15 @@ public:
     explicit DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive);
     void run();
 signals:
-    void itemsAdded(const QVector<QFileInfo> &files);
+    void itemsAdded(const DirItemInfoList &files);
     void workerFinished();
 
 protected:
-    QVector<QFileInfo>     getContents();
+    DirItemInfoList     getContents();
 
 private:
-    QVector<QFileInfo> add(const QString &pathName, QDir::Filter filter,
-                           const bool isRecursive, QVector<QFileInfo> directoryContents);
+    DirItemInfoList add(const QString &pathName, QDir::Filter filter,
+                           const bool isRecursive, DirItemInfoList directoryContents);
 private:
     QString       mPathName;
     QDir::Filter  mFilter;
@@ -91,18 +90,18 @@ class  ExternalFileSystemChangesWorker : public DirListWorker
 {
     Q_OBJECT
 public:
-    explicit ExternalFileSystemChangesWorker(const QVector<QFileInfo>& content,
+    explicit ExternalFileSystemChangesWorker(const DirItemInfoList& content,
                                       const QString &pathName,
                                       QDir::Filter filter,
                                       const bool isRecursive);
     void     run();
 signals:
-    void     removed(const QFileInfo&);
-    void     changed(const QFileInfo&);
-    void     added(const QFileInfo& );
+    void     removed(const DirItemInfo&);
+    void     changed(const DirItemInfo&);
+    void     added(const   DirItemInfo& );
     void     finished(int);
 private:
-    QHash<QString, QFileInfo>    m_curContent;   //!< using hash because the vector can be in any order
+    QHash<QString, DirItemInfo>    m_curContent;   //!< using hash because the vector can be in any order
 };
 
 

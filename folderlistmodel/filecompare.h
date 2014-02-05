@@ -37,15 +37,15 @@
 #ifndef FILECOMPARE_H
 #define FILECOMPARE_H
 
-class QFileInfo;
+class DirItemInfo;
 
-typedef bool  (*CompareFunction)(const QFileInfo &a, const QFileInfo &b);
+typedef bool  (*CompareFunction)(const DirItemInfo &a, const DirItemInfo &b);
 
-bool fileCompareExists(const QFileInfo &a, const QFileInfo &b);
-bool fileCompareAscending(const QFileInfo &a, const QFileInfo &b);
-bool fileCompareDescending(const QFileInfo &a, const QFileInfo &b);
+bool fileCompareExists(const DirItemInfo &a, const DirItemInfo &b);
+bool fileCompareAscending(const DirItemInfo &a, const DirItemInfo &b);
+bool fileCompareDescending(const DirItemInfo &a, const DirItemInfo &b);
 
-bool dateCompareDescending(const QFileInfo &a, const QFileInfo &b);
-bool dateCompareAscending(const QFileInfo &a, const QFileInfo &b);
+bool dateCompareDescending(const DirItemInfo &a, const DirItemInfo &b);
+bool dateCompareAscending(const DirItemInfo &a, const DirItemInfo &b);
 
 #endif // FILECOMPARE_H
