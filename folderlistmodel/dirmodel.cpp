@@ -464,8 +464,11 @@ bool DirModel::rename(int row, const QString &newName)
     }
     else
     {
-        mDirectoryContents[row] = DirItemInfo(QFileInfo(newFullFilename));
-        notifyItemChanged(row);
+        bool isSelected =  mDirectoryContents.at(row).isSelected();
+        onItemRemoved(mDirectoryContents.at(row));
+        int newRow = addItem(DirItemInfo(QFileInfo(newFullFilename)));
+        //keep previous selected state, selection takes care of everything
+        mSelection->setIndex(newRow,isSelected);
     }
     return retval;
 }
