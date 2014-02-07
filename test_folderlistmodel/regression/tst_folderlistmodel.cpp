@@ -29,11 +29,8 @@
 #include <QPixmap>
 #include <QFileIconProvider>
 
-#if QT_VERSION >= 0x050000
 #include <QMimeType>
 #include <QMimeDatabase>
-#endif
-
 #include <QCryptographicHash>
 #include <QDesktopServices>
 #include <QFile>
@@ -53,9 +50,6 @@
 #define  QSKIP_ALL_TESTS(statement)   QSKIP(statement,SkipAll)
 #endif
 
-#if  QT_VERSION < 0x050000
-# define QFileDevice   QFile
-#endif
 
 QByteArray md5FromIcon(const QIcon& icon);
 QString createFileInTempDir(const QString& name, const char *content, qint64 size);
@@ -116,9 +110,7 @@ private Q_SLOTS: // test cases
     void  modelCutAndPasteInTheSamePlace();
     void  modelCopyAndPasteToBackupFiles();
     void  fileIconProvider();
-#if QT_VERSION >= 0x050000
     void  getThemeIcons();
-#endif
 #ifndef DO_NOT_USE_TAG_LIB
     void  verifyMP3Metadata();
 #endif
@@ -1638,7 +1630,6 @@ void TestDirModel::watchExternalChanges()
 }
 
 
-#if QT_VERSION >= 0x050000
 void TestDirModel::getThemeIcons()
 {   
     QStringList mimesToTest = QStringList()
@@ -1709,7 +1700,6 @@ void TestDirModel::getThemeIcons()
         md5IconsTable.insert(md5, mimesToTest.at(counter));
     }
 }
-#endif
 
 
 bool TestDirModel::createFileAndCheckIfIconIsExclisive(const QString& termination,
@@ -2103,9 +2093,9 @@ void TestDirModel::modelSingleSelection()
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_selectionMode, (int)DirSelection::Single);
 
-    QModelIndex firstIdx  = m_dirModel_01->index(0, DirModel::IsSelecteRole - DirModel::FileNameRole);
-    QModelIndex secondIdx = m_dirModel_01->index(1, DirModel::IsSelecteRole - DirModel::FileNameRole);
-    QModelIndex thirdIdx  = m_dirModel_01->index(2, DirModel::IsSelecteRole - DirModel::FileNameRole);
+    QModelIndex firstIdx  = m_dirModel_01->index(0, DirModel::IsSelectedRole - DirModel::FileNameRole);
+    QModelIndex secondIdx = m_dirModel_01->index(1, DirModel::IsSelectedRole - DirModel::FileNameRole);
+    QModelIndex thirdIdx  = m_dirModel_01->index(2, DirModel::IsSelectedRole - DirModel::FileNameRole);
 
     //toggle first item selection using index
     selection->toggleIndex(0);
@@ -2214,7 +2204,7 @@ void TestDirModel::modelMultiSelection()
     {
          int item = handledIndexes.at(counter);
          QModelIndex index =  m_dirModel_01->index(item,
-                                 DirModel::IsSelecteRole - DirModel::FileNameRole);
+                                 DirModel::IsSelectedRole - DirModel::FileNameRole);
          QCOMPARE(m_dirModel_01->data(index).toBool(),   true);
     }
 

@@ -2,7 +2,6 @@
 #define IMAGEPROVIDER_H
 
 #include <QtGlobal>
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 
 #include <QQuickImageProvider>
 #include <QImage>
@@ -26,6 +25,5 @@ public:
 
 };
 
-#endif  // Qt5
 
 #endif // IMAGEPROVIDER_H

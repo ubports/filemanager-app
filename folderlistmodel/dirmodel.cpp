@@ -58,12 +58,16 @@
 #include <QDesktopServices>
 #include <QMetaType>
 #include <QDateTime>
-#include <QColor>
-#include <QBrush>
+#include <QMimeType>
 
-#if QT_VERSION >= 0x050000
-# include <QMimeType>
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL)
+# include <QColor>
+# include <QBrush>
 #endif
+
+
+
+
 
 #define IS_VALID_ROW(row)             (row >=0 && row < mDirectoryContents.count())
 #define WARN_ROW_OUT_OF_RANGE(row)    qWarning() << Q_FUNC_INFO << this << "row:" << row << "Out of bounds access"
@@ -112,14 +116,7 @@ DirModel::DirModel(QObject *parent)
 
     mSelection   =  new DirSelection(this, &mDirectoryContents);
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    // There's no setRoleNames in Qt5.
-    setRoleNames(buildRoleNames());
-#else
-    // In Qt5, the roleNames() is virtual and will work just fine.
-#endif
-
-   connect(m_fsAction, SIGNAL(progress(int,int,int)),
+    connect(m_fsAction, SIGNAL(progress(int,int,int)),
             this,     SIGNAL(progress(int,int,int)));
 
     connect(m_fsAction, SIGNAL(added(DirItemInfo)),
@@ -169,9 +166,6 @@ DirModel::~DirModel()
 
 
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-// roleNames has changed between Qt4 and Qt5. In Qt5 it is a virtual
- // function and setRoleNames should not be used.
 QHash<int, QByteArray> DirModel::roleNames() const
 {
     static QHash<int, QByteArray> roles;
@@ -181,7 +175,7 @@ QHash<int, QByteArray> DirModel::roleNames() const
 
     return roles;
 }
-#endif
+
 
 
 
@@ -200,7 +194,7 @@ QHash<int, QByteArray> DirModel::buildRoleNames() const
         roles.insert(IsReadableRole, QByteArray("isReadable"));
         roles.insert(IsWritableRole, QByteArray("isWritable"));
         roles.insert(IsExecutableRole, QByteArray("isExecutable"));
-        roles.insert(IsSelecteRole, QByteArray("isSelected"));
+        roles.insert(IsSelectedRole, QByteArray("isSelected"));
         roles.insert(TrackTitleRole, QByteArray("trackTitle"));
         roles.insert(TrackArtistRole, QByteArray("trackArtist"));
         roles.insert(TrackAlbumRole, QByteArray("trackAlbum"));
@@ -235,6 +229,7 @@ QVariant DirModel::data(int row, const QByteArray &stringRole) const
 
 QVariant DirModel::data(const QModelIndex &index, int role) const
 {
+//its not for QML
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
     if (!index.isValid() ||
         (role != Qt::DisplayRole && role != Qt::DecorationRole && role != Qt::BackgroundRole)
@@ -244,15 +239,33 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
     }
     if (role == Qt::DecorationRole && index.column() == 0)
     {             
-#if QT_VERSION >= 0x050000
         QIcon icon;      
         QMimeType mime = mDirectoryContents.at(index.row()).mimeType();
-        if (mime.isValid()) {
-            icon = QIcon::fromTheme(mime.iconName());
+        if (mime.isValid())
+        {
+            if (QIcon::hasThemeIcon(mime.iconName()) ) {
+               icon = QIcon::fromTheme(mime.iconName());
+            }
+            else if (QIcon::hasThemeIcon(mime.genericIconName())) {
+               icon = QIcon::fromTheme(mime.genericIconName());
+            }
         }
-#else
-        QIcon icon =  QFileIconProvider().icon(mDirectoryContents.at(index.row()));
-#endif
+        if (icon.isNull())
+        {
+            if (mDirectoryContents.at(index.row()).isLocal())
+            {
+                icon =  QFileIconProvider().icon(mDirectoryContents.at(index.row()).diskFileInfo());
+            }
+            else
+            if (mDirectoryContents.at(index.row()).isDir())
+            {
+                icon =  QFileIconProvider().icon(QFileIconProvider::Folder);
+            }
+            else
+            {
+                icon =  QFileIconProvider().icon(QFileIconProvider::File);
+            }
+        }
         return icon;
     }
     if (role == Qt::BackgroundRole && index.column() == 0)
@@ -324,7 +337,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             return fi.isWritable();
         case IsExecutableRole:
             return fi.isExecutable();
-        case IsSelecteRole:
+        case IsSelectedRole:
             return fi.isSelected();
 #ifndef DO_NOT_USE_TAG_LIB
         case TrackTitleRole:

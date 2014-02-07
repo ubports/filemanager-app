@@ -28,10 +28,8 @@
 #include <QSharedData>
 #include <QDateTime>
 
-#if QT_VERSION >= 0x050000
 #include <QMimeType>
 #include <QMimeDatabase>
-#endif
 
 class DirItemInfoPrivate;
 

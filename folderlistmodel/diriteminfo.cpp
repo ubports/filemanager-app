@@ -57,14 +57,12 @@ public:
     QDateTime _lastRead;
     QString   _path;
     QString   _fileName;
-#if QT_VERSION >= 0x050000
-        static QMimeDatabase mimeDatabase;
-#endif
+    static QMimeDatabase mimeDatabase;
 };
 
-#if QT_VERSION >= 0x050000
- QMimeDatabase DirItemInfoPrivate::mimeDatabase;
-#endif
+
+QMimeDatabase DirItemInfoPrivate::mimeDatabase;
+
 
 DirItemInfoPrivate::DirItemInfoPrivate() :
    _isValid(false)
@@ -339,9 +337,9 @@ QString DirItemInfo::path() const
     return d_ptr->_path;
 }
 
-#if QT_VERSION >= 0x050000
+
 QMimeType DirItemInfo::mimeType() const
 {
     return d_ptr->mimeDatabase.mimeTypeForFile(diskFileInfo());
 }
-#endif
+

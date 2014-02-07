@@ -71,7 +71,7 @@ public:
         IsReadableRole,
         IsWritableRole,
         IsExecutableRole,
-        IsSelecteRole,
+        IsSelectedRole,
         TrackTitleRole,
         TrackArtistRole,
         TrackAlbumRole,
@@ -163,12 +163,8 @@ signals:
     void error(const QString &errorTitle, const QString &errorMessage);
 
 private:
-    QHash<int, QByteArray> buildRoleNames() const;
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    // In Qt5, the roleNames() is virtual and will work just fine. On qt4 setRoleNames must be used with buildRoleNames.
+    QHash<int, QByteArray> buildRoleNames() const;   
     QHash<int, QByteArray> roleNames() const;
-#endif
-
     QStringList mNameFilters;
     bool mFilterDirectories;
     bool mShowDirectories;
