@@ -35,6 +35,7 @@
 #include <QDebug>
 
 #ifdef DEBUG_MESSAGES
+#include <QDateTime>
 #include <QThread>
 #endif
 
@@ -63,7 +64,7 @@ void DirListWorker::run()
     qDebug() << Q_FUNC_INFO << "Running on: " << QThread::currentThreadId();
 #endif
 
-    QVector<QFileInfo> directoryContents = getContents();
+    DirItemInfoList directoryContents = getContents();
 
     // last batch
     emit itemsAdded(directoryContents);
@@ -71,22 +72,22 @@ void DirListWorker::run()
 }
 
 
-QVector<QFileInfo> DirListWorker::getContents()
+DirItemInfoList DirListWorker::getContents()
 {
 #if DEBUG_EXT_FS_WATCHER
     qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
              << Q_FUNC_INFO;
 #endif
-    QVector<QFileInfo> directoryContents;  
+    DirItemInfoList directoryContents;
     directoryContents = add(mPathName, mFilter, mIsRecursive, directoryContents);
     return directoryContents;
 }
 
 
-QVector<QFileInfo> DirListWorker::add(const QString &pathName,
+DirItemInfoList DirListWorker::add(const QString &pathName,
                                       QDir::Filter filter,
                                       const bool isRecursive,
-                                      QVector<QFileInfo> directoryContents)
+                                      DirItemInfoList directoryContents)
 {
     QDir tmpDir = QDir(pathName, QString(), QDir::NoSort, filter);
     QDirIterator it(tmpDir);
@@ -94,9 +95,10 @@ QVector<QFileInfo> DirListWorker::add(const QString &pathName,
         it.next();
 
         if(it.fileInfo().isDir() && isRecursive) {
-            directoryContents = add(it.fileInfo().filePath(), filter, isRecursive, directoryContents);
+            directoryContents = add(it.fileInfo().filePath(),
+                                    filter, isRecursive, directoryContents);
         } else {
-            directoryContents.append(it.fileInfo());
+            directoryContents.append(DirItemInfo(it.fileInfo()));
         }
 
         if (directoryContents.count() >= 50) {
@@ -112,7 +114,7 @@ QVector<QFileInfo> DirListWorker::add(const QString &pathName,
 
 
 //---------------------------------------------------------------------------------------------------------
-ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const QVector<QFileInfo>& content,
+ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const DirItemInfoList &content,
                                                    const QString &pathName,
                                                    QDir::Filter filter,
                                                    const bool isRecursive)
@@ -130,7 +132,7 @@ ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const QVector<Q
 
 void ExternalFileSystemChangesWorker::run()
 {
-    QVector<QFileInfo> directoryContents = getContents();
+    DirItemInfoList directoryContents = getContents();
     int   addedCounter=0;
     int   removedCounter=0;
 #if DEBUG_EXT_FS_WATCHER
@@ -145,8 +147,8 @@ void ExternalFileSystemChangesWorker::run()
         int tmpCounter = counter;
         while (tmpCounter--)
         {
-            const QFileInfo& originalItem = directoryContents.at(tmpCounter);
-            const QFileInfo  existItem    = m_curContent.value(originalItem.absoluteFilePath());
+            const DirItemInfo& originalItem = directoryContents.at(tmpCounter);
+            const DirItemInfo  existItem    = m_curContent.value(originalItem.absoluteFilePath());
             if ( existItem.exists() )
             {
                 //it may have changed
@@ -167,7 +169,7 @@ void ExternalFileSystemChangesWorker::run()
             }
         }
 
-        QHash<QString, QFileInfo>::iterator  i = m_curContent.begin();
+        QHash<QString, DirItemInfo>::iterator  i = m_curContent.begin();
         for ( ;  i != m_curContent.end();  ++removedCounter, ++i )
         {
             emit removed(i.value());

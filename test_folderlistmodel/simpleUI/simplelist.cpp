@@ -41,9 +41,7 @@ SimpleList::SimpleList(QWidget *parent) :
 
     m_model = new DirModel(this);
 
-    qRegisterMetaType< QVector<QFileInfo> > ("QVector<QFileInfo>");
-    qRegisterMetaType<QFileInfo>("QFileInfo");
-
+    DirModel::registerMetaTypes();
     ui->tableView->setModel(m_model);   
 
     connect(ui->tableView, SIGNAL(clicked(QModelIndex)),

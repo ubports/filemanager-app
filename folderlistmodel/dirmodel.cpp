@@ -29,6 +29,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
  */
 
+#include "dirselection.h"
 #include "dirmodel.h"
 #include "iorequest.h"
 #include "ioworkerthread.h"
@@ -36,6 +37,7 @@
 #include "externalfswatcher.h"
 #include "clipboard.h"
 #include "fmutil.h"
+
 
 #ifndef DO_NOT_USE_TAG_LIB
 #include <taglib/attachedpictureframe.h>
@@ -54,11 +56,18 @@
 #include <QFileIconProvider>
 #include <QUrl>
 #include <QDesktopServices>
+#include <QMetaType>
+#include <QDateTime>
+#include <QMimeType>
 
-#if QT_VERSION >= 0x050000
-# include <QMimeType>
-# include <QMimeDatabase>
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL)
+# include <QColor>
+# include <QBrush>
 #endif
+
+
+
+
 
 #define IS_VALID_ROW(row)             (row >=0 && row < mDirectoryContents.count())
 #define WARN_ROW_OUT_OF_RANGE(row)    qWarning() << Q_FUNC_INFO << this << "row:" << row << "Out of bounds access"
@@ -89,7 +98,7 @@ static CompareFunction availableCompareFunctions[2][2] =
 
 
 DirModel::DirModel(QObject *parent)
-    : QAbstractListModel(parent)
+    : DirItemAbstractListModel(parent)
     , mFilterDirectories(false)
     , mShowDirectories(true)
     , mAwaitingResults(false)
@@ -100,29 +109,24 @@ DirModel::DirModel(QObject *parent)
     , mSortOrder(SortAscending)
     , mCompareFunction(0)  
     , mExtFSWatcher(0)
-    , mClipboard(new Clipboard(this))
+    , mClipboard(new Clipboard(this))    
     , m_fsAction(new FileSystemAction(this) )    
 {
     mNameFilters = QStringList() << "*";
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    // There's no setRoleNames in Qt5.
-    setRoleNames(buildRoleNames());
-#else
-    // In Qt5, the roleNames() is virtual and will work just fine.
-#endif
+    mSelection   =  new DirSelection(this, &mDirectoryContents);
 
     connect(m_fsAction, SIGNAL(progress(int,int,int)),
             this,     SIGNAL(progress(int,int,int)));
 
-    connect(m_fsAction, SIGNAL(added(QFileInfo)),
-            this,     SLOT(onItemAdded(QFileInfo)));
+    connect(m_fsAction, SIGNAL(added(DirItemInfo)),
+            this,     SLOT(onItemAdded(DirItemInfo)));
 
     connect(m_fsAction, SIGNAL(added(QString)),
             this,     SLOT(onItemAdded(QString)));
 
-    connect(m_fsAction, SIGNAL(removed(QFileInfo)),
-            this,     SLOT(onItemRemoved(QFileInfo)));
+    connect(m_fsAction, SIGNAL(removed(DirItemInfo)),
+            this,     SLOT(onItemRemoved(DirItemInfo)));
 
     connect(m_fsAction, SIGNAL(removed(QString)),
             this,     SLOT(onItemRemoved(QString)));  
@@ -136,8 +140,8 @@ DirModel::DirModel(QObject *parent)
     connect(mClipboard, SIGNAL(clipboardChanged()),
             this,       SIGNAL(clipboardChanged()));
 
-    connect(m_fsAction,  SIGNAL(changed(QFileInfo)),
-           this,        SLOT(onItemChanged(QFileInfo)));
+    connect(m_fsAction,  SIGNAL(changed(DirItemInfo)),
+           this,        SLOT(onItemChanged(DirItemInfo)));
 
     connect(mClipboard, SIGNAL(clipboardChanged()),
             m_fsAction, SLOT(onClipboardChanged()));
@@ -162,9 +166,6 @@ DirModel::~DirModel()
 
 
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-// roleNames has changed between Qt4 and Qt5. In Qt5 it is a virtual
- // function and setRoleNames should not be used.
 QHash<int, QByteArray> DirModel::roleNames() const
 {
     static QHash<int, QByteArray> roles;
@@ -174,7 +175,7 @@ QHash<int, QByteArray> DirModel::roleNames() const
 
     return roles;
 }
-#endif
+
 
 
 
@@ -193,6 +194,7 @@ QHash<int, QByteArray> DirModel::buildRoleNames() const
         roles.insert(IsReadableRole, QByteArray("isReadable"));
         roles.insert(IsWritableRole, QByteArray("isWritable"));
         roles.insert(IsExecutableRole, QByteArray("isExecutable"));
+        roles.insert(IsSelectedRole, QByteArray("isSelected"));
         roles.insert(TrackTitleRole, QByteArray("trackTitle"));
         roles.insert(TrackArtistRole, QByteArray("trackArtist"));
         roles.insert(TrackAlbumRole, QByteArray("trackAlbum"));
@@ -227,24 +229,54 @@ QVariant DirModel::data(int row, const QByteArray &stringRole) const
 
 QVariant DirModel::data(const QModelIndex &index, int role) const
 {
+//its not for QML
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
-    if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::DecorationRole) )
+    if (!index.isValid() ||
+        (role != Qt::DisplayRole && role != Qt::DecorationRole && role != Qt::BackgroundRole)
+       )
     {
         return QVariant();
     }
     if (role == Qt::DecorationRole && index.column() == 0)
     {             
-#if QT_VERSION >= 0x050000
-        QIcon icon;
-        QMimeDatabase database;
-        QMimeType mime = database.mimeTypeForFile(mDirectoryContents.at(index.row()));
-        if (mime.isValid()) {
-            icon = QIcon::fromTheme(mime.iconName());
+        QIcon icon;      
+        QMimeType mime = mDirectoryContents.at(index.row()).mimeType();
+        if (mime.isValid())
+        {
+            if (QIcon::hasThemeIcon(mime.iconName()) ) {
+               icon = QIcon::fromTheme(mime.iconName());
+            }
+            else if (QIcon::hasThemeIcon(mime.genericIconName())) {
+               icon = QIcon::fromTheme(mime.genericIconName());
+            }
         }
-#else
-        QIcon icon =  QFileIconProvider().icon(mDirectoryContents.at(index.row()));
-#endif
+        if (icon.isNull())
+        {
+            if (mDirectoryContents.at(index.row()).isLocal())
+            {
+                icon =  QFileIconProvider().icon(mDirectoryContents.at(index.row()).diskFileInfo());
+            }
+            else
+            if (mDirectoryContents.at(index.row()).isDir())
+            {
+                icon =  QFileIconProvider().icon(QFileIconProvider::Folder);
+            }
+            else
+            {
+                icon =  QFileIconProvider().icon(QFileIconProvider::File);
+            }
+        }
         return icon;
+    }
+    if (role == Qt::BackgroundRole && index.column() == 0)
+    {
+        if (mDirectoryContents.at(index.row()).isSelected())
+        {
+           //TODO it'd better to get some style or other default
+           //     background color
+           return QBrush(Qt::lightGray);
+        }
+        return QVariant();
     }
     role = FileNameRole + index.column();
 #else
@@ -262,7 +294,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         return QVariant();
 #endif
 
-    const QFileInfo &fi = mDirectoryContents.at(index.row());
+    const DirItemInfo &fi = mDirectoryContents.at(index.row());
 
     switch (role) {
         case FileNameRole:
@@ -274,9 +306,9 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         case ModifiedDateRole:
             return fi.lastModified();
         case FileSizeRole: {
-             if (fi.isDir())
+             if (fi.isDir() && fi.isLocal())
              {
-                return dirItems(fi);
+                return dirItems(fi.diskFileInfo());
              }
              return fileSize(fi.size());
         }
@@ -305,6 +337,8 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             return fi.isWritable();
         case IsExecutableRole:
             return fi.isExecutable();
+        case IsSelectedRole:
+            return fi.isSelected();
 #ifndef DO_NOT_USE_TAG_LIB
         case TrackTitleRole:
         case TrackArtistRole:
@@ -314,9 +348,9 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         case TrackGenreRole:
         case TrackLengthRole:
         case TrackCoverRole:
-             if (mReadsMediaMetadata)
+             if (mReadsMediaMetadata && fi.isLocal())
              {
-                 return getAudioMetaData(fi, role);
+                 return getAudioMetaData(fi.diskFileInfo(), role);
              }
              break;
 #endif
@@ -359,7 +393,7 @@ void DirModel::setPath(const QString &pathName)
     clear();
 
     DirListWorker *dlw  = createWorkerRequest(IORequest::DirList, pathName);
-    connect(dlw, SIGNAL(itemsAdded(QVector<QFileInfo>)), SLOT(onItemsAdded(QVector<QFileInfo>)));
+    connect(dlw, SIGNAL(itemsAdded(DirItemInfoList)), SLOT(onItemsAdded(DirItemInfoList)));
     connect(dlw, SIGNAL(workerFinished()), SLOT(onResultsFetched()));
     ioWorkerThread()->addRequest(dlw);
 
@@ -378,13 +412,17 @@ void DirModel::onResultsFetched() {
     }    
 }
 
-void DirModel::onItemsAdded(const QVector<QFileInfo> &newFiles)
+void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 {
 #if DEBUG_MESSAGES
     qDebug() << Q_FUNC_INFO << this << "Got new files: " << newFiles.count();
 #endif
 
-    foreach (const QFileInfo &fi, newFiles) {
+    if (newFiles.count() > 0)
+    {
+        mDirectoryContents.reserve(newFiles.count()) ;
+    }
+    foreach (const DirItemInfo &fi, newFiles) {
 
         bool doAdd = false;
         foreach (const QString &nameFilter, mNameFilters) {
@@ -408,6 +446,13 @@ void DirModel::rm(const QStringList &paths)
    m_fsAction->remove(paths);
 }
 
+
+bool DirModel::rename(const QString& oldName, const QString &newName)
+{
+    return rename(getIndex(oldName), newName);
+}
+
+
 bool DirModel::rename(int row, const QString &newName)
 {
 #if DEBUG_MESSAGES
@@ -419,7 +464,7 @@ bool DirModel::rename(int row, const QString &newName)
         return false;
     }
 
-    const QFileInfo &fi = mDirectoryContents.at(row);
+    const DirItemInfo &fi = mDirectoryContents.at(row);
     QString newFullFilename(fi.absolutePath() + QDir::separator() + newName);
 
     //QFile::rename() works for File and Dir
@@ -432,9 +477,11 @@ bool DirModel::rename(int row, const QString &newName)
     }
     else
     {
-        mDirectoryContents[row] = QFileInfo(newFullFilename);
-        QModelIndex idx = createIndex(row,0);
-        emit dataChanged(idx, idx);
+        bool isSelected =  mDirectoryContents.at(row).isSelected();
+        onItemRemoved(mDirectoryContents.at(row));
+        int newRow = addItem(DirItemInfo(QFileInfo(newFullFilename)));
+        //keep previous selected state, selection takes care of everything
+        mSelection->setIndex(newRow,isSelected);
     }
     return retval;
 }
@@ -586,7 +633,7 @@ void DirModel::removeIndex(int row)
 {
     if (IS_VALID_ROW(row))
     {
-        const QFileInfo &fi = mDirectoryContents.at(row);
+        const DirItemInfo &fi = mDirectoryContents.at(row);
         QStringList list(fi.absoluteFilePath());
         this->rm(list);
     }
@@ -605,7 +652,7 @@ void DirModel::copyIndex(int row)
 {
     if (IS_VALID_ROW(row))
     {
-        const QFileInfo &fi = mDirectoryContents.at(row);
+        const DirItemInfo &fi = mDirectoryContents.at(row);
         QStringList list(fi.absoluteFilePath());
         this->copyPaths(list);
     }
@@ -625,7 +672,7 @@ void DirModel::cutIndex(int row)
 {
     if (IS_VALID_ROW(row))
     {
-        const QFileInfo &fi = mDirectoryContents.at(row);
+        const DirItemInfo &fi = mDirectoryContents.at(row);
         QStringList list(fi.absoluteFilePath());
         this->cutPaths(list);
     }
@@ -674,19 +721,24 @@ bool  DirModel::cdIntoIndex(int row)
 
 bool  DirModel::cdIntoPath(const QString &filename)
 {
-    QFileInfo fi(filename);
-    if (fi.isRelative())
+    bool ret = false;
+    DirItemInfo fi(filename);
+    if (fi.isValid())
     {
-        fi.setFile(mCurrentDir, filename);
+        if (fi.isRelative())
+        {
+            fi.setFile(mCurrentDir, filename);
+        }
+        ret =  cdInto(fi);
     }
-    return cdInto(fi);
+    return ret;
 }
 
 
-bool  DirModel::cdInto(const QFileInfo &fi)
+bool  DirModel::cdInto(const DirItemInfo &fi)
 {
     bool ret = false;
-    if (canReadDir(fi))
+    if (canReadDir(fi.diskFileInfo()))
     {
         if (fi.isRelative())
         {
@@ -712,12 +764,12 @@ bool  DirModel::cdInto(const QFileInfo &fi)
  */
 void DirModel::onItemRemoved(const QString &pathname)
 {
-    QFileInfo info(pathname);
+    DirItemInfo info(pathname);
     onItemRemoved(info);
 }
 
 
-void DirModel::onItemRemoved(const QFileInfo &fi)
+void DirModel::onItemRemoved(const DirItemInfo &fi)
 {  
     int row = rowOfItem(fi);
 #if DEBUG_MESSAGES || DEBUG_EXT_FS_WATCHER
@@ -729,6 +781,7 @@ void DirModel::onItemRemoved(const QFileInfo &fi)
     if (row >= 0)
     {
         beginRemoveRows(QModelIndex(), row, row);
+        mSelection->itemGoingToBeRemoved(row);
         mDirectoryContents.remove(row,1);
         endRemoveRows();
     }
@@ -741,12 +794,12 @@ void DirModel::onItemRemoved(const QFileInfo &fi)
  */
 void DirModel::onItemAdded(const QString &pathname)
 {
-    QFileInfo info(pathname);
+    DirItemInfo info(pathname);
     onItemAdded(info);
 }
 
 
-void DirModel::onItemAdded(const QFileInfo &fi)
+void DirModel::onItemAdded(const DirItemInfo &fi)
 {
     int newRow = addItem(fi);
     emit insertedRow(newRow);
@@ -761,9 +814,9 @@ void DirModel::onItemAdded(const QFileInfo &fi)
  * \return  the index where it was inserted, it can be used in the view
  * \sa insertedRow()
  */
-int DirModel::addItem(const QFileInfo &fi)
+int DirModel::addItem(const DirItemInfo &fi)
 {
-    QVector<QFileInfo>::Iterator it = qLowerBound(mDirectoryContents.begin(),
+    DirItemInfoList::Iterator it = qLowerBound(mDirectoryContents.begin(),
                                                   mDirectoryContents.end(),
                                                   fi,
                                                   mCompareFunction);
@@ -787,21 +840,15 @@ int DirModel::addItem(const QFileInfo &fi)
  *
  * \note If the item does  not exist it is inserted
  *
- * \param fi QFileInfo of the item
+ * \param fi DirItemInfo of the item
  */
-void DirModel::onItemChanged(const QFileInfo &fi)
+void DirModel::onItemChanged(const DirItemInfo &fi)
 {
     int row = rowOfItem(fi);
     if (row >= 0)
     {
         mDirectoryContents[row] = fi;
-        QModelIndex first = index(row,0);
-#if REGRESSION_TEST_FOLDERLISTMODEL
-        QModelIndex last  = index(row, columnCount()); //Table only when testing
-#else
-        QModelIndex last  = first; //QML uses Listview, just one column
-#endif
-        emit dataChanged(first, last);
+        notifyItemChanged(row);
     }
     else
     {   // it simplifies some logic outside, when removing and adding on the same operation
@@ -938,7 +985,7 @@ void DirModel::setCompareAndReorder()
     mCompareFunction = availableCompareFunctions[mSortBy][mSortOrder];
     if (mDirectoryContents.count() > 0 && !mAwaitingResults )
     {
-        QVector<QFileInfo> tmpDirectoryContents = mDirectoryContents;
+        DirItemInfoList tmpDirectoryContents = mDirectoryContents;
         beginResetModel();
         mDirectoryContents.clear();
         endResetModel();
@@ -956,13 +1003,13 @@ int DirModel::getClipboardUrlsCounter() const
 }
 
 
-int DirModel::rowOfItem(const QFileInfo& fi)
+int DirModel::rowOfItem(const DirItemInfo& fi)
 {
     int row = -1;
     //to use qBinaryFind() the array needs to be ordered ascending
     if (mCompareFunction == fileCompareAscending)
     {
-        QVector<QFileInfo>::Iterator it = qBinaryFind(mDirectoryContents.begin(),
+        DirItemInfoList::Iterator it = qBinaryFind(mDirectoryContents.begin(),
                                                       mDirectoryContents.end(),
                                                       fi,
                                                       fileCompareExists);
@@ -1009,7 +1056,7 @@ QDir::Filter DirModel::currentDirFilter() const
     return dirFilter;
 }
 
-QString DirModel::dirItems(const QFileInfo& fi) const
+QString DirModel::dirItems(const DirItemInfo& fi) const
 {
     int counter = 0;
     QDir d(fi.absoluteFilePath(), QString(), QDir::NoSort, currentDirFilter());
@@ -1040,7 +1087,7 @@ bool DirModel::openIndex(int row)
 
 bool DirModel::openPath(const QString &filename)
 {
-    QFileInfo fi(setParentIfRelative(filename));
+    DirItemInfo fi(setParentIfRelative(filename));
     return openItem(fi);
 }
 
@@ -1049,19 +1096,22 @@ bool DirModel::openPath(const QString &filename)
  * \param fi
  * \return  true it could open the item
  */
-bool DirModel::openItem(const QFileInfo &fi)
+bool DirModel::openItem(const DirItemInfo &fi)
 {
-    bool ret = false;  
-    if (canReadDir(fi))
+    bool ret = false;
+    if (fi.isLocal())
     {
-        ret = cdInto(fi);
-    }
-    else
-    {
-        //TODO open executables
-        if (canReadFile(fi))
+        if (canReadDir(fi.diskFileInfo()))
         {
-            ret = QDesktopServices::openUrl(QUrl::fromLocalFile(fi.absoluteFilePath()));
+            ret = cdInto(fi.diskFileInfo());
+        }
+        else
+        {
+            //TODO open executables
+            if (canReadFile(fi.diskFileInfo()))
+            {
+                ret = QDesktopServices::openUrl(QUrl::fromLocalFile(fi.absoluteFilePath()));
+            }
         }
     }
     return ret;
@@ -1154,12 +1204,12 @@ void DirModel::onThereAreExternalChanges()
         ExternalFileSystemChangesWorker *extFsWorker =
                 static_cast<ExternalFileSystemChangesWorker*> (w);
 
-        connect(extFsWorker,    SIGNAL(added(QFileInfo)),
-                this,         SLOT(onItemAddedOutsideFm(QFileInfo)));
-        connect(extFsWorker,    SIGNAL(removed(QFileInfo)),
-                this,         SLOT(onItemRemovedOutSideFm(QFileInfo)));
-        connect(extFsWorker,    SIGNAL(changed(QFileInfo)),
-                this,         SLOT(onItemChangedOutSideFm(QFileInfo)));
+        connect(extFsWorker,    SIGNAL(added(DirItemInfo)),
+                this,         SLOT(onItemAddedOutsideFm(DirItemInfo)));
+        connect(extFsWorker,    SIGNAL(removed(DirItemInfo)),
+                this,         SLOT(onItemRemovedOutSideFm(DirItemInfo)));
+        connect(extFsWorker,    SIGNAL(changed(DirItemInfo)),
+                this,         SLOT(onItemChangedOutSideFm(DirItemInfo)));
         connect(extFsWorker,    SIGNAL(finished(int)),
                 this,         SLOT(onExternalFsWorkerFinished(int)));
 
@@ -1178,7 +1228,7 @@ void DirModel::onThereAreExternalChanges()
  * \brief DirModel::onItemAddedOutsideFm() It receives a  signal saying an item was added by other application
  * \param fi
  */
-void DirModel::onItemAddedOutsideFm(const QFileInfo &fi)
+void DirModel::onItemAddedOutsideFm(const DirItemInfo &fi)
 {
 #if DEBUG_EXT_FS_WATCHER
     int before  = rowCount();
@@ -1207,7 +1257,7 @@ void DirModel::onItemAddedOutsideFm(const QFileInfo &fi)
  *
  * \param fi
  */
-void DirModel::onItemRemovedOutSideFm(const QFileInfo &fi)
+void DirModel::onItemRemovedOutSideFm(const DirItemInfo &fi)
 {
     if (IS_FILE_MANAGER_IDLE())
     {
@@ -1224,7 +1274,7 @@ void DirModel::onItemRemovedOutSideFm(const QFileInfo &fi)
  *
  * A File or a Dir modified by other applications: size,date, permissions
  */
-void DirModel::onItemChangedOutSideFm(const QFileInfo &fi)
+void DirModel::onItemChangedOutSideFm(const DirItemInfo &fi)
 {   
     if (IS_FILE_MANAGER_IDLE())
     {       
@@ -1286,31 +1336,31 @@ void DirModel::setEnabledExternalFSWatcher(bool enable)
 
 bool DirModel::existsDir(const QString &folderName) const
 {
-    QFileInfo d(setParentIfRelative(folderName));
+    DirItemInfo d(setParentIfRelative(folderName));
     return d.exists() && d.isDir();
 }
 
 bool  DirModel::canReadDir(const QString &folderName) const
 {
-    QFileInfo d(setParentIfRelative(folderName));
-    return canReadDir(d);
+    DirItemInfo d(setParentIfRelative(folderName));
+    return canReadDir(d.diskFileInfo());
 }
 
-bool  DirModel::canReadDir(const QFileInfo& d) const
+bool  DirModel::canReadDir(const QFileInfo & d) const
 {
     return d.exists() && d.isDir() && d.isReadable() && d.isExecutable();
 }
 
 bool DirModel::existsFile(const QString &fileName) const
 {
-     QFileInfo f(setParentIfRelative(fileName));
+     DirItemInfo f(setParentIfRelative(fileName));
      return f.exists() && f.isFile();
 }
 
 bool DirModel::canReadFile(const QString &fileName) const
 {
-    QFileInfo  f(setParentIfRelative(fileName));
-    return canReadFile(f);
+    DirItemInfo  f(setParentIfRelative(fileName));
+    return canReadFile(f.diskFileInfo());
 }
 
 bool DirModel::canReadFile(const QFileInfo &f) const
@@ -1404,6 +1454,8 @@ QFileInfo  DirModel::setParentIfRelative(const QString &fileOrDir) const
     if (myFi.isRelative())
     {
         myFi.setFile(mCurrentDir, fileOrDir);
+        QFileInfo abs(myFi.absoluteFilePath());
+        myFi = abs;
     }
     return myFi;
 }
@@ -1419,7 +1471,39 @@ void DirModel::clear()
 {
     beginResetModel();
     mDirectoryContents.clear();
+    mSelection->clear();
     endResetModel();
+}
+
+
+DirSelection * DirModel::selectionObject() const
+{
+    return mSelection;
+}
+
+
+void DirModel::registerMetaTypes()
+{
+    qRegisterMetaType<DirItemInfoList>("DirItemInfoList");
+    qRegisterMetaType<DirItemInfo>("DirItemInfo");
+}
+
+void DirModel::notifyItemChanged(int row)
+{   
+    QModelIndex first = index(row,0);
+#if REGRESSION_TEST_FOLDERLISTMODEL
+    QModelIndex last  = index(row, columnCount()); //Table only when testing
+#else
+    QModelIndex last  = first; //QML uses Listview, just one column
+#endif
+    emit dataChanged(first, last);
+}
+
+
+int DirModel::getIndex(const QString &name)
+{
+    QFileInfo i(name);
+    return rowOfItem(DirItemInfo(i));
 }
 
 

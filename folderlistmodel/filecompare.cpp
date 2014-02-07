@@ -35,14 +35,14 @@
  */
 
 #include "filecompare.h"
-#include <QFileInfo>
+#include "diriteminfo.h"
 #include <QString>
 #include <QDateTime>
 #include <QDebug>
 
 
 
-bool fileCompareExists(const QFileInfo &a, const QFileInfo &b)
+bool fileCompareExists(const DirItemInfo &a, const DirItemInfo &b)
 {
     if (a.isDir() && !b.isDir())
         return true;
@@ -50,15 +50,16 @@ bool fileCompareExists(const QFileInfo &a, const QFileInfo &b)
     if (b.isDir() && !a.isDir())
         return false;
 
-    bool ret = QString::localeAwareCompare(a.absoluteFilePath(), b.absoluteFilePath()) < 0;
+    bool ret = QString::localeAwareCompare(a.fileName(), b.fileName()) < 0;
 #if DEBUG_MESSAGES
-    qDebug() <<  Q_FUNC_INFO << ret << a.absoluteFilePath() << b.absoluteFilePath();
+    qDebug() <<  Q_FUNC_INFO << ret << a.fileName() << b.fileName();
 #endif
+
     return ret;
 }
 
 
-bool fileCompareAscending(const QFileInfo &a, const QFileInfo &b)
+bool fileCompareAscending(const DirItemInfo &a, const DirItemInfo &b)
 {
     if (a.isDir() && !b.isDir())
         return true;
@@ -70,7 +71,7 @@ bool fileCompareAscending(const QFileInfo &a, const QFileInfo &b)
 }
 
 
-bool fileCompareDescending(const QFileInfo &a, const QFileInfo &b)
+bool fileCompareDescending(const DirItemInfo &a, const DirItemInfo &b)
 {
     if (a.isDir() && !b.isDir())
         return true;
@@ -82,7 +83,7 @@ bool fileCompareDescending(const QFileInfo &a, const QFileInfo &b)
 }
 
 
-bool dateCompareDescending(const QFileInfo &a, const QFileInfo &b)
+bool dateCompareDescending(const DirItemInfo &a, const DirItemInfo &b)
 {
     if (a.isDir() && !b.isDir())
         return true;
@@ -94,7 +95,7 @@ bool dateCompareDescending(const QFileInfo &a, const QFileInfo &b)
 }
 
 
-bool dateCompareAscending(const QFileInfo &a, const QFileInfo &b)
+bool dateCompareAscending(const DirItemInfo &a, const DirItemInfo &b)
 {
     if (a.isDir() && !b.isDir())
         return true;

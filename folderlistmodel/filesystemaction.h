@@ -37,9 +37,9 @@
 #ifndef FILESYSTEMACTION_H
 #define FILESYSTEMACTION_H
 
+#include "diriteminfo.h"
 
 #include <QObject>
-#include <QFileInfo>
 #include <QVector>
 
 /*!
@@ -114,10 +114,10 @@ public slots:
 signals:
     void     error(const QString& errorTitle, const QString &errorMessage);
     void     removed(const QString& item);
-    void     removed(const QFileInfo&);
+    void     removed(const DirItemInfo&);
     void     added(const QString& );
-    void     added(const QFileInfo& );
-    void     changed(const QFileInfo&);
+    void     added(const DirItemInfo& );
+    void     changed(const DirItemInfo&);
     void     progress(int curItem, int totalItems, int percent);
     void     recopy(const QStringList &names, const QString& path);
 
@@ -170,7 +170,7 @@ private slots:
            reversedOrder.clear();
            if (newName) { delete newName; }
        }
-       QList<QFileInfo>   reversedOrder;   //!< last item must be the item from the list
+       QList<DirItemInfo>   reversedOrder;   //!< last item must be the item from the list
        int                currStep;
        int                currItem;
        bool               alreadyExists;

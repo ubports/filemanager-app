@@ -2,6 +2,7 @@
 #include "dirmodel.h"
 #include "tempfiles.h"
 #include "externalfswatcher.h"
+#include "dirselection.h"
 
 #if defined(Q_OS_UNIX)
 #include <stdio.h>
@@ -23,17 +24,13 @@
 #include <QtCore/QString>
 #include <QtTest/QtTest>
 #include <QFileInfo>
-#include <QMetaType>
 #include <QDirIterator>
 #include <QIcon>
 #include <QPixmap>
 #include <QFileIconProvider>
 
-#if QT_VERSION >= 0x050000
 #include <QMimeType>
 #include <QMimeDatabase>
-#endif
-
 #include <QCryptographicHash>
 #include <QDesktopServices>
 #include <QFile>
@@ -53,9 +50,6 @@
 #define  QSKIP_ALL_TESTS(statement)   QSKIP(statement,SkipAll)
 #endif
 
-#if  QT_VERSION < 0x050000
-# define QFileDevice   QFile
-#endif
 
 QByteArray md5FromIcon(const QIcon& icon);
 QString createFileInTempDir(const QString& name, const char *content, qint64 size);
@@ -71,8 +65,8 @@ public:
 protected slots:
     void slotFileAdded(const QString& s)     {m_filesAdded.append(s); }
     void slotFileRemoved(const QString& s)   {m_filesRemoved.append(s); }
-    void slotFileAdded(const QFileInfo& f)   {m_filesAdded.append(f.absoluteFilePath()); }
-    void slotFileRemoved(const QFileInfo& f) {m_filesRemoved.append(f.absoluteFilePath()); }
+    void slotFileAdded(const DirItemInfo& f)   {m_filesAdded.append(f.absoluteFilePath()); }
+    void slotFileRemoved(const DirItemInfo& f) {m_filesRemoved.append(f.absoluteFilePath()); }
     void slotPathChamged(QString path)       { m_currentPath = path;}
     void progress(int, int, int);
     void slotRemoveFileWhenProgressArrive(int,int,int);
@@ -80,6 +74,8 @@ protected slots:
     void slotclipboardChanged();
     void slotError(QString title, QString message);
     void slotExtFsWatcherPathModified()     { ++m_extFSWatcherPathModifiedCounter; }
+    void slotSelectionChanged(int counter)  { m_selectedItemsCounter = counter; }
+    void slotSelectionModeChanged(int m)    { m_selectionMode = m;}
 
 private Q_SLOTS:
     void initTestCase();       //before all tests
@@ -114,9 +110,7 @@ private Q_SLOTS: // test cases
     void  modelCutAndPasteInTheSamePlace();
     void  modelCopyAndPasteToBackupFiles();
     void  fileIconProvider();
-#if QT_VERSION >= 0x050000
     void  getThemeIcons();
-#endif
 #ifndef DO_NOT_USE_TAG_LIB
     void  verifyMP3Metadata();
 #endif
@@ -140,6 +134,8 @@ private Q_SLOTS: // test cases
     void  openPDF();
 #endif
 
+    void modelSingleSelection();
+    void modelMultiSelection();
 
 private:
     void initDeepDirs();
@@ -183,6 +179,8 @@ private:
     QString        m_currentPath;
     QString        m_fileToRemoveInProgressSignal;
     int            m_extFSWatcherPathModifiedCounter;
+    int            m_selectedItemsCounter;
+    int            m_selectionMode;
 
 };
 
@@ -197,10 +195,10 @@ TestDirModel::TestDirModel() : m_deepDir_01(0)
     connect(&fsAction, SIGNAL(removed(QString)),
             this,      SLOT(slotFileRemoved(QString)) );
 
-    connect(&fsAction, SIGNAL(added(QFileInfo)),
-            this,      SLOT(slotFileAdded(QFileInfo)));
-    connect(&fsAction, SIGNAL(removed(QFileInfo)),
-            this,      SLOT(slotFileRemoved(QFileInfo)));
+    connect(&fsAction, SIGNAL(added(DirItemInfo)),
+            this,      SLOT(slotFileAdded(DirItemInfo)));
+    connect(&fsAction, SIGNAL(removed(DirItemInfo)),
+            this,      SLOT(slotFileRemoved(DirItemInfo)));
 
     connect(&fsAction, SIGNAL(progress(int,int,int)),
             this,      SLOT(progress(int,int,int)));
@@ -380,19 +378,19 @@ void TestDirModel::initModels()
             this,      SLOT(slotFileAdded(QString)) );
     connect(m_dirModel_01->m_fsAction, SIGNAL(removed(QString)),
             this,      SLOT(slotFileRemoved(QString)) );
-    connect(m_dirModel_01->m_fsAction, SIGNAL(added(QFileInfo)),
-            this,      SLOT(slotFileAdded(QFileInfo)));
-    connect(m_dirModel_01->m_fsAction, SIGNAL(removed(QFileInfo)),
-            this,      SLOT(slotFileRemoved(QFileInfo)));
+    connect(m_dirModel_01->m_fsAction, SIGNAL(added(DirItemInfo)),
+            this,      SLOT(slotFileAdded(DirItemInfo)));
+    connect(m_dirModel_01->m_fsAction, SIGNAL(removed(DirItemInfo)),
+            this,      SLOT(slotFileRemoved(DirItemInfo)));
 
     connect(m_dirModel_02->m_fsAction, SIGNAL(added(QString)),
             this,      SLOT(slotFileAdded(QString)) );
     connect(m_dirModel_02->m_fsAction, SIGNAL(removed(QString)),
             this,      SLOT(slotFileRemoved(QString)) );
-    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QFileInfo)),
-            this,      SLOT(slotFileAdded(QFileInfo)));
-    connect(m_dirModel_02->m_fsAction, SIGNAL(removed(QFileInfo)),
-            this,      SLOT(slotFileRemoved(QFileInfo)));
+    connect(m_dirModel_02->m_fsAction, SIGNAL(added(DirItemInfo)),
+            this,      SLOT(slotFileAdded(DirItemInfo)));
+    connect(m_dirModel_02->m_fsAction, SIGNAL(removed(DirItemInfo)),
+            this,      SLOT(slotFileRemoved(DirItemInfo)));
 
     m_dirModel_01->setEnabledExternalFSWatcher(true);
     m_dirModel_02->setEnabledExternalFSWatcher(true);
@@ -409,8 +407,7 @@ void TestDirModel::cleanModels()
 
 void TestDirModel::initTestCase()
 {
-   qRegisterMetaType<QVector<QFileInfo> >("QVector<QFileInfo>");
-   qRegisterMetaType<QFileInfo>("QFileInfo");
+    DirModel::registerMetaTypes();
 }
 
 
@@ -436,6 +433,8 @@ void TestDirModel::init()
    m_progressNotificationsCounter = 0;
    m_visibleProgressMessages      = false;
    m_extFSWatcherPathModifiedCounter = 0;
+   m_selectedItemsCounter   = 0;
+   m_selectionMode          = -1;
 }
 
 
@@ -456,6 +455,8 @@ void TestDirModel::cleanup()
     m_progressNotificationsCounter      = 0;
     m_visibleProgressMessages           = false;
     m_extFSWatcherPathModifiedCounter   = 0;
+    m_selectedItemsCounter = 0;
+    m_selectionMode          = -1;
 }
 
 
@@ -1404,7 +1405,7 @@ void TestDirModel::openPathAbsouluteAndRelative()
 
     ret = m_dirModel_01->openPath(QLatin1String(".."));
     QTest::qWait(TIME_TO_REFRESH_DIR);
-    QCOMPARE(ret,                        true);
+    QCOMPARE(ret,                        true);   
     QCOMPARE(m_currentPath,              QDir::tempPath());
 
     ret = m_dirModel_01->openPath(orig);
@@ -1629,7 +1630,6 @@ void TestDirModel::watchExternalChanges()
 }
 
 
-#if QT_VERSION >= 0x050000
 void TestDirModel::getThemeIcons()
 {   
     QStringList mimesToTest = QStringList()
@@ -1700,7 +1700,6 @@ void TestDirModel::getThemeIcons()
         md5IconsTable.insert(md5, mimesToTest.at(counter));
     }
 }
-#endif
 
 
 bool TestDirModel::createFileAndCheckIfIconIsExclisive(const QString& termination,
@@ -2053,6 +2052,178 @@ void TestDirModel::extFsWatcherNoticeChangesWithSameTimestamp()
     QCOMPARE(secondFile.lastModified(),  firstFile.lastModified());
 }
 #endif //Q_OS_UNIX
+
+
+void TestDirModel::modelSingleSelection()
+{
+    DirSelection  *selection = m_dirModel_01->selectionObject();
+    QVERIFY(selection != 0);
+
+    connect(selection, SIGNAL(selectionChanged(int)),
+            this,      SLOT(slotSelectionChanged(int)));
+
+    connect(selection, SIGNAL(modeChanged(int)),
+            this,      SLOT(slotSelectionModeChanged(int)));
+
+    QString dirName("modelSingleSelection");
+    m_deepDir_01 = new DeepDir(dirName,0);
+    //create 2 files
+    TempFiles  tmp1, tmp2, tmp3;
+    tmp1.addSubDirLevel(dirName);
+    tmp2.addSubDirLevel(dirName);
+    tmp3.addSubDirLevel(dirName);
+    tmp1.create(QLatin1String("01first"), 1);
+    tmp2.create(QLatin1String("02second"), 1);
+    tmp3.create(QLatin1String("03third"), 1);
+    QString   firstFile  = tmp1.createdNames().at(0);
+    QString   secondFile = tmp2.createdList().at(0);
+    QString   thirdFile  = tmp3.createdNames().at(0);
+
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(),  3) ;
+
+    //relative path = name in the file manager
+    QCOMPARE(QFileInfo(firstFile).isAbsolute() , false);
+    //using full path
+    QCOMPARE(QFileInfo(secondFile).isAbsolute(), true);
+
+    QVERIFY(m_selectionMode != DirSelection::Single);
+    selection->setMode(DirSelection::Single);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_selectionMode, (int)DirSelection::Single);
+
+    QModelIndex firstIdx  = m_dirModel_01->index(0, DirModel::IsSelectedRole - DirModel::FileNameRole);
+    QModelIndex secondIdx = m_dirModel_01->index(1, DirModel::IsSelectedRole - DirModel::FileNameRole);
+    QModelIndex thirdIdx  = m_dirModel_01->index(2, DirModel::IsSelectedRole - DirModel::FileNameRole);
+
+    //toggle first item selection using index
+    selection->toggleIndex(0);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->data(firstIdx).toBool(),   true);
+    QCOMPARE(m_dirModel_01->data(secondIdx).toBool(),  false);
+    QCOMPARE(m_dirModel_01->data(thirdIdx).toBool(),   false);
+    QCOMPARE(m_selectedItemsCounter,                   1);
+
+    //toggle second item selection using name
+    selection->toggle(secondFile);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->data(firstIdx).toBool(),    false);
+    QCOMPARE(m_dirModel_01->data(secondIdx).toBool(),   true);
+    QCOMPARE(m_dirModel_01->data(thirdIdx).toBool(),    false);
+    QCOMPARE(m_selectedItemsCounter,                    1);
+
+    //toggle third item selection using name
+    selection->toggle(thirdFile);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->data(firstIdx).toBool(),    false);
+    QCOMPARE(m_dirModel_01->data(secondIdx).toBool(),   false);
+    QCOMPARE(m_dirModel_01->data(thirdIdx).toBool(),    true);
+    QCOMPARE(m_selectedItemsCounter,                    1);
+
+    selection->selectAll();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_selectedItemsCounter,                    3);
+
+    //all items are selected, if one item is unselected, other 2 items remain selected
+    selection->toggleIndex(0);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->data(firstIdx).toBool(),   false);
+    QCOMPARE(m_dirModel_01->data(secondIdx).toBool(),  true);
+    QCOMPARE(m_dirModel_01->data(thirdIdx).toBool(),   true);
+    QCOMPARE(m_selectedItemsCounter,                   2);
+
+    //compare results
+    QList<int>  selectedIndexes = selection->selectedIndexes();
+    QCOMPARE(selectedIndexes.count(),   2);
+    QCOMPARE(selectedIndexes.at(0),     1);
+    QCOMPARE(selectedIndexes.at(1),     2);
+    QStringList selectedNames = selection->selectedNames();
+    QCOMPARE(selectedNames.count(),     2);
+      // as secondFile is absolute path
+    QCOMPARE(selectedNames.at(0),       QFileInfo(secondFile).fileName());
+    QCOMPARE(selectedNames.at(1),       thirdFile);
+    QStringList pathNames  = selection->selectedAbsFilePaths();
+    QCOMPARE(pathNames.count(),         2);
+    QCOMPARE(pathNames.at(0),           tmp2.createdList().first());
+    QCOMPARE(pathNames.at(1),           tmp3.createdList().first());
+
+    //now as the first item is unselected, toggle
+    selection->toggleIndex(0);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->data(firstIdx).toBool(),   true);
+    QCOMPARE(m_dirModel_01->data(secondIdx).toBool(),  false);
+    QCOMPARE(m_dirModel_01->data(thirdIdx).toBool(),   false);
+    QCOMPARE(m_selectedItemsCounter,                   1);
+}
+
+
+void TestDirModel::modelMultiSelection()
+{
+    DirSelection  *selection = m_dirModel_01->selectionObject();
+    QVERIFY(selection != 0);
+
+    connect(selection, SIGNAL(selectionChanged(int)),
+            this,      SLOT(slotSelectionChanged(int)));
+
+    connect(selection, SIGNAL(modeChanged(int)),
+            this,      SLOT(slotSelectionModeChanged(int)));
+
+    QString dirName("modelMultiSelection");
+    const int createdFiles = 10;
+
+    m_deepDir_01 = new DeepDir(dirName,0);
+    TempFiles  tmpFiles;
+    tmpFiles.addSubDirLevel(dirName);
+    tmpFiles.create(createdFiles);
+
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(),  createdFiles) ;
+
+    selection->setMode(DirSelection::Multi);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(selection->mode(), DirSelection::Multi);
+
+    QStringList createdNames   = tmpFiles.createdNames();
+    QList<int> handledIndexes;
+    handledIndexes << 0 << 3 << 5 << 8 << 4;
+    int counter = handledIndexes.count();
+
+    QCOMPARE(m_selectedItemsCounter,         0);
+    while (counter--)
+    {
+        int item = handledIndexes.at(counter);
+        selection->set(createdNames.at(item), true);
+        QTest::qWait(10);
+    }
+    QCOMPARE(m_selectedItemsCounter,     handledIndexes.count());
+
+    counter = handledIndexes.count();
+    while (counter--)
+    {
+         int item = handledIndexes.at(counter);
+         QModelIndex index =  m_dirModel_01->index(item,
+                                 DirModel::IsSelectedRole - DirModel::FileNameRole);
+         QCOMPARE(m_dirModel_01->data(index).toBool(),   true);
+    }
+
+    //remove selected Items
+    m_dirModel_01->removeIndex(handledIndexes.takeAt(2));
+    QTest::qWait(TIME_TO_PROCESS);
+    m_dirModel_01->removeIndex(handledIndexes.takeLast());
+    QTest::qWait(TIME_TO_PROCESS);
+    QCOMPARE(m_selectedItemsCounter,     handledIndexes.count());
+
+    selection->selectAll();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_selectedItemsCounter,                    m_dirModel_01->rowCount());
+
+    selection->clear();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_selectedItemsCounter,                    0);
+}
+
 
 int main(int argc, char *argv[])
 {

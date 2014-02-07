@@ -32,22 +32,11 @@
 #ifndef NEMO_QML_PLUGINS_FOLDERLISTMODEL
 #define NEMO_QML_PLUGINS_FOLDERLISTMODEL
 
+#include "dirmodel.h"
+#include "dirselection.h"
+
 #include <QtGlobal>
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-#include <QtDeclarative>
-#include <QDeclarativeEngine>
-#include <QDeclarativeExtensionPlugin>
-#include <QVector>
-#include <QFileInfo>
 
-#define PLUGIN_CLASS_EXPORT
-#define PLUGIN_CLASS_EXTERNAL_EXPORT Q_EXPORT_PLUGIN2(nemofolderlistmodel, NemoFolderListModelPlugin);
-#define PLUGIN_CLASS_EXTEND
-typedef QDeclarativeExtensionPlugin QmlPluginParent;
-typedef QDeclarativeEngine QmlEngine;
-Q_DECLARE_METATYPE(QVector<QFileInfo>)
-
-#else
 #include <QQmlComponent>
 #include <QQmlEngine>
 #include <QQmlContext>
@@ -60,11 +49,10 @@ Q_DECLARE_METATYPE(QVector<QFileInfo>)
     Q_PLUGIN_METADATA(IID "org.nemomobile.folderlistmodel")
 typedef QQmlExtensionPlugin QmlPluginParent;
 typedef QQmlEngine QmlEngine;
-#endif
 
-#include "dirmodel.h"
+
 #ifndef DO_NOT_USE_TAG_LIB
-#include "imageprovider.h"
+# include "imageprovider.h"
 #endif
 
 #define QUOTES(x)  #x

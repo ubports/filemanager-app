@@ -6,7 +6,9 @@ SOURCES += $$PWD/dirmodel.cpp \
            $$PWD/filecompare.cpp \
            $$PWD/externalfswatcher.cpp \
            $$PWD/clipboard.cpp \
-           $$PWD/fmutil.cpp
+           $$PWD/fmutil.cpp \
+           $$PWD/dirselection.cpp \
+           $$PWD/diriteminfo.cpp
 
 
 
@@ -19,7 +21,10 @@ HEADERS += $$PWD/dirmodel.h \
            $$PWD/filecompare.h \
            $$PWD/externalfswatcher.h \
            $$PWD/clipboard.h \
-           $$PWD/fmutil.h
+           $$PWD/fmutil.h  \
+           $$PWD/dirselection.h \          
+           $$PWD/diritemabstractlistmodel.h \
+           $$PWD/diriteminfo.h
 
 
 

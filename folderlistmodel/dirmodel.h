@@ -32,19 +32,19 @@
 #ifndef DIRMODEL_H
 #define DIRMODEL_H
 
-#include <QAbstractListModel>
-#include <QFileInfo>
-#include <QVector>
+
 #include <QStringList>
 #include <QDir>
-#include <QDateTime>
 
 #include "iorequest.h"
 #include "filecompare.h"
+#include "diritemabstractlistmodel.h"
+#include "diriteminfo.h"
 
 class FileSystemAction;
 class ExternalFSWatcher;
 class Clipboard;
+class DirSelection;
 
 /*!
  *  When the External File System Wathcer is enabled,
@@ -54,7 +54,7 @@ class Clipboard;
  */
 #define EX_FS_WATCHER_TIMER_INTERVAL   900
 
-class DirModel : public QAbstractListModel
+class DirModel : public DirItemAbstractListModel
 {
     Q_OBJECT
 public:
@@ -71,6 +71,7 @@ public:
         IsReadableRole,
         IsWritableRole,
         IsExecutableRole,
+        IsSelectedRole,
         TrackTitleRole,
         TrackArtistRole,
         TrackAlbumRole,
@@ -84,6 +85,12 @@ public:
 public:
     explicit DirModel(QObject *parent = 0);
     ~DirModel();
+
+    static void registerMetaTypes();
+
+    //DirItemAbstractListModel
+    virtual int                 getIndex(const QString& name);
+    virtual void                notifyItemChanged(int row);
 
     int rowCount(const QModelIndex &index = QModelIndex()) const
     {
@@ -120,6 +127,7 @@ public:
 
     Q_INVOKABLE void rm(const QStringList &paths);
 
+    Q_INVOKABLE bool rename(const QString& oldName, const QString& newName);
     Q_INVOKABLE bool rename(int row, const QString &newName);
 
     Q_INVOKABLE void mkdir(const QString &newdir);
@@ -141,7 +149,7 @@ public:
     void setNameFilters(const QStringList &nameFilters);
 
 public slots:
-    void onItemsAdded(const QVector<QFileInfo> &newFiles);
+    void onItemsAdded(const DirItemInfoList &newFiles);
     void onResultsFetched();
 
 signals:
@@ -155,12 +163,8 @@ signals:
     void error(const QString &errorTitle, const QString &errorMessage);
 
 private:
-    QHash<int, QByteArray> buildRoleNames() const;
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    // In Qt5, the roleNames() is virtual and will work just fine. On qt4 setRoleNames must be used with buildRoleNames.
+    QHash<int, QByteArray> buildRoleNames() const;   
     QHash<int, QByteArray> roleNames() const;
-#endif
-
     QStringList mNameFilters;
     bool mFilterDirectories;
     bool mShowDirectories;
@@ -168,9 +172,12 @@ private:
     bool mIsRecursive;
     bool mReadsMediaMetadata;
     QString mCurrentDir;
-    QVector<QFileInfo> mDirectoryContents;
+    DirItemInfoList  mDirectoryContents;
 
 public:
+
+    Q_INVOKABLE DirSelection * selectionObject() const ;
+
     //[0] new stuff Ubuntu File Manager
     Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
     QString parentPath() const;
@@ -209,8 +216,8 @@ public:
      *    \return true if row points to a directory and the directory is readble, false otherwise
      */
     Q_INVOKABLE  bool cdIntoIndex(int row);
-
     Q_INVOKABLE  bool cdIntoPath(const QString& filename);
+
     /*!
      * \brief copyIndex() puts the item pointed by \a row (dir or file) into the clipboard
      * \param row points to the item file or directory
@@ -358,19 +365,19 @@ signals:
 
 private slots:
     void onItemRemoved(const QString&);
-    void onItemRemoved(const QFileInfo&);
+    void onItemRemoved(const DirItemInfo&);
     void onItemAdded(const QString&);
-    void onItemAdded(const QFileInfo&);
-    void onItemChanged(const QFileInfo&);
+    void onItemAdded(const DirItemInfo&);
+    void onItemChanged(const DirItemInfo&);
 
 private:
-    int           addItem(const QFileInfo& fi);
+    int           addItem(const DirItemInfo& fi);
     void          setCompareAndReorder();
-    int           rowOfItem(const QFileInfo& fi);
+    int           rowOfItem(const DirItemInfo& fi);
     QDir::Filter  currentDirFilter()  const;
-    QString       dirItems(const QFileInfo& fi) const;
-    bool          cdInto(const QFileInfo& fi);
-    bool          openItem(const QFileInfo& fi);
+    QString       dirItems(const DirItemInfo& fi) const;
+    bool          cdInto(const DirItemInfo& fi);
+    bool          openItem(const DirItemInfo& fi);
     DirListWorker * createWorkerRequest(IORequest::RequestType requestType,
                                                   const QString& pathName);
     bool          canReadDir(const QFileInfo& d)   const;
@@ -382,9 +389,9 @@ private:
     void          stoptExternalFsWatcher();
     void          clear();
 private slots:
-    void          onItemAddedOutsideFm(const QFileInfo&fi);
-    void          onItemRemovedOutSideFm(const QFileInfo&);
-    void          onItemChangedOutSideFm(const QFileInfo&fi);
+    void          onItemAddedOutsideFm(const DirItemInfo&fi);
+    void          onItemRemovedOutSideFm(const DirItemInfo&);
+    void          onItemChangedOutSideFm(const DirItemInfo&fi);
     void          onThereAreExternalChanges();
     void          onExternalFsWorkerFinished(int);
 
@@ -396,6 +403,7 @@ private:
     CompareFunction     mCompareFunction;
     ExternalFSWatcher*  mExtFSWatcher;
     Clipboard *         mClipboard;
+    DirSelection *      mSelection;
 
 
 private:

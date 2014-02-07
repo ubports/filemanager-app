@@ -46,8 +46,10 @@
 #include <taglib/mpegfile.h>
 #endif
 
+#include <QQmlEngine>
 #include <QtGlobal>
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#include <QPainter>
+
 
 CoverArtImageProvider::CoverArtImageProvider() : QQuickImageProvider(QQuickImageProvider::Image) {}
 
@@ -88,4 +90,4 @@ QImage CoverArtFullImageProvider::requestImage(const QString &id, QSize *size, c
     return img;
 }
 
-#endif
+

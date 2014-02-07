@@ -155,7 +155,7 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << pathname;
 #endif
-    QFileInfo info(pathname);
+    DirItemInfo info(pathname);
     if (!info.isAbsolute())
     {
         info.setFile(action->targetPath, pathname);
@@ -175,7 +175,7 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
         action->type == ActionMove ||
         action->type == ActionHardMoveCopy)
     {
-        QFileInfo destination(targetFom(info.absoluteFilePath(), action));
+        DirItemInfo destination(targetFom(info.absoluteFilePath(), action));
         entry->alreadyExists = destination.exists();
     }
     //ActionMove will perform a rename, so no Directory expanding is necessary
@@ -197,7 +197,7 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
     int bufferSize = (COPY_BUFFER_SIZE * STEP_FILES);
     while (counter--)
             {
-        const QFileInfo & item =  entry->reversedOrder.at(counter);
+        const DirItemInfo & item =  entry->reversedOrder.at(counter);
         size =  (item.isFile() && !item.isDir() && !item.isSymLink()) ?
                  item.size() :   COMMON_SIZE_ITEM;
         action->totalBytes +=  size;
@@ -340,7 +340,7 @@ void FileSystemAction::endActionEntry()
     // if so Views need to receive the notification about that
     if (curEntry->currItem == curEntry->reversedOrder.count())
     {
-        const QFileInfo & mainItem = curEntry->reversedOrder.at(curEntry->currItem -1);
+        const DirItemInfo & mainItem = curEntry->reversedOrder.at(curEntry->currItem -1);
         m_curAction->currEntryIndex++;
         switch(m_curAction->type)
         {
@@ -376,7 +376,7 @@ void FileSystemAction::endActionEntry()
                     }
                     else
                     {
-                        emit changed(QFileInfo(addedItem));
+                        emit changed(DirItemInfo(addedItem));
                     }
                 }
                 break;
@@ -440,7 +440,7 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
         )
 
     {
-        const QFileInfo &fi = entry->reversedOrder.at(entry->currItem);
+        const DirItemInfo &fi = entry->reversedOrder.at(entry->currItem);
         if (fi.isDir() && !fi.isSymLink())
         {
             m_cancelCurrentAction = !dir.rmdir(fi.absoluteFilePath());
@@ -518,7 +518,7 @@ void  FileSystemAction::processCopyEntry()
         )
 
     {
-        const QFileInfo &fi = entry->reversedOrder.at(entry->currItem);
+        const DirItemInfo &fi = entry->reversedOrder.at(entry->currItem);
         QString orig    = fi.absoluteFilePath();
         QString target = targetFom(orig, m_curAction);
         QString path(target);
@@ -527,7 +527,7 @@ void  FileSystemAction::processCopyEntry()
         //--
         if (fi.isFile() || fi.isSymLink())
         {
-            QFileInfo  t(target);
+            DirItemInfo  t(target);
             path = t.path();
         }
         //check if the main item in the entry is a directory
@@ -555,7 +555,7 @@ void  FileSystemAction::processCopyEntry()
         else
         if (fi.isSymLink())
         {
-            m_cancelCurrentAction = ! copySymLink(target,fi);
+            m_cancelCurrentAction = ! copySymLink(target,fi.diskFileInfo());
             if (m_cancelCurrentAction)
             {
                 m_errorTitle = QObject::tr("Could not create link to");
@@ -632,7 +632,7 @@ void  FileSystemAction::processCopyEntry()
                     }
                     else
                     {
-                        emit changed(QFileInfo(target));
+                        emit changed(DirItemInfo(target));
                     }
                 }
             }
@@ -664,10 +664,10 @@ void FileSystemAction::moveEntry(ActionEntry *entry)
         )
 
     {
-        const QFileInfo &fi = entry->reversedOrder.at(entry->currItem);
+        const DirItemInfo &fi = entry->reversedOrder.at(entry->currItem);
         file.setFileName(fi.absoluteFilePath());
         QString target(targetFom(fi.absoluteFilePath(), m_curAction));
-        QFileInfo targetInfo(target);
+        DirItemInfo targetInfo(target);
         //rename will fail
         if (targetInfo.exists())
         {
@@ -719,7 +719,7 @@ void FileSystemAction::copyIntoCurrentPath(const QStringList& items)
     m_clipboardChanged = false;
     if (items.count())
     {
-        QFileInfo destination(m_path);
+        DirItemInfo destination(m_path);
         if (destination.isWritable())
         {
             createAndProcessAction(ActionCopy, items);
@@ -742,8 +742,8 @@ void FileSystemAction::moveIntoCurrentPath(const QStringList& items)
     m_clipboardChanged = false;
     if (items.count())
     {
-        QFileInfo destination(m_path);
-        QFileInfo origin(QFileInfo(items.at(0)).absolutePath());
+        DirItemInfo destination(m_path);
+        DirItemInfo origin(DirItemInfo(items.at(0)).absolutePath());
         ActionType actionType  = ActionMove;
         static QString titleError     = tr("Cannot move items");
         static QString noWriteError   = tr("no write permission on folder ");
@@ -790,7 +790,7 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
     Action       *myAction       = 0;
     int           origPathLen    = 0;
     myAction                     = createAction(actionType, origPathLen);
-    myAction->origPath           = QFileInfo(paths.at(0)).absolutePath();
+    myAction->origPath           = DirItemInfo(paths.at(0)).absolutePath();
     myAction->baseOrigSize       = myAction->origPath.length();
     for (int counter=0; counter < paths.count(); counter++)
     {
@@ -1031,7 +1031,7 @@ bool FileSystemAction::processCopySingleFile()
             if (m_curAction->copyFile.isEntryItem && m_curAction->copyFile.amountSavedToRefresh <= 0)
             {
                 m_curAction->copyFile.amountSavedToRefresh = AMOUNT_COPIED_TO_REFRESH_ITEM_INFO;
-                emit changed(QFileInfo(m_curAction->copyFile.targetName));
+                emit changed(DirItemInfo(m_curAction->copyFile.targetName));
             }
             scheduleSlot(SLOT(processCopySingleFile()));
         }
@@ -1204,9 +1204,9 @@ bool FileSystemAction::makeBackupNameForCurrentItem(Action *action)
     bool ret = false;
     if (action->currEntry->alreadyExists)
     {
-        const QFileInfo& fi =
+        const DirItemInfo& fi =
               action->currEntry->reversedOrder.at(action->currEntry->reversedOrder.count() -1);
-        QFileInfo backuped;       
+        DirItemInfo backuped;
         int counter=0;
         QString name;
         do
@@ -1229,7 +1229,7 @@ bool FileSystemAction::makeBackupNameForCurrentItem(Action *action)
                 }
             }
             name.insert(pos,copy);
-            backuped.setFile(fi.absoluteDir(), name);
+            backuped.setFile(fi.absolutePath(), name);
         } while (backuped.exists() && counter < 100);
         if (counter < 100)
         {

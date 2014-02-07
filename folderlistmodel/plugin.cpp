@@ -31,10 +31,6 @@
 
 #include "plugin.h"
 
-#include <QVector>
-#include <QFileInfo>
-
-
 NemoFolderListModelPlugin::NemoFolderListModelPlugin() { }
 
 NemoFolderListModelPlugin::~NemoFolderListModelPlugin() { }
@@ -44,10 +40,8 @@ void NemoFolderListModelPlugin::initializeEngine(QmlEngine *engine, const char *
     Q_ASSERT(uri == QLatin1String(QUOTES(PLUGIN_URI)));
 
 #ifndef DO_NOT_USE_TAG_LIB
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     engine->addImageProvider(QLatin1String("cover-art"), new CoverArtImageProvider);
     engine->addImageProvider(QLatin1String("cover-art-full"), new CoverArtFullImageProvider);    
-#endif
 #endif //DO_NOT_USE_TAG_LIB
     
     Q_UNUSED(uri);
@@ -57,8 +51,8 @@ void NemoFolderListModelPlugin::initializeEngine(QmlEngine *engine, const char *
 void NemoFolderListModelPlugin::registerTypes(const char *uri)
 {
     Q_ASSERT(uri == QLatin1String(QUOTES(PLUGIN_URI)));
-    qRegisterMetaType< QVector<QFileInfo> >();
-    qRegisterMetaType<QFileInfo>("QFileInfo");
+    DirModel::registerMetaTypes();
+    qmlRegisterType<DirSelection>(uri, 1, 0, "FolderListSelection");
     qmlRegisterType<DirModel>(uri, 1, 0, "FolderListModel");
 }
 
