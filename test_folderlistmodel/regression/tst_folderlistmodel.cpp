@@ -3,6 +3,7 @@
 #include "tempfiles.h"
 #include "externalfswatcher.h"
 #include "dirselection.h"
+#include "trash/qtrashdir.h"
 
 #if defined(Q_OS_UNIX)
 #include <stdio.h>
@@ -34,6 +35,8 @@
 #include <QCryptographicHash>
 #include <QDesktopServices>
 #include <QFile>
+#include <QTemporaryDir>
+#include <QTemporaryFile>
 
 //files to generate
 #include "testonly_pdf.h"
@@ -136,6 +139,8 @@ private Q_SLOTS: // test cases
 
     void modelSingleSelection();
     void modelMultiSelection();
+
+    void trashDiretories();
 
 private:
     void initDeepDirs();
@@ -2222,6 +2227,104 @@ void TestDirModel::modelMultiSelection()
     selection->clear();
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_selectedItemsCounter,                    0);
+}
+
+
+void TestDirModel::trashDiretories()
+{
+    QTrashDir  trash;
+    QString dirName("trashDiretories");
+    m_deepDir_01 = new DeepDir(dirName,0);
+
+   // there is not .Trash dir
+   QCOMPARE(trash.isMountPointSharedWithStickBit(dirName),  false);
+
+   //create .Trash in it
+   QString trashDir(m_deepDir_01->path() + QDir::separator() + ".Trash");
+   QCOMPARE(QDir().mkpath(trashDir),           true);
+
+
+   //still faling
+   QCOMPARE(trash.isMountPointSharedWithStickBit(dirName),  false);
+
+   //turn stick bit on
+   QString cmd("chmod +t " + trashDir);
+   QCOMPARE(system(cmd.toLatin1().constData()),   0);
+   QCOMPARE(trash.isMountPointSharedWithStickBit((m_deepDir_01->path())),  true);
+
+   //test validate Trash Dir()
+   QCOMPARE(trash.validate(trashDir, false),  false);
+
+   //test   permissions
+   QFile f(trashDir);
+   bool permOk = f.setPermissions(QFile::ReadOwner  |
+                                  QFile::WriteOwner |
+                                  QFile::ExeOwner);
+   QCOMPARE(permOk,    true);
+   QCOMPARE(trash.checkUserDirPermissions(trashDir),  true);
+
+   //create files in Trash
+   QCOMPARE(trash.createUserDir(trash.filesTrashDir(trashDir)),  true);
+   //create info in Trash
+   QCOMPARE(trash.createUserDir(trash.infoTrashDir(trashDir)),  true);
+   //test validate Trash Dir(), now it MUST pass
+   QCOMPARE(trash.validate(trashDir, false),  true);
+
+   //invalidate Trash dir
+   QFile *f1 = new QFile(trashDir) ;
+   permOk  =  f1->setPermissions(QFile::ReadOwner  | QFile::ReadOther |
+                               QFile::WriteOwner   | QFile::WriteGroup|
+                               QFile::ExeOwner);
+   QCOMPARE(permOk,    true);
+   f1->flush();
+   delete f1;
+   QCOMPARE(trash.validate(trashDir, false),  false);
+
+   QString xdgTrash("xdg_Trash");
+   m_deepDir_02 = new DeepDir(xdgTrash,0);
+
+   //test XDG Home Trash
+   ::setenv("XDG_DATA_HOME", m_deepDir_02->path().toLatin1().constData(), true );
+
+   QString xdgTrashDir(trash.xdgHomeTrash());
+   QCOMPARE(trash.validate(xdgTrashDir, false),  true);
+   QCOMPARE(trash.homeTrash() , xdgTrashDir);
+
+   ::setenv("XDG_DATA_HOME", "\0", true );
+   QCOMPARE(trash.homeTrash() , QDir::homePath() + "/.local/share/Trash");
+
+   QCOMPARE(trash.getMountPoint(QDir::rootPath()), QDir::rootPath());
+   QCOMPARE(trash.getMountPoint(QDir::homePath()), QDir::rootPath());
+
+   QStringList mountedPoints = trash.mountedPoints();
+   foreach (const QString& mp, mountedPoints)
+   {
+        //attemp to create a temporary folder inside the mount point
+        QTemporaryDir  dir(mp + QDir::separator() );
+        if (dir.isValid())
+        {
+           QFileInfo fiDir(dir.path());
+           if (fiDir.exists())
+           {
+              qDebug() << "temp dir" << dir.path();
+              QCOMPARE(trash.getMountPoint(fiDir.canonicalFilePath()), mp);
+              //creates a temporary file inside temporary dir
+              QTemporaryFile file (fiDir.canonicalFilePath() + QDir::separator());
+              QCOMPARE(file.open(),   true);
+              file.close();
+              QCOMPARE(trash.getMountPoint(file.fileName()),   mp);
+          }
+        }
+   }
+
+   QTemporaryFile homeFile (QDir::homePath() + QDir::separator());
+   QString        homeTrashDir = trash.suitableTrash(homeFile.fileName());
+   QCOMPARE(homeTrashDir,          trash.homeTrash());
+
+   QStringList trashes =  trash.allTrashes();
+   qWarning() << "return from allTrashes():" << trashes;
+
+   QVERIFY(trashes.count() > 0);
 }
 
 
