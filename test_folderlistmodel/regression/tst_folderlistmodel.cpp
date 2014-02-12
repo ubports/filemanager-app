@@ -29,6 +29,7 @@
 #include <QIcon>
 #include <QPixmap>
 #include <QFileIconProvider>
+#include <QStandardPaths>
 
 #include <QMimeType>
 #include <QMimeDatabase>
@@ -2317,14 +2318,32 @@ void TestDirModel::trashDiretories()
         }
    }
 
+   //file under home
    QTemporaryFile homeFile (QDir::homePath() + QDir::separator());
+   QCOMPARE(homeFile.open(),     true);
+   homeFile.close();
    QString        homeTrashDir = trash.suitableTrash(homeFile.fileName());
    QCOMPARE(homeTrashDir,          trash.homeTrash());
+
+   //home
+   homeTrashDir = trash.suitableTrash(QDir::homePath());
+   QVERIFY(homeTrashDir != trash.homeTrash());
+
+   //file under home Trash
+   QTemporaryFile cannotMoveTotrash(trash.homeTrash() + QDir::separator());
+   QCOMPARE(cannotMoveTotrash.open(),   true);
+   cannotMoveTotrash.close();
+   QCOMPARE(trash.suitableTrash(cannotMoveTotrash.fileName()).isEmpty(),   true);
 
    QStringList trashes =  trash.allTrashes();
    qWarning() << "return from allTrashes():" << trashes;
 
    QVERIFY(trashes.count() > 0);
+
+   qDebug() << "QStandardPaths::CacheLocation"  << QStandardPaths::standardLocations(QStandardPaths::CacheLocation);
+   qDebug() << "QStandardPaths::DataLocation" << QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+   qDebug() << "QStandardPaths::GenericCacheLocation" << QStandardPaths::standardLocations(QStandardPaths::GenericCacheLocation);
+   qDebug() << "QStandardPaths::GenericDataLocation" << QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
 }
 
 

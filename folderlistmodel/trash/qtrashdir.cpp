@@ -24,6 +24,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDebug>
+#include <QStandardPaths>
 
 #if defined(Q_OS_UNIX)
 # include <sys/statvfs.h>
@@ -57,9 +58,9 @@ QString QTrashDir::xdgHomeTrash() const
 
 QString  QTrashDir::localHomeTrash() const
 {
-   QString homeTrash( QDir::homePath()  +
-                      QDir::separator() +
-                      QLatin1String(".local/share/Trash"));
+   QString homeTrash = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                              QLatin1String("Trash"),
+                                              QStandardPaths::LocateDirectory);
    if ( !validate(homeTrash, true) )
    {
        homeTrash.clear();
@@ -334,19 +335,29 @@ QString QTrashDir::suitableTrash(const QString &fullPathName) const
     QFileInfo fi(fullPathName);
     QString trashDir;
     QString homeTrashDir(homeTrash());
-    //first case file/dir is under home and it is different from homeTrashDir
-    if (fi.canonicalPath().startsWith(QDir::homePath()))
+    if (fi.exists())
     {
-        trashDir = homeTrashDir;
-    }
-    else // try mount points
-    {
-        QString topDir = getMountPoint(fi.canonicalFilePath());
-        trashDir  = getSuitableTopTrashDir(topDir);
-        if (trashDir.isEmpty() && fi.canonicalFilePath() != homeTrashDir)
-        {
-            trashDir = homeTrashDir;
-        }
+         //first case file/dir is under other directory than Home
+         if (!fi.canonicalPath().startsWith(QDir::homePath()))
+         {
+             QString topDir = getMountPoint(fi.canonicalFilePath());
+             trashDir  = getSuitableTopTrashDir(topDir);
+             //check if the file/dir intended to be moved into Trash does belong to Trash Dir itself
+             if (!trashDir.isEmpty() &&
+                  fi.canonicalFilePath().startsWith(trashDir)
+                )
+             {
+                 trashDir.clear();
+             }
+         }
+         //check AGAIN if the file/dir intended to be moved into Trash does belong to Trash Dir itself
+         if ( trashDir.isEmpty() &&
+              fi.canonicalFilePath() != QDir::homePath() &&
+              !fi.canonicalFilePath().startsWith(homeTrashDir)
+              )
+         {
+             trashDir = homeTrashDir;
+         }
     }
     return trashDir;
 }
