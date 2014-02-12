@@ -58,12 +58,27 @@ QString QTrashDir::xdgHomeTrash() const
 
 QString  QTrashDir::localHomeTrash() const
 {
+   QLatin1String  trash("Trash");
    QString homeTrash = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                              QLatin1String("Trash"),
+                                              trash,
                                               QStandardPaths::LocateDirectory);
-   if ( !validate(homeTrash, true) )
+   if (homeTrash.isEmpty() || !validate(homeTrash, false))
    {
        homeTrash.clear();
+   }
+   if (homeTrash.isEmpty())
+   {
+       QStringList dataLocations = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
+       QString tmp;
+       foreach(const QString& location, dataLocations)
+       {
+           tmp = location + QDir::separator() + trash;
+           if (validate(tmp, true))
+           {
+               homeTrash = tmp;
+               break;
+           }
+       }
    }
    return homeTrash;
 }
