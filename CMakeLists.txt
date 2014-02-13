@@ -46,7 +46,7 @@ list(SORT I18N_SRC_FILES)
 
 file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-     *.qml *.js *.png *.js)
+     *.qml *.js *.png *.js *.json)
 install(DIRECTORY icons DESTINATION ${DATA_DIR})
 install(FILES ${MAIN_QML} DESTINATION ${DATA_DIR})
 
