@@ -8,272 +8,272 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-12-30 14:24-0600\n"
-"PO-Revision-Date: 2014-01-16 18:46+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-02-04 08:51+0000\n"
+"Last-Translator: Peter Ahlgren <ahlgren1234@gmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-17 07:04+0000\n"
-"X-Generator: Launchpad (build 16901)\n"
+"X-Launchpad-Export-Date: 2014-02-06 06:25+0000\n"
+"X-Generator: Launchpad (build 16916)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
 #: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
 #: ../GoToDialog.qml:61
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: ../FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Välj handling"
 
 #: ../FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "För fil: %1"
 
 #: ../FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "Öppna"
 
 #: ../FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "Läsbar"
 
 #: ../FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "Skrivbar"
 
 #: ../FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "Körbar"
 
 #: ../FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "Sökväg:"
 
 #: ../FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "Innehåll:"
 
 #: ../FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "Storlek:"
 
 #: ../FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "Använd:"
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "Ändrad:"
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "Rättigheter:"
 
 #: ../FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "Pågående operationer"
 
 #: ../FolderListPage.qml:119
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Skrivbord"
 
 #: ../FolderListPage.qml:121
 msgid "~/Documents"
-msgstr ""
+msgstr "~/Dokument"
 
 #: ../FolderListPage.qml:123
 msgid "~/Downloads"
-msgstr ""
+msgstr "~/Hämtningar"
 
 #: ../FolderListPage.qml:125
 msgid "~/Music"
-msgstr ""
+msgstr "~/Musik"
 
 #: ../FolderListPage.qml:127
 msgid "~/Pictures"
-msgstr ""
+msgstr "~/Bilder"
 
 #: ../FolderListPage.qml:129
 msgid "~/Public"
-msgstr ""
+msgstr "~/Allmänt"
 
 #: ../FolderListPage.qml:131
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Program"
 
 #: ../FolderListPage.qml:133
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Mallar"
 
 #: ../FolderListPage.qml:135
 msgid "~/Videos"
-msgstr ""
+msgstr "~/Video"
 
 #: ../FolderListPage.qml:148
 msgid "Home"
-msgstr ""
+msgstr "Hem"
 
 #: ../FolderListPage.qml:150
 msgid "File System"
-msgstr ""
+msgstr "Filsystem"
 
 #: ../FolderListPage.qml:197
 msgid "1 file"
-msgstr ""
+msgstr "1 fil"
 
 #: ../FolderListPage.qml:198
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 filer"
 
 #: ../FolderListPage.qml:222
 msgid "Create New Folder"
-msgstr ""
+msgstr "Skapa ny mapp"
 
 #: ../FolderListPage.qml:242
 msgid "Paste"
-msgstr ""
+msgstr "Klistra in"
 
 #: ../FolderListPage.qml:244
 #, qt-format
 msgid "Paste %1 File"
-msgstr ""
+msgstr "Klistra in %1 fil"
 
 #: ../FolderListPage.qml:245
 #, qt-format
 msgid "Paste %1 Files"
-msgstr ""
+msgstr "Klistra in %1 filer"
 
 #: ../FolderListPage.qml:248
 msgid "Paste files"
-msgstr ""
+msgstr "Klistra in filer"
 
 #: ../FolderListPage.qml:260
 msgid "Open in Terminal"
-msgstr ""
+msgstr "Öppna i terminal"
 
 #: ../FolderListPage.qml:272 ../FolderListView.qml:150
 msgid "Properties"
-msgstr ""
+msgstr "Egenskaper"
 
 #: ../FolderListPage.qml:307
 msgid "Create folder"
-msgstr ""
+msgstr "Skapa mapp"
 
 #: ../FolderListPage.qml:308
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Skriv in namn för ny mapp"
 
 #: ../FolderListPage.qml:324
 msgid "Create file"
-msgstr ""
+msgstr "Skapa fil"
 
 #: ../FolderListPage.qml:325
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Skriv in namn för ny fil"
 
 #: ../FolderListPage.qml:360
 msgid "Actions"
-msgstr ""
+msgstr "Åtgärder"
 
 #: ../FolderListPage.qml:370
 msgid "View"
-msgstr ""
+msgstr "Visa"
 
 #: ../FolderListPage.qml:385
 msgid "Go To"
-msgstr ""
+msgstr "Gå till"
 
 #: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
 msgid "Places"
-msgstr ""
+msgstr "Platser"
 
 #: ../FolderListPage.qml:465
 msgid "No files"
-msgstr ""
+msgstr "Inga filer"
 
 #: ../FolderListPage.qml:486
 msgid "File operation error"
-msgstr ""
+msgstr "Filoperationsfel"
 
 #: ../FolderListView.qml:34
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 fil)"
 
 #: ../FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 filer)"
 
 #: ../FolderListView.qml:43 ../FolderListView.qml:124
 msgid "Delete"
-msgstr ""
+msgstr "Ta bort"
 
 #: ../FolderListView.qml:44
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "Är du säker att du vill ta bort '%1' permanent?"
 
 #: ../FolderListView.qml:67 ../FolderListView.qml:137
 msgid "Rename"
-msgstr ""
+msgstr "Byt namn"
 
 #: ../FolderListView.qml:68
 msgid "Enter a new name"
-msgstr ""
+msgstr "Ange ett nytt namn"
 
 #: ../FolderListView.qml:77
 msgid "Could not rename"
-msgstr ""
+msgstr "Kunde ej byta namn"
 
 #: ../FolderListView.qml:78
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Otillräckliga rättigheter eller finns namnet redan?"
 
 #: ../FolderListView.qml:101
 msgid "Cut"
-msgstr ""
+msgstr "Klipp ut"
 
 #: ../FolderListView.qml:112
 msgid "Copy"
-msgstr ""
+msgstr "Kopiera"
 
 #: ../FolderListView.qml:175
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Mapp ej tillgänglig"
 
 #: ../FolderListView.qml:176
 msgid "Can not access "
-msgstr ""
+msgstr "Kan ej komma åt "
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Gå till plats"
 
 #: ../GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Ange plats att gå till:"
 
 #: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
 msgid "Location..."
-msgstr ""
+msgstr "Plats..."
 
 #: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
 msgid "Go"
-msgstr ""
+msgstr "Gå"
 
 #: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
 msgid "Settings"
-msgstr ""
+msgstr "Inställningar"
 
 #: ../SettingsPage.qml:38
 msgid "Show Advanced Features"
@@ -281,40 +281,40 @@ msgstr ""
 
 #: ../ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Visa dolda filer"
 
 #: ../ViewPopover.qml:59
 msgid "Sort By"
-msgstr ""
+msgstr "Sortera efter"
 
 #: ../ViewPopover.qml:70
 msgid "Name"
-msgstr ""
+msgstr "Namn"
 
 #: ../ViewPopover.qml:71
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: ../ViewPopover.qml:81
 msgid "Sort Order"
-msgstr ""
+msgstr "Sorteringsordning"
 
 #: ../ViewPopover.qml:92 ../ViewPopover.qml:97
 msgid "Ascending"
-msgstr ""
+msgstr "Stigande"
 
 #: ../ViewPopover.qml:93
 msgid "Descending"
-msgstr ""
+msgstr "Fallande"
 
 #: ../ViewPopover.qml:105
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #: ../ubuntu-filemanager-app.qml:52
 msgid "Change app settings"
-msgstr ""
+msgstr "Ändra programinställningar"
 
 #: ../.build/ubuntu-filemanager-app.desktop.js:1
 msgid "File Manager"
-msgstr ""
+msgstr "Filhanterare"
