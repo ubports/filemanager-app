@@ -48,7 +48,7 @@ file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
      *.qml *.js *.png *.js *.json)
 install(DIRECTORY icons DESTINATION ${DATA_DIR})
-install(FILES FolderListPage.qml DESTINATION ${DATA_DIR})
+install(FILES FolderListPage.qml SettingsPage.qml DESTINATION ${DATA_DIR})
 install(FILES ${MAIN_QML} DESTINATION ${DATA_DIR})
 
 configure_file(${DESKTOP_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE})
