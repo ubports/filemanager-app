@@ -11,7 +11,7 @@ set(APP_NAME filemanager)
 set(DESKTOP_FILE "${PROJECT_NAME}_${APP_NAME}.desktop")
 set(URLS_FILE "${PROJECT_NAME}_${APP_NAME}.url-dispatcher")
 set(APP_HARDCODE ubuntu-filemanager-app)
-set(MAIN_QML ubuntu-filemanager-app.qml)
+set(MAIN_QML ${APP_HARDCODE}.qml)
 set(ICON filemanager64.png)
 set(AUTOPILOT_DIR ubuntu_filemanager_app)
 
@@ -47,7 +47,7 @@ list(SORT I18N_SRC_FILES)
 file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
      *.qml *.js *.png *.js)
-install(FILES ${SRC_FILES}  DESTINATION ${DATA_DIR})
+install(DIRECTORY icons DESTINATION ${DATA_DIR})
 install(FILES ${MAIN_QML} DESTINATION ${DATA_DIR})
 
 configure_file(${DESKTOP_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE})

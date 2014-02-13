@@ -1,8 +1,8 @@
 Source: ubuntu-filemanager-app
 Priority: extra
 Maintainer: Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>
-Build-Depends: debhelper (>= 9),
-               cmake
+Build-Depends: cmake,
+               debhelper (>= 9),
 Standards-Version: 3.9.4
 Section: misc
 Homepage: https://launchpad.net/ubuntu-filemanager-app
@@ -11,13 +11,13 @@ Vcs-Bzr: https://code.launchpad.net/~ubuntu-filemanager-dev/ubuntu-filemanager-a
 Package: ubuntu-filemanager-app
 Section: misc
 Architecture: all
-Depends: ${misc:Depends},
-         qmlscene,
-         qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
-         qtdeclarative5-qtquick2-plugin,
+Depends: qmlscene,
+         qtdeclarative5-hud1.0,
          qtdeclarative5-nemo-qml-plugin-folderlistmodel,
+         qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-u1db1.0,
-         qtdeclarative5-hud1.0
+         qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
+         ${misc:Depends},
 Description: File Manager application
  Core File Manager application
 
@@ -26,7 +26,7 @@ Architecture: all
 Depends: libautopilot-qt (>= 1.4),
          libqt5test5,
          python-mock,
+         ubuntu-filemanager-app (= ${source:Version}),
          ubuntu-ui-toolkit-autopilot,
-         ubuntu-filemanager-app (= ${source:Version})
 Description: Autopilot tests for File Manager Application
  This package contains the autopilot tests for the File Manager
