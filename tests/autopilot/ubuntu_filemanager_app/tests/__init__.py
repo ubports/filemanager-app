@@ -62,7 +62,7 @@ class FileManagerTestCase(AutopilotTestCase):
         #turn off the OSK so it doesn't block screen elements
         if model() != 'Desktop':
             os.system("stop maliit-server")
-            self.addCleanup(os.system,"start maliit-server")
+            self.addCleanup(os.system, "start maliit-server")
 
         self.original_file_count = \
             len([i for i in os.listdir(os.environ['TESTHOME'])
