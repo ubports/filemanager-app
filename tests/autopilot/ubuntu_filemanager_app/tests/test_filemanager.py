@@ -227,8 +227,8 @@ class TestFolderListPage(FileManagerTestCase):
 
         self.assertThat(
             self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
-        self.assertThat(
-            lambda: first_dir.fileName, Eventually(Equals(new_name)))
+        self.assertThat(self._get_file_by_index(0).fileName,
+                        Eventually(Equals(new_name)))
 
     def test_open_directory(self):
         dir_path = self._make_directory_in_testhome()
@@ -321,8 +321,8 @@ class TestFolderListPage(FileManagerTestCase):
 
         self.assertThat(
             self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
-        self.assertThat(
-            lambda: first_file.fileName, Eventually(Equals(new_name)))
+        self.assertThat(self._get_file_by_index(0).fileName,
+                        Eventually(Equals(new_name)))
 
     def test_cancel_delete_directory(self):
         dir_name = os.path.basename(self._make_directory_in_testhome())
