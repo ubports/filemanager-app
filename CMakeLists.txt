@@ -10,20 +10,20 @@ option(CLICK_MODE "Installs to a contained location" off)
 set(APP_NAME filemanager)
 set(DESKTOP_FILE "${PROJECT_NAME}_${APP_NAME}.desktop")
 set(URLS_FILE "${PROJECT_NAME}_${APP_NAME}.url-dispatcher")
-set(MAIN_QML filemanager.qml)
+set(APP_HARDCODE ubuntu-filemanager-app)
+set(MAIN_QML ubuntu-filemanager-app.qml)
 set(ICON filemanager64.png)
 set(AUTOPILOT_DIR ubuntu_filemanager_app)
-set(APP_HARDCODE ubuntu-filemanager-app)
 
 if(CLICK_MODE)
     if(NOT DEFINED BZR_SOURCE)
-        set(BZR_SOURCE "lp:ubuntu-${APP_HARDCODE}")
+        set(BZR_SOURCE "lp:${APP_HARDCODE}")
         message("-- Setting BZR_SOURCE to ${BZR_SOURCE}")
     endif(NOT DEFINED BZR_SOURCE)
     set(CMAKE_INSTALL_PREFIX /)
     set(CMAKE_INSTALL_BINDIR /)
     set(DATA_DIR /)
-    set(EXEC "qmlscene %u ${MAIN_QML}")
+    set(EXEC "qmlscene ${MAIN_QML}")
     set(DESKTOP_DIR ${DATA_DIR})
     set(URLS_DIR ${DATA_DIR})
 else(CLICK_MODE)
@@ -48,9 +48,11 @@ file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
      *.qml *.js *.png *.js)
 install(FILES ${SRC_FILES}  DESTINATION ${DATA_DIR})
+install(FILES ${MAIN_QML} DESTINATION ${DATA_DIR})
 
 configure_file(${DESKTOP_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE})
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE} DESTINATION ${DESKTOP_DIR})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE}
+    DESTINATION ${DESKTOP_DIR})
 
 install(FILES ${URLS_FILE} DESTINATION ${URLS_DIR})
 
