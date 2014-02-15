@@ -39,51 +39,6 @@ QTrashDir::QTrashDir() : m_userId(::getuid())
 
 }
 
-
-QString QTrashDir::xdgHomeTrash() const
-{
-    QString ret;
-    QByteArray xdg = ::qgetenv("XDG_DATA_HOME");
-    if (xdg.size() > 0)
-    {
-       QString trashDir(QString(xdg) + QDir::separator() + QLatin1String("Trash"));
-       if (validate(trashDir, true))
-       {
-            ret = trashDir;
-       }
-    }
-    return ret;
-}
-
-
-QString  QTrashDir::localHomeTrash() const
-{
-   QLatin1String  trash("Trash");
-   QString homeTrash = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                              trash,
-                                              QStandardPaths::LocateDirectory);
-   if (homeTrash.isEmpty() || !validate(homeTrash, false))
-   {
-       homeTrash.clear();
-   }
-   if (homeTrash.isEmpty())
-   {
-       QStringList dataLocations = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
-       QString tmp;
-       foreach(const QString& location, dataLocations)
-       {
-           tmp = location + QDir::separator() + trash;
-           if (validate(tmp, true))
-           {
-               homeTrash = tmp;
-               break;
-           }
-       }
-   }
-   return homeTrash;
-}
-
-
 bool QTrashDir::validate(const QString &trashDir, bool create) const
 {
    bool ret = false;
@@ -143,10 +98,17 @@ bool QTrashDir::createUserDir(const QString &dir) const
 
 QString QTrashDir::homeTrash() const
 {
-   QString homeTrash(xdgHomeTrash());
-   if (homeTrash.isEmpty())
+   QString homeTrash;
+   // If $XDG_DATA_HOME is either not set or empty, a default equal to
+   //$HOME/.local/share should be used.
+   QString xdg_home =   QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+   if (!xdg_home.isEmpty())
    {
-       homeTrash = localHomeTrash();
+       QString tmp(xdg_home+ QDir::separator() + QLatin1String("Trash"));
+       if (validate(tmp,true))
+       {
+          homeTrash = tmp;
+       }
    }
    return homeTrash;
 }
@@ -267,12 +229,7 @@ QStringList QTrashDir::mountedPoints() const
 QStringList QTrashDir::allTrashes() const
 {
     QStringList trashes;
-    QString    trashDir(xdgHomeTrash());
-    if (!trashDir.isEmpty())
-    {
-        trashes.append(trashDir);
-    }
-    trashDir = localHomeTrash();
+    QString    trashDir(homeTrash());
     if (!trashDir.isEmpty())
     {
         trashes.append(trashDir);

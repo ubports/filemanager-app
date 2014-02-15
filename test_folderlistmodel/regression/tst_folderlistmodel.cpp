@@ -2287,7 +2287,7 @@ void TestDirModel::trashDiretories()
    //test XDG Home Trash
    ::setenv("XDG_DATA_HOME", m_deepDir_02->path().toLatin1().constData(), true );
 
-   QString xdgTrashDir(trash.xdgHomeTrash());
+   QString xdgTrashDir(trash.homeTrash());
    QCOMPARE(trash.validate(xdgTrashDir, false),  true);
    QCOMPARE(trash.homeTrash() , xdgTrashDir);
 

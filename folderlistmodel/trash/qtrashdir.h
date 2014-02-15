@@ -107,9 +107,7 @@ public:
      */
     QString       infoTrashDir(const QString& trashDir)  const;
 
-private:        
-    QString       xdgHomeTrash() const;
-    QString       localHomeTrash() const;
+private:          
     bool          validate(const QString& trashDir, bool create=false) const;
     bool          isMountPointSharedWithStickBit(const QString& mountPoint) const;
     bool          checkUserDirPermissions(const QString& dir) const;
