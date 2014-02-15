@@ -1,21 +1,21 @@
 # Uyghur translation for ubuntu-filemanager-app
 # Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
 # This file is distributed under the same license as the ubuntu-filemanager-app package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# Gheyret Kenji <gheyret@gmail.com>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-12-30 14:24-0600\n"
-"PO-Revision-Date: 2013-11-13 01:49+0000\n"
+"PO-Revision-Date: 2014-02-14 21:46+0000\n"
 "Last-Translator: Gheyret T.Kenji <Unknown>\n"
-"Language-Team: Uyghur <ug@li.org>\n"
+"Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-09 05:38+0000\n"
-"X-Generator: Launchpad (build 16884)\n"
+"X-Launchpad-Export-Date: 2014-02-15 07:38+0000\n"
+"X-Generator: Launchpad (build 16916)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
@@ -47,11 +47,11 @@ msgstr "ئوقۇغىلى بولىدۇ"
 
 #: ../FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr "يازغىلى بولىدۇ"
+msgstr "يازغىلى بولامدۇ يوق"
 
 #: ../FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr "ئىجرا قىلغىلى بولىدۇ"
+msgstr "ئىجراچان"
 
 #: ../FileDetailsPopover.qml:91
 msgid "Path:"
@@ -67,15 +67,15 @@ msgstr "چوڭلۇقى:"
 
 #: ../FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr "زىيارەت قىلىنغان ۋاقتى:"
+msgstr "زىيارەت:"
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr "ئۆزگەرتىلگەن ۋاقتى:"
+msgstr "ئۆزگەرتكەن:"
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr "ئىمتىيازلار:"
+msgstr "ھوقۇقى:"
 
 #: ../FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
@@ -127,12 +127,12 @@ msgstr "ھۆججەت سىستېمىسى"
 
 #: ../FolderListPage.qml:197
 msgid "1 file"
-msgstr ""
+msgstr "%1 ھۆججەت"
 
 #: ../FolderListPage.qml:198
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 ھۆججەت"
 
 #: ../FolderListPage.qml:222
 msgid "Create New Folder"
@@ -154,15 +154,15 @@ msgstr ""
 
 #: ../FolderListPage.qml:248
 msgid "Paste files"
-msgstr "ھۆججەتلەرنى چاپلا"
+msgstr "ھۆججەتلەرنى چاپلايدۇ"
 
 #: ../FolderListPage.qml:260
 msgid "Open in Terminal"
-msgstr "تېرمىنالدا ئاچ"
+msgstr "تېرمىنالدا ئېچىش"
 
 #: ../FolderListPage.qml:272 ../FolderListView.qml:150
 msgid "Properties"
-msgstr "خاسلىقلار"
+msgstr "خاسلىق"
 
 #: ../FolderListPage.qml:307
 msgid "Create folder"
@@ -207,7 +207,7 @@ msgstr "ھۆججەت مەشغۇلاتىدا خاتالىق كۆرۈلدى"
 #: ../FolderListView.qml:34
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (ھۆججەت1)"
 
 #: ../FolderListView.qml:35
 #, qt-format
@@ -237,7 +237,7 @@ msgstr "ئاتىنى ئۆزگەرتەلمىدى"
 
 #: ../FolderListView.qml:78
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "ھوقۇقىڭىز  يەتمەيدۇ ياكى بۇ ھۆججەت ئاتى مەۋجۇت؟"
 
 #: ../FolderListView.qml:101
 msgid "Cut"
@@ -257,11 +257,11 @@ msgstr "زىيارەت قىلغىلى بولمىدى "
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "ئورۇنغا يۆتكەل"
 
 #: ../GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "يۆتكىلىدىغان ئورۇننى كىرگۈزۈڭ:"
 
 #: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
 msgid "Location..."
@@ -313,7 +313,7 @@ msgstr "سۈزگۈچ"
 
 #: ../ubuntu-filemanager-app.qml:52
 msgid "Change app settings"
-msgstr ""
+msgstr "ئەپ ئۆزگەرتىش تەڭشەكلىرى"
 
 #: ../.build/ubuntu-filemanager-app.desktop.js:1
 msgid "File Manager"
