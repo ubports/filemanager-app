@@ -124,7 +124,7 @@ Popover {
                     color: selected ? UbuntuColors.orange : Theme.palette.normal.overlayText
                 }
 
-                icon: model.icon || fileIcon(model.path, true)
+                iconSource: model.icon || fileIcon(model.path, true)
 
                 onClicked: {
                     PopupUtils.close(root)
