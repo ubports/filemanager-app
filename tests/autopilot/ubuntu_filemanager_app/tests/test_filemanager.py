@@ -102,7 +102,7 @@ class TestFolderListPage(FileManagerTestCase):
         # https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205201
         # --elopio - 2013-07-25
         place = None
-        if self.main_view.wideAspect:
+        if self.main_view.internal_wideAspect:
             place = (self.main_view.get_folder_list_page().get_sidebar()
                      .get_place(text))
         else:
@@ -117,9 +117,9 @@ class TestFolderListPage(FileManagerTestCase):
         #on wide UI display, we get the location dialog
         #on phone UI display, we get places popover
         device = model()
-        if self.main_view.wideAspect:
+        if self.main_view.internal_wideAspect:
             logger.debug("Using goto to goto %s on %s" % (location, device))
-            toolbar.click_button('goTo')
+            self.main_view.get_folder_list_page().get_pathbar().go_to_location()
             goto_location = self.main_view.get_dialog()
         else:
             logger.debug("Using places to goto %s on %s" % (location, device))

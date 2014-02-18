@@ -53,12 +53,12 @@ Item {
                     right: parent.right
                 }
 
-                objectName: "iconViewSmallHeader"
+                objectName: "iconViewHeader"
                 text: (root.count == 1
                        ? i18n.tr("%1 (1 file)").arg(root.folderPath)
                        : i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))
-                height: smallMode ? units.gu(4) : 0
-                clip: true
+                //height: smallMode ? units.gu(4) : 0
+                //clip: true
             }
 
             AutoSpacedGrid {

@@ -39,6 +39,7 @@ MainView {
 
     property alias filemanager: mainView
 
+    property bool internal_wideAspect: width >= units.gu(80)
     property bool wideAspect: width >= units.gu(80) && loaded
     property bool loaded: false
 

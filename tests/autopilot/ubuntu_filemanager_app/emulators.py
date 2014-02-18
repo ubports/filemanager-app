@@ -54,7 +54,7 @@ class MainView(toolkit_emulators.MainView):
 
     def get_places_popover(self):
         """Return the Places popover."""
-        if not(self.wideAspect):
+        if not(self.internal_wideAspect):
             # XXX It would be easier if the places popover was an object
             # that inherits from Popover, like the
             # ActionSelectionPopover does.
@@ -172,14 +172,14 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
             return self.select_single(FolderIconView).get_number_of_files()
 
     def get_sidebar(self):
-        if self.main_view.wideAspect:
+        if self.main_view.internal_wideAspect:
             return self.select_single(Sidebar)
         else:
             raise ValueError(
                 'Places sidebar is hidden in small mode.')
 
     def get_pathbar(self):
-        if self.main_view.wideAspect:
+        if self.main_view.internal_wideAspect:
             return self.main_view.get_toolbar().select_single(PathBar)
         else:
             raise ValueError(
