@@ -49,10 +49,10 @@ file(GLOB SRC_FILES
      *.qml *.js *.png *.js *.json)
 install(DIRECTORY icons DESTINATION ${DATA_DIR})
 install(FILES Sidebar.qml GoToDialog.qml ViewPopover.qml NotifyDialog.qml
-    SettingsPage.qml ConfirmDialog.qml PlacesPopover.qml PlacesSidebar.qml
+    SettingsSheet.qml ConfirmDialog.qml PlacesPopover.qml PlacesSidebar.qml
     FolderListPage.qml FolderListView.qml VerticalDivider.qml
     FileActionDialog.qml FileDetailsPopover.qml FolderListDelegate.qml
-    ConfirmDialogWithInput.qml FileOperationProgressDialog.qml
+    ConfirmDialogWithInput.qml FileOperationProgressDialog.qml SuruSheetStyle.qml
     DESTINATION ${DATA_DIR})
 install(FILES ${MAIN_QML} DESTINATION ${DATA_DIR})
 
