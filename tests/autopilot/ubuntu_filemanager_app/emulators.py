@@ -457,5 +457,5 @@ class FileDetailsPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 class PathBar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
     def go_to_location(self):
-        editButton = self.select_single('Rectangle', objectName='goToButton')
+        editButton = self.select_single(objectName='goToButton')
         self.pointing_device.click_object(editButton)

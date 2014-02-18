@@ -76,9 +76,6 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             folder_list_page.get_number_of_files_from_list,
             Eventually(Equals(expected_number_of_files), timeout=60))
-        self.assertThat(
-            folder_list_page.get_number_of_files_from_header,
-            Eventually(Equals(expected_number_of_files), timeout=60))
 
     def _get_file_by_name(self, name):
         folder_list_page = self.main_view.get_folder_list_page()

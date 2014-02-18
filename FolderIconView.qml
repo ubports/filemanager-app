@@ -46,6 +46,7 @@ Item {
             id: column
 
             width: flickable.contentWidth
+            // This must be visible so Autopilot can see it
             ListItem.Header {
                 anchors {
                     left: parent.left
@@ -56,8 +57,8 @@ Item {
                 text: (root.count == 1
                        ? i18n.tr("%1 (1 file)").arg(root.folderPath)
                        : i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))
-                visible: smallMode
-                height: visible ? units.gu(4) : 0
+                height: smallMode ? units.gu(4) : 0
+                clip: true
             }
 
             AutoSpacedGrid {
