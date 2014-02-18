@@ -119,7 +119,8 @@ class TestFolderListPage(FileManagerTestCase):
         device = model()
         if self.main_view.internal_wideAspect:
             logger.debug("Using goto to goto %s on %s" % (location, device))
-            self.main_view.get_folder_list_page().get_pathbar().go_to_location()
+            (self.main_view.get_folder_list_page().get_pathbar()
+                .go_to_location())
             goto_location = self.main_view.get_dialog()
         else:
             logger.debug("Using places to goto %s on %s" % (location, device))

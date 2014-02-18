@@ -454,6 +454,7 @@ class FileDetailsPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     def get_path(self):
         return self.select_single('Label', objectName='pathLabel').text
 
+
 class PathBar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
     def go_to_location(self):
