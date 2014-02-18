@@ -30,7 +30,7 @@ class MainView(toolkit_emulators.MainView):
 
     def get_folder_list_page(self):
         """Return the FolderListPage emulator of the MainView."""
-        page = self.select_single(FolderListPage)
+        page = self.wait_select_single(FolderListPage)
         page.main_view = self
         return page
 

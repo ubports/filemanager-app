@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-12-30 14:24-0600\n"
-"PO-Revision-Date: 2013-10-11 08:30+0000\n"
+"PO-Revision-Date: 2014-02-10 02:56+0000\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <km@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-09 05:38+0000\n"
-"X-Generator: Launchpad (build 16884)\n"
+"X-Launchpad-Export-Date: 2014-02-11 06:41+0000\n"
+"X-Generator: Launchpad (build 16916)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
@@ -127,12 +127,12 @@ msgstr "ប្រព័ន្ធ​ឯកសារ"
 
 #: ../FolderListPage.qml:197
 msgid "1 file"
-msgstr ""
+msgstr "ឯកសារ ១"
 
 #: ../FolderListPage.qml:198
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "ឯកសារ %1"
 
 #: ../FolderListPage.qml:222
 msgid "Create New Folder"
@@ -145,12 +145,12 @@ msgstr "បិទភ្ជាប់"
 #: ../FolderListPage.qml:244
 #, qt-format
 msgid "Paste %1 File"
-msgstr ""
+msgstr "បិទភ្ជាប់​ឯកសារ %1"
 
 #: ../FolderListPage.qml:245
 #, qt-format
 msgid "Paste %1 Files"
-msgstr ""
+msgstr "បិទភ្ជាប់​ឯកសារ %1"
 
 #: ../FolderListPage.qml:248
 msgid "Paste files"
@@ -207,12 +207,12 @@ msgstr "កំហុស​ក្នុងកា​រប្រតិបត្ត
 #: ../FolderListView.qml:34
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (ឯកសារ ១)"
 
 #: ../FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (ឯកសារ %2)"
 
 #: ../FolderListView.qml:43 ../FolderListView.qml:124
 msgid "Delete"
@@ -313,7 +313,7 @@ msgstr "តម្រង"
 
 #: ../ubuntu-filemanager-app.qml:52
 msgid "Change app settings"
-msgstr ""
+msgstr "ប្ដូរ​ការ​កំណត់​កម្មវិធី"
 
 #: ../.build/ubuntu-filemanager-app.desktop.js:1
 msgid "File Manager"

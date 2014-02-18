@@ -1,320 +1,320 @@
-# Arabic translation for ubuntu-filemanager-app
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# Bulgarian translation for ubuntu-filemanager-app
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
 # This file is distributed under the same license as the ubuntu-filemanager-app package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-12-30 14:24-0600\n"
-"PO-Revision-Date: 2014-01-22 18:18+0000\n"
-"Last-Translator: Ibrahim Saed <ibraheem5000@gmail.com>\n"
-"Language-Team: Arabic <ar@li.org>\n"
+"PO-Revision-Date: 2014-01-25 16:50+0000\n"
+"Last-Translator: Gangov <Unknown>\n"
+"Language-Team: Bulgarian <bg@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-23 05:57+0000\n"
-"X-Generator: Launchpad (build 16901)\n"
+"X-Launchpad-Export-Date: 2014-01-26 05:16+0000\n"
+"X-Generator: Launchpad (build 16914)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
 msgid "Ok"
-msgstr "حسنا"
+msgstr "ОК"
 
 #: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
 #: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
 #: ../GoToDialog.qml:61
 msgid "Cancel"
-msgstr "إلغاء"
+msgstr "Отмени"
 
 #: ../FileActionDialog.qml:30
 msgid "Choose action"
-msgstr "اختيار إجراء"
+msgstr "Избери действие"
 
 #: ../FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr "للملف: %1"
+msgstr "За файл: %1"
 
 #: ../FileActionDialog.qml:35
 msgid "Open"
-msgstr "افتح"
+msgstr "Отвoри"
 
 #: ../FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr "قابل للقراءة"
+msgstr "четим"
 
 #: ../FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr "قابل للكتابة"
+msgstr "записваем"
 
 #: ../FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr "تنفيذي"
+msgstr "Изпълним"
 
 #: ../FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr "المسار:"
+msgstr "Път:"
 
 #: ../FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr "المحتويات:"
+msgstr "Съдържание:"
 
 #: ../FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr "الحجم:"
+msgstr "Размер:"
 
 #: ../FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr "نُفِذ إليه:"
+msgstr "Последен достъп:"
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr "آخر تعديل:"
+msgstr "Последна промяна:"
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr "الصلاحيات:"
+msgstr "Права:"
 
 #: ../FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr "العملية قيد التنفيذ"
+msgstr "Операцията се изпълнява"
 
 #: ../FolderListPage.qml:119
 msgid "~/Desktop"
-msgstr "~/سطح المكتب"
+msgstr "~/Работен плот"
 
 #: ../FolderListPage.qml:121
 msgid "~/Documents"
-msgstr "~/المستندات"
+msgstr "~/Документи"
 
 #: ../FolderListPage.qml:123
 msgid "~/Downloads"
-msgstr "~/التنزيلات"
+msgstr "~/Свалени"
 
 #: ../FolderListPage.qml:125
 msgid "~/Music"
-msgstr "~/الموسيقى"
+msgstr "~/Музика"
 
 #: ../FolderListPage.qml:127
 msgid "~/Pictures"
-msgstr "~/الصور"
+msgstr "~/Изображения"
 
 #: ../FolderListPage.qml:129
 msgid "~/Public"
-msgstr "~/عام"
+msgstr "~/Публични"
 
 #: ../FolderListPage.qml:131
 msgid "~/Programs"
-msgstr "~/البرامج"
+msgstr "~/Програми"
 
 #: ../FolderListPage.qml:133
 msgid "~/Templates"
-msgstr "~/القوالب"
+msgstr "~/Шаблони"
 
 #: ../FolderListPage.qml:135
 msgid "~/Videos"
-msgstr "~/الفيديوهات"
+msgstr "~/Видео"
 
 #: ../FolderListPage.qml:148
 msgid "Home"
-msgstr "المنزل"
+msgstr "Домашна папка"
 
 #: ../FolderListPage.qml:150
 msgid "File System"
-msgstr "نظام الملفات"
+msgstr "Файлова система"
 
 #: ../FolderListPage.qml:197
 msgid "1 file"
-msgstr "ملف واحد"
+msgstr "1 файл"
 
 #: ../FolderListPage.qml:198
 #, qt-format
 msgid "%1 files"
-msgstr "%1 ملف/ملفات"
+msgstr "%1 файл"
 
 #: ../FolderListPage.qml:222
 msgid "Create New Folder"
-msgstr "إنشاء مجلد جديد"
+msgstr "Създай нова папка"
 
 #: ../FolderListPage.qml:242
 msgid "Paste"
-msgstr "ألصق"
+msgstr "Постави"
 
 #: ../FolderListPage.qml:244
 #, qt-format
 msgid "Paste %1 File"
-msgstr "لصق %1 ملف/ملفات"
+msgstr "Постави %1 файл"
 
 #: ../FolderListPage.qml:245
 #, qt-format
 msgid "Paste %1 Files"
-msgstr "لصق %1 ملف/ملفات"
+msgstr "Постави %1 файлове"
 
 #: ../FolderListPage.qml:248
 msgid "Paste files"
-msgstr "ألصق الملفات"
+msgstr "Постави файлове"
 
 #: ../FolderListPage.qml:260
 msgid "Open in Terminal"
-msgstr "فتح في الطرفية"
+msgstr "Отваряне в терминал"
 
 #: ../FolderListPage.qml:272 ../FolderListView.qml:150
 msgid "Properties"
-msgstr "الخصائص"
+msgstr "Свойства"
 
 #: ../FolderListPage.qml:307
 msgid "Create folder"
-msgstr "إنشاء مجلد"
+msgstr "Създай папка"
 
 #: ../FolderListPage.qml:308
 msgid "Enter name for new folder"
-msgstr "أدخل اسما للمجلد الجديد"
+msgstr "Въведи име за папка"
 
 #: ../FolderListPage.qml:324
 msgid "Create file"
-msgstr "إنشاء ملف"
+msgstr "Създай файл"
 
 #: ../FolderListPage.qml:325
 msgid "Enter name for new file"
-msgstr "أدخل اسما للملف الجديد"
+msgstr "Въведи име за файл"
 
 #: ../FolderListPage.qml:360
 msgid "Actions"
-msgstr "الإجراءات"
+msgstr "Действия"
 
 #: ../FolderListPage.qml:370
 msgid "View"
-msgstr "عرض"
+msgstr "Преглед"
 
 #: ../FolderListPage.qml:385
 msgid "Go To"
-msgstr "اذهب إلى"
+msgstr "Отиди до"
 
 #: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
 msgid "Places"
-msgstr "الأماكن"
+msgstr "Места"
 
 #: ../FolderListPage.qml:465
 msgid "No files"
-msgstr "لا ملفات"
+msgstr "Няма файлове"
 
 #: ../FolderListPage.qml:486
 msgid "File operation error"
-msgstr "خطأ في عملية الملف"
+msgstr "Грешка при действието с файла"
 
 #: ../FolderListView.qml:34
 #, qt-format
 msgid "%1 (1 file)"
-msgstr "%1 (ملف واحد)"
+msgstr "%1 (1 файл)"
 
 #: ../FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr "%1 (%2 ملف/ملفات)"
+msgstr "%1 (%2 файла)"
 
 #: ../FolderListView.qml:43 ../FolderListView.qml:124
 msgid "Delete"
-msgstr "احذف"
+msgstr "Изтрий"
 
 #: ../FolderListView.qml:44
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "هل أنت متأكد من أنك ترغب في حذف '%1' نهائيا؟"
+msgstr "Сигурни ли сте, че искате перманентно да изтриете '%1'?"
 
 #: ../FolderListView.qml:67 ../FolderListView.qml:137
 msgid "Rename"
-msgstr "تغيير التسمية"
+msgstr "Преименувай"
 
 #: ../FolderListView.qml:68
 msgid "Enter a new name"
-msgstr "أدخل اسما جديدا"
+msgstr "Въведи ново име"
 
 #: ../FolderListView.qml:77
 msgid "Could not rename"
-msgstr "لا يمكن تغيير الاسم"
+msgstr "Не може да се преименува"
 
 #: ../FolderListView.qml:78
 msgid "Insufficient permissions or name already exists?"
-msgstr "الصلاحيات غير كافية أو الاسم موجود بالفعل؟"
+msgstr "Недостатъчно правомощия или името вече съществува?"
 
 #: ../FolderListView.qml:101
 msgid "Cut"
-msgstr "قص"
+msgstr "Изрежи"
 
 #: ../FolderListView.qml:112
 msgid "Copy"
-msgstr "انسخ"
+msgstr "Копирай"
 
 #: ../FolderListView.qml:175
 msgid "Folder not accessible"
-msgstr "لا يمكن الوصول للمجلد"
+msgstr "Папката не е достъпна"
 
 #: ../FolderListView.qml:176
 msgid "Can not access "
-msgstr "لا يمكن الوصول لـ "
+msgstr "Не може да се достигне "
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
-msgstr "اذهب إلى المكان"
+msgstr "Отиди на локация"
 
 #: ../GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr "أدخِل مكانا للذهاب إلى:"
+msgstr "Въведи локация, на която да се отиде"
 
 #: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
 msgid "Location..."
-msgstr "المكان..."
+msgstr "Локация..."
 
 #: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
 msgid "Go"
-msgstr "اذهب"
+msgstr "Давай"
 
 #: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
 msgid "Settings"
-msgstr "الإعدادات"
+msgstr "Натройки"
 
 #: ../SettingsPage.qml:38
 msgid "Show Advanced Features"
-msgstr "اعرض ميزات متقدمة"
+msgstr "Покажи допълнителни екстри"
 
 #: ../ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr "أظهر الملفات المخفية"
+msgstr "Покажи скритите файлове"
 
 #: ../ViewPopover.qml:59
 msgid "Sort By"
-msgstr "ترتيب حسب"
+msgstr "Сортиране по"
 
 #: ../ViewPopover.qml:70
 msgid "Name"
-msgstr "الاسم"
+msgstr "Име"
 
 #: ../ViewPopover.qml:71
 msgid "Date"
-msgstr "التاريخ"
+msgstr "Дата"
 
 #: ../ViewPopover.qml:81
 msgid "Sort Order"
-msgstr "نوع الترتيب"
+msgstr "Ред на сортиране"
 
 #: ../ViewPopover.qml:92 ../ViewPopover.qml:97
 msgid "Ascending"
-msgstr "تصاعدي"
+msgstr "Възходящ"
 
 #: ../ViewPopover.qml:93
 msgid "Descending"
-msgstr "تنازلي"
+msgstr "Низходящ"
 
 #: ../ViewPopover.qml:105
 msgid "Filter"
-msgstr "تصفية"
+msgstr "Филтър"
 
 #: ../ubuntu-filemanager-app.qml:52
 msgid "Change app settings"
-msgstr "تغيير إعدادات التطبيق"
+msgstr "Промени настройките на приложението"
 
 #: ../.build/ubuntu-filemanager-app.desktop.js:1
 msgid "File Manager"
-msgstr "مدير الملفات"
+msgstr "Файлов мениджър"

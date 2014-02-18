@@ -39,7 +39,8 @@ MainView {
 
     property alias filemanager: mainView
 
-    property bool wideAspect: width >= units.gu(80)
+    property bool wideAspect: width >= units.gu(80) && loaded
+    property bool loaded: false
 
     property bool allowSidebarExpanded: width >= units.gu(80)
 
@@ -108,6 +109,7 @@ MainView {
             pageStack.push(tabs)
             pageStack.push(settingsPage)
             pageStack.pop()
+            loaded = true
         }
     }
 

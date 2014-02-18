@@ -1,5 +1,2 @@
-ubuntu-filemanager-app usr/bin/
-ubuntu-filemanager-app.desktop usr/share/applications/
-*.qml usr/share/ubuntu-filemanager-app/
-*.png usr/share/ubuntu-filemanager-app/
-icons/ usr/share/ubuntu-filemanager-app/
+usr/bin/*
+usr/share/*

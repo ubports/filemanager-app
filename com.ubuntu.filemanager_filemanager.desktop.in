@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=@EXEC@
+Icon=@ICON@
+Name=File Manager
+X-Ubuntu-Touch=true
+X-Ubuntu-Gettext-Domain=@PROJECT_NAME@

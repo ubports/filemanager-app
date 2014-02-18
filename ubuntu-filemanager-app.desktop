@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Terminal=false
-Exec=qmlscene /usr/share/ubuntu-filemanager-app/ubuntu-filemanager-app.qml
-Icon=/usr/share/ubuntu-filemanager-app/filemanager64.png
-Name=File Manager
-X-Ubuntu-Touch=true
-X-Ubuntu-StageHint=SideStage

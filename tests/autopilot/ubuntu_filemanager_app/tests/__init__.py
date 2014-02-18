@@ -62,9 +62,7 @@ class FileManagerTestCase(AutopilotTestCase):
         #turn off the OSK so it doesn't block screen elements
         if model() != 'Desktop':
             os.system("stop maliit-server")
-            #adding cleanup step seems to restart service immeadiately
-            #disabling for now
-            #self.addCleanup(os.system("start maliit-server"))
+            self.addCleanup(os.system, "start maliit-server")
 
         self.original_file_count = \
             len([i for i in os.listdir(os.environ['TESTHOME'])
@@ -95,8 +93,6 @@ class FileManagerTestCase(AutopilotTestCase):
         self.app = self.launch_test_application(
             base.get_qmlscene_launch_command(),
             self.installed_location,
-            "--desktop_file_hint="
-            "/usr/share/applications/ubuntu-filemanager-app.desktop",
             app_type='qt',
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 

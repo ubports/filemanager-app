@@ -92,15 +92,7 @@ Sidebar {
             model: places
 
             delegate: Standard {
-                id: standard
-
-                Label {
-                    anchors.left: parent.left
-                    anchors.leftMargin: units.gu(8)
-                    anchors.verticalCenter: parent.verticalCenter
                     text: folderName(path)
-                    color: selected ? UbuntuColors.orange : Theme.palette.selected.backgroundText
-                }
 
                 Image {
                     anchors {

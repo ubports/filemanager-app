@@ -28,7 +28,7 @@ import shutil
 from autopilot import process
 from autopilot.platform import model
 from autopilot.matchers import Eventually
-from testtools.matchers import Equals, NotEquals, Is, Not
+from testtools.matchers import Equals, NotEquals
 
 from ubuntu_filemanager_app.tests import FileManagerTestCase
 
@@ -76,6 +76,9 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             folder_list_page.get_number_of_files_from_list,
             Eventually(Equals(expected_number_of_files), timeout=60))
+        self.assertThat(
+            folder_list_page.get_number_of_files_from_header,
+            Eventually(Equals(expected_number_of_files), timeout=60))
 
     def _get_file_by_name(self, name):
         folder_list_page = self.main_view.get_folder_list_page()
@@ -109,13 +112,21 @@ class TestFolderListPage(FileManagerTestCase):
         self.pointing_device.click_object(place)
 
     def _go_to_location(self, location):
-        #go to specified location via the goto button
-        logger.debug("Opening goto dialog")
-        button = self.main_view.get_folder_list_page().get_pathbar().go_to_location()
-        logger.debug("Changing to %s" % location)
-        goto_dialog = self.main_view.get_dialog()
-        goto_dialog.enter_text(location)
-        goto_dialog.ok()
+        #go to specified location
+        toolbar = self.main_view.open_toolbar()
+        #on wide UI display, we get the location dialog
+        #on phone UI display, we get places popover
+        device = model()
+        if self.main_view.wideAspect:
+            logger.debug("Using goto to goto %s on %s" % (location, device))
+            toolbar.click_button('goTo')
+            goto_location = self.main_view.get_dialog()
+        else:
+            logger.debug("Using places to goto %s on %s" % (location, device))
+            toolbar.click_button('places')
+            goto_location = self.main_view.get_popover()
+        goto_location.enter_text(location)
+        goto_location.ok()
 
     def _get_place(self, text):
         places_popover = self.main_view.get_places_popover()
@@ -145,16 +156,10 @@ class TestFolderListPage(FileManagerTestCase):
         file_actions_popover.click_button(action)
 
     def _cancel_confirm_dialog(self):
-        self.assertThat(
-            self.main_view.get_confirm_dialog,
-            Eventually(NotEquals(None)))
         confirm_dialog = self.main_view.get_confirm_dialog()
         confirm_dialog.cancel()
 
     def _confirm_dialog(self, text=None):
-        self.assertThat(
-            self.main_view.get_confirm_dialog,
-            Eventually(NotEquals(None)))
         confirm_dialog = self.main_view.get_confirm_dialog()
         if text:
             confirm_dialog.enter_text(text)
@@ -182,9 +187,15 @@ class TestFolderListPage(FileManagerTestCase):
         first_file = self._get_file_by_index(0)
         self.pointing_device.click_object(first_file)
 
+        dialog = self.main_view.get_file_action_dialog()
+        dialog.visible.wait_for(True)
+
         process_manager = process.ProcessManager.create()
         original_apps = process_manager.get_running_applications()
 
+        dialog.open()
+        #make sure the dialog is open
+        self.main_view.get_file_action_dialog()
         # Filtering copied from
         # AutopilotTestCase._compare_system_with_app_snapshot.
         current_apps = self.process_manager.get_running_applications()
@@ -214,11 +225,10 @@ class TestFolderListPage(FileManagerTestCase):
         self._do_action_on_file(first_dir, action='Rename')
         self._confirm_dialog(new_name)
 
-        #make sure confirm dialog is open
-        self.main_view.get_confirm_dialog()
-
         self.assertThat(
-            lambda: first_dir.fileName, Eventually(Equals(new_name)))
+            self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
+        self.assertThat(self._get_file_by_index(0).fileName,
+                        Eventually(Equals(new_name)))
 
     def test_open_directory(self):
         dir_path = self._make_directory_in_testhome()
@@ -311,8 +321,8 @@ class TestFolderListPage(FileManagerTestCase):
 
         self.assertThat(
             self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
-        self.assertThat(
-            lambda: first_file.fileName, Eventually(Equals(new_name)))
+        self.assertThat(self._get_file_by_index(0).fileName,
+                        Eventually(Equals(new_name)))
 
     def test_cancel_delete_directory(self):
         dir_name = os.path.basename(self._make_directory_in_testhome())
@@ -370,10 +380,6 @@ class TestFolderListPage(FileManagerTestCase):
     def test_cancel_create_directory(self):
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('actions')
-
-        self.assertThat(
-            self.main_view.get_folder_actions_popover,
-            Eventually(Not(Is(None))))
 
         folder_actions_popover = self.main_view.get_folder_actions_popover()
         folder_actions_popover.click_button('Create New Folder')
