@@ -501,6 +501,7 @@ Page {
             left: sidebar.right
             right: parent.right
         }
+        smallMode: !sidebar.expanded
         visible: viewMethod === i18n.tr("List")
     }
 

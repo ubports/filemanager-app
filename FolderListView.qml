@@ -27,6 +27,7 @@ ListView {
     property FolderListModel folderListModel
     property string folderPath: folderListModel.path
     model: folderListModel
+    property bool smallMode: !wideAspect
 
     // This must be visible so Autopilot can see it
     header: Header {

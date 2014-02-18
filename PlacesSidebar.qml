@@ -92,7 +92,7 @@ Sidebar {
             model: places
 
             delegate: Standard {
-                    text: folderName(path)
+                text: folderName(path)
 
                 Image {
                     anchors {
@@ -111,19 +111,7 @@ Sidebar {
                     }
                 }
 
-                Image {
-                    id: image
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        horizontalCenterOffset: units.gu(4)
-                        horizontalCenter: parent.left
-                    }
-
-                    height: units.gu(4)
-                    width: height
-
-                    source: model.icon || fileIcon(model.path, true)
-                }
+                iconSource: model.icon || fileIcon(model.path, true)
 
                 onClicked: {
                     goTo(model.path)

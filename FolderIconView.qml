@@ -27,7 +27,7 @@ Item {
     property string folderPath: folderListModel.path
     property int count: repeater.count
     property Flickable flickable: flickable
-    property bool smallMode: false
+    property bool smallMode: !wideAspect
 
     Flickable {
         id: flickable
@@ -57,8 +57,8 @@ Item {
                 text: (root.count == 1
                        ? i18n.tr("%1 (1 file)").arg(root.folderPath)
                        : i18n.tr("%1 (%2 files)").arg(root.folderPath).arg(root.count))
-                //height: smallMode ? units.gu(4) : 0
-                //clip: true
+                height: smallMode ? units.gu(4) : 0
+                clip: true
             }
 
             AutoSpacedGrid {
