@@ -444,7 +444,6 @@ Page {
             id: settingsButton
             visible: sidebar.expanded
             objectName: "settings"
-            text: i18n.tr("Settings")
             action: settingsAction
         }
     }

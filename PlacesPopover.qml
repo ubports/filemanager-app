@@ -67,6 +67,7 @@ Popover {
 
             TextField {
                 id: locationField
+                objectName: "inputField"
                 anchors {
                     verticalCenter: parent.verticalCenter
                     left: parent.left
@@ -87,6 +88,7 @@ Popover {
 
             Button {
                 id: goButton
+                objectName: "okButton"
                 anchors {
                     top: locationField.top
                     bottom: locationField.bottom
@@ -112,8 +114,8 @@ Popover {
             model: places
 
             delegate: Standard {
-			    property string name: folderName(path)
-            
+                property string name: folderName(path)
+
                 Label {
                     anchors.left: parent.left
                     anchors.leftMargin: units.gu(8)

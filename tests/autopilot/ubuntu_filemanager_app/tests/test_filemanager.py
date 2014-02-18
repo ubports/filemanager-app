@@ -26,6 +26,7 @@ import os
 import shutil
 
 from autopilot import process
+from autopilot.platform import model
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals, NotEquals, Is, Not
 
@@ -260,6 +261,20 @@ class TestFolderListPage(FileManagerTestCase):
 
         file_ = self._get_file_by_name(file_name)
         self.assertThat(file_.fileName, Eventually(Equals(file_name)))
+
+    def test_cancel_file_action_dialog(self):
+        file_name = os.path.basename(self._make_file_in_testhome())
+
+        first_file = self._get_file_by_name(file_name)
+        self.pointing_device.click_object(first_file)
+
+        dialog = self.main_view.get_file_action_dialog()
+        dialog.visible.wait_for(True)
+        dialog.cancel()
+
+        self.assertThat(
+            self.main_view.file_action_dialog_exists,
+            Eventually(Equals(False)))
 
     def test_cancel_rename_directory(self):
         dir_path = self._make_directory_in_testhome()

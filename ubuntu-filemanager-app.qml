@@ -62,7 +62,7 @@ MainView {
         text: i18n.tr("Settings")
         description: i18n.tr("Change app settings")
         iconSource: getIcon("settings")
-        onTriggered: pageStack.push(settingsPage)
+        onTriggered: showSettings()
     }
     actions: [settingsAction]
 
@@ -109,12 +109,6 @@ MainView {
             pageStack.push(settingsPage)
             pageStack.pop()
         }
-    }
-
-    SettingsPage {
-        id: settingsPage
-
-        visible: false
     }
 
     /* Settings Storage */
@@ -166,6 +160,10 @@ MainView {
 
             reloadSettings()
         }
+    }
+
+    function showSettings() {
+        PopupUtils.open(Qt.resolvedUrl("SettingsSheet.qml"), mainView)
     }
 
     function reloadSettings() {

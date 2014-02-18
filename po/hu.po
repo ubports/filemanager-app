@@ -1,320 +1,320 @@
-# Uyghur translation for ubuntu-filemanager-app
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# Hungarian translation for ubuntu-filemanager-app
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
 # This file is distributed under the same license as the ubuntu-filemanager-app package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-12-30 14:24-0600\n"
-"PO-Revision-Date: 2013-11-13 01:49+0000\n"
-"Last-Translator: Gheyret T.Kenji <Unknown>\n"
-"Language-Team: Uyghur <ug@li.org>\n"
+"PO-Revision-Date: 2014-01-14 20:45+0000\n"
+"Last-Translator: Mátó Péter <Unknown>\n"
+"Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-09 05:38+0000\n"
-"X-Generator: Launchpad (build 16884)\n"
+"X-Launchpad-Export-Date: 2014-01-15 06:22+0000\n"
+"X-Generator: Launchpad (build 16890)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
 msgid "Ok"
-msgstr "تامام"
+msgstr "Ok"
 
 #: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
 #: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
 #: ../GoToDialog.qml:61
 msgid "Cancel"
-msgstr "ئەمەلدىن قالدۇر"
+msgstr "Mégse"
 
 #: ../FileActionDialog.qml:30
 msgid "Choose action"
-msgstr "مەشغۇلاتنى تاللاڭ"
+msgstr "Válasszon műveletet"
 
 #: ../FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "A következő fájlhoz: %1"
 
 #: ../FileActionDialog.qml:35
 msgid "Open"
-msgstr "ئاچ"
+msgstr "Megnyitás"
 
 #: ../FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr "ئوقۇغىلى بولىدۇ"
+msgstr "Olvasható"
 
 #: ../FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr "يازغىلى بولىدۇ"
+msgstr "Írható"
 
 #: ../FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr "ئىجرا قىلغىلى بولىدۇ"
+msgstr "Futtatható"
 
 #: ../FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr "يول:"
+msgstr "Útvonal:"
 
 #: ../FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr "مەزمۇنلىرى:"
+msgstr "Tartalom:"
 
 #: ../FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr "چوڭلۇقى:"
+msgstr "Méret:"
 
 #: ../FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr "زىيارەت قىلىنغان ۋاقتى:"
+msgstr "Hozzáférés:"
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr "ئۆزگەرتىلگەن ۋاقتى:"
+msgstr "Módosítás:"
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr "ئىمتىيازلار:"
+msgstr "Jogok:"
 
 #: ../FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr "مەشغۇلات ئىشلىنىۋاتىدۇ"
+msgstr "A művelet folyamatban"
 
 #: ../FolderListPage.qml:119
 msgid "~/Desktop"
-msgstr "~/ئۈستەلئۈستى"
+msgstr "~/Asztal"
 
 #: ../FolderListPage.qml:121
 msgid "~/Documents"
-msgstr "~/پۈتۈكلەر"
+msgstr "~/Dokumentumok"
 
 #: ../FolderListPage.qml:123
 msgid "~/Downloads"
-msgstr "~/چۈشۈرۈلمىلەر~/مۇزىكىلار"
+msgstr "~/Letöltések"
 
 #: ../FolderListPage.qml:125
 msgid "~/Music"
-msgstr "~/مۇزىكىلار"
+msgstr "~/Zenék"
 
 #: ../FolderListPage.qml:127
 msgid "~/Pictures"
-msgstr "~/سۈرەتلەر"
+msgstr "~/Képek"
 
 #: ../FolderListPage.qml:129
 msgid "~/Public"
-msgstr "~/ئورتاق"
+msgstr "~/Nyilvános"
 
 #: ../FolderListPage.qml:131
 msgid "~/Programs"
-msgstr "~/پروگراممىلار"
+msgstr "~/Programok"
 
 #: ../FolderListPage.qml:133
 msgid "~/Templates"
-msgstr "~/قېلىپلار"
+msgstr "~/Minták"
 
 #: ../FolderListPage.qml:135
 msgid "~/Videos"
-msgstr "~/سىنلار"
+msgstr "~/Videók"
 
 #: ../FolderListPage.qml:148
 msgid "Home"
-msgstr "ماكان"
+msgstr "Saját mappa"
 
 #: ../FolderListPage.qml:150
 msgid "File System"
-msgstr "ھۆججەت سىستېمىسى"
+msgstr "Fájlrendszer"
 
 #: ../FolderListPage.qml:197
 msgid "1 file"
-msgstr ""
+msgstr "1 fájl"
 
 #: ../FolderListPage.qml:198
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 fájl"
 
 #: ../FolderListPage.qml:222
 msgid "Create New Folder"
-msgstr "يېڭى قىسقۇچ قۇر"
+msgstr "Új mappa létrehozása"
 
 #: ../FolderListPage.qml:242
 msgid "Paste"
-msgstr "چاپلا"
+msgstr "Beillesztés"
 
 #: ../FolderListPage.qml:244
 #, qt-format
 msgid "Paste %1 File"
-msgstr ""
+msgstr "%1 fájl beszúrása"
 
 #: ../FolderListPage.qml:245
 #, qt-format
 msgid "Paste %1 Files"
-msgstr ""
+msgstr "%1 fájl beszúrása"
 
 #: ../FolderListPage.qml:248
 msgid "Paste files"
-msgstr "ھۆججەتلەرنى چاپلا"
+msgstr "Fájlok beillesztése"
 
 #: ../FolderListPage.qml:260
 msgid "Open in Terminal"
-msgstr "تېرمىنالدا ئاچ"
+msgstr "Megnyitás terminálban"
 
 #: ../FolderListPage.qml:272 ../FolderListView.qml:150
 msgid "Properties"
-msgstr "خاسلىقلار"
+msgstr "Tulajdonságok"
 
 #: ../FolderListPage.qml:307
 msgid "Create folder"
-msgstr "قىسقۇچ قۇر"
+msgstr "Mappa létrehozása"
 
 #: ../FolderListPage.qml:308
 msgid "Enter name for new folder"
-msgstr "يېڭى قىسقۇچنىڭ ئاتىنى كىرگۈزۈڭ"
+msgstr "Adja meg az új mappa nevét"
 
 #: ../FolderListPage.qml:324
 msgid "Create file"
-msgstr "ھوججەت قۇر"
+msgstr "Fájl létrehozása"
 
 #: ../FolderListPage.qml:325
 msgid "Enter name for new file"
-msgstr "يېڭى ھۆججەتنىڭ ئاتىنى كىرگۈزۈڭ"
+msgstr "Adja meg az új fájl nevét"
 
 #: ../FolderListPage.qml:360
 msgid "Actions"
-msgstr "مەشغۇلاتلار"
+msgstr "Műveletek"
 
 #: ../FolderListPage.qml:370
 msgid "View"
-msgstr "كۆرۈنۈش"
+msgstr "Megjelenítés"
 
 #: ../FolderListPage.qml:385
 msgid "Go To"
-msgstr "يۆتكەل"
+msgstr "Ugrás"
 
 #: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
 msgid "Places"
-msgstr "ئورۇنلار"
+msgstr "Helyek"
 
 #: ../FolderListPage.qml:465
 msgid "No files"
-msgstr "ھۆججەت يوق"
+msgstr "Nincs fájl"
 
 #: ../FolderListPage.qml:486
 msgid "File operation error"
-msgstr "ھۆججەت مەشغۇلاتىدا خاتالىق كۆرۈلدى"
+msgstr "Fájlművelethiba"
 
 #: ../FolderListView.qml:34
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 fájl)"
 
 #: ../FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 fájl)"
 
 #: ../FolderListView.qml:43 ../FolderListView.qml:124
 msgid "Delete"
-msgstr "ئۆچۈر"
+msgstr "Törlés"
 
 #: ../FolderListView.qml:44
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "راستلا ھۆججەت ‹%1› نى ئۆچۈرەمسىز؟"
+msgstr "Biztosan véglegesen törölni akarja a következőt: \"%1\"?"
 
 #: ../FolderListView.qml:67 ../FolderListView.qml:137
 msgid "Rename"
-msgstr "ئات ئۆزگەرت"
+msgstr "Átnevezés"
 
 #: ../FolderListView.qml:68
 msgid "Enter a new name"
-msgstr "بىر يېڭى ئات كىرگۈزۈڭ"
+msgstr "Adja meg az új nevet"
 
 #: ../FolderListView.qml:77
 msgid "Could not rename"
-msgstr "ئاتىنى ئۆزگەرتەلمىدى"
+msgstr "Az átnevezés nem lehetséges"
 
 #: ../FolderListView.qml:78
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Jogosultsági probléma vagy a név már létezik?"
 
 #: ../FolderListView.qml:101
 msgid "Cut"
-msgstr "كەس"
+msgstr "Kivágás"
 
 #: ../FolderListView.qml:112
 msgid "Copy"
-msgstr "كۆچۈر"
+msgstr "Másolás"
 
 #: ../FolderListView.qml:175
 msgid "Folder not accessible"
-msgstr "قىسقۇچنى زىيارەت قىلغىلى بولمايدىكەن"
+msgstr "A mappa nem elérhető"
 
 #: ../FolderListView.qml:176
 msgid "Can not access "
-msgstr "زىيارەت قىلغىلى بولمىدى "
+msgstr "Nem hozzáférhető "
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Ugrás megadott helyre"
 
 #: ../GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Adja meg a helyet:"
 
 #: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
 msgid "Location..."
-msgstr "ئورۇن…"
+msgstr "Hely..."
 
 #: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
 msgid "Go"
-msgstr "يۆتكەل"
+msgstr "Ugrás"
 
 #: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
 msgid "Settings"
-msgstr "تەڭشەكلەر"
+msgstr "Beállítások"
 
 #: ../SettingsPage.qml:38
 msgid "Show Advanced Features"
-msgstr "ئالىي ئىقتىدارلىرىنى كۆرسەت"
+msgstr "Mutassa a speciális beállításokat"
 
 #: ../ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr "يوشۇرۇن ھۆججەتلەرنى كۆرسەت"
+msgstr "Rejtett fájlok megjelenítése"
 
 #: ../ViewPopover.qml:59
 msgid "Sort By"
-msgstr "تەرتىپى"
+msgstr "Rendezés e szerint:"
 
 #: ../ViewPopover.qml:70
 msgid "Name"
-msgstr "ئاتى"
+msgstr "Név"
 
 #: ../ViewPopover.qml:71
 msgid "Date"
-msgstr "چېسلا"
+msgstr "Dátum"
 
 #: ../ViewPopover.qml:81
 msgid "Sort Order"
-msgstr "تەرتىپلەش تەرتىپى"
+msgstr "Rendezési sorrend"
 
 #: ../ViewPopover.qml:92 ../ViewPopover.qml:97
 msgid "Ascending"
-msgstr "ئۆسكۈچى"
+msgstr "Növekvő"
 
 #: ../ViewPopover.qml:93
 msgid "Descending"
-msgstr "كېمەيگۈچى"
+msgstr "Csökkenő"
 
 #: ../ViewPopover.qml:105
 msgid "Filter"
-msgstr "سۈزگۈچ"
+msgstr "Szűrő"
 
 #: ../ubuntu-filemanager-app.qml:52
 msgid "Change app settings"
-msgstr ""
+msgstr "Beállítások módosítása"
 
 #: ../.build/ubuntu-filemanager-app.desktop.js:1
 msgid "File Manager"
-msgstr "ھۆججەت باشقۇرغۇ"
+msgstr "Fájlkezelő"
