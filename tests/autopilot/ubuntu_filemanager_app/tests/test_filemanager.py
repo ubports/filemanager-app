@@ -102,7 +102,7 @@ class TestFolderListPage(FileManagerTestCase):
         # https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205201
         # --elopio - 2013-07-25
         place = None
-        if self.main_view.wideAspect:
+        if self.main_view.internal_wideAspect:
             place = (self.main_view.get_folder_list_page().get_sidebar()
                      .get_place(text))
         else:
@@ -117,9 +117,10 @@ class TestFolderListPage(FileManagerTestCase):
         #on wide UI display, we get the location dialog
         #on phone UI display, we get places popover
         device = model()
-        if self.main_view.wideAspect:
+        if self.main_view.internal_wideAspect:
             logger.debug("Using goto to goto %s on %s" % (location, device))
-            toolbar.click_button('goTo')
+            (self.main_view.get_folder_list_page().get_pathbar()
+                .go_to_location())
             goto_location = self.main_view.get_dialog()
         else:
             logger.debug("Using places to goto %s on %s" % (location, device))
@@ -268,20 +269,6 @@ class TestFolderListPage(FileManagerTestCase):
 
         file_ = self._get_file_by_name(file_name)
         self.assertThat(file_.fileName, Eventually(Equals(file_name)))
-
-    def test_cancel_file_action_dialog(self):
-        file_name = os.path.basename(self._make_file_in_testhome())
-
-        first_file = self._get_file_by_name(file_name)
-        self.pointing_device.click_object(first_file)
-
-        dialog = self.main_view.get_file_action_dialog()
-        dialog.visible.wait_for(True)
-        dialog.cancel()
-
-        self.assertThat(
-            self.main_view.file_action_dialog_exists,
-            Eventually(Equals(False)))
 
     def test_cancel_rename_directory(self):
         dir_path = self._make_directory_in_testhome()

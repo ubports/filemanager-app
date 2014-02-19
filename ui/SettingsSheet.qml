@@ -26,13 +26,18 @@ import Ubuntu.Components.Popups 0.1
  * TODO: Make sure this fits with the UI guidelines if
  * they are updated to include About/Settings info.
  */
-Page {
-    id: root
-
+DefaultSheet {
+    id: sheet
     title: i18n.tr("Settings")
+
+    Component.onCompleted: {
+        sheet.__leftButton.text = i18n.tr("Close")
+        sheet.__foreground.style = Theme.createStyleComponent(Qt.resolvedUrl("../components/SuruSheetStyle.qml"), sheet)
+    }
 
     Column {
         anchors.fill: parent
+        anchors.margins: units.gu(-1)
 
         Standard {
             text: i18n.tr("Show Advanced Features")

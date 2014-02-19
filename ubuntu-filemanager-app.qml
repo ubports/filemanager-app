@@ -22,6 +22,8 @@ import Ubuntu.Components.Popups 0.1
 import Ubuntu.Unity.Action 1.0 as UnityActions
 import U1db 1.0 as U1db
 
+import "ui"
+
 /*!
     \brief MainView with Tabs element.
            First Tab has a single Label and
@@ -29,7 +31,7 @@ import U1db 1.0 as U1db
 */
 
 MainView {
-    id: root
+    id: mainView
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
     applicationName: "com.ubuntu.filemanager"
@@ -37,10 +39,22 @@ MainView {
     width: units.gu(100)
     height: units.gu(75)
 
-    property alias filemanager: root
+    property alias filemanager: mainView
 
+    property bool internal_wideAspect: width >= units.gu(80)
     property bool wideAspect: width >= units.gu(80) && loaded
     property bool loaded: false
+
+    property bool allowSidebarExpanded: width >= units.gu(80)
+
+    onAllowSidebarExpandedChanged: {
+        if (!allowSidebarExpanded)
+            saveSetting("collapsedSidebar", true)
+    }
+
+    property bool showSidebar: width >= units.gu(50)
+
+    property bool showToolbar: width >= units.gu(80)
 
     headerColor: "#464646"
     backgroundColor: "#797979"
@@ -52,25 +66,44 @@ MainView {
         text: i18n.tr("Settings")
         description: i18n.tr("Change app settings")
         iconSource: getIcon("settings")
-        onTriggered: pageStack.push(settingsPage)
+        onTriggered: showSettings()
     }
     actions: [settingsAction]
 
     property var pageStack: pageStack
 
+    property var folderTabs: ["~"]
+
+    function openTab(folder) {
+        var list = folderTabs
+        list.push(folder)
+        folderTabs = list
+    }
+
+    function closeTab(index) {
+        var list = folderTabs
+        list.splice(index, 1)
+        folderTabs = list
+        tabs.selectedTabIndex = 0
+    }
+
     PageStack {
         id: pageStack
+
+        anchors.bottomMargin: toolbar.tools.opened && toolbar.tools.locked ? -mainView.toolbar.triggerSize : 0
 
         Tabs {
             id: tabs
 
-            Tab {
-                title: page.title
-                page: FolderListPage {
-                    id: folderPage
-                    objectName: "folderPage"
+            Repeater {
+                model: folderTabs
+                delegate: Tab {
+                    title: page.title
+                    page: FolderListPage {
+                        objectName: "folderPage"
 
-                    folder: homeFolder
+                        folder: modelData
+                    }
                 }
             }
         }
@@ -82,19 +115,6 @@ MainView {
             loaded = true
         }
     }
-
-    property var showToolbar: wideAspect ? true : undefined
-
-    states: [
-        State {
-            when: showToolbar && toolbar.tools.opened && toolbar.tools.locked
-
-            PropertyChanges {
-                target: pageStack
-                anchors.bottomMargin: -root.toolbar.triggerSize
-            }
-        }
-    ]
 
     /* Settings Storage */
 
@@ -112,15 +132,16 @@ MainView {
 
         defaults: {
             showAdvancedFeatures: false
+            collapsedSidebar: false
         }
-    }
-
-    SettingsPage {
-        id: settingsPage
     }
 
     // Individual settings, used for bindings
     property bool showAdvancedFeatures: false
+
+    property var viewMethod
+
+    property bool collapsedSidebar: false
 
     function getSetting(name, def) {
         var tempContents = {};
@@ -146,13 +167,34 @@ MainView {
         }
     }
 
-    function reloadSettings() {
-        showAdvancedFeatures = getSetting("showAdvancedFeatures", false)
+    function showSettings() {
+        PopupUtils.open(Qt.resolvedUrl("ui/SettingsSheet.qml"), mainView)
     }
 
-    Component.onCompleted: reloadSettings()
+    function reloadSettings() {
+        //showAdvancedFeatures = getSetting("showAdvancedFeatures", false)
+        viewMethod = getSetting("viewMethod", width > units.gu(40) ? i18n.tr("Icons") : i18n.tr("List"))
+        collapsedSidebar = getSetting("collapsedSidebar", false)
+    }
+
+    Component.onCompleted: {
+        reloadSettings()
+    }
 
     function getIcon(name) {
-        return Qt.resolvedUrl("icons/" + name + ".png")
+        return "/usr/share/icons/ubuntu-mobile/actions/scalable/" + name + ".svg" //Qt.resolvedUrl("icons/" + name + ".png")
+    }
+
+    function error(title, message) {
+        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), mainView,
+                        {
+                            title: title,
+                            text: message
+                        })
+    }
+
+    Keys.onPressed: {
+        print("Key pressed!")
+        event.accepted = tabs.currentPage.keyPressed(event.key, event.modifiers)
     }
 }

@@ -13,52 +13,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Authored by: Michael Spencer <sonrisesoftware@gmail.com>
+ * Authored by: Arto Jalkanen <ajalkane@gmail.com>
  */
 import QtQuick 2.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.Popups 0.1
+import org.nemomobile.folderlistmodel 1.0
 
 Dialog {
     id: root
 
-    title: i18n.tr("Go To Location")
+    property string fileName
+    property string filePath
+    property FolderListModel folderListModel
 
-    text: i18n.tr("Enter a location to go to:")
-
-    TextField {
-        id: locationField
-        objectName: "inputField"
-
-        inputMethodHints: Qt.ImhNoAutoUppercase
-
-        property bool valid: pathExists(text)
-
-        text: fileView.path
-
-        placeholderText: i18n.tr("Location...")
-
-        onAccepted: goButton.clicked()
-    }
+    title: i18n.tr("Choose action")
+    text: i18n.tr("For file: %1").arg(fileName)
 
     Button {
-        id: goButton
-        objectName: "okButton"
-
-        text: i18n.tr("Go")
-        enabled: locationField.acceptableInput && locationField.valid
-
+        objectName: "openButton"
+        text: i18n.tr("Open")
         onClicked: {
-            print("User switched to:", locationField.text)
-            goTo(locationField.text)
-            PopupUtils.close(root)
+            console.log("Opening file", filePath)
+            openFile(model.filePath)
+            onClicked: PopupUtils.close(root)
         }
     }
 
     Button {
-        id: cancelButton
         objectName: "cancelButton"
         text: i18n.tr("Cancel")
+        onClicked: PopupUtils.close(root)
 
         gradient: Gradient {
             GradientStop {
@@ -70,10 +55,6 @@ Dialog {
                 position: 1
                 color: "lightgray"
             }
-        }
-
-        onClicked: {
-            PopupUtils.close(root)
         }
     }
 }

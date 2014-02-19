@@ -31,6 +31,7 @@ ListItem.Subtitled {
 
     property string path: fileView.path + '/' + model.fileName
     iconSource: fileIcon(path, model.isDir)
+
     progression: model.isDir
     iconFrame: false
 }
