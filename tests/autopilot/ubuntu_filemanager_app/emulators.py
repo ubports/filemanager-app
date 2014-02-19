@@ -105,7 +105,7 @@ class MainView(toolkit_emulators.MainView):
         return self.wait_select_single(Popover)
 
 
-class Sidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
+class PlacesSidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """PlacesSidebar Autopilot emulator."""
 
     def get_place(self, text):
@@ -173,7 +173,7 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
     def get_sidebar(self):
         if self.main_view.internal_wideAspect:
-            return self.select_single(Sidebar)
+            return self.select_single(PlacesSidebar)
         else:
             raise ValueError(
                 'Places sidebar is hidden in small mode.')

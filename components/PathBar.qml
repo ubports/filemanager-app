@@ -32,7 +32,7 @@ Rectangle {
             hoverEnabled: true
 
             onClicked: {
-                PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), goToButton)
+                PopupUtils.open(Qt.resolvedUrl("../ui/GoToDialog.qml"), goToButton)
             }
         }
 
