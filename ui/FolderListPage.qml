@@ -20,6 +20,7 @@ import Ubuntu.Components 0.1
 import Ubuntu.Components.Popups 0.1
 import Ubuntu.Components.ListItems 0.1
 import org.nemomobile.folderlistmodel 1.0
+import "../components"
 
 Page {
     id: folderListPage
@@ -117,7 +118,7 @@ Page {
                              : "/usr/share/icons/Humanity/mimes/48/empty.svg"
 
         if (file === "~") {
-            iconPath = "icons/folder-home.svg"
+            iconPath = "../icons/folder-home.svg"
         } else if (file === i18n.tr("~/Desktop")) {
             iconPath = "/usr/share/icons/Humanity/places/48/user-desktop.svg"
         } else if (file === i18n.tr("~/Documents")) {

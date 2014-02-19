@@ -47,12 +47,7 @@ list(SORT I18N_SRC_FILES)
 file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
      *.qml *.js *.png *.js *.json)
-install(DIRECTORY icons DESTINATION ${DATA_DIR})
-install(FILES AutoSpacedGrid.qml Sidebar.qml GoToDialog.qml ViewPopover.qml NotifyDialog.qml
-    SettingsSheet.qml ConfirmDialog.qml PlacesPopover.qml PlacesSidebar.qml
-    FolderListPage.qml FolderListView.qml VerticalDivider.qml
-    FileActionDialog.qml FileDetailsPopover.qml FolderIconDelegate.qml FolderIconView.qml FolderListDelegate.qml
-    ConfirmDialogWithInput.qml FileOperationProgressDialog.qml SuruSheetStyle.qml PathBar.qml
+install(DIRECTORY ui components icons
     DESTINATION ${DATA_DIR})
 install(FILES ${MAIN_QML} DESTINATION ${DATA_DIR})
 

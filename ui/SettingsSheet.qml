@@ -32,7 +32,7 @@ DefaultSheet {
 
     Component.onCompleted: {
         sheet.__leftButton.text = i18n.tr("Close")
-        sheet.__foreground.style = Theme.createStyleComponent(Qt.resolvedUrl("SuruSheetStyle.qml"), sheet)
+        sheet.__foreground.style = Theme.createStyleComponent(Qt.resolvedUrl("../components/SuruSheetStyle.qml"), sheet)
     }
 
     Column {

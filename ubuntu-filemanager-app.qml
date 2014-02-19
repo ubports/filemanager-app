@@ -22,6 +22,8 @@ import Ubuntu.Components.Popups 0.1
 import Ubuntu.Unity.Action 1.0 as UnityActions
 import U1db 1.0 as U1db
 
+import "ui"
+
 /*!
     \brief MainView with Tabs element.
            First Tab has a single Label and
@@ -166,7 +168,7 @@ MainView {
     }
 
     function showSettings() {
-        PopupUtils.open(Qt.resolvedUrl("SettingsSheet.qml"), mainView)
+        PopupUtils.open(Qt.resolvedUrl("ui/SettingsSheet.qml"), mainView)
     }
 
     function reloadSettings() {
@@ -180,7 +182,7 @@ MainView {
     }
 
     function getIcon(name) {
-        return /*"/usr/share/icons/ubuntu-mobile/actions/scalable/" + name + ".svg" */Qt.resolvedUrl("icons/" + name + ".png")
+        return "/usr/share/icons/ubuntu-mobile/actions/scalable/" + name + ".svg" //Qt.resolvedUrl("icons/" + name + ".png")
     }
 
     function error(title, message) {
