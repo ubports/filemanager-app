@@ -700,7 +700,7 @@ void DirModel::paste()
     else
     {
         m_fsAction->copyIntoCurrentPath(items);
-    }
+    }   
 }
 
 
@@ -781,7 +781,10 @@ void DirModel::onItemRemoved(const DirItemInfo &fi)
     if (row >= 0)
     {
         beginRemoveRows(QModelIndex(), row, row);
-        mSelection->itemGoingToBeRemoved(row);
+        if (mDirectoryContents.at(row).isSelected())
+        {
+            mSelection->itemGoingToBeRemoved(mDirectoryContents.at(row));
+        }
         mDirectoryContents.remove(row,1);
         endRemoveRows();
     }
@@ -846,7 +849,13 @@ void DirModel::onItemChanged(const DirItemInfo &fi)
 {
     int row = rowOfItem(fi);
     if (row >= 0)
-    {
+    {       
+        if (mDirectoryContents.at(row).isSelected())
+        {
+            mSelection->itemGoingToBeReplaced(mDirectoryContents.at(row), fi);
+            DirItemInfo *myFi = const_cast<DirItemInfo*> (&fi);
+            myFi->setSelection(true);
+        }
         mDirectoryContents[row] = fi;
         notifyItemChanged(row);
     }

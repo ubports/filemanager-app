@@ -139,7 +139,8 @@ private Q_SLOTS: // test cases
 #endif
 
     void modelSingleSelection();
-    void modelMultiSelection();
+    void modelMultiSelection();   
+    void modelSelectionItemsRange();
 
     void trashDiretories();
 
@@ -2094,6 +2095,8 @@ void TestDirModel::modelSingleSelection()
     //using full path
     QCOMPARE(QFileInfo(secondFile).isAbsolute(), true);
 
+    selection->setMode(DirSelection::Multi);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
     QVERIFY(m_selectionMode != DirSelection::Single);
     selection->setMode(DirSelection::Single);
     QTest::qWait(TIME_TO_REFRESH_DIR);
@@ -2111,16 +2114,16 @@ void TestDirModel::modelSingleSelection()
     QCOMPARE(m_dirModel_01->data(thirdIdx).toBool(),   false);
     QCOMPARE(m_selectedItemsCounter,                   1);
 
-    //toggle second item selection using name
-    selection->toggle(secondFile);
+    //toggle second item selection
+    selection->toggleIndex(1);
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_01->data(firstIdx).toBool(),    false);
     QCOMPARE(m_dirModel_01->data(secondIdx).toBool(),   true);
     QCOMPARE(m_dirModel_01->data(thirdIdx).toBool(),    false);
     QCOMPARE(m_selectedItemsCounter,                    1);
 
-    //toggle third item selection using name
-    selection->toggle(thirdFile);
+    //toggle third item selection
+    selection->toggleIndex(2);
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_01->data(firstIdx).toBool(),    false);
     QCOMPARE(m_dirModel_01->data(secondIdx).toBool(),   false);
@@ -2200,7 +2203,7 @@ void TestDirModel::modelMultiSelection()
     while (counter--)
     {
         int item = handledIndexes.at(counter);
-        selection->set(createdNames.at(item), true);
+        selection->setIndex(item, true);
         QTest::qWait(10);
     }
     QCOMPARE(m_selectedItemsCounter,     handledIndexes.count());
@@ -2230,6 +2233,46 @@ void TestDirModel::modelMultiSelection()
     QCOMPARE(m_selectedItemsCounter,                    0);
 }
 
+
+void TestDirModel::modelSelectionItemsRange()
+{
+    QString dirName("modelSelectionItemsRange");
+    m_deepDir_01 = new DeepDir(dirName,0);
+    TempFiles  tmpFiles;
+    const int createdFiles = 11;
+    tmpFiles.addSubDirLevel(dirName);
+    tmpFiles.create(createdFiles);
+
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(),  createdFiles);
+
+    DirSelection  *selection = m_dirModel_01->selectionObject();
+    QVERIFY(selection != 0);
+
+    connect(selection, SIGNAL(selectionChanged(int)),
+            this,      SLOT(slotSelectionChanged(int)));
+
+
+    selection->setIndex(3, true);
+    QTest::qWait(TIME_TO_PROCESS);
+    QCOMPARE(m_selectedItemsCounter,     1);
+
+    //try to do range with same index (expected nothing to happen)
+    selection->selectRange(3);
+    QTest::qWait(TIME_TO_PROCESS);
+    QCOMPARE(m_selectedItemsCounter,     1);
+
+    //try item under selected item
+    selection->selectRange(8);
+    QTest::qWait(TIME_TO_PROCESS);
+    QCOMPARE(m_selectedItemsCounter,     6);
+
+    //try item above selected item
+    selection->selectRange(0);
+    QTest::qWait(TIME_TO_PROCESS);
+    QCOMPARE(m_selectedItemsCounter,     9);
+}
 
 void TestDirModel::trashDiretories()
 {
@@ -2294,8 +2337,7 @@ void TestDirModel::trashDiretories()
    ::setenv("XDG_DATA_HOME", "\0", true );
    QCOMPARE(trash.homeTrash() , QDir::homePath() + "/.local/share/Trash");
 
-   QCOMPARE(trash.getMountPoint(QDir::rootPath()), QDir::rootPath());
-   QCOMPARE(trash.getMountPoint(QDir::homePath()), QDir::rootPath());
+   QCOMPARE(trash.getMountPoint(QDir::rootPath()), QDir::rootPath());  
 
    QStringList mountedPoints = trash.mountedPoints();
    foreach (const QString& mp, mountedPoints)
