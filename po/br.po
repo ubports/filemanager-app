@@ -8,313 +8,313 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-12-30 14:24-0600\n"
-"PO-Revision-Date: 2014-03-04 10:42+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-03-05 22:11+0000\n"
+"Last-Translator: Fohanno Thierry <thierry.fohanno@ofis-bzh.org>\n"
 "Language-Team: Breton <br@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-05 05:57+0000\n"
+"X-Launchpad-Export-Date: 2014-03-06 06:15+0000\n"
 "X-Generator: Launchpad (build 16948)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
 msgid "Ok"
-msgstr ""
+msgstr "Mat eo"
 
 #: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
 #: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
 #: ../GoToDialog.qml:61
 msgid "Cancel"
-msgstr ""
+msgstr "Nullañ"
 
 #: ../FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Choaz un ober"
 
 #: ../FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "Evit ar restr : %1"
 
 #: ../FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "Digeriñ"
 
 #: ../FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "A c'haller lenn"
 
 #: ../FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "A c'haller skrivañ enni"
 
 #: ../FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "A c'haller erounit"
 
 #: ../FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "Hent :"
 
 #: ../FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "Endalc'had :"
 
 #: ../FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "Ment :"
 
 #: ../FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "Aet dezhi :"
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "Chenchet :"
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "Aotreoù :"
 
 #: ../FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "Oberiadenn o vont en-dro"
 
 #: ../FolderListPage.qml:119
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Burev"
 
 #: ../FolderListPage.qml:121
 msgid "~/Documents"
-msgstr ""
+msgstr "~/Teulioù"
 
 #: ../FolderListPage.qml:123
 msgid "~/Downloads"
-msgstr ""
+msgstr "~/Pellgargadennoù"
 
 #: ../FolderListPage.qml:125
 msgid "~/Music"
-msgstr ""
+msgstr "~/Sonerezh"
 
 #: ../FolderListPage.qml:127
 msgid "~/Pictures"
-msgstr ""
+msgstr "~/Skeudennoù"
 
 #: ../FolderListPage.qml:129
 msgid "~/Public"
-msgstr ""
+msgstr "~/Foran"
 
 #: ../FolderListPage.qml:131
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Programmoù"
 
 #: ../FolderListPage.qml:133
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Patromoù"
 
 #: ../FolderListPage.qml:135
 msgid "~/Videos"
-msgstr ""
+msgstr "~/Videoioù"
 
 #: ../FolderListPage.qml:148
 msgid "Home"
-msgstr ""
+msgstr "Degemer"
 
 #: ../FolderListPage.qml:150
 msgid "File System"
-msgstr ""
+msgstr "Reizhiad restroù"
 
 #: ../FolderListPage.qml:197
 msgid "1 file"
-msgstr ""
+msgstr "1 restr"
 
 #: ../FolderListPage.qml:198
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 restr"
 
 #: ../FolderListPage.qml:222
 msgid "Create New Folder"
-msgstr ""
+msgstr "Krouiñ ur renkell nevez"
 
 #: ../FolderListPage.qml:242
 msgid "Paste"
-msgstr ""
+msgstr "Pegañ"
 
 #: ../FolderListPage.qml:244
 #, qt-format
 msgid "Paste %1 File"
-msgstr ""
+msgstr "Pegañ %1 restr"
 
 #: ../FolderListPage.qml:245
 #, qt-format
 msgid "Paste %1 Files"
-msgstr ""
+msgstr "Pegañ %1 restr"
 
 #: ../FolderListPage.qml:248
 msgid "Paste files"
-msgstr ""
+msgstr "Pegañ restroù"
 
 #: ../FolderListPage.qml:260
 msgid "Open in Terminal"
-msgstr ""
+msgstr "Digeriñ en dermenell"
 
 #: ../FolderListPage.qml:272 ../FolderListView.qml:150
 msgid "Properties"
-msgstr ""
+msgstr "Perzhioù"
 
 #: ../FolderListPage.qml:307
 msgid "Create folder"
-msgstr ""
+msgstr "Krouiñ ur renkell"
 
 #: ../FolderListPage.qml:308
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Ebarzhiñ un anv evit ar renkell nevez"
 
 #: ../FolderListPage.qml:324
 msgid "Create file"
-msgstr ""
+msgstr "Krouiñ ur restr"
 
 #: ../FolderListPage.qml:325
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Ebarzhiñ un anv evit ar restr nevez"
 
 #: ../FolderListPage.qml:360
 msgid "Actions"
-msgstr ""
+msgstr "Oberoù"
 
 #: ../FolderListPage.qml:370
 msgid "View"
-msgstr ""
+msgstr "Gwel"
 
 #: ../FolderListPage.qml:385
 msgid "Go To"
-msgstr ""
+msgstr "Mont da"
 
 #: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
 msgid "Places"
-msgstr ""
+msgstr "Plasoù"
 
 #: ../FolderListPage.qml:465
 msgid "No files"
-msgstr ""
+msgstr "Restr ebet"
 
 #: ../FolderListPage.qml:486
 msgid "File operation error"
-msgstr ""
+msgstr "Fazi oberiadenn gant ur restr"
 
 #: ../FolderListView.qml:34
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 restr)"
 
 #: ../FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 restr)"
 
 #: ../FolderListView.qml:43 ../FolderListView.qml:124
 msgid "Delete"
-msgstr ""
+msgstr "Diverkañ"
 
 #: ../FolderListView.qml:44
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "Ha sur oc'h e fell deoc'h diverkañ \"%1\" da vat ?"
 
 #: ../FolderListView.qml:67 ../FolderListView.qml:137
 msgid "Rename"
-msgstr ""
+msgstr "Adenvel"
 
 #: ../FolderListView.qml:68
 msgid "Enter a new name"
-msgstr ""
+msgstr "Ebarzhiñ un anv nevez"
 
 #: ../FolderListView.qml:77
 msgid "Could not rename"
-msgstr ""
+msgstr "N'eus ket bet gallet adenvel"
 
 #: ../FolderListView.qml:78
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Aotreoù re skort pe anv a zo anezhañ dija ?"
 
 #: ../FolderListView.qml:101
 msgid "Cut"
-msgstr ""
+msgstr "Troc'hañ"
 
 #: ../FolderListView.qml:112
 msgid "Copy"
-msgstr ""
+msgstr "Eilañ"
 
 #: ../FolderListView.qml:175
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Ne c'haller ket mont d'ar renkell"
 
 #: ../FolderListView.qml:176
 msgid "Can not access "
-msgstr ""
+msgstr "Ne c'haller ket mont da "
 
 #: ../GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Mont d'al lec'h"
 
 #: ../GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Ebarzhiñ ul lec'h da vont dezhañ :"
 
 #: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
 msgid "Location..."
-msgstr ""
+msgstr "Lec'h..."
 
 #: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
 msgid "Go"
-msgstr ""
+msgstr "Mont da"
 
 #: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
 msgid "Settings"
-msgstr ""
+msgstr "Arventennoù"
 
 #: ../SettingsPage.qml:38
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Diskouez an arc'hweladurioù araokaet"
 
 #: ../ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Diskouez ar restroù kuzhet"
 
 #: ../ViewPopover.qml:59
 msgid "Sort By"
-msgstr ""
+msgstr "Renkañ dre"
 
 #: ../ViewPopover.qml:70
 msgid "Name"
-msgstr ""
+msgstr "Anv"
 
 #: ../ViewPopover.qml:71
 msgid "Date"
-msgstr ""
+msgstr "Deiziad"
 
 #: ../ViewPopover.qml:81
 msgid "Sort Order"
-msgstr ""
+msgstr "Urzh renkañ"
 
 #: ../ViewPopover.qml:92 ../ViewPopover.qml:97
 msgid "Ascending"
-msgstr ""
+msgstr "War gresk"
 
 #: ../ViewPopover.qml:93
 msgid "Descending"
-msgstr ""
+msgstr "War zigresk"
 
 #: ../ViewPopover.qml:105
 msgid "Filter"
-msgstr ""
+msgstr "Sil"
 
 #: ../ubuntu-filemanager-app.qml:52
 msgid "Change app settings"
-msgstr ""
+msgstr "Cheñch arventennoù an arload"
 
 #: ../.build/ubuntu-filemanager-app.desktop.js:1
 msgid "File Manager"
-msgstr ""
+msgstr "Merour restroù"
