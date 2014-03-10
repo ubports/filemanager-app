@@ -3,6 +3,7 @@ Priority: extra
 Maintainer: Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>
 Build-Depends: cmake,
                debhelper (>= 9),
+               python,
 Standards-Version: 3.9.4
 Section: misc
 Homepage: https://launchpad.net/ubuntu-filemanager-app
