@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-12-30 14:24-0600\n"
-"PO-Revision-Date: 2014-03-05 22:11+0000\n"
+"PO-Revision-Date: 2014-03-11 14:26+0000\n"
 "Last-Translator: Fohanno Thierry <thierry.fohanno@ofis-bzh.org>\n"
 "Language-Team: Breton <br@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-06 06:15+0000\n"
-"X-Generator: Launchpad (build 16948)\n"
+"X-Launchpad-Export-Date: 2014-03-12 05:27+0000\n"
+"X-Generator: Launchpad (build 16963)\n"
 
 #: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
 #: ../NotifyDialog.qml:25
@@ -71,7 +71,7 @@ msgstr "Aet dezhi :"
 
 #: ../FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr "Chenchet :"
+msgstr "Cheñchet :"
 
 #: ../FileDetailsPopover.qml:130
 msgid "Permissions:"
@@ -158,7 +158,7 @@ msgstr "Pegañ restroù"
 
 #: ../FolderListPage.qml:260
 msgid "Open in Terminal"
-msgstr "Digeriñ en dermenell"
+msgstr "Digeriñ en un dermenell"
 
 #: ../FolderListPage.qml:272 ../FolderListView.qml:150
 msgid "Properties"
@@ -194,7 +194,7 @@ msgstr "Mont da"
 
 #: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
 msgid "Places"
-msgstr "Plasoù"
+msgstr "Lec'hioù"
 
 #: ../FolderListPage.qml:465
 msgid "No files"
