@@ -1,6 +1,7 @@
 {
     "description": "File Manager application",
     "framework": "ubuntu-sdk-13.10",
+    "architecture": "armhf",
     "hooks": {
         "@APP_NAME@": {
             "apparmor": "apparmor.json",
