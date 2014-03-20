@@ -374,7 +374,7 @@ Page {
 
         Item {
             id: pathItem
-            // TODO: Uncomment after re-enabling tab support
+            // TODO: Uncomment after re-enabling tab support (caused by lp:1295242)
             width: folderListPage.width - units.gu(31)//folderListPage.width - units.gu(37)
             height: units.gu(5)
             anchors.verticalCenter: parent.verticalCenter
@@ -427,7 +427,7 @@ Page {
             }
         }
 
-        // TODO: Uncomment after re-enabling tab support
+        // TODO: Uncomment after re-enabling tab support (caused by lp:1295242)
 //        ToolbarButton {
 //            id: tabsButton
 //            objectName: "tabs"

@@ -103,7 +103,7 @@ Sidebar {
                     height: units.gu(1.1)
                     width: height
 
-                    source: getIcon("arrow")
+                    source: Qt.resolvedUrl("../icons/arrow.png")
                     opacity: selected && collapsed ? 1 : 0
 
                     Behavior on opacity {

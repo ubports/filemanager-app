@@ -104,7 +104,7 @@ MainView {
                 }
             }
 
-            // TODO: Temporarily disabled tabs support since this is broken in the SDK
+            // TODO: Temporarily disabled tabs support since this is broken in the SDK (lp:1295242)
 //            Repeater {
 //                model: folderTabs
 //                delegate: Tab {
