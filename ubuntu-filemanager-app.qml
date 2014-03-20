@@ -95,22 +95,32 @@ MainView {
         Tabs {
             id: tabs
 
-            Repeater {
-                model: folderTabs
-                delegate: Tab {
-                    title: page.title
-                    page: FolderListPage {
-                        objectName: "folderPage"
+            Tab {
+                title: page.title
+                page: FolderListPage {
+                    objectName: "folderPage"
 
-                        folder: modelData
-                    }
+                    folder: "~"//modelData
                 }
             }
+
+            // TODO: Temporarily disabled tabs support since this is broken in the SDK
+//            Repeater {
+//                model: folderTabs
+//                delegate: Tab {
+//                    title: page.title
+//                    page: FolderListPage {
+//                        objectName: "folderPage"
+
+//                        folder: modelData
+//                    }
+//                }
+//            }
         }
 
         Component.onCompleted: {
             pageStack.push(tabs)
-            pageStack.push(settingsPage)
+            pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"))
             pageStack.pop()
             loaded = true
         }
