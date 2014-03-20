@@ -374,7 +374,8 @@ Page {
 
         Item {
             id: pathItem
-            width: folderListPage.width - units.gu(37)
+            // TODO: Uncomment after re-enabling tab support (caused by lp:1295242)
+            width: folderListPage.width - units.gu(31)//folderListPage.width - units.gu(37)
             height: units.gu(5)
             anchors.verticalCenter: parent.verticalCenter
             PathBar {
@@ -426,20 +427,21 @@ Page {
             }
         }
 
-        ToolbarButton {
-            id: tabsButton
-            objectName: "tabs"
-            text: i18n.tr("Tabs")
-            iconSource: getIcon("browser-tabs")
+        // TODO: Uncomment after re-enabling tab support (caused by lp:1295242)
+//        ToolbarButton {
+//            id: tabsButton
+//            objectName: "tabs"
+//            text: i18n.tr("Tabs")
+//            iconSource: getIcon("browser-tabs")
 
-            onTriggered: {
-                print(text)
+//            onTriggered: {
+//                print(text)
 
-                PopupUtils.open(tabsPopover, tabsButton, {
-                                    tab: folderListPage.parent
-                                })
-            }
-        }
+//                PopupUtils.open(tabsPopover, tabsButton, {
+//                                    tab: folderListPage.parent
+//                                })
+//            }
+//        }
 
         ToolbarButton {
             id: settingsButton
