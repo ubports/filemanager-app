@@ -7,314 +7,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-12-30 14:24-0600\n"
+"POT-Creation-Date: 2014-03-10 18:46-0500\n"
 "PO-Revision-Date: 2013-10-26 07:11+0000\n"
 "Last-Translator: Thangamani Arun - தங்கமணி அருண் <thangam.arunx@gmail.com>\n"
 "Language-Team: Tamil <ta@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-09 05:38+0000\n"
-"X-Generator: Launchpad (build 16884)\n"
+"X-Launchpad-Export-Date: 2014-03-21 06:52+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
-#: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
-#: ../NotifyDialog.qml:25
-msgid "Ok"
-msgstr "சரி"
-
-#: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
-#: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
-#: ../GoToDialog.qml:61
-msgid "Cancel"
-msgstr "ரத்துசெய்"
-
-#: ../FileActionDialog.qml:30
-msgid "Choose action"
-msgstr "செயலை தேர்ந்தெடு"
-
-#: ../FileActionDialog.qml:31
-#, qt-format
-msgid "For file: %1"
-msgstr "கோப்புக்காக :%1"
-
-#: ../FileActionDialog.qml:35
-msgid "Open"
-msgstr "¾¢È"
-
-#: ../FileDetailsPopover.qml:37
-msgid "Readable"
-msgstr "படிக்கக்கூடிய"
-
-#: ../FileDetailsPopover.qml:40
-msgid "Writable"
-msgstr "எழுதக்கூடிய"
-
-#: ../FileDetailsPopover.qml:43
-msgid "Executable"
-msgstr "இயங்கக்கூடிய"
-
-#: ../FileDetailsPopover.qml:91
-msgid "Path:"
-msgstr "பாதை:"
-
-#: ../FileDetailsPopover.qml:102
-msgid "Contents:"
-msgstr "உள்ளடக்கங்கள்:"
-
-#: ../FileDetailsPopover.qml:103
-msgid "Size:"
-msgstr "அளவு:"
-
-#: ../FileDetailsPopover.qml:112
-msgid "Accessed:"
-msgstr "அணுகப்பட்டது:"
-
-#: ../FileDetailsPopover.qml:121
-msgid "Modified:"
-msgstr "மாற்றப்பட்டது:"
-
-#: ../FileDetailsPopover.qml:130
-msgid "Permissions:"
-msgstr "அனுமதிகள்:"
-
-#: ../FileOperationProgressDialog.qml:27
-msgid "Operation in progress"
-msgstr "செயல்பாடு நடைபெறுகிறது"
-
-#: ../FolderListPage.qml:119
-msgid "~/Desktop"
-msgstr "~/பணிமேடை"
-
-#: ../FolderListPage.qml:121
-msgid "~/Documents"
-msgstr "~/ஆவணங்கள்"
-
-#: ../FolderListPage.qml:123
-msgid "~/Downloads"
-msgstr "~/பதிவிறக்கங்கள்"
-
-#: ../FolderListPage.qml:125
-msgid "~/Music"
-msgstr "~/இசை"
-
-#: ../FolderListPage.qml:127
-msgid "~/Pictures"
-msgstr "~/படங்கள்"
-
-#: ../FolderListPage.qml:129
-msgid "~/Public"
-msgstr "~/பொதுவான"
-
-#: ../FolderListPage.qml:131
-msgid "~/Programs"
-msgstr "~/பயன்பாடுகள்"
-
-#: ../FolderListPage.qml:133
-msgid "~/Templates"
-msgstr "~/வார்ப்புருக்கள்"
-
-#: ../FolderListPage.qml:135
-msgid "~/Videos"
-msgstr "~/நிகழ்படங்கள்"
-
-#: ../FolderListPage.qml:148
-msgid "Home"
-msgstr "முகப்பு"
-
-#: ../FolderListPage.qml:150
-msgid "File System"
-msgstr "கோப்பு அமைப்பு"
-
-#: ../FolderListPage.qml:197
-msgid "1 file"
-msgstr ""
-
-#: ../FolderListPage.qml:198
-#, qt-format
-msgid "%1 files"
-msgstr ""
-
-#: ../FolderListPage.qml:222
-msgid "Create New Folder"
-msgstr "புதிய அடைவை உருவாக்கு"
-
-#: ../FolderListPage.qml:242
-msgid "Paste"
-msgstr "ஒட்டு"
-
-#: ../FolderListPage.qml:244
-#, qt-format
-msgid "Paste %1 File"
-msgstr ""
-
-#: ../FolderListPage.qml:245
-#, qt-format
-msgid "Paste %1 Files"
-msgstr ""
-
-#: ../FolderListPage.qml:248
-msgid "Paste files"
-msgstr "கோப்புகளை ஒட்டு"
-
-#: ../FolderListPage.qml:260
-msgid "Open in Terminal"
-msgstr "முனையத்தில் திற"
-
-#: ../FolderListPage.qml:272 ../FolderListView.qml:150
-msgid "Properties"
-msgstr "பண்புகள்"
-
-#: ../FolderListPage.qml:307
-msgid "Create folder"
-msgstr "அடைவை உருவாக்கு"
-
-#: ../FolderListPage.qml:308
-msgid "Enter name for new folder"
-msgstr "புதிய அடைவை உருவுக்கு பெயரை உள்ளிடு"
-
-#: ../FolderListPage.qml:324
-msgid "Create file"
-msgstr "கோப்பை உருவாக்கு"
-
-#: ../FolderListPage.qml:325
-msgid "Enter name for new file"
-msgstr "புதிய கோப்புக்கு பெயரை உள்ளிடு"
-
-#: ../FolderListPage.qml:360
-msgid "Actions"
-msgstr "செயல்கள்"
-
-#: ../FolderListPage.qml:370
-msgid "View"
-msgstr "காட்சி"
-
-#: ../FolderListPage.qml:385
-msgid "Go To"
-msgstr "இதற்கு செல்"
-
-#: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
-msgid "Places"
-msgstr "இடங்கள்"
-
-#: ../FolderListPage.qml:465
-msgid "No files"
-msgstr "கோப்புகள் இல்லை"
-
-#: ../FolderListPage.qml:486
-msgid "File operation error"
-msgstr "கோப்பு செயற்பாட்டில் பிழை"
-
-#: ../FolderListView.qml:34
-#, qt-format
-msgid "%1 (1 file)"
-msgstr ""
-
-#: ../FolderListView.qml:35
-#, qt-format
-msgid "%1 (%2 files)"
-msgstr ""
-
-#: ../FolderListView.qml:43 ../FolderListView.qml:124
-msgid "Delete"
-msgstr "நீக்கு"
-
-#: ../FolderListView.qml:44
-#, qt-format
-msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "நீங்க நிச்சையமாக '%1' நிரந்தரமாக நீக்க விரும்புகிறீர்களா?"
-
-#: ../FolderListView.qml:67 ../FolderListView.qml:137
-msgid "Rename"
-msgstr "மறுபெயரிடு"
-
-#: ../FolderListView.qml:68
-msgid "Enter a new name"
-msgstr "புதிய பெயரை உள்ளிடுக"
-
-#: ../FolderListView.qml:77
-msgid "Could not rename"
-msgstr "மறுபெயரிட முடியவில்லை"
-
-#: ../FolderListView.qml:78
-msgid "Insufficient permissions or name already exists?"
-msgstr "போதுமான அனுமதி இல்லை அல்லது பெயர் ஏற்கனவே உள்ளதா?"
-
-#: ../FolderListView.qml:101
-msgid "Cut"
-msgstr "வெட்டு"
-
-#: ../FolderListView.qml:112
-msgid "Copy"
-msgstr "நகலெடு"
-
-#: ../FolderListView.qml:175
-msgid "Folder not accessible"
-msgstr "அடைவை அனுக முடியவில்லை"
-
-#: ../FolderListView.qml:176
-msgid "Can not access "
-msgstr "அனுக முடியவில்லை "
-
-#: ../GoToDialog.qml:25
-msgid "Go To Location"
-msgstr "அந்த இடத்திற்கு செல்"
-
-#: ../GoToDialog.qml:27
-msgid "Enter a location to go to:"
-msgstr "செல்லக்கூடிய இடத்தை உள்ளிடு"
-
-#: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
-msgid "Location..."
-msgstr "இடம்..."
-
-#: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
-msgid "Go"
-msgstr "செல்"
-
-#: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
+#: ../ubuntu-filemanager-app.qml:66
 msgid "Settings"
 msgstr "அமைவுகள்"
 
-#: ../SettingsPage.qml:38
-msgid "Show Advanced Features"
-msgstr "மேம்பட்ட அம்சங்களை காட்டு"
-
-#: ../ViewPopover.qml:39
-msgid "Show Hidden Files"
-msgstr "மறைக்கப்பட்ட கோப்புகளைக் காட்டு"
-
-#: ../ViewPopover.qml:59
-msgid "Sort By"
-msgstr "ஆல் வரிசைப்படுத்து"
-
-#: ../ViewPopover.qml:70
-msgid "Name"
-msgstr "பெயர்"
-
-#: ../ViewPopover.qml:71
-msgid "Date"
-msgstr "தேதி"
-
-#: ../ViewPopover.qml:81
-msgid "Sort Order"
-msgstr "வரிசை ஓழுங்கு"
-
-#: ../ViewPopover.qml:92 ../ViewPopover.qml:97
-msgid "Ascending"
-msgstr "ஏறுவரிசை"
-
-#: ../ViewPopover.qml:93
-msgid "Descending"
-msgstr "இறங்குவரிசை"
-
-#: ../ViewPopover.qml:105
-msgid "Filter"
-msgstr "வடிகட்டு"
-
-#: ../ubuntu-filemanager-app.qml:52
+#: ../ubuntu-filemanager-app.qml:67
 msgid "Change app settings"
 msgstr ""
 
-#: ../.build/ubuntu-filemanager-app.desktop.js:1
+#: ../ubuntu-filemanager-app.qml:176
+msgid "Icons"
+msgstr ""
+
+#: ../ubuntu-filemanager-app.qml:176
+msgid "List"
+msgstr ""
+
+#: ../.build/com.ubuntu.filemanager_filemanager.desktop.in:1
 msgid "File Manager"
 msgstr "கோப்பு மேலாளர்"

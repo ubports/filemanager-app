@@ -7,314 +7,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-12-30 14:24-0600\n"
+"POT-Creation-Date: 2014-03-10 18:46-0500\n"
 "PO-Revision-Date: 2014-01-15 08:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-16 06:07+0000\n"
-"X-Generator: Launchpad (build 16901)\n"
+"X-Launchpad-Export-Date: 2014-03-21 06:52+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
-#: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
-#: ../NotifyDialog.qml:25
-msgid "Ok"
-msgstr "אישור"
-
-#: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
-#: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
-#: ../GoToDialog.qml:61
-msgid "Cancel"
-msgstr "ביטול"
-
-#: ../FileActionDialog.qml:30
-msgid "Choose action"
-msgstr "בחירת פעולה"
-
-#: ../FileActionDialog.qml:31
-#, qt-format
-msgid "For file: %1"
-msgstr "על הקובץ: %1"
-
-#: ../FileActionDialog.qml:35
-msgid "Open"
-msgstr "פתיחה"
-
-#: ../FileDetailsPopover.qml:37
-msgid "Readable"
-msgstr "ניתן לקריאה"
-
-#: ../FileDetailsPopover.qml:40
-msgid "Writable"
-msgstr "ניתן לכתיבה"
-
-#: ../FileDetailsPopover.qml:43
-msgid "Executable"
-msgstr "ניתן להפעלה"
-
-#: ../FileDetailsPopover.qml:91
-msgid "Path:"
-msgstr "נתיב:"
-
-#: ../FileDetailsPopover.qml:102
-msgid "Contents:"
-msgstr "תכנים:"
-
-#: ../FileDetailsPopover.qml:103
-msgid "Size:"
-msgstr "גודל:"
-
-#: ../FileDetailsPopover.qml:112
-msgid "Accessed:"
-msgstr "מועד גישה:"
-
-#: ../FileDetailsPopover.qml:121
-msgid "Modified:"
-msgstr "מועד שינוי:"
-
-#: ../FileDetailsPopover.qml:130
-msgid "Permissions:"
-msgstr "הרשאות:"
-
-#: ../FileOperationProgressDialog.qml:27
-msgid "Operation in progress"
-msgstr "הפעולה מתבצעת"
-
-#: ../FolderListPage.qml:119
-msgid "~/Desktop"
-msgstr "~/שולחן עבודה"
-
-#: ../FolderListPage.qml:121
-msgid "~/Documents"
-msgstr "~/מסמכים"
-
-#: ../FolderListPage.qml:123
-msgid "~/Downloads"
-msgstr "~/הורדות"
-
-#: ../FolderListPage.qml:125
-msgid "~/Music"
-msgstr "~/מוזיקה"
-
-#: ../FolderListPage.qml:127
-msgid "~/Pictures"
-msgstr "~/תמונות"
-
-#: ../FolderListPage.qml:129
-msgid "~/Public"
-msgstr "~/ציבורי"
-
-#: ../FolderListPage.qml:131
-msgid "~/Programs"
-msgstr "~/תכניות"
-
-#: ../FolderListPage.qml:133
-msgid "~/Templates"
-msgstr "~/תבניות"
-
-#: ../FolderListPage.qml:135
-msgid "~/Videos"
-msgstr "~/סרטונים"
-
-#: ../FolderListPage.qml:148
-msgid "Home"
-msgstr "בית"
-
-#: ../FolderListPage.qml:150
-msgid "File System"
-msgstr "מערכת קבצים"
-
-#: ../FolderListPage.qml:197
-msgid "1 file"
-msgstr "קובץ אחד"
-
-#: ../FolderListPage.qml:198
-#, qt-format
-msgid "%1 files"
-msgstr "%1 קבצים"
-
-#: ../FolderListPage.qml:222
-msgid "Create New Folder"
-msgstr "יצירת תיקייה חדשה"
-
-#: ../FolderListPage.qml:242
-msgid "Paste"
-msgstr "הדבקה"
-
-#: ../FolderListPage.qml:244
-#, qt-format
-msgid "Paste %1 File"
-msgstr "הדבקה של קובץ %1"
-
-#: ../FolderListPage.qml:245
-#, qt-format
-msgid "Paste %1 Files"
-msgstr "הדבקה של%1 קבצים"
-
-#: ../FolderListPage.qml:248
-msgid "Paste files"
-msgstr "הדבקת קבצים"
-
-#: ../FolderListPage.qml:260
-msgid "Open in Terminal"
-msgstr "פתיחה במסוף"
-
-#: ../FolderListPage.qml:272 ../FolderListView.qml:150
-msgid "Properties"
-msgstr "מאפיינים"
-
-#: ../FolderListPage.qml:307
-msgid "Create folder"
-msgstr "יצירת תיקייה"
-
-#: ../FolderListPage.qml:308
-msgid "Enter name for new folder"
-msgstr "נא להזין שם לתיקייה החדשה"
-
-#: ../FolderListPage.qml:324
-msgid "Create file"
-msgstr "יצירת קובץ"
-
-#: ../FolderListPage.qml:325
-msgid "Enter name for new file"
-msgstr "נא להזין שם לקובץ החדש"
-
-#: ../FolderListPage.qml:360
-msgid "Actions"
-msgstr "פעולות"
-
-#: ../FolderListPage.qml:370
-msgid "View"
-msgstr "הצגה"
-
-#: ../FolderListPage.qml:385
-msgid "Go To"
-msgstr "מעבר אל"
-
-#: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
-msgid "Places"
-msgstr "מיקומים"
-
-#: ../FolderListPage.qml:465
-msgid "No files"
-msgstr "אין קבצים"
-
-#: ../FolderListPage.qml:486
-msgid "File operation error"
-msgstr "שגיאת בפעולה על הקבצים"
-
-#: ../FolderListView.qml:34
-#, qt-format
-msgid "%1 (1 file)"
-msgstr "%1 (קובץ אחד)"
-
-#: ../FolderListView.qml:35
-#, qt-format
-msgid "%1 (%2 files)"
-msgstr "%1 (%2 קבצים)"
-
-#: ../FolderListView.qml:43 ../FolderListView.qml:124
-msgid "Delete"
-msgstr "מחיקה"
-
-#: ../FolderListView.qml:44
-#, qt-format
-msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "האם למחוק את ‚%1‘ לצמיתות?"
-
-#: ../FolderListView.qml:67 ../FolderListView.qml:137
-msgid "Rename"
-msgstr "שינוי שם"
-
-#: ../FolderListView.qml:68
-msgid "Enter a new name"
-msgstr "הזנת השם החדש"
-
-#: ../FolderListView.qml:77
-msgid "Could not rename"
-msgstr "לא ניתן לשנות את השם"
-
-#: ../FolderListView.qml:78
-msgid "Insufficient permissions or name already exists?"
-msgstr "אין די הרשאות או שהשם כבר קיים?"
-
-#: ../FolderListView.qml:101
-msgid "Cut"
-msgstr "גזירה"
-
-#: ../FolderListView.qml:112
-msgid "Copy"
-msgstr "העתקה"
-
-#: ../FolderListView.qml:175
-msgid "Folder not accessible"
-msgstr "התיקייה אינה נגישה"
-
-#: ../FolderListView.qml:176
-msgid "Can not access "
-msgstr "לא ניתן לגשת אל "
-
-#: ../GoToDialog.qml:25
-msgid "Go To Location"
-msgstr "מעבר למיקום"
-
-#: ../GoToDialog.qml:27
-msgid "Enter a location to go to:"
-msgstr "נא להזין את היעד המבוקש להלן:"
-
-#: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
-msgid "Location..."
-msgstr "מיקום…"
-
-#: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
-msgid "Go"
-msgstr "מעבר"
-
-#: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
+#: ../ubuntu-filemanager-app.qml:66
 msgid "Settings"
 msgstr "הגדרות"
 
-#: ../SettingsPage.qml:38
-msgid "Show Advanced Features"
-msgstr "הצגת תכונות מתקדמות"
-
-#: ../ViewPopover.qml:39
-msgid "Show Hidden Files"
-msgstr "הצגת קבצים מוסתרים"
-
-#: ../ViewPopover.qml:59
-msgid "Sort By"
-msgstr "מיון לפי"
-
-#: ../ViewPopover.qml:70
-msgid "Name"
-msgstr "שם"
-
-#: ../ViewPopover.qml:71
-msgid "Date"
-msgstr "תאריך"
-
-#: ../ViewPopover.qml:81
-msgid "Sort Order"
-msgstr "אופן המיון"
-
-#: ../ViewPopover.qml:92 ../ViewPopover.qml:97
-msgid "Ascending"
-msgstr "סדר עולה"
-
-#: ../ViewPopover.qml:93
-msgid "Descending"
-msgstr "סדר יורד"
-
-#: ../ViewPopover.qml:105
-msgid "Filter"
-msgstr "סינון"
-
-#: ../ubuntu-filemanager-app.qml:52
+#: ../ubuntu-filemanager-app.qml:67
 msgid "Change app settings"
 msgstr "שינוי הגדרות היישום"
 
-#: ../.build/ubuntu-filemanager-app.desktop.js:1
+#: ../ubuntu-filemanager-app.qml:176
+msgid "Icons"
+msgstr ""
+
+#: ../ubuntu-filemanager-app.qml:176
+msgid "List"
+msgstr ""
+
+#: ../.build/com.ubuntu.filemanager_filemanager.desktop.in:1
 msgid "File Manager"
 msgstr "מנהל קבצים"

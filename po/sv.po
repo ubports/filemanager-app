@@ -7,314 +7,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-12-30 14:24-0600\n"
+"POT-Creation-Date: 2014-03-10 18:46-0500\n"
 "PO-Revision-Date: 2014-02-15 11:48+0000\n"
 "Last-Translator: Peter Ahlgren <ahlgren1234@gmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-02-16 06:42+0000\n"
-"X-Generator: Launchpad (build 16916)\n"
+"X-Launchpad-Export-Date: 2014-03-21 06:52+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
-#: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
-#: ../NotifyDialog.qml:25
-msgid "Ok"
-msgstr "Ok"
-
-#: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
-#: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
-#: ../GoToDialog.qml:61
-msgid "Cancel"
-msgstr "Avbryt"
-
-#: ../FileActionDialog.qml:30
-msgid "Choose action"
-msgstr "Välj handling"
-
-#: ../FileActionDialog.qml:31
-#, qt-format
-msgid "For file: %1"
-msgstr "För fil: %1"
-
-#: ../FileActionDialog.qml:35
-msgid "Open"
-msgstr "Öppna"
-
-#: ../FileDetailsPopover.qml:37
-msgid "Readable"
-msgstr "Läsbar"
-
-#: ../FileDetailsPopover.qml:40
-msgid "Writable"
-msgstr "Skrivbar"
-
-#: ../FileDetailsPopover.qml:43
-msgid "Executable"
-msgstr "Körbar"
-
-#: ../FileDetailsPopover.qml:91
-msgid "Path:"
-msgstr "Sökväg:"
-
-#: ../FileDetailsPopover.qml:102
-msgid "Contents:"
-msgstr "Innehåll:"
-
-#: ../FileDetailsPopover.qml:103
-msgid "Size:"
-msgstr "Storlek:"
-
-#: ../FileDetailsPopover.qml:112
-msgid "Accessed:"
-msgstr "Använd:"
-
-#: ../FileDetailsPopover.qml:121
-msgid "Modified:"
-msgstr "Ändrad:"
-
-#: ../FileDetailsPopover.qml:130
-msgid "Permissions:"
-msgstr "Rättigheter:"
-
-#: ../FileOperationProgressDialog.qml:27
-msgid "Operation in progress"
-msgstr "Pågående operationer"
-
-#: ../FolderListPage.qml:119
-msgid "~/Desktop"
-msgstr "~/Skrivbord"
-
-#: ../FolderListPage.qml:121
-msgid "~/Documents"
-msgstr "~/Dokument"
-
-#: ../FolderListPage.qml:123
-msgid "~/Downloads"
-msgstr "~/Hämtningar"
-
-#: ../FolderListPage.qml:125
-msgid "~/Music"
-msgstr "~/Musik"
-
-#: ../FolderListPage.qml:127
-msgid "~/Pictures"
-msgstr "~/Bilder"
-
-#: ../FolderListPage.qml:129
-msgid "~/Public"
-msgstr "~/Allmänt"
-
-#: ../FolderListPage.qml:131
-msgid "~/Programs"
-msgstr "~/Program"
-
-#: ../FolderListPage.qml:133
-msgid "~/Templates"
-msgstr "~/Mallar"
-
-#: ../FolderListPage.qml:135
-msgid "~/Videos"
-msgstr "~/Video"
-
-#: ../FolderListPage.qml:148
-msgid "Home"
-msgstr "Hem"
-
-#: ../FolderListPage.qml:150
-msgid "File System"
-msgstr "Filsystem"
-
-#: ../FolderListPage.qml:197
-msgid "1 file"
-msgstr "1 fil"
-
-#: ../FolderListPage.qml:198
-#, qt-format
-msgid "%1 files"
-msgstr "%1 filer"
-
-#: ../FolderListPage.qml:222
-msgid "Create New Folder"
-msgstr "Skapa ny mapp"
-
-#: ../FolderListPage.qml:242
-msgid "Paste"
-msgstr "Klistra in"
-
-#: ../FolderListPage.qml:244
-#, qt-format
-msgid "Paste %1 File"
-msgstr "Klistra in %1 fil"
-
-#: ../FolderListPage.qml:245
-#, qt-format
-msgid "Paste %1 Files"
-msgstr "Klistra in %1 filer"
-
-#: ../FolderListPage.qml:248
-msgid "Paste files"
-msgstr "Klistra in filer"
-
-#: ../FolderListPage.qml:260
-msgid "Open in Terminal"
-msgstr "Öppna i terminal"
-
-#: ../FolderListPage.qml:272 ../FolderListView.qml:150
-msgid "Properties"
-msgstr "Egenskaper"
-
-#: ../FolderListPage.qml:307
-msgid "Create folder"
-msgstr "Skapa mapp"
-
-#: ../FolderListPage.qml:308
-msgid "Enter name for new folder"
-msgstr "Skriv in namn för ny mapp"
-
-#: ../FolderListPage.qml:324
-msgid "Create file"
-msgstr "Skapa fil"
-
-#: ../FolderListPage.qml:325
-msgid "Enter name for new file"
-msgstr "Skriv in namn för ny fil"
-
-#: ../FolderListPage.qml:360
-msgid "Actions"
-msgstr "Åtgärder"
-
-#: ../FolderListPage.qml:370
-msgid "View"
-msgstr "Visa"
-
-#: ../FolderListPage.qml:385
-msgid "Go To"
-msgstr "Gå till"
-
-#: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
-msgid "Places"
-msgstr "Platser"
-
-#: ../FolderListPage.qml:465
-msgid "No files"
-msgstr "Inga filer"
-
-#: ../FolderListPage.qml:486
-msgid "File operation error"
-msgstr "Filoperationsfel"
-
-#: ../FolderListView.qml:34
-#, qt-format
-msgid "%1 (1 file)"
-msgstr "%1 (1 fil)"
-
-#: ../FolderListView.qml:35
-#, qt-format
-msgid "%1 (%2 files)"
-msgstr "%1 (%2 filer)"
-
-#: ../FolderListView.qml:43 ../FolderListView.qml:124
-msgid "Delete"
-msgstr "Ta bort"
-
-#: ../FolderListView.qml:44
-#, qt-format
-msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "Är du säker att du vill ta bort '%1' permanent?"
-
-#: ../FolderListView.qml:67 ../FolderListView.qml:137
-msgid "Rename"
-msgstr "Byt namn"
-
-#: ../FolderListView.qml:68
-msgid "Enter a new name"
-msgstr "Ange ett nytt namn"
-
-#: ../FolderListView.qml:77
-msgid "Could not rename"
-msgstr "Kunde ej byta namn"
-
-#: ../FolderListView.qml:78
-msgid "Insufficient permissions or name already exists?"
-msgstr "Otillräckliga rättigheter eller finns namnet redan?"
-
-#: ../FolderListView.qml:101
-msgid "Cut"
-msgstr "Klipp ut"
-
-#: ../FolderListView.qml:112
-msgid "Copy"
-msgstr "Kopiera"
-
-#: ../FolderListView.qml:175
-msgid "Folder not accessible"
-msgstr "Mapp ej tillgänglig"
-
-#: ../FolderListView.qml:176
-msgid "Can not access "
-msgstr "Kan ej komma åt "
-
-#: ../GoToDialog.qml:25
-msgid "Go To Location"
-msgstr "Gå till plats"
-
-#: ../GoToDialog.qml:27
-msgid "Enter a location to go to:"
-msgstr "Ange plats att gå till:"
-
-#: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
-msgid "Location..."
-msgstr "Plats..."
-
-#: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
-msgid "Go"
-msgstr "Gå"
-
-#: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
+#: ../ubuntu-filemanager-app.qml:66
 msgid "Settings"
 msgstr "Inställningar"
 
-#: ../SettingsPage.qml:38
-msgid "Show Advanced Features"
-msgstr "Visa avancerade funktioner"
-
-#: ../ViewPopover.qml:39
-msgid "Show Hidden Files"
-msgstr "Visa dolda filer"
-
-#: ../ViewPopover.qml:59
-msgid "Sort By"
-msgstr "Sortera efter"
-
-#: ../ViewPopover.qml:70
-msgid "Name"
-msgstr "Namn"
-
-#: ../ViewPopover.qml:71
-msgid "Date"
-msgstr "Datum"
-
-#: ../ViewPopover.qml:81
-msgid "Sort Order"
-msgstr "Sorteringsordning"
-
-#: ../ViewPopover.qml:92 ../ViewPopover.qml:97
-msgid "Ascending"
-msgstr "Stigande"
-
-#: ../ViewPopover.qml:93
-msgid "Descending"
-msgstr "Fallande"
-
-#: ../ViewPopover.qml:105
-msgid "Filter"
-msgstr "Filter"
-
-#: ../ubuntu-filemanager-app.qml:52
+#: ../ubuntu-filemanager-app.qml:67
 msgid "Change app settings"
 msgstr "Ändra programinställningar"
 
-#: ../.build/ubuntu-filemanager-app.desktop.js:1
+#: ../ubuntu-filemanager-app.qml:176
+msgid "Icons"
+msgstr ""
+
+#: ../ubuntu-filemanager-app.qml:176
+msgid "List"
+msgstr ""
+
+#: ../.build/com.ubuntu.filemanager_filemanager.desktop.in:1
 msgid "File Manager"
 msgstr "Filhanterare"

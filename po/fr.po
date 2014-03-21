@@ -7,314 +7,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-12-30 14:24-0600\n"
+"POT-Creation-Date: 2014-03-10 18:46-0500\n"
 "PO-Revision-Date: 2013-10-01 13:01+0000\n"
 "Last-Translator: Anne <anneonyme017@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-09 05:38+0000\n"
-"X-Generator: Launchpad (build 16884)\n"
+"X-Launchpad-Export-Date: 2014-03-21 06:52+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
-#: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
-#: ../NotifyDialog.qml:25
-msgid "Ok"
-msgstr "Ok"
-
-#: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
-#: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
-#: ../GoToDialog.qml:61
-msgid "Cancel"
-msgstr "Annuler"
-
-#: ../FileActionDialog.qml:30
-msgid "Choose action"
-msgstr "Choisissez une action"
-
-#: ../FileActionDialog.qml:31
-#, qt-format
-msgid "For file: %1"
-msgstr "Pour le fichier : %1"
-
-#: ../FileActionDialog.qml:35
-msgid "Open"
-msgstr "Ouvrir"
-
-#: ../FileDetailsPopover.qml:37
-msgid "Readable"
-msgstr "Lisible"
-
-#: ../FileDetailsPopover.qml:40
-msgid "Writable"
-msgstr "Accessible en écriture"
-
-#: ../FileDetailsPopover.qml:43
-msgid "Executable"
-msgstr "Exécutable"
-
-#: ../FileDetailsPopover.qml:91
-msgid "Path:"
-msgstr "Chemin :"
-
-#: ../FileDetailsPopover.qml:102
-msgid "Contents:"
-msgstr "Contenu :"
-
-#: ../FileDetailsPopover.qml:103
-msgid "Size:"
-msgstr "Taile :"
-
-#: ../FileDetailsPopover.qml:112
-msgid "Accessed:"
-msgstr "Dernier accès :"
-
-#: ../FileDetailsPopover.qml:121
-msgid "Modified:"
-msgstr "Modifié :"
-
-#: ../FileDetailsPopover.qml:130
-msgid "Permissions:"
-msgstr "Droits d'accès :"
-
-#: ../FileOperationProgressDialog.qml:27
-msgid "Operation in progress"
-msgstr "Opération en cours"
-
-#: ../FolderListPage.qml:119
-msgid "~/Desktop"
-msgstr "~/Bureau"
-
-#: ../FolderListPage.qml:121
-msgid "~/Documents"
-msgstr "~/Documents"
-
-#: ../FolderListPage.qml:123
-msgid "~/Downloads"
-msgstr "~/Téléchargements"
-
-#: ../FolderListPage.qml:125
-msgid "~/Music"
-msgstr "~/Musique"
-
-#: ../FolderListPage.qml:127
-msgid "~/Pictures"
-msgstr "~/Images"
-
-#: ../FolderListPage.qml:129
-msgid "~/Public"
-msgstr "~/Public"
-
-#: ../FolderListPage.qml:131
-msgid "~/Programs"
-msgstr "~/Programmes"
-
-#: ../FolderListPage.qml:133
-msgid "~/Templates"
-msgstr "~/Modèles"
-
-#: ../FolderListPage.qml:135
-msgid "~/Videos"
-msgstr "~/Vidéos"
-
-#: ../FolderListPage.qml:148
-msgid "Home"
-msgstr "Dossier personnel"
-
-#: ../FolderListPage.qml:150
-msgid "File System"
-msgstr "Système de fichiers"
-
-#: ../FolderListPage.qml:197
-msgid "1 file"
-msgstr ""
-
-#: ../FolderListPage.qml:198
-#, qt-format
-msgid "%1 files"
-msgstr ""
-
-#: ../FolderListPage.qml:222
-msgid "Create New Folder"
-msgstr "Créer un nouveau dossier"
-
-#: ../FolderListPage.qml:242
-msgid "Paste"
-msgstr "Coller"
-
-#: ../FolderListPage.qml:244
-#, qt-format
-msgid "Paste %1 File"
-msgstr ""
-
-#: ../FolderListPage.qml:245
-#, qt-format
-msgid "Paste %1 Files"
-msgstr ""
-
-#: ../FolderListPage.qml:248
-msgid "Paste files"
-msgstr "Coller les fichiers"
-
-#: ../FolderListPage.qml:260
-msgid "Open in Terminal"
-msgstr "Ouvrir dans un terminal"
-
-#: ../FolderListPage.qml:272 ../FolderListView.qml:150
-msgid "Properties"
-msgstr "Propriétés"
-
-#: ../FolderListPage.qml:307
-msgid "Create folder"
-msgstr "Créer un dossier"
-
-#: ../FolderListPage.qml:308
-msgid "Enter name for new folder"
-msgstr "Entrez le nom du nouveau dossier"
-
-#: ../FolderListPage.qml:324
-msgid "Create file"
-msgstr "Créer un fichier"
-
-#: ../FolderListPage.qml:325
-msgid "Enter name for new file"
-msgstr "Entrez le nom du nouveau fichier"
-
-#: ../FolderListPage.qml:360
-msgid "Actions"
-msgstr "Actions"
-
-#: ../FolderListPage.qml:370
-msgid "View"
-msgstr "Vue"
-
-#: ../FolderListPage.qml:385
-msgid "Go To"
-msgstr "Aller à"
-
-#: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
-msgid "Places"
-msgstr "Lieux"
-
-#: ../FolderListPage.qml:465
-msgid "No files"
-msgstr "Pas de fichiers"
-
-#: ../FolderListPage.qml:486
-msgid "File operation error"
-msgstr "Erreur de manipulation de fichier"
-
-#: ../FolderListView.qml:34
-#, qt-format
-msgid "%1 (1 file)"
-msgstr ""
-
-#: ../FolderListView.qml:35
-#, qt-format
-msgid "%1 (%2 files)"
-msgstr ""
-
-#: ../FolderListView.qml:43 ../FolderListView.qml:124
-msgid "Delete"
-msgstr "Supprimer"
-
-#: ../FolderListView.qml:44
-#, qt-format
-msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "Voulez-vous vraiment supprimer définitivement '%1' ?"
-
-#: ../FolderListView.qml:67 ../FolderListView.qml:137
-msgid "Rename"
-msgstr "Renommer"
-
-#: ../FolderListView.qml:68
-msgid "Enter a new name"
-msgstr "Saisissez un nouveau nom."
-
-#: ../FolderListView.qml:77
-msgid "Could not rename"
-msgstr "Impossible de renommer"
-
-#: ../FolderListView.qml:78
-msgid "Insufficient permissions or name already exists?"
-msgstr "Droits d'accès insuffisants ou nom déjà utilisé ?"
-
-#: ../FolderListView.qml:101
-msgid "Cut"
-msgstr "Couper"
-
-#: ../FolderListView.qml:112
-msgid "Copy"
-msgstr "Copier"
-
-#: ../FolderListView.qml:175
-msgid "Folder not accessible"
-msgstr "Dossier inaccessible"
-
-#: ../FolderListView.qml:176
-msgid "Can not access "
-msgstr "Impossible d'accéder à "
-
-#: ../GoToDialog.qml:25
-msgid "Go To Location"
-msgstr "Aller à l'emplacement"
-
-#: ../GoToDialog.qml:27
-msgid "Enter a location to go to:"
-msgstr "Saisissez l'emplacement à atteindre :"
-
-#: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
-msgid "Location..."
-msgstr "Lieu…"
-
-#: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
-msgid "Go"
-msgstr "Aller à"
-
-#: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
+#: ../ubuntu-filemanager-app.qml:66
 msgid "Settings"
 msgstr "Paramètres"
 
-#: ../SettingsPage.qml:38
-msgid "Show Advanced Features"
-msgstr "Afficher les fonctionnalités avancées"
-
-#: ../ViewPopover.qml:39
-msgid "Show Hidden Files"
-msgstr "Afficher les fichiers cachés"
-
-#: ../ViewPopover.qml:59
-msgid "Sort By"
-msgstr "Trier par…"
-
-#: ../ViewPopover.qml:70
-msgid "Name"
-msgstr "Nom"
-
-#: ../ViewPopover.qml:71
-msgid "Date"
-msgstr "Date"
-
-#: ../ViewPopover.qml:81
-msgid "Sort Order"
-msgstr "Ordre de tri"
-
-#: ../ViewPopover.qml:92 ../ViewPopover.qml:97
-msgid "Ascending"
-msgstr "Croissant"
-
-#: ../ViewPopover.qml:93
-msgid "Descending"
-msgstr "Décroissant"
-
-#: ../ViewPopover.qml:105
-msgid "Filter"
-msgstr "Filtrer"
-
-#: ../ubuntu-filemanager-app.qml:52
+#: ../ubuntu-filemanager-app.qml:67
 msgid "Change app settings"
 msgstr ""
 
-#: ../.build/ubuntu-filemanager-app.desktop.js:1
+#: ../ubuntu-filemanager-app.qml:176
+msgid "Icons"
+msgstr ""
+
+#: ../ubuntu-filemanager-app.qml:176
+msgid "List"
+msgstr ""
+
+#: ../.build/com.ubuntu.filemanager_filemanager.desktop.in:1
 msgid "File Manager"
 msgstr "Gestionnaire de fichiers"

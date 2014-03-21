@@ -7,314 +7,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-12-30 14:24-0600\n"
+"POT-Creation-Date: 2014-03-10 18:46-0500\n"
 "PO-Revision-Date: 2014-02-16 16:22+0000\n"
 "Last-Translator: Mantas Kriaučiūnas <mantas@akl.lt>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-02-17 06:03+0000\n"
-"X-Generator: Launchpad (build 16916)\n"
+"X-Launchpad-Export-Date: 2014-03-21 06:52+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
-#: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
-#: ../NotifyDialog.qml:25
-msgid "Ok"
-msgstr "Gerai"
-
-#: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
-#: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
-#: ../GoToDialog.qml:61
-msgid "Cancel"
-msgstr "Atsisakyti"
-
-#: ../FileActionDialog.qml:30
-msgid "Choose action"
-msgstr "Pasirinkite veiksmą"
-
-#: ../FileActionDialog.qml:31
-#, qt-format
-msgid "For file: %1"
-msgstr ""
-
-#: ../FileActionDialog.qml:35
-msgid "Open"
-msgstr "Atverti"
-
-#: ../FileDetailsPopover.qml:37
-msgid "Readable"
-msgstr ""
-
-#: ../FileDetailsPopover.qml:40
-msgid "Writable"
-msgstr ""
-
-#: ../FileDetailsPopover.qml:43
-msgid "Executable"
-msgstr "Vykdomasis failas"
-
-#: ../FileDetailsPopover.qml:91
-msgid "Path:"
-msgstr "Kelias:"
-
-#: ../FileDetailsPopover.qml:102
-msgid "Contents:"
-msgstr "Turinys:"
-
-#: ../FileDetailsPopover.qml:103
-msgid "Size:"
-msgstr "Dydis:"
-
-#: ../FileDetailsPopover.qml:112
-msgid "Accessed:"
-msgstr "Naudota:"
-
-#: ../FileDetailsPopover.qml:121
-msgid "Modified:"
-msgstr "Pakeista:"
-
-#: ../FileDetailsPopover.qml:130
-msgid "Permissions:"
-msgstr ""
-
-#: ../FileOperationProgressDialog.qml:27
-msgid "Operation in progress"
-msgstr "Veiksmas vykdomas"
-
-#: ../FolderListPage.qml:119
-msgid "~/Desktop"
-msgstr ""
-
-#: ../FolderListPage.qml:121
-msgid "~/Documents"
-msgstr ""
-
-#: ../FolderListPage.qml:123
-msgid "~/Downloads"
-msgstr ""
-
-#: ../FolderListPage.qml:125
-msgid "~/Music"
-msgstr ""
-
-#: ../FolderListPage.qml:127
-msgid "~/Pictures"
-msgstr ""
-
-#: ../FolderListPage.qml:129
-msgid "~/Public"
-msgstr ""
-
-#: ../FolderListPage.qml:131
-msgid "~/Programs"
-msgstr ""
-
-#: ../FolderListPage.qml:133
-msgid "~/Templates"
-msgstr ""
-
-#: ../FolderListPage.qml:135
-msgid "~/Videos"
-msgstr ""
-
-#: ../FolderListPage.qml:148
-msgid "Home"
-msgstr ""
-
-#: ../FolderListPage.qml:150
-msgid "File System"
-msgstr ""
-
-#: ../FolderListPage.qml:197
-msgid "1 file"
-msgstr ""
-
-#: ../FolderListPage.qml:198
-#, qt-format
-msgid "%1 files"
-msgstr ""
-
-#: ../FolderListPage.qml:222
-msgid "Create New Folder"
-msgstr ""
-
-#: ../FolderListPage.qml:242
-msgid "Paste"
-msgstr ""
-
-#: ../FolderListPage.qml:244
-#, qt-format
-msgid "Paste %1 File"
-msgstr ""
-
-#: ../FolderListPage.qml:245
-#, qt-format
-msgid "Paste %1 Files"
-msgstr ""
-
-#: ../FolderListPage.qml:248
-msgid "Paste files"
-msgstr ""
-
-#: ../FolderListPage.qml:260
-msgid "Open in Terminal"
-msgstr ""
-
-#: ../FolderListPage.qml:272 ../FolderListView.qml:150
-msgid "Properties"
-msgstr ""
-
-#: ../FolderListPage.qml:307
-msgid "Create folder"
-msgstr ""
-
-#: ../FolderListPage.qml:308
-msgid "Enter name for new folder"
-msgstr ""
-
-#: ../FolderListPage.qml:324
-msgid "Create file"
-msgstr ""
-
-#: ../FolderListPage.qml:325
-msgid "Enter name for new file"
-msgstr ""
-
-#: ../FolderListPage.qml:360
-msgid "Actions"
-msgstr ""
-
-#: ../FolderListPage.qml:370
-msgid "View"
-msgstr ""
-
-#: ../FolderListPage.qml:385
-msgid "Go To"
-msgstr ""
-
-#: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
-msgid "Places"
-msgstr ""
-
-#: ../FolderListPage.qml:465
-msgid "No files"
-msgstr ""
-
-#: ../FolderListPage.qml:486
-msgid "File operation error"
-msgstr ""
-
-#: ../FolderListView.qml:34
-#, qt-format
-msgid "%1 (1 file)"
-msgstr ""
-
-#: ../FolderListView.qml:35
-#, qt-format
-msgid "%1 (%2 files)"
-msgstr ""
-
-#: ../FolderListView.qml:43 ../FolderListView.qml:124
-msgid "Delete"
-msgstr ""
-
-#: ../FolderListView.qml:44
-#, qt-format
-msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
-
-#: ../FolderListView.qml:67 ../FolderListView.qml:137
-msgid "Rename"
-msgstr ""
-
-#: ../FolderListView.qml:68
-msgid "Enter a new name"
-msgstr ""
-
-#: ../FolderListView.qml:77
-msgid "Could not rename"
-msgstr ""
-
-#: ../FolderListView.qml:78
-msgid "Insufficient permissions or name already exists?"
-msgstr ""
-
-#: ../FolderListView.qml:101
-msgid "Cut"
-msgstr ""
-
-#: ../FolderListView.qml:112
-msgid "Copy"
-msgstr ""
-
-#: ../FolderListView.qml:175
-msgid "Folder not accessible"
-msgstr ""
-
-#: ../FolderListView.qml:176
-msgid "Can not access "
-msgstr ""
-
-#: ../GoToDialog.qml:25
-msgid "Go To Location"
-msgstr ""
-
-#: ../GoToDialog.qml:27
-msgid "Enter a location to go to:"
-msgstr ""
-
-#: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
-msgid "Location..."
-msgstr ""
-
-#: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
-msgid "Go"
-msgstr ""
-
-#: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
+#: ../ubuntu-filemanager-app.qml:66
 msgid "Settings"
 msgstr ""
 
-#: ../SettingsPage.qml:38
-msgid "Show Advanced Features"
-msgstr ""
-
-#: ../ViewPopover.qml:39
-msgid "Show Hidden Files"
-msgstr ""
-
-#: ../ViewPopover.qml:59
-msgid "Sort By"
-msgstr ""
-
-#: ../ViewPopover.qml:70
-msgid "Name"
-msgstr ""
-
-#: ../ViewPopover.qml:71
-msgid "Date"
-msgstr ""
-
-#: ../ViewPopover.qml:81
-msgid "Sort Order"
-msgstr ""
-
-#: ../ViewPopover.qml:92 ../ViewPopover.qml:97
-msgid "Ascending"
-msgstr ""
-
-#: ../ViewPopover.qml:93
-msgid "Descending"
-msgstr ""
-
-#: ../ViewPopover.qml:105
-msgid "Filter"
-msgstr ""
-
-#: ../ubuntu-filemanager-app.qml:52
+#: ../ubuntu-filemanager-app.qml:67
 msgid "Change app settings"
 msgstr ""
 
-#: ../.build/ubuntu-filemanager-app.desktop.js:1
+#: ../ubuntu-filemanager-app.qml:176
+msgid "Icons"
+msgstr ""
+
+#: ../ubuntu-filemanager-app.qml:176
+msgid "List"
+msgstr ""
+
+#: ../.build/com.ubuntu.filemanager_filemanager.desktop.in:1
 msgid "File Manager"
 msgstr ""

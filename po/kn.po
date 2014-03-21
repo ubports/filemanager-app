@@ -7,314 +7,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-12-30 14:24-0600\n"
+"POT-Creation-Date: 2014-03-10 18:46-0500\n"
 "PO-Revision-Date: 2013-10-16 04:30+0000\n"
 "Last-Translator: ಸುಧೀಂದ್ರ <Unknown>\n"
 "Language-Team: Kannada <kn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-09 05:38+0000\n"
-"X-Generator: Launchpad (build 16884)\n"
+"X-Launchpad-Export-Date: 2014-03-21 06:52+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
-#: ../ConfirmDialog.qml:31 ../ConfirmDialogWithInput.qml:41
-#: ../NotifyDialog.qml:25
-msgid "Ok"
-msgstr "ಸರಿ"
-
-#: ../ConfirmDialog.qml:41 ../ConfirmDialogWithInput.qml:51
-#: ../FileActionDialog.qml:45 ../FileOperationProgressDialog.qml:44
-#: ../GoToDialog.qml:61
-msgid "Cancel"
-msgstr "ರದ್ದುಗೊಳಿಸಿ"
-
-#: ../FileActionDialog.qml:30
-msgid "Choose action"
-msgstr "ಕ್ರಿಯೆಯನ್ನು ಆರಿಸಿ"
-
-#: ../FileActionDialog.qml:31
-#, qt-format
-msgid "For file: %1"
-msgstr ""
-
-#: ../FileActionDialog.qml:35
-msgid "Open"
-msgstr "ತೆರೆ"
-
-#: ../FileDetailsPopover.qml:37
-msgid "Readable"
-msgstr "ಓದಬಹುದಾದ"
-
-#: ../FileDetailsPopover.qml:40
-msgid "Writable"
-msgstr "ಬರೆಯಬಹುದಾದ"
-
-#: ../FileDetailsPopover.qml:43
-msgid "Executable"
-msgstr ""
-
-#: ../FileDetailsPopover.qml:91
-msgid "Path:"
-msgstr "ಮಾರ್ಗ:"
-
-#: ../FileDetailsPopover.qml:102
-msgid "Contents:"
-msgstr "ಒಳ ಅಂಶಗಳು:"
-
-#: ../FileDetailsPopover.qml:103
-msgid "Size:"
-msgstr "ಗಾತ್ರ:"
-
-#: ../FileDetailsPopover.qml:112
-msgid "Accessed:"
-msgstr ""
-
-#: ../FileDetailsPopover.qml:121
-msgid "Modified:"
-msgstr "ಮಾರ್ಪಾಟುಗೊಂಡಿದ್ದು:"
-
-#: ../FileDetailsPopover.qml:130
-msgid "Permissions:"
-msgstr "ಅನುಮತಿಗಳು:"
-
-#: ../FileOperationProgressDialog.qml:27
-msgid "Operation in progress"
-msgstr "ಕಾರ್ಯವು ಪ್ರಗತಿಯಲ್ಲಿದೆ"
-
-#: ../FolderListPage.qml:119
-msgid "~/Desktop"
-msgstr ""
-
-#: ../FolderListPage.qml:121
-msgid "~/Documents"
-msgstr ""
-
-#: ../FolderListPage.qml:123
-msgid "~/Downloads"
-msgstr ""
-
-#: ../FolderListPage.qml:125
-msgid "~/Music"
-msgstr ""
-
-#: ../FolderListPage.qml:127
-msgid "~/Pictures"
-msgstr ""
-
-#: ../FolderListPage.qml:129
-msgid "~/Public"
-msgstr ""
-
-#: ../FolderListPage.qml:131
-msgid "~/Programs"
-msgstr ""
-
-#: ../FolderListPage.qml:133
-msgid "~/Templates"
-msgstr ""
-
-#: ../FolderListPage.qml:135
-msgid "~/Videos"
-msgstr ""
-
-#: ../FolderListPage.qml:148
-msgid "Home"
-msgstr ""
-
-#: ../FolderListPage.qml:150
-msgid "File System"
-msgstr "ಕಡತ ವ್ಯವಸ್ಥೆ"
-
-#: ../FolderListPage.qml:197
-msgid "1 file"
-msgstr ""
-
-#: ../FolderListPage.qml:198
-#, qt-format
-msgid "%1 files"
-msgstr ""
-
-#: ../FolderListPage.qml:222
-msgid "Create New Folder"
-msgstr "ಹೊಸ ಕಡತಕೋಶವನ್ನು ಸೃಷ್ಟಿಸು"
-
-#: ../FolderListPage.qml:242
-msgid "Paste"
-msgstr "ಅಂಟಿಸು"
-
-#: ../FolderListPage.qml:244
-#, qt-format
-msgid "Paste %1 File"
-msgstr ""
-
-#: ../FolderListPage.qml:245
-#, qt-format
-msgid "Paste %1 Files"
-msgstr ""
-
-#: ../FolderListPage.qml:248
-msgid "Paste files"
-msgstr "ಕಡತಗಳನ್ನು ಅಂಟಿಸು"
-
-#: ../FolderListPage.qml:260
-msgid "Open in Terminal"
-msgstr ""
-
-#: ../FolderListPage.qml:272 ../FolderListView.qml:150
-msgid "Properties"
-msgstr "ಗುಣಲಕ್ಷಣಗಳು"
-
-#: ../FolderListPage.qml:307
-msgid "Create folder"
-msgstr "ಕಡತಕೋಶ ರಚಿಸು"
-
-#: ../FolderListPage.qml:308
-msgid "Enter name for new folder"
-msgstr "ಹೊಸ ಕಡತಕೋಶದ ಹೆಸರನ್ನು ನಮೂದಿಸಿ"
-
-#: ../FolderListPage.qml:324
-msgid "Create file"
-msgstr "ಕಡತವನ್ನು ರಚಿಸಿ"
-
-#: ../FolderListPage.qml:325
-msgid "Enter name for new file"
-msgstr ""
-
-#: ../FolderListPage.qml:360
-msgid "Actions"
-msgstr "ಕಾರ್ಯಗಳು"
-
-#: ../FolderListPage.qml:370
-msgid "View"
-msgstr "ನೋಟ"
-
-#: ../FolderListPage.qml:385
-msgid "Go To"
-msgstr "ಇಲ್ಲಿಗೆ ತೆರಳು"
-
-#: ../FolderListPage.qml:398 ../PlacesSidebar.qml:73
-msgid "Places"
-msgstr "ಸ್ಥಳಗಳು"
-
-#: ../FolderListPage.qml:465
-msgid "No files"
-msgstr "ಯಾವುದೆ ಕಡತಗಳಿಲ್ಲ"
-
-#: ../FolderListPage.qml:486
-msgid "File operation error"
-msgstr ""
-
-#: ../FolderListView.qml:34
-#, qt-format
-msgid "%1 (1 file)"
-msgstr ""
-
-#: ../FolderListView.qml:35
-#, qt-format
-msgid "%1 (%2 files)"
-msgstr ""
-
-#: ../FolderListView.qml:43 ../FolderListView.qml:124
-msgid "Delete"
-msgstr "ಅಳಿಸು"
-
-#: ../FolderListView.qml:44
-#, qt-format
-msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
-
-#: ../FolderListView.qml:67 ../FolderListView.qml:137
-msgid "Rename"
-msgstr "ಮರುಹೆಸರಿಸು"
-
-#: ../FolderListView.qml:68
-msgid "Enter a new name"
-msgstr "ಒಂದು ಹೊಸ ಹೆಸರನ್ನು ನಮೂದಿಸಿ"
-
-#: ../FolderListView.qml:77
-msgid "Could not rename"
-msgstr ""
-
-#: ../FolderListView.qml:78
-msgid "Insufficient permissions or name already exists?"
-msgstr "ಅನುಮತಿ ಇಲ್ಲ ಅಥವಾ ಹೆಸರು ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ?"
-
-#: ../FolderListView.qml:101
-msgid "Cut"
-msgstr "ಕತ್ತರಿಸು"
-
-#: ../FolderListView.qml:112
-msgid "Copy"
-msgstr "ನಕಲು"
-
-#: ../FolderListView.qml:175
-msgid "Folder not accessible"
-msgstr ""
-
-#: ../FolderListView.qml:176
-msgid "Can not access "
-msgstr ""
-
-#: ../GoToDialog.qml:25
-msgid "Go To Location"
-msgstr ""
-
-#: ../GoToDialog.qml:27
-msgid "Enter a location to go to:"
-msgstr ""
-
-#: ../GoToDialog.qml:39 ../PlacesPopover.qml:84
-msgid "Location..."
-msgstr ""
-
-#: ../GoToDialog.qml:48 ../PlacesPopover.qml:99
-msgid "Go"
-msgstr "ಹೋಗು"
-
-#: ../SettingsPage.qml:32 ../ubuntu-filemanager-app.qml:51
+#: ../ubuntu-filemanager-app.qml:66
 msgid "Settings"
 msgstr "ಸಂಯೋಜನೆಗಳು"
 
-#: ../SettingsPage.qml:38
-msgid "Show Advanced Features"
-msgstr "ಸುಧಾರಿತ ವೈಶಿಷ್ಟ್ಯಗಳು ತೋರಿಸಿ"
-
-#: ../ViewPopover.qml:39
-msgid "Show Hidden Files"
-msgstr "ಅಡಗಿಸಿದ ಕಡತಗಳನ್ನು ತೋರಿಸು"
-
-#: ../ViewPopover.qml:59
-msgid "Sort By"
-msgstr "ಹೀಗೆ ವಿಂಗಡಿಸು"
-
-#: ../ViewPopover.qml:70
-msgid "Name"
-msgstr "ಹೆಸರು"
-
-#: ../ViewPopover.qml:71
-msgid "Date"
-msgstr "ದಿನಾಂಕ"
-
-#: ../ViewPopover.qml:81
-msgid "Sort Order"
-msgstr "ವಿಂಗಡಣಾ ಕ್ರಮ"
-
-#: ../ViewPopover.qml:92 ../ViewPopover.qml:97
-msgid "Ascending"
-msgstr "ಆರೋಹಣ ಕ್ರಮ"
-
-#: ../ViewPopover.qml:93
-msgid "Descending"
-msgstr "ಅವರೋಹಣಾ ಕ್ರಮ"
-
-#: ../ViewPopover.qml:105
-msgid "Filter"
-msgstr "ಶೋಧಕ (ಫಿಲ್ಟರ್)"
-
-#: ../ubuntu-filemanager-app.qml:52
+#: ../ubuntu-filemanager-app.qml:67
 msgid "Change app settings"
 msgstr ""
 
-#: ../.build/ubuntu-filemanager-app.desktop.js:1
+#: ../ubuntu-filemanager-app.qml:176
+msgid "Icons"
+msgstr ""
+
+#: ../ubuntu-filemanager-app.qml:176
+msgid "List"
+msgstr ""
+
+#: ../.build/com.ubuntu.filemanager_filemanager.desktop.in:1
 msgid "File Manager"
 msgstr "ಕಡತ ನಿರ್ವಾಹಕ"
