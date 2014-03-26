@@ -12,7 +12,7 @@ set(DESKTOP_FILE "${PROJECT_NAME}_${APP_NAME}.desktop")
 set(URLS_FILE "${PROJECT_NAME}_${APP_NAME}.url-dispatcher")
 set(APP_HARDCODE ubuntu-filemanager-app)
 set(MAIN_QML ${APP_HARDCODE}.qml)
-set(ICON filemanager64.png)
+set(ICON_FILE filemanager64.png)
 set(AUTOPILOT_DIR ubuntu_filemanager_app)
 
 if(CLICK_MODE)
@@ -23,13 +23,14 @@ if(CLICK_MODE)
     set(CMAKE_INSTALL_PREFIX /)
     set(CMAKE_INSTALL_BINDIR /)
     set(DATA_DIR /)
-    set(EXEC "qmlscene ${MAIN_QML}")
+    set(ICON ${ICON_FILE})
+    set(EXEC "qmlscene -qt5 ${MAIN_QML}")
     set(DESKTOP_DIR ${DATA_DIR})
     set(URLS_DIR ${DATA_DIR})
 else(CLICK_MODE)
     set(DATA_DIR ${CMAKE_INSTALL_DATADIR}/${APP_HARDCODE})
     set(EXEC ${APP_HARDCODE})
-    set(ICON ${CMAKE_INSTALL_PREFIX}/${DATA_DIR}/${ICON})
+    set(ICON ${CMAKE_INSTALL_PREFIX}/${DATA_DIR}/${ICON_FILE})
     configure_file(${APP_HARDCODE}.in
         ${CMAKE_CURRENT_BINARY_DIR}/${APP_HARDCODE})
     install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${APP_HARDCODE}
@@ -49,7 +50,7 @@ file(GLOB SRC_FILES
      *.qml *.js *.png *.js *.json)
 install(DIRECTORY ui components icons
     DESTINATION ${DATA_DIR})
-install(FILES ${MAIN_QML} DESTINATION ${DATA_DIR})
+install(FILES ${SRC_FILES} ${ICON_FILE} DESTINATION ${DATA_DIR})
 
 configure_file(${DESKTOP_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE})
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE}
