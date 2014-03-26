@@ -1,6 +1,9 @@
 project(com.ubuntu.filemanager)
 cmake_minimum_required(VERSION 2.8.9)
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fno-permissive -pedantic -Wall -Wextra -fPIC")
+
 # Standard install paths
 include(GNUInstallDirs)
 
@@ -22,6 +25,7 @@ if(CLICK_MODE)
     endif(NOT DEFINED BZR_SOURCE)
     set(CMAKE_INSTALL_PREFIX /)
     set(CMAKE_INSTALL_BINDIR /)
+    set(QT_IMPORTS_DIR "/lib/${ARCH_TRIPLET}")
     set(DATA_DIR /)
     set(ICON ${ICON_FILE})
     set(EXEC "qmlscene -qt5 ${MAIN_QML}")
@@ -64,3 +68,4 @@ enable_testing()
 add_subdirectory(click)
 add_subdirectory(po)
 add_subdirectory(tests)
+add_subdirectory(plugin)
