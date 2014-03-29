@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-03-10 18:46-0500\n"
-"PO-Revision-Date: 2014-01-15 10:37+0000\n"
-"Last-Translator: Florian Fischer <flo.f.3095@gmail.com>\n"
+"PO-Revision-Date: 2014-03-28 20:33+0000\n"
+"Last-Translator: Phillip Sz <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-21 06:52+0000\n"
+"X-Launchpad-Export-Date: 2014-03-29 07:30+0000\n"
 "X-Generator: Launchpad (build 16967)\n"
 
 #: ../ubuntu-filemanager-app.qml:66
@@ -27,11 +27,11 @@ msgstr "Einstellungen ändern"
 
 #: ../ubuntu-filemanager-app.qml:176
 msgid "Icons"
-msgstr ""
+msgstr "Symbole"
 
 #: ../ubuntu-filemanager-app.qml:176
 msgid "List"
-msgstr ""
+msgstr "Liste"
 
 #: ../.build/com.ubuntu.filemanager_filemanager.desktop.in:1
 msgid "File Manager"
