@@ -4,7 +4,7 @@ set(filemanager_SRCS
     ${QML_SRCS}
 )
 
-qt5_use_modules(reminders Gui Qml Quick)
+#qt5_use_modules(reminders Gui Qml Quick)
 
 if(NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
 add_custom_target(filemanager-qmlfiles ALL
@@ -14,8 +14,8 @@ add_custom_target(filemanager-qmlfiles ALL
 endif(NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
 
 install(DIRECTORY qml DESTINATION ${DATA_DIR})
-if(CLICK_MODE)
-  install(TARGETS filemanager DESTINATION ${BIN_DIR})
-else()
-  install(TARGETS filemanager RUNTIME DESTINATION bin)
-endif()
+#if(CLICK_MODE)
+#  install(TARGETS filemanager DESTINATION ${BIN_DIR})
+#else()
+#  install(TARGETS filemanager RUNTIME DESTINATION bin)
+#endif()
