@@ -27,7 +27,7 @@ if(CLICK_MODE)
     set(CMAKE_INSTALL_BINDIR /)
     set(DATA_DIR /)
     set(ICON ${ICON_FILE})
-    set(EXEC "qmlscene -qt5 ${MAIN_QML}")
+    set(EXEC "qmlscene -qt5 qml/${MAIN_QML} -I ../plugin")
     set(DESKTOP_DIR ${DATA_DIR})
     set(URLS_DIR ${DATA_DIR})
 else(CLICK_MODE)
@@ -49,10 +49,8 @@ list(SORT I18N_SRC_FILES)
 
 file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-     *.qml *.js *.png *.js *.json)
-install(DIRECTORY ui components icons
-    DESTINATION ${DATA_DIR})
-install(FILES ${SRC_FILES} ${ICON_FILE} DESTINATION ${DATA_DIR})
+     *.qml *.js *.png *.js)
+install(FILES ${SRC_FILES}  DESTINATION ${DATA_DIR})
 
 configure_file(${DESKTOP_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE})
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE}
