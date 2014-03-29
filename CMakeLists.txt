@@ -1,5 +1,8 @@
-project(com.ubuntu.filemanager)
+project(com.ubuntu.filemanager C CXX)
 cmake_minimum_required(VERSION 2.8.9)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fno-permissive -pedantic -Wall -Wextra -fPIC")
 
 # Standard install paths
 include(GNUInstallDirs)
@@ -41,9 +44,8 @@ endif(CLICK_MODE)
 
 file(GLOB_RECURSE I18N_SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-     rc/**.qml desktop/**.desktop.in)
+     src/app/**.qml *.desktop.in)
 list(SORT I18N_SRC_FILES)
-
 
 file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
@@ -64,3 +66,4 @@ enable_testing()
 add_subdirectory(click)
 add_subdirectory(po)
 add_subdirectory(tests)
+add_subdirectory(src)
