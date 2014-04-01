@@ -23,14 +23,27 @@ if(CLICK_MODE)
         set(BZR_SOURCE "lp:${APP_HARDCODE}")
         message("-- Setting BZR_SOURCE to ${BZR_SOURCE}")
     endif(NOT DEFINED BZR_SOURCE)
+    # Find out the architecture for package building
+    # to determine the plugin's installation path
+    execute_process(
+        COMMAND dpkg-architecture -qDEB_HOST_MULTIARCH
+        OUTPUT_VARIABLE ARCH_TRIPLET
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
     set(CMAKE_INSTALL_PREFIX /)
     set(CMAKE_INSTALL_BINDIR /)
     set(DATA_DIR /)
     set(ICON ${ICON_FILE})
-    set(EXEC "qmlscene -qt5 qml/${MAIN_QML} -I ../plugin")
+    set(QT_IMPORTS_DIR "/lib/${ARCH_TRIPLET}")
+    set(EXEC "qmlscene -qt5 qml/${MAIN_QML}")
     set(DESKTOP_DIR ${DATA_DIR})
     set(URLS_DIR ${DATA_DIR})
 else(CLICK_MODE)
+    execute_process(
+        COMMAND qmake -query QT_INSTALL_QML
+        OUTPUT_VARIABLE QT_IMPORTS_DIR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
     set(DATA_DIR ${CMAKE_INSTALL_DATADIR}/${APP_HARDCODE})
     set(EXEC ${APP_HARDCODE})
     set(ICON ${CMAKE_INSTALL_PREFIX}/${DATA_DIR}/${ICON_FILE})
