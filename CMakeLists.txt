@@ -37,6 +37,7 @@ if(CLICK_MODE)
     set(QT_IMPORTS_DIR "/lib/${ARCH_TRIPLET}")
     set(DESKTOP_DIR ${DATA_DIR})
     set(URLS_DIR ${DATA_DIR})
+    install(FILES manifest.json apparmor.json DESTINATION ${CMAKE_INSTALL_PREFIX})
 else(CLICK_MODE)
     execute_process(
         COMMAND qmake -query QT_INSTALL_QML
