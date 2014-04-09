@@ -69,7 +69,6 @@ install(FILES ${URLS_FILE} DESTINATION ${URLS_DIR})
 # Tests
 enable_testing()
 
-add_subdirectory(click)
 add_subdirectory(po)
 add_subdirectory(tests)
 add_subdirectory(src)
