@@ -11,7 +11,7 @@ option(INSTALL_TESTS "Install the tests on make install" on)
 option(CLICK_MODE "Installs to a contained location" off)
 
 set(APP_NAME filemanager)
-set(DESKTOP_FILE "${PROJECT_NAME}_${APP_NAME}.desktop")
+set(DESKTOP_FILE "${PROJECT_NAME}.desktop")
 set(URLS_FILE "${PROJECT_NAME}_${APP_NAME}.url-dispatcher")
 set(APP_HARDCODE ubuntu-filemanager-app)
 set(MAIN_QML ${APP_HARDCODE}.qml)
