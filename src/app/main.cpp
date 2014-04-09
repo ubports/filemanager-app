@@ -78,17 +78,17 @@ int main(int argc, char *argv[])
         }
     }
 
-    view.engine()->rootContext()->setContextProperty("tablet", false);
-    view.engine()->rootContext()->setContextProperty("phone", false);
+    view.engine()->rootContext()->setContextProperty("tablet", QVariant(false));
+    view.engine()->rootContext()->setContextProperty("phone", QVariant(false));
     if (args.contains("-t") || args.contains("--tablet")) {
         qDebug() << "running in tablet mode";
-        view.engine()->rootContext()->setContextProperty("tablet", true);
+        view.engine()->rootContext()->setContextProperty("tablet", QVariant(true));
     } else if (args.contains("-p") || args.contains("--phone")){
         qDebug() << "running in phone mode";
-        view.engine()->rootContext()->setContextProperty("phone", true);
+        view.engine()->rootContext()->setContextProperty("phone", QVariant(true));
     } else if (qgetenv("QT_QPA_PLATFORM") != "ubuntumirclient") {
         // Default to tablet size on X11
-        view.engine()->rootContext()->setContextProperty("tablet", true);
+        view.engine()->rootContext()->setContextProperty("tablet", QVariant(true));
     }
 
     view.engine()->setImportPathList(importPathList);
