@@ -104,6 +104,7 @@ class MainView(toolkit_emulators.MainView):
         """Return a popover emulator"""
         return self.wait_select_single(Popover)
 
+
 class PlacesSidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """PlacesSidebar Autopilot emulator."""
 

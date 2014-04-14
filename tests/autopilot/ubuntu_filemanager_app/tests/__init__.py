@@ -21,7 +21,6 @@ from autopilot.testcase import AutopilotTestCase
 from autopilot import logging as autopilot_logging
 
 from ubuntuuitoolkit import (
-    base,
     emulators as toolkit_emulators
 )
 
