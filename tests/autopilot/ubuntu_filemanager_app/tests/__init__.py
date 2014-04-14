@@ -41,7 +41,7 @@ class FileManagerTestCase(AutopilotTestCase):
     local_location_binary = '../../src/app/filemanager'
     installed_location_binary = '/usr/bin/filemanager'
     installed_location_qml = \
-        '/usr/share/ubuntu-filemanager-app/ubuntu-filemanager-app.qml'
+        '/usr/share/ubuntu-filemanager-app/qml/ubuntu-filemanager-app.qml'
 
     def setUp(self):
         self._create_test_root()
