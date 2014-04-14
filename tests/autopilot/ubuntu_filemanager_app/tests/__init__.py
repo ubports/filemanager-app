@@ -39,7 +39,7 @@ class FileManagerTestCase(AutopilotTestCase):
         scenarios = [('with touch', dict(input_device_class=Touch))]
 
     local_location_binary = '../../src/app/filemanager'
-    installed_location_binary = '/usr/bin/filemanager-app'
+    installed_location_binary = '/usr/bin/filemanager'
 
     def setUp(self):
         self._create_test_root()
@@ -72,7 +72,6 @@ class FileManagerTestCase(AutopilotTestCase):
         self.addCleanup(shutil.rmtree, temp_dir)
         logger.debug('Created root test directory ' + temp_dir)
         self.patch_environment('TESTHOME', temp_dir)
-        logger.debug('Patched root test directory ' + temp_dir)
         return temp_dir
 
     @autopilot_logging.log_action(logger.info)
