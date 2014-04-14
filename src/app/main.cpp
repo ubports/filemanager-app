@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
     view.engine()->setImportPathList(importPathList);
 
     QString qmlfile;
-    const QString filePath = QLatin1String("qml/reminders.qml");
+    const QString filePath = QLatin1String("qml/ubuntu-filemanager-app.qml");
     QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
     paths.prepend(QCoreApplication::applicationDirPath());
     Q_FOREACH (const QString &path, paths) {
