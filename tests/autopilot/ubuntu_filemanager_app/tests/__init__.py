@@ -40,6 +40,8 @@ class FileManagerTestCase(AutopilotTestCase):
 
     local_location_binary = '../../src/app/filemanager'
     installed_location_binary = '/usr/bin/filemanager'
+    installed_location_qml = \
+        '/usr/share/ubuntu-filemanager-app/ubuntu-filemanager-app.qml'
 
     def setUp(self):
         self._create_test_root()
@@ -85,14 +87,15 @@ class FileManagerTestCase(AutopilotTestCase):
 
     @autopilot_logging.log_action(logger.info)
     def launch_test_installed(self):
-        self.app = self.launch_test_application(
+        return self.launch_test_application(
             self.installed_location_binary,
+            '-q ' + self.installed_location_qml,
             app_type='qt',
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
     @autopilot_logging.log_action(logger.info)
     def launch_test_click(self):
-        self.app = self.launch_click_package(
+        return self.launch_click_package(
             'com.ubuntu.filemanager',
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
