@@ -11,9 +11,9 @@
     },
     "icon": "filemanager64.png",
     "maintainer": "Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>",
-    "name": "com.ubuntu.filemanager",
+    "name": "@PROJECT_NAME@",
     "title": "File Manager",
-    "version": "0.2",
+    "version": "0.2.@BZR_REVNO@",
     "x-source": {
         "vcs-bzr": "lp:ubuntu-filemanager-app",
         "vcs-bzr-revno": "latest"
