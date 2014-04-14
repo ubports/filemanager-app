@@ -89,7 +89,7 @@ class FileManagerTestCase(AutopilotTestCase):
     def launch_test_installed(self):
         return self.launch_test_application(
             self.installed_location_binary,
-            '-q ' + self.installed_location_qml,
+            '-q', self.installed_location_qml,
             app_type='qt',
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
