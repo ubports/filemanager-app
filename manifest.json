@@ -1,0 +1,24 @@
+{
+    "description": "File Manager application",
+    "framework": "ubuntu-sdk-14.04-dev1",
+    "architecture": "armhf",
+    "hooks": {
+        "filemanager": {
+            "apparmor": "apparmor.json",
+            "desktop": "com.ubuntu.filemanager.desktop",
+            "urls": "com.ubuntu.filemanager_filemanager.url-dispatcher"
+        }
+    },
+    "icon": "filemanager64.png",
+    "maintainer": "Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>",
+    "name": "com.ubuntu.filemanager",
+    "title": "File Manager",
+    "version": "0.3",
+    "x-source": {
+        "vcs-bzr": "lp:ubuntu-filemanager-app",
+        "vcs-bzr-revno": "latest"
+    },
+    "x-test": {
+        "autopilot": "ubuntu_filemanager_app"
+    }
+}

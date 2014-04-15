@@ -1,3 +1,10 @@
+ubuntu-filemanager-app (0.2) trusty; urgency=medium
+
+  * Merged the plugin code into the main tree, now the main source package
+    generates a binary package for the app and another for the plugin
+
+ -- David Planella <david.planella@ubuntu.com>  Thu, 10 Apr 2014 09:23:41 +0200
+
 ubuntu-filemanager-app (0.1.1) raring; urgency=low
 
   * Initial release
