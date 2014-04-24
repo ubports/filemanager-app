@@ -39,7 +39,11 @@ if(CLICK_MODE)
     set(BIN_DIR /lib/${ARCH_TRIPLET}/bin)
     set(DESKTOP_DIR ${DATA_DIR})
     set(URLS_DIR ${DATA_DIR})
-    install(FILES manifest.json apparmor.json DESTINATION ${CMAKE_INSTALL_PREFIX})
+    if(NOT BZR_REVNO)
+        set(BZR_REVNO "latest")
+    endif(NOT BZR_REVNO)
+    configure_file(manifest.json ${CMAKE_CURRENT_BINARY_DIR}/manifest.json)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json apparmor.json DESTINATION ${CMAKE_INSTALL_PREFIX})
 else(CLICK_MODE)
     execute_process(
         COMMAND qmake -query QT_INSTALL_QML
