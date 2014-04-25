@@ -25,6 +25,7 @@
 #include <QtQuick/QQuickView>
 #include <QtQml/QtQml>
 #include <QLibrary>
+#include <QDir>
 
 #include <QDebug>
 
@@ -96,7 +97,8 @@ int main(int argc, char *argv[])
     // load the qml file
     if (qmlfile.isEmpty()) {
         QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-        paths.prepend(".");
+        paths.prepend(QDir::currentPath());
+        paths.prepend(QCoreApplication::applicationDirPath());
 
         foreach (const QString &path, paths) {
             QFileInfo fi(path + "/qml/ubuntu-filemanager-app.qml");
