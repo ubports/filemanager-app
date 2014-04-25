@@ -1,3 +1,10 @@
+ubuntu-filemanager-app (0.3) trusty; urgency=medium
+
+  * Get the click package to run on devices. (LP: #1294301)
+  * Get the app to run on the desktop. (LP: #1312712)
+
+ -- David Planella <david.planella@ubuntu.com>  Fri, 25 Apr 2014 14:57:32 +0200
+
 ubuntu-filemanager-app (0.2) trusty; urgency=medium
 
   * Merged the plugin code into the main tree, now the main source package

@@ -102,6 +102,7 @@ int main(int argc, char *argv[])
 
         foreach (const QString &path, paths) {
             QFileInfo fi(path + "/qml/ubuntu-filemanager-app.qml");
+            qDebug() << "Trying to load QML from:" << path + "/qml/ubuntu-filemanager-app.qml";
             if (fi.exists()) {
                 qmlfile = path +  "/qml/ubuntu-filemanager-app.qml";
                 break;
