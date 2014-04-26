@@ -13,7 +13,7 @@ import tempfile
 import logging
 
 import fixtures
-from ubuntu_filemanager_app import emulators
+from filemanager import emulators
 
 from autopilot.input import Mouse, Touch, Pointer
 from autopilot.platform import model
@@ -41,7 +41,7 @@ class FileManagerTestCase(AutopilotTestCase):
     local_location_binary = '../../src/app/filemanager'
     installed_location_binary = '/usr/bin/filemanager'
     installed_location_qml = \
-        '/usr/share/ubuntu-filemanager-app/qml/ubuntu-filemanager-app.qml'
+        '/usr/share/filemanager/qml/filemanager.qml'
 
     def setUp(self):
         self._create_test_root()

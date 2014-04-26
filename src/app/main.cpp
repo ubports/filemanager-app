@@ -101,10 +101,10 @@ int main(int argc, char *argv[])
         paths.prepend(QCoreApplication::applicationDirPath());
 
         foreach (const QString &path, paths) {
-            QFileInfo fi(path + "/qml/ubuntu-filemanager-app.qml");
-            qDebug() << "Trying to load QML from:" << path + "/qml/ubuntu-filemanager-app.qml";
+            QFileInfo fi(path + "/qml/filemanager.qml");
+            qDebug() << "Trying to load QML from:" << path + "/qml/filemanager.qml";
             if (fi.exists()) {
-                qmlfile = path +  "/qml/ubuntu-filemanager-app.qml";
+                qmlfile = path +  "/qml/filemanager.qml";
                 break;
             }
         }
