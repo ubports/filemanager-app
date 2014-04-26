@@ -56,7 +56,8 @@ class FileManagerTestCase(AutopilotTestCase):
         logger.debug('File count in TESTHOME is %s' % self.original_file_count)
 
         self.EXEC = 'filemanager'
-        self.source_dir = os.path.dirname(os.path.dirname(os.path.abspath('.')))
+        self.source_dir = os.path.dirname(
+            os.path.dirname(os.path.abspath('.')))
         self.build_dir = self._get_build_dir()
         self.local_location_binary = os.path.join(self.build_dir,
                                                   'src', 'app', self.EXEC)
