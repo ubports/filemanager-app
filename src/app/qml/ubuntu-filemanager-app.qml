@@ -183,7 +183,7 @@ MainView {
 
     function reloadSettings() {
         //showAdvancedFeatures = getSetting("showAdvancedFeatures", false)
-        viewMethod = getSetting("viewMethod", width > units.gu(40) ? i18n.tr("Icons") : i18n.tr("List"))
+        viewMethod = getSetting("viewMethod", wideAspect ? i18n.tr("Icons") : i18n.tr("List"))
         collapsedSidebar = getSetting("collapsedSidebar", false)
     }
 
