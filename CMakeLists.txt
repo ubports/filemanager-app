@@ -34,7 +34,6 @@ if(CLICK_MODE)
     set(CMAKE_INSTALL_PREFIX /)
     set(CMAKE_INSTALL_BINDIR /)
     set(DATA_DIR /)
-    set(QML_DIR "/qml/")
     set(ICON ${ICON_FILE})
     set(QT_IMPORTS_DIR "/lib/${ARCH_TRIPLET}")
     set(BIN_DIR /lib/${ARCH_TRIPLET}/bin)
@@ -52,7 +51,6 @@ else(CLICK_MODE)
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     set(DATA_DIR ${CMAKE_INSTALL_DATADIR}/${APP_HARDCODE})
-    set(QML_DIR ${CMAKE_INSTALL_DATADIR}/${APP_HARDCODE}/qml)
     set(ICON ${CMAKE_INSTALL_PREFIX}/${DATA_DIR}/${ICON_FILE})
     set(DESKTOP_DIR ${CMAKE_INSTALL_DATADIR}/applications)
     set(URLS_DIR ${CMAKE_INSTALL_DATADIR}/url-dispatcher/urls)
@@ -65,8 +63,7 @@ list(SORT I18N_SRC_FILES)
 
 file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-     *.qml *.js *.png *.js)
-install(DIRECTORY icons DESTINATION ${QML_DIR})
+     *.qml *.js *.png *.svg *.js)
 install(FILES ${SRC_FILES}  DESTINATION ${DATA_DIR})
 
 configure_file(${DESKTOP_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE})
