@@ -13,7 +13,7 @@ import tempfile
 import logging
 
 import fixtures
-from filemanager import emulators, CMakePluginParser
+from filemanager import emulators
 
 from autopilot.input import Mouse, Touch, Pointer
 from autopilot.platform import model
@@ -73,13 +73,7 @@ class FileManagerTestCase(AutopilotTestCase):
             self.app = self.launch_test_click()
 
     def _get_build_dir(self):
-
-        try:
-            cmake_config = CMakePluginParser.CMakePluginParser(os.path.join(
-                self.source_dir, 'CMakeLists.txt.user'))
-            build_dir = cmake_config.active_build_dir
-        except:
-            build_dir = self.source_dir
+        build_dir = self.source_dir
 
         return build_dir
 
