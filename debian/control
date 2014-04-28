@@ -43,7 +43,6 @@ Package: ubuntu-filemanager-app-autopilot
 Architecture: all
 Depends: libautopilot-qt (>= 1.4),
          libqt5test5,
-         python-lxml,
          python-mock,
          ubuntu-filemanager-app (= ${source:Version}),
          ubuntu-ui-toolkit-autopilot,
