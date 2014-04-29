@@ -17,7 +17,8 @@ Vcs-Bzr: https://code.launchpad.net/~ubuntu-filemanager-dev/ubuntu-filemanager-a
 Package: ubuntu-filemanager-app
 Section: misc
 Architecture: any
-Depends: qmlscene,
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
          qtdeclarative5-hud1.0,
          qtdeclarative5-nemo-qml-plugin-folderlistmodel,
          qtdeclarative5-qtquick2-plugin,
@@ -32,6 +33,7 @@ Architecture: any
 Multi-Arch: same
 Depends: ${misc:Depends},
          ${shlibs:Depends},
+         ${misc:Pre-Depends},
 Description: Nemo QML plugin - folder list model
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.
@@ -41,10 +43,11 @@ Description: Nemo QML plugin - folder list model
 
 Package: ubuntu-filemanager-app-autopilot
 Architecture: all
-Depends: libautopilot-qt (>= 1.4),
+Depends: ${misc:Depends},
+         libautopilot-qt (>= 1.4),
          libqt5test5,
          python-mock,
-         ubuntu-filemanager-app (= ${source:Version}),
+         ubuntu-filemanager-app (>= ${source:Version}),
          ubuntu-ui-toolkit-autopilot,
 Description: Autopilot tests for File Manager Application
  This package contains the autopilot tests for the File Manager
