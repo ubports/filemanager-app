@@ -62,7 +62,7 @@ list(SORT I18N_SRC_FILES)
 
 file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-     *.qml *.js *.png *.js)
+     *.qml *.js *.png *.svg *.js)
 install(FILES ${SRC_FILES}  DESTINATION ${DATA_DIR})
 
 configure_file(${DESKTOP_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE})
