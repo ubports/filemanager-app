@@ -80,7 +80,7 @@ class FileManagerTestCase(AutopilotTestCase):
         """
         try:
             cmake_config = CMakePluginParser.CMakePluginParser(os.path.join(
-            self.source_dir, 'CMakeLists.txt.user'))
+                self.source_dir, 'CMakeLists.txt.user'))
             build_dir = cmake_config.active_build_dir
         except:
             build_dir = self.source_dir
