@@ -19,6 +19,6 @@
         "vcs-bzr-revno": "@BZR_REVNO@"
     },
     "x-test": {
-        "autopilot": "ubuntu_filemanager_app"
+        "autopilot": "filemanager"
     }
 }

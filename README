@@ -142,5 +142,5 @@ to uninstall:
 Once the app has been built, you can go to the build directory and run:
 
     cd tests/autopilot
-    autopilot run ubuntu_filemanager_app
+    autopilot run filemanager
 

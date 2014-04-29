@@ -30,7 +30,7 @@ from autopilot.platform import model
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals, NotEquals
 
-from ubuntu_filemanager_app.tests import FileManagerTestCase
+from filemanager.tests import FileManagerTestCase
 
 logger = logging.getLogger(__name__)
 

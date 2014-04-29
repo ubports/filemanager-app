@@ -25,6 +25,7 @@
 #include <QtQuick/QQuickView>
 #include <QtQml/QtQml>
 #include <QLibrary>
+#include <QDir>
 
 #include <QDebug>
 
@@ -36,7 +37,10 @@ int main(int argc, char *argv[])
 
     // Set up import paths
     QStringList importPathList = view.engine()->importPathList();
-    importPathList.append(QDir::currentPath() + "/../plugin/");
+    // Prepend the location of the plugin in the build dir,
+    // so that Qt Creator finds it there, thus overriding the one installed
+    // in the sistem if there is one
+    importPathList.prepend(QCoreApplication::applicationDirPath() + "/../plugin/");
 
     QStringList args = a.arguments();
     if (args.contains("-h") || args.contains("--help")) {
@@ -96,12 +100,14 @@ int main(int argc, char *argv[])
     // load the qml file
     if (qmlfile.isEmpty()) {
         QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-        paths.prepend(".");
+        paths.prepend(QDir::currentPath());
+        paths.prepend(QCoreApplication::applicationDirPath());
 
         foreach (const QString &path, paths) {
-            QFileInfo fi(path + "/qml/ubuntu-filemanager-app.qml");
+            QFileInfo fi(path + "/qml/filemanager.qml");
+            qDebug() << "Trying to load QML from:" << path + "/qml/filemanager.qml";
             if (fi.exists()) {
-                qmlfile = path +  "/qml/ubuntu-filemanager-app.qml";
+                qmlfile = path +  "/qml/filemanager.qml";
                 break;
             }
         }

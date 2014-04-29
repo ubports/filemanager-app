@@ -2,6 +2,8 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+set(PLUGIN_DIR org/nemomobile/folderlistmodel)
+
 set(folderlistmodel_SRCS
     clipboard.cpp
     clipboard.h
@@ -40,11 +42,15 @@ add_library(nemofolderlistmodel MODULE
 
 qt5_use_modules(nemofolderlistmodel Gui Qml Quick Widgets)
 
-# Copy qmldir file to build dir for running in QtCreator
+# Copy the plugin, the qmldir file and other assets to the build dir for running in QtCreator
 if(NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
-    add_custom_target(folderlistmodel-qmldir ALL
-        COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${CMAKE_CURRENT_BINARY_DIR}
-        DEPENDS ${QMLFILES}
+    add_custom_command(TARGET nemofolderlistmodel POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/../${PLUGIN_DIR}
+        COMMENT "Creating plugin directory layout in the build directory"
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/qmldir ${CMAKE_CURRENT_BINARY_DIR}/../${PLUGIN_DIR}
+        COMMENT "Copying the qmldir file to the build directory"
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:nemofolderlistmodel> ${CMAKE_CURRENT_BINARY_DIR}/../${PLUGIN_DIR}
+        COMMENT "Copying the plugin binary to the build directory"
     )
 endif(NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
 

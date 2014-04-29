@@ -13,7 +13,7 @@ import tempfile
 import logging
 
 import fixtures
-from ubuntu_filemanager_app import emulators
+from filemanager import emulators
 
 from autopilot.input import Mouse, Touch, Pointer
 from autopilot.platform import model
@@ -38,11 +38,6 @@ class FileManagerTestCase(AutopilotTestCase):
     else:
         scenarios = [('with touch', dict(input_device_class=Touch))]
 
-    local_location_binary = '../../src/app/filemanager'
-    installed_location_binary = '/usr/bin/filemanager'
-    installed_location_qml = \
-        '/usr/share/ubuntu-filemanager-app/qml/ubuntu-filemanager-app.qml'
-
     def setUp(self):
         self._create_test_root()
         self.pointing_device = Pointer(self.input_device_class.create())
@@ -60,12 +55,27 @@ class FileManagerTestCase(AutopilotTestCase):
                      os.listdir(os.environ['TESTHOME']))
         logger.debug('File count in TESTHOME is %s' % self.original_file_count)
 
+        self.EXEC = 'filemanager'
+        self.source_dir = os.path.dirname(
+            os.path.dirname(os.path.abspath('.')))
+        self.build_dir = self._get_build_dir()
+        self.local_location_binary = os.path.join(self.build_dir,
+                                                  'src', 'app', self.EXEC)
+        self.installed_location_binary = os.path.join('/usr/bin/', self.EXEC)
+        self.installed_location_qml = \
+            '/usr/share/filemanager/qml/filemanager.qml'
+
         if os.path.exists(self.local_location_binary):
             self.app = self.launch_test_local()
         elif os.path.exists(self.installed_location_binary):
             self.app = self.launch_test_installed()
         else:
             self.app = self.launch_test_click()
+
+    def _get_build_dir(self):
+        build_dir = self.source_dir
+
+        return build_dir
 
     def _create_test_root(self):
         #create a temporary directory for testing purposes
@@ -79,7 +89,9 @@ class FileManagerTestCase(AutopilotTestCase):
     @autopilot_logging.log_action(logger.info)
     def launch_test_local(self):
         self.useFixture(fixtures.EnvironmentVariable(
-            'QML2_IMPORT_PATH', newvalue='../../src/plugin'))
+            'QML2_IMPORT_PATH', newvalue=os.path.join(self.build_dir,
+                                                      'src', 'plugin')))
+
         return self.launch_test_application(
             self.local_location_binary,
             app_type='qt',
