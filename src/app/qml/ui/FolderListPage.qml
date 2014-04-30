@@ -686,7 +686,8 @@ Page {
                 PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
                                 {
                                     title: i18n.tr("Folder not accessible"),
-                                    text: i18n.tr("Can not access ") + model.fileName
+				    // TRANSLATORS: this refers to a folder name
+		         	    text: i18n.tr("Can not access %1").arg(model.fileName)
 
                                  })
             }
