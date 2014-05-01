@@ -392,7 +392,7 @@ private slots:
     void          onItemAddedOutsideFm(const DirItemInfo&fi);
     void          onItemRemovedOutSideFm(const DirItemInfo&);
     void          onItemChangedOutSideFm(const DirItemInfo&fi);
-    void          onThereAreExternalChanges();
+    void          onThereAreExternalChanges(const QString &);
     void          onExternalFsWorkerFinished(int);
 
 

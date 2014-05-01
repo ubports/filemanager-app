@@ -1189,8 +1189,8 @@ void DirModel::startExternalFsWatcher()
         connect(this,          SIGNAL(pathChanged(QString)),
                 mExtFSWatcher, SLOT(setCurrentPath(QString)));
 
-        connect(mExtFSWatcher, SIGNAL(pathModified()),
-                this,          SLOT(onThereAreExternalChanges()));
+        connect(mExtFSWatcher, SIGNAL(pathModified(QString)),
+                this,          SLOT(onThereAreExternalChanges(QString)));
 
        //setCurrentPath() checks for empty paths
        mExtFSWatcher->setCurrentPath(mCurrentDir);
@@ -1216,13 +1216,15 @@ void DirModel::stoptExternalFsWatcher()
 }
 
 
-void DirModel::onThereAreExternalChanges()
+void DirModel::onThereAreExternalChanges(const QString& pathModifiedOutside)
 {
     if ( IS_FILE_MANAGER_IDLE() )
     {
 #if DEBUG_EXT_FS_WATCHER
         qDebug() << "[extFsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
-                 << Q_FUNC_INFO << this << "File System modified";
+                 << Q_FUNC_INFO << this << "File System modified" << pathModifiedOutside;
+#else
+  Q_UNUSED(pathModifiedOutside);
 #endif
         DirListWorker *w =
                 createWorkerRequest(IORequest::DirListExternalFSChanges,

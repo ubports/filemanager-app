@@ -23,6 +23,7 @@
 #define EXTERNALFSWATCHER_H
 
 #include <QFileSystemWatcher>
+#include <QStringList>
 
 #define DEFAULT_NOTICATION_PERIOD  500
 
@@ -47,11 +48,14 @@ public:
     explicit ExternalFSWatcher(QObject *parent = 0);
     int      getIntervalToNotifyChanges() const;
 
-signals:
-     void      pathModified();
+    inline const QStringList& pathsWatched() const { return m_setPath;}
 
-     public slots:
+signals:
+     void      pathModified(const QString& path);
+
+public slots:
      void      setCurrentPath(const QString& curPath);
+     void      setCurrentPaths(const QStringList& paths);
      void      setIntervalToNotifyChanges(int ms);     
 
 private slots:
@@ -59,10 +63,11 @@ private slots:
      void      slotFireChanges();
 
  private:
-     QString   m_setPath;
-     QString   m_changedPath;   
-     unsigned  m_waitingEmitCounter;
-     int       m_msWaitTime;
+     QStringList m_setPath;
+     QString     m_changedPath;
+     unsigned    m_waitingEmitCounter;
+     int         m_msWaitTime;
+     int         m_lastChangedIndex;
 };
 
 #endif // EXTERNALFSWATCHER_H

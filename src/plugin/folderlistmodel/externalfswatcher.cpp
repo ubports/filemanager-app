@@ -40,6 +40,7 @@ ExternalFSWatcher::ExternalFSWatcher(QObject *parent) :
     QFileSystemWatcher(parent)
   , m_waitingEmitCounter(0)
   , m_msWaitTime(DEFAULT_NOTICATION_PERIOD)
+  , m_lastChangedIndex(0)
 {
     connect(this,   SIGNAL(directoryChanged(QString)),
             this,   SLOT(slotDirChanged(QString)));
@@ -49,31 +50,45 @@ ExternalFSWatcher::ExternalFSWatcher(QObject *parent) :
 void ExternalFSWatcher::setCurrentPath(const QString &curPath)
 {
     if (!curPath.isEmpty())
-    {
-        if (m_setPath != curPath)
+    {        
+        if (m_setPath.count() == 1 && m_setPath.at(0) != curPath)
         {
-            if (!m_setPath.isEmpty())
-            {
-                removePath(m_setPath);
-            }
-            m_setPath = curPath;
-            addPath(m_setPath);
-        }        
+            m_setPath.removeFirst();
+        }
+        if (m_setPath.count() == 0)
+        {
+            m_setPath.append(curPath);
+            QFileSystemWatcher::addPath(curPath);
+        }
     }
     DEBUG_FSWATCHER();
+}
+
+
+void ExternalFSWatcher::setCurrentPaths(const QStringList &paths)
+{
+    QStringList myPaths(paths);
+    ::qSort(myPaths);
+    QStringList existentPaths = QFileSystemWatcher::directories();
+    if (existentPaths.count() > 0)
+    {
+        QFileSystemWatcher::removePaths(existentPaths);
+    }
+    m_setPath = myPaths;
+    QFileSystemWatcher::addPaths(paths);
 }
 
 
 void ExternalFSWatcher::slotDirChanged(const QString &dir)
 {
     DEBUG_FSWATCHER();
-    if (    (m_setPath == dir)
-         && ( m_waitingEmitCounter == 0 || m_setPath != m_changedPath )
+    if (    ((m_lastChangedIndex = m_setPath.indexOf(dir)) != -1)
+         && ( m_waitingEmitCounter == 0 || dir != m_changedPath )
        )
     {
-        removePath(m_setPath);
+        removePath(m_setPath.at(m_lastChangedIndex));
         ++m_waitingEmitCounter;
-        m_changedPath = m_setPath;
+        m_changedPath = dir;
         QTimer::singleShot(m_msWaitTime, this, SLOT(slotFireChanges()));       
     }
 }
@@ -87,12 +102,14 @@ void ExternalFSWatcher::slotDirChanged(const QString &dir)
  */
 void ExternalFSWatcher::slotFireChanges()
 {
-   if (--m_waitingEmitCounter == 0)
+   if (   --m_waitingEmitCounter == 0
+       && m_lastChangedIndex != -1
+       && m_lastChangedIndex < m_setPath.count() )
    {
-       addPath(m_setPath);
-       if (m_setPath == m_changedPath)
+       addPath(m_setPath.at(m_lastChangedIndex));
+       if (m_setPath.at(m_lastChangedIndex) == m_changedPath)
        {
-           emit pathModified();
+           emit pathModified(m_changedPath);
 #if DEBUG_EXT_FS_WATCHER
        DEBUG_FSWATCHER() << "emit pathModified()";
 #endif
