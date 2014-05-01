@@ -414,13 +414,9 @@ private:
 #endif
 //[0]
 
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL)
-    //make this work with tables
-    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const
-    {
-        Q_UNUSED(parent);
-        return TrackCoverRole - FileNameRole + 1;
-    }
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL)    
+    ExternalFSWatcher * getExternalFSWatcher() const;
+    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
     virtual QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
     friend class TestDirModel;
 #endif

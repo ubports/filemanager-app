@@ -27,7 +27,7 @@
 #include <QFileInfo>
 #include <QSharedData>
 #include <QDateTime>
-
+#include <QDir>
 #include <QMimeType>
 #include <QMimeDatabase>
 
@@ -46,9 +46,10 @@ class DirItemInfo
 {
 public:
      DirItemInfo();
-     DirItemInfo(const QString& urlOrPath);
-     DirItemInfo(const QFileInfo&);
+     DirItemInfo(const QString& filePath);
      DirItemInfo(const DirItemInfo& other);
+     DirItemInfo(const QFileInfo& fi);
+
 
      virtual ~DirItemInfo();
 
@@ -74,7 +75,7 @@ public:
     inline void swap(DirItemInfo &other)
     { qSwap(d_ptr, other.d_ptr); }
 
-    inline DirItemInfo& operator=(const DirItemInfo &other)
+    virtual inline DirItemInfo& operator=(const DirItemInfo &other)
     {  swap(*(const_cast<DirItemInfo*>(&other))); return *this; }
 
     virtual bool      exists()   const;
@@ -82,8 +83,10 @@ public:
     virtual QString   fileName() const;
     virtual QString   path() const;
     virtual QString   absolutePath() const;
-    virtual QString   absoluteFilePath() const;     
+    virtual QString   absoluteFilePath() const;
+    virtual QString   urlPath() const;
     virtual bool      isReadable() const;
+    virtual bool      isContentReadable() const;
     virtual bool      isWritable() const;
     virtual bool      isExecutable() const;
     virtual bool      isRelative() const;
@@ -110,6 +113,8 @@ public:
     virtual bool      permission(QFile::Permissions permissions) const;
 #endif
 
+protected:
+   QString           filePathFrom(const QString& path) const;
 
 protected:
     QSharedDataPointer<DirItemInfoPrivate> d_ptr;
@@ -119,5 +124,43 @@ typedef QVector<DirItemInfo>   DirItemInfoList;
 
 Q_DECLARE_SHARED(DirItemInfo)
 Q_DECLARE_METATYPE(DirItemInfo)
+
+
+
+
+class  DirItemInfoPrivate : public QSharedData
+{
+public:
+    DirItemInfoPrivate();
+    DirItemInfoPrivate(const DirItemInfoPrivate& other);
+    DirItemInfoPrivate(const QFileInfo& fi);
+    void setFileInfo(const QFileInfo&);
+
+public:
+    bool      _isValid     :1;
+    bool      _isLocal     :1;
+    bool      _isRemote    :1;
+    bool      _isSelected  :1;
+    bool      _isAbsolute  :1;
+    bool      _exists      :1;
+    bool      _isFile      :1;
+    bool      _isDir       :1;
+    bool      _isSymLink   :1;
+    bool      _isRoot      :1;
+    bool      _isReadable  :1;
+    bool      _isWritable  :1;
+    bool      _isExecutable:1;
+    QFile::Permissions  _permissions;
+    qint64    _size;
+    QDateTime _created;
+    QDateTime _lastModified;
+    QDateTime _lastRead;
+    QString   _path;
+    QString   _fileName;
+    QString   _normalizedPath;
+    static QMimeDatabase mimeDatabase;
+};
+
+
 
 #endif // DIRITEMINFO_H

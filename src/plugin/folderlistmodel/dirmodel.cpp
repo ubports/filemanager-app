@@ -588,22 +588,31 @@ QString DirModel::homePath() const
 }
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
- QVariant  DirModel::headerData(int section, Qt::Orientation orientation, int role) const
- {
-   if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
-   {
-       QVariant ret;
-       QHash<int, QByteArray> roles = this->roleNames();
-       section += FileNameRole;
-       if (roles.contains(section))
-       {
-           QString header=  QString(roles.value(section));
-           ret = header;
-       }
-       return ret;
-   }
-   return QAbstractItemModel::headerData(section, orientation, role);
- }
+int DirModel::columnCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent);
+    return TrackCoverRole - FileNameRole + 1;
+}
+QVariant  DirModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
+    {
+        QVariant ret;
+        QHash<int, QByteArray> roles = this->roleNames();
+        section += FileNameRole;
+        if (roles.contains(section))
+        {
+            QString header=  QString(roles.value(section));
+            ret = header;
+        }
+        return ret;
+    }
+    return QAbstractItemModel::headerData(section, orientation, role);
+}
+ExternalFSWatcher * DirModel::getExternalFSWatcher() const
+{
+   return mExtFSWatcher;
+}
 #endif
 
 
@@ -707,7 +716,9 @@ void DirModel::paste()
 bool  DirModel::cdIntoIndex(int row)
 {
     bool ret = false;
-    if (IS_VALID_ROW(row))
+    if (IS_VALID_ROW(row)                       &&
+        mDirectoryContents.at(row).isDir()      &&
+        mDirectoryContents.at(row).isContentReadable())
     {
         ret = cdInto(mDirectoryContents.at(row));
     }
@@ -1085,7 +1096,14 @@ bool DirModel::openIndex(int row)
     bool ret = false;
     if (IS_VALID_ROW(row))
     {
-        ret = openItem(mDirectoryContents.at(row));
+        if (mDirectoryContents.at(row).isDir())
+        {
+            ret = cdIntoIndex(row);
+        }
+        else
+        {
+            ret = openItem(mDirectoryContents.at(row));
+        }
     }
     else
     {
