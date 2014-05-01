@@ -16,8 +16,6 @@
 
 """File Manager app autopilot tests."""
 
-from __future__ import absolute_import
-
 import tempfile
 import unittest
 import logging

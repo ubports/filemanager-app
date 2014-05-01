@@ -54,7 +54,7 @@ class MainView(toolkit_emulators.MainView):
 
     def get_places_popover(self):
         """Return the Places popover."""
-        if not(self.internal_wideAspect):
+        if not self.internal_wideAspect:
             # XXX It would be easier if the places popover was an object
             # that inherits from Popover, like the
             # ActionSelectionPopover does.
@@ -147,7 +147,7 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
         """
         files = self.select_many(FolderListDelegate)
-        if not(self.showingListView):
+        if not self.showingListView:
             files = self.select_many(FolderIconDelegate)
         for file_ in files:
             if file_.fileName == name:
@@ -305,7 +305,7 @@ class FolderIconDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         # autopilot. Reported on
         # bug https://bugs.launchpad.net/autopilot/+bug/1195141
         # --elopio - 2013-07-25
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def open_actions_popover(self):
         """Open the actions popover of the file or folder."""
@@ -417,15 +417,9 @@ class ConfirmDialogWithInput(ConfirmDialog):
 class Dialog(ConfirmDialogWithInput):
     """Dialog Autopilot emulator."""
 
-    def __init__(self, *args):
-        super(Dialog, self).__init__(*args)
-
 
 class Popover(ConfirmDialogWithInput):
     """Popover Autopilot emulator, containing buttons and an inputfield"""
-
-    def __init__(self, *args):
-        super(Popover, self).__init__(*args)
 
     def click_button(self, text):
         """Click a button on the popover.
