@@ -207,7 +207,6 @@ QHash<int, QByteArray> DirModel::roleNames() const
 
 
 
-
 QHash<int, QByteArray> DirModel::buildRoleNames() const
 {
     QHash<int, QByteArray> roles;
@@ -394,6 +393,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
 
     return QVariant();
 }
+
 
 void DirModel::setPath(const QString &pathName)
 {
@@ -660,6 +660,12 @@ ExternalFSWatcher * DirModel::getExternalFSWatcher() const
 void DirModel::goHome()
 {
     setPath(QDir::homePath());
+}
+
+
+void DirModel::goTrash()
+{
+    setPath(LocationUrl::TrashRootURL);
 }
 
 

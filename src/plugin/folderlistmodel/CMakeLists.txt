@@ -43,7 +43,13 @@ set(folderlistmodel_SRCS
     disk/disklocation.cpp
     disk/disklocation.h
     trash/qtrashdir.cpp
-    trash/qtrashdir.h
+    trash/qtrashdir.h   
+    trash/qtrashutilinfo.cpp
+    trash/qtrashutilinfo.h
+    trash/trashiteminfo.cpp
+    trash/trashiteminfo.h
+    trash/trashlocation.cpp
+    trash/trashlocation.h
 )
 
 add_library(nemofolderlistmodel MODULE

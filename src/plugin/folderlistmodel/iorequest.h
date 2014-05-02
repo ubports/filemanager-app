@@ -75,21 +75,28 @@ public:
     IORequestLoader( const QString &pathName,
                      QDir::Filter filter,
                      bool isRecursive
-                   );    
+                   );
+    IORequestLoader( const QString& trashRootDir,
+                     const QString &pathName,
+                     QDir::Filter filter,
+                     bool isRecursive
+                   );
     DirItemInfoList     getContents();
 
 signals:
     void itemsAdded(const DirItemInfoList &files);
 
 private:
-    DirItemInfoList getNormalContent();   
+    DirItemInfoList getNormalContent();
+    DirItemInfoList getTrashContent();
     DirItemInfoList add(const QString &pathName, QDir::Filter filter,
                         bool isRecursive, DirItemInfoList directoryContents);
 protected:
     LoaderType    mLoaderType;
     QString       mPathName;
     QDir::Filter  mFilter;
-    bool          mIsRecursive;   
+    bool          mIsRecursive;
+    QString       mTtrashRootDir;
 };
 
 
@@ -99,7 +106,8 @@ class DirListWorker : public IORequestLoader
 {
     Q_OBJECT
 public:
-    explicit DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive);    
+    explicit DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive);
+    explicit DirListWorker(const QString& trashRootDir, const QString &pathName, QDir::Filter filter, const bool isRecursive);
     void run();
 protected:
 signals:
@@ -108,7 +116,18 @@ signals:
 };
 
 
-class  ExternalFileSystemChangesWorker : public DirListWorker
+
+
+class TrashListWorker  : public DirListWorker
+{
+    Q_OBJECT
+public:
+    explicit TrashListWorker(const QString &trashRoot, const QString& path, QDir::Filter filter);
+};
+
+
+
+class  ExternalFileSystemChangesWorker : public IORequestLoader
 {
     Q_OBJECT
 public:
@@ -132,6 +151,19 @@ private:
 
 
 
+class ExternalFileSystemTrashChangesWorker : public ExternalFileSystemChangesWorker
+{
+ Q_OBJECT
+
+public:
+  ExternalFileSystemTrashChangesWorker(const QStringList& pathNames,
+                                       const DirItemInfoList& list,
+                                       QDir::Filter filter);
+
+  void run();
+private:
+  QStringList    m_pathList;
+};
 
 
 
