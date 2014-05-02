@@ -31,12 +31,13 @@
 
 #include "dirselection.h"
 #include "dirmodel.h"
-#include "iorequest.h"
-#include "ioworkerthread.h"
 #include "filesystemaction.h"
-#include "externalfswatcher.h"
 #include "clipboard.h"
 #include "fmutil.h"
+#include "locationsfactory.h"
+#include "location.h"
+#include "locationurl.h"
+#include "disklocation.h"
 
 
 #ifndef DO_NOT_USE_TAG_LIB
@@ -75,7 +76,6 @@
 #define IS_FILE_MANAGER_IDLE()            (!mAwaitingResults)
 
 
-Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread)
 
 namespace {
     QHash<QByteArray, int> roleMapping;
@@ -108,9 +108,11 @@ DirModel::DirModel(QObject *parent)
     , mSortBy(SortByName)
     , mSortOrder(SortAscending)
     , mCompareFunction(0)  
-    , mExtFSWatcher(0)
-    , mClipboard(new Clipboard(this))    
-    , m_fsAction(new FileSystemAction(this) )    
+    , mExtFSWatcher(false)
+    , mClipboard(new Clipboard(this))
+    , mLocationFactory(new LocationsFactory(this))
+    , mCurLocation(0)
+    , m_fsAction(new FileSystemAction(this) )
 {
     mNameFilters = QStringList() << "*";
 
@@ -155,13 +157,40 @@ DirModel::DirModel(QObject *parent)
     {
         FMUtil::setThemeName();
     }
+
+    foreach (const Location* l, mLocationFactory->availableLocations())
+    {
+       connect(l,     SIGNAL(itemsAdded(DirItemInfoList)),
+               this,  SLOT(onItemsAdded(DirItemInfoList)));
+
+       connect(l,     SIGNAL(itemsFetched()),
+               this,  SLOT(onItemsFetched()));
+
+       connect(l,     SIGNAL(extWatcherItemAdded(DirItemInfo)),
+               this,  SLOT(onItemAddedOutsideFm(DirItemInfo)));
+
+       connect(l,     SIGNAL(extWatcherItemRemoved(DirItemInfo)),
+               this,  SLOT(onItemRemovedOutSideFm(DirItemInfo)));
+
+       connect(l,     SIGNAL(extWatcherItemChanged(DirItemInfo)),
+               this,  SLOT(onItemChangedOutSideFm(DirItemInfo)));
+
+       connect(l,     SIGNAL(extWatcherChangesFetched(int)),
+               this,  SLOT(onExternalFsWorkerFinished(int)));
+
+       connect(l,     SIGNAL(extWatcherPathChanged(QString)),
+               this,  SLOT(onThereAreExternalChanges(QString)));
+
+       connect(this,  SIGNAL(enabledExternalFSWatcherChanged(bool)),
+               l,     SLOT(setUsingExternalWatcher(bool)));
+    }
 }
 
 
 
 DirModel::~DirModel()
 {
-    stoptExternalFsWatcher();
+
 }
 
 
@@ -371,38 +400,48 @@ void DirModel::setPath(const QString &pathName)
     if (pathName.isEmpty())
         return;   
 
-    if (!canReadDir(pathName))
-    {
-        emit error(tr("cannot read path"), pathName);
-        return;
-    }
-
-    if (mAwaitingResults) {
+   if (mAwaitingResults) {
         // TODO: handle the case where pathName != our current path, cancel old
         // request, start a new one
-        qDebug() << Q_FUNC_INFO << this << "Ignoring path change request, request already running";
+        qDebug() << Q_FUNC_INFO << this << "Ignoring path change request, request already running in" << pathName;
         return;
     }
 
+    const Location *location = mLocationFactory->setNewPath(pathName);
+    if (location == 0)
+    {
+        emit error(tr("path or url may not exist or cannot be read"), pathName);
+        qDebug() << Q_FUNC_INFO << this << "path or url may not exist or cannot be read:" << pathName;
+        return;
+    }
+
+    mCurLocation = const_cast<Location*> (location);
+    setPathFromCurrentLocation();
+}
+
+/*!
+ * \brief DirModel::setPathFromCurrentLocation() changes current Path using current Location
+ *
+ *  Used in \ref cdUp() and \ref cdIntoIndex()
+ */
+void DirModel::setPathFromCurrentLocation()
+{   
     mAwaitingResults = true;
     emit awaitingResultsChanged();
 #if DEBUG_MESSAGES
-    qDebug() << Q_FUNC_INFO << this << "Changing to " << pathName << " on " << QThread::currentThreadId();
+    qDebug() << Q_FUNC_INFO << this << "Changing to " << mCurLocation->urlPath();
 #endif
 
     clear();
 
-    DirListWorker *dlw  = createWorkerRequest(IORequest::DirList, pathName);
-    connect(dlw, SIGNAL(itemsAdded(DirItemInfoList)), SLOT(onItemsAdded(DirItemInfoList)));
-    connect(dlw, SIGNAL(workerFinished()), SLOT(onResultsFetched()));
-    ioWorkerThread()->addRequest(dlw);
+    mCurLocation->fetchItems(currentDirFilter(), mIsRecursive);
 
-    mCurrentDir = pathName;
-    emit pathChanged(pathName);
+    mCurrentDir = mCurLocation->urlPath();
+    emit pathChanged(mCurLocation->urlPath());
 }
 
 
-void DirModel::onResultsFetched() {
+void DirModel::onItemsFetched() {
     if (mAwaitingResults) {
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << this << "No longer awaiting results";
@@ -611,7 +650,9 @@ QVariant  DirModel::headerData(int section, Qt::Orientation orientation, int rol
 }
 ExternalFSWatcher * DirModel::getExternalFSWatcher() const
 {
-   return mExtFSWatcher;
+   const Location *l = mLocationFactory->availableLocations().at(LocationsFactory::LocalDisk);
+   const DiskLocation *disk = static_cast<const DiskLocation*> (l);
+   return disk->getExternalFSWatcher();
 }
 #endif
 
@@ -624,15 +665,10 @@ void DirModel::goHome()
 
 bool DirModel::cdUp()
 {
-    int ret = false;
-    if (!mCurrentDir.isEmpty()) // we are in any dir
+    int ret = mCurLocation && mCurLocation->becomeParent();
+    if (ret)
     {
-        QDir current(mCurrentDir);
-        if (current.cdUp())
-        {
-            setPath(current.absolutePath());
-            ret = true;
-        }
+       setPathFromCurrentLocation();
     }
     return ret;
 }
@@ -720,7 +756,9 @@ bool  DirModel::cdIntoIndex(int row)
         mDirectoryContents.at(row).isDir()      &&
         mDirectoryContents.at(row).isContentReadable())
     {
-        ret = cdInto(mDirectoryContents.at(row));
+        mCurLocation->setFromInfoItem(mDirectoryContents.at(row));
+        setPathFromCurrentLocation();
+        ret = true;
     }
     else
     {
@@ -1114,8 +1152,28 @@ bool DirModel::openIndex(int row)
 
 bool DirModel::openPath(const QString &filename)
 {
-    DirItemInfo fi(setParentIfRelative(filename));
-    return openItem(fi);
+    bool ret = false;
+    //first void any relative path when is root
+    if ( !(mCurLocation && mCurLocation->isRoot() && filename.startsWith(QLatin1String(".."))) )
+    {
+        const Location *location = mLocationFactory->setNewPath(filename);
+        if (location)
+        {
+            mCurLocation = const_cast<Location*> (location);
+            setPathFromCurrentLocation();
+            ret = true;
+        }
+        else
+        {
+           const DirItemInfo *item = mLocationFactory->lastValidFileInfo();
+           // DirItemInfo fi(setParentIfRelative(filename));
+           if (item && item->isFile())
+           {
+               ret =  openItem(*item);
+           }
+        }
+    }
+    return ret;
 }
 
 /*!
@@ -1144,76 +1202,8 @@ bool DirModel::openItem(const DirItemInfo &fi)
     return ret;
 }
 
-/*!
- * \brief DirModel::createWorkerRequest() create a request for IORequestWorker
- * \param requestType the common IORequest::DirList to fill a directory content
- *                    or IORequest::DirAutoRefresh that will verify any external File System modification
- * \param pathName  the path to get content
- * \return          the thread object
- */
-DirListWorker * DirModel::createWorkerRequest(IORequest::RequestType requestType,
-                                              const QString& pathName)
-{
-    DirListWorker * reqThread = 0;
-    QDir::Filter dirFilter = currentDirFilter();
-    if (requestType == IORequest::DirList)
-    {
-        // TODO: we need to set a spinner active before we start getting results from DirListWorker
-        reqThread = new DirListWorker(pathName, dirFilter, mIsRecursive);
-    }
-    else
-    {
-        reqThread = new ExternalFileSystemChangesWorker(mDirectoryContents,
-                                                  pathName,
-                                                  dirFilter, mIsRecursive);
-    }  
-    return reqThread;
-}
 
 
-
-/*!
- * \brief DirModel::startExternalFsWatcher() starts the External File System Watcher
- */
-void DirModel::startExternalFsWatcher()
-{
-#if DEBUG_EXT_FS_WATCHER
-        qDebug() << "[extFsWorker]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
-                  << Q_FUNC_INFO << this;
-
-#endif
-    if (!mExtFSWatcher)
-    {
-        mExtFSWatcher = new ExternalFSWatcher(this);
-        mExtFSWatcher->setIntervalToNotifyChanges(EX_FS_WATCHER_TIMER_INTERVAL);
-        connect(this,          SIGNAL(pathChanged(QString)),
-                mExtFSWatcher, SLOT(setCurrentPath(QString)));
-
-        connect(mExtFSWatcher, SIGNAL(pathModified(QString)),
-                this,          SLOT(onThereAreExternalChanges(QString)));
-
-       //setCurrentPath() checks for empty paths
-       mExtFSWatcher->setCurrentPath(mCurrentDir);
-    }
-}
-
-
-
-/*!
- * \brief DirModel::stoptExternalFsWatcher stops the External File System Watcher
- */
-void DirModel::stoptExternalFsWatcher()
-{
-#if DEBUG_EXT_FS_WATCHER
-        qDebug() << "[extFsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
-                  << Q_FUNC_INFO << this;
-#endif
-   if (mExtFSWatcher)
-   {
-       delete mExtFSWatcher;
-       mExtFSWatcher = 0;
-   }
-}
 
 
 void DirModel::onThereAreExternalChanges(const QString& pathModifiedOutside)
@@ -1222,27 +1212,11 @@ void DirModel::onThereAreExternalChanges(const QString& pathModifiedOutside)
     {
 #if DEBUG_EXT_FS_WATCHER
         qDebug() << "[extFsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
-                 << Q_FUNC_INFO << this << "File System modified" << pathModifiedOutside;
-#else
-  Q_UNUSED(pathModifiedOutside);
+                 << Q_FUNC_INFO << this << "File System modified in" << pathModifiedOutside;
 #endif
-        DirListWorker *w =
-                createWorkerRequest(IORequest::DirListExternalFSChanges,
-                                    mCurrentDir
-                                   );
-        ExternalFileSystemChangesWorker *extFsWorker =
-                static_cast<ExternalFileSystemChangesWorker*> (w);
-
-        connect(extFsWorker,    SIGNAL(added(DirItemInfo)),
-                this,         SLOT(onItemAddedOutsideFm(DirItemInfo)));
-        connect(extFsWorker,    SIGNAL(removed(DirItemInfo)),
-                this,         SLOT(onItemRemovedOutSideFm(DirItemInfo)));
-        connect(extFsWorker,    SIGNAL(changed(DirItemInfo)),
-                this,         SLOT(onItemChangedOutSideFm(DirItemInfo)));
-        connect(extFsWorker,    SIGNAL(finished(int)),
-                this,         SLOT(onExternalFsWorkerFinished(int)));
-
-        ioWorkerThread()->addRequest(extFsWorker);
+        mCurLocation->fetchExternalChanges(pathModifiedOutside,
+                                           mDirectoryContents,
+                                           currentDirFilter());
     }
 #if DEBUG_EXT_FS_WATCHER
     else
@@ -1342,7 +1316,7 @@ void DirModel::onExternalFsWorkerFinished(int currentDirCounter)
  */
 bool DirModel::getEnabledExternalFSWatcher() const
 {
-   return mExtFSWatcher ? true : false;
+   return mExtFSWatcher;
 }
 
 
@@ -1351,15 +1325,8 @@ bool DirModel::getEnabledExternalFSWatcher() const
  * \param enable
  */
 void DirModel::setEnabledExternalFSWatcher(bool enable)
-{
-    if(enable)
-    {
-        startExternalFsWatcher();
-    }
-    else
-    {
-        stoptExternalFsWatcher();
-    }
+{   
+    emit enabledExternalFSWatcherChanged(enable);
 }
 
 
