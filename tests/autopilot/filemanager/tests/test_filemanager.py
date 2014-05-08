@@ -164,9 +164,10 @@ class TestFolderListPage(FileManagerTestCase):
     def _safe_open_popover(self, popover_open_function):
         timeout = 0
         popover_exists = False
-        while timeout < 10 and not popover_exists:
+        while timeout < 3 and not popover_exists:
             popover_open_function()
-            popover_exists = self._check_popover_exists
+            popover_exists = self._check_popover_exists()
+            timeout += 1
 
     def _do_action_on_file(self, file_, action):
         logger.debug("Performing %s on file %s" % (action, file_))
