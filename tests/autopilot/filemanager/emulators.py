@@ -67,7 +67,7 @@ class MainView(toolkit_emulators.MainView):
             # that inherits from Popover, like the
             # ActionSelectionPopover does.
             # --elopio - 2013-07-25
-            return self.select_single('Popover', objectName='placesPopover')
+            return self.wait_select_single('Popover', objectName='placesPopover')
         else:
             raise ValueError(
                 'Places sidebar is hidden in wide mode.')
