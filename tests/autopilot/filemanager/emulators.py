@@ -200,7 +200,7 @@ class FolderListView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
     def _split_header_text(self):
         header_text = self.select_single(
-            'Header', objectName='directoryHeader').text
+            'Header', objectName='listViewSmallHeader').text
         match = re.match(self.SPLIT_HEADER_REGEX, header_text)
         if match:
             path = match.group(1)
