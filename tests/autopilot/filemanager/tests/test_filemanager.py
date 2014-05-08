@@ -39,8 +39,6 @@ class TestFolderListPage(FileManagerTestCase):
         super(TestFolderListPage, self).setUp()
         self.assertThat(
             self.main_view.visible, Eventually(Equals(True)))
-        #start in HOME everytime
-        #self._go_to_location(os.environ['HOME'])
 
     def _make_file_in_home(self):
         return self._make_content_in_home('file')
