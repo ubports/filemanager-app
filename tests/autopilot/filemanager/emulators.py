@@ -172,7 +172,7 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
             return self.select_single(FolderIconView).get_number_of_files()
 
     def get_sidebar(self):
-        if self.main_view.internal_wideAspect:
+        if self.main_view.showSidebar:
             return self.select_single(PlacesSidebar)
         else:
             raise ValueError(
@@ -270,8 +270,9 @@ class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         """Open the actions popover of the file or folder."""
         self.pointing_device.move_to_object(self)
         self.pointing_device.press()
-        time.sleep(1)
+        time.sleep(2)
         self.pointing_device.release()
+
         # TODO wait for the popover to be opened. For this we would need to
         # access the MainView, but that's not currently possible with
         # autopilot. Reported on
