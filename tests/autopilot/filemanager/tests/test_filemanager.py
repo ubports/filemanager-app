@@ -39,8 +39,6 @@ class TestFolderListPage(FileManagerTestCase):
         super(TestFolderListPage, self).setUp()
         self.assertThat(
             self.main_view.visible, Eventually(Equals(True)))
-        #start in home everytime
-        self._go_to_location(os.environ['HOME'])
 
     def _make_file_in_home(self):
         return self._make_content_in_home('file')
@@ -50,20 +48,20 @@ class TestFolderListPage(FileManagerTestCase):
             raise ValueError('Unknown content type: "{0}"', type_)
         if type_ == 'file':
             _, path = tempfile.mkstemp(prefix='tmpfm',
-                                       dir=os.environ['HOME'])
-            #path = os.environ['HOME'] + "/tmpfmFile"
+                                       dir=self.home_dir)
+            #path = self.home_dir + "/tmpfmFile"
             #os.system("touch " + path)
             logger.debug("Created %s, a file in HOME" % path)
             self.addCleanup(self._unlink_cleanup, path)
         else:
-            path = tempfile.mkdtemp(prefix='tmpfm', dir=os.environ['HOME'])
-            #path = os.environ['HOME'] + "/tmpfmDir"
+            path = tempfile.mkdtemp(prefix='tmpfm', dir=self.home_dir)
+            #path = self.home_dir + "/tmpfmDir"
             #os.system("mkdir " + path)
             logger.debug("Created %s, a directory in HOME" % path)
             self.addCleanup(self._rmdir_cleanup, path)
 
         logger.debug("Directory Listing for HOME\n%s" %
-                     os.listdir(os.environ['HOME']))
+                     os.listdir(self.home_dir))
         self._assert_number_of_files(1)
         return path
 
@@ -218,7 +216,7 @@ class TestFolderListPage(FileManagerTestCase):
         orig_dir = os.path.basename(self._make_directory_in_home())
         new_name = 'Renamed directory'
         self.addCleanup(self._rmdir_cleanup,
-                        os.path.join(os.environ['HOME'], new_name))
+                        os.path.join(self.home_dir, new_name))
 
         first_dir = self._get_file_by_name(orig_dir)
         self._do_action_on_file(first_dir, action='Rename')
@@ -348,7 +346,7 @@ class TestFolderListPage(FileManagerTestCase):
     def test_create_directory(self):
         dir_name = 'Test Directory'
         self.addCleanup(self._rmdir_cleanup,
-                        os.path.join(os.environ['HOME'], dir_name))
+                        os.path.join(self.home_dir, dir_name))
 
         toolbar = self.main_view.open_toolbar()
         toolbar.click_button('actions')
@@ -400,12 +398,12 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_copy_directory(self):
         # Set up a directory to copy and a directory to copy it into.
-        destination_dir_path = os.path.join(os.environ['HOME'],
+        destination_dir_path = os.path.join(self.home_dir,
                                             'destination')
         destination_dir_name = os.path.basename(destination_dir_path)
         os.mkdir(destination_dir_path)
         self.addCleanup(self._rmdir_cleanup, destination_dir_path)
-        dir_to_copy_path = os.path.join(os.environ['HOME'], 'to_copy')
+        dir_to_copy_path = os.path.join(self.home_dir, 'to_copy')
         dir_to_copy_name = os.path.basename(dir_to_copy_path)
         os.mkdir(dir_to_copy_path)
         self.addCleanup(self._rmdir_cleanup, dir_to_copy_path)
@@ -447,12 +445,12 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_cut_directory(self):
         # Set up a directory to cut and a directory to move it into.
-        destination_dir_path = os.path.join(os.environ['HOME'],
+        destination_dir_path = os.path.join(self.home_dir,
                                             'destination')
         destination_dir_name = os.path.basename(destination_dir_path)
         os.mkdir(destination_dir_path)
         self.addCleanup(self._rmdir_cleanup, destination_dir_path)
-        dir_to_cut_path = os.path.join(os.environ['HOME'], 'to_cut')
+        dir_to_cut_path = os.path.join(self.home_dir, 'to_cut')
         dir_to_cut_name = os.path.basename(dir_to_cut_path)
         os.mkdir(dir_to_cut_path)
         self.addCleanup(self._rmdir_cleanup, dir_to_cut_path)
@@ -599,7 +597,7 @@ class TestFolderListPage(FileManagerTestCase):
         folder_list_page = self.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_current_path,
-            Eventually(Equals(os.environ['HOME'])))
+            Eventually(Equals(self.home_dir)))
 
     def test_go_home(self):
         self._go_to_place('Home')
@@ -607,7 +605,7 @@ class TestFolderListPage(FileManagerTestCase):
         folder_list_page = self.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_current_path,
-            Eventually(Equals(os.environ['HOME'])))
+            Eventually(Equals(self.home_dir)))
 
     def test_go_to_root(self):
         self._go_to_place('File System')

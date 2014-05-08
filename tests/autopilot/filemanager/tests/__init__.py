@@ -68,10 +68,10 @@ class FileManagerTestCase(AutopilotTestCase):
             self.addCleanup(os.system, 'start maliit-server')
 
         self.original_file_count = \
-            len([i for i in os.listdir(os.environ['HOME'])
+            len([i for i in os.listdir(self.home_dir)
                  if not i.startswith('.')])
         logger.debug('Directory Listing for HOME\n%s' %
-                     os.listdir(os.environ['HOME']))
+                     os.listdir(self.home_dir))
         logger.debug('File count in HOME is %s' % self.original_file_count)
 
         self.app = launcher()
