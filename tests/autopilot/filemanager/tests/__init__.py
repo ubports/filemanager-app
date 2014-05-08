@@ -44,20 +44,20 @@ class FileManagerTestCase(AutopilotTestCase):
     local_location_binary = os.path.join(local_location, 'src/app/filemanager')
     installed_location_binary = '/usr/bin/filemanager'
 
-    def setup_environment(self):
+    def get_launcher_and_type(self):
         if os.path.exists(self.local_location_binary):
-            launch = self.launch_test_local
+            launcher = self.launch_test_local
             test_type = 'local'
         elif os.path.exists(self.installed_location_binary):
-            launch = self.launch_test_installed
+            launcher = self.launch_test_installed
             test_type = 'deb'
         else:
-            launch = self.launch_test_click
+            launcher = self.launch_test_click
             test_type = 'click'
-        return launch, test_type
+        return launcher, test_type
 
     def setUp(self):
-        launch, self.test_type = self.setup_environment()
+        launcher, self.test_type = self.get_launcher_and_type()
         self.home_dir = self._patch_home()
         self.pointing_device = Pointer(self.input_device_class.create())
         super(FileManagerTestCase, self).setUp()
@@ -74,7 +74,7 @@ class FileManagerTestCase(AutopilotTestCase):
                      os.listdir(os.environ['HOME']))
         logger.debug('File count in HOME is %s' % self.original_file_count)
 
-        self.app = launch()
+        self.app = launcher()
 
     @autopilot_logging.log_action(logger.info)
     def launch_test_local(self):
@@ -101,12 +101,28 @@ class FileManagerTestCase(AutopilotTestCase):
             'com.ubuntu.filemanager',
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
+    def _copy_xauthority_file(self, directory):
+        """ Copy .Xauthority file to directory, if it exists in /home
+        """
+        xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
+        if os.path.isfile(xauth):
+            logger.debug("Copying .Xauthority to " + directory)
+            shutil.copyfile(
+                os.path.expanduser(os.path.join('~', '.Xauthority')),
+                os.path.join(directory, '.Xauthority'))
+
     def _patch_home(self):
         """ mock /home for testing purposes to preserve user data
         """
         temp_dir_fixture = fixtures.TempDir()
         self.useFixture(temp_dir_fixture)
         temp_dir = temp_dir_fixture.path
+
+        #If running under xvfb, as jenkins does,
+        #xsession will fail to start without xauthority file
+        #Thus if the Xauthority file is in the home directory
+        #make sure we copy it to our temp home directory
+        self._copy_xauthority_file(temp_dir)
 
         #click requires using initctl env (upstart), but the desktop can set
         #an environment variable instead
@@ -116,17 +132,6 @@ class FileManagerTestCase(AutopilotTestCase):
         else:
             self.useFixture(fixtures.EnvironmentVariable('HOME',
                                                          newvalue=temp_dir))
-
-        #If running under xvfb, as jenkins does,
-        #xsession will fail to start without xauthority file
-        #Thus if the Xauthority file is in home directory
-        #make sure we copy it to temp home, otherwise do nothing
-        xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
-        if os.path.isfile(xauth):
-            logger.debug("Copying .Xauthority to fake home " + temp_dir)
-            shutil.copyfile(
-                os.path.expanduser(os.path.join('~', '.Xauthority')),
-                os.path.join(temp_dir, '.Xauthority'))
 
         logger.debug("Patched home to fake home directory " + temp_dir)
 
