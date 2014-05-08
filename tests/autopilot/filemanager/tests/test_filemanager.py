@@ -102,8 +102,9 @@ class TestFolderListPage(FileManagerTestCase):
             place = (self.main_view.get_folder_list_page().get_sidebar()
                      .get_place(text))
         else:
-            self._safe_open_popover(
-                self.main_view.open_toolbar().click_button('places'))
+            open_popover = lambda: \
+                self.main_view.open_toolbar().click_button('places')
+            self._safe_open_popover(open_popover)
             place = self._get_place(text)
         self.pointing_device.click_object(place)
 
@@ -119,8 +120,9 @@ class TestFolderListPage(FileManagerTestCase):
             goto_location = self.main_view.get_dialog()
         else:
             logger.debug("Using places to goto %s on %s" % (location, device))
-            self._safe_open_popover(
-                self.main_view.open_toolbar().click_button('places'))
+            open_popover = lambda: \
+                self.main_view.open_toolbar().click_button('places')
+            self._safe_open_popover(open_popover)
             goto_location = self.main_view.get_popover
         goto_location.enter_text(location)
         goto_location.ok()
