@@ -146,9 +146,22 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             list_view.get_current_path, Eventually(Equals(expected_path)))
 
+    def _check_popover_exists(self):
+        """Boolean, checks if popover exists."""
+        try:
+            popover = toolkit_emulators.MainView.wait_select_single('ActionSelectionPopover')
+            if popover:
+                return True
+        except:
+            return False
+
     def _do_action_on_file(self, file_, action):
         logger.debug("Performing %s on file %s" % (action, file_))
-        file_.open_actions_popover()
+        timeout = 0
+        popover_exists = False
+        while timeout <10 and not popover_exists:
+            file_.open_actions_popover()
+            popover_exists = self._check_popover_exists
         file_actions_popover = self.main_view.get_file_actions_popover()
         file_actions_popover.click_button_by_text(action)
 

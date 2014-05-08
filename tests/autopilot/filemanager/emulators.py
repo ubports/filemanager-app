@@ -43,12 +43,22 @@ class MainView(toolkit_emulators.MainView):
         return self.get_action_selection_popover('folderActionsPopover')
 
     def folder_actions_popover_exists(self):
-        """Boolean, checks if the Actions Popover exists."""
-        popover = self.select_many(
-            ActionSelectionPopover, objectName='folderActionsPopover')
-        if popover == '[]':
-            return True
-        return False
+        """Boolean, checks if the folder actions popover exists."""
+        try:
+            popover = self.get_folder_actions_popover()
+            if popover:
+                return True
+        except:
+            return False
+
+    def file_actions_popover_exists(self):
+        """Boolean, checks if the file actions popover exists."""
+        try:
+            popover = self.get_file_actions_popover()
+            if popover:
+                return True
+        except:
+            return False
 
     def get_places_popover(self):
         """Return the Places popover."""
@@ -271,12 +281,6 @@ class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         time.sleep(2)
         self.pointing_device.release()
 
-        # TODO wait for the popover to be opened. For this we would need to
-        # access the MainView, but that's not currently possible with
-        # autopilot. Reported on
-        # https://bugs.launchpad.net/autopilot/+bug/1195141
-        # --elopio - 2013-07-25
-
 
 class FolderIconDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderIconPage Autopilot emulator.
@@ -310,13 +314,8 @@ class FolderIconDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         """Open the actions popover of the file or folder."""
         self.pointing_device.move_to_object(self)
         self.pointing_device.press()
-        time.sleep(1)
+        time.sleep(2)
         self.pointing_device.release()
-        # TODO wait for the popover to be opened. For this we would need to
-        # access the MainView, but that's not currently possible with
-        # autopilot. Reported on
-        # https://bugs.launchpad.net/autopilot/+bug/1195141
-        # --elopio - 2013-07-25
 
 
 class FileActionDialog(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
