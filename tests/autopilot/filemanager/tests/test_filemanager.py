@@ -102,14 +102,13 @@ class TestFolderListPage(FileManagerTestCase):
             place = (self.main_view.get_folder_list_page().get_sidebar()
                      .get_place(text))
         else:
-            self.main_view.open_toolbar()
-            self.main_view.get_toolbar().click_button('places')
+            self._safe_open_popover(
+                self.main_view.open_toolbar().click_button('places'))
             place = self._get_place(text)
         self.pointing_device.click_object(place)
 
     def _go_to_location(self, location):
         #go to specified location
-        toolbar = self.main_view.open_toolbar()
         #on wide UI display, we get the location dialog
         #on phone UI display, we get places popover
         device = model()
@@ -120,13 +119,14 @@ class TestFolderListPage(FileManagerTestCase):
             goto_location = self.main_view.get_dialog()
         else:
             logger.debug("Using places to goto %s on %s" % (location, device))
-            toolbar.click_button('places')
-            goto_location = self._safe_open_popover(self.main_view.get_popover)
+            self._safe_open_popover(
+                self.main_view.open_toolbar().click_button('places'))
+            goto_location = self.main_view.get_popover
         goto_location.enter_text(location)
         goto_location.ok()
 
     def _get_place(self, text):
-        places_popover = self._safe_open_popover(self.main_view.get_places_popover)
+        places_popover = self.main_view.get_places_popover
         places = places_popover.select_many('Standard')
         for place in places:
             if place.name == text:
