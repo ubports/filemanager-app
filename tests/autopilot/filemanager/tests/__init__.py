@@ -39,7 +39,8 @@ class FileManagerTestCase(AutopilotTestCase):
         scenarios = [('with touch', dict(input_device_class=Touch))]
 
     local_location = os.path.dirname(os.path.dirname(os.getcwd()))
-    local_location_qml = os.path.join(local_location, 'src/app/qml/filemanager.qml')
+    local_location_qml = os.path.join(local_location,
+                                      'src/app/qml/filemanager.qml')
     local_location_binary = os.path.join(local_location, 'src/app/filemanager')
     installed_location_qml = "/usr/share/filemanager/qml/filemanager.qml"
     installed_location_binary = '/usr/bin/filemanager'

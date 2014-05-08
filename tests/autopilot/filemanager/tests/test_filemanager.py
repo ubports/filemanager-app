@@ -149,7 +149,8 @@ class TestFolderListPage(FileManagerTestCase):
     def _check_popover_exists(self):
         """Boolean, checks if popover exists."""
         try:
-            popover = toolkit_emulators.MainView.wait_select_single('ActionSelectionPopover')
+            popover = \
+                self.main_view.wait_select_single('ActionSelectionPopover')
             if popover:
                 return True
         except:
@@ -159,7 +160,7 @@ class TestFolderListPage(FileManagerTestCase):
         logger.debug("Performing %s on file %s" % (action, file_))
         timeout = 0
         popover_exists = False
-        while timeout <10 and not popover_exists:
+        while timeout < 10 and not popover_exists:
             file_.open_actions_popover()
             popover_exists = self._check_popover_exists
         file_actions_popover = self.main_view.get_file_actions_popover()
