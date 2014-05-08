@@ -39,9 +39,9 @@ class FileManagerTestCase(AutopilotTestCase):
         scenarios = [('with touch', dict(input_device_class=Touch))]
 
     local_location = os.path.dirname(os.path.dirname(os.getcwd()))
-    local_location_qml = local_location + "/filemanager.qml"
-    installed_location_qml = "/usr/share/filemanager/qml/filemanager.qml"
+    local_location_qml = os.path.join(local_location, 'src/app/qml/filemanager.qml')
     local_location_binary = os.path.join(local_location, 'src/app/filemanager')
+    installed_location_qml = "/usr/share/filemanager/qml/filemanager.qml"
     installed_location_binary = '/usr/bin/filemanager'
 
     def get_launcher_and_type(self):
@@ -79,7 +79,7 @@ class FileManagerTestCase(AutopilotTestCase):
     @autopilot_logging.log_action(logger.info)
     def launch_test_local(self):
         self.useFixture(fixtures.EnvironmentVariable(
-            'QML2_IMPORT_PATH', newvalue=os.path.join(self.build_dir,
+            'QML2_IMPORT_PATH', newvalue=os.path.join(self.local_location,
                                                       'src', 'plugin')))
         return self.launch_test_application(
             self.local_location_binary,
