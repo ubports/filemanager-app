@@ -36,13 +36,11 @@ class MainView(toolkit_emulators.MainView):
 
     def get_file_actions_popover(self):
         """Return the ActionSelectionPopover emulator of the file actions."""
-        return self.wait_select_single(
-            ActionSelectionPopover, objectName='fileActionsPopover')
+        return self.get_action_selection_popover('fileActionsPopover')
 
     def get_folder_actions_popover(self):
         """Return the ActionSelectionPopover emulator of the folder actions."""
-        return self.wait_select_single(
-            ActionSelectionPopover, objectName='folderActionsPopover')
+        return self.get_action_selection_popover('folderActionsPopover')
 
     def folder_actions_popover_exists(self):
         """Boolean, checks if the Actions Popover exists."""
@@ -335,37 +333,6 @@ class FileActionDialog(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     def cancel(self):
         cancel_button = self.select_single('Button', objectName='cancelButton')
         self.pointing_device.click_object(cancel_button)
-
-
-class ActionSelectionPopover(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
-    """ActionSelectionPopover Autopilot emulator."""
-    # TODO Move this to the ubuntu-ui-toolkit. Reported on
-    # https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205205
-    # --elopio - 2013-07-25
-
-    def __init__(self, *args):
-        super(ActionSelectionPopover, self).__init__(*args)
-        self.pointing_device = toolkit_emulators.get_pointing_device()
-
-    def click_button(self, text):
-        """Click a button on the popover.
-
-        XXX We are receiving the text because there's no way to set the
-        objectName on the action. This is reported at
-        https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205144
-        --elopio - 2013-07-25
-
-        :parameter text: The text of the button.
-
-        """
-        button = self._get_button(text)
-        self.pointing_device.click_object(button)
-
-    def _get_button(self, text):
-        buttons = self.select_many('Empty')
-        for button in buttons:
-            if button.text == text:
-                return button
 
 
 class ConfirmDialog(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
