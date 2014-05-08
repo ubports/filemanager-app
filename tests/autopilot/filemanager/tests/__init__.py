@@ -7,11 +7,6 @@
 
 """Filemanager app autopilot tests."""
 
-import tempfile
-try:
-    from unittest import mock
-except ImportError:
-    import mock
 import os
 import shutil
 import logging
@@ -25,9 +20,8 @@ from autopilot.testcase import AutopilotTestCase
 from autopilot import logging as autopilot_logging
 
 from ubuntuuitoolkit import (
-    base,
     emulators as toolkit_emulators,
-    environment
+    fixture_setup as toolkit_fixtures
 )
 
 logger = logging.getLogger(__name__)
@@ -108,12 +102,24 @@ class FileManagerTestCase(AutopilotTestCase):
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
     def _patch_home(self):
-        #make a temp dir
-        temp_dir = tempfile.mkdtemp()
-        logger.debug("Created fake home directory " + temp_dir)
-        self.addCleanup(shutil.rmtree, temp_dir)
+        """ mock /home for testing purposes to preserve user data
+        """
+        temp_dir_fixture = fixtures.TempDir()
+        self.useFixture(temp_dir_fixture)
+        temp_dir = temp_dir_fixture.path
 
-        #if the Xauthority file is in home directory
+        #click requires using initctl env (upstart), but the desktop can set
+        #an environment variable instead
+        if self.test_type == 'click':
+            self.useFixture(toolkit_fixtures.InitctlEnvironmentVariable(
+                            HOME=temp_dir))
+        else:
+            self.useFixture(fixtures.EnvironmentVariable('HOME',
+                                                         newvalue=temp_dir))
+
+        #If running under xvfb, as jenkins does,
+        #xsession will fail to start without xauthority file
+        #Thus if the Xauthority file is in home directory
         #make sure we copy it to temp home, otherwise do nothing
         xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
         if os.path.isfile(xauth):
@@ -122,16 +128,8 @@ class FileManagerTestCase(AutopilotTestCase):
                 os.path.expanduser(os.path.join('~', '.Xauthority')),
                 os.path.join(temp_dir, '.Xauthority'))
 
-        #click can use initctl env (upstart), but desktop still requires mock
-        if self.test_type == 'click':
-            environment.set_initctl_env_var('HOME', temp_dir)
-            self.addCleanup(environment.unset_initctl_env_var, 'HOME')
-        else:
-            patcher = mock.patch.dict('os.environ', {'HOME': temp_dir})
-            patcher.start()
-            self.addCleanup(patcher.stop)
-
         logger.debug("Patched home to fake home directory " + temp_dir)
+
         return temp_dir
 
     @property
