@@ -123,12 +123,12 @@ class TestFolderListPage(FileManagerTestCase):
             open_popover = lambda: \
                 self.main_view.open_toolbar().click_button('places')
             self._safe_open_popover(open_popover)
-            goto_location = self.main_view.get_popover
+            goto_location = self.main_view.get_popover()
         goto_location.enter_text(location)
         goto_location.ok()
 
     def _get_place(self, text):
-        places_popover = self.main_view.get_places_popover
+        places_popover = self.main_view.get_places_popover()
         places = places_popover.select_many('Standard')
         for place in places:
             if place.name == text:
