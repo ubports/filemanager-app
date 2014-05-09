@@ -210,7 +210,7 @@ bool  DirItemInfo::isReadable() const
 }
 
 /*!
- * \brief DirItemInfo::isContentReadable() Expands the isReadble() idea, when it is a folder says if it is possible to get the content
+ * \brief DirItemInfo::isContentReadable() Expands the isReadable() idea, when it is a folder says if it is possible to get the content
  * \return true if the file/directory can be read, otherwise false.
  */
 bool  DirItemInfo::isContentReadable() const
