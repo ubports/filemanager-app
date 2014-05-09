@@ -9,7 +9,6 @@
 
 import os
 import shutil
-import tempfile
 import logging
 
 import fixtures
@@ -21,7 +20,8 @@ from autopilot.testcase import AutopilotTestCase
 from autopilot import logging as autopilot_logging
 
 from ubuntuuitoolkit import (
-    emulators as toolkit_emulators
+    emulators as toolkit_emulators,
+    fixture_setup as toolkit_fixtures
 )
 
 logger = logging.getLogger(__name__)
@@ -38,8 +38,28 @@ class FileManagerTestCase(AutopilotTestCase):
     else:
         scenarios = [('with touch', dict(input_device_class=Touch))]
 
+    local_location = os.path.dirname(os.path.dirname(os.getcwd()))
+    local_location_qml = os.path.join(local_location,
+                                      'src/app/qml/filemanager.qml')
+    local_location_binary = os.path.join(local_location, 'src/app/filemanager')
+    installed_location_qml = "/usr/share/filemanager/qml/filemanager.qml"
+    installed_location_binary = '/usr/bin/filemanager'
+
+    def get_launcher_and_type(self):
+        if os.path.exists(self.local_location_binary):
+            launcher = self.launch_test_local
+            test_type = 'local'
+        elif os.path.exists(self.installed_location_binary):
+            launcher = self.launch_test_installed
+            test_type = 'deb'
+        else:
+            launcher = self.launch_test_click
+            test_type = 'click'
+        return launcher, test_type
+
     def setUp(self):
-        self._create_test_root()
+        launcher, self.test_type = self.get_launcher_and_type()
+        self.home_dir = self._patch_home()
         self.pointing_device = Pointer(self.input_device_class.create())
         super(FileManagerTestCase, self).setUp()
 
@@ -49,51 +69,22 @@ class FileManagerTestCase(AutopilotTestCase):
             self.addCleanup(os.system, 'start maliit-server')
 
         self.original_file_count = \
-            len([i for i in os.listdir(os.environ['TESTHOME'])
+            len([i for i in os.listdir(self.home_dir)
                  if not i.startswith('.')])
-        logger.debug('Directory Listing for TESTHOME\n%s' %
-                     os.listdir(os.environ['TESTHOME']))
-        logger.debug('File count in TESTHOME is %s' % self.original_file_count)
+        logger.debug('Directory Listing for HOME\n%s' %
+                     os.listdir(self.home_dir))
+        logger.debug('File count in HOME is %s' % self.original_file_count)
 
-        self.EXEC = 'filemanager'
-        self.source_dir = os.path.dirname(
-            os.path.dirname(os.path.abspath('.')))
-        self.build_dir = self._get_build_dir()
-        self.local_location_binary = os.path.join(self.build_dir,
-                                                  'src', 'app', self.EXEC)
-        self.installed_location_binary = os.path.join('/usr/bin/', self.EXEC)
-        self.installed_location_qml = \
-            '/usr/share/filemanager/qml/filemanager.qml'
-
-        if os.path.exists(self.local_location_binary):
-            self.app = self.launch_test_local()
-        elif os.path.exists(self.installed_location_binary):
-            self.app = self.launch_test_installed()
-        else:
-            self.app = self.launch_test_click()
-
-    def _get_build_dir(self):
-        build_dir = self.source_dir
-
-        return build_dir
-
-    def _create_test_root(self):
-        #create a temporary directory for testing purposes
-        #due to security lockdowns, make it under /home always
-        temp_dir = tempfile.mkdtemp(dir=os.path.expanduser('~'))
-        self.addCleanup(shutil.rmtree, temp_dir)
-        logger.debug('Created root test directory ' + temp_dir)
-        self.patch_environment('TESTHOME', temp_dir)
-        return temp_dir
+        self.app = launcher()
 
     @autopilot_logging.log_action(logger.info)
     def launch_test_local(self):
         self.useFixture(fixtures.EnvironmentVariable(
-            'QML2_IMPORT_PATH', newvalue=os.path.join(self.build_dir,
+            'QML2_IMPORT_PATH', newvalue=os.path.join(self.local_location,
                                                       'src', 'plugin')))
-
         return self.launch_test_application(
             self.local_location_binary,
+            '-q', self.local_location_qml,
             app_type='qt',
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
@@ -111,6 +102,42 @@ class FileManagerTestCase(AutopilotTestCase):
             'com.ubuntu.filemanager',
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
+    def _copy_xauthority_file(self, directory):
+        """ Copy .Xauthority file to directory, if it exists in /home
+        """
+        xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
+        if os.path.isfile(xauth):
+            logger.debug("Copying .Xauthority to " + directory)
+            shutil.copyfile(
+                os.path.expanduser(os.path.join('~', '.Xauthority')),
+                os.path.join(directory, '.Xauthority'))
+
+    def _patch_home(self):
+        """ mock /home for testing purposes to preserve user data
+        """
+        temp_dir_fixture = fixtures.TempDir()
+        self.useFixture(temp_dir_fixture)
+        temp_dir = temp_dir_fixture.path
+
+        #If running under xvfb, as jenkins does,
+        #xsession will fail to start without xauthority file
+        #Thus if the Xauthority file is in the home directory
+        #make sure we copy it to our temp home directory
+        self._copy_xauthority_file(temp_dir)
+
+        #click requires using initctl env (upstart), but the desktop can set
+        #an environment variable instead
+        if self.test_type == 'click':
+            self.useFixture(toolkit_fixtures.InitctlEnvironmentVariable(
+                            HOME=temp_dir))
+        else:
+            self.useFixture(fixtures.EnvironmentVariable('HOME',
+                                                         newvalue=temp_dir))
+
+        logger.debug("Patched home to fake home directory " + temp_dir)
+
+        return temp_dir
+
     @property
     def main_view(self):
-        return self.app.select_single(emulators.MainView)
+        return self.app.wait_select_single(emulators.MainView)
