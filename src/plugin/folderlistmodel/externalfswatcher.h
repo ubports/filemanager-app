@@ -29,17 +29,17 @@
 
 
 /*!
- * \brief The ExternalFSWatcher class notifies the owner when the File System when the current path \a m_setPath has changed
+ * \brief The ExternalFSWatcher class notifies when one of the paths in the \a m_setPaths has changed
  *            emitting pathModified() signal.
  *
- *  The current path \a m_setPath is set by using the slot \ref  setCurrentPath()
+ *  The path being watched  is set by using the slot \ref  setCurrentPath() or \ref setCurrentPaths()
  *
- *  The idea of this class is to minimize notifications as the current path can change quickly.
+ *  The idea of this class is to minimize notifications as the current path in the File Manager can change quickly.
  *  A notification will occur if it was requested for a path and this path is still the current at the moment
  *  of the notification.
  *
  *  Once it detects a change it will wait \ref getIntervalToNotifyChanges() milliseconds to notify that change.
- *  At this moment it checks if no \ref setCurrentPath() has been called during this time and then notifies that change.
+ *  At this moment it checks if no \ref setCurrentPath() nor \ref setCurrentPaths() has been called during this time and then notifies that change.
  */
 class ExternalFSWatcher : public QFileSystemWatcher
 {
@@ -48,7 +48,7 @@ public:
     explicit ExternalFSWatcher(QObject *parent = 0);
     int      getIntervalToNotifyChanges() const;
 
-    inline const QStringList& pathsWatched() const { return m_setPath;}
+    inline const QStringList& pathsWatched() const { return m_setPaths;}
 
 signals:
      void      pathModified(const QString& path);
@@ -62,8 +62,11 @@ private slots:
      void      slotDirChanged(const QString&);
      void      slotFireChanges();
 
- private:
-     QStringList m_setPath;
+private:
+     void      clearPaths();
+
+private:
+     QStringList m_setPaths;
      QString     m_changedPath;
      unsigned    m_waitingEmitCounter;
      int         m_msWaitTime;
