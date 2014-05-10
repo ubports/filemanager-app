@@ -183,10 +183,11 @@ void TrashLocation::startExternalFsWatcher()
 {
     //TODO implement a Watcher for this
     //modify the existent watcher to work having  a list of paths
-    if (m_extWatcher == 0)
+    if (m_usingExternalWatcher && m_extWatcher == 0 && isRoot())
     {     
         m_extWatcher = new ExternalFSWatcher(this);
-        m_extWatcher->setIntervalToNotifyChanges(EX_FS_WATCHER_TIMER_INTERVAL);
+        m_extWatcher->setIntervalToNotifyChanges(EX_FS_WATCHER_TIMER_INTERVAL);      
+        m_extWatcher->setCurrentPaths(m_currentPaths);
 
         connect(m_extWatcher, SIGNAL(pathModified(QString)),
                 this,         SIGNAL(extWatcherPathChanged(QString)));
@@ -209,11 +210,11 @@ void TrashLocation::fetchItems(QDir::Filter dirFilter, bool recursive)
     }
     else    
     {
-        QStringList trashes = allTrashes();
+        m_currentPaths = allTrashes();
         startExternalFsWatcher();
-        m_extWatcher->setCurrentPaths(trashes);
+
         //the trash a is logical folder, its content can be composed by more than one physical folder
-        foreach (const QString& trashRootDir, trashes)
+        foreach (const QString& trashRootDir, m_currentPaths)
         {
             TrashListWorker *dlw  = new TrashListWorker(trashRootDir,
                                                         QTrashUtilInfo::filesTrashDir(trashRootDir),

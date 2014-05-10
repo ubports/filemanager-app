@@ -48,8 +48,8 @@ public:
 private:
     void               addTrashFetchRequest(TrashListWorker *workerObject);
 
-public slots:
-
+private:
+    QStringList        m_currentPaths;  //!< also used in the startExternalFsWatcher(), it can br activated any time
 };
 
 #endif // TRASHLOCATION_H
