@@ -66,7 +66,7 @@ Location::~Location()
 
 bool Location::isRoot() const
 {
-     return m_info->isRoot();
+     return m_info ? m_info->isRoot() : false;
 }
 
 
@@ -78,7 +78,7 @@ bool Location::isWritable() const
 
 bool Location::isReadable() const
 {
-    return m_info->isContentReadable();
+    return m_info ? m_info->isContentReadable() : false;
 }
 
 void Location::setFromInfoItem(const DirItemInfo &itemInfo)
@@ -98,7 +98,7 @@ void Location::setFromInfoItem(const DirItemInfo *itemInfo)
 
 QString Location::urlPath() const
 {
-    return m_info->urlPath();
+    return m_info ? m_info->urlPath(): QString();
 }
 
 
