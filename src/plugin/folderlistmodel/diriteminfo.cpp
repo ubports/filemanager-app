@@ -22,45 +22,6 @@
 #include "diriteminfo.h"
 
 
-
-
-#include <QUrl>
-#include <QDir>
-
-
-class  DirItemInfoPrivate : public QSharedData
-{
-public:
-    DirItemInfoPrivate();
-    DirItemInfoPrivate(const DirItemInfoPrivate& other);
-    DirItemInfoPrivate(const QFileInfo& fi);
-    void setFileInfo(const QFileInfo&);
-
-public:
-    bool      _isValid     :1;
-    bool      _isLocal     :1;
-    bool      _isRemote    :1;
-    bool      _isSelected  :1;
-    bool      _isAbsolute  :1;
-    bool      _exists      :1;
-    bool      _isFile      :1;
-    bool      _isDir       :1;
-    bool      _isSymLink   :1;
-    bool      _isRoot      :1;
-    bool      _isReadable  :1;
-    bool      _isWritable  :1;
-    bool      _isExecutable:1;
-    QFile::Permissions  _permissions;
-    qint64    _size;
-    QDateTime _created;
-    QDateTime _lastModified;
-    QDateTime _lastRead;
-    QString   _path;
-    QString   _fileName;
-    static QMimeDatabase mimeDatabase;
-};
-
-
 QMimeDatabase DirItemInfoPrivate::mimeDatabase;
 
 
@@ -128,22 +89,23 @@ void DirItemInfoPrivate::setFileInfo(const QFileInfo &fi)
     }
     else
     {
-        _path          = fi.absolutePath();
-        _fileName      = fi.fileName();
-        _isAbsolute    = fi.isAbsolute();
-        _exists        = fi.exists();
-        _isDir         = fi.isDir();
-        _isFile        = fi.isFile();
-        _isSymLink     = fi.isSymLink();
-        _isRoot        = fi.isRoot();
-        _isReadable    = fi.isReadable();
-        _isWritable    = fi.isWritable();
-        _isExecutable  = fi.isExecutable();
-        _permissions   = fi.permissions();
-        _size          = fi.size();
-        _created       = fi.created();
-        _lastRead      = fi.lastRead();
-        _lastModified  = fi.lastModified();
+        _path           = fi.absolutePath();
+        _normalizedPath = _path;
+        _fileName       = fi.fileName();
+        _isAbsolute     = fi.isAbsolute();
+        _exists         = fi.exists();
+        _isDir          = fi.isDir();
+        _isFile         = fi.isFile();
+        _isSymLink      = fi.isSymLink();
+        _isRoot         = fi.isRoot();
+        _isReadable     = fi.isReadable();
+        _isWritable     = fi.isWritable();
+        _isExecutable   = fi.isExecutable();
+        _permissions    = fi.permissions();
+        _size           = fi.size();
+        _created        = fi.created();
+        _lastRead       = fi.lastRead();
+        _lastModified   = fi.lastModified();
     }
 }
 
@@ -168,8 +130,8 @@ DirItemInfo::DirItemInfo(const QFileInfo &fi):
 
 
 
-DirItemInfo::DirItemInfo(const QString& urlOrPath):
-    d_ptr(  new DirItemInfoPrivate(QFileInfo(urlOrPath)) )
+DirItemInfo::DirItemInfo(const QString& filePath):
+    d_ptr(  new DirItemInfoPrivate(QFileInfo(filePath)) )
 {
 
 }
@@ -219,20 +181,13 @@ bool DirItemInfo::exists() const
     return d_ptr->_exists;
 }
 
+
+
 QString DirItemInfo::filePath() const
 {
-   QString filepath;
-   if (!d_ptr->_path.isEmpty())
-   {
-       filepath = d_ptr->_path;
-       if (d_ptr->_path != QDir::rootPath())
-       {
-           filepath += QDir::separator();
-       }
-   }
-   filepath += d_ptr->_fileName;
-   return filepath;
+   return filePathFrom(d_ptr->_path);
 }
+
 
 QString DirItemInfo::fileName() const
 {
@@ -252,6 +207,20 @@ QString DirItemInfo::absolutePath() const
 bool  DirItemInfo::isReadable() const
 {
     return d_ptr->_isReadable;
+}
+
+/*!
+ * \brief DirItemInfo::isContentReadable() Expands the isReadable() idea, when it is a folder says if it is possible to get the content
+ * \return true if the file/directory can be read, otherwise false.
+ */
+bool  DirItemInfo::isContentReadable() const
+{
+    bool readable = d_ptr->_isReadable;
+    if (isDir() && !isSymLink())
+    {
+       readable &= isExecutable();
+    }
+    return readable;
 }
 
 bool DirItemInfo::isWritable() const
@@ -343,3 +312,24 @@ QMimeType DirItemInfo::mimeType() const
     return d_ptr->mimeDatabase.mimeTypeForFile(diskFileInfo());
 }
 
+
+QString DirItemInfo::urlPath() const
+{
+    return filePathFrom(d_ptr->_normalizedPath);
+}
+
+
+QString DirItemInfo::filePathFrom(const QString& p) const
+{
+    QString filepath;
+    if (!p.isEmpty())
+    {
+        filepath = p;
+        if (!p.endsWith(QDir::separator()) && !d_ptr->_fileName.isEmpty())
+        {
+            filepath += QDir::separator();
+        }
+    }
+    filepath += d_ptr->_fileName;
+    return filepath;
+}
