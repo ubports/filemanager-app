@@ -29,17 +29,24 @@
 
 
 /*!
- * \brief The ExternalFSWatcher class notifies when one of the paths in the \a m_setPaths has changed
- *            emitting pathModified() signal.
+ * \brief The ExternalFSWatcher class watches for external changes in Disk emitting pathModified() signal.
  *
- *  The path being watched  is set by using the slot \ref  setCurrentPath() or \ref setCurrentPaths()
+ *  The path(s) being watched  is/are set by using the slot \ref  setCurrentPath() or \ref setCurrentPaths()
  *
  *  The idea of this class is to minimize notifications as the current path in the File Manager can change quickly.
  *  A notification will occur if it was requested for a path and this path is still the current at the moment
  *  of the notification.
  *
- *  Once it detects a change it will wait \ref getIntervalToNotifyChanges() milliseconds to notify that change.
- *  At this moment it checks if no \ref setCurrentPath() nor \ref setCurrentPaths() has been called during this time and then notifies that change.
+ *  Once it detects a Disk change it will wait \ref getIntervalToNotifyChanges() milliseconds to notify that change.
+ *  During the time it waits:
+ *    \li  the notified path will NOT be watched until pathModified() is emitted
+ *    \li  another call to \ref setCurrentPath() or \ref setCurrentPaths() invalidades the current change,
+ *         that mean the signal pathModified() will NOT be emitted.
+ *
+ * \note When more than one path is being watched by using \ref setCurrentPaths() and changes happen in
+ *       more than one path before the getIntervalToNotifyChanges() expires, only the LAST path modified
+ *       will be notified as changed. It may possible that it goes to a loop if all the paths were modified,
+ *       but the loop finishes when the last one from the list is modified.
  */
 class ExternalFSWatcher : public QFileSystemWatcher
 {
