@@ -21,6 +21,7 @@ import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 0.1
 import Ubuntu.Unity.Action 1.0 as UnityActions
 import U1db 1.0 as U1db
+import Ubuntu.Content 0.1
 
 import "ui"
 
@@ -60,6 +61,17 @@ MainView {
     backgroundColor: "#797979"
     footerColor: "#808080"
 
+    QtObject {
+        id: fileSelector
+        property var activeTransfer: null
+        property var fileSelectorComponent: null
+    }
+
+    Component {
+        id: fileSelectorResultComponent
+        ContentItem {}
+    }
+
     // HUD Actions
     Action {
         id: settingsAction
@@ -85,6 +97,47 @@ MainView {
         list.splice(index, 1)
         folderTabs = list
         tabs.selectedTabIndex = 0
+    }
+
+    function openFileSelector() {
+        pageStack.push(fileSelectorComponent, { fileSelectorMode: true} )
+    }
+
+    function cancelFileSelector() {
+        console.log("Cancel file selector")
+        pageStack.pop()
+        // fileSelector.fileSelectorCompeonnt = null
+
+    }
+
+    function acceptFileSelector(fileUrl) {
+        console.log("accept file selector " + fileUrl)
+        var result = fileSelectorResultComponent.createObject(mainView);
+        result.url = fileUrl
+        if (fileSelector.activeTransfer !== null) {
+            fileSelector.activeTransfer.items = [ result ]
+            fileSelector.activeTransfer.state = ContentTransfer.Charged
+            console.log("set activeTransfer")
+        } else {
+            console.log("activeTransfer null, not setting, testing code")
+        }
+    }
+
+    Connections {
+        target: ContentHub
+        onExportRequested: {
+            fileSelector.activeTransfer = transfer
+            openFileSelector()
+        }
+    }
+
+    Component {
+        id: fileSelectorComponent
+
+        FolderListPage {
+            // TODO: remember last selection
+            folder: "~"
+        }
     }
 
     PageStack {

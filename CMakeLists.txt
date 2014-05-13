@@ -17,6 +17,7 @@ set(LP_PROJECT ubuntu-filemanager-app)
 set(ICON_FILE filemanager64.png)
 set(AUTOPILOT_DIR ${APP_NAME})
 set(EXEC "${APP_NAME}")
+set(CONTENT_HUB_EXPORTER hub-exporter.json)
 
 if(CLICK_MODE)
     if(NOT DEFINED BZR_SOURCE)
@@ -42,7 +43,7 @@ if(CLICK_MODE)
         set(BZR_REVNO "latest")
     endif(NOT BZR_REVNO)
     configure_file(manifest.json ${CMAKE_CURRENT_BINARY_DIR}/manifest.json)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json apparmor.json DESTINATION ${CMAKE_INSTALL_PREFIX})
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json apparmor.json ${CONTENT_HUB_EXPORTER} DESTINATION ${CMAKE_INSTALL_PREFIX})
 else(CLICK_MODE)
     execute_process(
         COMMAND qmake -query QT_INSTALL_QML
@@ -62,7 +63,7 @@ list(SORT I18N_SRC_FILES)
 
 file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-     *.qml *.js *.png *.svg *.js)
+     *.qml *.js *.png *.svg *.json)
 install(FILES ${SRC_FILES}  DESTINATION ${DATA_DIR})
 
 configure_file(${DESKTOP_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE})

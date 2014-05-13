@@ -33,6 +33,9 @@ Page {
 
     property bool showingListView: folderListView.visible
 
+    // Set to true if called as file selector
+    property bool fileSelectorMode: false
+
     onShowHiddenFilesChanged: {
         pageModel.showHiddenFiles = folderListPage.showHiddenFiles
     }
@@ -349,9 +352,32 @@ Page {
         }
     }
 
+    Component {
+        id: selectFileDialog
+        ConfirmDialog {
+            property string filePath
+
+            title: i18n.tr("Confirm selection")
+            text: filePath
+
+            onAccepted: {
+                console.log("Create file accepted", filePath)
+                // IMPROVE: for now single select
+                acceptFileSelector("file:/" + filePath)
+            }
+        }
+    }
+
+
     function openFile(filePath) {
-        if (!pageModel.openPath(filePath)) {
-            error(i18n.tr("File operation error"), i18n.tr("Unable to open '%11").arg(filePath))
+        // Just temporarily like this... finally should highlight selection and use buttons
+        if (fileSelectorMode) {
+            PopupUtils.open(selectFileDialog, folderListPage, { filePath: pageModel.path + "/" + filePath })
+        }
+        else {
+            if (!pageModel.openPath(filePath)) {
+                error(i18n.tr("File operation error"), i18n.tr("Unable to open '%11'").arg(filePath))
+            }
         }
     }
 

@@ -6,6 +6,7 @@
         "filemanager": {
             "apparmor": "apparmor.json",
             "desktop": "com.ubuntu.filemanager.desktop",
+            "content-hub": "hub-exporter.json",
             "urls": "com.ubuntu.filemanager_filemanager.url-dispatcher"
         }
     },
@@ -13,10 +14,10 @@
     "maintainer": "Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>",
     "name": "com.ubuntu.filemanager",
     "title": "File Manager",
-    "version": "0.3.@BZR_REVNO@",
+    "version": "0.3.latest",
     "x-source": {
         "vcs-bzr": "lp:ubuntu-filemanager-app",
-        "vcs-bzr-revno": "@BZR_REVNO@"
+        "vcs-bzr-revno": "latest"
     },
     "x-test": {
         "autopilot": "filemanager"
