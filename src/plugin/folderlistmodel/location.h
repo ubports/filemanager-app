@@ -47,7 +47,7 @@ class Location : public QObject
    Q_OBJECT
 public:
     explicit Location( int type, QObject *parent=0);
-    ~Location();
+    virtual ~Location();
 
     IOWorkerThread * workerThread() const;
 
@@ -107,8 +107,8 @@ public:
     virtual void        fetchExternalChanges(const QString& urlPath,
                                              const DirItemInfoList& list,
                                              QDir::Filter dirFilter) ;
-    virtual void        setFromInfoItem(const DirItemInfo &itemInfo);
-    virtual void        setFromInfoItem(const DirItemInfo *itemInfo);
+    virtual void        setInfoItem(const DirItemInfo &itemInfo);
+    virtual void        setInfoItem(DirItemInfo *itemInfo);
     virtual bool        isRoot() const;
     virtual bool        isWritable() const;
     virtual bool        isReadable() const;

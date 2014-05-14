@@ -42,7 +42,7 @@ DiskLocation::DiskLocation(int type, QObject *parent)
 
 DiskLocation::~ DiskLocation()
 {
-    stoptExternalFsWatcher();
+    stopExternalFsWatcher();
 }
 
 
@@ -90,9 +90,9 @@ void DiskLocation::refreshInfo()
 
 
 /*!
- * \brief DiskLocation::stoptExternalFsWatcher stops the External File System Watcher
+ * \brief DiskLocation::stopExternalFsWatcher() stops the External File System Watcher
  */
-void DiskLocation::stoptExternalFsWatcher()
+void DiskLocation::stopExternalFsWatcher()
 {
         if (m_extWatcher)
         {
@@ -145,7 +145,7 @@ void DiskLocation::startWorking()
 
 void DiskLocation::stopWorking()
 {
-    stoptExternalFsWatcher();
+    stopExternalFsWatcher();
 }
 
 
@@ -195,7 +195,7 @@ void DiskLocation::setUsingExternalWatcher(bool use)
     }
     else
     {
-        stoptExternalFsWatcher();
+        stopExternalFsWatcher();
     }
 }
 

@@ -50,11 +50,10 @@ bool fileCompareExists(const DirItemInfo &a, const DirItemInfo &b)
     if (b.isDir() && !a.isDir())
         return false;
 
-    bool ret = QString::localeAwareCompare(a.fileName(), b.fileName()) < 0;
+    bool ret = QString::localeAwareCompare(a.absoluteFilePath(), b.absoluteFilePath()) < 0;
 #if DEBUG_MESSAGES
-    qDebug() <<  Q_FUNC_INFO << ret << a.fileName() << b.fileName();
+    qDebug() <<  Q_FUNC_INFO << ret << a.absoluteFilePath() << b.absoluteFilePath();
 #endif
-
     return ret;
 }
 

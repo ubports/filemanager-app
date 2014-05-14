@@ -53,7 +53,7 @@ LocationsFactory::~LocationsFactory()
  * \return
  */
 
-const Location * LocationsFactory::parse(const QString& uPath)
+Location * LocationsFactory::parse(const QString& uPath)
 {
     int index = -1;
     int type  = -1;
@@ -66,7 +66,7 @@ const Location * LocationsFactory::parse(const QString& uPath)
         if (uPath.startsWith(LocationUrl::TrashRootURL.midRef(0,6)))
         {
             type = TrashDisk;
-            m_tmpPath  = LocationUrl::TrashRootURL + stringAfterSlahes(uPath, index+1);
+            m_tmpPath  = LocationUrl::TrashRootURL + stringAfterSlashes(uPath, index+1);
         }
         else
 #endif //Q_OS_UNIX
@@ -74,12 +74,12 @@ const Location * LocationsFactory::parse(const QString& uPath)
         if (uPath.startsWith(LocationUrl::DiskRootURL.midRef(0,5)))
         {
             type = LocalDisk;
-            m_tmpPath  = QDir::rootPath() + stringAfterSlahes(uPath, index+1);
+            m_tmpPath  = QDir::rootPath() + stringAfterSlashes(uPath, index+1);
         }
     }
     else
     {
-        m_tmpPath = stringAfterSlahes(uPath, -1);
+        m_tmpPath = stringAfterSlashes(uPath, -1);
         type    = LocalDisk;
         if (!m_tmpPath.startsWith(QDir::rootPath()) && m_curLoc)
         {
@@ -98,19 +98,19 @@ const Location * LocationsFactory::parse(const QString& uPath)
 }
 
 
-const Location * LocationsFactory::setNewPath(const QString& uPath)
+Location * LocationsFactory::setNewPath(const QString& uPath)
 {
     storeValidFileInfo(0);
-    Location *location = const_cast<Location*> (parse(uPath));
+    Location *location = parse(uPath);
     if (location)
     {
-        const DirItemInfo *item = location->validateUrlPath(m_tmpPath);
+        DirItemInfo *item = location->validateUrlPath(m_tmpPath);
         if (item)
         {
             //isContentReadable() must already carry execution permission
             if (item->isValid() && item->isDir() && item->isContentReadable())
             {
-                location->setFromInfoItem(item);
+                location->setInfoItem(item);
                 if (location != m_curLoc)
                 {
                     if (m_curLoc)
@@ -139,7 +139,7 @@ const Location * LocationsFactory::setNewPath(const QString& uPath)
 }
 
 
-QString  LocationsFactory::stringAfterSlahes(const QString &url, int firstSlashIndex) const
+QString  LocationsFactory::stringAfterSlashes(const QString &url, int firstSlashIndex) const
 {
     QString ret;
     if (firstSlashIndex >=0)

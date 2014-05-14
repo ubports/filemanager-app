@@ -756,7 +756,7 @@ bool  DirModel::cdIntoIndex(int row)
         mDirectoryContents.at(row).isDir()      &&
         mDirectoryContents.at(row).isContentReadable())
     {
-        mCurLocation->setFromInfoItem(mDirectoryContents.at(row));
+        mCurLocation->setInfoItem(mDirectoryContents.at(row));
         setPathFromCurrentLocation();
         ret = true;
     }

@@ -81,18 +81,18 @@ bool Location::isReadable() const
     return m_info ? m_info->isContentReadable() : false;
 }
 
-void Location::setFromInfoItem(const DirItemInfo &itemInfo)
+void Location::setInfoItem(const DirItemInfo &itemInfo)
 {
-    setFromInfoItem (new DirItemInfo(itemInfo));
+    setInfoItem (new DirItemInfo(itemInfo));
 }
 
-void Location::setFromInfoItem(const DirItemInfo *itemInfo)
+void Location::setInfoItem(DirItemInfo *itemInfo)
 {
     if (m_info)
     {
         delete m_info;
     }
-    m_info = const_cast<DirItemInfo*> (itemInfo);
+    m_info = itemInfo;
 }
 
 

@@ -45,7 +45,7 @@ class DiskLocation : public Location
     Q_OBJECT
 public:
     explicit DiskLocation(int type, QObject *parent=0);
-    ~DiskLocation();
+    virtual ~DiskLocation();
 
     ExternalFSWatcher  * getExternalFSWatcher() const;
 
@@ -57,7 +57,7 @@ public:
     virtual void        refreshInfo();
 
     virtual void        startExternalFsWatcher();
-    virtual void        stoptExternalFsWatcher();
+    virtual void        stopExternalFsWatcher();
 
     virtual void        startWorking();
     virtual void        stopWorking();

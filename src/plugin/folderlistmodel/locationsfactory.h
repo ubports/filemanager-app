@@ -74,7 +74,7 @@ public:
      * \param urlPath  urlPath the url like: file:///Item trash:///item /item, it MUST point to a valid Directory
      * \return   The location which supports the \a  urlPath
      */
-    const Location * parse(const QString& urlPath);
+    Location * parse(const QString& urlPath);
 
     /*!
      * \brief setNewPath() Sets a new path, it can be in the current location or on another location
@@ -86,13 +86,13 @@ public:
      *
      *  \sa \ref parse() \ref location()
      */
-    const Location * setNewPath(const QString& urlPath);
+    Location * setNewPath(const QString& urlPath);
 
     /*!
      * \brief location()
      * \return The current location
      */
-    const Location * location() const { return m_curLoc; }
+    Location * location() const { return m_curLoc; }
 
     /*!
      * \brief availableLocations()
@@ -113,13 +113,13 @@ public:
      */
     const DirItemInfo* lastValidFileInfo() const { return m_lastValidFileInfo; }
 
-    void         storeValidFileInfo(const DirItemInfo *item);
+    void        storeValidFileInfo(const DirItemInfo *item);
 
 signals:
-    void       locationChanged(const Location *old, const Location *current);
+    void        locationChanged(const Location *old, const Location *current);
 
 private:
-    QString        stringAfterSlahes(const QString& url, int firstSlashIndex) const;   
+    QString     stringAfterSlashes(const QString& url, int firstSlashIndex) const;
 
 private:
      Location         *  m_curLoc;
