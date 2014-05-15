@@ -42,6 +42,7 @@ class IORequest : public QObject
     Q_OBJECT
 public:   
     explicit IORequest();
+    virtual ~IORequest();
     
 public:
     enum RequestType
@@ -80,7 +81,8 @@ public:
                      const QString &pathName,
                      QDir::Filter filter,
                      bool isRecursive
-                   );
+                   );                   
+    virtual ~IORequestLoader();
     DirItemInfoList     getContents();
 
 signals:
@@ -108,6 +110,7 @@ class DirListWorker : public IORequestLoader
 public:
     explicit DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive);
     explicit DirListWorker(const QString& trashRootDir, const QString &pathName, QDir::Filter filter, const bool isRecursive);
+    virtual ~DirListWorker();
     void run();
 protected:
 signals:
@@ -123,6 +126,7 @@ class TrashListWorker  : public DirListWorker
     Q_OBJECT
 public:
     explicit TrashListWorker(const QString &trashRoot, const QString& path, QDir::Filter filter);
+    virtual ~TrashListWorker();
 };
 
 
@@ -135,6 +139,7 @@ public:
                                       const QString &pathName,
                                       QDir::Filter filter,
                                       const bool isRecursive);
+    virtual ~ExternalFileSystemChangesWorker();
     void     run();
 
 protected:
@@ -159,7 +164,7 @@ public:
   ExternalFileSystemTrashChangesWorker(const QStringList& pathNames,
                                        const DirItemInfoList& list,
                                        QDir::Filter filter);
-
+  virtual ~ExternalFileSystemTrashChangesWorker();
   void run();
 private:
   QStringList    m_pathList;

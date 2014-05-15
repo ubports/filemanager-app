@@ -32,7 +32,7 @@ class TrashLocation : public DiskLocation, public QTrashDir
     Q_OBJECT
 public:
     explicit TrashLocation(int type, QObject *parent=0);
-    ~TrashLocation();
+    virtual ~TrashLocation();
     virtual bool        becomeParent();
     virtual void        refreshInfo();
     virtual void        fetchItems(QDir::Filter dirFilter, bool recursive=0);

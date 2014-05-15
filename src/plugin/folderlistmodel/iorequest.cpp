@@ -46,6 +46,11 @@ IORequest::IORequest() : QObject(), m_type(DirList)
 {
 }
 
+IORequest::~IORequest()
+{
+
+}
+
 IORequest::RequestType IORequest::type() const
 {
     return m_type;
@@ -73,6 +78,11 @@ IORequestLoader::IORequestLoader(const QString& trashRootDir,
       , mFilter(filter)
       , mIsRecursive(isRecursive)
       , mTtrashRootDir(trashRootDir)
+{
+
+}
+
+IORequestLoader::~IORequestLoader()
 {
 
 }
@@ -161,6 +171,10 @@ DirListWorker::DirListWorker(const QString& trashRootDir, const QString &pathNam
 
 }
 
+DirListWorker::~DirListWorker()
+{
+
+}
 
 void DirListWorker::run()
 {
@@ -185,6 +199,10 @@ TrashListWorker::TrashListWorker(const QString& trashRoot, const QString &path, 
     mLoaderType = TrashLoader;
 }
 
+TrashListWorker::~TrashListWorker()
+{
+
+}
 
 //---------------------------------------------------------------------------------------------------------
 ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const DirItemInfoList &content,
@@ -202,6 +220,11 @@ ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const DirItemIn
     }
 }
 
+
+ExternalFileSystemChangesWorker::~ExternalFileSystemChangesWorker()
+{
+
+}
 
 int ExternalFileSystemChangesWorker::compareItems(const DirItemInfoList& contentNew)
 {
@@ -273,6 +296,11 @@ ExternalFileSystemTrashChangesWorker::ExternalFileSystemTrashChangesWorker(const
     ,  m_pathList(pathNames)
 {
     mLoaderType = TrashLoader;
+}
+
+ExternalFileSystemTrashChangesWorker::~ExternalFileSystemTrashChangesWorker()
+{
+
 }
 
 void ExternalFileSystemTrashChangesWorker::run()
