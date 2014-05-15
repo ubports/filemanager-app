@@ -407,7 +407,7 @@ void DirModel::setPath(const QString &pathName)
         return;
     }
 
-    const Location *location = mLocationFactory->setNewPath(pathName);
+    Location *location = mLocationFactory->setNewPath(pathName);
     if (location == 0)
     {
         emit error(tr("path or url may not exist or cannot be read"), pathName);
@@ -415,7 +415,7 @@ void DirModel::setPath(const QString &pathName)
         return;
     }
 
-    mCurLocation = const_cast<Location*> (location);
+    mCurLocation = location;
     setPathFromCurrentLocation();
 }
 
@@ -1156,10 +1156,10 @@ bool DirModel::openPath(const QString &filename)
     //first void any relative path when is root
     if ( !(mCurLocation && mCurLocation->isRoot() && filename.startsWith(QLatin1String(".."))) )
     {
-        const Location *location = mLocationFactory->setNewPath(filename);
+        Location *location = mLocationFactory->setNewPath(filename);
         if (location)
         {
-            mCurLocation = const_cast<Location*> (location);
+            mCurLocation = location;
             setPathFromCurrentLocation();
             ret = true;
         }
