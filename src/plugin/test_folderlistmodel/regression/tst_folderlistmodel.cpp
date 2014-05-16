@@ -3,7 +3,11 @@
 #include "tempfiles.h"
 #include "externalfswatcher.h"
 #include "dirselection.h"
-#include "trash/qtrashdir.h"
+#include "qtrashdir.h"
+#include "location.h"
+#include "locationurl.h"
+#include "locationsfactory.h"
+#include "disklocation.h"
 
 #if defined(Q_OS_UNIX)
 #include <stdio.h>
@@ -143,6 +147,8 @@ private Q_SLOTS: // test cases
     void modelSelectionItemsRange();
 
     void trashDiretories();
+    void locationFactory();
+
 
 private:
     void initDeepDirs();
@@ -2386,6 +2392,45 @@ void TestDirModel::trashDiretories()
    qDebug() << "QStandardPaths::DataLocation" << QStandardPaths::standardLocations(QStandardPaths::DataLocation);
    qDebug() << "QStandardPaths::GenericCacheLocation" << QStandardPaths::standardLocations(QStandardPaths::GenericCacheLocation);
    qDebug() << "QStandardPaths::GenericDataLocation" << QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
+}
+
+
+void TestDirModel::locationFactory()
+{
+    LocationsFactory factoryLocations(this);
+    const Location *location = 0;   
+
+   //Due to current File Manager UI typing method both: "file:" and "trash:" are supported
+   // location = factoryLocations.setNewPath("trash:");
+   // QVERIFY(location == 0);
+
+    location = factoryLocations.setNewPath("file://////");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   QDir::rootPath());
+    QCOMPARE(location->urlPath(), QDir::rootPath());
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("/");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   QDir::rootPath());
+    QCOMPARE(location->urlPath(), QDir::rootPath());
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("//");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   QDir::rootPath());
+    QCOMPARE(location->urlPath(), QDir::rootPath());
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("//bin");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   QLatin1String("/bin"));
+    QCOMPARE(location->urlPath(), QLatin1String("/bin"));
+    QCOMPARE(location->isRoot(), false);   
 }
 
 

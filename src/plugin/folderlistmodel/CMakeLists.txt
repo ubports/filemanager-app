@@ -1,5 +1,7 @@
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
+    disk
+    trash
 )
 
 set(PLUGIN_DIR org/nemomobile/folderlistmodel)
@@ -32,6 +34,14 @@ set(folderlistmodel_SRCS
     ioworkerthread.h
     plugin.cpp
     plugin.h
+    location.cpp
+    location.h
+    locationsfactory.cpp
+    locationsfactory.h
+    locationurl.cpp
+    locationurl.h
+    disk/disklocation.cpp
+    disk/disklocation.h
     trash/qtrashdir.cpp
     trash/qtrashdir.h
 )

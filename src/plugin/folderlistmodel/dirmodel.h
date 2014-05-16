@@ -42,17 +42,11 @@
 #include "diriteminfo.h"
 
 class FileSystemAction;
-class ExternalFSWatcher;
 class Clipboard;
 class DirSelection;
-
-/*!
- *  When the External File System Wathcer is enabled,
- *  this is the interval used to check if there has been any change in the current path
- *
- *  \sa setEnabledExternalFSWatcher()
- */
-#define EX_FS_WATCHER_TIMER_INTERVAL   900
+class LocationsFactory;
+class Location;
+class ExternalFSWatcher;
 
 class DirModel : public DirItemAbstractListModel
 {
@@ -150,7 +144,7 @@ public:
 
 public slots:
     void onItemsAdded(const DirItemInfoList &newFiles);
-    void onResultsFetched();
+    void onItemsFetched();
 
 signals:
     void awaitingResultsChanged();
@@ -206,7 +200,7 @@ public:
     Q_PROPERTY(int clipboardUrlsCounter READ getClipboardUrlsCounter NOTIFY clipboardChanged)
     int getClipboardUrlsCounter() const;
 
-    Q_PROPERTY(bool enableExternalFSWatcher READ getEnabledExternalFSWatcher WRITE setEnabledExternalFSWatcher)
+    Q_PROPERTY(bool enableExternalFSWatcher READ getEnabledExternalFSWatcher WRITE setEnabledExternalFSWatcher NOTIFY enabledExternalFSWatcherChanged)
     bool  getEnabledExternalFSWatcher() const;
 
     Q_INVOKABLE QString homePath() const;
@@ -360,8 +354,8 @@ signals:
     void     showHiddenFilesChanged();
     void     sortByChanged();
     void     sortOrderChanged();
-
     void     clipboardChanged();
+    void     enabledExternalFSWatcherChanged(bool);
 
 private slots:
     void onItemRemoved(const QString&);
@@ -377,12 +371,11 @@ private:
     QDir::Filter  currentDirFilter()  const;
     QString       dirItems(const DirItemInfo& fi) const;
     bool          cdInto(const DirItemInfo& fi);
-    bool          openItem(const DirItemInfo& fi);
-    DirListWorker * createWorkerRequest(IORequest::RequestType requestType,
-                                                  const QString& pathName);
+    bool          openItem(const DirItemInfo& fi);  
     bool          canReadDir(const QFileInfo& d)   const;
     bool          canReadFile(const QFileInfo& f)  const;
     QFileInfo     setParentIfRelative(const QString &fileOrDir) const;
+    void          setPathFromCurrentLocation();
 
 private:
     void          startExternalFsWatcher();
@@ -401,9 +394,11 @@ private:
     SortBy              mSortBy;
     SortOrder           mSortOrder;
     CompareFunction     mCompareFunction;
-    ExternalFSWatcher*  mExtFSWatcher;
+    bool                mExtFSWatcher;
     Clipboard *         mClipboard;
     DirSelection *      mSelection;
+    LocationsFactory *  mLocationFactory;
+    Location         *  mCurLocation;
 
 
 private:
