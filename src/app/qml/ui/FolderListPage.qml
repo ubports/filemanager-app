@@ -376,7 +376,7 @@ Page {
         }
         else {
             if (!pageModel.openPath(filePath)) {
-                error(i18n.tr("File operation error"), i18n.tr("Unable to open '%11'").arg(filePath))
+                error(i18n.tr("File operation error"), i18n.tr("Unable to open '%1'").arg(filePath))
             }
         }
     }
