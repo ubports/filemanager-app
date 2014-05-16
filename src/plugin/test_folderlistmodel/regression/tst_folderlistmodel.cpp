@@ -77,7 +77,7 @@ protected slots:
     void cancel(int index, int, int percent);
     void slotclipboardChanged();
     void slotError(QString title, QString message);
-    void slotExtFsWatcherPathModified()     { ++m_extFSWatcherPathModifiedCounter; }
+    void slotExtFsWatcherPathModified(const QString&)     { ++m_extFSWatcherPathModifiedCounter; }
     void slotSelectionChanged(int counter)  { m_selectedItemsCounter = counter; }
     void slotSelectionModeChanged(int m)    { m_selectionMode = m;}
 
@@ -1859,8 +1859,8 @@ void  TestDirModel::openPDF()
 void TestDirModel::extFsWatcherChangePathManyTimesModifyAllPathsLessLast()
 {
     ExternalFSWatcher  watcher;
-    connect(&watcher, SIGNAL(pathModified()),
-            this,     SLOT(slotExtFsWatcherPathModified()));
+    connect(&watcher, SIGNAL(pathModified(QString)),
+            this,     SLOT(slotExtFsWatcherPathModified(QString)));
 
     const int items = 150;
     QVector<DeepDir *>  deepDirs;
@@ -1896,8 +1896,8 @@ void TestDirModel::extFsWatcherChangePathManyTimesModifyAllPathsLessLast()
 void TestDirModel::extFsWatcherChangePathManyTimesModifyManyTimes()
 {
     ExternalFSWatcher  watcher;
-    connect(&watcher, SIGNAL(pathModified()),
-            this,     SLOT(slotExtFsWatcherPathModified()));
+    connect(&watcher, SIGNAL(pathModified(QString)),
+            this,     SLOT(slotExtFsWatcherPathModified(QString)));
 
     const int items = 50;
     QVector<DeepDir *>  deepDirs;
@@ -1930,8 +1930,8 @@ void TestDirModel::extFsWatcherChangePathManyTimesModifyManyTimes()
 void TestDirModel::extFsWatcherModifySamePathManyTimesWithInInterval()
 {
     ExternalFSWatcher  watcher;
-    connect(&watcher, SIGNAL(pathModified()),
-            this,     SLOT(slotExtFsWatcherPathModified()));
+    connect(&watcher, SIGNAL(pathModified(QString)),
+            this,     SLOT(slotExtFsWatcherPathModified(QString)));
 
     QString dirName("extFsWatcher_expects_just_one_signal");
     m_deepDir_01 = new DeepDir(dirName,0);
@@ -1957,8 +1957,8 @@ void TestDirModel::extFsWatcherModifySamePathManyTimesWithInInterval()
 void TestDirModel::extFsWatcherSetPathAndModifyManyTimesWithInInterval()
 {
     ExternalFSWatcher  watcher;
-    connect(&watcher, SIGNAL(pathModified()),
-            this,     SLOT(slotExtFsWatcherPathModified()));
+    connect(&watcher, SIGNAL(pathModified(QString)),
+            this,     SLOT(slotExtFsWatcherPathModified(QString)));
 
     QList<DeepDir *>  deepDirs;
 
@@ -1995,8 +1995,8 @@ void TestDirModel::extFsWatcherNoticeChangesWithSameTimestamp()
 {
     bool updateAndSetModificationTime(const QString& filename, QDateTime& desiredTime);
 
-    connect( m_dirModel_01->mExtFSWatcher, SIGNAL(pathModified()),
-            this,     SLOT(slotExtFsWatcherPathModified()));
+    connect( m_dirModel_01->getExternalFSWatcher(), SIGNAL(pathModified(QString)),
+            this,     SLOT(slotExtFsWatcherPathModified(QString)));
 
     QString dirName("extFsWatcher_generate_fileswithsameTimeStamp");
     m_deepDir_01 = new DeepDir(dirName,0);
@@ -2029,7 +2029,7 @@ void TestDirModel::extFsWatcherNoticeChangesWithSameTimestamp()
     QFileInfo firstFile(firstPathName);
     QCOMPARE(firstFile.lastModified(),  timeStamp);
 
-    const int maxWait   = m_dirModel_01->mExtFSWatcher->getIntervalToNotifyChanges() + 10;
+    const int maxWait   = m_dirModel_01->getExternalFSWatcher()->getIntervalToNotifyChanges() + 10;
     int counter = 0;
 
     //make sure ExternalFSWatcher has not notified any change
