@@ -62,28 +62,50 @@ protected:
 
 
 
-class DirListWorker : public IORequest
+class IORequestLoader : public IORequest
+{
+ Q_OBJECT
+public:
+    enum LoaderType
+    {
+        NormalLoader,
+        TrashLoader
+    };
+
+    IORequestLoader( const QString &pathName,
+                     QDir::Filter filter,
+                     bool isRecursive
+                   );    
+    DirItemInfoList     getContents();
+
+signals:
+    void itemsAdded(const DirItemInfoList &files);
+
+private:
+    DirItemInfoList getNormalContent();   
+    DirItemInfoList add(const QString &pathName, QDir::Filter filter,
+                        bool isRecursive, DirItemInfoList directoryContents);
+protected:
+    LoaderType    mLoaderType;
+    QString       mPathName;
+    QDir::Filter  mFilter;
+    bool          mIsRecursive;   
+};
+
+
+
+
+class DirListWorker : public IORequestLoader
 {
     Q_OBJECT
 public:
-    explicit DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive);
+    explicit DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive);    
     void run();
+protected:
 signals:
-    void itemsAdded(const DirItemInfoList &files);
     void workerFinished();
 
-protected:
-    DirItemInfoList     getContents();
-
-private:
-    DirItemInfoList add(const QString &pathName, QDir::Filter filter,
-                           const bool isRecursive, DirItemInfoList directoryContents);
-private:
-    QString       mPathName;
-    QDir::Filter  mFilter;
-    bool          mIsRecursive;
 };
-
 
 
 class  ExternalFileSystemChangesWorker : public DirListWorker
@@ -95,6 +117,10 @@ public:
                                       QDir::Filter filter,
                                       const bool isRecursive);
     void     run();
+
+protected:
+    int  compareItems(const DirItemInfoList& contentNew);
+
 signals:
     void     removed(const DirItemInfo&);
     void     changed(const DirItemInfo&);
@@ -103,6 +129,9 @@ signals:
 private:
     QHash<QString, DirItemInfo>    m_curContent;   //!< using hash because the vector can be in any order
 };
+
+
+
 
 
 

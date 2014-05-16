@@ -30,6 +30,7 @@
  */
 
 #include "iorequest.h"
+#include "diriteminfo.h"
 
 #include <QDirIterator>
 #include <QDebug>
@@ -48,11 +49,22 @@ IORequest::RequestType IORequest::type() const
     return m_type;
 }
 
+//----------------------------------------------------------------------------------
+IORequestLoader::IORequestLoader(const QString &pathName,
+                                 QDir::Filter filter,
+                                 bool isRecursive)
+      : IORequest()
+      , mLoaderType(NormalLoader)
+      , mPathName(pathName)
+      , mFilter(filter)
+      , mIsRecursive(isRecursive)
+{
 
+}
+
+//-----------------------------------------------------------------------------------------------
 DirListWorker::DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive)
-    : mPathName(pathName)
-    , mFilter(filter)
-    , mIsRecursive(isRecursive)
+    : IORequestLoader(pathName, filter, isRecursive)
 {
 
 }
@@ -71,8 +83,12 @@ void DirListWorker::run()
     emit workerFinished();
 }
 
+DirItemInfoList  IORequestLoader::getContents()
+{
+   return  getNormalContent();
+}
 
-DirItemInfoList DirListWorker::getContents()
+DirItemInfoList  IORequestLoader::getNormalContent()
 {
 #if DEBUG_EXT_FS_WATCHER
     qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
@@ -83,10 +99,9 @@ DirItemInfoList DirListWorker::getContents()
     return directoryContents;
 }
 
-
-DirItemInfoList DirListWorker::add(const QString &pathName,
+DirItemInfoList IORequestLoader::add(const QString &pathName,
                                       QDir::Filter filter,
-                                      const bool isRecursive,
+                                      bool isRecursive,
                                       DirItemInfoList directoryContents)
 {
     QDir tmpDir = QDir(pathName, QString(), QDir::NoSort, filter);
@@ -133,21 +148,28 @@ ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const DirItemIn
 void ExternalFileSystemChangesWorker::run()
 {
     DirItemInfoList directoryContents = getContents();
+    int remainingitemsCounter = compareItems(directoryContents);
+    emit finished(remainingitemsCounter);
+}
+
+
+int ExternalFileSystemChangesWorker::compareItems(const DirItemInfoList& contentNew)
+{
     int   addedCounter=0;
     int   removedCounter=0;
 #if DEBUG_EXT_FS_WATCHER
         qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
                  << Q_FUNC_INFO
                  << "m_curContent.count():"      << m_curContent.count()
-                 << "directoryContents.count():" << directoryContents.count();
+                 << "contentNew.count():" << contentNew.count();
 #endif
-    int counter = directoryContents.count();
+    int counter = contentNew.count();
     if (counter > 0)
     {
         int tmpCounter = counter;
         while (tmpCounter--)
         {
-            const DirItemInfo& originalItem = directoryContents.at(tmpCounter);
+            const DirItemInfo& originalItem = contentNew.at(tmpCounter);
             const DirItemInfo  existItem    = m_curContent.value(originalItem.absoluteFilePath());
             if ( existItem.exists() )
             {
@@ -181,5 +203,8 @@ void ExternalFileSystemChangesWorker::run()
                  << "addedCounter:"   << addedCounter
                  << "removedCounter:" << removedCounter;
 #endif
-    emit finished(counter);
+
+   return counter;
 }
+
+
