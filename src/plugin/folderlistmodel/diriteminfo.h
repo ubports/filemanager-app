@@ -163,4 +163,82 @@ public:
 
 
 
+/*!
+ * \brief The ActionPaths struct contains helper functions to do simple path handling
+ *
+ *  Paths stored here are supposed to NOT be relative.
+ *
+ *  It does not use any QFileInfo method, so it may work for any URL type
+ */
+struct ActionPaths
+{
+ public:
+    ActionPaths() {}
+    ActionPaths(const QString& source)
+    {
+        setSource(source);
+    }
+    inline void setSource(const QString& source)
+    {
+        _source = source;
+        int pathLen = _source.lastIndexOf(QDir::separator());
+        if (pathLen != -1)
+        {
+           _sFile    = QStringRef(&_source, pathLen + 1, _source.size() - pathLen - 1);
+           _origPath = QStringRef(&_source, 0, pathLen);
+        }
+        else
+        {   //avoid bad index
+            pathLen = 0;
+        }
+    }
+    inline void setTargetPathOnly(const QString& path)
+    {
+        _targetPath = path;
+        _target     = path +  QDir::separator();
+        _target    += _sFile;
+    }
+    inline void setTargetFullName(const QString& fullPathname)
+    {
+        _target = fullPathname;
+        int lastSeparator = _target.lastIndexOf(QDir::separator());
+        if (lastSeparator > 0)
+        {
+            _targetPath  = _target.mid(0, lastSeparator);
+        }
+    }
+    inline ActionPaths& operator=(const ActionPaths& other)
+    {
+        setSource(other._source);
+        setTargetFullName(other._target);
+        return *this;
+    }
+    inline bool              areEquals() const {return _source == _target;}
+    inline bool              arePathsEquals() const
+    {
+        return QStringRef::compare(_origPath, _targetPath) == 0;
+    }
+    inline const QString&    source()    const {return _source;}
+    inline const QString&    target()    const {return _target;}
+    inline const QString&    targetPath()const {return _targetPath;}
+    inline const QStringRef& file()      const {return _sFile;}
+    inline int               baseOrigSize() const {return _origPath.size();}
+    inline void  toggle()
+    {
+        QString savedSource(_source);
+        setSource(_target);
+        setTargetFullName(savedSource);
+    }
+ private:
+    QString    _source;      //!<   source full pathname
+    QString    _target;      //!<   target full pathname
+    QString    _targetPath;  //!<   target path only
+    QStringRef _sFile;       //!<   source file name only
+    QStringRef _origPath;    //!<   source path only
+};
+
+Q_DECLARE_METATYPE(ActionPaths)
+
+typedef QList<ActionPaths>       ActionPathList;
+
 #endif // DIRITEMINFO_H
