@@ -201,7 +201,7 @@ void TrashLocation::fetchItems(QDir::Filter dirFilter, bool recursive)
     if (!m_info->isRoot()) //any item under the logical trash folder
     {
         //sub items inside Trash do not need external watcher, they will never be updated
-        stoptExternalFsWatcher();
+        stopExternalFsWatcher();
         TrashItemInfo *trashItem = static_cast<TrashItemInfo*> (m_info);
         TrashListWorker *dlw  = new TrashListWorker(trashItem->getRootTrashDir(),
                                                     trashItem->absoluteFilePath(),
