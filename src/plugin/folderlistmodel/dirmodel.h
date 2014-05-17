@@ -297,6 +297,11 @@ public slots:
     void  goHome();
 
     /*!
+     * \brief goTrash() goes to logical folder trash:///
+     */
+    void goTrash();
+
+    /*!
      * \brief cdUp() sets the parent directory as current directory
      *
      *  It can work as a back function if there is no user input path

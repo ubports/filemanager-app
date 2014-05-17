@@ -24,7 +24,8 @@
 #include "location.h"
 #include "locationurl.h"
 #include "disklocation.h"
-
+#include "trashlocation.h"
+#include "trashiteminfo.h"
 
 #include <QDir>
 #include <QDebug>
@@ -36,7 +37,8 @@ LocationsFactory::LocationsFactory(QObject *parent)
  , m_curLoc(0)
  , m_lastValidFileInfo(0)
 {
-   m_locations.append(new DiskLocation(LocalDisk)); 
+   m_locations.append(new DiskLocation(LocalDisk));
+   m_locations.append(new TrashLocation(TrashDisk));
 }
 
 

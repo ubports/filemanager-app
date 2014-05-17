@@ -30,7 +30,9 @@
  */
 
 #include "iorequest.h"
+#include "qtrashutilinfo.h"
 #include "diriteminfo.h"
+#include "trashiteminfo.h"
 
 #include <QDirIterator>
 #include <QDebug>
@@ -42,6 +44,11 @@
 
 IORequest::IORequest() : QObject(), m_type(DirList)
 {
+}
+
+IORequest::~IORequest()
+{
+
 }
 
 IORequest::RequestType IORequest::type() const
@@ -59,33 +66,32 @@ IORequestLoader::IORequestLoader(const QString &pathName,
       , mFilter(filter)
       , mIsRecursive(isRecursive)
 {
-
 }
 
-//-----------------------------------------------------------------------------------------------
-DirListWorker::DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive)
-    : IORequestLoader(pathName, filter, isRecursive)
+IORequestLoader::IORequestLoader(const QString& trashRootDir,
+                                 const QString &pathName,
+                                 QDir::Filter filter,
+                                 bool isRecursive)
+      : IORequest()
+      , mLoaderType(TrashLoader)
+      , mPathName(pathName)
+      , mFilter(filter)
+      , mIsRecursive(isRecursive)
+      , mTtrashRootDir(trashRootDir)
 {
 
 }
 
-
-void DirListWorker::run()
+IORequestLoader::~IORequestLoader()
 {
-#if DEBUG_MESSAGES
-    qDebug() << Q_FUNC_INFO << "Running on: " << QThread::currentThreadId();
-#endif
 
-    DirItemInfoList directoryContents = getContents();
-
-    // last batch
-    emit itemsAdded(directoryContents);
-    emit workerFinished();
 }
 
 DirItemInfoList  IORequestLoader::getContents()
 {
-   return  getNormalContent();
+   return mLoaderType == NormalLoader ?
+                getNormalContent() :
+                getTrashContent();
 }
 
 DirItemInfoList  IORequestLoader::getNormalContent()
@@ -123,17 +129,87 @@ DirItemInfoList IORequestLoader::add(const QString &pathName,
             directoryContents.erase(directoryContents.begin(), directoryContents.end());
         }
     }
-
     return directoryContents;
 }
 
+DirItemInfoList  IORequestLoader::getTrashContent()
+{
+   DirItemInfoList directoryContents;
+   QTrashUtilInfo trashInfo;
+   QDir tmpDir = QDir(mPathName, QString(), QDir::NoSort, mFilter);
+   bool isTopLevel = QFileInfo(mPathName).absolutePath() == mTtrashRootDir;
+   QDirIterator it(tmpDir);
+   while (it.hasNext())
+   {
+       it.next();
+       trashInfo.setInfo(mTtrashRootDir, it.fileInfo().absoluteFilePath());
+       if (!isTopLevel || (isTopLevel && trashInfo.existsInfoFile() && trashInfo.existsFile()) )
+       {
+          //TODO read the trashinfo file and set it into  a display field
+          //     the display field can be a string the usally points to absoluteFilePath()
+          //     it would be used only in the DirModel::data()
+           TrashItemInfo item(QTrashUtilInfo::filesTrashDir(mTtrashRootDir),
+                              it.fileInfo().absoluteFilePath());
+           directoryContents.append(item);
+       }
+   }
+   return directoryContents;
+}
+
+
+//-----------------------------------------------------------------------------------------------
+DirListWorker::DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive)
+    : IORequestLoader(pathName, filter, isRecursive)
+{
+
+}
+
+
+DirListWorker::DirListWorker(const QString& trashRootDir, const QString &pathName, QDir::Filter filter, const bool isRecursive)
+    : IORequestLoader(trashRootDir, pathName, filter, isRecursive)
+{
+
+}
+
+DirListWorker::~DirListWorker()
+{
+
+}
+
+void DirListWorker::run()
+{
+#if DEBUG_MESSAGES
+    qDebug() << Q_FUNC_INFO << "Running on: " << QThread::currentThreadId();
+#endif
+
+    DirItemInfoList directoryContents = getContents();
+
+    // last batch
+    emit itemsAdded(directoryContents);
+    emit workerFinished();
+}
+
+
+
+
+//-------------------------------------------------------------------------------------
+TrashListWorker::TrashListWorker(const QString& trashRoot, const QString &path, QDir::Filter filter)
+  : DirListWorker(trashRoot, path, filter, false)
+{
+    mLoaderType = TrashLoader;
+}
+
+TrashListWorker::~TrashListWorker()
+{
+
+}
 
 //---------------------------------------------------------------------------------------------------------
 ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const DirItemInfoList &content,
                                                    const QString &pathName,
                                                    QDir::Filter filter,
                                                    const bool isRecursive)
-    : DirListWorker(pathName, filter, isRecursive)
+    : IORequestLoader(pathName, filter, isRecursive)
 
 {
     m_type        = DirListExternalFSChanges;
@@ -145,13 +221,10 @@ ExternalFileSystemChangesWorker::ExternalFileSystemChangesWorker(const DirItemIn
 }
 
 
-void ExternalFileSystemChangesWorker::run()
+ExternalFileSystemChangesWorker::~ExternalFileSystemChangesWorker()
 {
-    DirItemInfoList directoryContents = getContents();
-    int remainingitemsCounter = compareItems(directoryContents);
-    emit finished(remainingitemsCounter);
-}
 
+}
 
 int ExternalFileSystemChangesWorker::compareItems(const DirItemInfoList& contentNew)
 {
@@ -207,4 +280,37 @@ int ExternalFileSystemChangesWorker::compareItems(const DirItemInfoList& content
    return counter;
 }
 
+void ExternalFileSystemChangesWorker::run()
+{
+    DirItemInfoList directoryContents = getContents();    
+    int remainingitemsCounter = compareItems(directoryContents);
+    emit finished(remainingitemsCounter);
+}
 
+
+//---------------------------------------------------------------------
+ExternalFileSystemTrashChangesWorker::ExternalFileSystemTrashChangesWorker(const QStringList &pathNames,
+                                                                           const DirItemInfoList &list,
+                                                                           QDir::Filter filter)
+    :  ExternalFileSystemChangesWorker(list, pathNames.at(0), filter, false)
+    ,  m_pathList(pathNames)
+{
+    mLoaderType = TrashLoader;
+}
+
+ExternalFileSystemTrashChangesWorker::~ExternalFileSystemTrashChangesWorker()
+{
+
+}
+
+void ExternalFileSystemTrashChangesWorker::run()
+{
+    DirItemInfoList directoryContents;
+    for(int counter = 0; counter < m_pathList.count(); counter++)
+    {
+        mPathName = QTrashUtilInfo::filesTrashDir(m_pathList.at(counter));
+        directoryContents += getContents();
+    }
+    int remainingitemsCounter = compareItems(directoryContents);
+    emit finished(remainingitemsCounter);
+}

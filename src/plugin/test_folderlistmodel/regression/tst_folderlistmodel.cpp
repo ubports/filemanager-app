@@ -8,6 +8,7 @@
 #include "locationurl.h"
 #include "locationsfactory.h"
 #include "disklocation.h"
+#include "qtrashutilinfo.h"
 
 #if defined(Q_OS_UNIX)
 #include <stdio.h>
@@ -147,10 +148,11 @@ private Q_SLOTS: // test cases
     void modelSelectionItemsRange();
 
     void trashDiretories();
+
     void locationFactory();
 
-
 private:
+    bool createTempHomeTrashDir(const QString& existentDir);
     void initDeepDirs();
     void cleanDeepDirs();
     void initModels();
@@ -1415,16 +1417,114 @@ void TestDirModel::openPathAbsouluteAndRelative()
     QCOMPARE(ret,                        true);
     QCOMPARE(m_currentPath,              m_deepDir_01->path());
     QCOMPARE(m_dirModel_01->rowCount(), 1);
+    QCOMPARE(m_receivedErrorSignal,      false);
 
     ret = m_dirModel_01->openPath(QLatin1String(".."));
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(ret,                        true);   
     QCOMPARE(m_currentPath,              QDir::tempPath());
+    QCOMPARE(m_receivedErrorSignal,      false);
 
     ret = m_dirModel_01->openPath(orig);
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(ret,                        true);
     QCOMPARE(m_currentPath,              m_deepDir_01->path());
+    QCOMPARE(m_receivedErrorSignal,      false);
+
+    // trash --------------------------------------
+    TempFiles files;
+    QCOMPARE(files.addSubDirLevel(m_deepDir_01->path()),  true);
+
+    createTempHomeTrashDir(m_deepDir_01->path());
+
+    QTrashDir tempTrash;
+    QCOMPARE(files.addSubDirLevel(tempTrash.homeTrash()),  true);
+    QCOMPARE(files.addSubDirLevel(QTrashUtilInfo::filesTrashDir(tempTrash.homeTrash())),  true);
+
+    QString level1("Level1");
+    QCOMPARE(files.addSubDirLevel(level1),  true);
+
+    QTrashUtilInfo trashInfo;
+    trashInfo.setInfo(tempTrash.homeTrash(), level1);
+    QCOMPARE(trashInfo.existsFile()   , true);
+    QFile infoFile(trashInfo.absInfo);
+    QCOMPARE(infoFile.open(QFile::WriteOnly),  true);
+    infoFile.close();
+
+    //check if "Level1" is valid item under trash
+    QCOMPARE(trashInfo.existsInfoFile()   , true);
+
+    QString level2("level2");
+    QString level3("level3");
+
+    QCOMPARE(files.addSubDirLevel(level2),  true);
+    QCOMPARE(files.addSubDirLevel(level3),  true);
+
+    files.create(1);
+
+    // using trash:///
+    ret = m_dirModel_01->openPath(LocationUrl::TrashRootURL);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(ret,                        true);
+    QCOMPARE(m_currentPath,              LocationUrl::TrashRootURL);
+    QCOMPARE(m_receivedErrorSignal,      false);
+
+    // using relative "Level1"
+    ret = m_dirModel_01->openPath(level1);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(ret,                        true);
+    QCOMPARE(m_currentPath,              QString(LocationUrl::TrashRootURL + level1) );
+    QCOMPARE(m_receivedErrorSignal,      false);
+
+   //using trash:///Level1/Level2/Level3
+   QString deep(LocationUrl::TrashRootURL + level1 + QDir::separator() + level2 + QDir::separator() + level3);
+   ret = m_dirModel_01->openPath(deep);
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   //using ../ to go up into Level2
+   ret = m_dirModel_01->openPath("../");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   //using .. to go up into Level1
+   ret = m_dirModel_01->openPath("..");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   //back to trash:///
+   ret = m_dirModel_01->openPath("..");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);   
+   QCOMPARE(m_currentPath,              LocationUrl::TrashRootURL);
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   //now it must fail
+   ret = m_dirModel_01->openPath("..");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        false);
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   ret = m_dirModel_01->openPath("file:///");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_currentPath,              QDir::rootPath());
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   ret = m_dirModel_01->openPath("file://");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_currentPath,              QDir::rootPath());
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   ret = m_dirModel_01->openPath("file:/");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_currentPath,              QDir::rootPath());
+   QCOMPARE(m_receivedErrorSignal,      false);
 }
 
 
@@ -2314,9 +2414,9 @@ void TestDirModel::trashDiretories()
    QCOMPARE(trash.checkUserDirPermissions(trashDir),  true);
 
    //create files in Trash
-   QCOMPARE(trash.createUserDir(trash.filesTrashDir(trashDir)),  true);
+   QCOMPARE(trash.createUserDir(QTrashUtilInfo::filesTrashDir(trashDir)),  true);
    //create info in Trash
-   QCOMPARE(trash.createUserDir(trash.infoTrashDir(trashDir)),  true);
+   QCOMPARE(trash.createUserDir(QTrashUtilInfo::infoTrashDir(trashDir)),  true);
    //test validate Trash Dir(), now it MUST pass
    QCOMPARE(trash.validate(trashDir, false),  true);
 
@@ -2333,15 +2433,17 @@ void TestDirModel::trashDiretories()
    QString xdgTrash("xdg_Trash");
    m_deepDir_02 = new DeepDir(xdgTrash,0);
 
+   if (::qgetenv("XDG_DATA_HOME").size() == 0)
+   {
+       QString myTrash(QDir::homePath() + "/.local/share/Trash");
+       QCOMPARE(trash.homeTrash(), myTrash);
+   }
+
    //test XDG Home Trash
    ::setenv("XDG_DATA_HOME", m_deepDir_02->path().toLatin1().constData(), true );
-
    QString xdgTrashDir(trash.homeTrash());
    QCOMPARE(trash.validate(xdgTrashDir, false),  true);
    QCOMPARE(trash.homeTrash() , xdgTrashDir);
-
-   ::setenv("XDG_DATA_HOME", "\0", true );
-   QCOMPARE(trash.homeTrash() , QDir::homePath() + "/.local/share/Trash");
 
    QCOMPARE(trash.getMountPoint(QDir::rootPath()), QDir::rootPath());  
 
@@ -2398,11 +2500,45 @@ void TestDirModel::trashDiretories()
 void TestDirModel::locationFactory()
 {
     LocationsFactory factoryLocations(this);
-    const Location *location = 0;   
+    const Location *location = 0;
+
+    QString validTrashURL(LocationUrl::TrashRootURL);
 
    //Due to current File Manager UI typing method both: "file:" and "trash:" are supported
    // location = factoryLocations.setNewPath("trash:");
    // QVERIFY(location == 0);
+
+    location = factoryLocations.setNewPath("trash:/");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
+    QCOMPARE(location->urlPath(), validTrashURL);
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("trash://");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
+    QCOMPARE(location->urlPath(), validTrashURL);
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("trash:///");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
+    QCOMPARE(location->urlPath(), validTrashURL);
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("trash://////");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
+    QCOMPARE(location->urlPath(), validTrashURL);
+    QCOMPARE(location->isRoot(), true);
+
+    QString myDir("___myDir_must_NOT_EXIST___");
+    location = factoryLocations.setNewPath(QString("trash:/") + myDir);
+    QVERIFY(location == 0);
 
     location = factoryLocations.setNewPath("file://////");
     QVERIFY(location);
@@ -2430,9 +2566,48 @@ void TestDirModel::locationFactory()
     QVERIFY(location->type() == LocationsFactory::LocalDisk);
     QCOMPARE(location->info()->absoluteFilePath(),   QLatin1String("/bin"));
     QCOMPARE(location->urlPath(), QLatin1String("/bin"));
-    QCOMPARE(location->isRoot(), false);   
-}
+    QCOMPARE(location->isRoot(), false);
 
+    QTrashDir  trash;
+    QString dirName("trashDirectory");
+    m_deepDir_01 = new DeepDir(dirName,0);
+
+    //create a Trash to have
+
+    ::setenv("XDG_DATA_HOME", m_deepDir_01->path().toLatin1().constData(), true );
+    QString xdgTrashDir(trash.homeTrash());
+    QCOMPARE(trash.validate(xdgTrashDir, true),  true);
+    QCOMPARE(trash.homeTrash() , xdgTrashDir);
+
+    QString trash3("trash:///Dir1/Dir2/Dir3");
+    QString trash2("trash:///Dir1/Dir2");
+    QString trash1("trash:///Dir1");
+
+    QCOMPARE(QDir().mkpath(QTrashUtilInfo::filesTrashDir(xdgTrashDir) + "/Dir1/Dir2/Dir3"), true);
+
+
+    //create a empty .trashinfo file to validate the Trash
+    QFile trashinfo (QTrashUtilInfo::infoTrashDir(xdgTrashDir) + "/Dir1.trashinfo");
+    QCOMPARE(trashinfo.open(QFile::WriteOnly),  true);
+    trashinfo.close();
+
+    location =  factoryLocations.setNewPath(trash3);
+    Location * myLocation = const_cast<Location*> (location);
+    QCOMPARE(myLocation->becomeParent(),   true);
+    QCOMPARE(location->urlPath(),  trash2);
+    QCOMPARE(location->isRoot(), false);
+
+    location =  factoryLocations.setNewPath(trash2);
+    myLocation = const_cast<Location*> (location);
+    QCOMPARE(myLocation->becomeParent(),   true);
+    QCOMPARE(location->urlPath(),  trash1);
+    QCOMPARE(location->isRoot(), false);
+
+    myLocation = const_cast<Location*> (location);
+    QCOMPARE(myLocation->becomeParent(),  true);
+    QCOMPARE(location->urlPath(),  LocationUrl::TrashRootURL);
+    QCOMPARE(location->isRoot(), true);
+}
 
 int main(int argc, char *argv[])
 {
@@ -2485,6 +2660,21 @@ QString createFileInTempDir(const QString& name, const char *content, qint64 siz
             ret = fullName;
         }
         file.close();
+    }
+    return ret;
+}
+
+
+bool TestDirModel::createTempHomeTrashDir(const QString& existentDir)
+{
+    QDir d(existentDir);
+    bool ret = false;
+    if (existentDir.startsWith(QDir::tempPath()) && (d.exists() || d.mkpath(existentDir)))
+    {
+        QTrashDir trash;
+        ::setenv("XDG_DATA_HOME", existentDir.toLatin1().constData(), true );
+        QString xdgTrashDir(trash.homeTrash());
+        ret = trash.validate(xdgTrashDir, true);
     }
     return ret;
 }

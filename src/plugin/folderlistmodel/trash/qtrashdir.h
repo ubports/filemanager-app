@@ -24,7 +24,7 @@
 
 #include <QStringList>
 #include <QDateTime>
-
+struct QTrashUtilInfo;
 
 /*!
  * \brief The QTrashDir class is a Qt implementation of the Trash Directories specification
@@ -93,19 +93,8 @@ public:
      */
     QString       suitableTrash(const QString &fullPathName) const;
 
-    /*!
-     * \brief filesTrashDir() gets the "files" directory under Trash Dir
-     * \param trashDir
-     * \return trashDir/files
-     */
-    QString       filesTrashDir(const QString& trashDir) const;
+    bool          suitableTrash(const QString &fullPathName, QTrashUtilInfo& fullInfo) const;
 
-    /*!
-     * \brief infoTrashDir() gets gets the "info" directory under Trash Dir
-     * \param trashDir
-     * \return trashDir/info
-     */
-    QString       infoTrashDir(const QString& trashDir)  const;
 
 private:          
     bool          validate(const QString& trashDir, bool create=false) const;
@@ -120,7 +109,7 @@ private:
 
 private:
     uint          m_userId;
- #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
    friend class TestDirModel;
 #endif
 };
