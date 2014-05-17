@@ -70,7 +70,73 @@
 #define   COMMON_SIZE_ITEM       120
 
 
+FileSystemAction::Action::Action()
+   : auxAction(0), isAux(false)
+{
+    reset();
+}
 
+FileSystemAction::Action::~Action()
+{
+   qDeleteAll(entries);
+   entries.clear();
+   copyFile.clear();
+}
+
+/*!
+ * \brief FileSystemAction::Action::reset() Used for Undo operations
+ */
+void FileSystemAction::Action::reset()
+{
+    totalItems     = 0;
+    currItem       = 0;
+    currEntryIndex = 0;
+    totalBytes     = 0;
+    bytesWritten   = 0;
+    done           = false;
+    isAux          = false;
+    currEntry      = 0;
+    steps          = 1;
+    copyFile.clear();
+    if (auxAction)
+    {
+       delete auxAction;
+        auxAction      = 0;
+    }
+}
+
+FileSystemAction::ActionEntry::ActionEntry(): newName(0)
+{
+    init();
+}
+
+FileSystemAction::ActionEntry::~ActionEntry()
+{
+    reversedOrder.clear();
+    if (newName) { delete newName; }
+}
+
+void FileSystemAction::ActionEntry::init()
+{
+    currItem      = 0 ;
+    currStep      = 0;
+    added         = false;
+    alreadyExists = false;
+    if (newName)
+    {
+        delete newName;
+        newName = 0;
+    }
+}
+
+/*!
+ * \brief FileSystemAction::Action::reset() Used for Undo operations
+ */
+void FileSystemAction::ActionEntry::reset()
+{
+    init();
+    reversedOrder.clear();   
+}
 
 void FileSystemAction::CopyFile::clear()
 {
@@ -94,6 +160,9 @@ FileSystemAction::FileSystemAction(QObject *parent) :
   , m_cancelCurrentAction(false)
   , m_busy(false)  
   , m_clipboardChanged(false)
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
+  , m_forceUsingOtherFS(false)
+#endif
 {
 
 }
@@ -124,23 +193,10 @@ void FileSystemAction::remove(const QStringList &paths)
  * \param origBase
  * \return
  */
-FileSystemAction::Action* FileSystemAction::createAction(ActionType type, int  origBase)
+FileSystemAction::Action* FileSystemAction::createAction(ActionType type)
 {
     Action * action = new Action();
-    action->type         = type;
-    action->baseOrigSize = origBase;
-    action->targetPath   = m_path;
-    action->totalItems   = 0;
-    action->currItem     = 0;
-    action->currEntryIndex    = 0;
-    action->totalBytes   = 0;
-    action->bytesWritten = 0;
-    action->done         = false;
-    action->auxAction    = 0;
-    action->isAux        = false;
-    action->currEntry    = 0;
-    action->steps        = 1;
-
+    action->type  = type;
     return action;
 }
 
@@ -150,36 +206,50 @@ FileSystemAction::Action* FileSystemAction::createAction(ActionType type, int  o
  * \param action
  * \param pathname
  */
-void  FileSystemAction::addEntry(Action* action, const QString& pathname)
+void  FileSystemAction::addEntry(Action* action, const ActionPaths& pairPaths)
 {
 #if DEBUG_MESSAGES
-        qDebug() << Q_FUNC_INFO << pathname;
+        qDebug() << Q_FUNC_INFO << pairPaths.source();
 #endif
-    DirItemInfo info(pathname);
-    if (!info.isAbsolute())
+
+    ActionEntry * entry = new ActionEntry();
+    entry->itemPaths    = pairPaths;       
+    if (populateEntry(action, entry))
     {
-        info.setFile(action->targetPath, pathname);
+        //now put the Entry in the Action
+        action->entries.append(entry);
     }
+}
+
+bool FileSystemAction::populateEntry(Action* action, ActionEntry* entry)
+{
+    DirItemInfo info(entry->itemPaths.source());
     if (!info.exists())
     {
         emit error(QObject::tr("File or Directory does not exist"),
-                   pathname + QObject::tr(" does not exist")
-                  );       
-        return;
+                   info.absoluteFilePath() + QObject::tr(" does not exist")
+                  );
+        return false;
     }
-    ActionEntry * entry = new ActionEntry();
+    //action->type is top level for all items, entry->type drives item behaviour  
+    entry->type = action->type; //normal behaviour
     //this is the item being handled
     entry->reversedOrder.append(info);
-    // verify if the destination item already exists
-    if (action->type == ActionCopy ||
-        action->type == ActionMove ||
-        action->type == ActionHardMoveCopy)
+    // verify if the destination item already exists and it the destination path is in other file system
+    if (entry->type == ActionCopy ||
+        entry->type == ActionMove
+       )
     {
-        DirItemInfo destination(targetFom(info.absoluteFilePath(), action));
+        DirItemInfo destination(entry->itemPaths.target());
         entry->alreadyExists = destination.exists();
+        //check if it is possible to move items
+        if (entry->type == ActionMove && !moveUsingSameFileSystem(entry->itemPaths) )
+        {
+            entry->type = ActionHardMoveCopy; // first step
+        }
     }
     //ActionMove will perform a rename, so no Directory expanding is necessary
-    if (action->type != ActionMove && info.isDir() && !info.isSymLink())
+    if (entry->type != ActionMove && info.isDir() && !info.isSymLink())
     {
         QDirIterator it(info.absoluteFilePath(),
                         QDir::AllEntries | QDir::System |
@@ -196,22 +266,22 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
     int sizeSteps = 0;
     int bufferSize = (COPY_BUFFER_SIZE * STEP_FILES);
     while (counter--)
-            {
+    {
         const DirItemInfo & item =  entry->reversedOrder.at(counter);
         size =  (item.isFile() && !item.isDir() && !item.isSymLink()) ?
                  item.size() :   COMMON_SIZE_ITEM;
         action->totalBytes +=  size;
-        if (action->type == ActionCopy || action->type == ActionHardMoveCopy)
+        if (entry->type == ActionCopy || entry->type == ActionHardMoveCopy)
         {
             if ( (sizeSteps = size / bufferSize) )
             {
                 if ( !(size % bufferSize) )
                 {
                     --sizeSteps;
+                }
             }
-                action->steps      += sizeSteps ;
+            action->steps      += sizeSteps ;
         }
-    }
     }
     //set final steps for the Entry based on Items number
     int entrySteps = entry->reversedOrder.count() / STEP_FILES;
@@ -222,8 +292,8 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
     qDebug() << "entrySteps" << entrySteps << "from entry counter" << entry->reversedOrder.count()
              << "total steps" << action->steps;
 #endif
-    //now put the Entry in the Action
-    action->entries.append(entry);
+
+    return true;
 }
 
 //===============================================================================================
@@ -233,14 +303,9 @@ void  FileSystemAction::addEntry(Action* action, const QString& pathname)
 void FileSystemAction::processAction()
 {
     if (m_curAction)
-    {
-        //it will be ActionHardMoveRemove only when switched from ActionHardMoveCopy
-        //in this case the move is done in two steps COPY and REMOVE
-        if (m_curAction->type != ActionHardMoveCopy)
-        {
+    {        
             delete m_curAction;
             m_curAction = 0;
-        }
     }
     if (!m_curAction && m_queuedActions.count())
     {
@@ -277,11 +342,11 @@ void FileSystemAction::processAction()
  */
 void FileSystemAction::processActionEntry()
 {
-#if DEBUG_MESSAGES
-        qDebug() << Q_FUNC_INFO;
-#endif
-
     ActionEntry * curEntry = m_curAction->currEntry;
+
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO << "entry:" << curEntry << "type:" << curEntry->type;
+#endif
 
 #if defined(SIMULATE_LONG_ACTION)
     {
@@ -295,7 +360,7 @@ void FileSystemAction::processActionEntry()
 #endif
     if (!m_cancelCurrentAction)
     {
-        switch(m_curAction->type)
+        switch(curEntry->type)
         {
            case ActionRemove:
            case ActionHardMoveRemove:
@@ -310,6 +375,8 @@ void FileSystemAction::processActionEntry()
                 moveEntry(curEntry);
                 endActionEntry();
                 break;
+          default:
+                break;
         }
     }
 }
@@ -320,10 +387,11 @@ void FileSystemAction::processActionEntry()
  */
 void FileSystemAction::endActionEntry()
 {
-#if DEBUG_MESSAGES
-        qDebug() << Q_FUNC_INFO;
-#endif
      ActionEntry * curEntry = m_curAction->currEntry;
+
+#if DEBUG_MESSAGES
+        qDebug() << Q_FUNC_INFO << "entry:" << curEntry << "type:" << curEntry->type;
+#endif
 
     // first of all check for any error or a cancel issued by the user
     if (m_cancelCurrentAction)
@@ -336,60 +404,54 @@ void FileSystemAction::endActionEntry()
         scheduleSlot(SLOT(processAction()));
         return;
     }
+
+    int percent = notifyProgress();
+
     // check if the current entry has finished
     // if so Views need to receive the notification about that
     if (curEntry->currItem == curEntry->reversedOrder.count())
     {
         const DirItemInfo & mainItem = curEntry->reversedOrder.at(curEntry->currItem -1);
         m_curAction->currEntryIndex++;
-        switch(m_curAction->type)
-        {
-           case ActionRemove:           
+
+           switch(curEntry->type)
+           {
+            case ActionRemove:                
                 emit removed(mainItem);
                 break;
-           case ActionHardMoveRemove: // nothing to do
+            case ActionHardMoveRemove: // nothing to do
                 break;
-           case ActionHardMoveCopy:
-                //check if is doing a hard move and the copy part has finished
-                //if so switch the action to remove
-                if (m_curAction->currEntryIndex == m_curAction->entries.count())
+            case ActionHardMoveCopy:
+            case ActionCopy: // ActionHardMoveCopy is  lso checked here
+            case ActionMove:
+                if (!curEntry->added && !curEntry->alreadyExists)
                 {
-                   m_curAction->type      = ActionHardMoveRemove;
-                   m_curAction->currEntryIndex = 0;
-                   int entryCounter = m_curAction->entries.count();
-                   ActionEntry * entry;
-                   while (entryCounter--)
-                   {
-                       entry = m_curAction->entries.at(entryCounter);
-                       entry->currItem = 0;
-                       entry->currStep = 0;
-                   }
+                    emit added(curEntry->itemPaths.target());
+                    curEntry->added = true;
                 }
-           case ActionCopy: // ActionHardMoveCopy is also checked here
-           case ActionMove:
+                else
                 {
-                    QString addedItem = targetFom(mainItem.absoluteFilePath(), m_curAction);
-                    if (!curEntry->added && !curEntry->alreadyExists)
-                    {
-                        emit added(addedItem);
-                        curEntry->added = true;
-                    }
-                    else
-                    {
-                        emit changed(DirItemInfo(addedItem));
-                    }
+                    emit changed(DirItemInfo(curEntry->itemPaths.target()));
+                }
+                if (curEntry->type == ActionHardMoveCopy)
+                {
+                    //process same Entry again,
+                    m_curAction->currEntryIndex--;
+                    curEntry->type = ActionHardMoveRemove;
+                    m_curAction->currItem -= curEntry->reversedOrder.count();
+                    curEntry->init();
                 }
                 break;
-        }//switch
-
+             default:
+                break;
+           }//switch
     }//end if (curEntry->currItem == curEntry->reversedOrder.count())
 
     if (curEntry->currStep == STEP_FILES)
     {
         curEntry->currStep = 0;
-    }
+    }   
 
-    int percent = notifyProgress();
     //Check if the current action has finished or cancelled
     if (m_cancelCurrentAction ||
         m_curAction->currEntryIndex == m_curAction->entries.count())
@@ -485,14 +547,14 @@ void  FileSystemAction::processCopyEntry()
     //first item from an Entry,    
     if (entry->currItem == 0 && entry->alreadyExists && entry->newName == 0)
     {
-        //making backup only if the targetpath == origPath, otherwise the item is overwritten
-        if (m_curAction->targetPath == m_curAction->origPath)
+        //making backup only if the targetpath == origPath, otherwise the item is overwritten        
+        if (entry->itemPaths.areEquals())
         {
             //it will check again if the target exists
             //if so, sets the entry->newName
             //then targetFom() will use entry->newName for
             //  sub items in the Entry if the Entry is a directory
-            if (!makeBackupNameForCurrentItem(m_curAction) )
+            if (!makeBackupNameForCurrentItem(entry) )
             {
                 m_cancelCurrentAction = true;
                 m_errorTitle = QObject::tr("Could not find a suitable name to backup");
@@ -520,7 +582,7 @@ void  FileSystemAction::processCopyEntry()
     {
         const DirItemInfo &fi = entry->reversedOrder.at(entry->currItem);
         QString orig    = fi.absoluteFilePath();
-        QString target = targetFom(orig, m_curAction);
+        QString target = targetFom(orig, entry);
         QString path(target);
         // do this here to allow progress send right item number, copySingleFile will emit progress()
         m_curAction->currItem++;
@@ -537,7 +599,7 @@ void  FileSystemAction::processCopyEntry()
             && !entry->reversedOrder.last().isSymLink()
            )
         {
-            QString entryDir = targetFom(entry->reversedOrder.last().absoluteFilePath(), m_curAction);
+            QString entryDir = targetFom(entry->reversedOrder.last().absoluteFilePath(), entry);
             QDir entryDirObj(entryDir);
             if (!entryDirObj.exists() && entryDirObj.mkpath(entryDir))
             {
@@ -600,7 +662,7 @@ void  FileSystemAction::processCopyEntry()
                     m_curAction->copyFile.target->close();
                 }
                 //check if there is disk space to copy source to target
-                if (needsSize > 0 && !isThereDiskSpace( needsSize ))
+                if (needsSize > 0 && !isThereDiskSpace(entry, needsSize ))
                 {
                     m_cancelCurrentAction = true;
                     m_errorTitle = QObject::tr("There is no space on disk to copy");
@@ -666,8 +728,7 @@ void FileSystemAction::moveEntry(ActionEntry *entry)
     {
         const DirItemInfo &fi = entry->reversedOrder.at(entry->currItem);
         file.setFileName(fi.absoluteFilePath());
-        QString target(targetFom(fi.absoluteFilePath(), m_curAction));
-        DirItemInfo targetInfo(target);
+        DirItemInfo targetInfo(entry->itemPaths.target());
         //rename will fail
         if (targetInfo.exists())
         {
@@ -675,10 +736,11 @@ void FileSystemAction::moveEntry(ActionEntry *entry)
             entry->added = true;
             if (targetInfo.isFile() || targetInfo.isSymLink())
             {
-                if (!QFile::remove(target))
+                if (!QFile::remove(targetInfo.absoluteFilePath()))
                 {
                     m_cancelCurrentAction = true;
-                    m_errorTitle = QObject::tr("Could remove the directory/file ") + target;
+                    m_errorTitle = QObject::tr("Could remove the directory/file ") +
+                                      targetInfo.absoluteFilePath();
                     m_errorMsg   = ::strerror(errno);
                 }
             }
@@ -687,13 +749,14 @@ void FileSystemAction::moveEntry(ActionEntry *entry)
             {
                //move target to /tmp and remove it later by creating an Remove action
                //this will emit removed()
-               moveDirToTempAndRemoveItLater(target);
+               moveDirToTempAndRemoveItLater(targetInfo.absoluteFilePath());
             }
         }
-        if (!m_cancelCurrentAction && !file.rename(target))
+        if (!m_cancelCurrentAction && !file.rename(entry->itemPaths.target()))
         {
             m_cancelCurrentAction = true;
-            m_errorTitle = QObject::tr("Could not move the directory/file ") + target;
+            m_errorTitle = QObject::tr("Could not move the directory/file ") +
+                                     targetInfo.absoluteFilePath();
             m_errorMsg   = ::strerror(errno);
         }
     }//for
@@ -759,12 +822,7 @@ void FileSystemAction::moveIntoCurrentPath(const QStringList& items)
         {
             emit error(titleError, noWriteError + origin.absoluteFilePath());
             return;
-        }
-        //check if it is possible to move items
-        if ( !moveUsingSameFileSystem(items.at(0)) )
-        {
-            actionType = ActionHardMoveCopy; // first step
-        }
+        }        
         if (!destination.isWritable())
         {
             emit error(titleError, noWriteError + destination.absoluteFilePath());
@@ -780,28 +838,34 @@ void FileSystemAction::moveIntoCurrentPath(const QStringList& items)
  * \brief FileSystemAction::createAndProcessAction
  * \param actionType
  * \param paths
- * \param operation
+ *
  */
 void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStringList& paths)
 {
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << paths;
 #endif
-    Action       *myAction       = 0;
-    int           origPathLen    = 0;
-    myAction                     = createAction(actionType, origPathLen);
-    myAction->origPath           = DirItemInfo(paths.at(0)).absolutePath();
-    myAction->baseOrigSize       = myAction->origPath.length();
+    Action       *myAction       = 0;    
+    myAction                     = createAction(actionType);
     for (int counter=0; counter < paths.count(); counter++)
     {
-        addEntry(myAction, paths.at(counter));
-    }
-    if (myAction->totalItems > 0)
-    {
-        if (actionType == ActionHardMoveCopy)
+        DirItemInfo info(paths.at(counter));
+        if (!info.isAbsolute())
         {
-            myAction->totalItems *= 2; //duplicate this
+            info.setFile(m_path, paths.at(counter));
         }
+        ActionPaths pairPaths(info.absoluteFilePath());
+        pairPaths.setTargetPathOnly(m_path);
+        addEntry(myAction, pairPaths);
+    }
+    queueAction(myAction);
+}
+
+
+void  FileSystemAction::queueAction(Action *myAction)
+{
+    if (myAction->totalItems > 0)
+    {       
         /*
         if (actionType == ActionHardMoveCopy || actionType == ActionCopy)
         {
@@ -830,21 +894,24 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
 //===============================================================================================
 /*!
  * \brief FileSystemAction::targetFom() makes a destination full pathname from \a origItem
- * \param origItem full pathname from a item intended to be copied or moved into current path
+ * \param origItem full pathname from a item intended to be copied or moved under entry->itemPaths.target
+ * \param entry which the item belongs to (item may be a sub item if the entry is a Directory)
  * \return full pathname of target
+ *
+ * \sa makeBackupNameForCurrentItem()
  */
-QString FileSystemAction::targetFom(const QString& origItem, const Action* const action)
+QString FileSystemAction::targetFom(const QString& origItem, ActionEntry *entry)
 {
-    QString destinationUnderTarget(origItem.mid(action->baseOrigSize));
-    if (action->currEntry  && action->currEntry->newName)
+    QString destinationUnderTarget(origItem.mid(entry->itemPaths.baseOrigSize()));
+    if (entry->newName)
     {
         int len = destinationUnderTarget.indexOf(QDir::separator(), 1);
         if (len == -1) {
             len = destinationUnderTarget.size();
         }
-        destinationUnderTarget.replace(1, len -1, *action->currEntry->newName);
+        destinationUnderTarget.replace(1, len -1, *entry->newName);
     }
-    QString target(action->targetPath + destinationUnderTarget);
+    QString target(entry->itemPaths.targetPath() + destinationUnderTarget);
 
 #if DEBUG_MESSAGES
      qDebug() << Q_FUNC_INFO << "orig" << origItem
@@ -856,31 +923,39 @@ QString FileSystemAction::targetFom(const QString& origItem, const Action* const
 
 //===============================================================================================
 /*!
- * \brief FileSystemAction::moveUsingSameFileSystem() Checks if the item being moved to
- *   current m_path belongs to the same File System
+ * \brief FileSystemAction::moveUsingSameFileSystem() Checks if the item being moved to another path
+ *   belongs to the same File System as the target path
  *
  *  It is used to set ActionHardMoveCopy or ActionMove for cut operations.
  *
- * \param itemToMovePathname  first item being moved from a paste operation
+ * \param paths
  *
- * \return true if the item being moved to the current m_path belongs to the same file system as m_path
+ * \return true if the operation is going to performed in the same file system
  */
-bool FileSystemAction::moveUsingSameFileSystem(const QString& itemToMovePathname)
+bool FileSystemAction::moveUsingSameFileSystem(const ActionPaths& movedItem)
 {
     unsigned long targetFsId = 0xffff;
     unsigned long originFsId = 0xfffe;
+
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL)
+    if (m_forceUsingOtherFS)
+    {
+      return false;
+    }
+#endif
+
 #if defined(Q_OS_UNIX)
     struct statvfs  vfs;
-    if ( ::statvfs( QFile::encodeName(m_path).constData(), &vfs) == 0 )
+    if ( ::statvfs( QFile::encodeName(movedItem.source()).constData(), &vfs) == 0 )
     {
         targetFsId = vfs.f_fsid;
     }
-    if ( ::statvfs(QFile::encodeName(itemToMovePathname).constData(), &vfs) == 0)
+    if ( ::statvfs(QFile::encodeName(movedItem.targetPath()).constData(), &vfs) == 0)
     {
         originFsId = vfs.f_fsid;
     }   
 #else
-    Q_UNUSED(itemToMovePathname); 
+    Q_UNUSED(movedItem);
 #endif
     return targetFsId == originFsId;
 }
@@ -899,26 +974,23 @@ bool FileSystemAction::moveUsingSameFileSystem(const QString& itemToMovePathname
 void FileSystemAction::endCurrentAction()
 {
 
-    if ( !m_clipboardChanged  &&
-          m_curAction->origPath != m_curAction->targetPath &&
-         (m_curAction->type == ActionMove  || m_curAction->type == ActionHardMoveRemove)
-       )
-    {
-         QStringList items;
-         const ActionEntry *entry;
-         int   last;
-         for(int e = 0; e < m_curAction->entries.count(); e++)
+    if ( !m_clipboardChanged  && m_curAction->type == ActionMove )
+    {        
+         const ActionEntry *entry = m_curAction->entries.at(0);
+         if (!entry->itemPaths.arePathsEquals())
          {
-             entry   = m_curAction->entries.at(e);
-             last    = entry->reversedOrder.count() -1;
-             QString item(targetFom(entry->reversedOrder.at(last).absoluteFilePath(), m_curAction));
-             items.append(item);
-         }
-         if (items.count())
-         {
-             QString targetPath = m_curAction->targetPath;
-             //it is not necessary to handle own clipboard here
-             emit recopy(items, targetPath);
+             QString destinationPath = entry->itemPaths.targetPath();
+             QStringList items;
+             for(int e = 0; e < m_curAction->entries.count(); e++)
+             {
+                 entry   = m_curAction->entries.at(e);
+                 items.append(entry->itemPaths.target());
+             }
+             if (items.count())
+             {
+                 //it is not necessary to handle own clipboard here
+                 emit recopy(items, destinationPath);
+             }
          }
     }
 }
@@ -1055,7 +1127,9 @@ int FileSystemAction::percentWorkDone()
 
     //copying empty files will have totalBytes==0
     if ( m_curAction->totalBytes > 0 &&
-         (m_curAction->type == ActionCopy || m_curAction->type == ActionHardMoveCopy)
+         (m_curAction->currEntry->type == ActionCopy ||
+          m_curAction->currEntry->type  == ActionHardMoveCopy
+         )
        )
     {
         percent = (m_curAction->bytesWritten * 100) / m_curAction->totalBytes ;
@@ -1086,17 +1160,12 @@ int FileSystemAction::notifyProgress(int forcePercent)
     {
         percent = 1;
     }
-    if (SHOULD_EMIT_PROGRESS_SIGNAL(m_curAction) && !m_curAction->done)
-    {
-        if (m_curAction->type == ActionHardMoveCopy ||
-            m_curAction->type ==ActionHardMoveRemove)
-        {
-            emit progress(m_curAction->currItem/2,  m_curAction->totalItems/2, percent);
-        }
-        else
-        {
-            emit progress(m_curAction->currItem,  m_curAction->totalItems, percent);
-        }
+    if ( SHOULD_EMIT_PROGRESS_SIGNAL(m_curAction) &&
+        !m_curAction->done &&
+         m_curAction->currEntry->type != ActionHardMoveRemove
+       )
+    {       
+        emit progress(m_curAction->currItem,  m_curAction->totalItems, percent);
         if (percent == 100 && m_curAction->currItem == m_curAction->totalItems)
         {
             m_curAction->done = true;
@@ -1177,7 +1246,8 @@ void FileSystemAction::moveDirToTempAndRemoveItLater(const QString& dir)
             m_curAction->auxAction->isAux     = true;
             m_queuedActions.append(m_curAction->auxAction);
         }
-        addEntry(m_curAction->auxAction, tempDir);
+        ActionPaths pathToRemove(tempDir);
+        addEntry(m_curAction->auxAction, pathToRemove);
     }
 }
 
@@ -1199,13 +1269,13 @@ bool FileSystemAction::isBusy() const
  * The newName field from current entry will be set to a suitable name
  * \param action
  */
-bool FileSystemAction::makeBackupNameForCurrentItem(Action *action)
+bool FileSystemAction::makeBackupNameForCurrentItem(ActionEntry *entry)
 {
     bool ret = false;
-    if (action->currEntry->alreadyExists)
+    if (entry->alreadyExists)
     {
         const DirItemInfo& fi =
-              action->currEntry->reversedOrder.at(action->currEntry->reversedOrder.count() -1);
+              entry->reversedOrder.at(entry->reversedOrder.count() -1);
         DirItemInfo backuped;
         int counter=0;
         QString name;
@@ -1233,7 +1303,8 @@ bool FileSystemAction::makeBackupNameForCurrentItem(Action *action)
         } while (backuped.exists() && counter < 100);
         if (counter < 100)
         {
-            action->currEntry->newName = new QString(backuped.fileName());
+            entry->newName = new QString(backuped.fileName());
+            entry->itemPaths.setTargetFullName( backuped.absoluteFilePath() );
             ret = true;
         }
     }
@@ -1275,12 +1346,12 @@ bool FileSystemAction::endCopySingleFile()
 }
 
 //==================================================================
-bool FileSystemAction::isThereDiskSpace(qint64 requiredSize)
+bool FileSystemAction::isThereDiskSpace(const ActionEntry *entry, qint64 requiredSize)
 {
     bool ret = true;
 #if defined(Q_OS_UNIX)
     struct statvfs  vfs;
-    if ( ::statvfs( QFile::encodeName(m_path).constData(), &vfs) == 0 )
+    if ( ::statvfs( QFile::encodeName(entry->itemPaths.targetPath()).constData(), &vfs) == 0 )
     {
         qint64 free =  vfs.f_bsize * vfs.f_bfree;
         ret = free > requiredSize;

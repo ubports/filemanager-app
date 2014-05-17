@@ -164,42 +164,40 @@ private slots:
    struct ActionEntry
    {
      public:
-       ActionEntry(): currStep(0),currItem(0),alreadyExists(false), newName(0), added(false) {}
-       ~ActionEntry()
-       {
-           reversedOrder.clear();
-           if (newName) { delete newName; }
-       }
-       QList<DirItemInfo>   reversedOrder;   //!< last item must be the item from the list
+       ActionEntry();
+       ~ActionEntry();
+       void init();
+       void reset();
+       ActionPaths        itemPaths;            //!< identifies the item being handled source and destination
+       ActionType         type;
+       QList<DirItemInfo> reversedOrder;   //!< last item must be the item from the list
        int                currStep;
-       int                currItem;
-       bool               alreadyExists;
+       int                currItem;      
        QString *          newName; //TODO:  allow to rename an existent file when it already exists.
                                    //       So far it is possible to backup items when copy/paste in the
                                    //       same place, in this case it is renamed to "<name> Copy (%d).termination"
-
-       bool               added;   //!< signal added() already emitted for the current ActionEntry
+       bool               added :1;   //!< signal added() already emitted for the current ActionEntry
+       bool               alreadyExists :1;
    };
 
    struct Action
    {
     public:
-       ~Action()           {qDeleteAll(entries); entries.clear(); copyFile.clear();}
+       Action();
+       ~Action();
+       void                reset();
        ActionType          type;
        QList<ActionEntry*> entries;
        int                 totalItems;
-       int                 currItem;
-       int                 baseOrigSize;
-       QString             origPath;
-       QString             targetPath;
+       int                 currItem;              
        quint64             totalBytes;
        quint64             bytesWritten;
        int                 currEntryIndex;
        ActionEntry  *      currEntry;     
-       CopyFile            copyFile;
-       bool                done;
+       CopyFile            copyFile;       
        Action *            auxAction;
-       bool                isAux;
+       bool                isAux   :1;
+       bool                done    :1; 
        int                 steps;
    };
 
@@ -215,12 +213,13 @@ private slots:
 
 
 private:  
-   Action * createAction(ActionType, int origBase = 0);
-   void     addEntry(Action* action, const QString &pathname);
+   Action * createAction(ActionType);
+   void     addEntry(Action* action, const ActionPaths& pairPaths);
+   bool     populateEntry(Action* action, ActionEntry* entry);
    void     removeEntry(ActionEntry *);   
    void     moveEntry(ActionEntry *entry);
-   bool     moveUsingSameFileSystem(const QString& itemToMovePathname);
-   QString  targetFom(const QString& origItem, const Action * const action);
+   bool     moveUsingSameFileSystem(const ActionPaths &movedItem);
+   QString  targetFom(const QString& origItem, ActionEntry * entry);
    void     endCurrentAction();
    int      percentWorkDone();
    int      notifyProgress(int forcePercent = 0);
@@ -228,11 +227,13 @@ private:
    bool     copySymLink(const QString& target, const QFileInfo& orig);
    void     scheduleSlot(const char *slot);
    void     moveDirToTempAndRemoveItLater(const QString& dir);
-   bool     makeBackupNameForCurrentItem(Action *action);   
+   bool     makeBackupNameForCurrentItem(ActionEntry *entry);
    bool     endCopySingleFile();
-   bool     isThereDiskSpace(qint64 requiredSize);
+   bool     isThereDiskSpace(const ActionEntry *entry, qint64 requiredSize);
+   void     queueAction(Action *myAction);  
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
+   bool     m_forceUsingOtherFS;
    friend class TestDirModel;
 #endif
 };

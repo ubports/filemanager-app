@@ -914,7 +914,8 @@ void  TestDirModel::fsActionMoveItemsForcingCopyAndThenRemove()
      QStringList allFiles(m_deepDir_01->firstLevel());
      allFiles.append(tempFiles.createdList());
 
-     m_dirModel_02->m_fsAction->createAndProcessAction(FileSystemAction::ActionHardMoveCopy,
+     m_dirModel_02->m_fsAction->m_forceUsingOtherFS = true;
+     m_dirModel_02->m_fsAction->createAndProcessAction(FileSystemAction::ActionMove,
                                                        allFiles);
 
      QTest::qWait(TIME_TO_PROCESS);
