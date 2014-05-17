@@ -8,36 +8,36 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-03-24 07:13+0000\n"
+"PO-Revision-Date: 2014-05-16 09:53+0000\n"
 "Last-Translator: Fohanno Thierry <thierry.fohanno@ofis-bzh.org>\n"
 "Language-Team: Breton <br@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-16 06:44+0000\n"
+"X-Launchpad-Export-Date: 2014-05-17 07:11+0000\n"
 "X-Generator: Launchpad (build 17007)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 restr)"
 
 #: src/app/qml/components/FolderIconView.qml:59
 #: src/app/qml/components/FolderListView.qml:37
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 restr)"
 
 #: src/app/qml/components/PathBar.qml:120
 #: src/app/qml/ui/FolderListPage.qml:151
 msgid "Home"
-msgstr ""
+msgstr "Er gêr"
 
 #: src/app/qml/components/PlacesSidebar.qml:85
 #: src/app/qml/ui/FolderListPage.qml:421
 msgid "Places"
-msgstr ""
+msgstr "Plasoù"
 
 #: src/app/qml/filemanager.qml:66 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
@@ -61,7 +61,7 @@ msgstr "Roll"
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:41
 #: src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
-msgstr ""
+msgstr "Mat eo"
 
 #: src/app/qml/ui/ConfirmDialog.qml:41
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:51
@@ -69,284 +69,284 @@ msgstr ""
 #: src/app/qml/ui/FileOperationProgressDialog.qml:44
 #: src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
-msgstr ""
+msgstr "Nullañ"
 
 #: src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Dibab un ober"
 
 #: src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "Evit ar restr : %1"
 
 #: src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "Digeriñ"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "A c'haller lenn"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "A c'haller skrivañ enni"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "Erounadus"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "Hent :"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "Endalc'hadoù :"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "Ment :"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "Diwezhañ :"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "Kemmet :"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "Aotreoù :"
 
 #: src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "Oberiadenn grog"
 
 #: src/app/qml/ui/FolderListPage.qml:122
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Burev"
 
 #: src/app/qml/ui/FolderListPage.qml:124
 msgid "~/Documents"
-msgstr ""
+msgstr "~/Teulioù"
 
 #: src/app/qml/ui/FolderListPage.qml:126
 msgid "~/Downloads"
-msgstr ""
+msgstr "~/Pellgargadennoù"
 
 #: src/app/qml/ui/FolderListPage.qml:128
 msgid "~/Music"
-msgstr ""
+msgstr "~/Sonerezh"
 
 #: src/app/qml/ui/FolderListPage.qml:130
 msgid "~/Pictures"
-msgstr ""
+msgstr "~/Skeudennoù"
 
 #: src/app/qml/ui/FolderListPage.qml:132
 msgid "~/Public"
-msgstr ""
+msgstr "~/Foran"
 
 #: src/app/qml/ui/FolderListPage.qml:134
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Programmoù"
 
 #: src/app/qml/ui/FolderListPage.qml:136
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Patromoù"
 
 #: src/app/qml/ui/FolderListPage.qml:138
 msgid "~/Videos"
-msgstr ""
+msgstr "~/Videoioù"
 
 #: src/app/qml/ui/FolderListPage.qml:153
 msgid "File System"
-msgstr ""
+msgstr "Restr reizhiad"
 
 #: src/app/qml/ui/FolderListPage.qml:200
 msgid "1 file"
-msgstr ""
+msgstr "1 restr"
 
 #: src/app/qml/ui/FolderListPage.qml:201
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 restr"
 
 #: src/app/qml/ui/FolderListPage.qml:226
 msgid "Open in a new tab"
-msgstr ""
+msgstr "Digeriñ en un ivinell nevez"
 
 #: src/app/qml/ui/FolderListPage.qml:234
 msgid "Close this tab"
-msgstr ""
+msgstr "Serriñ an ivinell-mañ"
 
 #: src/app/qml/ui/FolderListPage.qml:254
 msgid "Create New Folder"
-msgstr ""
+msgstr "Krouiñ ur renkell nevez"
 
 #: src/app/qml/ui/FolderListPage.qml:274
 msgid "Paste"
-msgstr ""
+msgstr "Pegañ"
 
 #: src/app/qml/ui/FolderListPage.qml:276
 #, qt-format
 msgid "Paste %1 File"
-msgstr ""
+msgstr "Pegañ %1 restr"
 
 #: src/app/qml/ui/FolderListPage.qml:277
 #, qt-format
 msgid "Paste %1 Files"
-msgstr ""
+msgstr "Pegañ %1 restr"
 
 #: src/app/qml/ui/FolderListPage.qml:280
 msgid "Paste files"
-msgstr ""
+msgstr "Pegañ restroù"
 
 #: src/app/qml/ui/FolderListPage.qml:292
 msgid "Open in Terminal"
-msgstr ""
+msgstr "Digeriñ en dermenell"
 
 #: src/app/qml/ui/FolderListPage.qml:304 src/app/qml/ui/FolderListPage.qml:650
 msgid "Properties"
-msgstr ""
+msgstr "Perzhioù"
 
 #: src/app/qml/ui/FolderListPage.qml:321
 msgid "Create folder"
-msgstr ""
+msgstr "Krouiñ ur renkell"
 
 #: src/app/qml/ui/FolderListPage.qml:322
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Lakaat un anv evit ar renkell nevez"
 
 #: src/app/qml/ui/FolderListPage.qml:338
 msgid "Create file"
-msgstr ""
+msgstr "Krouiñ ur restr"
 
 #: src/app/qml/ui/FolderListPage.qml:339
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Lakaat un anv evit ar restr nevez"
 
 #: src/app/qml/ui/FolderListPage.qml:354 src/app/qml/ui/FolderListPage.qml:669
 msgid "File operation error"
-msgstr ""
+msgstr "Fazi oc'h ober gant restroù"
 
 #: src/app/qml/ui/FolderListPage.qml:354
 #, qt-format
 msgid "Unable to open '%11"
-msgstr ""
+msgstr "Ne c'haller ket digeriñ  '%11"
 
 #: src/app/qml/ui/FolderListPage.qml:396
 msgid "Actions"
-msgstr ""
+msgstr "Oberoù"
 
 #: src/app/qml/ui/FolderListPage.qml:406
 msgid "View"
-msgstr ""
+msgstr "Gwelet"
 
 #: src/app/qml/ui/FolderListPage.qml:523
 msgid "No files"
-msgstr ""
+msgstr "Restr ebet"
 
 #: src/app/qml/ui/FolderListPage.qml:543 src/app/qml/ui/FolderListPage.qml:624
 msgid "Delete"
-msgstr ""
+msgstr "Diverkañ"
 
 #: src/app/qml/ui/FolderListPage.qml:544
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "Ha sur oc'h e fell deoc'h diverkañ '%1' da vat ?"
 
 #: src/app/qml/ui/FolderListPage.qml:567 src/app/qml/ui/FolderListPage.qml:637
 msgid "Rename"
-msgstr ""
+msgstr "Adenvel"
 
 #: src/app/qml/ui/FolderListPage.qml:568
 msgid "Enter a new name"
-msgstr ""
+msgstr "Lakaat un anv nevez"
 
 #: src/app/qml/ui/FolderListPage.qml:577
 msgid "Could not rename"
-msgstr ""
+msgstr "N'eus ket bet gallet adenvel"
 
 #: src/app/qml/ui/FolderListPage.qml:578
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Aotreoù re skort pe anv a zo anezhañ dija ?"
 
 #: src/app/qml/ui/FolderListPage.qml:601
 msgid "Cut"
-msgstr ""
+msgstr "Troc'hañ"
 
 #: src/app/qml/ui/FolderListPage.qml:612
 msgid "Copy"
-msgstr ""
+msgstr "Eilañ"
 
 #: src/app/qml/ui/FolderListPage.qml:688
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Ne c'haller ket mont d'ar renkell"
 
 #. TRANSLATORS: this refers to a folder name
 #: src/app/qml/ui/FolderListPage.qml:690
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "Ne c'haller ket mont da %1"
 
 #: src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Mont d'al lec'h"
 
 #: src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Lakaat ul lec'h da vont dezhañ :"
 
 #: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:84
 msgid "Location..."
-msgstr ""
+msgstr "Lec'h..."
 
 #: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:99
 msgid "Go"
-msgstr ""
+msgstr "Mont"
 
 #: src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
-msgstr ""
+msgstr "Serriñ"
 
 #: src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Diskouez an arc'hwelioù araokaet"
 
 #: src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Diskouez ar restroù kuzhet"
 
 #: src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr ""
+msgstr "Gwelet evel"
 
 #: src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "Renkañ dre"
 
 #: src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr ""
+msgstr "Anv"
 
 #: src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr ""
+msgstr "Deiziad"
 
 #: src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "Urzh renkañ"
 
 #: src/app/qml/ui/ViewPopover.qml:114 src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr ""
+msgstr "War gresk"
 
 #: src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr ""
+msgstr "War zigresk"
 
 #: src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
-msgstr ""
+msgstr "Sil"
