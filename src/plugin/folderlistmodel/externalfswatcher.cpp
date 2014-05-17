@@ -31,8 +31,10 @@
              << Q_FUNC_INFO << "m_setPath:" << m_setPaths \
              << "m_changedPath:" << m_changedPath        \
              << "m_waitingEmit:" << m_waitingEmitCounter
+# define DEBUG_FSWATCHER_MSG(msg) DEBUG_FSWATCHER() << msg
 #else
 # define DEBUG_FSWATCHER()  /**/
+# define DEBUG_FSWATCHER_MSG(msg) /* msg */
 #endif //
 
 
@@ -51,22 +53,29 @@ void ExternalFSWatcher::setCurrentPath(const QString &curPath)
 {
     if (!curPath.isEmpty() && (m_setPaths.count() != 1 || m_setPaths.at(0) != curPath))
     {
-        clearPaths();
-        m_setPaths.clear();
-        m_setPaths.append(curPath);
-        QFileSystemWatcher::addPath(curPath);
+       setCurrentPaths(QStringList(curPath));
     }
-    DEBUG_FSWATCHER();
 }
 
 
 void ExternalFSWatcher::setCurrentPaths(const QStringList &paths)
-{
-    QStringList myPaths(paths);
-    ::qSort(myPaths);
+{    
+    if (paths.count() > 0)
+    {
+        QStringList myPaths(paths);
+        ::qSort(myPaths);
+        m_setPaths = myPaths;
+    }
+    else
+    {
+        m_setPaths = paths;
+    }
     clearPaths();
-    m_setPaths = myPaths;
-    QFileSystemWatcher::addPaths(paths);
+    //cleaning m_changedPath avoids any notification for a change
+    // already scheduled to happen in slotFireChanges()
+    m_changedPath.clear();    
+    QFileSystemWatcher::addPaths(m_setPaths);
+    DEBUG_FSWATCHER();
 }
 
 
@@ -117,21 +126,23 @@ void ExternalFSWatcher::slotDirChanged(const QString &dir)
  */
 void ExternalFSWatcher::slotFireChanges()
 {
-   if (   --m_waitingEmitCounter == 0
-       && m_lastChangedIndex != -1
-       && m_lastChangedIndex < m_setPaths.count() )
-   {            
-       if (m_setPaths.at(m_lastChangedIndex) == m_changedPath)
+   DEBUG_FSWATCHER();
+   if ( --m_waitingEmitCounter == 0 ) //no more changes queued (it is the LAST), time to notify
+   {
+       //the notification will not fired if either setCurrentPath() or setCurrentPaths()
+       //was called after the change in the disk be noticed
+       if (m_lastChangedIndex != -1 &&
+           m_lastChangedIndex < m_setPaths.count() &&
+           m_setPaths.at(m_lastChangedIndex) == m_changedPath)
        {          
            emit pathModified(m_changedPath);
-#if DEBUG_EXT_FS_WATCHER
-       DEBUG_FSWATCHER() << "emit pathModified()";
-#endif
+           DEBUG_FSWATCHER_MSG("emit pathModified()");
        }
-       //restore the original list in QFileSystemWatcher
+       //restore the original m_setPaths list in QFileSystemWatcher anyway
+       //it does not matter if the notification was fired or not.
        clearPaths();
        QFileSystemWatcher::addPaths(m_setPaths);
-   }  
+   }
 }
 
 
