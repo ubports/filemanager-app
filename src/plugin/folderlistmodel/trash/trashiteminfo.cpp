@@ -83,11 +83,17 @@ void TrashItemInfo::init(const QString& trashPath)
 TrashItemInfo& TrashItemInfo::operator=(const DirItemInfo &other)
 {
     DirItemInfo::operator  = (other);
+    //the following code is disabled because TrashItemInfo does not define any data member
+    //but it is kept for the case any specific data member be necessary in the future
+    //and it is also kept to warn that doing so would cause a bug
+#if 0
     const TrashItemInfo *isTrash = dynamic_cast<const TrashItemInfo*> (&other);   
     if (isTrash)
     {
-       // move extra data here when exist, avoid extra data than DirItemInfo
+      //copy data specific to this class here,
+      //do not unnecessarily copy data that is handled by parent's assignment operator
     }
+#endif
     return *this;
 }
 
