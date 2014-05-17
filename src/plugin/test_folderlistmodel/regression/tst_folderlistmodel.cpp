@@ -150,6 +150,9 @@ private Q_SLOTS: // test cases
     void trashDiretories();
 
     void locationFactory();
+    void moveOneFileToTrashAndRestore();
+    void restoreTrashWithMultipleSources();
+    void emptyTrash();
 
 private:
     bool createTempHomeTrashDir(const QString& existentDir);
@@ -2609,6 +2612,184 @@ void TestDirModel::locationFactory()
     QCOMPARE(location->urlPath(),  LocationUrl::TrashRootURL);
     QCOMPARE(location->isRoot(), true);
 }
+
+
+
+void TestDirModel::moveOneFileToTrashAndRestore()
+{
+    QString orig("moveFilesTrash");
+    m_deepDir_01  = new DeepDir(orig, 0);
+    const int createdFiles = 4;
+    TempFiles tempfiles;
+    tempfiles.addSubDirLevel(orig);
+    tempfiles.create(createdFiles);
+
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(), createdFiles);
+
+    QString tempTrash("tempTrashDir");
+    m_deepDir_02  = new DeepDir(tempTrash, 0);
+    createTempHomeTrashDir(m_deepDir_02->path());
+
+    // move item to Trash
+    m_dirModel_01->moveIndexToTrash(0);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(), createdFiles -1);
+
+    //use another DirModel instance and point it to Trash
+    m_dirModel_02->goTrash();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 1);
+
+    // now restore from Trash
+    m_dirModel_02->restoreIndexFromTrash(0);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 0);
+
+    //using refresh to not depend from External File System Watcher
+    if (m_dirModel_01->rowCount() != createdFiles)
+    {
+        qWarning("using refresh() external File System Watcher did not get it right");
+        m_dirModel_01->refresh();
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+    }
+    QCOMPARE(m_dirModel_01->rowCount(), createdFiles);
+}
+
+
+void TestDirModel::restoreTrashWithMultipleSources()
+{
+#define DIRS 3
+
+    DeepDir d_01("folder_01", 0);
+    DeepDir d_02("folder_02", 0);
+    DeepDir d_03("folder_03", 0);
+
+    //create a temp trash
+    QString tempTrash("tempTrashDir");
+    m_deepDir_02  = new DeepDir(tempTrash, 0);
+    createTempHomeTrashDir(m_deepDir_02->path());
+
+    DeepDir * dirs [DIRS]  = {&d_01, &d_02, &d_03};
+    int counter = 0;
+
+    //move items from different sources to trash
+    for(counter = 0; counter < DIRS; counter++)
+    {
+        TempFiles  files;
+        files.addSubDirLevel(dirs[counter]->path());
+        QString name = QString("file_from_dir%1.txt").arg(counter);
+        files.create(name, 1);
+        DirModel model;
+        model.setPath(dirs[counter]->path());
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 1);
+        model.moveIndexToTrash(0);
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 0);
+    }
+
+    //another model points to temporary Trash
+    connect(m_dirModel_02, SIGNAL(error(QString,QString)),
+            this,          SLOT(slotError(QString,QString)));
+    m_dirModel_02->goTrash();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), DIRS);
+    m_dirModel_02->restoreTrash();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 0);
+
+    //now look into info directories from trash, check if it is empty
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 1);
+    QCOMPARE(m_dirModel_02->openPath("Trash"),    true);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->openPath("info"),    true);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(),  0);
+
+    //test it items were moved back to their sources
+    for(counter = 0; counter < DIRS; counter++)
+    {
+        DirModel model;
+        model.setPath(dirs[counter]->path());
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 1);
+    }
+
+    QCOMPARE(m_receivedErrorSignal,   false);
+#undef DIRS
+}
+
+
+void TestDirModel::emptyTrash()
+{
+#define DIRS 3
+
+    DeepDir d_01("folder_01", 0);
+    DeepDir d_02("folder_02", 0);
+    DeepDir d_03("folder_03", 0);
+
+    //create a temp trash
+    QString tempTrash("tempTrashDir");
+    m_deepDir_02  = new DeepDir(tempTrash, 0);
+    createTempHomeTrashDir(m_deepDir_02->path());
+
+    DeepDir * dirs [DIRS]  = {&d_01, &d_02, &d_03};
+    int counter = 0;
+
+    //move items from different sources to trash
+    for(counter = 0; counter < DIRS; counter++)
+    {
+        TempFiles  files;
+        files.addSubDirLevel(dirs[counter]->path());
+        QString name = QString("file_from_dir%1.txt").arg(counter);
+        files.create(name, 1);
+        DirModel model;
+        model.setPath(dirs[counter]->path());
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 1);
+        model.moveIndexToTrash(0);
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 0);
+    }
+
+    //another model points to temporary Trash
+    connect(m_dirModel_02, SIGNAL(error(QString,QString)),
+            this,          SLOT(slotError(QString,QString)));
+    m_dirModel_02->goTrash();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), DIRS);
+    m_dirModel_02->emptyTrash();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 0);
+
+    //now look into info directories from trash, check if it is empty
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 1);
+    QCOMPARE(m_dirModel_02->openPath("Trash"),    true);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->openPath("info"),    true);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(),  0);
+
+    //test if original items folder is still empty
+    for(counter = 0; counter < DIRS; counter++)
+    {
+        DirModel model;
+        model.setPath(dirs[counter]->path());
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 0);
+    }
+
+    QCOMPARE(m_receivedErrorSignal,   false);
+#undef DIRS
+}
+
+
 
 int main(int argc, char *argv[])
 {
