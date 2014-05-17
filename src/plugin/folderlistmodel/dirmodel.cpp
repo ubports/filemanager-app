@@ -1617,6 +1617,58 @@ void DirModel::restoreIndexesFromTrash(const QList<int> &items)
 }
 
 
+QStringList  DirModel::makePathnamesFromIndexes(const QList<int>& items) const
+{
+     QStringList pathnames;
+     int index;
+     for (int counter=0; counter < items.count(); ++counter)
+     {
+         index = items.at(counter);
+         if (IS_VALID_ROW(index))
+         {
+             pathnames.append(mDirectoryContents.at(index).urlPath());
+         }
+     }
+     return pathnames;
+}
+
+
+QStringList  DirModel::makePathnamesFromSelection() const
+{
+    return makePathnamesFromIndexes(selectionObject()->selectedIndexes());
+}
+
+
+void DirModel::copySelection()
+{
+    copyPaths(makePathnamesFromSelection());
+}
+
+
+void DirModel::cutSelection()
+{
+    cutPaths(makePathnamesFromSelection());
+}
+
+
+void DirModel::removeSelection()
+{
+    removePaths(makePathnamesFromSelection());
+}
+
+
+void DirModel::moveSelectionToTrash()
+{
+    moveIndexesToTrash(selectionObject()->selectedIndexes());
+}
+
+
+void DirModel::restoreSelectionFromTrash()
+{
+    restoreIndexesFromTrash(selectionObject()->selectedIndexes());
+}
+
+
 #ifndef DO_NOT_USE_TAG_LIB
 QVariant DirModel::getAudioMetaData(const QFileInfo& fi, int role) const
 {

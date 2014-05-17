@@ -36,12 +36,14 @@ class DirSelection : public QObject
 public:
     explicit DirSelection(DirItemAbstractListModel *parent,  DirItemInfoList *listItems);
     explicit DirSelection(QObject *parent = 0);
+
 public slots:
         void        selectRange(int indexClicked);
         void        selectAll();
         void        clear();      
         void        toggleIndex(int index);     
         void        setIndex(int index, bool selected);
+        void        setMultiSelection(bool enable);
 
 public:
         Q_ENUMS(Mode)

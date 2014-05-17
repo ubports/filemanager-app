@@ -2685,7 +2685,8 @@ void TestDirModel::restoreTrashWithMultipleSources()
         model.setPath(dirs[counter]->path());
         QTest::qWait(TIME_TO_REFRESH_DIR);
         QCOMPARE(model.rowCount(), 1);
-        model.moveIndexToTrash(0);
+        model.selectionObject()->selectAll();
+        model.moveSelectionToTrash();
         QTest::qWait(TIME_TO_REFRESH_DIR);
         QCOMPARE(model.rowCount(), 0);
     }
@@ -2751,7 +2752,8 @@ void TestDirModel::emptyTrash()
         model.setPath(dirs[counter]->path());
         QTest::qWait(TIME_TO_REFRESH_DIR);
         QCOMPARE(model.rowCount(), 1);
-        model.moveIndexToTrash(0);
+        model.selectionObject()->selectAll();
+        model.moveSelectionToTrash();
         QTest::qWait(TIME_TO_REFRESH_DIR);
         QCOMPARE(model.rowCount(), 0);
     }
