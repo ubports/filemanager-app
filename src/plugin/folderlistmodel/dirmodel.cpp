@@ -38,6 +38,7 @@
 #include "location.h"
 #include "locationurl.h"
 #include "disklocation.h"
+#include "trashlocation.h"
 
 
 #ifndef DO_NOT_USE_TAG_LIB
@@ -75,7 +76,7 @@
 
 #define IS_FILE_MANAGER_IDLE()            (!mAwaitingResults)
 
-
+#define IS_BROWSING_TRASH() (mCurLocation && mCurLocation->type() == LocationsFactory::TrashDisk && mCurLocation->isRoot())
 
 namespace {
     QHash<QByteArray, int> roleMapping;
@@ -482,7 +483,18 @@ void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 
 void DirModel::rm(const QStringList &paths)
 {
-   m_fsAction->remove(paths);
+    //if current location is Trash only in the root is allowed to remove Items
+    if (mCurLocation->type() == LocationsFactory::TrashDisk)
+    {
+        if (IS_BROWSING_TRASH())
+        {
+            m_fsAction->removeFromTrash(paths);
+        }
+    }
+    else
+    {
+        m_fsAction->remove(paths);
+    }
 }
 
 
@@ -1506,6 +1518,102 @@ int DirModel::getIndex(const QString &name)
 {
     QFileInfo i(name);
     return rowOfItem(DirItemInfo(i));
+}
+
+
+void DirModel:: moveIndexesToTrash(const QList<int>& items)
+{ 
+    if (mCurLocation->type() == LocationsFactory::LocalDisk)
+    {
+        const TrashLocation *trashLocation = static_cast<const TrashLocation*>
+                   (mLocationFactory->getLocation(LocationsFactory::TrashDisk));
+        ActionPathList  itemsAndTrashPath;
+        int index = 0;
+        for (int counter=0; counter < items.count(); ++counter)
+        {
+            index = items.at(counter);
+            if (IS_VALID_ROW(index))
+            {
+                const DirItemInfo &it = mDirectoryContents.at(index);
+                itemsAndTrashPath.append(trashLocation->getMovePairPaths(it));
+            }
+        }
+        if (itemsAndTrashPath.count() > 0)
+        {         
+            m_fsAction->moveToTrash(itemsAndTrashPath);
+        }
+    }  
+}
+
+
+void DirModel:: moveIndexToTrash(int index)
+{
+    QList<int> list;
+    list.append(index);
+    return moveIndexesToTrash(list);
+}
+
+
+void DirModel::restoreTrash()
+{  
+    if ( IS_BROWSING_TRASH() )
+    {
+        QList<int> allItems;
+        for (int counter=0; counter < rowCount(); ++counter)
+        {
+            allItems.append(counter);
+        }
+        restoreIndexesFromTrash(allItems);
+    }
+}
+
+
+void DirModel::emptyTrash()
+{  
+    if ( IS_BROWSING_TRASH() )
+    {
+        QStringList allItems;
+        for (int counter=0; counter < rowCount(); ++counter)
+        {
+            allItems.append(mDirectoryContents.at(counter).absoluteFilePath());
+        }
+        if (allItems.count() > 0)
+        {
+            m_fsAction->removeFromTrash(allItems);
+        }
+    }
+}
+
+
+void DirModel::restoreIndexFromTrash(int index)
+{
+    QList<int>  item;
+    item.append(index);
+    restoreIndexesFromTrash(item);
+}
+
+
+void DirModel::restoreIndexesFromTrash(const QList<int> &items)
+{   
+    if ( IS_BROWSING_TRASH() )
+    {
+        TrashLocation *trashLocation = static_cast<TrashLocation*> (mCurLocation);
+        ActionPathList  itemsAndOriginalPaths;
+        int index = 0;
+        for (int counter=0; counter < items.count(); ++counter)
+        {
+            index = items.at(counter);
+            if (IS_VALID_ROW(index))
+            {
+                const DirItemInfo &it = mDirectoryContents.at(index);
+                itemsAndOriginalPaths.append(trashLocation->getRestorePairPaths(it));
+            }
+        }
+        if (itemsAndOriginalPaths.count() > 0)
+        {           
+            m_fsAction->restoreFromTrash(itemsAndOriginalPaths);
+        }
+    }   
 }
 
 

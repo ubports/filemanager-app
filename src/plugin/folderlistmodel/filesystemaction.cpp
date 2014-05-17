@@ -36,6 +36,7 @@
 
 #include "filesystemaction.h"
 #include "clipboard.h"
+#include "qtrashutilinfo.h"
 
 #if defined(Q_OS_UNIX)
 #include <sys/statvfs.h>
@@ -231,8 +232,17 @@ bool FileSystemAction::populateEntry(Action* action, ActionEntry* entry)
                   );
         return false;
     }
-    //action->type is top level for all items, entry->type drives item behaviour  
-    entry->type = action->type; //normal behaviour
+    //action->type is top level for all items, entry->type drives item behaviour
+    switch(action->type)
+    {
+       case ActionMoveToTrash:
+       case ActionRestoreFromTrash:   entry->type = ActionMove;  //needs create .trashinfo file
+            break;
+       case ActionRemoveFromTrash:    entry->type = ActionRemove; //needs remove .trashinfo file
+            break;
+       default:                       entry->type = action->type; //normal behaviour
+            break;
+    }
     //this is the item being handled
     entry->reversedOrder.append(info);
     // verify if the destination item already exists and it the destination path is in other file system
@@ -414,9 +424,31 @@ void FileSystemAction::endActionEntry()
         const DirItemInfo & mainItem = curEntry->reversedOrder.at(curEntry->currItem -1);
         m_curAction->currEntryIndex++;
 
+        //check Trash  operations
+        if ( (m_curAction->type == ActionMoveToTrash || m_curAction->type == ActionRestoreFromTrash)
+             && (curEntry->type == ActionMove || curEntry->type == ActionHardMoveRemove)
+           )
+        {                   
+            if ( m_curAction->type == ActionMoveToTrash )
+            {
+                createTrashInfoFileFromEnry(curEntry);
+            }
+            else
+            {
+                removeTrashInfoFileFromEnry(curEntry);
+            }
+            emit removed(mainItem);
+        }
+        else
+        {
            switch(curEntry->type)
            {
-            case ActionRemove:                
+            case ActionRemove:
+                if (m_curAction->type == ActionRemoveFromTrash)
+                {
+                     //it is necessary to remove also (file).trashinfo file
+                     removeTrashInfoFileFromEnry(curEntry);
+                }
                 emit removed(mainItem);
                 break;
             case ActionHardMoveRemove: // nothing to do
@@ -445,6 +477,7 @@ void FileSystemAction::endActionEntry()
              default:
                 break;
            }//switch
+        }
     }//end if (curEntry->currItem == curEntry->reversedOrder.count())
 
     if (curEntry->currStep == STEP_FILES)
@@ -1370,4 +1403,71 @@ bool FileSystemAction::isThereDiskSpace(const ActionEntry *entry, qint64 require
 void FileSystemAction::onClipboardChanged()
 {
     m_clipboardChanged = true;
+}
+
+
+//==================================================================
+/*!
+ * \brief FileSystemAction::moveToTrash() Move a set of files to Trash
+ * \param items files/dirs that belong to the same parent directory
+ */
+void FileSystemAction::moveToTrash(const ActionPathList &pairPaths)
+{
+    Action *moveAction = createAction(ActionMoveToTrash);
+    for (int counter=0; counter < pairPaths.count(); ++counter)
+    {
+        addEntry(moveAction, pairPaths.at(counter));
+    }
+    queueAction(moveAction);
+}
+
+//==================================================================
+/*!
+ * \brief FileSystemAction::restoreFromTrash() restore a set of Files to
+ *               their original path
+ * \param pairPaths
+ */
+void FileSystemAction::restoreFromTrash(const ActionPathList &pairPaths)
+{
+    Action *moveAction = createAction(ActionRestoreFromTrash);
+    for (int counter=0; counter < pairPaths.count(); ++counter)
+    {
+        addEntry(moveAction, pairPaths.at(counter));
+    }
+    queueAction(moveAction);
+}
+
+/*!
+ * \brief FileSystemAction::removeFromTrash
+ * \param paths
+ */
+void FileSystemAction::removeFromTrash(const QStringList &paths)
+{
+    createAndProcessAction(ActionRemoveFromTrash, paths);
+}
+
+
+void FileSystemAction::createTrashInfoFileFromEnry(ActionEntry *entry)
+{
+    QTrashUtilInfo trashUtil;
+    trashUtil.setInfoFromTrashItem(entry->itemPaths.target());
+    if (!trashUtil.createTrashInfoFile(entry->itemPaths.source()))
+    {
+        m_cancelCurrentAction = true;
+        m_errorTitle = QObject::tr("Could not create trash info file");
+        m_errorMsg   = trashUtil.absInfo;
+    }
+}
+
+
+void FileSystemAction::removeTrashInfoFileFromEnry(ActionEntry *entry)
+{
+    QTrashUtilInfo trashUtil;
+    trashUtil.setInfoFromTrashItem(entry->itemPaths.source());
+    if (!trashUtil.removeTrashInfoFile())
+    {
+         m_cancelCurrentAction = true;
+         m_errorTitle = QObject::tr("Could not remove the trash info file");
+         m_errorMsg   = trashUtil.absInfo;
+    }
 }

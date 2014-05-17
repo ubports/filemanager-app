@@ -289,7 +289,27 @@ public:
     Q_INVOKABLE  bool  existsFile(const QString& fileName)   const;
     Q_INVOKABLE  bool  canReadFile(const QString& fileName)  const;
 
-public slots:
+    // Trash functions
+    Q_INVOKABLE  void  moveIndexToTrash(int index);
+    Q_INVOKABLE  void  moveIndexesToTrash(const QList<int>&);
+    Q_INVOKABLE  void  restoreIndexFromTrash(int index);
+    Q_INVOKABLE  void  restoreIndexesFromTrash(const QList<int>&);
+
+public slots:    
+    /*!
+     * \brief restoreTrash() restore all items being actually browsed in the Trash
+     *
+     */
+    void   restoreTrash();
+
+    /*!
+     * \brief emptyTrash() remove definitely all items being actually browsed in the Trash
+     *
+     *  \sa \ref removeSelection() and \ref rm()
+     *
+     */
+    void  emptyTrash();
+
     /*!
      * \brief goHome() goes to user home dir
      *  Go to user home dir, we may have a tab for places or something like that
