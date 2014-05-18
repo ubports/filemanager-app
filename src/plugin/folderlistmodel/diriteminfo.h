@@ -179,20 +179,19 @@ struct ActionPaths
         setSource(source);
     }
     inline void setSource(const QString& source)
-    {
-        _source = source;
-        int pathLen = _source.lastIndexOf(QDir::separator());
+    {        
+        int pathLen = source.lastIndexOf(QDir::separator());
         if (pathLen != -1)
         {
-           _sFile    = QStringRef(&_source, pathLen + 1, _source.size() - pathLen - 1);
+           _source   = source;
+           _sFile    = QStringRef(&_source, pathLen + 1,  _source.size() - pathLen - 1);
            _origPath = QStringRef(&_source, 0, pathLen);
         }
         else
         {
-           //avoids possible memory corruption, it may happen if calling setSource() using relative paths
+           //avoids possible memory corruption using relative paths, QStringRef would be empty/null
            //relative paths currently are not supported
-            _sFile    = QStringRef();
-            _origPath = QStringRef();
+            setSource(QString(".") + QDir::separator() + source);
         }
     }
     inline void setTargetPathOnly(const QString& path)
