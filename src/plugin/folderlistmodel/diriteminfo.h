@@ -188,8 +188,11 @@ struct ActionPaths
            _origPath = QStringRef(&_source, 0, pathLen);
         }
         else
-        {   //avoid bad index
-            pathLen = 0;
+        {
+           //avoids possible memory corruption, it may happen if calling setSource() using relative paths
+           //relative paths currently are not supported
+            _sFile    = QStringRef();
+            _origPath = QStringRef();
         }
     }
     inline void setTargetPathOnly(const QString& path)
