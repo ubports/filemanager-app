@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-05-15 19:52+0000\n"
+"PO-Revision-Date: 2014-05-19 01:02+0000\n"
 "Last-Translator: Marcos Lans <Unknown>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-16 06:44+0000\n"
+"X-Launchpad-Export-Date: 2014-05-19 06:21+0000\n"
 "X-Generator: Launchpad (build 17007)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
@@ -134,7 +134,7 @@ msgstr "~/Documentos"
 
 #: src/app/qml/ui/FolderListPage.qml:126
 msgid "~/Downloads"
-msgstr ""
+msgstr "~/Descargas"
 
 #: src/app/qml/ui/FolderListPage.qml:128
 msgid "~/Music"
@@ -142,11 +142,11 @@ msgstr "~/Musica"
 
 #: src/app/qml/ui/FolderListPage.qml:130
 msgid "~/Pictures"
-msgstr ""
+msgstr "~/Imaxes"
 
 #: src/app/qml/ui/FolderListPage.qml:132
 msgid "~/Public"
-msgstr ""
+msgstr "~/Público"
 
 #: src/app/qml/ui/FolderListPage.qml:134
 msgid "~/Programs"
@@ -154,11 +154,11 @@ msgstr "~/Programas"
 
 #: src/app/qml/ui/FolderListPage.qml:136
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Modelos"
 
 #: src/app/qml/ui/FolderListPage.qml:138
 msgid "~/Videos"
-msgstr ""
+msgstr "~/Vídeos"
 
 #: src/app/qml/ui/FolderListPage.qml:153
 msgid "File System"
@@ -217,7 +217,7 @@ msgstr "Crear un cartafol"
 
 #: src/app/qml/ui/FolderListPage.qml:322
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Nome do novo cartafol"
 
 #: src/app/qml/ui/FolderListPage.qml:338
 msgid "Create file"
@@ -225,7 +225,7 @@ msgstr "Crear un ficheiro"
 
 #: src/app/qml/ui/FolderListPage.qml:339
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Nome do novo ficheiro"
 
 #: src/app/qml/ui/FolderListPage.qml:354 src/app/qml/ui/FolderListPage.qml:669
 msgid "File operation error"
@@ -234,7 +234,7 @@ msgstr "Erro na operación sobre o ficheiro"
 #: src/app/qml/ui/FolderListPage.qml:354
 #, qt-format
 msgid "Unable to open '%11"
-msgstr ""
+msgstr "Non foi posíbel abrir «%11»"
 
 #: src/app/qml/ui/FolderListPage.qml:396
 msgid "Actions"
@@ -255,7 +255,7 @@ msgstr "Eliminar"
 #: src/app/qml/ui/FolderListPage.qml:544
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "Está certo de eliminar permanentemente «%1»?"
 
 #: src/app/qml/ui/FolderListPage.qml:567 src/app/qml/ui/FolderListPage.qml:637
 msgid "Rename"
@@ -267,11 +267,11 @@ msgstr "Introduza un novo nome"
 
 #: src/app/qml/ui/FolderListPage.qml:577
 msgid "Could not rename"
-msgstr ""
+msgstr "Non foi posíbel renomear"
 
 #: src/app/qml/ui/FolderListPage.qml:578
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Non ten permisos ou xa existe o nome?"
 
 #: src/app/qml/ui/FolderListPage.qml:601
 msgid "Cut"
@@ -283,25 +283,25 @@ msgstr "Copiar"
 
 #: src/app/qml/ui/FolderListPage.qml:688
 msgid "Folder not accessible"
-msgstr ""
+msgstr "O cartafol non é accesíbel"
 
 #. TRANSLATORS: this refers to a folder name
 #: src/app/qml/ui/FolderListPage.qml:690
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "Non se pode acceder a %1"
 
 #: src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Ir á localización"
 
 #: src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Introducir a localización onde ir:"
 
 #: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:84
 msgid "Location..."
-msgstr ""
+msgstr "Localización..."
 
 #: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:99
 msgid "Go"
@@ -313,7 +313,7 @@ msgstr "Pechar"
 
 #: src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Mostrar características avanzadas"
 
 #: src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
