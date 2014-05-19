@@ -106,16 +106,18 @@ MainView {
     function cancelFileSelector() {
         console.log("Cancel file selector")
         pageStack.pop()
-        // fileSelector.fileSelectorCompeonnt = null
-
+        fileSelector.fileSelectorComponent = null
+        fileSelector.activeTransfer.state = ContentTransfer.Aborted
     }
 
-    function acceptFileSelector(fileUrl) {
-        console.log("accept file selector " + fileUrl)
-        var result = fileSelectorResultComponent.createObject(mainView);
-        result.url = fileUrl
+    function acceptFileSelector(fileUrls) {
+        console.log("accept file selector " + fileUrls)
+        var results = fileUrls.map(function(fileUrl) {
+            return fileSelectorResultComponent.createObject(mainView, {"url": fileUrl})
+        })
+
         if (fileSelector.activeTransfer !== null) {
-            fileSelector.activeTransfer.items = [ result ]
+            fileSelector.activeTransfer.items = results
             fileSelector.activeTransfer.state = ContentTransfer.Charged
             console.log("set activeTransfer")
         } else {

@@ -33,8 +33,10 @@ Page {
 
     property bool showingListView: folderListView.visible
 
-    // Set to true if called as file selector
+    // Set to true if called as file selector for ContentHub
     property bool fileSelectorMode: false
+
+    property FolderListSelection selectionManager: pageModel.selectionObject()
 
     onShowHiddenFilesChanged: {
         pageModel.showHiddenFiles = folderListPage.showHiddenFiles
@@ -352,32 +354,9 @@ Page {
         }
     }
 
-    Component {
-        id: selectFileDialog
-        ConfirmDialog {
-            property string filePath
-
-            title: i18n.tr("Confirm selection")
-            text: filePath
-
-            onAccepted: {
-                console.log("Create file accepted", filePath)
-                // IMPROVE: for now single select
-                acceptFileSelector("file:/" + filePath)
-            }
-        }
-    }
-
-
     function openFile(filePath) {
-        // Just temporarily like this... finally should highlight selection and use buttons
-        if (fileSelectorMode) {
-            PopupUtils.open(selectFileDialog, folderListPage, { filePath: pageModel.path + "/" + filePath })
-        }
-        else {
-            if (!pageModel.openPath(filePath)) {
-                error(i18n.tr("File operation error"), i18n.tr("Unable to open '%11'").arg(filePath))
-            }
+        if (!pageModel.openPath(filePath)) {
+            error(i18n.tr("File operation error"), i18n.tr("Unable to open '%11'").arg(filePath))
         }
     }
 
@@ -502,6 +481,49 @@ Page {
         expanded: showSidebar
     }
 
+    Item {
+        id: bottomBar
+        anchors {
+            bottom: parent.bottom
+            left: sidebar.right
+            right: parent.right
+        }
+        height: fileSelectorMode ? bottomBarFileSelectorButtons.height : 0
+        visible: fileSelectorMode
+
+    }
+
+    Row {
+        id: bottomBarFileSelectorButtons
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: bottomBar.bottom
+        spacing: units.gu(5)
+        visible: fileSelectorMode
+
+        Button {
+            text: i18n.tr("Select")
+            enabled: selectionManager.counter > 0
+            onClicked: {
+               var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+               // For now support only selection in filesystem
+               var selectedAbsUrls = selectedAbsPaths.map(function(item) {
+                   return "file:/" + item;
+               });
+               console.log("FileSelector OK clicked, selected items: " + selectedAbsUrls)
+
+               acceptFileSelector(selectedAbsUrls)
+           }
+        }
+        Button {
+           text: i18n.tr("Cancel")
+           onClicked: {
+               console.log("FileSelector cancelled")
+               cancelFileSelector()
+           }
+        }
+    }
+
+
     FolderIconView {
         id: folderIconView
 
@@ -511,6 +533,7 @@ Page {
         anchors {
             top: parent.top
             bottom: parent.bottom
+            bottomMargin: bottomBar.height
             left: sidebar.right
             right: parent.right
         }
@@ -527,6 +550,7 @@ Page {
         anchors {
             top: parent.top
             bottom: parent.bottom
+            bottomMargin: bottomBar.height
             left: sidebar.right
             right: parent.right
         }
@@ -719,7 +743,13 @@ Page {
             }
         } else {
             console.log("Non dir clicked")
-            openFile(model.fileName)
+            if (fileSelectorMode) {
+                selectionManager.select(model.index,
+                                        false,
+                                        true);
+            } else {
+                openFile(model.fileName)
+            }
 //            PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
 //                            {
 //                                fileName: model.fileName,

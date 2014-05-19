@@ -34,4 +34,6 @@ ListItem.Subtitled {
 
     progression: model.isDir
     iconFrame: false
+
+    selected: model.isSelected
 }
