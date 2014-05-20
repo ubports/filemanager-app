@@ -507,7 +507,7 @@ Page {
                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
                // For now support only selection in filesystem
                var selectedAbsUrls = selectedAbsPaths.map(function(item) {
-                   return "file:/" + item;
+                   return "file://" + item;
                });
                console.log("FileSelector OK clicked, selected items: " + selectedAbsUrls)
 
