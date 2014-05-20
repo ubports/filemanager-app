@@ -1617,43 +1617,21 @@ void DirModel::restoreIndexesFromTrash(const QList<int> &items)
 }
 
 
-QStringList  DirModel::makePathnamesFromIndexes(const QList<int>& items) const
-{
-     QStringList pathnames;
-     int index;
-     for (int counter=0; counter < items.count(); ++counter)
-     {
-         index = items.at(counter);
-         if (IS_VALID_ROW(index))
-         {
-             pathnames.append(mDirectoryContents.at(index).urlPath());
-         }
-     }
-     return pathnames;
-}
-
-
-QStringList  DirModel::makePathnamesFromSelection() const
-{
-    return makePathnamesFromIndexes(selectionObject()->selectedIndexes());
-}
-
-
 void DirModel::copySelection()
 {
-    copyPaths(makePathnamesFromSelection());
+    copyPaths(selectionObject()->selectedAbsFilePaths());
 }
 
 
 void DirModel::cutSelection()
 {
-    cutPaths(makePathnamesFromSelection());
+    cutPaths(selectionObject()->selectedAbsFilePaths());
 }
 
 
 void DirModel::removeSelection()
 {
-    removePaths(makePathnamesFromSelection());
+    removePaths(selectionObject()->selectedAbsFilePaths());
 }
 
 

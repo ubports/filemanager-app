@@ -430,9 +430,7 @@ private:
 private:
     void          startExternalFsWatcher();
     void          stoptExternalFsWatcher();
-    void          clear();
-    QStringList   makePathnamesFromIndexes(const QList<int>&) const;
-    QStringList   makePathnamesFromSelection() const;
+    void          clear();   
 
 private slots:
     void          onItemAddedOutsideFm(const DirItemInfo&fi);
