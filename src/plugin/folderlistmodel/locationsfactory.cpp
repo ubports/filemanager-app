@@ -46,6 +46,10 @@ LocationsFactory::~LocationsFactory()
 {
     ::qDeleteAll(m_locations);
     m_locations.clear();
+    if (m_lastValidFileInfo)
+    {
+        delete m_lastValidFileInfo;
+    }
 }
 
 
@@ -173,7 +177,7 @@ QString  LocationsFactory::stringAfterSlashes(const QString &url, int firstSlash
 }
 
 
-void LocationsFactory::storeValidFileInfo(const DirItemInfo *item)
+void LocationsFactory::storeValidFileInfo(DirItemInfo *item)
 {
     if (m_lastValidFileInfo)
     {
