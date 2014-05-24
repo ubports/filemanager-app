@@ -142,12 +142,9 @@ private slots:
    struct CopyFile
    {
      public:
-       CopyFile() : bytesWritten(0), source(0), target(0),
-                    isEntryItem(false) , amountSavedToRefresh(AMOUNT_COPIED_TO_REFRESH_ITEM_INFO)
-       {}
-       ~CopyFile() { clear(); }
+       CopyFile();
+       ~CopyFile();
        void clear();
-
        qint64            bytesWritten;           // set 0 when reach  bytesToNotify, notify progress
        QFile          *  source;
        QFile          *  target;
@@ -219,7 +216,7 @@ private:
    void     removeEntry(ActionEntry *);   
    void     moveEntry(ActionEntry *entry);
    bool     moveUsingSameFileSystem(const ActionPaths &movedItem);
-   QString  targetFom(const QString& origItem, ActionEntry * entry);
+   QString  targetFrom(const QString& origItem, ActionEntry * entry);
    void     endCurrentAction();
    int      percentWorkDone();
    int      notifyProgress(int forcePercent = 0);

@@ -113,7 +113,7 @@ public:
      */
     const DirItemInfo* lastValidFileInfo() const { return m_lastValidFileInfo; }
 
-    void        storeValidFileInfo(const DirItemInfo *item);
+    void        storeValidFileInfo(DirItemInfo *item);
 
 signals:
     void        locationChanged(const Location *old, const Location *current);
@@ -125,7 +125,7 @@ private:
      Location         *  m_curLoc;
      QList<Location*>    m_locations;
      QString             m_tmpPath;
-     const DirItemInfo * m_lastValidFileInfo;
+     DirItemInfo      * m_lastValidFileInfo;
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
     friend class TestDirModel;

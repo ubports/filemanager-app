@@ -70,6 +70,26 @@
 #define   COMMON_SIZE_ITEM       120
 
 
+//===============================================================================================
+FileSystemAction::CopyFile::CopyFile():
+                    bytesWritten(0),
+                    source(0),
+                    target(0),
+                    isEntryItem(false) ,
+                    amountSavedToRefresh(AMOUNT_COPIED_TO_REFRESH_ITEM_INFO)
+{
+
+}
+
+
+FileSystemAction::CopyFile::~CopyFile()
+{
+    clear();
+}
+
+
+
+//===============================================================================================
 FileSystemAction::Action::Action()
    : auxAction(0), isAux(false)
 {
@@ -78,9 +98,11 @@ FileSystemAction::Action::Action()
 
 FileSystemAction::Action::~Action()
 {
-   qDeleteAll(entries);
+   ::qDeleteAll(entries);
    entries.clear();
-   copyFile.clear();
+   copyFile.clear();  
+   //it is not necessary to delete auxAction, because it should be
+   //inside FileSystemAction::m_queuedActions
 }
 
 /*!
@@ -96,15 +118,17 @@ void FileSystemAction::Action::reset()
     done           = false;
     isAux          = false;
     currEntry      = 0;
-    steps          = 1;
+    steps          = 1;    
+    //auxAction should be in FileSystemAction::m_queuedActions
+    //it is not necessary to delete
+    auxAction      = 0;
     copyFile.clear();
-    if (auxAction)
-    {
-       delete auxAction;
-        auxAction      = 0;
-    }
+
 }
 
+
+
+//===============================================================================================
 FileSystemAction::ActionEntry::ActionEntry(): newName(0)
 {
     init();
@@ -173,7 +197,12 @@ FileSystemAction::FileSystemAction(QObject *parent) :
  */
 FileSystemAction::~FileSystemAction()
 {   
-
+    if (m_curAction)
+    {
+        delete m_curAction;
+    }
+    ::qDeleteAll(m_queuedActions);
+    m_queuedActions.clear();
 }
 
 //===============================================================================================
@@ -218,6 +247,10 @@ void  FileSystemAction::addEntry(Action* action, const ActionPaths& pairPaths)
     {
         //now put the Entry in the Action
         action->entries.append(entry);
+    }
+    else
+    {
+        delete entry;
     }
 }
 
@@ -307,7 +340,7 @@ void FileSystemAction::processAction()
             delete m_curAction;
             m_curAction = 0;
     }
-    if (!m_curAction && m_queuedActions.count())
+    if (m_queuedActions.count())
     {
         m_curAction = m_queuedActions.at(0);
         m_curAction->currEntry = static_cast<ActionEntry*>
@@ -582,7 +615,7 @@ void  FileSystemAction::processCopyEntry()
     {
         const DirItemInfo &fi = entry->reversedOrder.at(entry->currItem);
         QString orig    = fi.absoluteFilePath();
-        QString target = targetFom(orig, entry);
+        QString target = targetFrom(orig, entry);
         QString path(target);
         // do this here to allow progress send right item number, copySingleFile will emit progress()
         m_curAction->currItem++;
@@ -599,7 +632,7 @@ void  FileSystemAction::processCopyEntry()
             && !entry->reversedOrder.last().isSymLink()
            )
         {
-            QString entryDir = targetFom(entry->reversedOrder.last().absoluteFilePath(), entry);
+            QString entryDir = targetFrom(entry->reversedOrder.last().absoluteFilePath(), entry);
             QDir entryDirObj(entryDir);
             if (!entryDirObj.exists() && entryDirObj.mkpath(entryDir))
             {
@@ -739,7 +772,7 @@ void FileSystemAction::moveEntry(ActionEntry *entry)
                 if (!QFile::remove(targetInfo.absoluteFilePath()))
                 {
                     m_cancelCurrentAction = true;
-                    m_errorTitle = QObject::tr("Could remove the directory/file ") +
+                    m_errorTitle = QObject::tr("Could not remove the directory/file ") +
                                       targetInfo.absoluteFilePath();
                     m_errorMsg   = ::strerror(errno);
                 }
@@ -845,8 +878,7 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << paths;
 #endif
-    Action       *myAction       = 0;    
-    myAction                     = createAction(actionType);
+    Action       *myAction       = createAction(actionType);
     for (int counter=0; counter < paths.count(); counter++)
     {
         DirItemInfo info(paths.at(counter));
@@ -900,7 +932,7 @@ void  FileSystemAction::queueAction(Action *myAction)
  *
  * \sa makeBackupNameForCurrentItem()
  */
-QString FileSystemAction::targetFom(const QString& origItem, ActionEntry *entry)
+QString FileSystemAction::targetFrom(const QString& origItem, ActionEntry *entry)
 {
     QString destinationUnderTarget(origItem.mid(entry->itemPaths.baseOrigSize()));
     if (entry->newName)
@@ -1240,7 +1272,7 @@ void FileSystemAction::moveDirToTempAndRemoveItLater(const QString& dir)
 #endif
     if (QFile::rename(dir, tempDir))
     {
-        if (!m_curAction->auxAction)
+        if (m_curAction->auxAction == 0)
         {   // this new action as Remove will remove all dirs
             m_curAction->auxAction            = createAction(ActionRemove);
             m_curAction->auxAction->isAux     = true;
