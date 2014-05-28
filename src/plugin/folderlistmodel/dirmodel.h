@@ -291,9 +291,9 @@ public:
 
     // Trash functions
     Q_INVOKABLE  void  moveIndexToTrash(int index);
-    Q_INVOKABLE  void  moveIndexesToTrash(const QList<int>&);
+                 void  moveIndexesToTrash(const QList<int>&);
     Q_INVOKABLE  void  restoreIndexFromTrash(int index);
-    Q_INVOKABLE  void  restoreIndexesFromTrash(const QList<int>&);
+                 void  restoreIndexesFromTrash(const QList<int>&);
 
 public slots:    
     /*!

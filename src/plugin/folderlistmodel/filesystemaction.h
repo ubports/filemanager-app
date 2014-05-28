@@ -237,8 +237,8 @@ private:
    bool     endCopySingleFile();
    bool     isThereDiskSpace(const ActionEntry *entry, qint64 requiredSize);
    void     queueAction(Action *myAction);
-   void     createTrashInfoFileFromEnry(ActionEntry *entry);
-   void     removeTrashInfoFileFromEnry(ActionEntry *entry);
+   void     createTrashInfoFileFromEntry(ActionEntry *entry);
+   void     removeTrashInfoFileFromEntry(ActionEntry *entry);
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
    bool     m_forceUsingOtherFS;

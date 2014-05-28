@@ -431,11 +431,11 @@ void FileSystemAction::endActionEntry()
         {                   
             if ( m_curAction->type == ActionMoveToTrash )
             {
-                createTrashInfoFileFromEnry(curEntry);
+                createTrashInfoFileFromEntry(curEntry);
             }
             else
             {
-                removeTrashInfoFileFromEnry(curEntry);
+                removeTrashInfoFileFromEntry(curEntry);
             }
             emit removed(mainItem);
         }
@@ -447,7 +447,7 @@ void FileSystemAction::endActionEntry()
                 if (m_curAction->type == ActionRemoveFromTrash)
                 {
                      //it is necessary to remove also (file).trashinfo file
-                     removeTrashInfoFileFromEnry(curEntry);
+                     removeTrashInfoFileFromEntry(curEntry);
                 }
                 emit removed(mainItem);
                 break;
@@ -1447,7 +1447,7 @@ void FileSystemAction::removeFromTrash(const QStringList &paths)
 }
 
 
-void FileSystemAction::createTrashInfoFileFromEnry(ActionEntry *entry)
+void FileSystemAction::createTrashInfoFileFromEntry(ActionEntry *entry)
 {
     QTrashUtilInfo trashUtil;
     trashUtil.setInfoFromTrashItem(entry->itemPaths.target());
@@ -1460,7 +1460,7 @@ void FileSystemAction::createTrashInfoFileFromEnry(ActionEntry *entry)
 }
 
 
-void FileSystemAction::removeTrashInfoFileFromEnry(ActionEntry *entry)
+void FileSystemAction::removeTrashInfoFileFromEntry(ActionEntry *entry)
 {
     QTrashUtilInfo trashUtil;
     trashUtil.setInfoFromTrashItem(entry->itemPaths.source());

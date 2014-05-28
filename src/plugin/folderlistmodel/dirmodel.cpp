@@ -76,7 +76,7 @@
 
 #define IS_FILE_MANAGER_IDLE()            (!mAwaitingResults)
 
-#define IS_BROWSING_TRASH() (mCurLocation && mCurLocation->type() == LocationsFactory::TrashDisk && mCurLocation->isRoot())
+#define IS_BROWSING_TRASH_ROOTDIR() (mCurLocation && mCurLocation->type() == LocationsFactory::TrashDisk && mCurLocation->isRoot())
 
 namespace {
     QHash<QByteArray, int> roleMapping;
@@ -486,7 +486,7 @@ void DirModel::rm(const QStringList &paths)
     //if current location is Trash only in the root is allowed to remove Items
     if (mCurLocation->type() == LocationsFactory::TrashDisk)
     {
-        if (IS_BROWSING_TRASH())
+        if (IS_BROWSING_TRASH_ROOTDIR())
         {
             m_fsAction->removeFromTrash(paths);
         }
@@ -1556,7 +1556,7 @@ void DirModel:: moveIndexToTrash(int index)
 
 void DirModel::restoreTrash()
 {  
-    if ( IS_BROWSING_TRASH() )
+    if ( IS_BROWSING_TRASH_ROOTDIR() )
     {
         QList<int> allItems;
         for (int counter=0; counter < rowCount(); ++counter)
@@ -1570,7 +1570,7 @@ void DirModel::restoreTrash()
 
 void DirModel::emptyTrash()
 {  
-    if ( IS_BROWSING_TRASH() )
+    if ( IS_BROWSING_TRASH_ROOTDIR() )
     {
         QStringList allItems;
         for (int counter=0; counter < rowCount(); ++counter)
@@ -1595,7 +1595,7 @@ void DirModel::restoreIndexFromTrash(int index)
 
 void DirModel::restoreIndexesFromTrash(const QList<int> &items)
 {   
-    if ( IS_BROWSING_TRASH() )
+    if ( IS_BROWSING_TRASH_ROOTDIR() )
     {
         TrashLocation *trashLocation = static_cast<TrashLocation*> (mCurLocation);
         ActionPathList  itemsAndOriginalPaths;
