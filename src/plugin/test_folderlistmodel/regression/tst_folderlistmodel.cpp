@@ -2660,8 +2660,6 @@ void TestDirModel::moveOneFileToTrashAndRestore()
 
 void TestDirModel::restoreTrashWithMultipleSources()
 {
-#define DIRS 3
-
     DeepDir d_01("folder_01", 0);
     DeepDir d_02("folder_02", 0);
     DeepDir d_03("folder_03", 0);
@@ -2671,11 +2669,12 @@ void TestDirModel::restoreTrashWithMultipleSources()
     m_deepDir_02  = new DeepDir(tempTrash, 0);
     createTempHomeTrashDir(m_deepDir_02->path());
 
-    DeepDir * dirs [DIRS]  = {&d_01, &d_02, &d_03};
+    const int dirsCounter = 3;
+    DeepDir * dirs [dirsCounter]  = {&d_01, &d_02, &d_03};
     int counter = 0;
 
     //move items from different sources to trash
-    for(counter = 0; counter < DIRS; counter++)
+    for(counter = 0; counter < dirsCounter; counter++)
     {
         TempFiles  files;
         files.addSubDirLevel(dirs[counter]->path());
@@ -2695,7 +2694,7 @@ void TestDirModel::restoreTrashWithMultipleSources()
             this,          SLOT(slotError(QString,QString)));
     m_dirModel_02->goTrash();
     QTest::qWait(TIME_TO_REFRESH_DIR);
-    QCOMPARE(m_dirModel_02->rowCount(), DIRS);
+    QCOMPARE(m_dirModel_02->rowCount(), dirsCounter);
     m_dirModel_02->restoreTrash();
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_02->rowCount(), 0);
@@ -2711,7 +2710,7 @@ void TestDirModel::restoreTrashWithMultipleSources()
     QCOMPARE(m_dirModel_02->rowCount(),  0);
 
     //test it items were moved back to their sources
-    for(counter = 0; counter < DIRS; counter++)
+    for(counter = 0; counter < dirsCounter; counter++)
     {
         DirModel model;
         model.setPath(dirs[counter]->path());
@@ -2720,14 +2719,11 @@ void TestDirModel::restoreTrashWithMultipleSources()
     }
 
     QCOMPARE(m_receivedErrorSignal,   false);
-#undef DIRS
 }
 
 
 void TestDirModel::emptyTrash()
 {
-#define DIRS 3
-
     DeepDir d_01("folder_01", 0);
     DeepDir d_02("folder_02", 0);
     DeepDir d_03("folder_03", 0);
@@ -2737,11 +2733,12 @@ void TestDirModel::emptyTrash()
     m_deepDir_02  = new DeepDir(tempTrash, 0);
     createTempHomeTrashDir(m_deepDir_02->path());
 
-    DeepDir * dirs [DIRS]  = {&d_01, &d_02, &d_03};
+    const int dirsCounter = 3;
+    DeepDir * dirs [dirsCounter]  = {&d_01, &d_02, &d_03};
     int counter = 0;
 
     //move items from different sources to trash
-    for(counter = 0; counter < DIRS; counter++)
+    for(counter = 0; counter < dirsCounter; counter++)
     {
         TempFiles  files;
         files.addSubDirLevel(dirs[counter]->path());
@@ -2761,7 +2758,7 @@ void TestDirModel::emptyTrash()
             this,          SLOT(slotError(QString,QString)));
     m_dirModel_02->goTrash();
     QTest::qWait(TIME_TO_REFRESH_DIR);
-    QCOMPARE(m_dirModel_02->rowCount(), DIRS);
+    QCOMPARE(m_dirModel_02->rowCount(), dirsCounter);
     m_dirModel_02->emptyTrash();
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(m_dirModel_02->rowCount(), 0);
@@ -2777,7 +2774,7 @@ void TestDirModel::emptyTrash()
     QCOMPARE(m_dirModel_02->rowCount(),  0);
 
     //test if original items folder is still empty
-    for(counter = 0; counter < DIRS; counter++)
+    for(counter = 0; counter < dirsCounter; counter++)
     {
         DirModel model;
         model.setPath(dirs[counter]->path());
@@ -2786,7 +2783,6 @@ void TestDirModel::emptyTrash()
     }
 
     QCOMPARE(m_receivedErrorSignal,   false);
-#undef DIRS
 }
 
 
