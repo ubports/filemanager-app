@@ -121,7 +121,7 @@ Rectangle {
                         color: UbuntuColors.coolGrey
                     }
 
-                    height: parent.height
+                    height: row.height
                     width: label.width + units.gu(4)
 
                     Rectangle {
