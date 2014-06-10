@@ -50,7 +50,7 @@ class MainView(toolkit_emulators.MainView):
         side_bar.go_to_place(object_name)
 
     def _go_to_place_from_popover(self, object_name):
-        popover = self.open_places_popover()
+        popover = self.open_places()
         place = popover.select_single('Standard', objectName=object_name)
         self.pointing_device.click_object(place)
 
