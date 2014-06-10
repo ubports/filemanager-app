@@ -1,6 +1,6 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 #
-# Copyright (C) 2013 Canonical Ltd.
+# Copyright (C) 2013, 2014 Canonical Ltd.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -34,11 +34,6 @@ logger = logging.getLogger(__name__)
 
 
 class TestFolderListPage(FileManagerTestCase):
-
-    def setUp(self):
-        super(TestFolderListPage, self).setUp()
-        self.assertThat(
-            self.main_view.visible, Eventually(Equals(True)))
 
     def _make_file_in_home(self):
         return self._make_content_in_home('file')
@@ -92,22 +87,6 @@ class TestFolderListPage(FileManagerTestCase):
             Eventually(NotEquals(None)))
         return folder_list_page.get_file_by_index(index)
 
-    def _go_to_place(self, text):
-        # XXX We are receiving the text because there's no way to set the
-        # objectName on the ListElement. This is reported at
-        # https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205201
-        # --elopio - 2013-07-25
-        place = None
-        if self.main_view.showSidebar:
-            place = (self.main_view.get_folder_list_page().get_sidebar()
-                     .get_place(text))
-        else:
-            open_popover = lambda: \
-                self.main_view.open_toolbar().click_button('places')
-            self._safe_open_popover(open_popover)
-            place = self._get_place(text)
-        self.pointing_device.click_object(place)
-
     def _go_to_location(self, location):
         #go to specified location
         #on wide UI display, we get the location dialog
@@ -120,21 +99,10 @@ class TestFolderListPage(FileManagerTestCase):
             goto_location = self.main_view.get_dialog()
         else:
             logger.debug("Using places to goto %s on %s" % (location, device))
-            open_popover = lambda: \
-                self.main_view.open_toolbar().click_button('places')
-            self._safe_open_popover(open_popover)
+            self._safe_open_popover(self.main_view.open_places)
             goto_location = self.main_view.get_popover()
         goto_location.enter_text(location)
         goto_location.ok()
-
-    def _get_place(self, text):
-        places_popover = self.main_view.get_places_popover()
-        places = places_popover.select_many('Standard')
-        for place in places:
-            if place.name == text:
-                return place
-        raise ValueError(
-            'Place "{0}" not found.'.format(text))
 
     def _make_directory_in_home(self):
         return self._make_content_in_home('directory')
@@ -626,22 +594,6 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             folder_list_page.get_current_path,
             Eventually(Equals(self.home_dir)))
-
-    def test_go_home(self):
-        self._go_to_place('Home')
-
-        folder_list_page = self.main_view.get_folder_list_page()
-        self.assertThat(
-            folder_list_page.get_current_path,
-            Eventually(Equals(self.home_dir)))
-
-    def test_go_to_root(self):
-        self._go_to_place('File System')
-
-        folder_list_page = self.main_view.get_folder_list_page()
-        self.assertThat(
-            folder_list_page.get_current_path,
-            Eventually(Equals('/')))
 
     def test_file_context_menu_shows(self):
         """Checks to make sure that the file actions popover is shown."""

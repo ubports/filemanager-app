@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Canonical Ltd
+ * Copyright (C) 2013, 2014 Canonical Ltd
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -46,6 +46,7 @@ Sidebar {
         id: places
 
         ListElement {
+            objectName: "placeHome"
             path: "~"
         }
 
@@ -70,6 +71,7 @@ Sidebar {
         }
 
         ListElement {
+            objectName: "placeRoot"
             path: "/"
         }
     }
@@ -92,6 +94,7 @@ Sidebar {
             model: places
 
             delegate: Standard {
+                objectName: model.objectName
                 text: folderName(path)
 
                 Image {
