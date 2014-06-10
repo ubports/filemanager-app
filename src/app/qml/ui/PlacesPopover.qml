@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Canonical Ltd
+ * Copyright (C) 2013, 2014 Canonical Ltd
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -28,6 +28,7 @@ Popover {
         id: places
 
         ListElement {
+            objectName: 'placeHome'
             path: "~"
         }
 
@@ -52,6 +53,7 @@ Popover {
         }
 
         ListElement {
+            objectName: "placeRoot"
             path: "/"
         }
     }
@@ -114,6 +116,7 @@ Popover {
             model: places
 
             delegate: Standard {
+                objectName: model.objectName
                 property string name: folderName(path)
 
                 Label {

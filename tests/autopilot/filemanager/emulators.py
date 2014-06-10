@@ -1,6 +1,6 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 #
-# Copyright (C) 2013 Canonical Ltd.
+# Copyright (C) 2013, 2014 Canonical Ltd.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -16,17 +16,59 @@
 
 """File Manager app autopilot emulators."""
 
+import logging
 import re
 import time
 
+import autopilot.logging
 from autopilot import input
 from autopilot.introspection import dbus
-
 from ubuntuuitoolkit import emulators as toolkit_emulators
+
+from filemanager import _common
+
+logger = logging.getLogger(__name__)
 
 
 class MainView(toolkit_emulators.MainView):
     """File Manager MainView Autopilot emulator."""
+
+    @autopilot.logging.log_action(logger.info)
+    def go_to_place(self, object_name):
+        """Open one of the bookmarked place folders.
+
+        :param object_name: The objectName property of the place to open.
+
+        """
+        if self.showSidebar:
+            self._go_to_place_from_side_bar(object_name)
+        else:
+            self._go_to_place_from_popover(object_name)
+
+    def _go_to_place_from_side_bar(self, object_name):
+        side_bar = self.get_folder_list_page().get_sidebar()
+        side_bar.go_to_place(object_name)
+
+    def _go_to_place_from_popover(self, object_name):
+        popover = self.open_places()
+        place = popover.select_single('Standard', objectName=object_name)
+        self.pointing_device.click_object(place)
+
+    @autopilot.logging.log_action(logger.info)
+    def open_places(self):
+        if not self.showSidebar:
+            self.open_toolbar().click_button('places')
+            return self._get_places_popover()
+        else:
+            raise _common('The places popover cannot be opened on wide mode.')
+
+    def _get_places_popover(self):
+        """Return the Places popover."""
+        # XXX It would be easier if the places popover was an object
+        # that inherits from Popover, like the
+        # ActionSelectionPopover does.
+        # --elopio - 2013-07-25
+        return self.wait_select_single('Popover', objectName='placesPopover')
 
     def get_folder_list_page(self):
         """Return the FolderListPage emulator of the MainView."""
@@ -59,19 +101,6 @@ class MainView(toolkit_emulators.MainView):
                 return True
         except:
             return False
-
-    def get_places_popover(self):
-        """Return the Places popover."""
-        if not self.showSidebar:
-            # XXX It would be easier if the places popover was an object
-            # that inherits from Popover, like the
-            # ActionSelectionPopover does.
-            # --elopio - 2013-07-25
-            return self.wait_select_single('Popover',
-                                           objectName='placesPopover')
-        else:
-            raise ValueError(
-                'Places sidebar is hidden in wide mode.')
 
     def get_file_details_popover(self):
         """Return the FileDetailsPopover emulator."""
@@ -117,13 +146,15 @@ class MainView(toolkit_emulators.MainView):
 class PlacesSidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """PlacesSidebar Autopilot emulator."""
 
-    def get_place(self, text):
-        places = self.select_many('Standard')
-        for place in places:
-            if place.text == text:
-                return place
-        raise ValueError(
-            'Place "{0}" not found.'.format(text))
+    @autopilot.logging.log_action(logger.info)
+    def go_to_place(self, object_name):
+        """Open one of the bookmarked place folders.
+
+        :param object_name: The objectName property of the place to open.
+
+        """
+        place = self.select_single('Standard', objectName=object_name)
+        self.pointing_device.click_object(place)
 
 
 class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
@@ -169,6 +200,7 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
             'File with name "{0}" not found.'.format(name))
 
     def get_current_path(self):
+        """Get the path of the folder currently displayed."""
         if self.showingListView:
             return self.select_single(FolderListView).get_current_path()
         else:
