@@ -18,6 +18,7 @@
 
 import logging
 import os
+import shutil
 
 import fixtures
 from autopilot import logging as autopilot_logging
