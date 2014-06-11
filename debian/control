@@ -38,7 +38,7 @@ Description: Nemo QML plugin - folder list model
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.
  .
- This package contains the Folder List model plugin of the Nemo QML 
+ This package contains the Folder List model plugin of the Nemo QML
  plugins collection.
 
 Package: ubuntu-filemanager-app-autopilot
@@ -49,5 +49,6 @@ Depends: ${misc:Depends},
          ubuntu-filemanager-app (>= ${source:Version}),
          ubuntu-ui-toolkit-autopilot,
          python3-autopilot,
+         python3-fixtures,
 Description: Autopilot tests for File Manager Application
  This package contains the autopilot tests for the File Manager
