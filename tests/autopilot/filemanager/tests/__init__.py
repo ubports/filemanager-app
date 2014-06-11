@@ -114,11 +114,41 @@ class FileManagerTestCase(AutopilotTestCase):
             'com.ubuntu.filemanager',
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
+    def _copy_xauthority_file(self, directory):
+        """ Copy .Xauthority file to directory, if it exists in /home
+        """
+        xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
+        if os.path.isfile(xauth):
+            logger.debug("Copying .Xauthority to " + directory)
+            shutil.copyfile(
+                os.path.expanduser(os.path.join('~', '.Xauthority')),
+                os.path.join(directory, '.Xauthority'))
+
     def _patch_home(self):
-        """Mock /home for testing purposes to preserve user data."""
-        fake_home_fixture = toolkit_fixtures.FakeHome()
-        self.useFixture(fake_home_fixture)
-        return fake_home_fixture.directory
+        """ mock /home for testing purposes to preserve user data
+        """
+        temp_dir_fixture = fixtures.TempDir()
+        self.useFixture(temp_dir_fixture)
+        temp_dir = temp_dir_fixture.path
+
+        #If running under xvfb, as jenkins does,
+        #xsession will fail to start without xauthority file
+        #Thus if the Xauthority file is in the home directory
+        #make sure we copy it to our temp home directory
+        self._copy_xauthority_file(temp_dir)
+
+        #click requires using initctl env (upstart), but the desktop can set
+        #an environment variable instead
+        if self.test_type == 'click':
+            self.useFixture(toolkit_fixtures.InitctlEnvironmentVariable(
+                            HOME=temp_dir))
+        else:
+            self.useFixture(fixtures.EnvironmentVariable('HOME',
+                                                         newvalue=temp_dir))
+
+        logger.debug('Patched home to fake home directory ' + temp_dir)
+
+        return temp_dir
 
     @property
     def main_view(self):
