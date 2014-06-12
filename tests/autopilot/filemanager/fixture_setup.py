@@ -26,14 +26,20 @@ import fixtures
 logger = logging.getLogger(__name__)
 
 
-class TemporaryFileInHome(fixtures.Fixture):
-    """Create a temporafy file in the home directory."""
+class TemporaryFileInDirectory(fixtures.Fixture):
+    """Create a temporafy file in a specified directory."""
+
+    def __init__(self, parent_directory):
+        super(TemporaryFileInDirectory, self).__init__()
+        self.parent_directory = parent_directory
 
     def setUp(self):
-        super(TemporaryFileInHome, self).setUp()
+        super(TemporaryFileInDirectory, self).setUp()
         _, self.path = tempfile.mkstemp(
-            prefix='tmpfm', dir=os.environ.get('HOME'))
-        logger.debug('Created temporary file in HOME: {}'.format(self.path))
+            prefix='tmpfm', dir=self.parent_directory)
+        logger.debug(
+            'Created temporary file {} in {}.'.format(
+                self.path, self.parent_directory))
         self.addCleanup(self.delete_file, self.path)
 
     @autopilot.logging.log_action(logger.info)
@@ -46,15 +52,20 @@ class TemporaryFileInHome(fixtures.Fixture):
             logger.debug('File does not exist.')
 
 
-class TemporaryDirectoryInHome(fixtures.Fixture):
-    """Create a temporary directory in the home directory."""
+class TemporaryDirectoryInDirectory(fixtures.Fixture):
+    """Create a temporary directory in a specified directory."""
+
+    def __init__(self, parent_directory):
+        super(TemporaryDirectoryInDirectory, self).__init__()
+        self.parent_directory = parent_directory
 
     def setUp(self):
-        super(TemporaryDirectoryInHome, self).setUp()
+        super(TemporaryDirectoryInDirectory, self).setUp()
         self.path = tempfile.mkdtemp(
-            prefix='tmpfm', dir=os.environ.get('HOME'))
+            prefix='tmpfm', dir=self.parent_directory)
         logger.debug(
-            'Created temporary directory in HOME: {}'.format(self.path))
+            'Created temporary directory {} in parent directory {}'.format(
+                self.path, self.parent_directory))
         self.addCleanup(self.delete_directory, self.path)
 
     @autopilot.logging.log_action(logger.info)

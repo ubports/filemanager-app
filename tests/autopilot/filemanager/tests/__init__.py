@@ -165,11 +165,12 @@ class FileManagerTestCase(AutopilotTestCase):
         if type_ != 'file' and type_ != 'directory':
             raise ValueError('Unknown content type: "{0}"', type_)
         if type_ == 'file':
-            temp_file = fixture_setup.TemporaryFileInHome()
+            temp_file = fixture_setup.TemporaryFileInDirectory(self.home_dir)
             self.useFixture(temp_file)
             path = temp_file.path
         else:
-            temp_dir = fixture_setup.TemporaryDirectoryInHome()
+            temp_dir = fixture_setup.TemporaryDirectoryInDirectory(
+                self.home_dir)
             self.useFixture(temp_dir)
             path = temp_dir.path
         logger.debug('Directory Listing for HOME\n%s' %
