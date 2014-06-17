@@ -2,6 +2,7 @@
 #define XDGUSERDIR_H
 
 #include <QObject>
+#include <QAbstractListModel>
 #include <QStandardPaths>
 
 class XdgUserDir : public QAbstractListModel
@@ -16,7 +17,7 @@ class XdgUserDir : public QAbstractListModel
     Q_PROPERTY(QString locationVideos READ locationVideos CONSTANT)
 
 public:
-    explicit XdgUserDir(QObject *parent = 0);
+    explicit XdgUserDir(QAbstractListModel *parent = 0);
     ~XdgUserDir();
     QString locationHome() const;
     QString locationDocuments() const;
@@ -24,9 +25,9 @@ public:
     QString locationMusic() const;
     QString locationPictures() const;
     QString locationVideos() const;
-    int rowCount(const QAbstractListModel &parent);
-    data(const QModelIndex &index, int role);
-    QHash<int, QByteArray> roleNames() const;
+    int rowCount(const QAbstractListModel &parent) const override;
+    QString data(const QModelIndex &index, int role) const override;
+    QHash<int, QByteArray> roleNames() const override;
 
 private:
     QString standardLocation(QStandardPaths::StandardLocation location) const;

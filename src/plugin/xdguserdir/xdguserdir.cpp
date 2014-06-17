@@ -59,24 +59,25 @@ QString XdgUserDir::locationVideos() const
     return XdgUserDir::standardLocation(QStandardPaths::MoviesLocation);
 }
 
-int rowCount(const QAbstractListModel &parent)
+int rowCount(const QAbstractListModel &parent) const override
 {
     return 6;
 }
 
-QVariant data(const QModelIndex &index, int role)
+QVariant data(const QModelIndex &index, int role) const override
 {
     switch(index.row()) {
-        case 0: return locationHome();
-        case 1: return locationDocuments();
-        case 2: return locationDownloads();
-        case 3: return locationMusic();
-        case 4: return locationPictures();
-        case 5: return locationVideos();
+        case 0: return XdgUserDir::locationHome();
+        case 1: return XdgUserDir::locationDocuments();
+        case 2: return XdgUserDir::locationDownloads();
+        case 3: return XdgUserDir::locationMusic();
+        case 4: return XdgUserDir::locationPictures();
+        case 5: return XdgUserDir::locationVideos();
     }
 }
 
-QHash<int, QByteArray> roleNames() const {
+QHash<int, QByteArray> roleNames() const override
+{
     QHash<int, QByteArray> roles;
     roles.insert("path");
 
