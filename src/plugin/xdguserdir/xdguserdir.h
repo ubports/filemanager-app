@@ -25,8 +25,8 @@ public:
     QString locationMusic() const;
     QString locationPictures() const;
     QString locationVideos() const;
-    int rowCount(const QAbstractListModel &parent) const override;
-    QString data(const QModelIndex &index, int role) const override;
+    int rowCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
 
 private:
