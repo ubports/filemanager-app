@@ -45,10 +45,32 @@ public:
 
     virtual DirItemInfo *validateUrlPath(const QString& urlPath);
 
+    /*!
+     * \brief getMovePairPaths() Get: original path and destination trash path
+     *
+     *
+     * \param item desired item to be moved into Trash
+     *
+     * \return an \ref ActionPaths that contains the source orginal file and
+     *                 the suitable Trash path where the source will moved into
+     */
+    ActionPaths         getMovePairPaths(const DirItemInfo& item) const;
+
+    /*!
+     * \brief getRestorePairPaths() Get: Trash path as source and item original path as destination
+     *
+     * \param item desired to be restored from Trash
+     *
+     * \return n \ref ActionPaths that contains the thash item and
+     *                 the original source path as destionation
+     */
+    ActionPaths         getRestorePairPaths(const DirItemInfo& item) const;
+
 private:
     void               addTrashFetchRequest(TrashListWorker *workerObject);
 
 private:
+    ActionPathList     m_actionPathList;
     QStringList        m_currentPaths;  //!< also used in the startExternalFsWatcher(), it can br activated any time
 };
 

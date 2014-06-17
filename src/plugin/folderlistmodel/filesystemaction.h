@@ -108,6 +108,9 @@ public slots:
     void     pathChanged(const QString& path);   
     void     copyIntoCurrentPath(const QStringList& items);
     void     moveIntoCurrentPath(const QStringList& items);
+    void     moveToTrash(const ActionPathList& pairPaths );
+    void     restoreFromTrash(const ActionPathList& pairPaths);
+    void     removeFromTrash(const QStringList& paths);
     void     onClipboardChanged();
 
 
@@ -134,7 +137,10 @@ private slots:
        ActionCopy,
        ActionMove,
        ActionHardMoveCopy,
-       ActionHardMoveRemove
+       ActionHardMoveRemove,
+       ActionMoveToTrash,
+       ActionRestoreFromTrash,
+       ActionRemoveFromTrash
    };
 
    void     createAndProcessAction(ActionType actionType, const QStringList& paths);
@@ -227,7 +233,9 @@ private:
    bool     makeBackupNameForCurrentItem(ActionEntry *entry);
    bool     endCopySingleFile();
    bool     isThereDiskSpace(const ActionEntry *entry, qint64 requiredSize);
-   void     queueAction(Action *myAction);  
+   void     queueAction(Action *myAction);
+   void     createTrashInfoFileFromEntry(ActionEntry *entry);
+   void     removeTrashInfoFileFromEntry(ActionEntry *entry);
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
    bool     m_forceUsingOtherFS;

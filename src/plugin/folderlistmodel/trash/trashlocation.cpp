@@ -258,3 +258,31 @@ void TrashLocation::startWorking()
 {
    // do nothing, the startExternalFsWatcher() is called in fetchItems()
 }
+
+
+ActionPaths
+TrashLocation::getRestorePairPaths(const DirItemInfo& item)  const
+{
+    const TrashItemInfo* ptrash = static_cast<const TrashItemInfo*> (&item);
+    QTrashUtilInfo trashInfo;
+
+    trashInfo.setInfo(ptrash->getRootTrashDir(), ptrash->absoluteFilePath());
+
+    ActionPaths ret(ptrash->absoluteFilePath());
+    ret.setTargetFullName(trashInfo.getOriginalPathName());
+
+    return ret;
+}
+
+
+ActionPaths
+TrashLocation::getMovePairPaths(const DirItemInfo &item) const
+{
+    ActionPaths ret(item.absoluteFilePath());
+
+    QTrashUtilInfo trashInfo;
+    trashInfo.setInfo(suitableTrash(item.absoluteFilePath()), item.absoluteFilePath());
+
+    ret.setTargetFullName( trashInfo.absFile );
+    return ret;
+}
