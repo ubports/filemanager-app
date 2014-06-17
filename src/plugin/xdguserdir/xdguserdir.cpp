@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2013 Canonical Ltd
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author : David Planella <david.planella@ubuntu.com>
+ */
+
 #include "xdguserdir.h"
 #include <QDebug>
 #include <QDir>
@@ -59,13 +77,16 @@ QString XdgUserDir::locationVideos() const
     return standardLocation(QStandardPaths::MoviesLocation);
 }
 
-int rowCount(const QModelIndex &parent) const override
+int XdgUserDir::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return 6;
 }
 
-QVariant data(const QModelIndex &index, int role) const override
+QVariant XdgUserDir::data(const QModelIndex &index, int role) const
 {
+    Q_UNUSED(role)
+
     switch(index.row()) {
         case 0: return locationHome();
         case 1: return locationDocuments();
@@ -74,12 +95,14 @@ QVariant data(const QModelIndex &index, int role) const override
         case 4: return locationPictures();
         case 5: return locationVideos();
     }
+
+    return QVariant();
 }
 
-QHash<int, QByteArray> roleNames() const override
+QHash<int, QByteArray> XdgUserDir::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles.insert("path");
+    roles.insert(Qt::UserRole, "path");
 
     return roles;
  }

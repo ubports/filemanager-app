@@ -47,20 +47,6 @@ Sidebar {
        id: userdirs
     }
 
-    ListModel {
-        id: places
-
-        Component.onCompleted: {
-            append({ objectName: "placeHome", path: userdirs.locationHome })
-            append({ objectName: "placeDocuments", path: userdirs.locationDocuments })
-            append({ objectName: "placeDownloads", path: userdirs.locationDownloads })
-            append({ objectName: "placeMusic", path: userdirs.locationMusic })
-            append({ objectName: "placePictures", path: userdirs.locationPictures })
-            append({ objectName: "placeVideos", path: userdirs.locationVideos })
-            append({ objectName: "placeRoot", path: "/" })
-        }
-    }
-
     Column {
         anchors {
             left: parent.left
@@ -76,7 +62,7 @@ Sidebar {
             id: placesList
             objectName: "placesList"
 
-            model: places
+            model: userdirs
 
             delegate: Standard {
                 objectName: model.objectName
