@@ -208,7 +208,7 @@ Page {
         path: folderListPage.folder
 
         onPathChanged: {
-            console.log("Path: " + repeaterModel.path)
+            console.log("Path changed to: " + repeaterModel.path)
         }
     }
 
