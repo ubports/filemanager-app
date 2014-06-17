@@ -21,6 +21,7 @@ import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 0.1
 import Ubuntu.Unity.Action 1.0 as UnityActions
 import U1db 1.0 as U1db
+import com.canonical.xdguserdir 1.0
 
 import "ui"
 
@@ -59,6 +60,12 @@ MainView {
     headerColor: "#464646"
     backgroundColor: "#797979"
     footerColor: "#808080"
+
+    XdgUserDir {
+       id: userdir
+
+       Component.onCompleted: console.log(userdir.getLocation(XdgUserDir.Home));
+    }
 
     // HUD Actions
     Action {
