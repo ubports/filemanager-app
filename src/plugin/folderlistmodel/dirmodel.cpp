@@ -1617,6 +1617,36 @@ void DirModel::restoreIndexesFromTrash(const QList<int> &items)
 }
 
 
+void DirModel::copySelection()
+{
+    copyPaths(selectionObject()->selectedAbsFilePaths());
+}
+
+
+void DirModel::cutSelection()
+{
+    cutPaths(selectionObject()->selectedAbsFilePaths());
+}
+
+
+void DirModel::removeSelection()
+{
+    removePaths(selectionObject()->selectedAbsFilePaths());
+}
+
+
+void DirModel::moveSelectionToTrash()
+{
+    moveIndexesToTrash(selectionObject()->selectedIndexes());
+}
+
+
+void DirModel::restoreSelectionFromTrash()
+{
+    restoreIndexesFromTrash(selectionObject()->selectedIndexes());
+}
+
+
 #ifndef DO_NOT_USE_TAG_LIB
 QVariant DirModel::getAudioMetaData(const QFileInfo& fi, int role) const
 {

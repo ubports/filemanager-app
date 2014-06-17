@@ -295,7 +295,32 @@ public:
     Q_INVOKABLE  void  restoreIndexFromTrash(int index);
                  void  restoreIndexesFromTrash(const QList<int>&);
 
-public slots:    
+public slots:
+  /*!
+     * \brief copySelection() copy selected items to the clipboard
+     */
+    void  copySelection();
+
+    /*!
+     * \brief cutSelection() cut selected items to the clipboard
+     */
+    void  cutSelection();
+
+    /*!
+     * \brief removeSelection() remove selected items, it handles Trash items
+     */
+    void  removeSelection();
+    
+    /*!
+     * \brief moveSelectionToTrash() move selected items from Local Disk (only) to Local Trash
+     */
+    void  moveSelectionToTrash();
+
+    /*!
+     * \brief restoreSelectionFromTrash() restore selected trash items to their orginal location
+     */
+    void  restoreSelectionFromTrash();
+
     /*!
      * \brief restoreTrash() restore all items being actually browsed in the Trash
      *
@@ -405,7 +430,8 @@ private:
 private:
     void          startExternalFsWatcher();
     void          stoptExternalFsWatcher();
-    void          clear();
+    void          clear();   
+
 private slots:
     void          onItemAddedOutsideFm(const DirItemInfo&fi);
     void          onItemRemovedOutSideFm(const DirItemInfo&);
