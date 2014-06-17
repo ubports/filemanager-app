@@ -73,11 +73,6 @@ class FileManagerTestCase(AutopilotTestCase):
         self.pointing_device = Pointer(self.input_device_class.create())
         super(FileManagerTestCase, self).setUp()
 
-        #turn off the OSK so it doesn't block screen elements
-        if model() != 'Desktop':
-            os.system('stop maliit-server')
-            self.addCleanup(os.system, 'start maliit-server')
-
         self.original_file_count = \
             len([i for i in os.listdir(self.home_dir)
                  if not i.startswith('.')])
