@@ -62,9 +62,7 @@ MainView {
     footerColor: "#808080"
 
     XdgUserDir {
-       id: userdir
-
-       Component.onCompleted: console.log(userdir.getLocation(XdgUserDir.Home));
+       id: userdirs
     }
 
     // HUD Actions
@@ -79,7 +77,7 @@ MainView {
 
     property var pageStack: pageStack
 
-    property var folderTabs: ["~"]
+    property var folderTabs: [userdirs.locationHome]
 
     function openTab(folder) {
         var list = folderTabs
@@ -107,7 +105,7 @@ MainView {
                 page: FolderListPage {
                     objectName: "folderPage"
 
-                    folder: "~"//modelData
+                    folder: userdirs.locationHome //modelData
                 }
             }
 

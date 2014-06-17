@@ -20,6 +20,7 @@ import QtGraphicalEffects 1.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.ListItems 0.1
 import Ubuntu.Components.Popups 0.1
+import com.canonical.xdguserdir 1.0
 
 Sidebar {
     id: root
@@ -42,37 +43,21 @@ Sidebar {
         UbuntuNumberAnimation {}
     }
 
+    XdgUserDir {
+       id: userdirs
+    }
+
     ListModel {
         id: places
 
-        ListElement {
-            objectName: "placeHome"
-            path: "~"
-        }
-
-        ListElement {
-            path: "~/Documents"
-        }
-
-        ListElement {
-            path: "~/Downloads"
-        }
-
-        ListElement {
-            path: "~/Music"
-        }
-
-        ListElement {
-            path: "~/Pictures"
-        }
-
-        ListElement {
-            path: "~/Videos"
-        }
-
-        ListElement {
-            objectName: "placeRoot"
-            path: "/"
+        Component.onCompleted: {
+            append({ objectName: "placeHome", path: userdirs.locationHome })
+            append({ objectName: "placeDocuments", path: userdirs.locationDocuments })
+            append({ objectName: "placeDownloads", path: userdirs.locationDownloads })
+            append({ objectName: "placeMusic", path: userdirs.locationMusic })
+            append({ objectName: "placePictures", path: userdirs.locationPictures })
+            append({ objectName: "placeVideos", path: userdirs.locationVideos })
+            append({ objectName: "placeRoot", path: "/" })
         }
     }
 
