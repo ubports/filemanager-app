@@ -19,10 +19,41 @@
 #include "placesmodel.h"
 #include <QDebug>
 #include <QDir>
+#include <QAbstractItemModel>
+#include <QCoreApplication>
+#include <QStandardPaths>
+#include <QDebug>
 
 PlacesModel::PlacesModel(QAbstractListModel *parent) :
     QAbstractListModel(parent)
 {
+
+    QStringList defaultLocations;
+    // Set the storage location to a path that works well
+    // with app isolation
+    QString settingsLocation =
+            QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first()
+            + "/" + QCoreApplication::applicationName() + "/" + "places.conf";
+    m_settings = new QSettings(settingsLocation, QSettings::IniFormat, this);
+
+    // Prepopulate the model with the user locations
+    // for the first time it's used
+    defaultLocations.append(locationHome());
+    defaultLocations.append(locationDocuments());
+    defaultLocations.append(locationDownloads());
+    defaultLocations.append(locationMusic());
+    defaultLocations.append(locationPictures());
+    defaultLocations.append(locationVideos());
+
+    if (!m_settings->contains("storedLocations")) {
+        m_locations.append(defaultLocations);
+    } else {
+        m_locations = m_settings->value("storedLocations").toStringList();
+    }
+
+    foreach (const QString &location, m_locations) {
+        qDebug() << "Location: " << location;
+    }
 
 }
 
@@ -80,23 +111,15 @@ QString PlacesModel::locationVideos() const
 int PlacesModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return 6;
+
+    return m_locations.count();
 }
 
 QVariant PlacesModel::data(const QModelIndex &index, int role) const
 {
     Q_UNUSED(role)
 
-    switch(index.row()) {
-        case 0: return locationHome();
-        case 1: return locationDocuments();
-        case 2: return locationDownloads();
-        case 3: return locationMusic();
-        case 4: return locationPictures();
-        case 5: return locationVideos();
-    }
-
-    return QVariant();
+    return m_locations.at(index.row());
 }
 
 QHash<int, QByteArray> PlacesModel::roleNames() const
@@ -105,4 +128,47 @@ QHash<int, QByteArray> PlacesModel::roleNames() const
     roles.insert(Qt::UserRole, "path");
 
     return roles;
- }
+}
+
+void PlacesModel::removeItem(int indexToRemove)
+{
+
+    // Tell Qt that we're going to be changing the model
+    // There's no tree-parent, first new item will be at
+    // indexToRemove, and the last one too
+    beginRemoveRows(QModelIndex(), indexToRemove, indexToRemove);
+
+    // Remove the actual location
+    m_locations.removeAt(indexToRemove);
+
+    // Tell Qt we're done with modifying the model so that
+    // it can update the UI and everything else to reflect
+    // the new state
+    endRemoveRows();
+
+    // Remove the location permanently
+    m_settings->setValue("storedLocations", m_locations);
+}
+
+void PlacesModel::addLocation(const QString &location)
+{
+    // Do not allow for duplicates
+    if (!m_locations.contains(location)) {
+        // Tell Qt that we're going to be changing the model
+        // There's no tree-parent, first new item will be at
+        // m_locations.count(), and the last one too
+        beginInsertRows(QModelIndex(), m_locations.count(), m_locations.count());
+
+        // Append the actual location
+        m_locations.append(location);
+
+
+        // Tell Qt we're done with modifying the model so that
+        // it can update the UI and everything else to reflect
+        // the new state
+        endInsertRows();
+
+        // Store the location permanently
+        m_settings->setValue("storedLocations", m_locations);
+    }
+}

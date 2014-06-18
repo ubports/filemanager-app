@@ -54,11 +54,21 @@ Sidebar {
             text: i18n.tr("Places")
         }
 
+        PlacesModel {
+            id: userplaces
+
+            // By default, the model only contains the
+            // user directories. Add the file system location too
+            Component.onCompleted: {
+                addLocation("/");
+            }
+        }
+
         Repeater {
             id: placesList
             objectName: "placesList"
 
-            model: PlacesModel {}
+            model: userplaces
 
             delegate: Standard {
                 objectName: model.objectName

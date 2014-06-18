@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QAbstractListModel>
 #include <QStandardPaths>
+#include <QSettings>
 
 class PlacesModel : public QAbstractListModel
 {
@@ -47,8 +48,14 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
 
+public slots:
+    void addLocation(const QString &location);
+    void removeItem(int indexToRemove);
+
 private:
     QString standardLocation(QStandardPaths::StandardLocation location) const;
+    QStringList m_locations;
+    QSettings *m_settings;
 };
 
 #endif // PLACESMODEL_H
