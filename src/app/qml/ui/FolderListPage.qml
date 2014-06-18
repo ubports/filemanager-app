@@ -20,7 +20,7 @@ import Ubuntu.Components 0.1
 import Ubuntu.Components.Popups 0.1
 import Ubuntu.Components.ListItems 0.1
 import org.nemomobile.folderlistmodel 1.0
-import com.ubuntu.XdgUserDirs 0.1
+import com.ubuntu.PlacesModel 0.1
 import "../components"
 
 Page {
@@ -64,7 +64,7 @@ Page {
         }
     }
 
-    XdgUserDirs { id: userdirs }
+    PlacesModel { id: userplaces }
 
     property string folder
     property string path: folder
@@ -72,7 +72,7 @@ Page {
     function goTo(location) {
         // This allows us to enter "~" as a shortcut to the home folder
         // when entering a location on the Go To dialog
-        folderListPage.folder = location.replace("~", userdirs.locationHome)
+        folderListPage.folder = location.replace("~", userplaces.locationHome)
         refresh()
     }
 
@@ -105,17 +105,17 @@ Page {
         var iconPath = isDir ? "/usr/share/icons/Humanity/places/48/folder.svg"
                              : "/usr/share/icons/Humanity/mimes/48/empty.svg"
 
-        if (file === userdirs.locationHome) {
+        if (file === userplaces.locationHome) {
             iconPath = "../icons/folder-home.svg"
         } else if (file === i18n.tr("~/Desktop")) {
             iconPath = "/usr/share/icons/Humanity/places/48/user-desktop.svg"
-        } else if (file === userdirs.locationDocuments) {
+        } else if (file === userplaces.locationDocuments) {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-documents.svg"
-        } else if (file === userdirs.locationDownloads) {
+        } else if (file === userplaces.locationDownloads) {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-downloads.svg"
-        } else if (file === userdirs.locationMusic) {
+        } else if (file === userplaces.locationMusic) {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-music.svg"
-        } else if (file === userdirs.locationPictures) {
+        } else if (file === userplaces.locationPictures) {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-pictures.svg"
         } else if (file === i18n.tr("~/Public")) {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-publicshare.svg"
@@ -123,7 +123,7 @@ Page {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-system.svg"
         } else if (file === i18n.tr("~/Templates")) {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-templates.svg"
-        } else if (file === userdirs.locationVideos) {
+        } else if (file === userplaces.locationVideos) {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-videos.svg"
         } else if (file === "/") {
             iconPath = "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
@@ -134,7 +134,7 @@ Page {
 
     function folderName(folder) {
 
-        if (folder === userdirs.locationHome) {
+        if (folder === userplaces.locationHome) {
             return i18n.tr("Home")
         } else if (folder === "/") {
             return i18n.tr("File System")

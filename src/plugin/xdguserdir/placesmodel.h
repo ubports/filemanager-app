@@ -16,14 +16,14 @@
  * Author : David Planella <david.planella@ubuntu.com>
  */
 
-#ifndef XDGUSERDIR_H
-#define XDGUSERDIR_H
+#ifndef PLACESMODEL_H
+#define PLACESMODEL_H
 
 #include <QObject>
 #include <QAbstractListModel>
 #include <QStandardPaths>
 
-class XdgUserDir : public QAbstractListModel
+class PlacesModel : public QAbstractListModel
 {
     Q_OBJECT
 
@@ -35,8 +35,8 @@ class XdgUserDir : public QAbstractListModel
     Q_PROPERTY(QString locationVideos READ locationVideos CONSTANT)
 
 public:
-    explicit XdgUserDir(QAbstractListModel *parent = 0);
-    ~XdgUserDir();
+    explicit PlacesModel(QAbstractListModel *parent = 0);
+    ~PlacesModel();
     QString locationHome() const;
     QString locationDocuments() const;
     QString locationDownloads() const;
@@ -51,7 +51,7 @@ private:
     QString standardLocation(QStandardPaths::StandardLocation location) const;
 };
 
-#endif // XDGUSERDIR_H
+#endif // PLACESMODEL_H
 
 
 

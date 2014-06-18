@@ -1,2 +1,2 @@
-module com.ubuntu.XdgUserDirs
-plugin XdgUserDirs
+module com.ubuntu.PlacesModel
+plugin PlacesModel

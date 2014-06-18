@@ -16,21 +16,21 @@
  * Author : David Planella <david.planella@ubuntu.com>
  */
 
-#include "xdguserdir.h"
+#include "placesmodel.h"
 #include <QDebug>
 #include <QDir>
 
-XdgUserDir::XdgUserDir(QAbstractListModel *parent) :
+PlacesModel::PlacesModel(QAbstractListModel *parent) :
     QAbstractListModel(parent)
 {
 
 }
 
-XdgUserDir::~XdgUserDir() {
+PlacesModel::~PlacesModel() {
 
 }
 
-QString XdgUserDir::standardLocation(QStandardPaths::StandardLocation location) const
+QString PlacesModel::standardLocation(QStandardPaths::StandardLocation location) const
 {
     QStringList locations = QStandardPaths::standardLocations(location);
     QString standardLocation = "";
@@ -47,43 +47,43 @@ QString XdgUserDir::standardLocation(QStandardPaths::StandardLocation location) 
     return standardLocation;
 }
 
-QString XdgUserDir::locationHome() const
+QString PlacesModel::locationHome() const
 {
     return standardLocation(QStandardPaths::HomeLocation);
 }
 
-QString XdgUserDir::locationDocuments() const
+QString PlacesModel::locationDocuments() const
 {
     return standardLocation(QStandardPaths::DocumentsLocation);
 }
 
-QString XdgUserDir::locationDownloads() const
+QString PlacesModel::locationDownloads() const
 {
     return standardLocation(QStandardPaths::DownloadLocation);
 }
 
-QString XdgUserDir::locationMusic() const
+QString PlacesModel::locationMusic() const
 {
     return standardLocation(QStandardPaths::MusicLocation);
 }
 
-QString XdgUserDir::locationPictures() const
+QString PlacesModel::locationPictures() const
 {
     return standardLocation(QStandardPaths::PicturesLocation);
 }
 
-QString XdgUserDir::locationVideos() const
+QString PlacesModel::locationVideos() const
 {
     return standardLocation(QStandardPaths::MoviesLocation);
 }
 
-int XdgUserDir::rowCount(const QModelIndex &parent) const
+int PlacesModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return 6;
 }
 
-QVariant XdgUserDir::data(const QModelIndex &index, int role) const
+QVariant PlacesModel::data(const QModelIndex &index, int role) const
 {
     Q_UNUSED(role)
 
@@ -99,7 +99,7 @@ QVariant XdgUserDir::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QHash<int, QByteArray> XdgUserDir::roleNames() const
+QHash<int, QByteArray> PlacesModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles.insert(Qt::UserRole, "path");

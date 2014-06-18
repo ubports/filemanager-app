@@ -18,14 +18,14 @@
 
 #include <QtQml>
 #include <QtQml/QQmlContext>
-#include "xdguserdir_plugin.h"
-#include "xdguserdir.h"
+#include "placesmodel_plugin.h"
+#include "placesmodel.h"
 
 void BackendPlugin::registerTypes(const char *uri)
 {
     Q_ASSERT(uri == QLatin1String(QUOTES(PLUGIN_URI)));
 
-    qmlRegisterType<XdgUserDir>(uri, 0, 1, "XdgUserDirs");
+    qmlRegisterType<PlacesModel>(uri, 0, 1, "PlacesModel");
 }
 
 void BackendPlugin::initializeEngine(QQmlEngine *engine, const char *uri)

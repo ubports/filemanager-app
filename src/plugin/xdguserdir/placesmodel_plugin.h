@@ -16,8 +16,8 @@
  * Author : David Planella <david.planella@ubuntu.com>
  */
 
-#ifndef XDGUSERDIR_PLUGIN_H
-#define XDGUSERDIR_PLUGIN_H
+#ifndef PLACESMODEL_PLUGIN_H
+#define PLACESMODEL_PLUGIN_H
 
 #include <QtQml/QQmlEngine>
 #include <QtQml/QQmlExtensionPlugin>
@@ -31,7 +31,7 @@ public:
     void registerTypes(const char *uri);
     void initializeEngine(QQmlEngine *engine, const char *uri);
 };
-#endif // XDGUSERDIR_PLUGIN_H
+#endif // PLACESMODEL_PLUGIN_H
 
 
 

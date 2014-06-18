@@ -19,7 +19,7 @@ import QtQuick 2.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.Popups 0.1
 import Ubuntu.Components.ListItems 0.1
-import com.ubuntu.XdgUserDirs 0.1
+import com.ubuntu.PlacesModel 0.1
 
 Popover {
     id: root
@@ -80,7 +80,7 @@ Popover {
             id: placesList
             objectName: "placesList"
 
-            model: XdgUserDirs {}
+            model: PlacesModel {}
 
             delegate: Standard {
                 objectName: model.objectName
