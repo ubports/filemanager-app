@@ -20,7 +20,7 @@ import QtGraphicalEffects 1.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.ListItems 0.1
 import Ubuntu.Components.Popups 0.1
-import com.canonical.xdguserdir 1.0
+import com.ubuntu.XdgUserDirs 0.1
 
 Sidebar {
     id: root
@@ -43,10 +43,6 @@ Sidebar {
         UbuntuNumberAnimation {}
     }
 
-    XdgUserDir {
-       id: userdirs
-    }
-
     Column {
         anchors {
             left: parent.left
@@ -62,7 +58,7 @@ Sidebar {
             id: placesList
             objectName: "placesList"
 
-            model: userdirs
+            model: XdgUserDirs {}
 
             delegate: Standard {
                 objectName: model.objectName

@@ -25,7 +25,7 @@ void BackendPlugin::registerTypes(const char *uri)
 {
     Q_ASSERT(uri == QLatin1String(QUOTES(PLUGIN_URI)));
 
-    qmlRegisterType<XdgUserDir>(uri, 1, 0, "XdgUserDir");
+    qmlRegisterType<XdgUserDir>(uri, 0, 1, "XdgUserDirs");
 }
 
 void BackendPlugin::initializeEngine(QQmlEngine *engine, const char *uri)

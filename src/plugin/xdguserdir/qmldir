@@ -1,2 +1,2 @@
-module com.canonical.xdguserdir
-plugin xdguserdir
+module com.ubuntu.XdgUserDirs
+plugin XdgUserDirs
