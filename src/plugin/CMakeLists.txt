@@ -5,4 +5,4 @@ find_package(Qt5Quick)
 find_package(Qt5Widgets)
 
 add_subdirectory(folderlistmodel)
-add_subdirectory(xdguserdir)
+add_subdirectory(placesmodel)
