@@ -49,6 +49,12 @@ class MainView(toolkit_emulators.MainView):
         side_bar = self.get_folder_list_page().get_sidebar()
         side_bar.go_to_place(object_name)
 
+    def get_folder_list_page(self):
+        """Return the FolderListPage emulator of the MainView."""
+        page = self.wait_select_single(FolderListPage)
+        page.main_view = self
+        return page
+
     def _go_to_place_from_popover(self, object_name):
         popover = self.open_places()
         place = popover.select_single('Standard', objectName=object_name)
@@ -70,11 +76,41 @@ class MainView(toolkit_emulators.MainView):
         # --elopio - 2013-07-25
         return self.wait_select_single('Popover', objectName='placesPopover')
 
-    def get_folder_list_page(self):
-        """Return the FolderListPage emulator of the MainView."""
-        page = self.wait_select_single(FolderListPage)
-        page.main_view = self
-        return page
+    @autopilot.logging.log_action(logger.info)
+    def rename(self, original_name, new_name):
+        """Rename a file or directory.
+
+        :param original_name: The name of the file or directory to rename.
+        :param new_name: The new name to set for the file or directory.
+
+        """
+        actions_popover = self.open_actions(original_name)
+        actions_popover.click_button_by_text('Rename')
+        confirm_dialog = self.wait_select_single(ConfirmDialogWithInput)
+        confirm_dialog.enter_text(new_name)
+        confirm_dialog.ok()
+
+    @autopilot.logging.log_action(logger.info)
+    def open_actions(self, name):
+        """Open the list of available actions of a file or directory."""
+        folder_list_page = self.get_folder_list_page()
+        folder_list_page.open_file_actions(name)
+        actions_popover = self.get_action_selection_popover(
+            'fileActionsPopover')
+        actions_popover.visible.wait_for(True)
+        return actions_popover
+
+    @autopilot.logging.log_action(logger.info)
+    def delete(self, name):
+        """Delete a file or directory.
+
+        :param name: The name of the file or directory to delete.
+
+        """
+        actions_popover = self.open_actions(name)
+        actions_popover.click_button_by_text('Delete')
+        confirm_dialog = self.wait_select_single(ConfirmDialog)
+        confirm_dialog.ok()
 
     def get_file_actions_popover(self):
         """Return the ActionSelectionPopover emulator of the file actions."""
@@ -159,6 +195,27 @@ class PlacesSidebar(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
 class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderListPage Autopilot emulator."""
+
+    def open_file_actions(self, name):
+        """Open the actions menu of a file or folder.
+
+        :param name: The name of the file or folder.
+
+        """
+        delegate = self.get_file_by_name(name)
+        delegate.open_actions_popover()
+
+    def get_files_and_folders(self):
+        """Return the list of files and folders of the opened directory.
+
+        The list returned will contain the names of the files and folders.
+
+        """
+        if self.showingListView:
+            view = self.select_single(FolderListView)
+        else:
+            view = self.select_single(FolderIconView)
+        return view.get_files_and_folders()
 
     def get_number_of_files_from_list(self):
         """Return the number of files shown on the folder."""
@@ -252,6 +309,16 @@ class FolderListView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         _, number_of_files = self._split_header_text()
         return int(number_of_files)
 
+    def get_files_and_folders(self):
+        """Return the list of files and folders of the opened directory."""
+        list_delegates = self.select_many(FolderListDelegate)
+        # sort by y, x
+        list_delegates = sorted(
+            list_delegates,
+            key=lambda item: (item.globalRect.y, item.globalRect.x))
+
+        return [item.fileName for item in list_delegates]
+
 
 class FolderIconView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderListView Autopilot emulator."""
@@ -277,6 +344,16 @@ class FolderIconView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     def get_number_of_files(self):
         _, number_of_files = self._split_header_text()
         return int(number_of_files)
+
+    def get_files_and_folders(self):
+        """Return the list of files and folders of the opened directory."""
+        icon_delegates = self.select_many(FolderIconDelegate)
+        # sort by y, x
+        icon_delegates = sorted(
+            icon_delegates,
+            key=lambda icon: (icon.globalRect.y, icon.globalRect.x))
+
+        return [icon.fileName for icon in icon_delegates]
 
 
 class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
@@ -391,27 +468,12 @@ class ConfirmDialogWithInput(ConfirmDialog):
         self.keyboard = input.Keyboard.create()
 
     def enter_text(self, text, clear=True):
-        if clear:
-            self.clear_text()
         text_field = self._select_text_field()
-        self.pointing_device.click_object(text_field)
-        self.keyboard.type(text)
-        text_field.text.wait_for(text)
-
-    def clear_text(self):
-        text_field = self._select_text_field()
-        # XXX The clear button doesn't have an objectName. Reported on
-        # https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1205208
-        # --elopio - 2013-07-25
-        clear_button = text_field.select_single('AbstractButton')
-        # XXX for some reason, we need to click the button twice.
-        # More investigation is needed. --elopio - 2013-07-25
-        self.pointing_device.click_object(clear_button)
-        self.pointing_device.click_object(clear_button)
-        text_field.text.wait_for('')
+        text_field.write(text, clear)
 
     def _select_text_field(self):
-        return self.select_single('TextField', objectName='inputField')
+        return self.select_single(
+            toolkit_emulators.TextField, objectName='inputField')
 
 
 class Dialog(ConfirmDialogWithInput):
