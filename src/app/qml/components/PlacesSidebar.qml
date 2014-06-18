@@ -71,7 +71,7 @@ Sidebar {
             model: userplaces
 
             delegate: Standard {
-                objectName: model.objectName
+                objectName: "place" + folderName(path).replace(/ /g,'')
                 text: folderName(path)
 
                 Image {
