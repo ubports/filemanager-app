@@ -17,7 +17,6 @@
 """File Manager app autopilot emulators."""
 
 import logging
-import os
 import re
 import time
 
@@ -213,10 +212,10 @@ class FolderListPage(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
 
         """
         if self.showingListView:
-            raise NotImplementedError()
+            view = self.select_single(FolderListView)
         else:
-            folder_icon_view = self.select_single(FolderIconView)
-            return folder_icon_view.get_files_and_folders()
+            view = self.select_single(FolderIconView)
+        return view.get_files_and_folders()
 
     def get_number_of_files_from_list(self):
         """Return the number of files shown on the folder."""
@@ -310,6 +309,16 @@ class FolderListView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
         _, number_of_files = self._split_header_text()
         return int(number_of_files)
 
+    def get_files_and_folders(self):
+        """Return the list of files and folders of the opened directory."""
+        list_delegates = self.select_many(FolderListDelegate)
+        # sort by y, x
+        list_delegates = sorted(
+            list_delegates,
+            key=lambda item: (item.globalRect.y, item.globalRect.x))
+
+        return [item.fileName for item in list_delegates]
+
 
 class FolderIconView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
     """FolderListView Autopilot emulator."""
@@ -344,7 +353,7 @@ class FolderIconView(toolkit_emulators.UbuntuUIToolkitEmulatorBase):
             icon_delegates,
             key=lambda icon: (icon.globalRect.y, icon.globalRect.x))
 
-        return [os.path.basename(icon.filePath) for icon in icon_delegates]
+        return [icon.fileName for icon in icon_delegates]
 
 
 class FolderListDelegate(toolkit_emulators.UbuntuUIToolkitEmulatorBase):

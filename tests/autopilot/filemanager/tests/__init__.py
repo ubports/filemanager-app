@@ -116,18 +116,16 @@ class FileManagerTestCase(AutopilotTestCase):
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
     def _copy_xauthority_file(self, directory):
-        """ Copy .Xauthority file to directory, if it exists in /home
-        """
-        xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
+        """Copy .Xauthority file to directory, if it exists in /home"""
+        xauth = os.path.join(os.environ.get('HOME'), '.Xauthority')
         if os.path.isfile(xauth):
             logger.debug("Copying .Xauthority to " + directory)
             shutil.copyfile(
-                os.path.expanduser(os.path.join('~', '.Xauthority')),
+                os.path.join(os.environ.get('HOME'), '.Xauthority'),
                 os.path.join(directory, '.Xauthority'))
 
     def _patch_home(self):
-        """ mock /home for testing purposes to preserve user data
-        """
+        """mock /home for testing purposes to preserve user data"""
         temp_dir_fixture = fixtures.TempDir()
         self.useFixture(temp_dir_fixture)
         temp_dir = temp_dir_fixture.path
