@@ -21,6 +21,7 @@ import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 0.1
 import Ubuntu.Unity.Action 1.0 as UnityActions
 import U1db 1.0 as U1db
+import com.ubuntu.PlacesModel 0.1
 
 import "ui"
 
@@ -60,6 +61,10 @@ MainView {
     backgroundColor: "#797979"
     footerColor: "#808080"
 
+    PlacesModel {
+       id: userplaces
+    }
+
     // HUD Actions
     Action {
         id: settingsAction
@@ -72,7 +77,7 @@ MainView {
 
     property var pageStack: pageStack
 
-    property var folderTabs: ["~"]
+    property var folderTabs: [userplaces.locationHome]
 
     function openTab(folder) {
         var list = folderTabs
@@ -100,7 +105,7 @@ MainView {
                 page: FolderListPage {
                     objectName: "folderPage"
 
-                    folder: "~"//modelData
+                    folder: userplaces.locationHome //modelData
                 }
             }
 
