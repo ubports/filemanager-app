@@ -117,7 +117,7 @@ Rectangle {
                     Label {
                         id: label
                         anchors.centerIn: parent
-                        text: modelData === "" ? "/" : modelData
+                        text: modelData === "" ? "/" : modelData === "~" ? i18n.tr("Home") : modelData
                         color: UbuntuColors.coolGrey
                     }
 
