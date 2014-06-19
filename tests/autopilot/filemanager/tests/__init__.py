@@ -16,9 +16,9 @@
 
 """Filemanager app autopilot tests."""
 
+import logging
 import os
 import shutil
-import logging
 
 import fixtures
 from autopilot import logging as autopilot_logging
@@ -32,7 +32,7 @@ from ubuntuuitoolkit import (
     fixture_setup as toolkit_fixtures
 )
 
-from filemanager import emulators
+from filemanager import emulators, fixture_setup
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +52,7 @@ class FileManagerTestCase(AutopilotTestCase):
     local_location_qml = os.path.join(local_location,
                                       'src/app/qml/filemanager.qml')
     local_location_binary = os.path.join(local_location, 'src/app/filemanager')
-    installed_location_qml = "/usr/share/filemanager/qml/filemanager.qml"
+    installed_location_qml = '/usr/share/filemanager/qml/filemanager.qml'
     installed_location_binary = '/usr/bin/filemanager'
 
     def get_launcher_and_type(self):
@@ -111,18 +111,16 @@ class FileManagerTestCase(AutopilotTestCase):
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
 
     def _copy_xauthority_file(self, directory):
-        """ Copy .Xauthority file to directory, if it exists in /home
-        """
-        xauth = os.path.expanduser(os.path.join('~', '.Xauthority'))
+        """Copy .Xauthority file to directory, if it exists in /home"""
+        xauth = os.path.join(os.environ.get('HOME'), '.Xauthority')
         if os.path.isfile(xauth):
             logger.debug("Copying .Xauthority to " + directory)
             shutil.copyfile(
-                os.path.expanduser(os.path.join('~', '.Xauthority')),
+                os.path.join(os.environ.get('HOME'), '.Xauthority'),
                 os.path.join(directory, '.Xauthority'))
 
     def _patch_home(self):
-        """ mock /home for testing purposes to preserve user data
-        """
+        """mock /home for testing purposes to preserve user data"""
         temp_dir_fixture = fixtures.TempDir()
         self.useFixture(temp_dir_fixture)
         temp_dir = temp_dir_fixture.path
@@ -142,10 +140,44 @@ class FileManagerTestCase(AutopilotTestCase):
             self.useFixture(fixtures.EnvironmentVariable('HOME',
                                                          newvalue=temp_dir))
 
-        logger.debug("Patched home to fake home directory " + temp_dir)
+        logger.debug('Patched home to fake home directory ' + temp_dir)
 
         return temp_dir
 
     @property
     def main_view(self):
         return self.app.wait_select_single(emulators.MainView)
+
+    def make_file_in_home(self):
+        return self.make_content_in_home('file')
+
+    def make_directory_in_home(self):
+        return self.make_content_in_home('directory')
+
+    def make_content_in_home(self, type_):
+        if type_ != 'file' and type_ != 'directory':
+            raise ValueError('Unknown content type: "{0}"', type_)
+        if type_ == 'file':
+            temp_file = fixture_setup.TemporaryFileInDirectory(self.home_dir)
+            self.useFixture(temp_file)
+            path = temp_file.path
+        else:
+            temp_dir = fixture_setup.TemporaryDirectoryInDirectory(
+                self.home_dir)
+            self.useFixture(temp_dir)
+            path = temp_dir.path
+        logger.debug('Directory Listing for HOME\n%s' %
+                     os.listdir(self.home_dir))
+        self._assert_number_of_files(1)
+        return path
+
+    def _assert_number_of_files(self, expected_number_of_files, home=True):
+        if home:
+            expected_number_of_files += self.original_file_count
+        folder_list_page = self.main_view.get_folder_list_page()
+        self.assertThat(
+            folder_list_page.get_number_of_files_from_list,
+            Eventually(Equals(expected_number_of_files), timeout=60))
+        self.assertThat(
+            folder_list_page.get_number_of_files_from_header,
+            Eventually(Equals(expected_number_of_files), timeout=60))
