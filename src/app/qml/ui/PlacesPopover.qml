@@ -19,11 +19,44 @@ import QtQuick 2.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.Popups 0.1
 import Ubuntu.Components.ListItems 0.1
-import com.ubuntu.PlacesModel 0.1
 
 Popover {
     id: root
     objectName: "placesPopover"
+
+    ListModel {
+        id: places
+
+        ListElement {
+            objectName: 'placeHome'
+            path: "~"
+        }
+
+        ListElement {
+            path: "~/Documents"
+        }
+
+        ListElement {
+            path: "~/Downloads"
+        }
+
+        ListElement {
+            path: "~/Music"
+        }
+
+        ListElement {
+            path: "~/Pictures"
+        }
+
+        ListElement {
+            path: "~/Videos"
+        }
+
+        ListElement {
+            objectName: "placeRoot"
+            path: "/"
+        }
+    }
 
     Column {
         anchors {
@@ -80,7 +113,7 @@ Popover {
             id: placesList
             objectName: "placesList"
 
-            model: PlacesModel {}
+            model: places
 
             delegate: Standard {
                 objectName: model.objectName
