@@ -20,6 +20,7 @@ import QtGraphicalEffects 1.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.ListItems 0.1
 import Ubuntu.Components.Popups 0.1
+import com.ubuntu.PlacesModel 0.1
 
 Sidebar {
     id: root
@@ -42,40 +43,6 @@ Sidebar {
         UbuntuNumberAnimation {}
     }
 
-    ListModel {
-        id: places
-
-        ListElement {
-            objectName: "placeHome"
-            path: "~"
-        }
-
-        ListElement {
-            path: "~/Documents"
-        }
-
-        ListElement {
-            path: "~/Downloads"
-        }
-
-        ListElement {
-            path: "~/Music"
-        }
-
-        ListElement {
-            path: "~/Pictures"
-        }
-
-        ListElement {
-            path: "~/Videos"
-        }
-
-        ListElement {
-            objectName: "placeRoot"
-            path: "/"
-        }
-    }
-
     Column {
         anchors {
             left: parent.left
@@ -87,14 +54,24 @@ Sidebar {
             text: i18n.tr("Places")
         }
 
+        PlacesModel {
+            id: userplaces
+
+            // By default, the model only contains the
+            // user directories. Add the file system location too
+            Component.onCompleted: {
+                addLocation("/");
+            }
+        }
+
         Repeater {
             id: placesList
             objectName: "placesList"
 
-            model: places
+            model: userplaces
 
             delegate: Standard {
-                objectName: model.objectName
+                objectName: "place" + folderName(path).replace(/ /g,'')
                 text: folderName(path)
 
                 Image {
