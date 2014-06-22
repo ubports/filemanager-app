@@ -611,7 +611,7 @@ Page {
         if (folder === userplaces.locationHome) {
             return i18n.tr("Home")
         } else if (folder === "/") {
-            return i18n.tr("File System")
+            return i18n.tr("Device")
         } else {
             return basename(folder)
         }

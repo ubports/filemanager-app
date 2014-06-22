@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.Popups 0.1
+import com.ubuntu.PlacesModel 0.1
 
 Rectangle {
     id: root
@@ -12,6 +13,49 @@ Rectangle {
     anchors.verticalCenter: parent.verticalCenter
 
     implicitWidth: goToButton.width + row.width
+
+    function rootDisplayName(path) {
+        // Returns the human-readable name for the root of a filesystem location
+        // for display purposes
+        // Supported roots are /home/$USER and /
+
+        var pathDisplayName
+
+        if (path.substring(0, userplaces.locationHome.length) === userplaces.locationHome) {
+            // Replace /home/$USER by its human readable name (generally "Home")
+            pathDisplayName = path.replace(userplaces.locationHome, folderDisplayName(userplaces.locationHome))
+        } else {
+            // Replace any other path than /home/$USER with the human readable of the root
+            // file system (generally "Device")
+            pathDisplayName = folderDisplayName("/").concat(path.replace(/^\/$/, ""))
+        }
+
+        return pathDisplayName
+    }
+
+    function rootAbsName(path) {
+        // Returns the absolute path name given a human-readable path
+        // Does the opposite of the rootDisplayName function
+
+        var pathAbsName
+        var rootAbsName
+        var pathComponents = path.split("/")
+
+        // Get the absolute path of the root
+        if (pathComponents[0] === folderDisplayName(userplaces.locationHome)) {
+            rootAbsName = userplaces.locationHome
+        } else {
+            rootAbsName = "/"
+        }
+
+        // Drop the human-readable part of the path components
+        pathComponents.shift()
+        // Join the root absolute path name with the rest of the path components,
+        // avoiding "/" duplicates
+        pathAbsName = rootAbsName.concat("/", pathComponents.join("/")).replace(/^\/\//, "/")
+
+        return pathAbsName
+    }
 
     Behavior on width {
         UbuntuNumberAnimation {}
@@ -88,7 +132,7 @@ Rectangle {
             Repeater {
                 id: repeater
                 // This refers to a parent FolderListPage.folder
-                model: folder === "/" ? [""] : folder.split("/")
+                model: rootDisplayName(folder).split("/")
                 delegate: Rectangle {
                     MouseArea {
                         id: mouseArea
@@ -98,14 +142,12 @@ Rectangle {
                         onClicked: {
                             var upCount = index
                             var path = modelData
+
                             while (upCount > 0) {
                                 path = repeater.model[--upCount] + "/" + path
-                                //print(path)
                             }
 
-                            if (path === "") path = "/"
-
-                            goTo(path)
+                            goTo(rootAbsName(path))
                         }
                     }
 
