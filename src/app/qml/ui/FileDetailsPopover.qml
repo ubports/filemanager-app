@@ -77,7 +77,7 @@ Popover {
             Label {
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: folderName(root.path)
+                text: folderDisplayName(root.path)
                 color: Theme.palette.normal.overlayText
                 font.bold: true
             }

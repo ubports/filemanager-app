@@ -25,20 +25,21 @@ import "../components"
 
 Page {
     id: folderListPage
-
-    title: folderName(folder)
+    title: folderDisplayName(folder)
+    flickable: !sidebar.expanded ?
+                   (folderListView.visible ? folderListView : folderIconView.flickable) : null
 
     property variant fileView: folderListPage
-
     property bool showHiddenFiles: false
-
     property bool showingListView: folderListView.visible
+    property string sortingMethod: "Name"
+    property bool sortAscending: true
+    property string folder
+    property bool loading: pageModel.awaitingResults
 
     onShowHiddenFilesChanged: {
         pageModel.showHiddenFiles = folderListPage.showHiddenFiles
     }
-
-    property string sortingMethod: "Name"
 
     onSortingMethodChanged: {
         console.log("Sorting by: " + sortingMethod)
@@ -52,140 +53,39 @@ Page {
         }
     }
 
-    property bool sortAccending: true
+    onSortAscendingChanged: {
+        console.log("Sorting ascending: " + sortAscending)
 
-    onSortAccendingChanged: {
-        console.log("Sorting accending: " + sortAccending)
-
-        if (sortAccending) {
+        if (sortAscending) {
             pageModel.sortOrder = FolderListModel.SortAscending
         } else {
             pageModel.sortOrder = FolderListModel.SortDescending
         }
     }
 
+    onFlickableChanged: {
+        if (flickable === null) {
+            folderListView.topMargin = 0
+            folderIconView.flickable.topMargin = 0
+        } else {
+            folderListView.topMargin = units.gu(9.5)
+            folderIconView.flickable.topMargin = units.gu(9.5)
+        }
+    }
+
+
+
     PlacesModel { id: userplaces }
-
-    property string folder
-    property string path: folder
-
-    function goTo(location) {
-        // This allows us to enter "~" as a shortcut to the home folder
-        // when entering a location on the Go To dialog
-        folderListPage.folder = location.replace("~", userplaces.locationHome)
-        refresh()
-    }
-
-    function refresh() {
-        pageModel.refresh()
-    }
-
-    function pathAccessedDate() {
-        console.log("calling method pageModel.curPathAccessedDate()")
-        return pageModel.curPathAccessedDate()
-    }
-
-    function pathModifiedDate() {
-        console.log("calling method pageModel.curPathModifiedDate()")
-        return pageModel.curPathModifiedDate()
-    }
-
-    function pathIsWritable() {
-        console.log("calling method pageModel.curPathIsWritable()")
-        return pageModel.curPathIsWritable()
-    }
-
-    // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
-    // Nemo mobile has icon provider. Have to figure out what's the proper way
-    // to get "system wide" icons in Ubuntu Touch, or if we have to use
-    // icons packaged into the application. Both folder and individual
-    // files will need an icon.
-    // TODO: Remove isDir parameter and use new model functions
-    function fileIcon(file, isDir) {
-        var iconPath = isDir ? "/usr/share/icons/Humanity/places/48/folder.svg"
-                             : "/usr/share/icons/Humanity/mimes/48/empty.svg"
-
-        if (file === userplaces.locationHome) {
-            iconPath = "../icons/folder-home.svg"
-        } else if (file === i18n.tr("~/Desktop")) {
-            iconPath = "/usr/share/icons/Humanity/places/48/user-desktop.svg"
-        } else if (file === userplaces.locationDocuments) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-documents.svg"
-        } else if (file === userplaces.locationDownloads) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-downloads.svg"
-        } else if (file === userplaces.locationMusic) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-music.svg"
-        } else if (file === userplaces.locationPictures) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-pictures.svg"
-        } else if (file === i18n.tr("~/Public")) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-publicshare.svg"
-        } else if (file === i18n.tr("~/Programs")) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-system.svg"
-        } else if (file === i18n.tr("~/Templates")) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-templates.svg"
-        } else if (file === userplaces.locationVideos) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-videos.svg"
-        } else if (file === "/") {
-            iconPath = "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
-        }
-
-        return Qt.resolvedUrl(iconPath)
-    }
-
-    function folderName(folder) {
-
-        if (folder === userplaces.locationHome) {
-            return i18n.tr("Home")
-        } else if (folder === "/") {
-            return i18n.tr("File System")
-        } else {
-            return folder.substr(folder.lastIndexOf('/') + 1)
-        }
-    }
-
-    function pathName(folder) {
-        if (folder === "/") {
-            return "/"
-        } else {
-            return folder.substr(folder.lastIndexOf('/') + 1)
-        }
-    }
-
-    function pathExists(path) {
-        path = path.replace("~", pageModel.homePath())
-
-        if (path === '/')
-            return true
-
-        if(path.charAt(0) === '/') {
-            console.log("Directory: " + path.substring(0, path.lastIndexOf('/')+1))
-            repeaterModel.path = path.substring(0, path.lastIndexOf('/')+1)
-            console.log("Sub dir: " + path.substring(path.lastIndexOf('/')+1))
-            if (path.substring(path.lastIndexOf('/')+1) !== "" && !repeaterModel.cdIntoPath(path.substring(path.lastIndexOf('/')+1))) {
-                return false
-            } else {
-                return true
-            }
-        } else {
-            return false
-        }
-    }
-
-    property bool loading: pageModel.awaitingResults
 
     FolderListModel {
         id: pageModel
-
-        path: folderListPage.path
-
+        path: folderListPage.folder
         enableExternalFSWatcher: true
 
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
         property string fileName: pathName(pageModel.path)
-        property string fileSize: (folderListView.count === 1
-                                   ? i18n.tr("1 file")
-                                   : i18n.tr("%1 files").arg(folderListView.count))       
+        property string fileSize: i18n.tr("%1 file", "%1 files", folderListView.count).arg(folderListView.count)
         property bool isReadable: true
         property bool isExecutable: true
     }
@@ -257,11 +157,9 @@ Page {
     //            }
 
                 Action {
-                    text: pageModel.clipboardUrlsCounter === 0
-                          ? i18n.tr("Paste")
-                          : pageModel.clipboardUrlsCounter === 1
-                            ? i18n.tr("Paste %1 File").arg(pageModel.clipboardUrlsCounter)
-                            : i18n.tr("Paste %1 Files").arg(pageModel.clipboardUrlsCounter)
+                    text: pageModel.clipboardUrlsCounter === 0 ?
+                            i18n.tr("Paste") :
+                            i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
                     onTriggered: {
                         console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
                         fileOperationDialog.startOperation(i18n.tr("Paste files"))
@@ -336,12 +234,6 @@ Page {
         }
     }
 
-    function openFile(filePath) {
-        if (!pageModel.openPath(filePath)) {
-            error(i18n.tr("File operation error"), i18n.tr("Unable to open '%11").arg(filePath))
-        }
-    }
-
     tools: ToolbarItems {
         id: toolbar
         locked: showToolbar
@@ -351,7 +243,7 @@ Page {
 
         back: ToolbarButton {
             objectName: "up"
-            text: "Up"
+            text: i18n.tr("Up")
             iconSource: getIcon("keyboard-caps")
             enabled: folder != "/"
             onTriggered: {
@@ -435,18 +327,6 @@ Page {
             visible: sidebar.expanded
             objectName: "settings"
             action: settingsAction
-        }
-    }
-
-    flickable: !sidebar.expanded ? folderListView.visible ? folderListView : folderIconView.flickable : null
-
-    onFlickableChanged: {
-        if (flickable === null) {
-            folderListView.topMargin = 0
-            folderIconView.flickable.topMargin = 0
-        } else {
-            folderListView.topMargin = units.gu(9.5)
-            folderIconView.flickable.topMargin = units.gu(9.5)
         }
     }
 
@@ -662,6 +542,122 @@ Page {
 
         page: folderListPage
         model: pageModel
+    }
+
+    function goTo(location) {
+        // This allows us to enter "~" as a shortcut to the home folder
+        // when entering a location on the Go To dialog
+        folderListPage.folder = location.replace("~", userplaces.locationHome)
+        refresh()
+    }
+
+    function refresh() {
+        pageModel.refresh()
+    }
+
+    function pathAccessedDate() {
+        console.log("calling method pageModel.curPathAccessedDate()")
+        return pageModel.curPathAccessedDate()
+    }
+
+    function pathModifiedDate() {
+        console.log("calling method pageModel.curPathModifiedDate()")
+        return pageModel.curPathModifiedDate()
+    }
+
+    function pathIsWritable() {
+        console.log("calling method pageModel.curPathIsWritable()")
+        return pageModel.curPathIsWritable()
+    }
+
+    // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
+    // Nemo mobile has icon provider. Have to figure out what's the proper way
+    // to get "system wide" icons in Ubuntu Touch, or if we have to use
+    // icons packaged into the application. Both folder and individual
+    // files will need an icon.
+    // TODO: Remove isDir parameter and use new model functions
+    function fileIcon(file, isDir) {
+        var iconPath = isDir ? "/usr/share/icons/Humanity/places/48/folder.svg"
+                             : "/usr/share/icons/Humanity/mimes/48/empty.svg"
+
+        if (file === userplaces.locationHome) {
+            iconPath = "../icons/folder-home.svg"
+        } else if (file === i18n.tr("~/Desktop")) {
+            iconPath = "/usr/share/icons/Humanity/places/48/user-desktop.svg"
+        } else if (file === userplaces.locationDocuments) {
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-documents.svg"
+        } else if (file === userplaces.locationDownloads) {
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-downloads.svg"
+        } else if (file === userplaces.locationMusic) {
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-music.svg"
+        } else if (file === userplaces.locationPictures) {
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-pictures.svg"
+        } else if (file === i18n.tr("~/Public")) {
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-publicshare.svg"
+        } else if (file === i18n.tr("~/Programs")) {
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-system.svg"
+        } else if (file === i18n.tr("~/Templates")) {
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-templates.svg"
+        } else if (file === userplaces.locationVideos) {
+            iconPath = "/usr/share/icons/Humanity/places/48/folder-videos.svg"
+        } else if (file === "/") {
+            iconPath = "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
+        }
+
+        return Qt.resolvedUrl(iconPath)
+    }
+
+    function folderDisplayName(folder) {
+        if (folder === userplaces.locationHome) {
+            return i18n.tr("Home")
+        } else if (folder === "/") {
+            return i18n.tr("File System")
+        } else {
+            return basename(folder)
+        }
+    }
+
+    function pathName(folder) {
+        if (folder === "/") {
+            return "/"
+        } else {
+            return basename(folder)
+        }
+    }
+
+    function basename(folder) {
+        // Returns the latest component (folder) of an absolute path
+        // E.g. basename('/home/phablet/Música') returns 'Música'
+
+        // Remove the last trailing '/' if there is one
+        folder.replace(/\/$/, "")
+        return folder.substr(folder.lastIndexOf('/') + 1)
+    }
+
+    function pathExists(path) {
+        path = path.replace("~", pageModel.homePath())
+
+        if (path === '/')
+            return true
+
+        if(path.charAt(0) === '/') {
+            console.log("Directory: " + path.substring(0, path.lastIndexOf('/')+1))
+            repeaterModel.path = path.substring(0, path.lastIndexOf('/')+1)
+            console.log("Sub dir: " + path.substring(path.lastIndexOf('/')+1))
+            if (path.substring(path.lastIndexOf('/')+1) !== "" && !repeaterModel.cdIntoPath(path.substring(path.lastIndexOf('/')+1))) {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return false
+        }
+    }
+
+    function openFile(filePath) {
+        if (!pageModel.openPath(filePath)) {
+            error(i18n.tr("File operation error"), i18n.tr("Unable to open '%1'").arg(filePath))
+        }
     }
 
     function itemClicked(model) {

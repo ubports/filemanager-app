@@ -71,8 +71,8 @@ Sidebar {
             model: userplaces
 
             delegate: Standard {
-                objectName: "place" + folderName(path).replace(/ /g,'')
-                text: folderName(path)
+                objectName: "place" + folderDisplayName(path).replace(/ /g,'')
+                text: folderDisplayName(path)
 
                 Image {
                     anchors {
@@ -100,6 +100,7 @@ Sidebar {
                 height: units.gu(5)
                 showDivider: !collapsed
 
+                // This refers to a parent FolderListPage.folder
                 selected: folder === path
                 iconFrame: false
             }

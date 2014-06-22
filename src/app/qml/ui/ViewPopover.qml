@@ -109,14 +109,14 @@ Popover {
                 anchors.topMargin: units.gu(1.7)
             }
 
-            selectedIndex: sortAccending ? 0 : 1
+            selectedIndex: sortAscending ? 0 : 1
             values: [
                 i18n.tr("Ascending"),
                 i18n.tr("Descending")
             ]
 
             onSelectedIndexChanged: {
-                fileView.sortAccending = (values[selectedIndex] === i18n.tr("Ascending"))
+                fileView.sortAscending = (values[selectedIndex] === i18n.tr("Ascending"))
             }
         }
 
