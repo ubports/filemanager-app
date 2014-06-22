@@ -48,7 +48,7 @@ Popover {
 
                 property bool valid: pathExists(text)
 
-                text: fileView.path
+                text: fileView.folder
 
                 placeholderText: i18n.tr("Location...")
 

@@ -23,7 +23,7 @@ Popover {
     id: root
     property var model
 
-    property string path: model.path || (fileView.path + '/' + model.fileName)
+    property string path: model.path || (fileView.folder + '/' + model.fileName)
 
     contentHeight: contents.height + 2 * contents.anchors.margins
 
