@@ -84,13 +84,13 @@ Popover {
 
             delegate: Standard {
                 objectName: model.objectName
-                property string name: folderName(path)
+                property string name: folderDisplayName(path)
 
                 Label {
                     anchors.left: parent.left
                     anchors.leftMargin: units.gu(8)
                     anchors.verticalCenter: parent.verticalCenter
-                    text: folderName(path)
+                    text: folderDisplayName(path)
                     color: selected ? UbuntuColors.orange : Theme.palette.normal.overlayText
                 }
 

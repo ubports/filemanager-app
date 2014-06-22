@@ -87,6 +87,7 @@ Rectangle {
 
             Repeater {
                 id: repeater
+                // This refers to a parent FolderListPage.folder
                 model: folder === "/" ? [""] : folder.split("/")
                 delegate: Rectangle {
                     MouseArea {
