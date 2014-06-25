@@ -8,36 +8,36 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-02-14 21:46+0000\n"
+"PO-Revision-Date: 2014-06-24 21:39+0000\n"
 "Last-Translator: Gheyret T.Kenji <Unknown>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-16 06:44+0000\n"
-"X-Generator: Launchpad (build 17007)\n"
+"X-Launchpad-Export-Date: 2014-06-25 06:08+0000\n"
+"X-Generator: Launchpad (build 17065)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 ھۆججەت)"
 
 #: src/app/qml/components/FolderIconView.qml:59
 #: src/app/qml/components/FolderListView.qml:37
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 ھۆججەت)"
 
 #: src/app/qml/components/PathBar.qml:120
 #: src/app/qml/ui/FolderListPage.qml:151
 msgid "Home"
-msgstr ""
+msgstr "ماكان"
 
 #: src/app/qml/components/PlacesSidebar.qml:85
 #: src/app/qml/ui/FolderListPage.qml:421
 msgid "Places"
-msgstr ""
+msgstr "ئورۇنلار"
 
 #: src/app/qml/filemanager.qml:66 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
@@ -50,18 +50,18 @@ msgstr "ئەپ ئۆزگەرتىش تەڭشەكلىرى"
 #: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:492
 #: src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
-msgstr ""
+msgstr "سىنبەلگىلەر"
 
 #: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:508
 #: src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
-msgstr ""
+msgstr "تىزىم"
 
 #: src/app/qml/ui/ConfirmDialog.qml:31
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:41
 #: src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
-msgstr ""
+msgstr "تامام"
 
 #: src/app/qml/ui/ConfirmDialog.qml:41
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:51
@@ -69,284 +69,284 @@ msgstr ""
 #: src/app/qml/ui/FileOperationProgressDialog.qml:44
 #: src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
-msgstr ""
+msgstr "ئەمەلدىن قالدۇر"
 
 #: src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "مەشغۇلات تاللاڭ"
 
 #: src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "ھۆججەت: %1"
 
 #: src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "ئاچ"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "ئوقۇغىلى بولىدىغان"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "يازغىلى بولىدىغان"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "ئىجراچان"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "يول:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "مەزمۇنلىرى:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "چوڭلۇقى:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "زىيارەت:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "ئۆزگەرتكەن:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "ھوقۇقى:"
 
 #: src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "مەشغۇلات ئىشلىنىۋاتىدۇ"
 
 #: src/app/qml/ui/FolderListPage.qml:122
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/ئۈستەلئۈستى"
 
 #: src/app/qml/ui/FolderListPage.qml:124
 msgid "~/Documents"
-msgstr ""
+msgstr "~/پۈتۈكلەر"
 
 #: src/app/qml/ui/FolderListPage.qml:126
 msgid "~/Downloads"
-msgstr ""
+msgstr "~/چۈشۈرۈلمىلەر"
 
 #: src/app/qml/ui/FolderListPage.qml:128
 msgid "~/Music"
-msgstr ""
+msgstr "~/مۇزىكا"
 
 #: src/app/qml/ui/FolderListPage.qml:130
 msgid "~/Pictures"
-msgstr ""
+msgstr "~/سۈرەتلەر"
 
 #: src/app/qml/ui/FolderListPage.qml:132
 msgid "~/Public"
-msgstr ""
+msgstr "~/ئاممىۋى"
 
 #: src/app/qml/ui/FolderListPage.qml:134
 msgid "~/Programs"
-msgstr ""
+msgstr "~/پروگرامما"
 
 #: src/app/qml/ui/FolderListPage.qml:136
 msgid "~/Templates"
-msgstr ""
+msgstr "~/قېلىپلار"
 
 #: src/app/qml/ui/FolderListPage.qml:138
 msgid "~/Videos"
-msgstr ""
+msgstr "~/سىنلار"
 
 #: src/app/qml/ui/FolderListPage.qml:153
 msgid "File System"
-msgstr ""
+msgstr "ھۆججەت سىستېمىسى"
 
 #: src/app/qml/ui/FolderListPage.qml:200
 msgid "1 file"
-msgstr ""
+msgstr "%1 ھۆججەت"
 
 #: src/app/qml/ui/FolderListPage.qml:201
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 ھۆججەت"
 
 #: src/app/qml/ui/FolderListPage.qml:226
 msgid "Open in a new tab"
-msgstr ""
+msgstr "يېڭى بەتكۈچتە ئاچ"
 
 #: src/app/qml/ui/FolderListPage.qml:234
 msgid "Close this tab"
-msgstr ""
+msgstr "بۇ بەتكۈچنى ياپىدۇ"
 
 #: src/app/qml/ui/FolderListPage.qml:254
 msgid "Create New Folder"
-msgstr ""
+msgstr "يېڭى قىسقۇچ قۇر"
 
 #: src/app/qml/ui/FolderListPage.qml:274
 msgid "Paste"
-msgstr ""
+msgstr "چاپلا"
 
 #: src/app/qml/ui/FolderListPage.qml:276
 #, qt-format
 msgid "Paste %1 File"
-msgstr ""
+msgstr "%1 ھۆججەت چاپلا"
 
 #: src/app/qml/ui/FolderListPage.qml:277
 #, qt-format
 msgid "Paste %1 Files"
-msgstr ""
+msgstr "%1 ھۆججەت چاپلا"
 
 #: src/app/qml/ui/FolderListPage.qml:280
 msgid "Paste files"
-msgstr ""
+msgstr "ھۆججەتلەرنى چاپلايدۇ"
 
 #: src/app/qml/ui/FolderListPage.qml:292
 msgid "Open in Terminal"
-msgstr ""
+msgstr "تېرمىنالدا ئېچىش"
 
 #: src/app/qml/ui/FolderListPage.qml:304 src/app/qml/ui/FolderListPage.qml:650
 msgid "Properties"
-msgstr ""
+msgstr "خاسلىق"
 
 #: src/app/qml/ui/FolderListPage.qml:321
 msgid "Create folder"
-msgstr ""
+msgstr "قىسقۇچ قۇر"
 
 #: src/app/qml/ui/FolderListPage.qml:322
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "يېڭى قىسقۇچنىڭ ئاتىنى كىرگۈزۈڭ"
 
 #: src/app/qml/ui/FolderListPage.qml:338
 msgid "Create file"
-msgstr ""
+msgstr "ھۆججەت قۇر"
 
 #: src/app/qml/ui/FolderListPage.qml:339
 msgid "Enter name for new file"
-msgstr ""
+msgstr "يېڭى ھۆججەتنىڭ ئاتىنى كىرگۈزۈڭ"
 
 #: src/app/qml/ui/FolderListPage.qml:354 src/app/qml/ui/FolderListPage.qml:669
 msgid "File operation error"
-msgstr ""
+msgstr "ھۆججەت مەشغۇلاتىدىكى خاتالىق"
 
 #: src/app/qml/ui/FolderListPage.qml:354
 #, qt-format
 msgid "Unable to open '%11"
-msgstr ""
+msgstr "«%11» نى ئاچقىلى بولمىدى"
 
 #: src/app/qml/ui/FolderListPage.qml:396
 msgid "Actions"
-msgstr ""
+msgstr "مەشغۇلاتلار"
 
 #: src/app/qml/ui/FolderListPage.qml:406
 msgid "View"
-msgstr ""
+msgstr "كۆرۈنۈش"
 
 #: src/app/qml/ui/FolderListPage.qml:523
 msgid "No files"
-msgstr ""
+msgstr "ھۆججەت يوق"
 
 #: src/app/qml/ui/FolderListPage.qml:543 src/app/qml/ui/FolderListPage.qml:624
 msgid "Delete"
-msgstr ""
+msgstr "ئۆچۈر"
 
 #: src/app/qml/ui/FolderListPage.qml:544
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "‹%1› نى راستلا مەڭگۈلۈككە ئۆچۈرەمسىز؟"
 
 #: src/app/qml/ui/FolderListPage.qml:567 src/app/qml/ui/FolderListPage.qml:637
 msgid "Rename"
-msgstr ""
+msgstr "ئات ئۆزگەرت"
 
 #: src/app/qml/ui/FolderListPage.qml:568
 msgid "Enter a new name"
-msgstr ""
+msgstr "يېڭى ئاتىنى كىرگۈزۈڭ"
 
 #: src/app/qml/ui/FolderListPage.qml:577
 msgid "Could not rename"
-msgstr ""
+msgstr "ئاتىنى ئۆزگەرتكىلى بولمىدى"
 
 #: src/app/qml/ui/FolderListPage.qml:578
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "ئىمتىيازلىرىڭىز يېتەرلىك ئەمەس ياكى ئاتى مەۋجۇت؟"
 
 #: src/app/qml/ui/FolderListPage.qml:601
 msgid "Cut"
-msgstr ""
+msgstr "كەس"
 
 #: src/app/qml/ui/FolderListPage.qml:612
 msgid "Copy"
-msgstr ""
+msgstr "كۆچۈر"
 
 #: src/app/qml/ui/FolderListPage.qml:688
 msgid "Folder not accessible"
-msgstr ""
+msgstr "قىسقۇچنى زىيارەت قىلغىلى بولمايدۇ"
 
 #. TRANSLATORS: this refers to a folder name
 #: src/app/qml/ui/FolderListPage.qml:690
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "%1 نى زىيارەت قىلالمىدى"
 
 #: src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "ئورۇنغا يۆتكەل"
 
 #: src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "يۆتكىلىدىغان ئورۇننى كىرگۈزۈڭ:"
 
 #: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:84
 msgid "Location..."
-msgstr ""
+msgstr "ئورنى…"
 
 #: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:99
 msgid "Go"
-msgstr ""
+msgstr "يۆتكەل"
 
 #: src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
-msgstr ""
+msgstr "ياپ"
 
 #: src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "ئالىي ئىقتىدارلىرىنى كۆرسەت"
 
 #: src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "يوشۇرۇن ھۆججەتلەرنى كۆرسەت"
 
 #: src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr ""
+msgstr "كۆرۈنۈشى"
 
 #: src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "تەرتىپى"
 
 #: src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr ""
+msgstr "ئاتى"
 
 #: src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr ""
+msgstr "چېسلا"
 
 #: src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "تەرتىپلەش تەرتىپى"
 
 #: src/app/qml/ui/ViewPopover.qml:114 src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr ""
+msgstr "ئۆسكۈچى"
 
 #: src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr ""
+msgstr "كېمەيگۈچى"
 
 #: src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
-msgstr ""
+msgstr "سۈزگۈچ"
