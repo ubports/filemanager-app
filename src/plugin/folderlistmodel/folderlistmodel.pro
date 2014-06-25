@@ -1,10 +1,6 @@
 TARGET = nemofolderlistmodel
 
 PLUGIN_IMPORT_PATH = org/nemomobile/folderlistmodel
-PLUGIN_URI         = org.nemomobile.folderlistmodel
-
-# plugin.h and plugin.cpp use URI from PLUGIN_URI instead of hard coded
-DEFINES += PLUGIN_URI=$$PLUGIN_URI
 
 #core:  sources + headers, separated here to use in regression test project
 include (folderlistmodel.pri)
