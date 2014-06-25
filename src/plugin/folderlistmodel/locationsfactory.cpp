@@ -131,6 +131,7 @@ Location * LocationsFactory::setNewPath(const QString& uPath)
             else
             {
                 storeValidFileInfo(item);
+                location = 0;
             }
         }
         else
