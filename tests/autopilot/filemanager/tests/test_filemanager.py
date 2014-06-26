@@ -50,9 +50,9 @@ class TestFolderListPage(FileManagerTestCase):
         return folder_list_page.get_file_by_index(index)
 
     def _go_to_location(self, location):
-        #go to specified location
-        #on wide UI display, we get the location dialog
-        #on phone UI display, we get places popover
+        # go to specified location
+        # on wide UI display, we get the location dialog
+        # on phone UI display, we get places popover
         device = model()
         if self.main_view.showSidebar:
             logger.debug("Using goto to goto %s on %s" % (location, device))
@@ -70,7 +70,7 @@ class TestFolderListPage(FileManagerTestCase):
         expected_path = item.filePath
         list_view = item.list_view
 
-        #item.open_directory()
+        # item.open_directory()
         self.pointing_device.click_object(item)
         self.assertThat(
             list_view.get_current_path, Eventually(Equals(expected_path)))
@@ -131,7 +131,7 @@ class TestFolderListPage(FileManagerTestCase):
         original_apps = process_manager.get_running_applications()
 
         dialog.open()
-        #make sure the dialog is open
+        # make sure the dialog is open
         self.main_view.get_file_action_dialog()
         # Filtering copied from
         # AutopilotTestCase._compare_system_with_app_snapshot.
