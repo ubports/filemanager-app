@@ -87,6 +87,7 @@ Rectangle {
 
             Repeater {
                 id: repeater
+                // This refers to a parent FolderListPage.folder
                 model: folder === "/" ? [""] : folder.split("/")
                 delegate: Rectangle {
                     MouseArea {
@@ -117,7 +118,7 @@ Rectangle {
                     Label {
                         id: label
                         anchors.centerIn: parent
-                        text: modelData === "" ? "/" : modelData === "~" ? i18n.tr("Home") : modelData
+                        text: modelData === "" ? "/" : modelData
                         color: UbuntuColors.coolGrey
                     }
 

@@ -13,25 +13,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Authored by: Arto Jalkanen <ajalkane@gmail.com>
+ * Author : David Planella <david.planella@ubuntu.com>
  */
-import QtQuick 2.0
-import Ubuntu.Components 0.1
-import Ubuntu.Components.ListItems 0.1 as ListItem
-import org.nemomobile.folderlistmodel 1.0
 
-ListItem.Subtitled {
-    objectName: "folder" + index
+#ifndef PLACESMODEL_PLUGIN_H
+#define PLACESMODEL_PLUGIN_H
 
-    property string fileName: model.fileName
-    property string filePath: path
+#include <QtQml/QQmlEngine>
+#include <QtQml/QQmlExtensionPlugin>
 
-    text: model.fileName
-    subText: Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate) + (!model.isDir ? ", " + fileSize : "")
+class BackendPlugin : public QQmlExtensionPlugin
+{
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
 
-    property string path: fileView.folder + '/' + model.fileName
-    iconSource: fileIcon(path, model.isDir)
+public:
+    void registerTypes(const char *uri);
+    void initializeEngine(QQmlEngine *engine, const char *uri);
+};
+#endif // PLACESMODEL_PLUGIN_H
 
-    progression: model.isDir
-    iconFrame: false
-}
+
+
+
+
