@@ -42,11 +42,13 @@
 #include <QQmlContext>
 #include <QQmlExtensionPlugin>
 
+#define PLUGIN_URI "org.nemomobile.folderlistmodel"
+
 #define PLUGIN_CLASS_EXPORT Q_DECL_EXPORT
 #define PLUGIN_CLASS_EXTERNAL_EXPORT
 #define PLUGIN_CLASS_EXTEND \
     Q_OBJECT \
-    Q_PLUGIN_METADATA(IID "org.nemomobile.folderlistmodel")
+    Q_PLUGIN_METADATA(IID PLUGIN_URI)
 typedef QQmlExtensionPlugin QmlPluginParent;
 typedef QQmlEngine QmlEngine;
 
@@ -54,8 +56,6 @@ typedef QQmlEngine QmlEngine;
 #ifndef DO_NOT_USE_TAG_LIB
 # include "imageprovider.h"
 #endif
-
-#define QUOTES(x)  #x
 
 
 class PLUGIN_CLASS_EXPORT NemoFolderListModelPlugin  : public QmlPluginParent
