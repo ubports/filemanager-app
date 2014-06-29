@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-06-16 18:26+0000\n"
-"Last-Translator: İbrahim Çelik <ibrahimcelik89@gmail.com>\n"
+"PO-Revision-Date: 2014-06-28 14:16+0000\n"
+"Last-Translator: Mehmet Hanoğlu <mail@mehmethanoglu.com.tr>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-06-25 06:08+0000\n"
-"X-Generator: Launchpad (build 17065)\n"
+"X-Launchpad-Export-Date: 2014-06-29 05:58+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
@@ -325,7 +325,7 @@ msgstr "Farklı Görüntüle"
 
 #: src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "Buna Göre Sırala"
 
 #: src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"

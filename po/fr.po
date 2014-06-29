@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-05-23 18:27+0000\n"
+"PO-Revision-Date: 2014-06-28 10:14+0000\n"
 "Last-Translator: Anne <anneonyme017@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-06-25 06:07+0000\n"
-"X-Generator: Launchpad (build 17065)\n"
+"X-Launchpad-Export-Date: 2014-06-29 05:58+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
@@ -37,7 +37,7 @@ msgstr "Dossier personnel"
 #: src/app/qml/components/PlacesSidebar.qml:85
 #: src/app/qml/ui/FolderListPage.qml:421
 msgid "Places"
-msgstr ""
+msgstr "Raccourcis"
 
 #: src/app/qml/filemanager.qml:66 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
@@ -110,11 +110,11 @@ msgstr "Taille :"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "Dernier accès :"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "Dernière modification :"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
