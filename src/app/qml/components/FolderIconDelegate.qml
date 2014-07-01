@@ -36,7 +36,7 @@ Item {
         radius: units.gu(2)
         smooth: true
         antialiasing: true
-        opacity: selected ? 0.5 : 0
+        opacity: model.isSelected ? 0.5 : 0
         color: UbuntuColors.orange
 
         Behavior on opacity {

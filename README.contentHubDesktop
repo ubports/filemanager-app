@@ -13,8 +13,13 @@ Install the following dependencies to run click applications:
 #### Build FileManager and install FileManager as click package
 
 Build FileManager as a click package and install it. At the time of this writing
-this doesn't seem to be working with the SDK (due to cmake), but for example this 
-should work from command line:
+this doesn't seem to be working with the SDK (due to cmake), but it can be done 
+from command line:
+
+First you must modify manifest.json and replace "architecture" value of "armhf" with "i386".
+Just remember to change it back to armhf if you commit changes.
+
+After that you can build x86 version of the package and install it:
 
     QT_SELECT=qt5 cmake . -DCLICK_MODE=1 && make -j2 && make install DESTDIR=install && click build install
     sudo click install --user=$USER ./com.ubuntu.filemanager_0.3.latest_i386.click 
