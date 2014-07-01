@@ -42,17 +42,11 @@
 #include "diriteminfo.h"
 
 class FileSystemAction;
-class ExternalFSWatcher;
 class Clipboard;
 class DirSelection;
-
-/*!
- *  When the External File System Wathcer is enabled,
- *  this is the interval used to check if there has been any change in the current path
- *
- *  \sa setEnabledExternalFSWatcher()
- */
-#define EX_FS_WATCHER_TIMER_INTERVAL   900
+class LocationsFactory;
+class Location;
+class ExternalFSWatcher;
 
 class DirModel : public DirItemAbstractListModel
 {
@@ -150,7 +144,7 @@ public:
 
 public slots:
     void onItemsAdded(const DirItemInfoList &newFiles);
-    void onResultsFetched();
+    void onItemsFetched();
 
 signals:
     void awaitingResultsChanged();
@@ -206,7 +200,7 @@ public:
     Q_PROPERTY(int clipboardUrlsCounter READ getClipboardUrlsCounter NOTIFY clipboardChanged)
     int getClipboardUrlsCounter() const;
 
-    Q_PROPERTY(bool enableExternalFSWatcher READ getEnabledExternalFSWatcher WRITE setEnabledExternalFSWatcher)
+    Q_PROPERTY(bool enableExternalFSWatcher READ getEnabledExternalFSWatcher WRITE setEnabledExternalFSWatcher NOTIFY enabledExternalFSWatcherChanged)
     bool  getEnabledExternalFSWatcher() const;
 
     Q_INVOKABLE QString homePath() const;
@@ -295,12 +289,62 @@ public:
     Q_INVOKABLE  bool  existsFile(const QString& fileName)   const;
     Q_INVOKABLE  bool  canReadFile(const QString& fileName)  const;
 
+    // Trash functions
+    Q_INVOKABLE  void  moveIndexToTrash(int index);
+                 void  moveIndexesToTrash(const QList<int>&);
+    Q_INVOKABLE  void  restoreIndexFromTrash(int index);
+                 void  restoreIndexesFromTrash(const QList<int>&);
+
 public slots:
+  /*!
+     * \brief copySelection() copy selected items to the clipboard
+     */
+    void  copySelection();
+
+    /*!
+     * \brief cutSelection() cut selected items to the clipboard
+     */
+    void  cutSelection();
+
+    /*!
+     * \brief removeSelection() remove selected items, it handles Trash items
+     */
+    void  removeSelection();
+    
+    /*!
+     * \brief moveSelectionToTrash() move selected items from Local Disk (only) to Local Trash
+     */
+    void  moveSelectionToTrash();
+
+    /*!
+     * \brief restoreSelectionFromTrash() restore selected trash items to their orginal location
+     */
+    void  restoreSelectionFromTrash();
+
+    /*!
+     * \brief restoreTrash() restore all items being actually browsed in the Trash
+     *
+     */
+    void   restoreTrash();
+
+    /*!
+     * \brief emptyTrash() remove definitely all items being actually browsed in the Trash
+     *
+     *  \sa \ref removeSelection() and \ref rm()
+     *
+     */
+    void  emptyTrash();
+
     /*!
      * \brief goHome() goes to user home dir
      *  Go to user home dir, we may have a tab for places or something like that
      */
     void  goHome();
+
+    /*!
+     * \brief goTrash() goes to logical folder trash:///
+     */
+    void goTrash();
 
     /*!
      * \brief cdUp() sets the parent directory as current directory
@@ -360,8 +404,8 @@ signals:
     void     showHiddenFilesChanged();
     void     sortByChanged();
     void     sortOrderChanged();
-
     void     clipboardChanged();
+    void     enabledExternalFSWatcherChanged(bool);
 
 private slots:
     void onItemRemoved(const QString&);
@@ -377,22 +421,22 @@ private:
     QDir::Filter  currentDirFilter()  const;
     QString       dirItems(const DirItemInfo& fi) const;
     bool          cdInto(const DirItemInfo& fi);
-    bool          openItem(const DirItemInfo& fi);
-    DirListWorker * createWorkerRequest(IORequest::RequestType requestType,
-                                                  const QString& pathName);
+    bool          openItem(const DirItemInfo& fi);  
     bool          canReadDir(const QFileInfo& d)   const;
     bool          canReadFile(const QFileInfo& f)  const;
     QFileInfo     setParentIfRelative(const QString &fileOrDir) const;
+    void          setPathFromCurrentLocation();
 
 private:
     void          startExternalFsWatcher();
     void          stoptExternalFsWatcher();
-    void          clear();
+    void          clear();   
+
 private slots:
     void          onItemAddedOutsideFm(const DirItemInfo&fi);
     void          onItemRemovedOutSideFm(const DirItemInfo&);
     void          onItemChangedOutSideFm(const DirItemInfo&fi);
-    void          onThereAreExternalChanges();
+    void          onThereAreExternalChanges(const QString &);
     void          onExternalFsWorkerFinished(int);
 
 
@@ -401,9 +445,11 @@ private:
     SortBy              mSortBy;
     SortOrder           mSortOrder;
     CompareFunction     mCompareFunction;
-    ExternalFSWatcher*  mExtFSWatcher;
+    bool                mExtFSWatcher;
     Clipboard *         mClipboard;
     DirSelection *      mSelection;
+    LocationsFactory *  mLocationFactory;
+    Location         *  mCurLocation;
 
 
 private:
@@ -414,13 +460,9 @@ private:
 #endif
 //[0]
 
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL)
-    //make this work with tables
-    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const
-    {
-        Q_UNUSED(parent);
-        return TrackCoverRole - FileNameRole + 1;
-    }
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL)    
+    ExternalFSWatcher * getExternalFSWatcher() const;
+    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
     virtual QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
     friend class TestDirModel;
 #endif

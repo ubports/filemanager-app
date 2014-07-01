@@ -9,7 +9,14 @@ SOURCES += $$PWD/dirmodel.cpp \
            $$PWD/fmutil.cpp \
            $$PWD/dirselection.cpp \
            $$PWD/diriteminfo.cpp \
-           $$PWD/trash/qtrashdir.cpp
+           $$PWD/trash/qtrashdir.cpp \
+           $$PWD/trash/trashiteminfo.cpp \
+           $$PWD/location.cpp \
+           $$PWD/locationsfactory.cpp \
+           $$PWD/disk/disklocation.cpp \
+           $$PWD/trash/trashlocation.cpp \
+           $$PWD/locationurl.cpp \
+           $$PWD/trash/qtrashutilinfo.cpp
 
 
 HEADERS += $$PWD/dirmodel.h \
@@ -24,10 +31,17 @@ HEADERS += $$PWD/dirmodel.h \
            $$PWD/dirselection.h \          
            $$PWD/diritemabstractlistmodel.h \
            $$PWD/diriteminfo.h \
-           $$PWD/trash/qtrashdir.h
+           $$PWD/trash/qtrashdir.h \
+           $$PWD/trash/trashiteminfo.h \
+           $$PWD/location.h \
+           $$PWD/locationsfactory.h \
+           $$PWD/disk/disklocation.h \
+           $$PWD/trash/trashlocation.h \
+           $$PWD/locationurl.h \
+           $$PWD/trash/qtrashutilinfo.h
 
 
-INCLUDEPATH  += $$PWD $$PWD/trash
+INCLUDEPATH  += $$PWD $$PWD/trash $$PWD/disk
 
 greaterThan(QT_MAJOR_VERSION, 4) {
    QT += qml

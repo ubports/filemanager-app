@@ -3,7 +3,12 @@
 #include "tempfiles.h"
 #include "externalfswatcher.h"
 #include "dirselection.h"
-#include "trash/qtrashdir.h"
+#include "qtrashdir.h"
+#include "location.h"
+#include "locationurl.h"
+#include "locationsfactory.h"
+#include "disklocation.h"
+#include "qtrashutilinfo.h"
 
 #if defined(Q_OS_UNIX)
 #include <stdio.h>
@@ -77,7 +82,7 @@ protected slots:
     void cancel(int index, int, int percent);
     void slotclipboardChanged();
     void slotError(QString title, QString message);
-    void slotExtFsWatcherPathModified()     { ++m_extFSWatcherPathModifiedCounter; }
+    void slotExtFsWatcherPathModified(const QString&)     { ++m_extFSWatcherPathModifiedCounter; }
     void slotSelectionChanged(int counter)  { m_selectedItemsCounter = counter; }
     void slotSelectionModeChanged(int m)    { m_selectionMode = m;}
 
@@ -144,7 +149,13 @@ private Q_SLOTS: // test cases
 
     void trashDiretories();
 
+    void locationFactory();
+    void moveOneFileToTrashAndRestore();
+    void restoreTrashWithMultipleSources();
+    void emptyTrash();
+
 private:
+    bool createTempHomeTrashDir(const QString& existentDir);
     void initDeepDirs();
     void cleanDeepDirs();
     void initModels();
@@ -906,7 +917,8 @@ void  TestDirModel::fsActionMoveItemsForcingCopyAndThenRemove()
      QStringList allFiles(m_deepDir_01->firstLevel());
      allFiles.append(tempFiles.createdList());
 
-     m_dirModel_02->m_fsAction->createAndProcessAction(FileSystemAction::ActionHardMoveCopy,
+     m_dirModel_02->m_fsAction->m_forceUsingOtherFS = true;
+     m_dirModel_02->m_fsAction->createAndProcessAction(FileSystemAction::ActionMove,
                                                        allFiles);
 
      QTest::qWait(TIME_TO_PROCESS);
@@ -1409,16 +1421,114 @@ void TestDirModel::openPathAbsouluteAndRelative()
     QCOMPARE(ret,                        true);
     QCOMPARE(m_currentPath,              m_deepDir_01->path());
     QCOMPARE(m_dirModel_01->rowCount(), 1);
+    QCOMPARE(m_receivedErrorSignal,      false);
 
     ret = m_dirModel_01->openPath(QLatin1String(".."));
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(ret,                        true);   
     QCOMPARE(m_currentPath,              QDir::tempPath());
+    QCOMPARE(m_receivedErrorSignal,      false);
 
     ret = m_dirModel_01->openPath(orig);
     QTest::qWait(TIME_TO_REFRESH_DIR);
     QCOMPARE(ret,                        true);
     QCOMPARE(m_currentPath,              m_deepDir_01->path());
+    QCOMPARE(m_receivedErrorSignal,      false);
+
+    // trash --------------------------------------
+    TempFiles files;
+    QCOMPARE(files.addSubDirLevel(m_deepDir_01->path()),  true);
+
+    createTempHomeTrashDir(m_deepDir_01->path());
+
+    QTrashDir tempTrash;
+    QCOMPARE(files.addSubDirLevel(tempTrash.homeTrash()),  true);
+    QCOMPARE(files.addSubDirLevel(QTrashUtilInfo::filesTrashDir(tempTrash.homeTrash())),  true);
+
+    QString level1("Level1");
+    QCOMPARE(files.addSubDirLevel(level1),  true);
+
+    QTrashUtilInfo trashInfo;
+    trashInfo.setInfo(tempTrash.homeTrash(), level1);
+    QCOMPARE(trashInfo.existsFile()   , true);
+    QFile infoFile(trashInfo.absInfo);
+    QCOMPARE(infoFile.open(QFile::WriteOnly),  true);
+    infoFile.close();
+
+    //check if "Level1" is valid item under trash
+    QCOMPARE(trashInfo.existsInfoFile()   , true);
+
+    QString level2("level2");
+    QString level3("level3");
+
+    QCOMPARE(files.addSubDirLevel(level2),  true);
+    QCOMPARE(files.addSubDirLevel(level3),  true);
+
+    files.create(1);
+
+    // using trash:///
+    ret = m_dirModel_01->openPath(LocationUrl::TrashRootURL);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(ret,                        true);
+    QCOMPARE(m_currentPath,              LocationUrl::TrashRootURL);
+    QCOMPARE(m_receivedErrorSignal,      false);
+
+    // using relative "Level1"
+    ret = m_dirModel_01->openPath(level1);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(ret,                        true);
+    QCOMPARE(m_currentPath,              QString(LocationUrl::TrashRootURL + level1) );
+    QCOMPARE(m_receivedErrorSignal,      false);
+
+   //using trash:///Level1/Level2/Level3
+   QString deep(LocationUrl::TrashRootURL + level1 + QDir::separator() + level2 + QDir::separator() + level3);
+   ret = m_dirModel_01->openPath(deep);
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   //using ../ to go up into Level2
+   ret = m_dirModel_01->openPath("../");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   //using .. to go up into Level1
+   ret = m_dirModel_01->openPath("..");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   //back to trash:///
+   ret = m_dirModel_01->openPath("..");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);   
+   QCOMPARE(m_currentPath,              LocationUrl::TrashRootURL);
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   //now it must fail
+   ret = m_dirModel_01->openPath("..");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        false);
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   ret = m_dirModel_01->openPath("file:///");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_currentPath,              QDir::rootPath());
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   ret = m_dirModel_01->openPath("file://");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_currentPath,              QDir::rootPath());
+   QCOMPARE(m_receivedErrorSignal,      false);
+
+   ret = m_dirModel_01->openPath("file:/");
+   QTest::qWait(TIME_TO_REFRESH_DIR);
+   QCOMPARE(ret,                        true);
+   QCOMPARE(m_currentPath,              QDir::rootPath());
+   QCOMPARE(m_receivedErrorSignal,      false);
 }
 
 
@@ -1859,8 +1969,8 @@ void  TestDirModel::openPDF()
 void TestDirModel::extFsWatcherChangePathManyTimesModifyAllPathsLessLast()
 {
     ExternalFSWatcher  watcher;
-    connect(&watcher, SIGNAL(pathModified()),
-            this,     SLOT(slotExtFsWatcherPathModified()));
+    connect(&watcher, SIGNAL(pathModified(QString)),
+            this,     SLOT(slotExtFsWatcherPathModified(QString)));
 
     const int items = 150;
     QVector<DeepDir *>  deepDirs;
@@ -1896,8 +2006,8 @@ void TestDirModel::extFsWatcherChangePathManyTimesModifyAllPathsLessLast()
 void TestDirModel::extFsWatcherChangePathManyTimesModifyManyTimes()
 {
     ExternalFSWatcher  watcher;
-    connect(&watcher, SIGNAL(pathModified()),
-            this,     SLOT(slotExtFsWatcherPathModified()));
+    connect(&watcher, SIGNAL(pathModified(QString)),
+            this,     SLOT(slotExtFsWatcherPathModified(QString)));
 
     const int items = 50;
     QVector<DeepDir *>  deepDirs;
@@ -1930,8 +2040,8 @@ void TestDirModel::extFsWatcherChangePathManyTimesModifyManyTimes()
 void TestDirModel::extFsWatcherModifySamePathManyTimesWithInInterval()
 {
     ExternalFSWatcher  watcher;
-    connect(&watcher, SIGNAL(pathModified()),
-            this,     SLOT(slotExtFsWatcherPathModified()));
+    connect(&watcher, SIGNAL(pathModified(QString)),
+            this,     SLOT(slotExtFsWatcherPathModified(QString)));
 
     QString dirName("extFsWatcher_expects_just_one_signal");
     m_deepDir_01 = new DeepDir(dirName,0);
@@ -1957,8 +2067,8 @@ void TestDirModel::extFsWatcherModifySamePathManyTimesWithInInterval()
 void TestDirModel::extFsWatcherSetPathAndModifyManyTimesWithInInterval()
 {
     ExternalFSWatcher  watcher;
-    connect(&watcher, SIGNAL(pathModified()),
-            this,     SLOT(slotExtFsWatcherPathModified()));
+    connect(&watcher, SIGNAL(pathModified(QString)),
+            this,     SLOT(slotExtFsWatcherPathModified(QString)));
 
     QList<DeepDir *>  deepDirs;
 
@@ -1995,8 +2105,8 @@ void TestDirModel::extFsWatcherNoticeChangesWithSameTimestamp()
 {
     bool updateAndSetModificationTime(const QString& filename, QDateTime& desiredTime);
 
-    connect( m_dirModel_01->mExtFSWatcher, SIGNAL(pathModified()),
-            this,     SLOT(slotExtFsWatcherPathModified()));
+    connect( m_dirModel_01->getExternalFSWatcher(), SIGNAL(pathModified(QString)),
+            this,     SLOT(slotExtFsWatcherPathModified(QString)));
 
     QString dirName("extFsWatcher_generate_fileswithsameTimeStamp");
     m_deepDir_01 = new DeepDir(dirName,0);
@@ -2029,7 +2139,7 @@ void TestDirModel::extFsWatcherNoticeChangesWithSameTimestamp()
     QFileInfo firstFile(firstPathName);
     QCOMPARE(firstFile.lastModified(),  timeStamp);
 
-    const int maxWait   = m_dirModel_01->mExtFSWatcher->getIntervalToNotifyChanges() + 10;
+    const int maxWait   = m_dirModel_01->getExternalFSWatcher()->getIntervalToNotifyChanges() + 10;
     int counter = 0;
 
     //make sure ExternalFSWatcher has not notified any change
@@ -2308,9 +2418,9 @@ void TestDirModel::trashDiretories()
    QCOMPARE(trash.checkUserDirPermissions(trashDir),  true);
 
    //create files in Trash
-   QCOMPARE(trash.createUserDir(trash.filesTrashDir(trashDir)),  true);
+   QCOMPARE(trash.createUserDir(QTrashUtilInfo::filesTrashDir(trashDir)),  true);
    //create info in Trash
-   QCOMPARE(trash.createUserDir(trash.infoTrashDir(trashDir)),  true);
+   QCOMPARE(trash.createUserDir(QTrashUtilInfo::infoTrashDir(trashDir)),  true);
    //test validate Trash Dir(), now it MUST pass
    QCOMPARE(trash.validate(trashDir, false),  true);
 
@@ -2327,15 +2437,17 @@ void TestDirModel::trashDiretories()
    QString xdgTrash("xdg_Trash");
    m_deepDir_02 = new DeepDir(xdgTrash,0);
 
+   if (::qgetenv("XDG_DATA_HOME").size() == 0)
+   {
+       QString myTrash(QDir::homePath() + "/.local/share/Trash");
+       QCOMPARE(trash.homeTrash(), myTrash);
+   }
+
    //test XDG Home Trash
    ::setenv("XDG_DATA_HOME", m_deepDir_02->path().toLatin1().constData(), true );
-
    QString xdgTrashDir(trash.homeTrash());
    QCOMPARE(trash.validate(xdgTrashDir, false),  true);
    QCOMPARE(trash.homeTrash() , xdgTrashDir);
-
-   ::setenv("XDG_DATA_HOME", "\0", true );
-   QCOMPARE(trash.homeTrash() , QDir::homePath() + "/.local/share/Trash");
 
    QCOMPARE(trash.getMountPoint(QDir::rootPath()), QDir::rootPath());  
 
@@ -2389,6 +2501,294 @@ void TestDirModel::trashDiretories()
 }
 
 
+void TestDirModel::locationFactory()
+{
+    LocationsFactory factoryLocations(this);
+    const Location *location = 0;
+
+    QString validTrashURL(LocationUrl::TrashRootURL);
+
+   //Due to current File Manager UI typing method both: "file:" and "trash:" are supported
+   // location = factoryLocations.setNewPath("trash:");
+   // QVERIFY(location == 0);
+
+    location = factoryLocations.setNewPath("trash:/");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
+    QCOMPARE(location->urlPath(), validTrashURL);
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("trash://");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
+    QCOMPARE(location->urlPath(), validTrashURL);
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("trash:///");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
+    QCOMPARE(location->urlPath(), validTrashURL);
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("trash://////");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
+    QCOMPARE(location->urlPath(), validTrashURL);
+    QCOMPARE(location->isRoot(), true);
+
+    QString myDir("___myDir_must_NOT_EXIST___");
+    location = factoryLocations.setNewPath(QString("trash:/") + myDir);
+    QVERIFY(location == 0);
+
+    location = factoryLocations.setNewPath("file://////");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   QDir::rootPath());
+    QCOMPARE(location->urlPath(), QDir::rootPath());
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("/");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   QDir::rootPath());
+    QCOMPARE(location->urlPath(), QDir::rootPath());
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("//");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   QDir::rootPath());
+    QCOMPARE(location->urlPath(), QDir::rootPath());
+    QCOMPARE(location->isRoot(), true);
+
+    location = factoryLocations.setNewPath("//bin");
+    QVERIFY(location);
+    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QCOMPARE(location->info()->absoluteFilePath(),   QLatin1String("/bin"));
+    QCOMPARE(location->urlPath(), QLatin1String("/bin"));
+    QCOMPARE(location->isRoot(), false);
+
+    QTrashDir  trash;
+    QString dirName("trashDirectory");
+    m_deepDir_01 = new DeepDir(dirName,0);
+
+    //create a Trash to have
+
+    ::setenv("XDG_DATA_HOME", m_deepDir_01->path().toLatin1().constData(), true );
+    QString xdgTrashDir(trash.homeTrash());
+    QCOMPARE(trash.validate(xdgTrashDir, true),  true);
+    QCOMPARE(trash.homeTrash() , xdgTrashDir);
+
+    QString trash3("trash:///Dir1/Dir2/Dir3");
+    QString trash2("trash:///Dir1/Dir2");
+    QString trash1("trash:///Dir1");
+
+    QCOMPARE(QDir().mkpath(QTrashUtilInfo::filesTrashDir(xdgTrashDir) + "/Dir1/Dir2/Dir3"), true);
+
+
+    //create a empty .trashinfo file to validate the Trash
+    QFile trashinfo (QTrashUtilInfo::infoTrashDir(xdgTrashDir) + "/Dir1.trashinfo");
+    QCOMPARE(trashinfo.open(QFile::WriteOnly),  true);
+    trashinfo.close();
+
+    location =  factoryLocations.setNewPath(trash3);
+    Location * myLocation = const_cast<Location*> (location);
+    QCOMPARE(myLocation->becomeParent(),   true);
+    QCOMPARE(location->urlPath(),  trash2);
+    QCOMPARE(location->isRoot(), false);
+
+    location =  factoryLocations.setNewPath(trash2);
+    myLocation = const_cast<Location*> (location);
+    QCOMPARE(myLocation->becomeParent(),   true);
+    QCOMPARE(location->urlPath(),  trash1);
+    QCOMPARE(location->isRoot(), false);
+
+    myLocation = const_cast<Location*> (location);
+    QCOMPARE(myLocation->becomeParent(),  true);
+    QCOMPARE(location->urlPath(),  LocationUrl::TrashRootURL);
+    QCOMPARE(location->isRoot(), true);
+}
+
+
+
+void TestDirModel::moveOneFileToTrashAndRestore()
+{
+    QString orig("moveFilesTrash");
+    m_deepDir_01  = new DeepDir(orig, 0);
+    const int createdFiles = 4;
+    TempFiles tempfiles;
+    tempfiles.addSubDirLevel(orig);
+    tempfiles.create(createdFiles);
+
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(), createdFiles);
+
+    QString tempTrash("tempTrashDir");
+    m_deepDir_02  = new DeepDir(tempTrash, 0);
+    createTempHomeTrashDir(m_deepDir_02->path());
+
+    // move item to Trash
+    m_dirModel_01->moveIndexToTrash(0);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(), createdFiles -1);
+
+    //use another DirModel instance and point it to Trash
+    m_dirModel_02->goTrash();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 1);
+
+    // now restore from Trash
+    m_dirModel_02->restoreIndexFromTrash(0);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 0);
+
+    //using refresh to not depend from External File System Watcher
+    if (m_dirModel_01->rowCount() != createdFiles)
+    {
+        qWarning("using refresh() external File System Watcher did not get it right");
+        m_dirModel_01->refresh();
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+    }
+    QCOMPARE(m_dirModel_01->rowCount(), createdFiles);
+}
+
+
+void TestDirModel::restoreTrashWithMultipleSources()
+{
+    DeepDir d_01("folder_01", 0);
+    DeepDir d_02("folder_02", 0);
+    DeepDir d_03("folder_03", 0);
+
+    //create a temp trash
+    QString tempTrash("tempTrashDir");
+    m_deepDir_02  = new DeepDir(tempTrash, 0);
+    createTempHomeTrashDir(m_deepDir_02->path());
+
+    const int dirsCounter = 3;
+    DeepDir * dirs [dirsCounter]  = {&d_01, &d_02, &d_03};
+    int counter = 0;
+
+    //move items from different sources to trash
+    for(counter = 0; counter < dirsCounter; counter++)
+    {
+        TempFiles  files;
+        files.addSubDirLevel(dirs[counter]->path());
+        QString name = QString("file_from_dir%1.txt").arg(counter);
+        files.create(name, 1);
+        DirModel model;
+        model.setPath(dirs[counter]->path());
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 1);
+        model.selectionObject()->selectAll();
+        model.moveSelectionToTrash();
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 0);
+    }
+
+    //another model points to temporary Trash
+    connect(m_dirModel_02, SIGNAL(error(QString,QString)),
+            this,          SLOT(slotError(QString,QString)));
+    m_dirModel_02->goTrash();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), dirsCounter);
+    m_dirModel_02->restoreTrash();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 0);
+
+    //now look into info directories from trash, check if it is empty
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 1);
+    QCOMPARE(m_dirModel_02->openPath("Trash"),    true);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->openPath("info"),    true);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(),  0);
+
+    //test it items were moved back to their sources
+    for(counter = 0; counter < dirsCounter; counter++)
+    {
+        DirModel model;
+        model.setPath(dirs[counter]->path());
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 1);
+    }
+
+    QCOMPARE(m_receivedErrorSignal,   false);
+}
+
+
+void TestDirModel::emptyTrash()
+{
+    DeepDir d_01("folder_01", 0);
+    DeepDir d_02("folder_02", 0);
+    DeepDir d_03("folder_03", 0);
+
+    //create a temp trash
+    QString tempTrash("tempTrashDir");
+    m_deepDir_02  = new DeepDir(tempTrash, 0);
+    createTempHomeTrashDir(m_deepDir_02->path());
+
+    const int dirsCounter = 3;
+    DeepDir * dirs [dirsCounter]  = {&d_01, &d_02, &d_03};
+    int counter = 0;
+
+    //move items from different sources to trash
+    for(counter = 0; counter < dirsCounter; counter++)
+    {
+        TempFiles  files;
+        files.addSubDirLevel(dirs[counter]->path());
+        QString name = QString("file_from_dir%1.txt").arg(counter);
+        files.create(name, 1);
+        DirModel model;
+        model.setPath(dirs[counter]->path());
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 1);
+        model.selectionObject()->selectAll();
+        model.moveSelectionToTrash();
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 0);
+    }
+
+    //another model points to temporary Trash
+    connect(m_dirModel_02, SIGNAL(error(QString,QString)),
+            this,          SLOT(slotError(QString,QString)));
+    m_dirModel_02->goTrash();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), dirsCounter);
+    m_dirModel_02->emptyTrash();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 0);
+
+    //now look into info directories from trash, check if it is empty
+    m_dirModel_02->setPath(m_deepDir_02->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(), 1);
+    QCOMPARE(m_dirModel_02->openPath("Trash"),    true);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->openPath("info"),    true);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_02->rowCount(),  0);
+
+    //test if original items folder is still empty
+    for(counter = 0; counter < dirsCounter; counter++)
+    {
+        DirModel model;
+        model.setPath(dirs[counter]->path());
+        QTest::qWait(TIME_TO_REFRESH_DIR);
+        QCOMPARE(model.rowCount(), 0);
+    }
+
+    QCOMPARE(m_receivedErrorSignal,   false);
+}
+
+
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -2440,6 +2840,21 @@ QString createFileInTempDir(const QString& name, const char *content, qint64 siz
             ret = fullName;
         }
         file.close();
+    }
+    return ret;
+}
+
+
+bool TestDirModel::createTempHomeTrashDir(const QString& existentDir)
+{
+    QDir d(existentDir);
+    bool ret = false;
+    if (existentDir.startsWith(QDir::tempPath()) && (d.exists() || d.mkpath(existentDir)))
+    {
+        QTrashDir trash;
+        ::setenv("XDG_DATA_HOME", existentDir.toLatin1().constData(), true );
+        QString xdgTrashDir(trash.homeTrash());
+        ret = trash.validate(xdgTrashDir, true);
     }
     return ret;
 }

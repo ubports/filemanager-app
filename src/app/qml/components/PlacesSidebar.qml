@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Canonical Ltd
+ * Copyright (C) 2013, 2014 Canonical Ltd
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -20,6 +20,7 @@ import QtGraphicalEffects 1.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.ListItems 0.1
 import Ubuntu.Components.Popups 0.1
+import com.ubuntu.PlacesModel 0.1
 
 Sidebar {
     id: root
@@ -42,38 +43,6 @@ Sidebar {
         UbuntuNumberAnimation {}
     }
 
-    ListModel {
-        id: places
-
-        ListElement {
-            path: "~"
-        }
-
-        ListElement {
-            path: "~/Documents"
-        }
-
-        ListElement {
-            path: "~/Downloads"
-        }
-
-        ListElement {
-            path: "~/Music"
-        }
-
-        ListElement {
-            path: "~/Pictures"
-        }
-
-        ListElement {
-            path: "~/Videos"
-        }
-
-        ListElement {
-            path: "/"
-        }
-    }
-
     Column {
         anchors {
             left: parent.left
@@ -85,14 +54,25 @@ Sidebar {
             text: i18n.tr("Places")
         }
 
+        PlacesModel {
+            id: userplaces
+
+            // By default, the model only contains the
+            // user directories. Add the file system location too
+            Component.onCompleted: {
+                addLocation("/");
+            }
+        }
+
         Repeater {
             id: placesList
             objectName: "placesList"
 
-            model: places
+            model: userplaces
 
             delegate: Standard {
-                text: folderName(path)
+                objectName: "place" + folderDisplayName(path).replace(/ /g,'')
+                text: folderDisplayName(path)
 
                 Image {
                     anchors {
@@ -120,6 +100,7 @@ Sidebar {
                 height: units.gu(5)
                 showDivider: !collapsed
 
+                // This refers to a parent FolderListPage.folder
                 selected: folder === path
                 iconFrame: false
             }

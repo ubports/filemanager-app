@@ -37,7 +37,7 @@ NemoFolderListModelPlugin::~NemoFolderListModelPlugin() { }
 
 void NemoFolderListModelPlugin::initializeEngine(QmlEngine *engine, const char *uri)
 {
-    Q_ASSERT(uri == QLatin1String(QUOTES(PLUGIN_URI)));
+    Q_ASSERT(uri == QLatin1String(PLUGIN_URI));
 
 #ifndef DO_NOT_USE_TAG_LIB
     engine->addImageProvider(QLatin1String("cover-art"), new CoverArtImageProvider);
@@ -50,7 +50,7 @@ void NemoFolderListModelPlugin::initializeEngine(QmlEngine *engine, const char *
 
 void NemoFolderListModelPlugin::registerTypes(const char *uri)
 {
-    Q_ASSERT(uri == QLatin1String(QUOTES(PLUGIN_URI)));
+    Q_ASSERT(uri == QLatin1String(PLUGIN_URI));
     DirModel::registerMetaTypes();
     qmlRegisterType<DirSelection>(uri, 1, 0, "FolderListSelection");
     qmlRegisterType<DirModel>(uri, 1, 0, "FolderListModel");

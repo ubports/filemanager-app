@@ -296,3 +296,10 @@ void DirSelection::select(int index, bool range, bool multiSelection )
         }
     }
 }
+
+
+void DirSelection::setMultiSelection(bool enable)
+{
+    Mode m = enable ? Multi : Single;
+    setMode(m);
+}

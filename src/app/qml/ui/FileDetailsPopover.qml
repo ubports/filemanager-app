@@ -23,7 +23,7 @@ Popover {
     id: root
     property var model
 
-    property string path: model.path || (fileView.path + '/' + model.fileName)
+    property string path: model.path || (fileView.folder + '/' + model.fileName)
 
     contentHeight: contents.height + 2 * contents.anchors.margins
 
@@ -77,7 +77,7 @@ Popover {
             Label {
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: folderName(root.path)
+                text: folderDisplayName(root.path)
                 color: Theme.palette.normal.overlayText
                 font.bold: true
             }

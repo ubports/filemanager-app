@@ -31,12 +31,14 @@
 
 #include "dirselection.h"
 #include "dirmodel.h"
-#include "iorequest.h"
-#include "ioworkerthread.h"
 #include "filesystemaction.h"
-#include "externalfswatcher.h"
 #include "clipboard.h"
 #include "fmutil.h"
+#include "locationsfactory.h"
+#include "location.h"
+#include "locationurl.h"
+#include "disklocation.h"
+#include "trashlocation.h"
 
 
 #ifndef DO_NOT_USE_TAG_LIB
@@ -74,8 +76,7 @@
 
 #define IS_FILE_MANAGER_IDLE()            (!mAwaitingResults)
 
-
-Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread)
+#define IS_BROWSING_TRASH_ROOTDIR() (mCurLocation && mCurLocation->type() == LocationsFactory::TrashDisk && mCurLocation->isRoot())
 
 namespace {
     QHash<QByteArray, int> roleMapping;
@@ -108,9 +109,11 @@ DirModel::DirModel(QObject *parent)
     , mSortBy(SortByName)
     , mSortOrder(SortAscending)
     , mCompareFunction(0)  
-    , mExtFSWatcher(0)
-    , mClipboard(new Clipboard(this))    
-    , m_fsAction(new FileSystemAction(this) )    
+    , mExtFSWatcher(false)
+    , mClipboard(new Clipboard(this))
+    , mLocationFactory(new LocationsFactory(this))
+    , mCurLocation(0)
+    , m_fsAction(new FileSystemAction(this) )
 {
     mNameFilters = QStringList() << "*";
 
@@ -155,13 +158,40 @@ DirModel::DirModel(QObject *parent)
     {
         FMUtil::setThemeName();
     }
+
+    foreach (const Location* l, mLocationFactory->availableLocations())
+    {
+       connect(l,     SIGNAL(itemsAdded(DirItemInfoList)),
+               this,  SLOT(onItemsAdded(DirItemInfoList)));
+
+       connect(l,     SIGNAL(itemsFetched()),
+               this,  SLOT(onItemsFetched()));
+
+       connect(l,     SIGNAL(extWatcherItemAdded(DirItemInfo)),
+               this,  SLOT(onItemAddedOutsideFm(DirItemInfo)));
+
+       connect(l,     SIGNAL(extWatcherItemRemoved(DirItemInfo)),
+               this,  SLOT(onItemRemovedOutSideFm(DirItemInfo)));
+
+       connect(l,     SIGNAL(extWatcherItemChanged(DirItemInfo)),
+               this,  SLOT(onItemChangedOutSideFm(DirItemInfo)));
+
+       connect(l,     SIGNAL(extWatcherChangesFetched(int)),
+               this,  SLOT(onExternalFsWorkerFinished(int)));
+
+       connect(l,     SIGNAL(extWatcherPathChanged(QString)),
+               this,  SLOT(onThereAreExternalChanges(QString)));
+
+       connect(this,  SIGNAL(enabledExternalFSWatcherChanged(bool)),
+               l,     SLOT(setUsingExternalWatcher(bool)));
+    }
 }
 
 
 
 DirModel::~DirModel()
 {
-    stoptExternalFsWatcher();
+
 }
 
 
@@ -175,7 +205,6 @@ QHash<int, QByteArray> DirModel::roleNames() const
 
     return roles;
 }
-
 
 
 
@@ -366,43 +395,54 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+
 void DirModel::setPath(const QString &pathName)
 {
     if (pathName.isEmpty())
         return;   
 
-    if (!canReadDir(pathName))
-    {
-        emit error(tr("cannot read path"), pathName);
-        return;
-    }
-
-    if (mAwaitingResults) {
+   if (mAwaitingResults) {
         // TODO: handle the case where pathName != our current path, cancel old
         // request, start a new one
-        qDebug() << Q_FUNC_INFO << this << "Ignoring path change request, request already running";
+        qDebug() << Q_FUNC_INFO << this << "Ignoring path change request, request already running in" << pathName;
         return;
     }
 
+    Location *location = mLocationFactory->setNewPath(pathName);
+    if (location == 0)
+    {
+        emit error(tr("path or url may not exist or cannot be read"), pathName);
+        qDebug() << Q_FUNC_INFO << this << "path or url may not exist or cannot be read:" << pathName;
+        return;
+    }
+
+    mCurLocation = location;
+    setPathFromCurrentLocation();
+}
+
+/*!
+ * \brief DirModel::setPathFromCurrentLocation() changes current Path using current Location
+ *
+ *  Used in \ref cdUp() and \ref cdIntoIndex()
+ */
+void DirModel::setPathFromCurrentLocation()
+{   
     mAwaitingResults = true;
     emit awaitingResultsChanged();
 #if DEBUG_MESSAGES
-    qDebug() << Q_FUNC_INFO << this << "Changing to " << pathName << " on " << QThread::currentThreadId();
+    qDebug() << Q_FUNC_INFO << this << "Changing to " << mCurLocation->urlPath();
 #endif
 
     clear();
 
-    DirListWorker *dlw  = createWorkerRequest(IORequest::DirList, pathName);
-    connect(dlw, SIGNAL(itemsAdded(DirItemInfoList)), SLOT(onItemsAdded(DirItemInfoList)));
-    connect(dlw, SIGNAL(workerFinished()), SLOT(onResultsFetched()));
-    ioWorkerThread()->addRequest(dlw);
+    mCurLocation->fetchItems(currentDirFilter(), mIsRecursive);
 
-    mCurrentDir = pathName;
-    emit pathChanged(pathName);
+    mCurrentDir = mCurLocation->urlPath();
+    emit pathChanged(mCurLocation->urlPath());
 }
 
 
-void DirModel::onResultsFetched() {
+void DirModel::onItemsFetched() {
     if (mAwaitingResults) {
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << this << "No longer awaiting results";
@@ -443,7 +483,18 @@ void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 
 void DirModel::rm(const QStringList &paths)
 {
-   m_fsAction->remove(paths);
+    //if current location is Trash only in the root is allowed to remove Items
+    if (mCurLocation->type() == LocationsFactory::TrashDisk)
+    {
+        if (IS_BROWSING_TRASH_ROOTDIR())
+        {
+            m_fsAction->removeFromTrash(paths);
+        }
+    }
+    else
+    {
+        m_fsAction->remove(paths);
+    }
 }
 
 
@@ -588,22 +639,33 @@ QString DirModel::homePath() const
 }
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
- QVariant  DirModel::headerData(int section, Qt::Orientation orientation, int role) const
- {
-   if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
-   {
-       QVariant ret;
-       QHash<int, QByteArray> roles = this->roleNames();
-       section += FileNameRole;
-       if (roles.contains(section))
-       {
-           QString header=  QString(roles.value(section));
-           ret = header;
-       }
-       return ret;
-   }
-   return QAbstractItemModel::headerData(section, orientation, role);
- }
+int DirModel::columnCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent);
+    return TrackCoverRole - FileNameRole + 1;
+}
+QVariant  DirModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
+    {
+        QVariant ret;
+        QHash<int, QByteArray> roles = this->roleNames();
+        section += FileNameRole;
+        if (roles.contains(section))
+        {
+            QString header=  QString(roles.value(section));
+            ret = header;
+        }
+        return ret;
+    }
+    return QAbstractItemModel::headerData(section, orientation, role);
+}
+ExternalFSWatcher * DirModel::getExternalFSWatcher() const
+{
+   const Location *l = mLocationFactory->availableLocations().at(LocationsFactory::LocalDisk);
+   const DiskLocation *disk = static_cast<const DiskLocation*> (l);
+   return disk->getExternalFSWatcher();
+}
 #endif
 
 
@@ -613,17 +675,18 @@ void DirModel::goHome()
 }
 
 
+void DirModel::goTrash()
+{
+    setPath(LocationUrl::TrashRootURL);
+}
+
+
 bool DirModel::cdUp()
 {
-    int ret = false;
-    if (!mCurrentDir.isEmpty()) // we are in any dir
+    int ret = mCurLocation && mCurLocation->becomeParent();
+    if (ret)
     {
-        QDir current(mCurrentDir);
-        if (current.cdUp())
-        {
-            setPath(current.absolutePath());
-            ret = true;
-        }
+       setPathFromCurrentLocation();
     }
     return ret;
 }
@@ -707,9 +770,13 @@ void DirModel::paste()
 bool  DirModel::cdIntoIndex(int row)
 {
     bool ret = false;
-    if (IS_VALID_ROW(row))
+    if (IS_VALID_ROW(row)                       &&
+        mDirectoryContents.at(row).isDir()      &&
+        mDirectoryContents.at(row).isContentReadable())
     {
-        ret = cdInto(mDirectoryContents.at(row));
+        mCurLocation->setInfoItem(mDirectoryContents.at(row));
+        setPathFromCurrentLocation();
+        ret = true;
     }
     else
     {
@@ -1085,7 +1152,14 @@ bool DirModel::openIndex(int row)
     bool ret = false;
     if (IS_VALID_ROW(row))
     {
-        ret = openItem(mDirectoryContents.at(row));
+        if (mDirectoryContents.at(row).isDir())
+        {
+            ret = cdIntoIndex(row);
+        }
+        else
+        {
+            ret = openItem(mDirectoryContents.at(row));
+        }
     }
     else
     {
@@ -1096,8 +1170,28 @@ bool DirModel::openIndex(int row)
 
 bool DirModel::openPath(const QString &filename)
 {
-    DirItemInfo fi(setParentIfRelative(filename));
-    return openItem(fi);
+    bool ret = false;
+    //first void any relative path when is root
+    if ( !(mCurLocation && mCurLocation->isRoot() && filename.startsWith(QLatin1String(".."))) )
+    {
+        Location *location = mLocationFactory->setNewPath(filename);
+        if (location)
+        {
+            mCurLocation = location;
+            setPathFromCurrentLocation();
+            ret = true;
+        }
+        else
+        {
+           const DirItemInfo *item = mLocationFactory->lastValidFileInfo();
+           // DirItemInfo fi(setParentIfRelative(filename));
+           if (item && item->isFile())
+           {
+               ret =  openItem(*item);
+           }
+        }
+    }
+    return ret;
 }
 
 /*!
@@ -1126,103 +1220,21 @@ bool DirModel::openItem(const DirItemInfo &fi)
     return ret;
 }
 
-/*!
- * \brief DirModel::createWorkerRequest() create a request for IORequestWorker
- * \param requestType the common IORequest::DirList to fill a directory content
- *                    or IORequest::DirAutoRefresh that will verify any external File System modification
- * \param pathName  the path to get content
- * \return          the thread object
- */
-DirListWorker * DirModel::createWorkerRequest(IORequest::RequestType requestType,
-                                              const QString& pathName)
-{
-    DirListWorker * reqThread = 0;
-    QDir::Filter dirFilter = currentDirFilter();
-    if (requestType == IORequest::DirList)
-    {
-        // TODO: we need to set a spinner active before we start getting results from DirListWorker
-        reqThread = new DirListWorker(pathName, dirFilter, mIsRecursive);
-    }
-    else
-    {
-        reqThread = new ExternalFileSystemChangesWorker(mDirectoryContents,
-                                                  pathName,
-                                                  dirFilter, mIsRecursive);
-    }  
-    return reqThread;
-}
 
 
 
-/*!
- * \brief DirModel::startExternalFsWatcher() starts the External File System Watcher
- */
-void DirModel::startExternalFsWatcher()
-{
-#if DEBUG_EXT_FS_WATCHER
-        qDebug() << "[extFsWorker]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
-                  << Q_FUNC_INFO << this;
 
-#endif
-    if (!mExtFSWatcher)
-    {
-        mExtFSWatcher = new ExternalFSWatcher(this);
-        mExtFSWatcher->setIntervalToNotifyChanges(EX_FS_WATCHER_TIMER_INTERVAL);
-        connect(this,          SIGNAL(pathChanged(QString)),
-                mExtFSWatcher, SLOT(setCurrentPath(QString)));
-
-        connect(mExtFSWatcher, SIGNAL(pathModified()),
-                this,          SLOT(onThereAreExternalChanges()));
-
-       //setCurrentPath() checks for empty paths
-       mExtFSWatcher->setCurrentPath(mCurrentDir);
-    }
-}
-
-
-
-/*!
- * \brief DirModel::stoptExternalFsWatcher stops the External File System Watcher
- */
-void DirModel::stoptExternalFsWatcher()
-{
-#if DEBUG_EXT_FS_WATCHER
-        qDebug() << "[extFsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
-                  << Q_FUNC_INFO << this;
-#endif
-   if (mExtFSWatcher)
-   {
-       delete mExtFSWatcher;
-       mExtFSWatcher = 0;
-   }
-}
-
-
-void DirModel::onThereAreExternalChanges()
+void DirModel::onThereAreExternalChanges(const QString& pathModifiedOutside)
 {
     if ( IS_FILE_MANAGER_IDLE() )
     {
 #if DEBUG_EXT_FS_WATCHER
         qDebug() << "[extFsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
-                 << Q_FUNC_INFO << this << "File System modified";
+                 << Q_FUNC_INFO << this << "File System modified in" << pathModifiedOutside;
 #endif
-        DirListWorker *w =
-                createWorkerRequest(IORequest::DirListExternalFSChanges,
-                                    mCurrentDir
-                                   );
-        ExternalFileSystemChangesWorker *extFsWorker =
-                static_cast<ExternalFileSystemChangesWorker*> (w);
-
-        connect(extFsWorker,    SIGNAL(added(DirItemInfo)),
-                this,         SLOT(onItemAddedOutsideFm(DirItemInfo)));
-        connect(extFsWorker,    SIGNAL(removed(DirItemInfo)),
-                this,         SLOT(onItemRemovedOutSideFm(DirItemInfo)));
-        connect(extFsWorker,    SIGNAL(changed(DirItemInfo)),
-                this,         SLOT(onItemChangedOutSideFm(DirItemInfo)));
-        connect(extFsWorker,    SIGNAL(finished(int)),
-                this,         SLOT(onExternalFsWorkerFinished(int)));
-
-        ioWorkerThread()->addRequest(extFsWorker);
+        mCurLocation->fetchExternalChanges(pathModifiedOutside,
+                                           mDirectoryContents,
+                                           currentDirFilter());
     }
 #if DEBUG_EXT_FS_WATCHER
     else
@@ -1322,7 +1334,7 @@ void DirModel::onExternalFsWorkerFinished(int currentDirCounter)
  */
 bool DirModel::getEnabledExternalFSWatcher() const
 {
-   return mExtFSWatcher ? true : false;
+   return mExtFSWatcher;
 }
 
 
@@ -1331,15 +1343,8 @@ bool DirModel::getEnabledExternalFSWatcher() const
  * \param enable
  */
 void DirModel::setEnabledExternalFSWatcher(bool enable)
-{
-    if(enable)
-    {
-        startExternalFsWatcher();
-    }
-    else
-    {
-        stoptExternalFsWatcher();
-    }
+{   
+    emit enabledExternalFSWatcherChanged(enable);
 }
 
 
@@ -1513,6 +1518,132 @@ int DirModel::getIndex(const QString &name)
 {
     QFileInfo i(name);
     return rowOfItem(DirItemInfo(i));
+}
+
+
+void DirModel:: moveIndexesToTrash(const QList<int>& items)
+{ 
+    if (mCurLocation->type() == LocationsFactory::LocalDisk)
+    {
+        const TrashLocation *trashLocation = static_cast<const TrashLocation*>
+                   (mLocationFactory->getLocation(LocationsFactory::TrashDisk));
+        ActionPathList  itemsAndTrashPath;
+        int index = 0;
+        for (int counter=0; counter < items.count(); ++counter)
+        {
+            index = items.at(counter);
+            if (IS_VALID_ROW(index))
+            {
+                const DirItemInfo &it = mDirectoryContents.at(index);
+                itemsAndTrashPath.append(trashLocation->getMovePairPaths(it));
+            }
+        }
+        if (itemsAndTrashPath.count() > 0)
+        {         
+            m_fsAction->moveToTrash(itemsAndTrashPath);
+        }
+    }  
+}
+
+
+void DirModel:: moveIndexToTrash(int index)
+{
+    QList<int> list;
+    list.append(index);
+    return moveIndexesToTrash(list);
+}
+
+
+void DirModel::restoreTrash()
+{  
+    if ( IS_BROWSING_TRASH_ROOTDIR() )
+    {
+        QList<int> allItems;
+        for (int counter=0; counter < rowCount(); ++counter)
+        {
+            allItems.append(counter);
+        }
+        restoreIndexesFromTrash(allItems);
+    }
+}
+
+
+void DirModel::emptyTrash()
+{  
+    if ( IS_BROWSING_TRASH_ROOTDIR() )
+    {
+        QStringList allItems;
+        for (int counter=0; counter < rowCount(); ++counter)
+        {
+            allItems.append(mDirectoryContents.at(counter).absoluteFilePath());
+        }
+        if (allItems.count() > 0)
+        {
+            m_fsAction->removeFromTrash(allItems);
+        }
+    }
+}
+
+
+void DirModel::restoreIndexFromTrash(int index)
+{
+    QList<int>  item;
+    item.append(index);
+    restoreIndexesFromTrash(item);
+}
+
+
+void DirModel::restoreIndexesFromTrash(const QList<int> &items)
+{   
+    if ( IS_BROWSING_TRASH_ROOTDIR() )
+    {
+        TrashLocation *trashLocation = static_cast<TrashLocation*> (mCurLocation);
+        ActionPathList  itemsAndOriginalPaths;
+        int index = 0;
+        for (int counter=0; counter < items.count(); ++counter)
+        {
+            index = items.at(counter);
+            if (IS_VALID_ROW(index))
+            {
+                const DirItemInfo &it = mDirectoryContents.at(index);
+                itemsAndOriginalPaths.append(trashLocation->getRestorePairPaths(it));
+            }
+        }
+        if (itemsAndOriginalPaths.count() > 0)
+        {           
+            m_fsAction->restoreFromTrash(itemsAndOriginalPaths);
+        }
+    }   
+}
+
+
+void DirModel::copySelection()
+{
+    copyPaths(selectionObject()->selectedAbsFilePaths());
+}
+
+
+void DirModel::cutSelection()
+{
+    cutPaths(selectionObject()->selectedAbsFilePaths());
+}
+
+
+void DirModel::removeSelection()
+{
+    removePaths(selectionObject()->selectedAbsFilePaths());
+}
+
+
+void DirModel::moveSelectionToTrash()
+{
+    moveIndexesToTrash(selectionObject()->selectedIndexes());
+}
+
+
+void DirModel::restoreSelectionFromTrash()
+{
+    restoreIndexesFromTrash(selectionObject()->selectedIndexes());
 }
 
 

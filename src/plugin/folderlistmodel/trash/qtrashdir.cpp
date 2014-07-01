@@ -20,6 +20,7 @@
  */
 
 #include "qtrashdir.h"
+#include "qtrashutilinfo.h"
 
 #include <QFileInfo>
 #include <QDir>
@@ -39,6 +40,7 @@ QTrashDir::QTrashDir() : m_userId(::getuid())
 
 }
 
+
 bool QTrashDir::validate(const QString &trashDir, bool create) const
 {
    bool ret = false;
@@ -49,8 +51,8 @@ bool QTrashDir::validate(const QString &trashDir, bool create) const
    }
    if (checkUserDirPermissions(trashDir))
    {
-       QString  files(filesTrashDir(trashDir));
-       QString  info(infoTrashDir(trashDir));
+       QString  files(QTrashUtilInfo::filesTrashDir(trashDir));
+       QString  info(QTrashUtilInfo::infoTrashDir(trashDir));
        if ( (checkUserDirPermissions(files) || (create && createUserDir(files)))  &&
             (checkUserDirPermissions(info)  || (create && createUserDir(info)))
           )
@@ -170,18 +172,6 @@ QString QTrashDir::getMountPoint(const QString &fileOrDir) const
 }
 
 
-QString QTrashDir::filesTrashDir(const QString &trashDir) const
-{
-   QString filesDir(trashDir + QDir::separator() + QLatin1String("files"));
-   return filesDir;
-}
-
-
-QString QTrashDir::infoTrashDir(const QString &trashDir) const
-{
-   QString infoDir(trashDir + QDir::separator() + QLatin1String("info"));
-   return infoDir;
-}
 
 
 /*!
@@ -333,3 +323,13 @@ QString QTrashDir::suitableTrash(const QString &fullPathName) const
     }
     return trashDir;
 }
+
+
+bool QTrashDir::suitableTrash(const QString &fullPathName, QTrashUtilInfo &fullInfo) const
+{
+    fullInfo.setInfo(suitableTrash(fullPathName), fullPathName);
+    return fullInfo.isValid();
+}
+
+
+

@@ -7,32 +7,346 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-03-10 18:46-0500\n"
-"PO-Revision-Date: 2014-01-17 09:37+0000\n"
+"POT-Creation-Date: 2014-05-15 10:53+0200\n"
+"PO-Revision-Date: 2014-06-11 02:42+0000\n"
 "Last-Translator: abuyop <Unknown>\n"
 "Language-Team: Malay <ms@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-02 06:46+0000\n"
-"X-Generator: Launchpad (build 16985)\n"
+"X-Launchpad-Export-Date: 2014-06-25 06:08+0000\n"
+"X-Generator: Launchpad (build 17065)\n"
 
-#: ../ubuntu-filemanager-app.qml:66
+#: src/app/qml/components/FolderIconView.qml:58
+#: src/app/qml/components/FolderListView.qml:36
+#, qt-format
+msgid "%1 (1 file)"
+msgstr "%1 (1 fail)"
+
+#: src/app/qml/components/FolderIconView.qml:59
+#: src/app/qml/components/FolderListView.qml:37
+#, qt-format
+msgid "%1 (%2 files)"
+msgstr "%1 (%2 fail)"
+
+#: src/app/qml/components/PathBar.qml:120
+#: src/app/qml/ui/FolderListPage.qml:151
+msgid "Home"
+msgstr "Rumah"
+
+#: src/app/qml/components/PlacesSidebar.qml:85
+#: src/app/qml/ui/FolderListPage.qml:421
+msgid "Places"
+msgstr "Tempat"
+
+#: src/app/qml/filemanager.qml:66 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
 msgstr "Tetapan"
 
-#: ../ubuntu-filemanager-app.qml:67
+#: src/app/qml/filemanager.qml:67
 msgid "Change app settings"
 msgstr "Ubah tetapan apl"
 
-#: ../ubuntu-filemanager-app.qml:176
+#: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:492
+#: src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
-msgstr ""
+msgstr "Ikon"
 
-#: ../ubuntu-filemanager-app.qml:176
+#: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:508
+#: src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
-msgstr ""
+msgstr "Senarai"
 
-#: ../.build/com.ubuntu.filemanager_filemanager.desktop.in:1
-msgid "File Manager"
-msgstr "Pengurus Fail"
+#: src/app/qml/ui/ConfirmDialog.qml:31
+#: src/app/qml/ui/ConfirmDialogWithInput.qml:41
+#: src/app/qml/ui/NotifyDialog.qml:25
+msgid "Ok"
+msgstr "Ok"
+
+#: src/app/qml/ui/ConfirmDialog.qml:41
+#: src/app/qml/ui/ConfirmDialogWithInput.qml:51
+#: src/app/qml/ui/FileActionDialog.qml:45
+#: src/app/qml/ui/FileOperationProgressDialog.qml:44
+#: src/app/qml/ui/GoToDialog.qml:66
+msgid "Cancel"
+msgstr "Batal"
+
+#: src/app/qml/ui/FileActionDialog.qml:30
+msgid "Choose action"
+msgstr "Pilih tindakan"
+
+#: src/app/qml/ui/FileActionDialog.qml:31
+#, qt-format
+msgid "For file: %1"
+msgstr "Bagi fail: %1"
+
+#: src/app/qml/ui/FileActionDialog.qml:35
+msgid "Open"
+msgstr "Buka"
+
+#: src/app/qml/ui/FileDetailsPopover.qml:37
+msgid "Readable"
+msgstr "Boleh Baca"
+
+#: src/app/qml/ui/FileDetailsPopover.qml:40
+msgid "Writable"
+msgstr "Boleh Tulis"
+
+#: src/app/qml/ui/FileDetailsPopover.qml:43
+msgid "Executable"
+msgstr "Boleh Laku"
+
+#: src/app/qml/ui/FileDetailsPopover.qml:91
+msgid "Path:"
+msgstr "Laluan:"
+
+#: src/app/qml/ui/FileDetailsPopover.qml:102
+msgid "Contents:"
+msgstr "Kandungan:"
+
+#: src/app/qml/ui/FileDetailsPopover.qml:103
+msgid "Size:"
+msgstr "Saiz:"
+
+#: src/app/qml/ui/FileDetailsPopover.qml:112
+msgid "Accessed:"
+msgstr "Dicapai:"
+
+#: src/app/qml/ui/FileDetailsPopover.qml:121
+msgid "Modified:"
+msgstr "Diubahsuai:"
+
+#: src/app/qml/ui/FileDetailsPopover.qml:130
+msgid "Permissions:"
+msgstr "Keizinan:"
+
+#: src/app/qml/ui/FileOperationProgressDialog.qml:27
+msgid "Operation in progress"
+msgstr "Operasi berjalan"
+
+#: src/app/qml/ui/FolderListPage.qml:122
+msgid "~/Desktop"
+msgstr "~/Desktop"
+
+#: src/app/qml/ui/FolderListPage.qml:124
+msgid "~/Documents"
+msgstr "~/Dokumen"
+
+#: src/app/qml/ui/FolderListPage.qml:126
+msgid "~/Downloads"
+msgstr "~/Muaturun"
+
+#: src/app/qml/ui/FolderListPage.qml:128
+msgid "~/Music"
+msgstr "~/Muzik"
+
+#: src/app/qml/ui/FolderListPage.qml:130
+msgid "~/Pictures"
+msgstr "~/Gambar"
+
+#: src/app/qml/ui/FolderListPage.qml:132
+msgid "~/Public"
+msgstr "~/Awam"
+
+#: src/app/qml/ui/FolderListPage.qml:134
+msgid "~/Programs"
+msgstr "~/Program"
+
+#: src/app/qml/ui/FolderListPage.qml:136
+msgid "~/Templates"
+msgstr "~/Templat"
+
+#: src/app/qml/ui/FolderListPage.qml:138
+msgid "~/Videos"
+msgstr "~/Video"
+
+#: src/app/qml/ui/FolderListPage.qml:153
+msgid "File System"
+msgstr "Sistem Fail"
+
+#: src/app/qml/ui/FolderListPage.qml:200
+msgid "1 file"
+msgstr "1 fail"
+
+#: src/app/qml/ui/FolderListPage.qml:201
+#, qt-format
+msgid "%1 files"
+msgstr "%1 Fail"
+
+#: src/app/qml/ui/FolderListPage.qml:226
+msgid "Open in a new tab"
+msgstr "Buka dalam tab baharu"
+
+#: src/app/qml/ui/FolderListPage.qml:234
+msgid "Close this tab"
+msgstr "Tutup tab ini"
+
+#: src/app/qml/ui/FolderListPage.qml:254
+msgid "Create New Folder"
+msgstr "Cipta Folder Baharu"
+
+#: src/app/qml/ui/FolderListPage.qml:274
+msgid "Paste"
+msgstr "Tampal"
+
+#: src/app/qml/ui/FolderListPage.qml:276
+#, qt-format
+msgid "Paste %1 File"
+msgstr "Tampal %1 Fail"
+
+#: src/app/qml/ui/FolderListPage.qml:277
+#, qt-format
+msgid "Paste %1 Files"
+msgstr "Tampal %1 Fail"
+
+#: src/app/qml/ui/FolderListPage.qml:280
+msgid "Paste files"
+msgstr "Tampal fail"
+
+#: src/app/qml/ui/FolderListPage.qml:292
+msgid "Open in Terminal"
+msgstr "Buka dalam Terminal"
+
+#: src/app/qml/ui/FolderListPage.qml:304 src/app/qml/ui/FolderListPage.qml:650
+msgid "Properties"
+msgstr "Sifat"
+
+#: src/app/qml/ui/FolderListPage.qml:321
+msgid "Create folder"
+msgstr "Cipta folder"
+
+#: src/app/qml/ui/FolderListPage.qml:322
+msgid "Enter name for new folder"
+msgstr "Masukkan nama folder baharu"
+
+#: src/app/qml/ui/FolderListPage.qml:338
+msgid "Create file"
+msgstr "Cipta fail"
+
+#: src/app/qml/ui/FolderListPage.qml:339
+msgid "Enter name for new file"
+msgstr "Masukkan nama fail baharu"
+
+#: src/app/qml/ui/FolderListPage.qml:354 src/app/qml/ui/FolderListPage.qml:669
+msgid "File operation error"
+msgstr "Ralat operasi fail"
+
+#: src/app/qml/ui/FolderListPage.qml:354
+#, qt-format
+msgid "Unable to open '%11"
+msgstr "Tidak boleh buka '%11"
+
+#: src/app/qml/ui/FolderListPage.qml:396
+msgid "Actions"
+msgstr "Tindakan"
+
+#: src/app/qml/ui/FolderListPage.qml:406
+msgid "View"
+msgstr "Lihat"
+
+#: src/app/qml/ui/FolderListPage.qml:523
+msgid "No files"
+msgstr "Tiada fail"
+
+#: src/app/qml/ui/FolderListPage.qml:543 src/app/qml/ui/FolderListPage.qml:624
+msgid "Delete"
+msgstr "Padam"
+
+#: src/app/qml/ui/FolderListPage.qml:544
+#, qt-format
+msgid "Are you sure you want to permanently delete '%1'?"
+msgstr "Anda pasti mahu padam '%1' secara  kekal?"
+
+#: src/app/qml/ui/FolderListPage.qml:567 src/app/qml/ui/FolderListPage.qml:637
+msgid "Rename"
+msgstr "Nama Semula"
+
+#: src/app/qml/ui/FolderListPage.qml:568
+msgid "Enter a new name"
+msgstr "Masukkan nama baharu"
+
+#: src/app/qml/ui/FolderListPage.qml:577
+msgid "Could not rename"
+msgstr "Tidak dapat namakan semula"
+
+#: src/app/qml/ui/FolderListPage.qml:578
+msgid "Insufficient permissions or name already exists?"
+msgstr "Keizinan tidak mencukupi atau nama sudah wujud?"
+
+#: src/app/qml/ui/FolderListPage.qml:601
+msgid "Cut"
+msgstr "Potong"
+
+#: src/app/qml/ui/FolderListPage.qml:612
+msgid "Copy"
+msgstr "Salin"
+
+#: src/app/qml/ui/FolderListPage.qml:688
+msgid "Folder not accessible"
+msgstr "Folder tidak boleh dicapai"
+
+#. TRANSLATORS: this refers to a folder name
+#: src/app/qml/ui/FolderListPage.qml:690
+#, qt-format
+msgid "Can not access %1"
+msgstr "Tidak dapat capai %1"
+
+#: src/app/qml/ui/GoToDialog.qml:25
+msgid "Go To Location"
+msgstr "Pergi Ke Lokasi"
+
+#: src/app/qml/ui/GoToDialog.qml:27
+msgid "Enter a location to go to:"
+msgstr "Masukkan lokasi untuk pergi ke:"
+
+#: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:84
+msgid "Location..."
+msgstr "Lokasi..."
+
+#: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:99
+msgid "Go"
+msgstr "Pergi"
+
+#: src/app/qml/ui/SettingsSheet.qml:34
+msgid "Close"
+msgstr "Tutup"
+
+#: src/app/qml/ui/SettingsSheet.qml:43
+msgid "Show Advanced Features"
+msgstr "Tunjuk Fitur Lanjutan"
+
+#: src/app/qml/ui/ViewPopover.qml:39
+msgid "Show Hidden Files"
+msgstr "Tunjuk Fail Tersembunyi"
+
+#: src/app/qml/ui/ViewPopover.qml:59
+msgid "View As"
+msgstr "Lihat Sebagai"
+
+#: src/app/qml/ui/ViewPopover.qml:81
+msgid "Sort By"
+msgstr "Isih Mengikut"
+
+#: src/app/qml/ui/ViewPopover.qml:92
+msgid "Name"
+msgstr "Nama"
+
+#: src/app/qml/ui/ViewPopover.qml:93
+msgid "Date"
+msgstr "Tarikh"
+
+#: src/app/qml/ui/ViewPopover.qml:103
+msgid "Sort Order"
+msgstr "Isih Tertib"
+
+#: src/app/qml/ui/ViewPopover.qml:114 src/app/qml/ui/ViewPopover.qml:119
+msgid "Ascending"
+msgstr "Menaik"
+
+#: src/app/qml/ui/ViewPopover.qml:115
+msgid "Descending"
+msgstr "Menurun"
+
+#: src/app/qml/ui/ViewPopover.qml:127
+msgid "Filter"
+msgstr "Penapis"

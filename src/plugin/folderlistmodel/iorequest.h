@@ -42,6 +42,7 @@ class IORequest : public QObject
     Q_OBJECT
 public:   
     explicit IORequest();
+    virtual ~IORequest();
     
 public:
     enum RequestType
@@ -62,31 +63,75 @@ protected:
 
 
 
-class DirListWorker : public IORequest
+class IORequestLoader : public IORequest
 {
-    Q_OBJECT
+ Q_OBJECT
 public:
-    explicit DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive);
-    void run();
-signals:
-    void itemsAdded(const DirItemInfoList &files);
-    void workerFinished();
+    enum LoaderType
+    {
+        NormalLoader,
+        TrashLoader
+    };
 
-protected:
+    IORequestLoader( const QString &pathName,
+                     QDir::Filter filter,
+                     bool isRecursive
+                   );
+    IORequestLoader( const QString& trashRootDir,
+                     const QString &pathName,
+                     QDir::Filter filter,
+                     bool isRecursive
+                   );                   
+    virtual ~IORequestLoader();
     DirItemInfoList     getContents();
 
+signals:
+    void itemsAdded(const DirItemInfoList &files);
+
 private:
+    DirItemInfoList getNormalContent();
+    DirItemInfoList getTrashContent();
     DirItemInfoList add(const QString &pathName, QDir::Filter filter,
-                           const bool isRecursive, DirItemInfoList directoryContents);
-private:
+                        bool isRecursive, DirItemInfoList directoryContents);
+protected:
+    LoaderType    mLoaderType;
     QString       mPathName;
     QDir::Filter  mFilter;
     bool          mIsRecursive;
+    QString       mTtrashRootDir;
 };
 
 
 
-class  ExternalFileSystemChangesWorker : public DirListWorker
+
+class DirListWorker : public IORequestLoader
+{
+    Q_OBJECT
+public:
+    explicit DirListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive);
+    explicit DirListWorker(const QString& trashRootDir, const QString &pathName, QDir::Filter filter, const bool isRecursive);
+    virtual ~DirListWorker();
+    void run();
+protected:
+signals:
+    void workerFinished();
+
+};
+
+
+
+
+class TrashListWorker  : public DirListWorker
+{
+    Q_OBJECT
+public:
+    explicit TrashListWorker(const QString &trashRoot, const QString& path, QDir::Filter filter);
+    virtual ~TrashListWorker();
+};
+
+
+
+class  ExternalFileSystemChangesWorker : public IORequestLoader
 {
     Q_OBJECT
 public:
@@ -94,7 +139,12 @@ public:
                                       const QString &pathName,
                                       QDir::Filter filter,
                                       const bool isRecursive);
+    virtual ~ExternalFileSystemChangesWorker();
     void     run();
+
+protected:
+    int  compareItems(const DirItemInfoList& contentNew);
+
 signals:
     void     removed(const DirItemInfo&);
     void     changed(const DirItemInfo&);
@@ -102,6 +152,22 @@ signals:
     void     finished(int);
 private:
     QHash<QString, DirItemInfo>    m_curContent;   //!< using hash because the vector can be in any order
+};
+
+
+
+class ExternalFileSystemTrashChangesWorker : public ExternalFileSystemChangesWorker
+{
+ Q_OBJECT
+
+public:
+  ExternalFileSystemTrashChangesWorker(const QStringList& pathNames,
+                                       const DirItemInfoList& list,
+                                       QDir::Filter filter);
+  virtual ~ExternalFileSystemTrashChangesWorker();
+  void run();
+private:
+  QStringList    m_pathList;
 };
 
 

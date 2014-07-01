@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Canonical Ltd
+ * Copyright (C) 2013, 2014 Canonical Ltd
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -19,42 +19,11 @@ import QtQuick 2.0
 import Ubuntu.Components 0.1
 import Ubuntu.Components.Popups 0.1
 import Ubuntu.Components.ListItems 0.1
+import com.ubuntu.PlacesModel 0.1
 
 Popover {
     id: root
     objectName: "placesPopover"
-
-    ListModel {
-        id: places
-
-        ListElement {
-            path: "~"
-        }
-
-        ListElement {
-            path: "~/Documents"
-        }
-
-        ListElement {
-            path: "~/Downloads"
-        }
-
-        ListElement {
-            path: "~/Music"
-        }
-
-        ListElement {
-            path: "~/Pictures"
-        }
-
-        ListElement {
-            path: "~/Videos"
-        }
-
-        ListElement {
-            path: "/"
-        }
-    }
 
     Column {
         anchors {
@@ -79,7 +48,7 @@ Popover {
 
                 property bool valid: pathExists(text)
 
-                text: fileView.path
+                text: fileView.folder
 
                 placeholderText: i18n.tr("Location...")
 
@@ -111,16 +80,17 @@ Popover {
             id: placesList
             objectName: "placesList"
 
-            model: places
+            model: PlacesModel {}
 
             delegate: Standard {
-                property string name: folderName(path)
+                objectName: model.objectName
+                property string name: folderDisplayName(path)
 
                 Label {
                     anchors.left: parent.left
                     anchors.leftMargin: units.gu(8)
                     anchors.verticalCenter: parent.verticalCenter
-                    text: folderName(path)
+                    text: folderDisplayName(path)
                     color: selected ? UbuntuColors.orange : Theme.palette.normal.overlayText
                 }
 
