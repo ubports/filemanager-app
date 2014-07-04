@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-06-05 13:22+0000\n"
+"PO-Revision-Date: 2014-07-03 09:25+0000\n"
 "Last-Translator: Andi Chandler <Unknown>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-06-25 06:08+0000\n"
-"X-Generator: Launchpad (build 17065)\n"
+"X-Launchpad-Export-Date: 2014-07-04 06:26+0000\n"
+"X-Generator: Launchpad (build 17086)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
@@ -78,7 +78,7 @@ msgstr "Choose action"
 #: src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "For file: %1"
 
 #: src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
@@ -122,7 +122,7 @@ msgstr "Permissions:"
 
 #: src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "Operation in progress"
 
 #: src/app/qml/ui/FolderListPage.qml:122
 msgid "~/Desktop"
@@ -130,7 +130,7 @@ msgstr "~/Desktop"
 
 #: src/app/qml/ui/FolderListPage.qml:124
 msgid "~/Documents"
-msgstr ""
+msgstr "~/Documents"
 
 #: src/app/qml/ui/FolderListPage.qml:126
 msgid "~/Downloads"
@@ -138,52 +138,52 @@ msgstr ""
 
 #: src/app/qml/ui/FolderListPage.qml:128
 msgid "~/Music"
-msgstr ""
+msgstr "~/Music"
 
 #: src/app/qml/ui/FolderListPage.qml:130
 msgid "~/Pictures"
-msgstr ""
+msgstr "~/Pictures"
 
 #: src/app/qml/ui/FolderListPage.qml:132
 msgid "~/Public"
-msgstr ""
+msgstr "~/Public"
 
 #: src/app/qml/ui/FolderListPage.qml:134
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Programs"
 
 #: src/app/qml/ui/FolderListPage.qml:136
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Templates"
 
 #: src/app/qml/ui/FolderListPage.qml:138
 msgid "~/Videos"
-msgstr ""
+msgstr "~/Videos"
 
 #: src/app/qml/ui/FolderListPage.qml:153
 msgid "File System"
-msgstr ""
+msgstr "File System"
 
 #: src/app/qml/ui/FolderListPage.qml:200
 msgid "1 file"
-msgstr ""
+msgstr "1 file"
 
 #: src/app/qml/ui/FolderListPage.qml:201
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 files"
 
 #: src/app/qml/ui/FolderListPage.qml:226
 msgid "Open in a new tab"
-msgstr ""
+msgstr "Open in a new tab"
 
 #: src/app/qml/ui/FolderListPage.qml:234
 msgid "Close this tab"
-msgstr ""
+msgstr "Close this tab"
 
 #: src/app/qml/ui/FolderListPage.qml:254
 msgid "Create New Folder"
-msgstr ""
+msgstr "Create New Folder"
 
 #: src/app/qml/ui/FolderListPage.qml:274
 msgid "Paste"
@@ -192,57 +192,57 @@ msgstr ""
 #: src/app/qml/ui/FolderListPage.qml:276
 #, qt-format
 msgid "Paste %1 File"
-msgstr ""
+msgstr "Paste %1 File"
 
 #: src/app/qml/ui/FolderListPage.qml:277
 #, qt-format
 msgid "Paste %1 Files"
-msgstr ""
+msgstr "Paste %1 Files"
 
 #: src/app/qml/ui/FolderListPage.qml:280
 msgid "Paste files"
-msgstr ""
+msgstr "Paste files"
 
 #: src/app/qml/ui/FolderListPage.qml:292
 msgid "Open in Terminal"
-msgstr ""
+msgstr "Open in Terminal"
 
 #: src/app/qml/ui/FolderListPage.qml:304 src/app/qml/ui/FolderListPage.qml:650
 msgid "Properties"
-msgstr ""
+msgstr "Properties"
 
 #: src/app/qml/ui/FolderListPage.qml:321
 msgid "Create folder"
-msgstr ""
+msgstr "Create folder"
 
 #: src/app/qml/ui/FolderListPage.qml:322
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Enter name for new folder"
 
 #: src/app/qml/ui/FolderListPage.qml:338
 msgid "Create file"
-msgstr ""
+msgstr "Create file"
 
 #: src/app/qml/ui/FolderListPage.qml:339
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Enter name for new file"
 
 #: src/app/qml/ui/FolderListPage.qml:354 src/app/qml/ui/FolderListPage.qml:669
 msgid "File operation error"
-msgstr ""
+msgstr "File operation error"
 
 #: src/app/qml/ui/FolderListPage.qml:354
 #, qt-format
 msgid "Unable to open '%11"
-msgstr ""
+msgstr "Unable to open '%11"
 
 #: src/app/qml/ui/FolderListPage.qml:396
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 #: src/app/qml/ui/FolderListPage.qml:406
 msgid "View"
-msgstr ""
+msgstr "View"
 
 #: src/app/qml/ui/FolderListPage.qml:523
 msgid "No files"
