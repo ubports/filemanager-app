@@ -1,6 +1,6 @@
 {
     "description": "File Manager application",
-    "framework": "ubuntu-sdk-14.04-dev2",
+    "framework": "ubuntu-sdk-14.10-dev2",
     "architecture": "armhf",
     "hooks": {
         "filemanager": {
