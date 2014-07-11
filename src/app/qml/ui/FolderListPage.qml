@@ -696,7 +696,7 @@ Page {
 
     function keyPressed(key, modifiers) {
         if (key === Qt.Key_L && modifiers & Qt.ControlModifier) {
-            PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), goToButton)
+            PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), mainView);
             return true;
         }
 
