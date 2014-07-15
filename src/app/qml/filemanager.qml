@@ -21,6 +21,7 @@ import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 0.1
 import Ubuntu.Unity.Action 1.0 as UnityActions
 import U1db 1.0 as U1db
+import Ubuntu.Content 0.1
 import com.ubuntu.PlacesModel 0.1
 
 import "ui"
@@ -61,6 +62,17 @@ MainView {
     backgroundColor: "#797979"
     footerColor: "#808080"
 
+    QtObject {
+        id: fileSelector
+        property var activeTransfer: null
+        property var fileSelectorComponent: null
+    }
+
+    Component {
+        id: fileSelectorResultComponent
+        ContentItem {}
+    }
+
     PlacesModel {
        id: userplaces
     }
@@ -90,6 +102,49 @@ MainView {
         list.splice(index, 1)
         folderTabs = list
         tabs.selectedTabIndex = 0
+    }
+
+    function openFileSelector() {
+        pageStack.push(fileSelectorComponent, { fileSelectorMode: true} )
+    }
+
+    function cancelFileSelector() {
+        console.log("Cancel file selector")
+        pageStack.pop()
+        fileSelector.fileSelectorComponent = null
+        fileSelector.activeTransfer.state = ContentTransfer.Aborted
+    }
+
+    function acceptFileSelector(fileUrls) {
+        console.log("accept file selector " + fileUrls)
+        var results = fileUrls.map(function(fileUrl) {
+            return fileSelectorResultComponent.createObject(mainView, {"url": fileUrl})
+        })
+
+        if (fileSelector.activeTransfer !== null) {
+            fileSelector.activeTransfer.items = results
+            fileSelector.activeTransfer.state = ContentTransfer.Charged
+            console.log("set activeTransfer")
+        } else {
+            console.log("activeTransfer null, not setting, testing code")
+        }
+    }
+
+    Connections {
+        target: ContentHub
+        onExportRequested: {
+            fileSelector.activeTransfer = transfer
+            openFileSelector()
+        }
+    }
+
+    Component {
+        id: fileSelectorComponent
+
+        FolderListPage {
+            // TODO: remember last selection
+            folder: "~"
+        }
     }
 
     PageStack {

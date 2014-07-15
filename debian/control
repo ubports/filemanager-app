@@ -24,7 +24,7 @@ Depends: ${misc:Depends},
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-u1db1.0,
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
-         ${misc:Depends},
+         qtdeclarative5-ubuntu-content0.1,
 Description: File Manager application
  Core File Manager application
 
