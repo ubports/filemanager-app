@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-07-03 09:25+0000\n"
+"PO-Revision-Date: 2014-07-14 14:53+0000\n"
 "Last-Translator: Andi Chandler <Unknown>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-07-14 07:07+0000\n"
+"X-Launchpad-Export-Date: 2014-07-15 05:57+0000\n"
 "X-Generator: Launchpad (build 17111)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
@@ -134,7 +134,7 @@ msgstr "~/Documents"
 
 #: src/app/qml/ui/FolderListPage.qml:126
 msgid "~/Downloads"
-msgstr ""
+msgstr "~/Downloads"
 
 #: src/app/qml/ui/FolderListPage.qml:128
 msgid "~/Music"
@@ -187,7 +187,7 @@ msgstr "Create New Folder"
 
 #: src/app/qml/ui/FolderListPage.qml:274
 msgid "Paste"
-msgstr ""
+msgstr "Paste"
 
 #: src/app/qml/ui/FolderListPage.qml:276
 #, qt-format
@@ -246,16 +246,16 @@ msgstr "View"
 
 #: src/app/qml/ui/FolderListPage.qml:523
 msgid "No files"
-msgstr ""
+msgstr "No files"
 
 #: src/app/qml/ui/FolderListPage.qml:543 src/app/qml/ui/FolderListPage.qml:624
 msgid "Delete"
-msgstr ""
+msgstr "Delete"
 
 #: src/app/qml/ui/FolderListPage.qml:544
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "Are you sure you want to permanently delete '%1'?"
 
 #: src/app/qml/ui/FolderListPage.qml:567 src/app/qml/ui/FolderListPage.qml:637
 msgid "Rename"
@@ -263,61 +263,61 @@ msgstr ""
 
 #: src/app/qml/ui/FolderListPage.qml:568
 msgid "Enter a new name"
-msgstr ""
+msgstr "Enter a new name"
 
 #: src/app/qml/ui/FolderListPage.qml:577
 msgid "Could not rename"
-msgstr ""
+msgstr "Could not rename"
 
 #: src/app/qml/ui/FolderListPage.qml:578
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Insufficient permissions or name already exists?"
 
 #: src/app/qml/ui/FolderListPage.qml:601
 msgid "Cut"
-msgstr ""
+msgstr "Cut"
 
 #: src/app/qml/ui/FolderListPage.qml:612
 msgid "Copy"
-msgstr ""
+msgstr "Copy"
 
 #: src/app/qml/ui/FolderListPage.qml:688
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Folder not accessible"
 
 #. TRANSLATORS: this refers to a folder name
 #: src/app/qml/ui/FolderListPage.qml:690
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "Can not access %1"
 
 #: src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Go To Location"
 
 #: src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Enter a location to go to:"
 
 #: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:84
 msgid "Location..."
-msgstr ""
+msgstr "Location..."
 
 #: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:99
 msgid "Go"
-msgstr ""
+msgstr "Go"
 
 #: src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
-msgstr ""
+msgstr "Close"
 
 #: src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Show Advanced Features"
 
 #: src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Show Hidden Files"
 
 #: src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
