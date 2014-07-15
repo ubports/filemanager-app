@@ -57,7 +57,7 @@ class MainView(toolkit_emulators.MainView):
 
     def _go_to_place_from_popover(self, object_name):
         popover = self.open_places()
-        place = popover.select_single('Standard', objectName=object_name)
+        place = popover.wait_select_single('Standard', objectName=object_name)
         self.pointing_device.click_object(place)
 
     @autopilot.logging.log_action(logger.info)
