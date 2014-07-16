@@ -15,10 +15,10 @@
     "maintainer": "Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>",
     "name": "com.ubuntu.filemanager",
     "title": "File Manager",
-    "version": "0.3.latest",
+    "version": "0.3.@BZR_REVNO@",
     "x-source": {
         "vcs-bzr": "lp:ubuntu-filemanager-app",
-        "vcs-bzr-revno": "latest"
+        "vcs-bzr-revno": "@BZR_REVNO@"
     },
     "x-test": {
         "autopilot": "filemanager"
