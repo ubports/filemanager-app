@@ -2,32 +2,33 @@
 # Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
 # This file is distributed under the same license as the ubuntu-filemanager-app package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
-#
+# GunChleoc <fios@foramnagaidhlig.net>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-07-15 14:55+0000\n"
+"PO-Revision-Date: 2014-07-16 14:48+0000\n"
 "Last-Translator: GunChleoc <Unknown>\n"
-"Language-Team: Gaelic; Scottish <gd@li.org>\n"
+"Language-Team: Fòram na Gàidhlig http://www.foramnagaidhlig.net\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-07-16 07:24+0000\n"
-"X-Generator: Launchpad (build 17112)\n"
+"X-Launchpad-Export-Date: 2014-07-17 06:32+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
+"Language: gd\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 fhaidhle)"
 
 #: src/app/qml/components/FolderIconView.qml:59
 #: src/app/qml/components/FolderListView.qml:37
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 faidhlichean)"
 
 #: src/app/qml/components/PathBar.qml:120
 #: src/app/qml/ui/FolderListPage.qml:151
@@ -37,7 +38,7 @@ msgstr "Dachaigh"
 #: src/app/qml/components/PlacesSidebar.qml:85
 #: src/app/qml/ui/FolderListPage.qml:421
 msgid "Places"
-msgstr ""
+msgstr "Àiteachan"
 
 #: src/app/qml/filemanager.qml:66 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
@@ -45,7 +46,7 @@ msgstr "Roghainnean"
 
 #: src/app/qml/filemanager.qml:67
 msgid "Change app settings"
-msgstr ""
+msgstr "Atharraich roghainnean na h-aplacaid"
 
 #: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:492
 #: src/app/qml/ui/ViewPopover.qml:70
@@ -73,12 +74,12 @@ msgstr "Sguir dheth"
 
 #: src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Tagh gnìomh"
 
 #: src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "Airson an fhaidhle: %1"
 
 #: src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
@@ -86,15 +87,15 @@ msgstr "Fosgail"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "Gabhaidh a leughadh"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "Gabhaidh sgrìobhadh ann"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "Gabhaidh a ruith"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
@@ -122,43 +123,43 @@ msgstr "Ceadan:"
 
 #: src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "Tha obrachadh 'ga dhèanamh"
 
 #: src/app/qml/ui/FolderListPage.qml:122
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/An deasg"
 
 #: src/app/qml/ui/FolderListPage.qml:124
 msgid "~/Documents"
-msgstr ""
+msgstr "~/Sgrìobhainnean"
 
 #: src/app/qml/ui/FolderListPage.qml:126
 msgid "~/Downloads"
-msgstr ""
+msgstr "~/Luchdaidhean a-nuas"
 
 #: src/app/qml/ui/FolderListPage.qml:128
 msgid "~/Music"
-msgstr ""
+msgstr "~/Ceòl"
 
 #: src/app/qml/ui/FolderListPage.qml:130
 msgid "~/Pictures"
-msgstr ""
+msgstr "~/Dealbhan"
 
 #: src/app/qml/ui/FolderListPage.qml:132
 msgid "~/Public"
-msgstr ""
+msgstr "~/Poblach"
 
 #: src/app/qml/ui/FolderListPage.qml:134
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Prògraman"
 
 #: src/app/qml/ui/FolderListPage.qml:136
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Teamplaidean"
 
 #: src/app/qml/ui/FolderListPage.qml:138
 msgid "~/Videos"
-msgstr ""
+msgstr "~/Videothan"
 
 #: src/app/qml/ui/FolderListPage.qml:153
 msgid "File System"
@@ -166,24 +167,24 @@ msgstr "Siostam-fhaidhlichean"
 
 #: src/app/qml/ui/FolderListPage.qml:200
 msgid "1 file"
-msgstr ""
+msgstr "1 fhaidhle"
 
 #: src/app/qml/ui/FolderListPage.qml:201
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 faidhlichean"
 
 #: src/app/qml/ui/FolderListPage.qml:226
 msgid "Open in a new tab"
-msgstr ""
+msgstr "Fosgail ann an taba ùr"
 
 #: src/app/qml/ui/FolderListPage.qml:234
 msgid "Close this tab"
-msgstr ""
+msgstr "Dùin an taba seo"
 
 #: src/app/qml/ui/FolderListPage.qml:254
 msgid "Create New Folder"
-msgstr ""
+msgstr "Cruthaich pasgan ùr"
 
 #: src/app/qml/ui/FolderListPage.qml:274
 msgid "Paste"
@@ -192,12 +193,12 @@ msgstr "Cuir ann"
 #: src/app/qml/ui/FolderListPage.qml:276
 #, qt-format
 msgid "Paste %1 File"
-msgstr ""
+msgstr "Cuir ann %1 fhaidhle"
 
 #: src/app/qml/ui/FolderListPage.qml:277
 #, qt-format
 msgid "Paste %1 Files"
-msgstr ""
+msgstr "Cuir ann %1 faidhlichean"
 
 #: src/app/qml/ui/FolderListPage.qml:280
 msgid "Paste files"
@@ -205,7 +206,7 @@ msgstr "Cuir ann faidhlichean"
 
 #: src/app/qml/ui/FolderListPage.qml:292
 msgid "Open in Terminal"
-msgstr ""
+msgstr "Fosgail ann an Terminal"
 
 #: src/app/qml/ui/FolderListPage.qml:304 src/app/qml/ui/FolderListPage.qml:650
 msgid "Properties"
@@ -213,28 +214,28 @@ msgstr "Roghainnean"
 
 #: src/app/qml/ui/FolderListPage.qml:321
 msgid "Create folder"
-msgstr ""
+msgstr "Cruthaich pasgan"
 
 #: src/app/qml/ui/FolderListPage.qml:322
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Cuir a-steach ainm a' phasgain ùir"
 
 #: src/app/qml/ui/FolderListPage.qml:338
 msgid "Create file"
-msgstr ""
+msgstr "Cruthaich faidhle"
 
 #: src/app/qml/ui/FolderListPage.qml:339
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Cuir a-steach ainm an fhaidhle ùir"
 
 #: src/app/qml/ui/FolderListPage.qml:354 src/app/qml/ui/FolderListPage.qml:669
 msgid "File operation error"
-msgstr ""
+msgstr "Mearachd le obrachadh faidhle"
 
 #: src/app/qml/ui/FolderListPage.qml:354
 #, qt-format
 msgid "Unable to open '%11"
-msgstr ""
+msgstr "Cha deach leinn seo fhosgladh: '%11"
 
 #: src/app/qml/ui/FolderListPage.qml:396
 msgid "Actions"
@@ -246,7 +247,7 @@ msgstr "Sealladh"
 
 #: src/app/qml/ui/FolderListPage.qml:523
 msgid "No files"
-msgstr ""
+msgstr "Chan eil faidhle ann"
 
 #: src/app/qml/ui/FolderListPage.qml:543 src/app/qml/ui/FolderListPage.qml:624
 msgid "Delete"
@@ -256,6 +257,7 @@ msgstr "Sguab às"
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr ""
+"A bheil thu cinnteach gu bheil thu airson \"%1\" a sguabadh às gu buan?"
 
 #: src/app/qml/ui/FolderListPage.qml:567 src/app/qml/ui/FolderListPage.qml:637
 msgid "Rename"
@@ -263,15 +265,16 @@ msgstr "Thoir ainm ùr air"
 
 #: src/app/qml/ui/FolderListPage.qml:568
 msgid "Enter a new name"
-msgstr ""
+msgstr "Cuir a-steach ainm ùr"
 
 #: src/app/qml/ui/FolderListPage.qml:577
 msgid "Could not rename"
-msgstr ""
+msgstr "Cha b' urrainn dhut ainm ùr a thoirt air"
 
 #: src/app/qml/ui/FolderListPage.qml:578
 msgid "Insufficient permissions or name already exists?"
 msgstr ""
+"'S dòcha gu bheil cead a dhìth ort no gu bheil an t-ainm ann mar-thà."
 
 #: src/app/qml/ui/FolderListPage.qml:601
 msgid "Cut"
@@ -283,25 +286,25 @@ msgstr "Dèan lethbhreac"
 
 #: src/app/qml/ui/FolderListPage.qml:688
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Cha ghabh am pasgan inntrigeadh"
 
 #. TRANSLATORS: this refers to a folder name
 #: src/app/qml/ui/FolderListPage.qml:690
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "Cha ghabh %1 inntrigeadh"
 
 #: src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Gach gun ionad"
 
 #: src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Cuir a-steach ionad gu dol ann:"
 
 #: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:84
 msgid "Location..."
-msgstr ""
+msgstr "Ionad..."
 
 #: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:99
 msgid "Go"
@@ -313,7 +316,7 @@ msgstr "Dùin"
 
 #: src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Seall roghainnean adhartach"
 
 #: src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
@@ -321,11 +324,11 @@ msgstr "Seall faidhlichean falaichte"
 
 #: src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr ""
+msgstr "Seall mar"
 
 #: src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "Seòrsaich le"
 
 #: src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
@@ -337,15 +340,15 @@ msgstr "Ceann-là"
 
 #: src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "Òrdugh an t-seòrsachaidh"
 
 #: src/app/qml/ui/ViewPopover.qml:114 src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr ""
+msgstr "A' dìreadh"
 
 #: src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr ""
+msgstr "A' teàrnadh"
 
 #: src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
