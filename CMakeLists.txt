@@ -12,7 +12,6 @@ option(CLICK_MODE "Installs to a contained location" off)
 
 set(APP_NAME filemanager)
 set(DESKTOP_FILE "${PROJECT_NAME}.desktop")
-set(URLS_FILE "${PROJECT_NAME}_${APP_NAME}.url-dispatcher")
 set(LP_PROJECT ubuntu-filemanager-app)
 set(ICON_FILE filemanager64.png)
 set(AUTOPILOT_DIR ${APP_NAME})
@@ -38,7 +37,6 @@ if(CLICK_MODE)
     set(QT_IMPORTS_DIR "/lib/${ARCH_TRIPLET}")
     set(BIN_DIR /lib/${ARCH_TRIPLET}/bin)
     set(DESKTOP_DIR ${DATA_DIR})
-    set(URLS_DIR ${DATA_DIR})
     if(NOT BZR_REVNO)
         set(BZR_REVNO "latest")
     endif(NOT BZR_REVNO)
@@ -53,7 +51,6 @@ else(CLICK_MODE)
     set(DATA_DIR ${CMAKE_INSTALL_DATADIR}/${APP_NAME})
     set(ICON ${CMAKE_INSTALL_PREFIX}/${DATA_DIR}/${ICON_FILE})
     set(DESKTOP_DIR ${CMAKE_INSTALL_DATADIR}/applications)
-    set(URLS_DIR ${CMAKE_INSTALL_DATADIR}/url-dispatcher/urls)
 endif(CLICK_MODE)
 
 file(GLOB_RECURSE I18N_SRC_FILES
@@ -69,8 +66,6 @@ install(FILES ${SRC_FILES}  DESTINATION ${DATA_DIR})
 configure_file(${DESKTOP_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE})
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE}
     DESTINATION ${DESKTOP_DIR})
-
-install(FILES ${URLS_FILE} DESTINATION ${URLS_DIR})
 
 # Tests
 enable_testing()
