@@ -7,8 +7,7 @@
         "filemanager": {
             "apparmor": "apparmor.json",
             "desktop": "com.ubuntu.filemanager.desktop",
-            "content-hub": "hub-exporter.json",
-            "urls": "com.ubuntu.filemanager_filemanager.url-dispatcher"
+            "content-hub": "hub-exporter.json"
         }
     },
     "icon": "filemanager64.png",
