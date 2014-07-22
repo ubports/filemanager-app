@@ -83,7 +83,7 @@ Popover {
             model: PlacesModel {}
 
             delegate: Standard {
-                objectName: model.objectName
+                objectName: "place" + folderDisplayName(path).replace(/ /g,'')
                 property string name: folderDisplayName(path)
 
                 Label {
