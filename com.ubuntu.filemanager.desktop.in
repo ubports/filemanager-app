@@ -7,3 +7,4 @@ Icon=@ICON@
 Name=File Manager
 X-Ubuntu-Touch=true
 X-Ubuntu-Gettext-Domain=@PROJECT_NAME@
+X-Ubuntu-Default-Department-ID=accessories
