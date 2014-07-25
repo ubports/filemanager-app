@@ -8,49 +8,49 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-05-10 04:38+0000\n"
+"PO-Revision-Date: 2014-07-25 05:47+0000\n"
 "Last-Translator: Gursharnjit_singh <ubuntuser13@gmail.com>\n"
 "Language-Team: Punjabi <pa@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-07-14 07:07+0000\n"
-"X-Generator: Launchpad (build 17111)\n"
+"X-Launchpad-Export-Date: 2014-07-25 07:49+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 ਫ਼ਾਈਲ)"
 
 #: src/app/qml/components/FolderIconView.qml:59
 #: src/app/qml/components/FolderListView.qml:37
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 ਫ਼ਾਈਲਾਂ)"
 
 #: src/app/qml/components/PathBar.qml:120
 #: src/app/qml/ui/FolderListPage.qml:151
 msgid "Home"
-msgstr ""
+msgstr "ਘਰ"
 
 #: src/app/qml/components/PlacesSidebar.qml:85
 #: src/app/qml/ui/FolderListPage.qml:421
 msgid "Places"
-msgstr ""
+msgstr "ਥਾਵਾਂ"
 
 #: src/app/qml/filemanager.qml:66 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
-msgstr "ਸੈਟਿੰਗ'ਸ"
+msgstr "ਸੈਟਿੰਗ"
 
 #: src/app/qml/filemanager.qml:67
 msgid "Change app settings"
-msgstr "ਐਪ ਸੈਟਿੰਗ'ਸ ਬਦਲੋ"
+msgstr "ਐਪ ਸੈਟਿੰਗ ਬਦਲੋ"
 
 #: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:492
 #: src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
-msgstr "ਆਈਕਾਨਸ"
+msgstr "ਆਈਕਾਨ"
 
 #: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:508
 #: src/app/qml/ui/ViewPopover.qml:71
@@ -61,7 +61,7 @@ msgstr "ਸੂਚੀ"
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:41
 #: src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
-msgstr ""
+msgstr "ਠੀਕ"
 
 #: src/app/qml/ui/ConfirmDialog.qml:41
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:51
@@ -69,284 +69,284 @@ msgstr ""
 #: src/app/qml/ui/FileOperationProgressDialog.qml:44
 #: src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
-msgstr ""
+msgstr "ਰੱਦ"
 
 #: src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "ਕਾਰਵਾਈ ਚੁਣੋ"
 
 #: src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "ਫ਼ਾਈਲ ਲਈ: %1"
 
 #: src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "ਖੋਲ੍ਹੋ"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "ਪੜ੍ਹਨਯੋਗ"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "ਲਿਖਣਯੋਗ"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "ਚੱਲਣਯੋਗ"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "ਰਾਹ:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "ਸਮੱਗਰੀ:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "ਅਕਾਰ:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "ਪਹੁੰਚ ਕੀਤੀ:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "ਸੋਧਿਆ:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "ਅਾਗਿਆ:"
 
 #: src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "ਕਾਰਵਾਈ ਜਾਰੀ ਹੈ"
 
 #: src/app/qml/ui/FolderListPage.qml:122
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/ਡੈਸਕਟੋਪ"
 
 #: src/app/qml/ui/FolderListPage.qml:124
 msgid "~/Documents"
-msgstr ""
+msgstr "~/ਦਸਤਾਵੇਜ"
 
 #: src/app/qml/ui/FolderListPage.qml:126
 msgid "~/Downloads"
-msgstr ""
+msgstr "~/ਡਾਊਨਲੋਡ"
 
 #: src/app/qml/ui/FolderListPage.qml:128
 msgid "~/Music"
-msgstr ""
+msgstr "~/ਸੰਗੀਤ"
 
 #: src/app/qml/ui/FolderListPage.qml:130
 msgid "~/Pictures"
-msgstr ""
+msgstr "~/ਤਸਵੀਰਾਂ"
 
 #: src/app/qml/ui/FolderListPage.qml:132
 msgid "~/Public"
-msgstr ""
+msgstr "~/ਆਮ"
 
 #: src/app/qml/ui/FolderListPage.qml:134
 msgid "~/Programs"
-msgstr ""
+msgstr "~/ਪ੍ਰੋਗਰਾਮ"
 
 #: src/app/qml/ui/FolderListPage.qml:136
 msgid "~/Templates"
-msgstr ""
+msgstr "~/ਤਿਅਾਰ ਖਾਕੇ"
 
 #: src/app/qml/ui/FolderListPage.qml:138
 msgid "~/Videos"
-msgstr ""
+msgstr "~/ਵੀਡੀਓ"
 
 #: src/app/qml/ui/FolderListPage.qml:153
 msgid "File System"
-msgstr ""
+msgstr "ਫਾਈਲ ਸਿਸਟਮ"
 
 #: src/app/qml/ui/FolderListPage.qml:200
 msgid "1 file"
-msgstr ""
+msgstr "1 ਫ਼ਾਈਲ"
 
 #: src/app/qml/ui/FolderListPage.qml:201
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 ਫ਼ਾਈਲਾਂ"
 
 #: src/app/qml/ui/FolderListPage.qml:226
 msgid "Open in a new tab"
-msgstr ""
+msgstr "ਨਵੀ ਟੈਬ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
 #: src/app/qml/ui/FolderListPage.qml:234
 msgid "Close this tab"
-msgstr ""
+msgstr "ਇਹ ਟੈਬ ਬੰਦ ਕਰੋ"
 
 #: src/app/qml/ui/FolderListPage.qml:254
 msgid "Create New Folder"
-msgstr ""
+msgstr "ਨਵਾਂ ਫੋਲਡਰ ਬਣਾਓ"
 
 #: src/app/qml/ui/FolderListPage.qml:274
 msgid "Paste"
-msgstr ""
+msgstr "ਪੇਸਟ"
 
 #: src/app/qml/ui/FolderListPage.qml:276
 #, qt-format
 msgid "Paste %1 File"
-msgstr ""
+msgstr "ਪੇਸਟ %1 ਫ਼ਾਈਲ"
 
 #: src/app/qml/ui/FolderListPage.qml:277
 #, qt-format
 msgid "Paste %1 Files"
-msgstr ""
+msgstr "ਪੇਸਟ %1 ਫ਼ਾਈਲਾਂ"
 
 #: src/app/qml/ui/FolderListPage.qml:280
 msgid "Paste files"
-msgstr ""
+msgstr "ਫ਼ਾਈਲਾਂ ਪੇਸਟ ਕਰੋ"
 
 #: src/app/qml/ui/FolderListPage.qml:292
 msgid "Open in Terminal"
-msgstr ""
+msgstr "ਟਰਮੀਨਲ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
 #: src/app/qml/ui/FolderListPage.qml:304 src/app/qml/ui/FolderListPage.qml:650
 msgid "Properties"
-msgstr ""
+msgstr "ਵਿਸ਼ੇਸ਼ਤਾ"
 
 #: src/app/qml/ui/FolderListPage.qml:321
 msgid "Create folder"
-msgstr ""
+msgstr "ਫੋਲਡਰ ਬਣਾਓ"
 
 #: src/app/qml/ui/FolderListPage.qml:322
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "ਨਵੇ ਫ਼ੋਲਡਰ ਲਈ ਨਾਂ ਭਰੋ"
 
 #: src/app/qml/ui/FolderListPage.qml:338
 msgid "Create file"
-msgstr ""
+msgstr "ਫ਼ਾਈਲ ਬਣਾਓ"
 
 #: src/app/qml/ui/FolderListPage.qml:339
 msgid "Enter name for new file"
-msgstr ""
+msgstr "ਨਵੀ ਫ਼ਾਈਲ ਲਈ ਨਾਂ ਭਰੋ"
 
 #: src/app/qml/ui/FolderListPage.qml:354 src/app/qml/ui/FolderListPage.qml:669
 msgid "File operation error"
-msgstr ""
+msgstr "ਫ਼ਾਈਲ ਕਾਰਵਾਈ ਖਾਮੀ"
 
 #: src/app/qml/ui/FolderListPage.qml:354
 #, qt-format
 msgid "Unable to open '%11"
-msgstr ""
+msgstr "ਖੋਲ੍ਹਣ ਵਿੱਚ ਅਸਮਰਥ '%11"
 
 #: src/app/qml/ui/FolderListPage.qml:396
 msgid "Actions"
-msgstr ""
+msgstr "ਕਾਰਵਾਈ"
 
 #: src/app/qml/ui/FolderListPage.qml:406
 msgid "View"
-msgstr ""
+msgstr "ਵੇਖੋ"
 
 #: src/app/qml/ui/FolderListPage.qml:523
 msgid "No files"
-msgstr ""
+msgstr "ਕੋਈ ਫਾਈਲ ਨਹੀਂ"
 
 #: src/app/qml/ui/FolderListPage.qml:543 src/app/qml/ui/FolderListPage.qml:624
 msgid "Delete"
-msgstr ""
+msgstr "ਹਟਾਓ"
 
 #: src/app/qml/ui/FolderListPage.qml:544
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "ਕੀ ਤੁਹਾਨੂੰ ਯਕੀਨ ਹੈ ਤੁਸੀ ਪੱਕੇ ਤੌਰ ਤੇ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ '%1'?"
 
 #: src/app/qml/ui/FolderListPage.qml:567 src/app/qml/ui/FolderListPage.qml:637
 msgid "Rename"
-msgstr ""
+msgstr "ਨਾਂ ਬਦਲੋ"
 
 #: src/app/qml/ui/FolderListPage.qml:568
 msgid "Enter a new name"
-msgstr ""
+msgstr "ਇੱਕ ਨਵਾਂ ਨਾਂ ਭਰੋ"
 
 #: src/app/qml/ui/FolderListPage.qml:577
 msgid "Could not rename"
-msgstr ""
+msgstr "ਨਾਂ ਨਹੀ ਬਦਲ ਸਕਦਾ"
 
 #: src/app/qml/ui/FolderListPage.qml:578
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "ਨਾਕਾਫ਼ੀ ਮਨਜ਼ੂਰੀ ਜਾਂ ਨਾਂ ਪਹਿਲਾਂ ਤੋਂ ਮੌਜੂਦ?"
 
 #: src/app/qml/ui/FolderListPage.qml:601
 msgid "Cut"
-msgstr ""
+msgstr "ਕੱਟ"
 
 #: src/app/qml/ui/FolderListPage.qml:612
 msgid "Copy"
-msgstr ""
+msgstr "ਕਾਪੀ ਕਰੋ"
 
 #: src/app/qml/ui/FolderListPage.qml:688
 msgid "Folder not accessible"
-msgstr ""
+msgstr "ਫ਼ੋਲਡਰ ਪਹੁੰਚ ਕਰਨ ਯੋਗ ਨਹੀ"
 
 #. TRANSLATORS: this refers to a folder name
 #: src/app/qml/ui/FolderListPage.qml:690
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "ਪਹੁੰਚ ਨਹੀ ਸਕਦਾ %1"
 
 #: src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "ਥਾਂ ਤੇ ਜਾਓ"
 
 #: src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "ਜਾਣ ਲਈ ਇੱਕ ਥਾਂ ਲਿੱਖੋ:"
 
 #: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:84
 msgid "Location..."
-msgstr ""
+msgstr "ਸਥਿਤੀ..."
 
 #: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:99
 msgid "Go"
-msgstr ""
+msgstr "ਜਾਓ"
 
 #: src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
-msgstr ""
+msgstr "ਬੰਦ ਕਰੋ"
 
 #: src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "ਉਂਨਤ ਵਿਸ਼ੇਸਤਾਵਾਂ ਵਿਖਾਓ"
 
 #: src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "ਲੁਕਵੀਆਂ ਫਾਈਲਾਂ ਵਿਖਾਓ"
 
 #: src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr ""
+msgstr "ਦੇ ਤੌਰ ਤੇ ਵੇਖੋ"
 
 #: src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "ਦੁਆਰਾ ਕ੍ਰਮਬੱਧ"
 
 #: src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr ""
+msgstr "ਨਾਂ"
 
 #: src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr ""
+msgstr "ਤਾਰੀਖ"
 
 #: src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "ਤਰਤੀਬ ਕ੍ਰਮਬੱਧ"
 
 #: src/app/qml/ui/ViewPopover.qml:114 src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr ""
+msgstr "ਵੱਧਦਾ ਕ੍ਰਮ"
 
 #: src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr ""
+msgstr "ਘੱਟਦਾ ਕ੍ਰਮ"
 
 #: src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
-msgstr ""
+msgstr "ਫਿਲਟਰ"
