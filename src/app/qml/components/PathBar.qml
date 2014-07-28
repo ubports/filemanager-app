@@ -21,7 +21,9 @@ Rectangle {
 
         var pathDisplayName
 
-        if (path.substring(0, userplaces.locationHome.length) === userplaces.locationHome) {
+        if ((path.substring(0, userplaces.locationHome.length) === userplaces.locationHome) &&
+            ((path.substring(userplaces.locationHome.length, userplaces.locationHome.length + 1) === '/') ||
+             (path.length === userplaces.locationHome.length))) {
             // Replace /home/$USER by its human readable name (generally "Home")
             pathDisplayName = path.replace(userplaces.locationHome, folderDisplayName(userplaces.locationHome))
         } else {
