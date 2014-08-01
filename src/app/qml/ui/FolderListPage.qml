@@ -86,7 +86,7 @@ Page {
         id: pageModel
         path: folderListPage.folder
         enableExternalFSWatcher: true
-        showNonMTPPaths: false
+        showNonMTPPaths: !pamAuthentication.requireAuthentication()
 
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
