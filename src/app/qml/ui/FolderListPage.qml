@@ -86,6 +86,7 @@ Page {
         id: pageModel
         path: folderListPage.folder
         enableExternalFSWatcher: true
+        showNonMTPPaths: false
 
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
@@ -355,21 +356,21 @@ Page {
             left: sidebar.right
             right: parent.right
         }
-        height: fileSelectorMode ? bottomBarFileSelectorButtons.height : 0
+        height: bottomBarButtons.visible ? bottomBarButtons.height : 0
         visible: fileSelectorMode
-
     }
 
     Row {
-        id: bottomBarFileSelectorButtons
+        id: bottomBarButtons
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: bottomBar.bottom
         spacing: units.gu(5)
-        visible: fileSelectorMode
+        visible: fileSelectorMode || !pageModel.showNonMTPPaths
 
         Button {
             text: i18n.tr("Select")
             enabled: selectionManager.counter > 0
+            visible: fileSelectorMode
             onClicked: {
                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
                // For now support only selection in filesystem
@@ -383,13 +384,21 @@ Page {
         }
         Button {
            text: i18n.tr("Cancel")
+           visible: fileSelectorMode
            onClicked: {
                console.log("FileSelector cancelled")
                cancelFileSelector()
            }
         }
+        Button {
+            text: i18n.tr("Show all files")
+            visible: !pageModel.showNonMTPPaths
+            onClicked: {
+               console.log("Show all files clicked")
+               pageModel.showNonMTPPaths = true
+           }
+        }
     }
-
 
     FolderIconView {
         id: folderIconView

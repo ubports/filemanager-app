@@ -179,6 +179,9 @@ public:
     Q_PROPERTY(bool showHiddenFiles READ getShowHiddenFiles WRITE setShowHiddenFiles NOTIFY showHiddenFilesChanged)
     bool getShowHiddenFiles() const;
 
+    Q_PROPERTY(bool showNonMTPPaths READ getShowNonMTPPaths WRITE setShowNonMTPPaths NOTIFY showNonMTPPathsChanged)
+    bool getShowNonMTPPaths() const;
+
     Q_ENUMS(SortBy)
     enum SortBy
     {
@@ -371,6 +374,7 @@ public slots:
     void setFilterDirectories(bool filterDirectories);
     void setShowDirectories(bool showDirectories);
     void setShowHiddenFiles(bool show);
+    void setShowNonMTPPaths(bool show);
     void setSortBy(SortBy field);
     void setSortOrder(SortOrder order);
     void setEnabledExternalFSWatcher(bool enable);
@@ -402,6 +406,7 @@ signals:
     void     progress(int curItem, int totalItems, int percent);
 
     void     showHiddenFilesChanged();
+    void     showNonMTPPathsChanged();
     void     sortByChanged();
     void     sortOrderChanged();
     void     clipboardChanged();
@@ -442,6 +447,7 @@ private slots:
 
 private:
     bool                mShowHiddenFiles;
+    bool                mShowNonMTPPaths;
     SortBy              mSortBy;
     SortOrder           mSortOrder;
     CompareFunction     mCompareFunction;
@@ -450,7 +456,6 @@ private:
     DirSelection *      mSelection;
     LocationsFactory *  mLocationFactory;
     Location         *  mCurLocation;
-
 
 private:
     FileSystemAction  *  m_fsAction;  //!< it does file system recursive remove/copy/move
@@ -466,6 +471,8 @@ private:
     virtual QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
     friend class TestDirModel;
 #endif
+
+    bool isMTPPath(const QString &path) const;
 };
 
 

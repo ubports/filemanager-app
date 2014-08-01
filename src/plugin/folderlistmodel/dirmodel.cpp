@@ -61,13 +61,14 @@
 #include <QMetaType>
 #include <QDateTime>
 #include <QMimeType>
+#include <QStandardPaths>
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
 # include <QColor>
 # include <QBrush>
 #endif
 
-
+#include <array>
 
 
 
@@ -80,6 +81,26 @@
 
 namespace {
     QHash<QByteArray, int> roleMapping;
+    QList<QString> mtpDirectories;
+
+    std::array<QStandardPaths::StandardLocation, 5> mtpStandardLocations = {
+        QStandardPaths::DocumentsLocation,
+        QStandardPaths::DownloadLocation,
+        QStandardPaths::MusicLocation,
+        QStandardPaths::PicturesLocation,
+        QStandardPaths::MoviesLocation
+    };
+
+    void buildMTPDirectories() {
+        mtpDirectories.clear();
+        foreach (const QStandardPaths::StandardLocation &standardLocation, mtpStandardLocations) {
+            QStringList locations = QStandardPaths::standardLocations(standardLocation);
+
+            foreach (const QString &location, locations) {
+                mtpDirectories << location;
+            }
+        }
+    }
 }
 
 
@@ -106,6 +127,7 @@ DirModel::DirModel(QObject *parent)
     , mIsRecursive(false)
     , mReadsMediaMetadata(false)
     , mShowHiddenFiles(false)
+    , mShowNonMTPPaths(true)
     , mSortBy(SortByName)
     , mSortOrder(SortAscending)
     , mCompareFunction(0)  
@@ -452,6 +474,20 @@ void DirModel::onItemsFetched() {
     }    
 }
 
+
+bool DirModel::isMTPPath(const QString &path) const {
+    if (mtpDirectories.isEmpty()) {
+        buildMTPDirectories();
+    }
+    foreach (const QString &mtpDirectory, mtpDirectories) {
+        if (path == mtpDirectory) return true;
+        // Returns true for any file/folder inside MTP directory
+        if (path.startsWith(mtpDirectory + "/")) return true;
+    }
+
+    return false;
+}
+
 void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 {
 #if DEBUG_MESSAGES
@@ -472,6 +508,10 @@ void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
                 doAdd = true;
                 break;
             }
+        }
+
+        if (!mShowNonMTPPaths) {
+            doAdd = isMTPPath(fi.absoluteFilePath());
         }
 
         if (!doAdd)
@@ -987,6 +1027,22 @@ void DirModel::setShowHiddenFiles(bool show)
         mShowHiddenFiles = show;
         refresh();
         emit showHiddenFilesChanged();
+    }
+}
+
+bool DirModel::getShowNonMTPPaths() const
+{
+    return mShowNonMTPPaths;
+}
+
+
+void DirModel::setShowNonMTPPaths(bool show)
+{
+    if (show != mShowNonMTPPaths)
+    {
+        mShowNonMTPPaths = show;
+        refresh();
+        emit showNonMTPPathsChanged();
     }
 }
 
