@@ -394,9 +394,24 @@ Page {
             text: i18n.tr("Show all files")
             visible: !pageModel.showNonMTPPaths
             onClicked: {
-               console.log("Show all files clicked")
-               pageModel.showNonMTPPaths = true
-           }
+                console.log("Show all files clicked")
+                var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
+                                                folderListPage)
+
+                authDialog.passwordEntered.connect(function(password) {
+                    if (pamAuthentication.validatePasswordToken(password)) {
+                        console.log("Authenticated to show all files")
+                        pageModel.showNonMTPPaths = true
+                    } else {
+                        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
+                                        {
+                                            title: i18n.tr("Authentication failed")
+                                        })
+
+                        console.log("Could not authenticate")
+                    }
+                })
+            }
         }
     }
 
