@@ -1,8 +1,4 @@
 /***************************************************************************
- * Whatsoever ye do in word or deed, do all in the name of the             *
- * Lord Jesus, giving thanks to God and the Father by him.                 *
- * - Colossians 3:17                                                       *
- *                                                                         *
  * Ubuntu UI Extras - A collection of QML widgets not available            *
  *                    in the default Ubuntu UI Toolkit                     *
  * Copyright (C) 2013 Michael Spencer <sonrisesoftware@gmail.com>          *
