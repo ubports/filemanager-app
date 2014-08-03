@@ -19,7 +19,17 @@
 #include "pamauthentication.h"
 
 #include <QDebug>
+#include <QtDBus/QtDBus>
+
 #include <security/pam_appl.h>
+
+#define UNITYGREETER_SERVICE "com.canonical.UnityGreeter"
+#define UNITYGREETER_PATH "/list"
+#define UNITYGREETER_INTERFACE "com.canonical.UnityGreeter"
+#define UNITYGREETER_METHOD_ENTRY_IS_LOCKED "org.freedesktop.DBus.Properties.Get"
+#define UNITYGREETER_METHOD_ENTRY_IS_LOCKED_ARG1 "com.canonical.UnityGreeter.List"
+#define UNITYGREETER_METHOD_ENTRY_IS_LOCKED_ARG2 "EntryIsLocked"
+
 
 PamAuthentication::PamAuthentication(QObject *parent) :
     QObject(parent)
@@ -37,6 +47,26 @@ PamAuthentication::setServiceName(const QString &serviceName) {
         m_serviceName = serviceName;
         emit serviceNameChanged();
     }
+}
+
+bool
+PamAuthentication::requireAuthentication() {
+    QDBusInterface dbus_iface(UNITYGREETER_SERVICE, UNITYGREETER_PATH,
+                              UNITYGREETER_INTERFACE);
+
+    qDebug() << Q_FUNC_INFO << "Querying if authentication required";
+    QDBusReply<bool> reply = dbus_iface.call(UNITYGREETER_METHOD_ENTRY_IS_LOCKED,
+                                             UNITYGREETER_METHOD_ENTRY_IS_LOCKED_ARG1,
+                                             UNITYGREETER_METHOD_ENTRY_IS_LOCKED_ARG2);
+    if (reply.isValid()) {
+        bool replyValue = reply.value();
+        qDebug() << Q_FUNC_INFO << "Return value" << replyValue;
+        return replyValue;
+    } else {
+        qDebug() << Q_FUNC_INFO << "Failed getting value";
+    }
+    // By default be cautious and require authentication
+    return true;
 }
 
 bool

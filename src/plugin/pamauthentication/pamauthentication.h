@@ -38,9 +38,7 @@ public:
     explicit PamAuthentication(QObject *parent = 0);
     ~PamAuthentication();
 
-    Q_INVOKABLE inline bool requireAuthentication() {
-        return true;
-    }
+    Q_INVOKABLE bool requireAuthentication();
 
     Q_INVOKABLE bool validatePasswordToken(const QString &token);
 

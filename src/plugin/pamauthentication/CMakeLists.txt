@@ -17,7 +17,7 @@ add_library(PamAuthentication MODULE
 
 target_link_libraries(PamAuthentication pam)
 
-qt5_use_modules(PamAuthentication Gui Qml Quick Widgets)
+qt5_use_modules(PamAuthentication Gui Qml Quick Widgets DBus)
 
 # Copy the plugin, the qmldir file and other assets to the build dir for running in QtCreator
 if(NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
