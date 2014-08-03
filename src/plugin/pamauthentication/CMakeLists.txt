@@ -15,6 +15,8 @@ add_library(PamAuthentication MODULE
     ${pamauthentication_SRCS}
 )
 
+target_link_libraries(PamAuthentication pam)
+
 qt5_use_modules(PamAuthentication Gui Qml Quick Widgets)
 
 # Copy the plugin, the qmldir file and other assets to the build dir for running in QtCreator

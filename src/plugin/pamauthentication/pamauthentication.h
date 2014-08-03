@@ -24,6 +24,12 @@
 #include <QStandardPaths>
 #include <QSettings>
 
+// Forward declarations
+struct pam_handle;
+struct pam_message;
+struct pam_response;
+
+// TODO: documentation
 class PamAuthentication : public QObject
 {
     Q_OBJECT
@@ -36,12 +42,29 @@ public:
         return true;
     }
 
-    Q_INVOKABLE inline bool validatePasswordToken(const QString &token) const {
-        return true;
+    Q_INVOKABLE bool validatePasswordToken(const QString &token);
+
+    Q_PROPERTY(QString serviceName READ serviceName WRITE setServiceName NOTIFY serviceNameChanged)
+    inline const QString &serviceName() const {
+        return m_serviceName;
     }
+
+    void setServiceName(const QString &serviceName);
+signals:
+    void serviceNameChanged();
 
 public slots:
 private:
+    static int ConversationFunction(int num_msg,
+                                    const pam_message** msg,
+                                    pam_response** resp,
+                                    void* appdata_ptr);
+
+    bool initPam(pam_handle **pamHandle);
+
+    QString m_passwordToken;
+    QString m_serviceName;
+    QString m_userLogin;
 };
 
 #endif // PAMAUTHENTICATION_H

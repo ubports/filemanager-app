@@ -80,6 +80,7 @@ MainView {
 
     PamAuthentication {
         id: pamAuthentication
+        serviceName: "filemanager"
     }
 
     // HUD Actions
