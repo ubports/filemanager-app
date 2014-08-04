@@ -9,6 +9,7 @@ Build-Depends: cmake,
                pkg-kde-tools,
 	       python3-all,
                libtag1-dev,
+               libpam0g-dev,
 Standards-Version: 3.9.5
 Section: misc
 Homepage: https://launchpad.net/ubuntu-filemanager-app
