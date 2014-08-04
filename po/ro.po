@@ -1,16 +1,16 @@
-# Persian translation for ubuntu-filemanager-app
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# Romanian translation for ubuntu-filemanager-app
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
 # This file is distributed under the same license as the ubuntu-filemanager-app package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-08-03 17:09+0000\n"
-"Last-Translator: Danial Behzadi <dani.behzi@gmail.com>\n"
-"Language-Team: Persian <fa@li.org>\n"
+"PO-Revision-Date: 2014-08-03 08:08+0000\n"
+"Last-Translator: Marian Vasile <marianvasile1972@gmail.com>\n"
+"Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,47 +21,47 @@ msgstr ""
 #: src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (1 file)"
-msgstr "%1 (۱ پرونده)"
+msgstr "%1 (1 fișier)"
 
 #: src/app/qml/components/FolderIconView.qml:59
 #: src/app/qml/components/FolderListView.qml:37
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr "%1 (%2 پرونده)"
+msgstr "%1 (%2 fișiere)"
 
 #: src/app/qml/components/PathBar.qml:120
 #: src/app/qml/ui/FolderListPage.qml:151
 msgid "Home"
-msgstr "خانه"
+msgstr "Acasă"
 
 #: src/app/qml/components/PlacesSidebar.qml:85
 #: src/app/qml/ui/FolderListPage.qml:421
 msgid "Places"
-msgstr "مکان‌ها"
+msgstr "Locuri"
 
 #: src/app/qml/filemanager.qml:66 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
-msgstr "تنظیمات"
+msgstr "Configurări"
 
 #: src/app/qml/filemanager.qml:67
 msgid "Change app settings"
-msgstr "دگرگونی تنظیمات برنامه"
+msgstr "Modificați configurările aplicației"
 
 #: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:492
 #: src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
-msgstr "شمایل"
+msgstr "Iconițe"
 
 #: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:508
 #: src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
-msgstr "فهرست"
+msgstr "Listă"
 
 #: src/app/qml/ui/ConfirmDialog.qml:31
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:41
 #: src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
-msgstr "باشه"
+msgstr "În regulă"
 
 #: src/app/qml/ui/ConfirmDialog.qml:41
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:51
@@ -69,284 +69,284 @@ msgstr "باشه"
 #: src/app/qml/ui/FileOperationProgressDialog.qml:44
 #: src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
-msgstr "لغو"
+msgstr "Anulează"
 
 #: src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr "انتخاب عمل"
+msgstr "Alegeți acțiunea"
 
 #: src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr "برای پرونده: %1"
+msgstr "pentru fișier: %1"
 
 #: src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr "گشودن"
+msgstr "Deschide"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr "قابل خواندن"
+msgstr "Poate fi citit"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr "قابل نوشتن"
+msgstr "Poate fi scris"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr "قابل اجرا"
+msgstr "Executabil"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr "مسیر:"
+msgstr "Cale:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr "محتویات:"
+msgstr "Conținut:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr "اندازه:"
+msgstr "Dimensiune:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr "دست‌رسی:"
+msgstr "Accesat:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr "تغییر:"
+msgstr "Modificat:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr "اجازه‌ها:"
+msgstr "Permisiuni:"
 
 #: src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr "عملیات در حال پیش‌روی است"
+msgstr "Operațiune în desfășurare"
 
 #: src/app/qml/ui/FolderListPage.qml:122
 msgid "~/Desktop"
-msgstr "~/میزکار"
+msgstr "~/Desktop"
 
 #: src/app/qml/ui/FolderListPage.qml:124
 msgid "~/Documents"
-msgstr "~/نوشته‌ها"
+msgstr "~/Documente"
 
 #: src/app/qml/ui/FolderListPage.qml:126
 msgid "~/Downloads"
-msgstr "~/بارگیری‌ها"
+msgstr "~/Descărcări"
 
 #: src/app/qml/ui/FolderListPage.qml:128
 msgid "~/Music"
-msgstr "~/آهنگ‌ها"
+msgstr "~/Muzică"
 
 #: src/app/qml/ui/FolderListPage.qml:130
 msgid "~/Pictures"
-msgstr "~/تصاویر"
+msgstr "~/Fotografii"
 
 #: src/app/qml/ui/FolderListPage.qml:132
 msgid "~/Public"
-msgstr "~/عمومی"
+msgstr "~/Public"
 
 #: src/app/qml/ui/FolderListPage.qml:134
 msgid "~/Programs"
-msgstr "~/برنامه‌ها"
+msgstr "~/Programe"
 
 #: src/app/qml/ui/FolderListPage.qml:136
 msgid "~/Templates"
-msgstr "~/الگوها"
+msgstr "~/Șabloane"
 
 #: src/app/qml/ui/FolderListPage.qml:138
 msgid "~/Videos"
-msgstr "~/ویدیوها"
+msgstr "~/Filme"
 
 #: src/app/qml/ui/FolderListPage.qml:153
 msgid "File System"
-msgstr "سامانه‌ی پرونده"
+msgstr "Sistem de fișiere"
 
 #: src/app/qml/ui/FolderListPage.qml:200
 msgid "1 file"
-msgstr "۱ پرونده"
+msgstr "1 fișier"
 
 #: src/app/qml/ui/FolderListPage.qml:201
 #, qt-format
 msgid "%1 files"
-msgstr "%1 پرونده"
+msgstr "%1 fișiere"
 
 #: src/app/qml/ui/FolderListPage.qml:226
 msgid "Open in a new tab"
-msgstr "گشودن در زبانه‌ی جدید"
+msgstr "Deschide în filă nouă"
 
 #: src/app/qml/ui/FolderListPage.qml:234
 msgid "Close this tab"
-msgstr "بستن این زبانه"
+msgstr "Închide această filă"
 
 #: src/app/qml/ui/FolderListPage.qml:254
 msgid "Create New Folder"
-msgstr "ایجاد پوشه‌ی جدید"
+msgstr "Creează un dosar nou"
 
 #: src/app/qml/ui/FolderListPage.qml:274
 msgid "Paste"
-msgstr "چسباندن"
+msgstr "Lipește"
 
 #: src/app/qml/ui/FolderListPage.qml:276
 #, qt-format
 msgid "Paste %1 File"
-msgstr "چسباندن %1 پرونده"
+msgstr "Lipește %1 fișier"
 
 #: src/app/qml/ui/FolderListPage.qml:277
 #, qt-format
 msgid "Paste %1 Files"
-msgstr "چسباندن %1 پرونده"
+msgstr "Lipește %1 fișiere"
 
 #: src/app/qml/ui/FolderListPage.qml:280
 msgid "Paste files"
-msgstr "چسباندن پرونده‌ها"
+msgstr "Lipește fișierele"
 
 #: src/app/qml/ui/FolderListPage.qml:292
 msgid "Open in Terminal"
-msgstr "گشودن در پایانه"
+msgstr "Deschide în terminal"
 
 #: src/app/qml/ui/FolderListPage.qml:304 src/app/qml/ui/FolderListPage.qml:650
 msgid "Properties"
-msgstr "ویژگی‌ها"
+msgstr "Proprietăți"
 
 #: src/app/qml/ui/FolderListPage.qml:321
 msgid "Create folder"
-msgstr "ایجاد پوشه"
+msgstr "Creează dosar"
 
 #: src/app/qml/ui/FolderListPage.qml:322
 msgid "Enter name for new folder"
-msgstr "نام پوشه‌ی جدید را وارد کنید"
+msgstr "Introduceți un nume pentru dosarul nou"
 
 #: src/app/qml/ui/FolderListPage.qml:338
 msgid "Create file"
-msgstr "ایجاد پرونده"
+msgstr "Creează un fișier"
 
 #: src/app/qml/ui/FolderListPage.qml:339
 msgid "Enter name for new file"
-msgstr "نام پرونده‌ی جدید را وارد کنید"
+msgstr "Introduceți un nume pentru fișierul nou"
 
 #: src/app/qml/ui/FolderListPage.qml:354 src/app/qml/ui/FolderListPage.qml:669
 msgid "File operation error"
-msgstr "خطای عملیات پرونده"
+msgstr "Eroare la manipularea fișierului"
 
 #: src/app/qml/ui/FolderListPage.qml:354
 #, qt-format
 msgid "Unable to open '%11"
-msgstr "ناتوان در گشودن '%11"
+msgstr "'%11 nu poate fi deschis"
 
 #: src/app/qml/ui/FolderListPage.qml:396
 msgid "Actions"
-msgstr "کنش‌ها"
+msgstr "Acțiuni"
 
 #: src/app/qml/ui/FolderListPage.qml:406
 msgid "View"
-msgstr "نما"
+msgstr "Vizualizare"
 
 #: src/app/qml/ui/FolderListPage.qml:523
 msgid "No files"
-msgstr "بدون پرونده"
+msgstr "Niciun fișier"
 
 #: src/app/qml/ui/FolderListPage.qml:543 src/app/qml/ui/FolderListPage.qml:624
 msgid "Delete"
-msgstr "حذف"
+msgstr "Șterge"
 
 #: src/app/qml/ui/FolderListPage.qml:544
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "آیا مطمئن هستید که می‌خواهید «%1» را برای همیشه حذف کنید؟"
+msgstr "Sigur doriți să ștergeți definitiv  '%1'?"
 
 #: src/app/qml/ui/FolderListPage.qml:567 src/app/qml/ui/FolderListPage.qml:637
 msgid "Rename"
-msgstr "تغییر نام"
+msgstr "Redenumire"
 
 #: src/app/qml/ui/FolderListPage.qml:568
 msgid "Enter a new name"
-msgstr "یک نام جدید وارد کنید"
+msgstr "Introduceți un nume nou"
 
 #: src/app/qml/ui/FolderListPage.qml:577
 msgid "Could not rename"
-msgstr "نمی‌توان نام را تغییر داد"
+msgstr "Nu poate fi redenumit"
 
 #: src/app/qml/ui/FolderListPage.qml:578
 msgid "Insufficient permissions or name already exists?"
-msgstr "اجازه‌ها نا کافی هستند یا نام فبلاً وجود دارد؟"
+msgstr "Permisiuni insuficiente sau numele există deja?"
 
 #: src/app/qml/ui/FolderListPage.qml:601
 msgid "Cut"
-msgstr "برش"
+msgstr "Taie"
 
 #: src/app/qml/ui/FolderListPage.qml:612
 msgid "Copy"
-msgstr "رونوشت"
+msgstr "Copiază"
 
 #: src/app/qml/ui/FolderListPage.qml:688
 msgid "Folder not accessible"
-msgstr "پوشه قابل دست‌رسی نیست"
+msgstr "Dosarul nu este accesibil"
 
 #. TRANSLATORS: this refers to a folder name
 #: src/app/qml/ui/FolderListPage.qml:690
 #, qt-format
 msgid "Can not access %1"
-msgstr "نمی‌توان به %1 دست‌رسی داشت"
+msgstr "%1 nu poate fi accesat"
 
 #: src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr "رفتن به موقعیت"
+msgstr "Mergi la locul specificat"
 
 #: src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr "موقعیتی را برای رفتن وارد کنید:"
+msgstr "Introduceți un loc:"
 
 #: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:84
 msgid "Location..."
-msgstr "موقعیت…"
+msgstr "Loc..."
 
 #: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:99
 msgid "Go"
-msgstr "رفتن"
+msgstr "Mergi"
 
 #: src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
-msgstr "بستن"
+msgstr "Închide"
 
 #: src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr "نمایش ویژگی‌های پیش‌رفته"
+msgstr "Arată funcțiile avansate"
 
 #: src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr "نمایش پرونده‌های مخفی"
+msgstr "Afișează fișierele ascunse"
 
 #: src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr "دیدن به عنوان"
+msgstr "Vizualizare ca"
 
 #: src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr "چینش بر اساس"
+msgstr "Sortare după"
 
 #: src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr "نام"
+msgstr "Nume"
 
 #: src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr "تاریخ"
+msgstr "Dată"
 
 #: src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr "ترتیب چینش"
+msgstr "Ordine de sortare"
 
 #: src/app/qml/ui/ViewPopover.qml:114 src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr "افزایشی"
+msgstr "Ascendentă"
 
 #: src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr "کاهشی"
+msgstr "Descendentă"
 
 #: src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
-msgstr "پالایه"
+msgstr "Filtrare"
