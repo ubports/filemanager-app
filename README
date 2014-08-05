@@ -26,7 +26,7 @@ cross-compile the app. Here's how:
 4. Once created, you'll need to add the build dependencies for the app:
   - Click on the Maintain button on your chroot
   - On the terminal prompt that is started, type 
-    apt-get install libtag1-dev:armhf'
+    apt-get install libtag1-dev:armhf libpam0g-dev:armhf python3
   - Close the terminal when the installation finishes
 5. Now you can either do a clean checkout and wait to be prompted by Qt Creator
    to add the armhf kit, or alternatively:
