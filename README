@@ -112,7 +112,7 @@ your host computer
 Run the following commands to manually install the click package (replace 0.5
 with the version of your package):
 
-    adb push /home/phablet com.ubuntu.filemanager_0.3_armhf.click
+    adb push com.ubuntu.filemanager_0.3.latest_armhf.click /home/phablet/
     adb shell
     sudo -H -u phablet pkcon install-local /home/phablet/com.ubuntu.filemanager_0.3_armhf.click
 
