@@ -8,7 +8,7 @@ File manager app for Ubuntu on the desktop and on mobile devices.
 
 Install the following build dependencies:
 
-    sudo apt-get install libtag1-dev 
+    sudo apt-get install libtag1-dev libpam0g-dev python3
 
 Then open the CMakeLists.txt file in Qt Creator, and ensure that the kit
 selected on the left sidebar (just above the green "Run" button) is "Desktop"
