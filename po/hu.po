@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-07-27 15:00+0000\n"
+"PO-Revision-Date: 2014-08-04 09:14+0000\n"
 "Last-Translator: Richard Somlói <ricsipontaz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-07-28 06:41+0000\n"
-"X-Generator: Launchpad (build 17131)\n"
+"X-Launchpad-Export-Date: 2014-08-05 06:41+0000\n"
+"X-Generator: Launchpad (build 17147)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
@@ -61,7 +61,7 @@ msgstr "Lista"
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:41
 #: src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
-msgstr "Oké"
+msgstr "Ok"
 
 #: src/app/qml/ui/ConfirmDialog.qml:41
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:51
@@ -73,7 +73,7 @@ msgstr "Mégse"
 
 #: src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr "Esemény kiválasztása"
+msgstr "Művelet kiválasztása"
 
 #: src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
@@ -98,7 +98,7 @@ msgstr "Futtatható"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr "Útvonal:"
+msgstr "Elérési út:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
@@ -179,7 +179,7 @@ msgstr "Megnyitás új lapon"
 
 #: src/app/qml/ui/FolderListPage.qml:234
 msgid "Close this tab"
-msgstr "Ezen lap bezárása"
+msgstr "Lap bezárása"
 
 #: src/app/qml/ui/FolderListPage.qml:254
 msgid "Create New Folder"
@@ -229,7 +229,7 @@ msgstr "Adja meg az új fájl nevét"
 
 #: src/app/qml/ui/FolderListPage.qml:354 src/app/qml/ui/FolderListPage.qml:669
 msgid "File operation error"
-msgstr "Fájlművelethiba"
+msgstr "Fájlművelet-hiba"
 
 #: src/app/qml/ui/FolderListPage.qml:354
 #, qt-format
@@ -271,7 +271,7 @@ msgstr "Nem sikerült átnevezni"
 
 #: src/app/qml/ui/FolderListPage.qml:578
 msgid "Insufficient permissions or name already exists?"
-msgstr "Nem megfelelő jogosultság vagy már létező név?"
+msgstr "Nem megfelelő a jogosultság vagy már létezik a név?"
 
 #: src/app/qml/ui/FolderListPage.qml:601
 msgid "Cut"
@@ -313,7 +313,7 @@ msgstr "Bezárás"
 
 #: src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr "Speciális funkciók megjelenítése"
+msgstr "Haladó funkciók megjelenítése"
 
 #: src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
