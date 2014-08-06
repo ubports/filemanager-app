@@ -179,6 +179,7 @@ public:
     Q_PROPERTY(bool showHiddenFiles READ getShowHiddenFiles WRITE setShowHiddenFiles NOTIFY showHiddenFilesChanged)
     bool getShowHiddenFiles() const;
 
+    // IMPROVE: should be something like onlyMTPPaths (negation of current property) since this affects also deleting/creating directories/moving etc. modifying operations
     Q_PROPERTY(bool showNonMTPPaths READ getShowNonMTPPaths WRITE setShowNonMTPPaths NOTIFY showNonMTPPathsChanged)
     bool getShowNonMTPPaths() const;
 
@@ -472,6 +473,8 @@ private:
     friend class TestDirModel;
 #endif
 
+    bool allowAccess(const DirItemInfo &fi) const;
+    bool allowAccess(const QString &path) const;
     bool isMTPPath(const QString &path) const;
 };
 

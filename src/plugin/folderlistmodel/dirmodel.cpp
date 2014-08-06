@@ -488,6 +488,14 @@ bool DirModel::isMTPPath(const QString &path) const {
     return false;
 }
 
+bool DirModel::allowAccess(const DirItemInfo &fi) const {
+    return allowAccess(fi.absoluteFilePath());
+}
+
+bool DirModel::allowAccess(const QString &absoluteFilePath) const {
+    return mShowNonMTPPaths || isMTPPath(absoluteFilePath);
+}
+
 void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 {
 #if DEBUG_MESSAGES
@@ -499,6 +507,7 @@ void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
         mDirectoryContents.reserve(newFiles.count()) ;
     }
     foreach (const DirItemInfo &fi, newFiles) {
+        if (!allowAccess(fi)) continue;
 
         bool doAdd = false;
         foreach (const QString &nameFilter, mNameFilters) {
@@ -510,10 +519,6 @@ void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
             }
         }
 
-        if (!mShowNonMTPPaths) {
-            doAdd = isMTPPath(fi.absoluteFilePath());
-        }
-
         if (!doAdd)
             continue;
 
@@ -523,6 +528,11 @@ void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 
 void DirModel::rm(const QStringList &paths)
 {
+    if (!allowAccess(mCurrentDir)) {
+        qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
+        return;
+    }
+
     //if current location is Trash only in the root is allowed to remove Items
     if (mCurLocation->type() == LocationsFactory::TrashDisk)
     {
@@ -549,13 +559,17 @@ bool DirModel::rename(int row, const QString &newName)
 #if DEBUG_MESSAGES
     qDebug() << Q_FUNC_INFO << this << "Renaming " << row << " to " << newName;
 #endif
-
     if (!IS_VALID_ROW(row)) {
         WARN_ROW_OUT_OF_RANGE(row);
         return false;
     }
 
     const DirItemInfo &fi = mDirectoryContents.at(row);
+    if (!allowAccess(mCurrentDir)) {
+        qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
+        return false;
+    }
+
     QString newFullFilename(fi.absolutePath() + QDir::separator() + newName);
 
     //QFile::rename() works for File and Dir
@@ -579,6 +593,11 @@ bool DirModel::rename(int row, const QString &newName)
 
 void DirModel::mkdir(const QString &newDir)
 {
+    if (!allowAccess(mCurrentDir)) {
+        qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
+        return;
+    }
+
     QDir dir(mCurrentDir);
     bool retval = dir.mkdir(newDir);
     if (!retval) {
@@ -788,12 +807,23 @@ void DirModel::cutIndex(int row)
 
 void DirModel::cutPaths(const QStringList &items)
 {
-     mClipboard->cut(items, mCurrentDir);
+    if (!allowAccess(mCurrentDir)) {
+        qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
+        return;
+    }
+
+    mClipboard->cut(items, mCurrentDir);
 }
 
 
 void DirModel::paste()
 {
+    // Restrict pasting if in restricted directory
+    if (!allowAccess(mCurrentDir)) {
+        qDebug() << Q_FUNC_INFO << "access not allowed, pasting not done" << mCurrentDir;
+        return;
+    }
+
     ClipboardOperation operation;
     QStringList items = mClipboard->paste(operation);
     if (operation == ClipboardCut)
@@ -926,6 +956,9 @@ void DirModel::onItemAdded(const DirItemInfo &fi)
  */
 int DirModel::addItem(const DirItemInfo &fi)
 {
+    if (!allowAccess(fi)) {
+        return -1;
+    }
     DirItemInfoList::Iterator it = qLowerBound(mDirectoryContents.begin(),
                                                   mDirectoryContents.end(),
                                                   fi,
