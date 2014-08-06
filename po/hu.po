@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-08-04 09:14+0000\n"
+"PO-Revision-Date: 2014-08-05 08:30+0000\n"
 "Last-Translator: Richard Somlói <ricsipontaz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-08-05 06:41+0000\n"
+"X-Launchpad-Export-Date: 2014-08-06 06:52+0000\n"
 "X-Generator: Launchpad (build 17147)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
@@ -209,7 +209,7 @@ msgstr "Megnyitás terminálban"
 
 #: src/app/qml/ui/FolderListPage.qml:304 src/app/qml/ui/FolderListPage.qml:650
 msgid "Properties"
-msgstr "Beállítások"
+msgstr "Tulajdonságok"
 
 #: src/app/qml/ui/FolderListPage.qml:321
 msgid "Create folder"
@@ -321,7 +321,7 @@ msgstr "Rejtett fájlok megjelenítése"
 
 #: src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr "Megtekintés mint"
+msgstr "Megjelenítés"
 
 #: src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
