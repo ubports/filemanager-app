@@ -16,7 +16,9 @@ selected on the left sidebar (just above the green "Run" button) is "Desktop"
 ### For a device
 
 If you don't have one already, you'll need to create an armhf chroot to
-cross-compile the app. Here's how:
+cross-compile the app (also do this if you have an older armhf chroot, for
+example 14.04 and current target is 14.10. You can first delete the old target
+and then create a current one). Here's how:
 
 1. In Qt Creator, open the CMakeLists.txt file
 2. Go to Tools > Options > Ubuntu > Click
