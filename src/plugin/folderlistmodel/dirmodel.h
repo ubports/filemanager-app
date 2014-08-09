@@ -475,7 +475,7 @@ private:
 
     bool allowAccess(const DirItemInfo &fi) const;
     bool allowAccess(const QString &path) const;
-    bool isMTPPath(const QString &path) const;
+    bool isMTPPath(const QString &absolutePath) const;
 };
 
 

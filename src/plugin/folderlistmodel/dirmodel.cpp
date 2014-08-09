@@ -475,14 +475,23 @@ void DirModel::onItemsFetched() {
 }
 
 
-bool DirModel::isMTPPath(const QString &path) const {
+bool DirModel::isMTPPath(const QString &absolutePath) const {
+    // A simple fail check to try protect against most obvious accidental usages.
+    // This is a private function and should always get an absolute FilePath from caller,
+    // but just in case check if there's relational path in there.
+    // Example: absoluteFilePath = /home/$USER/Photos/../shouldNotGetHere => fail
+    if (absolutePath.contains("/../")) {
+        qWarning << Q_FUNC_INFO << "Possible relational file path provided, only absolute filepaths allowed. Fix calling of this function.";
+        return false;
+    }
+
     if (mtpDirectories.isEmpty()) {
         buildMTPDirectories();
     }
     foreach (const QString &mtpDirectory, mtpDirectories) {
-        if (path == mtpDirectory) return true;
+        if (absolutePath == mtpDirectory) return true;
         // Returns true for any file/folder inside MTP directory
-        if (path.startsWith(mtpDirectory + "/")) return true;
+        if (absolutePath.startsWith(mtpDirectory + "/")) return true;
     }
 
     return false;
