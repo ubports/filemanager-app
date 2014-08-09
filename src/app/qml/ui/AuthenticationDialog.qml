@@ -49,8 +49,6 @@ Dialog {
         text: i18n.tr("Ok")
 
         onClicked: {
-            console.log("Ok clicked with password " + passwordField.text)
-
             passwordEntered(passwordField.text)
             PopupUtils.close(root)
         }

@@ -141,6 +141,9 @@ to uninstall:
 
 ## Run the autopilot tests
 
+Prerequisites:
+    sudo apt-get install ubuntu-ui-toolkit-autopilot
+
 Once the app has been built, you can go to the build directory and run:
 
     cd tests/autopilot
