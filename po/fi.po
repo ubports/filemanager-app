@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-15 10:53+0200\n"
-"PO-Revision-Date: 2014-05-19 19:36+0000\n"
+"PO-Revision-Date: 2014-08-08 07:17+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-07-14 07:07+0000\n"
-"X-Generator: Launchpad (build 17111)\n"
+"X-Launchpad-Export-Date: 2014-08-09 05:40+0000\n"
+"X-Generator: Launchpad (build 17156)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
@@ -283,13 +283,13 @@ msgstr "Kopioi"
 
 #: src/app/qml/ui/FolderListPage.qml:688
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Kansio ei ole käytettävissä"
 
 #. TRANSLATORS: this refers to a folder name
 #: src/app/qml/ui/FolderListPage.qml:690
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "Kansion %1 käyttö ei onnistu"
 
 #: src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
