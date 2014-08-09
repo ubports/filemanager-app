@@ -98,7 +98,7 @@ PamAuthentication::initPam(pam_handle **pamHandle)
     conversation.conv = ConversationFunction;
     conversation.appdata_ptr = static_cast<void *>(this);
 
-    return pam_start(m_serviceName.toLatin1().data(), m_userLogin.toLatin1().data(),
+    return pam_start(m_serviceName.toLocal8Bit().data(), m_userLogin.toLocal8Bit().data(),
                      &conversation, pamHandle) == PAM_SUCCESS;
 }
 
@@ -120,14 +120,14 @@ int PamAuthentication::ConversationFunction(int num_msg,
         case PAM_PROMPT_ECHO_ON:
         {
             qDebug() << Q_FUNC_INFO << "PAM_PROMPT_ECHO_ON received";
-            resp[count]->resp = strdup(self->m_passwordToken.toLatin1().data());
+            resp[count]->resp = strdup(self->m_passwordToken.toLocal8Bit().data());
             resp[count]->resp_retcode = 0;
             break;
         }
         case PAM_PROMPT_ECHO_OFF:
         {
             qDebug() << Q_FUNC_INFO << "PAM_PROMPT_ECHO_OFF received";
-            resp[count]->resp = strdup(self->m_passwordToken.toLatin1().data());
+            resp[count]->resp = strdup(self->m_passwordToken.toLocal8Bit().data());
             resp[count]->resp_retcode = 0;
             break;
         }

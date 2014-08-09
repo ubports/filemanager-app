@@ -481,7 +481,7 @@ bool DirModel::isMTPPath(const QString &absolutePath) const {
     // but just in case check if there's relational path in there.
     // Example: absoluteFilePath = /home/$USER/Photos/../shouldNotGetHere => fail
     if (absolutePath.contains("/../")) {
-        qWarning << Q_FUNC_INFO << "Possible relational file path provided, only absolute filepaths allowed. Fix calling of this function.";
+        qWarning() << Q_FUNC_INFO << "Possible relational file path provided, only absolute filepaths allowed. Fix calling of this function.";
         return false;
     }
 
