@@ -7,15 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-05-15 10:53+0200\n"
+"POT-Creation-Date: 2014-08-08 17:46+0200\n"
 "PO-Revision-Date: 2014-07-24 03:18+0000\n"
 "Last-Translator: Sok Sophea <sksophea@gmail.com>\n"
 "Language-Team: Khmer <km@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-07-25 07:49+0000\n"
-"X-Generator: Launchpad (build 17114)\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Launchpad-Export-Date: 2014-08-12 06:34+0000\n"
+"X-Generator: Launchpad (build 17156)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
@@ -29,30 +30,25 @@ msgstr "%1 (ឯកសារ 1)"
 msgid "%1 (%2 files)"
 msgstr "%1 (ឯកសារ %2)"
 
-#: src/app/qml/components/PathBar.qml:120
-#: src/app/qml/ui/FolderListPage.qml:151
-msgid "Home"
-msgstr "ផ្ទះ"
-
-#: src/app/qml/components/PlacesSidebar.qml:85
-#: src/app/qml/ui/FolderListPage.qml:421
+#: src/app/qml/components/PlacesSidebar.qml:54
+#: src/app/qml/ui/FolderListPage.qml:305
 msgid "Places"
 msgstr "ទីតាំង"
 
-#: src/app/qml/filemanager.qml:66 src/app/qml/ui/SettingsSheet.qml:31
+#: src/app/qml/filemanager.qml:83 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
 msgstr "ការកំណត់"
 
-#: src/app/qml/filemanager.qml:67
+#: src/app/qml/filemanager.qml:84
 msgid "Change app settings"
 msgstr "ប្ដូរ​ការ​កំណត់​កម្មវិធី"
 
-#: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:492
+#: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:408
 #: src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr "រូបតំណាង"
 
-#: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:508
+#: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:425
 #: src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr "បញ្ជី"
@@ -67,7 +63,7 @@ msgstr "យល់ព្រម"
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:51
 #: src/app/qml/ui/FileActionDialog.qml:45
 #: src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: src/app/qml/ui/GoToDialog.qml:66
+#: src/app/qml/ui/FolderListPage.qml:385 src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
 msgstr "បោះ​បង់"
 
@@ -124,169 +120,156 @@ msgstr "សិទ្ធិ៖"
 msgid "Operation in progress"
 msgstr "ប្រតិបត្តិការ​កំពុង​ដំណើរការ"
 
-#: src/app/qml/ui/FolderListPage.qml:122
-msgid "~/Desktop"
-msgstr "~/ផ្ទៃតុ"
-
-#: src/app/qml/ui/FolderListPage.qml:124
-msgid "~/Documents"
-msgstr "~/ឯកសារ"
-
-#: src/app/qml/ui/FolderListPage.qml:126
-msgid "~/Downloads"
-msgstr "~/ទាញ​យក"
-
-#: src/app/qml/ui/FolderListPage.qml:128
-msgid "~/Music"
-msgstr "~/តន្ត្រី"
-
-#: src/app/qml/ui/FolderListPage.qml:130
-msgid "~/Pictures"
-msgstr "~/រូបភាព"
-
-#: src/app/qml/ui/FolderListPage.qml:132
-msgid "~/Public"
-msgstr "~/សាធារណៈ"
-
-#: src/app/qml/ui/FolderListPage.qml:134
-msgid "~/Programs"
-msgstr "~/កម្មវិធី"
-
-#: src/app/qml/ui/FolderListPage.qml:136
-msgid "~/Templates"
-msgstr "~/ពុម្ព"
-
-#: src/app/qml/ui/FolderListPage.qml:138
-msgid "~/Videos"
-msgstr "~/វីដេអូ"
-
-#: src/app/qml/ui/FolderListPage.qml:153
-msgid "File System"
-msgstr "ប្រព័ន្ធ​ឯកសារ"
-
-#: src/app/qml/ui/FolderListPage.qml:200
-msgid "1 file"
-msgstr "ឯកសារ 1"
-
-#: src/app/qml/ui/FolderListPage.qml:201
+#: src/app/qml/ui/FolderListPage.qml:93
 #, qt-format
-msgid "%1 files"
-msgstr "ឯកសារ %1"
+msgid "%1 file"
+msgid_plural "%1 files"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/app/qml/ui/FolderListPage.qml:226
+#: src/app/qml/ui/FolderListPage.qml:118
 msgid "Open in a new tab"
 msgstr "បើក​ក្នុង​ផ្ទាំង​ថ្មី"
 
-#: src/app/qml/ui/FolderListPage.qml:234
+#: src/app/qml/ui/FolderListPage.qml:126
 msgid "Close this tab"
 msgstr "បិទ​ផ្ទាំង​នេះ"
 
-#: src/app/qml/ui/FolderListPage.qml:254
+#: src/app/qml/ui/FolderListPage.qml:146
 msgid "Create New Folder"
 msgstr "បង្កើត​ថត​ថ្មី"
 
-#: src/app/qml/ui/FolderListPage.qml:274
+#: src/app/qml/ui/FolderListPage.qml:166
 msgid "Paste"
 msgstr "​បិទភ្ជាប់"
 
-#: src/app/qml/ui/FolderListPage.qml:276
+#: src/app/qml/ui/FolderListPage.qml:167
 #, qt-format
 msgid "Paste %1 File"
-msgstr "បិទភ្ជាប់​ឯកសារ  %1"
+msgid_plural "Paste %1 Files"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/app/qml/ui/FolderListPage.qml:277
-#, qt-format
-msgid "Paste %1 Files"
-msgstr "បិទភ្ជាប់​ឯកសារ %1"
-
-#: src/app/qml/ui/FolderListPage.qml:280
+#: src/app/qml/ui/FolderListPage.qml:170
 msgid "Paste files"
 msgstr "បិទភ្ជាប់​ឯកសារ"
 
-#: src/app/qml/ui/FolderListPage.qml:292
+#: src/app/qml/ui/FolderListPage.qml:182
 msgid "Open in Terminal"
 msgstr "បើក​ក្នុង​ស្ថានីយ"
 
-#: src/app/qml/ui/FolderListPage.qml:304 src/app/qml/ui/FolderListPage.qml:650
+#: src/app/qml/ui/FolderListPage.qml:194 src/app/qml/ui/FolderListPage.qml:567
 msgid "Properties"
 msgstr "លក្ខណសម្បត្តិ"
 
-#: src/app/qml/ui/FolderListPage.qml:321
+#: src/app/qml/ui/FolderListPage.qml:211
 msgid "Create folder"
 msgstr "បង្កើត​ថត"
 
-#: src/app/qml/ui/FolderListPage.qml:322
+#: src/app/qml/ui/FolderListPage.qml:212
 msgid "Enter name for new folder"
 msgstr "បញ្ចូល​ឈ្មោះ​ថត​ថ្មី"
 
-#: src/app/qml/ui/FolderListPage.qml:338
+#: src/app/qml/ui/FolderListPage.qml:228
 msgid "Create file"
 msgstr "បង្កើត​ឯកសារ"
 
-#: src/app/qml/ui/FolderListPage.qml:339
+#: src/app/qml/ui/FolderListPage.qml:229
 msgid "Enter name for new file"
 msgstr "បញ្ចូល​ឈ្មោះ​ឯកសារ​ថ្មី"
 
-#: src/app/qml/ui/FolderListPage.qml:354 src/app/qml/ui/FolderListPage.qml:669
-msgid "File operation error"
-msgstr "កំហុស​ក្នុងកា​រប្រតិបត្តិ​ឯកសារ"
+#: src/app/qml/ui/FolderListPage.qml:251
+msgid "Up"
+msgstr ""
 
-#: src/app/qml/ui/FolderListPage.qml:354
-#, qt-format
-msgid "Unable to open '%11"
-msgstr "មិន​អាច​បើក '%11"
-
-#: src/app/qml/ui/FolderListPage.qml:396
+#: src/app/qml/ui/FolderListPage.qml:280
 msgid "Actions"
 msgstr "សកម្មភាព"
 
-#: src/app/qml/ui/FolderListPage.qml:406
+#: src/app/qml/ui/FolderListPage.qml:290
 msgid "View"
 msgstr "មើល"
 
-#: src/app/qml/ui/FolderListPage.qml:523
+#: src/app/qml/ui/FolderListPage.qml:371
+msgid "Select"
+msgstr ""
+
+#: src/app/qml/ui/FolderListPage.qml:440
 msgid "No files"
 msgstr "មិន​មាន​ឯកសារ"
 
-#: src/app/qml/ui/FolderListPage.qml:543 src/app/qml/ui/FolderListPage.qml:624
+#: src/app/qml/ui/FolderListPage.qml:460 src/app/qml/ui/FolderListPage.qml:541
 msgid "Delete"
 msgstr "លុប"
 
-#: src/app/qml/ui/FolderListPage.qml:544
+#: src/app/qml/ui/FolderListPage.qml:461
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "តើ​អ្នក​ពិតជា​ចង់​លុប '%1' រហូត​មែន​ឬ?"
 
-#: src/app/qml/ui/FolderListPage.qml:567 src/app/qml/ui/FolderListPage.qml:637
+#: src/app/qml/ui/FolderListPage.qml:484 src/app/qml/ui/FolderListPage.qml:554
 msgid "Rename"
 msgstr "ប្តូរ​​ឈ្មោះ"
 
-#: src/app/qml/ui/FolderListPage.qml:568
+#: src/app/qml/ui/FolderListPage.qml:485
 msgid "Enter a new name"
 msgstr "បញ្ចូល​ឈ្មោះ​ថ្មី"
 
-#: src/app/qml/ui/FolderListPage.qml:577
+#: src/app/qml/ui/FolderListPage.qml:494
 msgid "Could not rename"
 msgstr "មិន​អាច​ប្ដូរ​ឈ្មោះ"
 
-#: src/app/qml/ui/FolderListPage.qml:578
+#: src/app/qml/ui/FolderListPage.qml:495
 msgid "Insufficient permissions or name already exists?"
 msgstr "មិន​មាន​សិទ្ធិ ឬ​ឈ្មោះ​មាន​រួចហើយ?"
 
-#: src/app/qml/ui/FolderListPage.qml:601
+#: src/app/qml/ui/FolderListPage.qml:518
 msgid "Cut"
 msgstr "​កាត់"
 
-#: src/app/qml/ui/FolderListPage.qml:612
+#: src/app/qml/ui/FolderListPage.qml:529
 msgid "Copy"
 msgstr "​ចម្លង"
 
-#: src/app/qml/ui/FolderListPage.qml:688
+#: src/app/qml/ui/FolderListPage.qml:586 src/app/qml/ui/FolderListPage.qml:709
+msgid "File operation error"
+msgstr "កំហុស​ក្នុងកា​រប្រតិបត្តិ​ឯកសារ"
+
+#: src/app/qml/ui/FolderListPage.qml:635
+msgid "~/Desktop"
+msgstr "~/ផ្ទៃតុ"
+
+#: src/app/qml/ui/FolderListPage.qml:645
+msgid "~/Public"
+msgstr "~/សាធារណៈ"
+
+#: src/app/qml/ui/FolderListPage.qml:647
+msgid "~/Programs"
+msgstr "~/កម្មវិធី"
+
+#: src/app/qml/ui/FolderListPage.qml:649
+msgid "~/Templates"
+msgstr "~/ពុម្ព"
+
+#: src/app/qml/ui/FolderListPage.qml:662
+msgid "Home"
+msgstr "ផ្ទះ"
+
+#: src/app/qml/ui/FolderListPage.qml:664
+msgid "Device"
+msgstr ""
+
+#: src/app/qml/ui/FolderListPage.qml:709
+#, qt-format
+msgid "Unable to open '%1'"
+msgstr ""
+
+#: src/app/qml/ui/FolderListPage.qml:721
 msgid "Folder not accessible"
 msgstr "ថត​មិន​អាច​ប្រើ​បាន"
 
 #. TRANSLATORS: this refers to a folder name
-#: src/app/qml/ui/FolderListPage.qml:690
+#: src/app/qml/ui/FolderListPage.qml:723
 #, qt-format
 msgid "Can not access %1"
 msgstr "មិន​អាច​ចូល​ប្រើ %1"
@@ -299,11 +282,11 @@ msgstr "ទៅកាន់​ទីតាំង"
 msgid "Enter a location to go to:"
 msgstr "បញ្ចូល​ទីតាំង​ដើម្បី​ទៅ៖"
 
-#: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:84
+#: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:53
 msgid "Location..."
 msgstr "ទីតាំង..."
 
-#: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:99
+#: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:68
 msgid "Go"
 msgstr "ទៅ"
 

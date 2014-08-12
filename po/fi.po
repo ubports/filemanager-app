@@ -7,14 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-05-15 10:53+0200\n"
+"POT-Creation-Date: 2014-08-08 17:46+0200\n"
 "PO-Revision-Date: 2014-08-08 07:17+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-08-09 05:40+0000\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2014-08-12 06:34+0000\n"
 "X-Generator: Launchpad (build 17156)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
@@ -29,30 +30,25 @@ msgstr "%1 (1 tiedosto)"
 msgid "%1 (%2 files)"
 msgstr "%1 (%2 tiedostoa)"
 
-#: src/app/qml/components/PathBar.qml:120
-#: src/app/qml/ui/FolderListPage.qml:151
-msgid "Home"
-msgstr "Koti"
-
-#: src/app/qml/components/PlacesSidebar.qml:85
-#: src/app/qml/ui/FolderListPage.qml:421
+#: src/app/qml/components/PlacesSidebar.qml:54
+#: src/app/qml/ui/FolderListPage.qml:305
 msgid "Places"
 msgstr "Sijainnit"
 
-#: src/app/qml/filemanager.qml:66 src/app/qml/ui/SettingsSheet.qml:31
+#: src/app/qml/filemanager.qml:83 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
 msgstr "Asetukset"
 
-#: src/app/qml/filemanager.qml:67
+#: src/app/qml/filemanager.qml:84
 msgid "Change app settings"
 msgstr "Muuta sovelluksen asetuksia"
 
-#: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:492
+#: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:408
 #: src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr "Kuvakkeet"
 
-#: src/app/qml/filemanager.qml:186 src/app/qml/ui/FolderListPage.qml:508
+#: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:425
 #: src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr "Luettelo"
@@ -67,7 +63,7 @@ msgstr "OK"
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:51
 #: src/app/qml/ui/FileActionDialog.qml:45
 #: src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: src/app/qml/ui/GoToDialog.qml:66
+#: src/app/qml/ui/FolderListPage.qml:385 src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
 msgstr "Peru"
 
@@ -124,169 +120,156 @@ msgstr "Oikeudet:"
 msgid "Operation in progress"
 msgstr "Toiminto käynnissä"
 
-#: src/app/qml/ui/FolderListPage.qml:122
-msgid "~/Desktop"
-msgstr ""
-
-#: src/app/qml/ui/FolderListPage.qml:124
-msgid "~/Documents"
-msgstr ""
-
-#: src/app/qml/ui/FolderListPage.qml:126
-msgid "~/Downloads"
-msgstr ""
-
-#: src/app/qml/ui/FolderListPage.qml:128
-msgid "~/Music"
-msgstr ""
-
-#: src/app/qml/ui/FolderListPage.qml:130
-msgid "~/Pictures"
-msgstr ""
-
-#: src/app/qml/ui/FolderListPage.qml:132
-msgid "~/Public"
-msgstr ""
-
-#: src/app/qml/ui/FolderListPage.qml:134
-msgid "~/Programs"
-msgstr ""
-
-#: src/app/qml/ui/FolderListPage.qml:136
-msgid "~/Templates"
-msgstr ""
-
-#: src/app/qml/ui/FolderListPage.qml:138
-msgid "~/Videos"
-msgstr ""
-
-#: src/app/qml/ui/FolderListPage.qml:153
-msgid "File System"
-msgstr "Tiedostojärjestelmä"
-
-#: src/app/qml/ui/FolderListPage.qml:200
-msgid "1 file"
-msgstr "1 tiedosto"
-
-#: src/app/qml/ui/FolderListPage.qml:201
+#: src/app/qml/ui/FolderListPage.qml:93
 #, qt-format
-msgid "%1 files"
-msgstr "%1 tiedostoa"
+msgid "%1 file"
+msgid_plural "%1 files"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/app/qml/ui/FolderListPage.qml:226
+#: src/app/qml/ui/FolderListPage.qml:118
 msgid "Open in a new tab"
 msgstr "Avaa uudessa välilehdessä"
 
-#: src/app/qml/ui/FolderListPage.qml:234
+#: src/app/qml/ui/FolderListPage.qml:126
 msgid "Close this tab"
 msgstr "Sulje tämä välilehti"
 
-#: src/app/qml/ui/FolderListPage.qml:254
+#: src/app/qml/ui/FolderListPage.qml:146
 msgid "Create New Folder"
 msgstr "Luo uusi kansio"
 
-#: src/app/qml/ui/FolderListPage.qml:274
+#: src/app/qml/ui/FolderListPage.qml:166
 msgid "Paste"
 msgstr "Liitä"
 
-#: src/app/qml/ui/FolderListPage.qml:276
+#: src/app/qml/ui/FolderListPage.qml:167
 #, qt-format
 msgid "Paste %1 File"
-msgstr "Liitä %1 tiedosto"
+msgid_plural "Paste %1 Files"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/app/qml/ui/FolderListPage.qml:277
-#, qt-format
-msgid "Paste %1 Files"
-msgstr "Liitä %1 tiedostoa"
-
-#: src/app/qml/ui/FolderListPage.qml:280
+#: src/app/qml/ui/FolderListPage.qml:170
 msgid "Paste files"
 msgstr "Liitä tiedostot"
 
-#: src/app/qml/ui/FolderListPage.qml:292
+#: src/app/qml/ui/FolderListPage.qml:182
 msgid "Open in Terminal"
 msgstr "Avaa päätteessä"
 
-#: src/app/qml/ui/FolderListPage.qml:304 src/app/qml/ui/FolderListPage.qml:650
+#: src/app/qml/ui/FolderListPage.qml:194 src/app/qml/ui/FolderListPage.qml:567
 msgid "Properties"
 msgstr "Ominaisuudet"
 
-#: src/app/qml/ui/FolderListPage.qml:321
+#: src/app/qml/ui/FolderListPage.qml:211
 msgid "Create folder"
 msgstr "Luo kansio"
 
-#: src/app/qml/ui/FolderListPage.qml:322
+#: src/app/qml/ui/FolderListPage.qml:212
 msgid "Enter name for new folder"
 msgstr "Anna nimi uudelle kansiolle"
 
-#: src/app/qml/ui/FolderListPage.qml:338
+#: src/app/qml/ui/FolderListPage.qml:228
 msgid "Create file"
 msgstr "Luo tiedosto"
 
-#: src/app/qml/ui/FolderListPage.qml:339
+#: src/app/qml/ui/FolderListPage.qml:229
 msgid "Enter name for new file"
 msgstr "Anna nimi uudelle tiedostolle"
 
-#: src/app/qml/ui/FolderListPage.qml:354 src/app/qml/ui/FolderListPage.qml:669
-msgid "File operation error"
-msgstr "Virhe tiedostotoiminnossa"
-
-#: src/app/qml/ui/FolderListPage.qml:354
-#, qt-format
-msgid "Unable to open '%11"
+#: src/app/qml/ui/FolderListPage.qml:251
+msgid "Up"
 msgstr ""
 
-#: src/app/qml/ui/FolderListPage.qml:396
+#: src/app/qml/ui/FolderListPage.qml:280
 msgid "Actions"
 msgstr "Toiminnot"
 
-#: src/app/qml/ui/FolderListPage.qml:406
+#: src/app/qml/ui/FolderListPage.qml:290
 msgid "View"
 msgstr "Näytä"
 
-#: src/app/qml/ui/FolderListPage.qml:523
+#: src/app/qml/ui/FolderListPage.qml:371
+msgid "Select"
+msgstr ""
+
+#: src/app/qml/ui/FolderListPage.qml:440
 msgid "No files"
 msgstr "Ei tiedostoja"
 
-#: src/app/qml/ui/FolderListPage.qml:543 src/app/qml/ui/FolderListPage.qml:624
+#: src/app/qml/ui/FolderListPage.qml:460 src/app/qml/ui/FolderListPage.qml:541
 msgid "Delete"
 msgstr "Poista"
 
-#: src/app/qml/ui/FolderListPage.qml:544
+#: src/app/qml/ui/FolderListPage.qml:461
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "Haluatko varmasti poistaa pysyvästi kohteen '%1'?"
 
-#: src/app/qml/ui/FolderListPage.qml:567 src/app/qml/ui/FolderListPage.qml:637
+#: src/app/qml/ui/FolderListPage.qml:484 src/app/qml/ui/FolderListPage.qml:554
 msgid "Rename"
 msgstr "Nimeä uudelleen"
 
-#: src/app/qml/ui/FolderListPage.qml:568
+#: src/app/qml/ui/FolderListPage.qml:485
 msgid "Enter a new name"
 msgstr "Anna uusi nimi"
 
-#: src/app/qml/ui/FolderListPage.qml:577
+#: src/app/qml/ui/FolderListPage.qml:494
 msgid "Could not rename"
 msgstr "Nimen muuttaminen epäonnistui"
 
-#: src/app/qml/ui/FolderListPage.qml:578
+#: src/app/qml/ui/FolderListPage.qml:495
 msgid "Insufficient permissions or name already exists?"
 msgstr ""
 
-#: src/app/qml/ui/FolderListPage.qml:601
+#: src/app/qml/ui/FolderListPage.qml:518
 msgid "Cut"
 msgstr "Leikkaa"
 
-#: src/app/qml/ui/FolderListPage.qml:612
+#: src/app/qml/ui/FolderListPage.qml:529
 msgid "Copy"
 msgstr "Kopioi"
 
-#: src/app/qml/ui/FolderListPage.qml:688
+#: src/app/qml/ui/FolderListPage.qml:586 src/app/qml/ui/FolderListPage.qml:709
+msgid "File operation error"
+msgstr "Virhe tiedostotoiminnossa"
+
+#: src/app/qml/ui/FolderListPage.qml:635
+msgid "~/Desktop"
+msgstr ""
+
+#: src/app/qml/ui/FolderListPage.qml:645
+msgid "~/Public"
+msgstr ""
+
+#: src/app/qml/ui/FolderListPage.qml:647
+msgid "~/Programs"
+msgstr ""
+
+#: src/app/qml/ui/FolderListPage.qml:649
+msgid "~/Templates"
+msgstr ""
+
+#: src/app/qml/ui/FolderListPage.qml:662
+msgid "Home"
+msgstr "Koti"
+
+#: src/app/qml/ui/FolderListPage.qml:664
+msgid "Device"
+msgstr ""
+
+#: src/app/qml/ui/FolderListPage.qml:709
+#, qt-format
+msgid "Unable to open '%1'"
+msgstr ""
+
+#: src/app/qml/ui/FolderListPage.qml:721
 msgid "Folder not accessible"
 msgstr "Kansio ei ole käytettävissä"
 
 #. TRANSLATORS: this refers to a folder name
-#: src/app/qml/ui/FolderListPage.qml:690
+#: src/app/qml/ui/FolderListPage.qml:723
 #, qt-format
 msgid "Can not access %1"
 msgstr "Kansion %1 käyttö ei onnistu"
@@ -299,11 +282,11 @@ msgstr "Siirry sijaintiin"
 msgid "Enter a location to go to:"
 msgstr "Anna sijainti, johon siirrytään:"
 
-#: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:84
+#: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:53
 msgid "Location..."
 msgstr "Sijainti..."
 
-#: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:99
+#: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:68
 msgid "Go"
 msgstr "Siirry"
 
