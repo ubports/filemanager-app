@@ -59,6 +59,7 @@ private:
                                     void* appdata_ptr);
 
     bool initPam(pam_handle **pamHandle);
+    int validateAccount(pam_handle *pamHandle);
 
     QString m_passwordToken;
     QString m_serviceName;

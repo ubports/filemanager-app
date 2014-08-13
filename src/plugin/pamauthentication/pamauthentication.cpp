@@ -82,13 +82,35 @@ PamAuthentication::validatePasswordToken(const QString &token) {
     m_passwordToken = token;
 
     int status = pam_authenticate(pamHandle, 0);
-    qDebug() << Q_FUNC_INFO << "Pam authenticate status" << status;
-
+    qDebug() << Q_FUNC_INFO << "Pam authenticate status" << status << pam_strerror(pamHandle, status);
+    if (status == PAM_SUCCESS) {
+        status = validateAccount(pamHandle);
+    }
     pam_end(pamHandle, status);
 
     m_passwordToken.clear();
 
     return status == PAM_SUCCESS;
+}
+
+int
+PamAuthentication::validateAccount(pam_handle *pamHandle) {
+    // This makes sure account and password are still valid
+    int status = pam_acct_mgmt(pamHandle, 0);
+    qDebug() << Q_FUNC_INFO << "pam_acct_mgmt: " << status << pam_strerror(pamHandle, status);
+    // Placeholders for some common errors
+    // IMPROVE: it'd be good to let user know reason for failure
+    switch (status) {
+    case PAM_SUCCESS:
+        break;
+    case PAM_USER_UNKNOWN:
+        break;
+    case PAM_ACCT_EXPIRED:
+        break;
+    case PAM_NEW_AUTHTOK_REQD:
+        break;
+    }
+    return status;
 }
 
 bool
