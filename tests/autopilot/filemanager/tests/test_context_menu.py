@@ -72,7 +72,7 @@ class ContextMenuTestCase(tests.FileManagerTestCase):
     def test_delete_file(self):
         """Test deleting a file.
 
-        The file must no longer be displayed ont he list of folder contents.
+        The file must no longer be displayed on the list of folder contents.
 
         """
         file_name = os.path.basename(self.make_file_in_home())

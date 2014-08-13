@@ -89,13 +89,8 @@ class FileManagerTestCase(AutopilotTestCase):
                      os.listdir(self.home_dir))
         logger.debug('File count in HOME is %s' % self.original_file_count)
 
-        if os.path.exists(self.local_location_binary):
-            self.app = self.launch_test_local()
-        elif os.path.exists(self.installed_location_binary):
-            self.app = self.launch_test_installed()
-        else:
-            self.app = self.launch_test_click()
-
+        self.app = launcher()
+        
     def _get_build_dir(self):
         """
         Returns the build dir after having parsed the CMake config file
