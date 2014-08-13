@@ -90,7 +90,7 @@ class FileManagerTestCase(AutopilotTestCase):
         logger.debug('File count in HOME is %s' % self.original_file_count)
 
         self.app = launcher()
-        
+
     def _get_build_dir(self):
         """
         Returns the build dir after having parsed the CMake config file
@@ -105,15 +105,6 @@ class FileManagerTestCase(AutopilotTestCase):
             build_dir = self.source_dir
 
         return build_dir
-
-    def _create_test_root(self):
-        #create a temporary directory for testing purposes
-        #due to security lockdowns, make it under /home always
-        temp_dir = tempfile.mkdtemp(dir=os.path.expanduser('~'))
-        self.addCleanup(shutil.rmtree, temp_dir)
-        logger.debug('Created root test directory ' + temp_dir)
-        self.patch_environment('TESTHOME', temp_dir)
-        return temp_dir
 
     @autopilot_logging.log_action(logger.info)
     def launch_test_local(self):
