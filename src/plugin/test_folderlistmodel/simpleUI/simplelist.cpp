@@ -22,6 +22,8 @@
 #include "simplelist.h"
 #include "ui_simplelist.h"
 #include "dirmodel.h"
+#include "dirselection.h"
+#include "placesmodel.h"
 
 #include <QDir>
 #include <QMetaType>
@@ -30,252 +32,174 @@
 #include <QProgressBar>
 #include <QMessageBox>
 #include <QTimer>
+#include <QLineEdit>
+#include <QMouseEvent>
 
 SimpleList::SimpleList(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::SimpleList),
-    m_curRow(-1),
-    m_pbar( new QProgressBar() )
+    QMainWindow(parent),
+    ui(new Ui::SimpleList),  
+    m_pbar( new QProgressBar() ),
+    m_selection(0),
+    m_holdingCtrlKey(false),
+    m_holdingShiftKey(false),
+    m_button(Qt::NoButton),
+    m_placesModel(new PlacesModel(this))
 {
+    //prepare UI
     ui->setupUi(this);
-
-    m_model = new DirModel(this);
-
-    DirModel::registerMetaTypes();
-    ui->tableView->setModel(m_model);   
-
-    connect(ui->tableView, SIGNAL(clicked(QModelIndex)),
-            this,          SLOT(onRowClicked(QModelIndex)));
-    connect(ui->tableView, SIGNAL(doubleClicked(QModelIndex)),
-            this,          SLOT(onOpenItem(QModelIndex)));
-
-    connect(ui->tableView->verticalHeader(), SIGNAL(sectionClicked(int)),
-            this,                            SLOT(onVerticalHeaderClicked(int)));
-
-    connect(m_model, SIGNAL(pathChanged(QString)),
-            this,    SLOT(pathChanged(QString)));
-
-    connect(ui->pushButtonCdUp,   SIGNAL(clicked()),  this, SLOT(onCdUP()));
-    connect(ui->pushButtonCopy,   SIGNAL(clicked()),  this, SLOT(onCopy()));
-    connect(ui->pushButtonCut,    SIGNAL(clicked()),  this, SLOT(onCut()));
-    connect(ui->pushButtonDelete, SIGNAL(clicked()),  this, SLOT(onRemove()));
-    connect(ui->pushButtonGoHome, SIGNAL(clicked()),  this, SLOT(onGoHome()));
-    connect(ui->pushButtonIntoDirs,SIGNAL(clicked()), this, SLOT(onCdInto()));
-    connect(ui->pushButtonNewDir, SIGNAL(clicked()),  this, SLOT(onNewDir()));
-    connect(ui->pushButtonPaste,  SIGNAL(clicked()),  this, SLOT(onPaste()));
-    connect(ui->pushButtonRename, SIGNAL(clicked()),  this, SLOT(onRename()));
-
-    connect(ui->checkBoxShowDirs,    SIGNAL(clicked(bool)), this, SLOT(onShowDirs(bool)));
-    connect(ui->checkBoxShowHidden,  SIGNAL(clicked(bool)), this, SLOT(onShowHidden(bool)));
-    connect(ui->checkBoxExtFsWatcher, SIGNAL(toggled(bool)),this, SLOT(onExtFsWatcherEnabled(bool)));
-
-    connect(ui->pushButtonOpen,   SIGNAL(clicked()),
-            this,                 SLOT(onOpen()));
-
-    connect(ui->lineEditOpen,   SIGNAL(returnPressed()),
-            this,                 SLOT(onOpen()));
-
-    ui->checkBoxShowDirs->setChecked( m_model->showDirectories() );
-
-    resize(800,600);
-
-    connect(m_model, SIGNAL(insertedRow(int)),
-            this,    SLOT(resizeColumnForName(int)));
-
-    connect(ui->tableView->horizontalHeader(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
-            this,                              SLOT(setSort(int,Qt::SortOrder)));
-
-    connect(m_model, SIGNAL(progress(int,int,int)),
-            this,    SLOT(progress(int,int,int)));
-
-    connect(m_model, SIGNAL(clipboardChanged()),
-            this,    SLOT(clipboardChanged()));
-
-    connect(m_model, SIGNAL(error(QString,QString)),
-            this,    SLOT(error(QString,QString)));
-
-    ui->tableView->horizontalHeader()->setSortIndicator(0,Qt::AscendingOrder);
-
+    ui->tableViewFM->horizontalHeader()->setSortIndicator(0,Qt::AscendingOrder);
+    resize(1200,600);
     m_pbar->setMaximum(100);
     m_pbar->setMinimum(0);
 
-    m_model->setReadsMediaMetadata(true);
-    ui->checkBoxExtFsWatcher->click();
-    m_model->goHome();
+    ui->listViewPlaces->setModel(m_placesModel);
+    ui->listViewPlaces->setSpacing(ui->listViewPlaces->spacing() + 7);
 
-    clipboardChanged();
+    //create the model
+    m_model = new DirModel(this);
+    DirModel::registerMetaTypes();
+    ui->tableViewFM->setModel(m_model);
+
+    //enable External Disk Watcher
+    m_model->setEnabledExternalFSWatcher(true);
+    ui->checkBoxExtFsWatcher->setChecked(true);
+
+    //get selection object
+    m_selection = m_model->selectionObject();
+
+    //selection is handled in the model, disable it in the view
+    ui->tableViewFM->setSelectionMode(QAbstractItemView::NoSelection);
+    ui->tableViewFM->viewport()->installEventFilter(this);
+
+    //get default values from model
+    ui->checkBoxShowDirs->setChecked(m_model->showDirectories());
+    ui->checkBoxShowHidden->setChecked(m_model->getShowHiddenFiles());   
+    ui->checkBoxShowMediaInfo->setChecked(m_model->readsMediaMetadata());
+    ui->checkBoxMultiSelection->setChecked(m_selection->mode() == DirSelection::Multi);
+
+    //start clibpboard message
+    onClipboardChanged();
+
+    //start with actions disabled,
+    //onSelectionChanged() does a basic actions allowable handling
+    onSelectionChanged(0);
+
+    //connect everything
+    do_connections();
+
+    //start browsing home
+    m_model->goHome();
 }
+
 
 SimpleList::~SimpleList()
 {
     delete ui;
 }
 
-void SimpleList::onRowClicked(QModelIndex index)
+
+bool SimpleList::eventFilter(QObject *obj, QEvent *event)
 {
-    if (index.isValid())
+    if (obj == ui->tableViewFM->viewport() && event->type() == QEvent::MouseButtonPress)
     {
-        m_curRow = index.row();
+        QMouseEvent *mouseEvent = static_cast<QMouseEvent*> (event);
+        m_holdingShiftKey = mouseEvent->modifiers() & Qt::ShiftModifier;;
+        m_holdingCtrlKey  = mouseEvent->modifiers() & Qt::ControlModifier;;
+        m_button          = mouseEvent->button();
+    }
+    return QMainWindow::eventFilter(obj, event);
+}
+
+
+void SimpleList::do_connections()
+{
+    connect(ui->tableViewFM, SIGNAL(clicked(QModelIndex)),
+            this,          SLOT(onRowClicked(QModelIndex)));
+
+    connect(ui->tableViewFM, SIGNAL(doubleClicked(QModelIndex)),
+            this,          SLOT(onOpenItem(QModelIndex)));
+
+    connect(m_model, SIGNAL(pathChanged(QString)),
+            this,    SLOT(onPathChanged(QString)));
+
+    connect(ui->toolButtonUp,     SIGNAL(clicked()),    m_model, SLOT(cdUp()));
+    connect(ui->actionCopy,       SIGNAL(triggered()),  m_model, SLOT(copySelection()));
+    connect(ui->actionCut,        SIGNAL(triggered()),  m_model, SLOT(cutSelection()));
+    connect(ui->actionDelete,     SIGNAL(triggered()),  m_model, SLOT(removeSelection()));
+    connect(ui->actionPaste,      SIGNAL(triggered()),  m_model, SLOT(paste()));
+    connect(ui->actionMoveToTrash,SIGNAL(triggered()),  m_model, SLOT(moveSelectionToTrash()));
+    connect(ui->actionTerminnal,  SIGNAL(triggered()),  this,    SLOT(onOpenTerminal()));
+
+    connect(ui->actionRestoreFromTrash, SIGNAL(triggered()),
+            m_model,              SLOT(restoreSelectionFromTrash()));
+
+    connect(ui->checkBoxShowDirs,     SIGNAL(clicked(bool)), m_model, SLOT(setShowDirectories(bool)));
+    connect(ui->checkBoxShowHidden,   SIGNAL(clicked(bool)), m_model, SLOT(setShowHiddenFiles(bool)));
+    connect(ui->checkBoxExtFsWatcher, SIGNAL(clicked(bool)), m_model, SLOT(setEnabledExternalFSWatcher(bool)));
+    connect(ui->checkBoxShowMediaInfo, SIGNAL(clicked(bool)),m_model, SLOT(setReadsMediaMetadata(bool)));
+    connect(ui->checkBoxMultiSelection,SIGNAL(clicked(bool)), m_selection, SLOT(setMultiSelection(bool)));
+
+    connect(ui->comboBoxPath,     SIGNAL(activated(int)),
+            this, SLOT(onPathChoosedFromList(int)));
+
+    connect(ui->comboBoxPath->lineEdit(),    SIGNAL(returnPressed()),
+            this,    SLOT(onPathComboEdited()));
+
+    connect(ui->tableViewFM->horizontalHeader(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
+            this,                              SLOT(onSetSort(int,Qt::SortOrder)));
+
+    connect(m_model, SIGNAL(progress(int,int,int)),
+            this,    SLOT(onProgress(int,int,int)));
+
+    connect(m_model, SIGNAL(clipboardChanged()),
+            this,    SLOT(onClipboardChanged()));
+
+    connect(m_model, SIGNAL(error(QString,QString)),
+            this,    SLOT(onError(QString,QString)));
+
+    connect(m_selection,   SIGNAL(selectionChanged(int)),
+            this,          SLOT(onSelectionChanged(int)));
+
+    connect(ui->listViewPlaces,  SIGNAL(clicked(QModelIndex)),
+            this,                SLOT(onPlacesClicked(QModelIndex)));
+
+}
+
+//===================================================================
+
+/*
+ *  Simple Allowable methods, they cover not everything
+ *
+ *  allowSelectedActions() and allowTrashActions()
+ */
+
+void SimpleList::allowSelectedActions(int selectedCounter)
+{
+    bool enableActions  = selectedCounter > 0;
+    ui->actionRename->setEnabled(selectedCounter == 1);
+    ui->actionDelete->setEnabled(enableActions);
+    ui->actionCut->setEnabled(enableActions);
+    ui->actionCopy->setEnabled(enableActions);
+    allowTrashActions(enableActions);
+}
+
+
+void SimpleList::allowTrashActions(bool enable)
+{
+    if (m_model->path().startsWith("trash:/"))
+    {
+       ui->actionEmptyTrash->setEnabled(true);
+       ui->actionRestoreFromTrash->setEnabled(enable);
+       ui->actionMoveToTrash->setEnabled(false);
+       ui->actionNewFolder->setEnabled(false);
+       ui->actionTerminnal->setEnabled(false);
     }
     else
     {
-        m_curRow = -1;
+       ui->actionEmptyTrash->setEnabled(false);
+       ui->actionRestoreFromTrash->setEnabled(false);
+       ui->actionMoveToTrash->setEnabled(enable);
+       ui->actionNewFolder->setEnabled(true);
+       ui->actionTerminnal->setEnabled(true);
     }
-}
-
-
-void SimpleList::onCdInto()
-{
-    m_model->cdIntoIndex(m_curRow);
-}
-
-void SimpleList::onGoHome()
-{
-     m_model->goHome();
-}
-
-void SimpleList::onCdUP()
-{
-    m_model->cdUp();
-}
-
-void SimpleList::onRemove()
-{
-     m_model->removeIndex(m_curRow);
-}
-
-void SimpleList::onCopy()
-{
-    m_model->copyIndex(m_curRow);
-}
-
-void SimpleList::onCut()
-{
-    m_model->cutIndex(m_curRow);
-}
-
-
-void SimpleList::onPaste()
-{
-    m_model->paste();
-}
-
-void SimpleList::onNewDir()
-{
-   m_model->mkdir(ui->lineEditNewDir->text());
-}
-
-void SimpleList::onRename()
-{
-   m_model->rename(m_curRow, ui->lineEditRename->text());
-}
-
-void SimpleList::onShowDirs(bool show)
-{
-    m_model->setShowDirectories(show);
-}
-
-void SimpleList::onShowHidden(bool s)
-{
-    m_model->setShowHiddenFiles(s);
-}
-
-void SimpleList::onVerticalHeaderClicked(int row)
-{
-    m_curRow = row;
-}
-
-
-void SimpleList::setSort(int col, Qt::SortOrder order)
-{
-    if (col == 0 || col == 2)
-    {
-        if (col == 0)
-        {
-            m_model->setSortBy(DirModel::SortByName);
-        }
-        else
-        {
-            m_model->setSortBy(DirModel::SortByDate);
-        }
-        DirModel::SortOrder o = (DirModel::SortOrder)order;
-        m_model->setSortOrder(o);
-    }
-}
-
-void SimpleList::clipboardChanged()
-{   
-    ui->clipboardNumber->setText( QString::number(m_model->getClipboardUrlsCounter()));
-}
-
-void SimpleList::progress(int cur, int total, int percent)
-{
-    QString p;
-    m_pbar->setValue(percent);
-    if (cur == 0 && percent == 0)
-    {
-        m_pbar->reset();
-        m_pbar->show();
-    }
-    else
-        if (percent == 100)
-        {
-            QTimer::singleShot(200, m_pbar, SLOT(hide()));
-        }
-    p.sprintf("progress(cur=%d, total=%d, percent=%d)", cur,total,percent);
-    qDebug() << p;
-}
-
-
-void SimpleList::error(QString title, QString message)
-{
-    if (m_pbar)
-    {
-        m_pbar->hide();
-    }
-    QMessageBox::critical(this, title, message);
-}
-
-void SimpleList::onOpenItem(QModelIndex index)
-{
-    if (index.isValid())
-    {
-        m_curRow = index.row();
-        if (!m_model->openIndex(m_curRow))
-        {
-            QModelIndex idx = m_model->index(m_curRow, 0);
-            QString item = m_model->data(idx).toString();
-            error("Could not open item index", item);
-        }
-    }
-    else
-    {
-        m_curRow = -1;
-    }
-}
-
-
-void SimpleList::pathChanged(QString path)
-{
-    this->setWindowTitle(path);
-}
-
-void SimpleList::resizeColumnForName(int)
-{
-    ui->tableView->resizeColumnToContents(0);
-}
-
-
-void SimpleList::onOpen()
-{
-    if ( ! m_model->openPath(ui->lineEditOpen->text()) )
-    {
-          QMessageBox::critical(this, "DirModel::openIndex() failed to open" , ui->lineEditOpen->text());
-    }
-}
-
-
-void SimpleList::onExtFsWatcherEnabled(bool enable)
-{
-    m_model->setEnabledExternalFSWatcher(enable);
 }
