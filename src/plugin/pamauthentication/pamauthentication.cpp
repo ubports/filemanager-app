@@ -63,7 +63,7 @@ PamAuthentication::requireAuthentication() {
     if (isLockedVariant.isValid()) {
         bool replyValue = isLockedVariant.toBool();
         qDebug() << Q_FUNC_INFO << "Return value" << replyValue;
-        return isLockedVariant.toBool();
+        return replyValue;
     } else {
         qDebug() << Q_FUNC_INFO << "Failed getting value for EntryIsLocked property";
     }
