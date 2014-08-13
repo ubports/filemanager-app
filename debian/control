@@ -3,11 +3,12 @@ Priority: extra
 Maintainer: Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>
 Build-Depends: cmake,
                debhelper (>= 9),
+               intltool,
                qtbase5-dev,
                qtdeclarative5-dev,
                qt5-default,
                pkg-kde-tools,
-	       python3-all,
+               python3-all,
                libtag1-dev,
 Standards-Version: 3.9.5
 Section: misc
