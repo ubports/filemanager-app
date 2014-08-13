@@ -89,11 +89,6 @@ class FileManagerTestCase(AutopilotTestCase):
                      os.listdir(self.home_dir))
         logger.debug('File count in HOME is %s' % self.original_file_count)
 
-        self.app = launcher()
-
-        self.assertThat(
-            self.main_view.visible, Eventually(Equals(True)))
-
         if os.path.exists(self.local_location_binary):
             self.app = self.launch_test_local()
         elif os.path.exists(self.installed_location_binary):
