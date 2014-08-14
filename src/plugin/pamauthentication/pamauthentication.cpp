@@ -49,6 +49,14 @@ PamAuthentication::setServiceName(const QString &serviceName) {
 
 bool
 PamAuthentication::requireAuthentication() {
+    // Desktop doesn't have yet Unity8 and so no unity greeter either. Consequently it doesn't
+    // also have any "PIN code" or "Password" extra authentication. Don't require any extra
+    // authentication there.
+    if (qgetenv("QT_QPA_PLATFORM") != "ubuntumirclient") {
+        qDebug() << Q_FUNC_INFO << "Running on non-MIR desktop, not requiring authentication";
+        return false;
+    }
+
     QDBusInterface dbus_iface(UNITYGREETER_SERVICE, UNITYGREETER_PATH, UNITYGREETER_INTERFACE);
 
     qDebug() << Q_FUNC_INFO << "Querying if authentication required";
