@@ -8,7 +8,7 @@ File manager app for Ubuntu on the desktop and on mobile devices.
 
 Install the following build dependencies:
 
-    sudo apt-get install libtag1-dev 
+    sudo apt-get install libtag1-dev libpam0g-dev python3
 
 Then open the CMakeLists.txt file in Qt Creator, and ensure that the kit
 selected on the left sidebar (just above the green "Run" button) is "Desktop"
@@ -16,7 +16,9 @@ selected on the left sidebar (just above the green "Run" button) is "Desktop"
 ### For a device
 
 If you don't have one already, you'll need to create an armhf chroot to
-cross-compile the app. Here's how:
+cross-compile the app (also do this if you have an older armhf chroot, for
+example 14.04 and current target is 14.10. You can first delete the old target
+and then create a current one). Here's how:
 
 1. In Qt Creator, open the CMakeLists.txt file
 2. Go to Tools > Options > Ubuntu > Click
@@ -26,7 +28,7 @@ cross-compile the app. Here's how:
 4. Once created, you'll need to add the build dependencies for the app:
   - Click on the Maintain button on your chroot
   - On the terminal prompt that is started, type 
-    apt-get install libtag1-dev:armhf'
+    apt-get install libtag1-dev:armhf libpam0g-dev:armhf python3
   - Close the terminal when the installation finishes
 5. Now you can either do a clean checkout and wait to be prompted by Qt Creator
    to add the armhf kit, or alternatively:
@@ -112,7 +114,7 @@ your host computer
 Run the following commands to manually install the click package (replace 0.5
 with the version of your package):
 
-    adb push /home/phablet com.ubuntu.filemanager_0.3_armhf.click
+    adb push com.ubuntu.filemanager_0.3.latest_armhf.click /home/phablet/
     adb shell
     sudo -H -u phablet pkcon install-local /home/phablet/com.ubuntu.filemanager_0.3_armhf.click
 
@@ -138,6 +140,9 @@ to uninstall:
     sudo click unregister com.ubuntu.filemanager 0.3
 
 ## Run the autopilot tests
+
+Prerequisites:
+    sudo apt-get install ubuntu-ui-toolkit-autopilot
 
 Once the app has been built, you can go to the build directory and run:
 

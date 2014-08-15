@@ -9,6 +9,7 @@ Build-Depends: cmake,
                pkg-kde-tools,
 	       python3-all,
                libtag1-dev,
+               libpam0g-dev,
 Standards-Version: 3.9.5
 Section: misc
 Homepage: https://launchpad.net/ubuntu-filemanager-app
@@ -22,6 +23,7 @@ Depends: ${misc:Depends},
          qtdeclarative5-hud1.0,
          qtdeclarative5-nemo-qml-plugin-folderlistmodel,
          qtdeclarative5-placesmodel0.1,
+         qtdeclarative5-pamauthentication0.1,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-u1db1.0,
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
@@ -51,6 +53,16 @@ Depends: ${misc:Depends},
 Description: Places model QML plugin
  This package contains a plugin that enables QML apps to list and
  modify a set of places (bookmarks) in the file system.
+
+Package: qtdeclarative5-pamauthentication0.1
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         ${misc:Pre-Depends},
+Description: PAM authentication QML plugin
+ This package contains a plugin that enables QML apps to do
+ password authentication via the PAM API.
 
 Package: ubuntu-filemanager-app-autopilot
 Architecture: all

@@ -23,6 +23,7 @@ import Ubuntu.Unity.Action 1.0 as UnityActions
 import U1db 1.0 as U1db
 import Ubuntu.Content 0.1
 import com.ubuntu.PlacesModel 0.1
+import com.ubuntu.PamAuthentication 0.1
 
 import "ui"
 
@@ -75,6 +76,11 @@ MainView {
 
     PlacesModel {
        id: userplaces
+    }
+
+    PamAuthentication {
+        id: pamAuthentication
+        serviceName: "filemanager"
     }
 
     // HUD Actions

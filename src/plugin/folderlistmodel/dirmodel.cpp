@@ -61,13 +61,14 @@
 #include <QMetaType>
 #include <QDateTime>
 #include <QMimeType>
+#include <QStandardPaths>
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
 # include <QColor>
 # include <QBrush>
 #endif
 
-
+#include <array>
 
 
 
@@ -80,6 +81,26 @@
 
 namespace {
     QHash<QByteArray, int> roleMapping;
+    QList<QString> mtpDirectories;
+
+    std::array<QStandardPaths::StandardLocation, 5> mtpStandardLocations = {
+        QStandardPaths::DocumentsLocation,
+        QStandardPaths::DownloadLocation,
+        QStandardPaths::MusicLocation,
+        QStandardPaths::PicturesLocation,
+        QStandardPaths::MoviesLocation
+    };
+
+    void buildMTPDirectories() {
+        mtpDirectories.clear();
+        foreach (const QStandardPaths::StandardLocation &standardLocation, mtpStandardLocations) {
+            QStringList locations = QStandardPaths::standardLocations(standardLocation);
+
+            foreach (const QString &location, locations) {
+                mtpDirectories << location;
+            }
+        }
+    }
 }
 
 
@@ -106,6 +127,7 @@ DirModel::DirModel(QObject *parent)
     , mIsRecursive(false)
     , mReadsMediaMetadata(false)
     , mShowHiddenFiles(false)
+    , mShowNonMTPPaths(true)
     , mSortBy(SortByName)
     , mSortOrder(SortAscending)
     , mCompareFunction(0)  
@@ -452,6 +474,37 @@ void DirModel::onItemsFetched() {
     }    
 }
 
+
+bool DirModel::isMTPPath(const QString &absolutePath) const {
+    // A simple fail check to try protect against most obvious accidental usages.
+    // This is a private function and should always get an absolute FilePath from caller,
+    // but just in case check if there's relational path in there.
+    // Example: absoluteFilePath = /home/$USER/Photos/../shouldNotGetHere => fail
+    if (absolutePath.contains("/../")) {
+        qWarning() << Q_FUNC_INFO << "Possible relational file path provided, only absolute filepaths allowed. Fix calling of this function.";
+        return false;
+    }
+
+    if (mtpDirectories.isEmpty()) {
+        buildMTPDirectories();
+    }
+    foreach (const QString &mtpDirectory, mtpDirectories) {
+        if (absolutePath == mtpDirectory) return true;
+        // Returns true for any file/folder inside MTP directory
+        if (absolutePath.startsWith(mtpDirectory + "/")) return true;
+    }
+
+    return false;
+}
+
+bool DirModel::allowAccess(const DirItemInfo &fi) const {
+    return allowAccess(fi.absoluteFilePath());
+}
+
+bool DirModel::allowAccess(const QString &absoluteFilePath) const {
+    return mShowNonMTPPaths || isMTPPath(absoluteFilePath);
+}
+
 void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 {
 #if DEBUG_MESSAGES
@@ -463,6 +516,7 @@ void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
         mDirectoryContents.reserve(newFiles.count()) ;
     }
     foreach (const DirItemInfo &fi, newFiles) {
+        if (!allowAccess(fi)) continue;
 
         bool doAdd = false;
         foreach (const QString &nameFilter, mNameFilters) {
@@ -483,6 +537,11 @@ void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 
 void DirModel::rm(const QStringList &paths)
 {
+    if (!allowAccess(mCurrentDir)) {
+        qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
+        return;
+    }
+
     //if current location is Trash only in the root is allowed to remove Items
     if (mCurLocation->type() == LocationsFactory::TrashDisk)
     {
@@ -509,13 +568,17 @@ bool DirModel::rename(int row, const QString &newName)
 #if DEBUG_MESSAGES
     qDebug() << Q_FUNC_INFO << this << "Renaming " << row << " to " << newName;
 #endif
-
     if (!IS_VALID_ROW(row)) {
         WARN_ROW_OUT_OF_RANGE(row);
         return false;
     }
 
     const DirItemInfo &fi = mDirectoryContents.at(row);
+    if (!allowAccess(mCurrentDir)) {
+        qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
+        return false;
+    }
+
     QString newFullFilename(fi.absolutePath() + QDir::separator() + newName);
 
     //QFile::rename() works for File and Dir
@@ -539,6 +602,11 @@ bool DirModel::rename(int row, const QString &newName)
 
 void DirModel::mkdir(const QString &newDir)
 {
+    if (!allowAccess(mCurrentDir)) {
+        qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
+        return;
+    }
+
     QDir dir(mCurrentDir);
     bool retval = dir.mkdir(newDir);
     if (!retval) {
@@ -748,12 +816,23 @@ void DirModel::cutIndex(int row)
 
 void DirModel::cutPaths(const QStringList &items)
 {
-     mClipboard->cut(items, mCurrentDir);
+    if (!allowAccess(mCurrentDir)) {
+        qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
+        return;
+    }
+
+    mClipboard->cut(items, mCurrentDir);
 }
 
 
 void DirModel::paste()
 {
+    // Restrict pasting if in restricted directory
+    if (!allowAccess(mCurrentDir)) {
+        qDebug() << Q_FUNC_INFO << "access not allowed, pasting not done" << mCurrentDir;
+        return;
+    }
+
     ClipboardOperation operation;
     QStringList items = mClipboard->paste(operation);
     if (operation == ClipboardCut)
@@ -886,6 +965,9 @@ void DirModel::onItemAdded(const DirItemInfo &fi)
  */
 int DirModel::addItem(const DirItemInfo &fi)
 {
+    if (!allowAccess(fi)) {
+        return -1;
+    }
     DirItemInfoList::Iterator it = qLowerBound(mDirectoryContents.begin(),
                                                   mDirectoryContents.end(),
                                                   fi,
@@ -987,6 +1069,22 @@ void DirModel::setShowHiddenFiles(bool show)
         mShowHiddenFiles = show;
         refresh();
         emit showHiddenFilesChanged();
+    }
+}
+
+bool DirModel::getShowNonMTPPaths() const
+{
+    return mShowNonMTPPaths;
+}
+
+
+void DirModel::setShowNonMTPPaths(bool show)
+{
+    if (show != mShowNonMTPPaths)
+    {
+        mShowNonMTPPaths = show;
+        refresh();
+        emit showNonMTPPathsChanged();
     }
 }
 

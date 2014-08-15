@@ -19,7 +19,10 @@
         "vcs-bzr": "lp:ubuntu-filemanager-app",
         "vcs-bzr-revno": "@BZR_REVNO@"
     },
-    "x-test": {
-        "autopilot": "filemanager"
-    }
+   "x-test": {
+           "autopilot": {
+                "autopilot_module": "@AUTOPILOT_DIR@",
+                "depends": ["python3-lxml", "python3-fixtures"]
+            }
+   }
 }
