@@ -12,8 +12,8 @@ messages in the code, make sure to follow these steps:
 
  1. Run click-buddy retaining the build directory:
     `click-buddy --dir . --no-clean`
- 3. Commit the generated .pot file: `bzr commit -m"Updated translation template"`
- 4. Push the branch and send a merge proposal as usual
+ 2. Commit the generated .pot file: `bzr commit -m"Updated translation template"`
+ 3. Push the branch and send a merge proposal as usual
 
 And that's it, once the branch lands Launchpad should take care of all the rest!
 
