@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-08-08 17:46+0200\n"
-"PO-Revision-Date: 2013-09-27 05:42+0000\n"
+"PO-Revision-Date: 2014-08-17 04:09+0000\n"
 "Last-Translator: David Planella <david.planella@ubuntu.com>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-08-12 06:34+0000\n"
+"X-Launchpad-Export-Date: 2014-08-17 06:35+0000\n"
 "X-Generator: Launchpad (build 17156)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
@@ -33,7 +33,7 @@ msgstr ""
 #: src/app/qml/components/PlacesSidebar.qml:54
 #: src/app/qml/ui/FolderListPage.qml:305
 msgid "Places"
-msgstr ""
+msgstr "Llocs"
 
 #: src/app/qml/filemanager.qml:83 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
@@ -41,23 +41,23 @@ msgstr "Paràmetres"
 
 #: src/app/qml/filemanager.qml:84
 msgid "Change app settings"
-msgstr ""
+msgstr "Canvia els paràmetres de l'aplicació"
 
 #: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:408
 #: src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
-msgstr ""
+msgstr "Icones"
 
 #: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:425
 #: src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
-msgstr ""
+msgstr "Llista"
 
 #: src/app/qml/ui/ConfirmDialog.qml:31
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:41
 #: src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
-msgstr ""
+msgstr "D'acord"
 
 #: src/app/qml/ui/ConfirmDialog.qml:41
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:51
@@ -65,7 +65,7 @@ msgstr ""
 #: src/app/qml/ui/FileOperationProgressDialog.qml:44
 #: src/app/qml/ui/FolderListPage.qml:385 src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel·la"
 
 #: src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
