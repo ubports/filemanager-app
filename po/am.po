@@ -1,20 +1,20 @@
-# Catalan translation for ubuntu-filemanager-app
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# Amharic translation for ubuntu-filemanager-app
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
 # This file is distributed under the same license as the ubuntu-filemanager-app package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-08-08 17:46+0200\n"
-"PO-Revision-Date: 2014-08-17 04:09+0000\n"
-"Last-Translator: David Planella <david.planella@ubuntu.com>\n"
-"Language-Team: Catalan <ca@li.org>\n"
+"PO-Revision-Date: 2014-08-17 22:55+0000\n"
+"Last-Translator: samson <Unknown>\n"
+"Language-Team: Amharic <am@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Launchpad-Export-Date: 2014-08-18 07:17+0000\n"
 "X-Generator: Launchpad (build 17156)\n"
 
@@ -22,42 +22,42 @@ msgstr ""
 #: src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 ፋይል)"
 
 #: src/app/qml/components/FolderIconView.qml:59
 #: src/app/qml/components/FolderListView.qml:37
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 ፋይሎች)"
 
 #: src/app/qml/components/PlacesSidebar.qml:54
 #: src/app/qml/ui/FolderListPage.qml:305
 msgid "Places"
-msgstr "Llocs"
+msgstr "ቦታዎች"
 
 #: src/app/qml/filemanager.qml:83 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
-msgstr "Paràmetres"
+msgstr "ማሰናጃ"
 
 #: src/app/qml/filemanager.qml:84
 msgid "Change app settings"
-msgstr "Canvia els paràmetres de l'aplicació"
+msgstr "የ መተግበሪያ ማሰናጃ መቀየሪያ"
 
 #: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:408
 #: src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
-msgstr "Icones"
+msgstr "ምልክቶች"
 
 #: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:425
 #: src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
-msgstr "Llista"
+msgstr "ዝርዝር"
 
 #: src/app/qml/ui/ConfirmDialog.qml:31
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:41
 #: src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
-msgstr "D'acord"
+msgstr "እሺ"
 
 #: src/app/qml/ui/ConfirmDialog.qml:41
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:51
@@ -65,28 +65,28 @@ msgstr "D'acord"
 #: src/app/qml/ui/FileOperationProgressDialog.qml:44
 #: src/app/qml/ui/FolderListPage.qml:385 src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
-msgstr "Cancel·la"
+msgstr "መሰረዣ"
 
 #: src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "ተግባር መምረጫ"
 
 #: src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "ለ ፋይል: %1"
 
 #: src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "መክፈቻ"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "ማንበብ የሚያስችል"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "መጻፍ የሚያስችል"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
@@ -94,15 +94,15 @@ msgstr ""
 
 #: src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "መንገድ:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "ይዞታዎች:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "መጠን:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
@@ -110,97 +110,97 @@ msgstr ""
 
 #: src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "የተሻሻለው:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "ፍቃዶች:"
 
 #: src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "ተግባሮች በ ሂደት ላይ"
 
 #: src/app/qml/ui/FolderListPage.qml:93
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 ፋይል"
+msgstr[1] "%1 ፋይሎች"
 
 #: src/app/qml/ui/FolderListPage.qml:118
 msgid "Open in a new tab"
-msgstr ""
+msgstr "በ አዲስ ንዑስ መስኮት መክፈቻ"
 
 #: src/app/qml/ui/FolderListPage.qml:126
 msgid "Close this tab"
-msgstr ""
+msgstr "ይህን ንዑስ መስኮት መዝጊያ"
 
 #: src/app/qml/ui/FolderListPage.qml:146
 msgid "Create New Folder"
-msgstr ""
+msgstr "አዲስ ፎልደር መፍጠሪያ"
 
 #: src/app/qml/ui/FolderListPage.qml:166
 msgid "Paste"
-msgstr ""
+msgstr "መለጠፊያ"
 
 #: src/app/qml/ui/FolderListPage.qml:167
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "መለጠፊያ %1 ፋይል"
+msgstr[1] "መለጠፊያ %1 ፋይሎች"
 
 #: src/app/qml/ui/FolderListPage.qml:170
 msgid "Paste files"
-msgstr ""
+msgstr "ፋይሎች መለጠፊያ"
 
 #: src/app/qml/ui/FolderListPage.qml:182
 msgid "Open in Terminal"
-msgstr ""
+msgstr "በተርሚናል ውስጥ መክፈቻ"
 
 #: src/app/qml/ui/FolderListPage.qml:194 src/app/qml/ui/FolderListPage.qml:567
 msgid "Properties"
-msgstr ""
+msgstr "ባህሪዎች"
 
 #: src/app/qml/ui/FolderListPage.qml:211
 msgid "Create folder"
-msgstr ""
+msgstr "ፎልደር መፍጠሪያ"
 
 #: src/app/qml/ui/FolderListPage.qml:212
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "ለ አዲሱ ፎልደር ስም ያስገቡ"
 
 #: src/app/qml/ui/FolderListPage.qml:228
 msgid "Create file"
-msgstr ""
+msgstr "ፋይል መፍጠሪያ"
 
 #: src/app/qml/ui/FolderListPage.qml:229
 msgid "Enter name for new file"
-msgstr ""
+msgstr "ለ አዲሱ ፋይል ስም ያስገቡ"
 
 #: src/app/qml/ui/FolderListPage.qml:251
 msgid "Up"
-msgstr ""
+msgstr "ወደ ላይ"
 
 #: src/app/qml/ui/FolderListPage.qml:280
 msgid "Actions"
-msgstr ""
+msgstr "ተግባሮች"
 
 #: src/app/qml/ui/FolderListPage.qml:290
 msgid "View"
-msgstr ""
+msgstr "መመልከቻ"
 
 #: src/app/qml/ui/FolderListPage.qml:371
 msgid "Select"
-msgstr ""
+msgstr "ይምረጡ"
 
 #: src/app/qml/ui/FolderListPage.qml:440
 msgid "No files"
-msgstr ""
+msgstr "ፋይሎች የሉም"
 
 #: src/app/qml/ui/FolderListPage.qml:460 src/app/qml/ui/FolderListPage.qml:541
 msgid "Delete"
-msgstr ""
+msgstr "ማጥፊያ"
 
 #: src/app/qml/ui/FolderListPage.qml:461
 #, qt-format
@@ -209,15 +209,15 @@ msgstr ""
 
 #: src/app/qml/ui/FolderListPage.qml:484 src/app/qml/ui/FolderListPage.qml:554
 msgid "Rename"
-msgstr ""
+msgstr "እንደገና መሰየሚያ"
 
 #: src/app/qml/ui/FolderListPage.qml:485
 msgid "Enter a new name"
-msgstr ""
+msgstr "አዲስ ስም ያስገቡ"
 
 #: src/app/qml/ui/FolderListPage.qml:494
 msgid "Could not rename"
-msgstr ""
+msgstr "መሰየም አልተቻለም"
 
 #: src/app/qml/ui/FolderListPage.qml:495
 msgid "Insufficient permissions or name already exists?"
@@ -225,44 +225,44 @@ msgstr ""
 
 #: src/app/qml/ui/FolderListPage.qml:518
 msgid "Cut"
-msgstr ""
+msgstr "መቁረጫ"
 
 #: src/app/qml/ui/FolderListPage.qml:529
 msgid "Copy"
-msgstr ""
+msgstr "ኮፒ"
 
 #: src/app/qml/ui/FolderListPage.qml:586 src/app/qml/ui/FolderListPage.qml:709
 msgid "File operation error"
-msgstr ""
+msgstr "የ ፋይል ተግባር ስህተት"
 
 #: src/app/qml/ui/FolderListPage.qml:635
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/ዴስክቶፕ"
 
 #: src/app/qml/ui/FolderListPage.qml:645
 msgid "~/Public"
-msgstr ""
+msgstr "~/ሕዝብ"
 
 #: src/app/qml/ui/FolderListPage.qml:647
 msgid "~/Programs"
-msgstr ""
+msgstr "~/ፕሮግራሞች"
 
 #: src/app/qml/ui/FolderListPage.qml:649
 msgid "~/Templates"
-msgstr ""
+msgstr "~/ቴምፕሌቶች"
 
 #: src/app/qml/ui/FolderListPage.qml:662
 msgid "Home"
-msgstr ""
+msgstr "ቤት"
 
 #: src/app/qml/ui/FolderListPage.qml:664
 msgid "Device"
-msgstr ""
+msgstr "አካል"
 
 #: src/app/qml/ui/FolderListPage.qml:709
 #, qt-format
 msgid "Unable to open '%1'"
-msgstr ""
+msgstr "መክፈት አልተቻለም '%1'"
 
 #: src/app/qml/ui/FolderListPage.qml:721
 msgid "Folder not accessible"
@@ -284,15 +284,15 @@ msgstr ""
 
 #: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:53
 msgid "Location..."
-msgstr ""
+msgstr "አካባቢ..."
 
 #: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:68
 msgid "Go"
-msgstr ""
+msgstr "መሄጃ"
 
 #: src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
-msgstr ""
+msgstr "መዝጊያ"
 
 #: src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
@@ -300,36 +300,36 @@ msgstr ""
 
 #: src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "የተደበቁ ፋይሎች ማሳያ"
 
 #: src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr ""
+msgstr "ማሳያ እንደ"
 
 #: src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "መለያ በ"
 
 #: src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr ""
+msgstr "ስም"
 
 #: src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr ""
+msgstr "ቀን"
 
 #: src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "መለያ ደንብ"
 
 #: src/app/qml/ui/ViewPopover.qml:114 src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr ""
+msgstr "እየጨመረ የሚሄድ"
 
 #: src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr ""
+msgstr "እየቀነስ የሚሄድ"
 
 #: src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
-msgstr ""
+msgstr "ማጣሪያ"
