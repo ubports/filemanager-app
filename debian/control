@@ -7,7 +7,7 @@ Build-Depends: cmake,
                qtdeclarative5-dev,
                qt5-default,
                pkg-kde-tools,
-	       python3-all,
+           python3-all,
                libtag1-dev,
                libpam0g-dev,
 Standards-Version: 3.9.5
@@ -73,5 +73,6 @@ Depends: ${misc:Depends},
          ubuntu-ui-toolkit-autopilot,
          python3-autopilot,
          python3-fixtures,
+         python3-lxml,
 Description: Autopilot tests for File Manager Application
  This package contains the autopilot tests for the File Manager
