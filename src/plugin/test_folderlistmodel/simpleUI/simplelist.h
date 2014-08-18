@@ -22,53 +22,59 @@
 #ifndef SIMPLELIST_H
 #define SIMPLELIST_H
 
-#include <QWidget>
+#include <QMainWindow>
 #include <QModelIndex>
 
 class DirModel;
 class QProgressBar;
+class DirSelection;
+class PlacesModel;
 
 namespace Ui {
 class SimpleList;
 }
 
-class SimpleList : public QWidget
+class SimpleList : public QMainWindow
 {
     Q_OBJECT
     
 public:
     explicit SimpleList(QWidget *parent = 0);
     ~SimpleList();
-    
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
+private:
+    void  allowSelectedActions(int selectedCounter);
+    void  allowTrashActions(bool enable);
+    void  do_connections();
+
 private:
     Ui::SimpleList *ui;
-    DirModel       *m_model;
-    int            m_curRow;
+    DirModel       *m_model;   
     QProgressBar  * m_pbar;
+    DirSelection  * m_selection;
+    bool            m_holdingCtrlKey;
+    bool            m_holdingShiftKey;
+    Qt::MouseButton m_button;
+    PlacesModel   * m_placesModel;
 
-private slots:
-    void   onCdInto();
-    void   onGoHome();
-    void   onCdUP();
-    void   onRemove();
-    void   onCopy();
-    void   onCut();
-    void   onPaste();
+private slots:   
     void   onNewDir();
-    void   onRename();
-    void   onShowDirs(bool);
-    void   onShowHidden(bool);
+    void   onRename();   
     void   onRowClicked(QModelIndex);
     void   onOpenItem(QModelIndex index);
-    void   onVerticalHeaderClicked(int);
-    void   setSort(int col, Qt::SortOrder order);
-    void   progress(int, int,int);
-    void   clipboardChanged();
-    void   error(QString title, QString message);
-    void   pathChanged(QString path);
-    void   resizeColumnForName(int);
-    void   onOpen();
-    void   onExtFsWatcherEnabled(bool);
+    void   onSetSort(int col, Qt::SortOrder order);
+    void   onProgress(int, int,int);
+    void   onClipboardChanged();
+    void   onError(QString title, QString message);
+    void   onPathChanged(QString path);
+    void   onPathChoosedFromList(int);
+    void   onPathComboEdited();
+    void   onSelectionChanged(int);
+    void   onPlacesClicked(QModelIndex);
+    void   onOpenTerminal();
 };
 
 #endif // SIMPLELIST_H

@@ -15,10 +15,9 @@ TEMPLATE = app
 
 DEFINES += REGRESSION_TEST_FOLDERLISTMODEL
 
-SOURCES += main.cpp\
-        simplelist.cpp
+SOURCES += main.cpp  simplelist.cpp simpleslots.cpp   placesmodel.cpp terminalfolderapp.cpp
 
-HEADERS  += simplelist.h
+HEADERS  += simplelist.h   placesmodel.h terminalfolderapp.h
 
 FORMS    += simplelist.ui
 
@@ -27,6 +26,8 @@ include (../../folderlistmodel/folderlistmodel.pri)
 #DEFINES += DEBUG_REMOVE
 
 DEFINES += SIMULATE_LONG_ACTION DEBUG_EXT_FS_WATCHER
+
+RESOURCES += res.qrc
 
 
 
