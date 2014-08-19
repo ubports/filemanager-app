@@ -28,7 +28,6 @@
 #define UNITYGREETER_INTERFACE "com.canonical.UnityGreeter.List"
 #define UNITYGREETER_PROPERTY_ENTRY_IS_LOCKED "EntryIsLocked"
 
-
 PamAuthentication::PamAuthentication(QObject *parent) :
     QObject(parent)
 {
