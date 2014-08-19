@@ -86,7 +86,7 @@ Page {
         id: pageModel
         path: folderListPage.folder
         enableExternalFSWatcher: true
-        showNonMTPPaths: !pamAuthentication.requireAuthentication()
+        onlyMTPPaths: pamAuthentication.requireAuthentication()
 
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
@@ -365,7 +365,7 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: bottomBar.bottom
         spacing: units.gu(5)
-        visible: fileSelectorMode || !pageModel.showNonMTPPaths
+        visible: fileSelectorMode || pageModel.onlyMTPPaths
 
         Button {
             text: i18n.tr("Select")
@@ -392,7 +392,7 @@ Page {
         }
         Button {
             text: i18n.tr("Unlock full access")
-            visible: !pageModel.showNonMTPPaths
+            visible: pageModel.onlyMTPPaths
             onClicked: {
                 console.log("Full access clicked")
                 var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
@@ -401,7 +401,7 @@ Page {
                 authDialog.passwordEntered.connect(function(password) {
                     if (pamAuthentication.validatePasswordToken(password)) {
                         console.log("Authenticated for full access")
-                        pageModel.showNonMTPPaths = true
+                        pageModel.onlyMTPPaths = false
                     } else {
                         PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
                                         {
