@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-08-08 17:46+0200\n"
-"PO-Revision-Date: 2014-01-16 08:17+0000\n"
+"PO-Revision-Date: 2014-08-21 13:13+0000\n"
 "Last-Translator: Damir Jerovšek <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,25 +16,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2014-08-12 06:35+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
+"X-Launchpad-Export-Date: 2014-08-22 07:15+0000\n"
+"X-Generator: Launchpad (build 17163)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 datoteka)"
 
 #: src/app/qml/components/FolderIconView.qml:59
 #: src/app/qml/components/FolderListView.qml:37
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 datoteki)"
 
 #: src/app/qml/components/PlacesSidebar.qml:54
 #: src/app/qml/ui/FolderListPage.qml:305
 msgid "Places"
-msgstr ""
+msgstr "Mesta"
 
 #: src/app/qml/filemanager.qml:83 src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
@@ -47,18 +47,18 @@ msgstr "Spremeni nastavitve programa"
 #: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:408
 #: src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
-msgstr ""
+msgstr "Ikone"
 
 #: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:425
 #: src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
-msgstr ""
+msgstr "Seznam"
 
 #: src/app/qml/ui/ConfirmDialog.qml:31
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:41
 #: src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
-msgstr ""
+msgstr "V redu"
 
 #: src/app/qml/ui/ConfirmDialog.qml:41
 #: src/app/qml/ui/ConfirmDialogWithInput.qml:51
@@ -66,191 +66,195 @@ msgstr ""
 #: src/app/qml/ui/FileOperationProgressDialog.qml:44
 #: src/app/qml/ui/FolderListPage.qml:385 src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #: src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Izberite dejanje"
 
 #: src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "Za datoteko: %1"
 
 #: src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "Odprto"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "Berljivo"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "Zapisljivo"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "Izvedljivo"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "Pot:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "Vsebina:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "Velikost:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "Zadnji dostop:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "Spremenjeno:"
 
 #: src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "Dovoljenja:"
 
 #: src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "Dejanje se opravilo"
 
 #: src/app/qml/ui/FolderListPage.qml:93
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 datotek"
+msgstr[1] "%1 datoteka"
+msgstr[2] "%1 datoteki"
+msgstr[3] "%1 datoteke"
 
 #: src/app/qml/ui/FolderListPage.qml:118
 msgid "Open in a new tab"
-msgstr ""
+msgstr "Odpri v novem zavihku"
 
 #: src/app/qml/ui/FolderListPage.qml:126
 msgid "Close this tab"
-msgstr ""
+msgstr "Zapri ta zavihek"
 
 #: src/app/qml/ui/FolderListPage.qml:146
 msgid "Create New Folder"
-msgstr ""
+msgstr "Ustvari novo mapo"
 
 #: src/app/qml/ui/FolderListPage.qml:166
 msgid "Paste"
-msgstr ""
+msgstr "Prilepi"
 
 #: src/app/qml/ui/FolderListPage.qml:167
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Prilepi %1 datotek"
+msgstr[1] "Prilepi %1 datoteko"
+msgstr[2] "Prilepi %1 datoteki"
+msgstr[3] "Prilepi %1 datoteke"
 
 #: src/app/qml/ui/FolderListPage.qml:170
 msgid "Paste files"
-msgstr ""
+msgstr "Prilepi datoteke"
 
 #: src/app/qml/ui/FolderListPage.qml:182
 msgid "Open in Terminal"
-msgstr ""
+msgstr "Odpri v terminalu"
 
 #: src/app/qml/ui/FolderListPage.qml:194 src/app/qml/ui/FolderListPage.qml:567
 msgid "Properties"
-msgstr ""
+msgstr "Lastnosti"
 
 #: src/app/qml/ui/FolderListPage.qml:211
 msgid "Create folder"
-msgstr ""
+msgstr "Ustvari mapo"
 
 #: src/app/qml/ui/FolderListPage.qml:212
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Vnesite ime za novo mapo"
 
 #: src/app/qml/ui/FolderListPage.qml:228
 msgid "Create file"
-msgstr ""
+msgstr "Ustvari datoteko"
 
 #: src/app/qml/ui/FolderListPage.qml:229
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Vnesite ime za novo datoteko"
 
 #: src/app/qml/ui/FolderListPage.qml:251
 msgid "Up"
-msgstr ""
+msgstr "Gor"
 
 #: src/app/qml/ui/FolderListPage.qml:280
 msgid "Actions"
-msgstr ""
+msgstr "Dejanja"
 
 #: src/app/qml/ui/FolderListPage.qml:290
 msgid "View"
-msgstr ""
+msgstr "Pogled"
 
 #: src/app/qml/ui/FolderListPage.qml:371
 msgid "Select"
-msgstr ""
+msgstr "Izbor"
 
 #: src/app/qml/ui/FolderListPage.qml:440
 msgid "No files"
-msgstr ""
+msgstr "Ni datotek"
 
 #: src/app/qml/ui/FolderListPage.qml:460 src/app/qml/ui/FolderListPage.qml:541
 msgid "Delete"
-msgstr ""
+msgstr "Izbriši"
 
 #: src/app/qml/ui/FolderListPage.qml:461
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "Ali ste prepričani, da želite trajno izbrisati '%1'?"
 
 #: src/app/qml/ui/FolderListPage.qml:484 src/app/qml/ui/FolderListPage.qml:554
 msgid "Rename"
-msgstr ""
+msgstr "Preimenuj"
 
 #: src/app/qml/ui/FolderListPage.qml:485
 msgid "Enter a new name"
-msgstr ""
+msgstr "Vnesite novo ime"
 
 #: src/app/qml/ui/FolderListPage.qml:494
 msgid "Could not rename"
-msgstr ""
+msgstr "Ni mogoče preimenovati"
 
 #: src/app/qml/ui/FolderListPage.qml:495
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Nezadostna dovoljenja ali pa ime že obstaja?"
 
 #: src/app/qml/ui/FolderListPage.qml:518
 msgid "Cut"
-msgstr ""
+msgstr "Izreži"
 
 #: src/app/qml/ui/FolderListPage.qml:529
 msgid "Copy"
-msgstr ""
+msgstr "Kopiraj"
 
 #: src/app/qml/ui/FolderListPage.qml:586 src/app/qml/ui/FolderListPage.qml:709
 msgid "File operation error"
-msgstr ""
+msgstr "Napaka med opravilom z datoteko"
 
 #: src/app/qml/ui/FolderListPage.qml:635
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Namizje"
 
 #: src/app/qml/ui/FolderListPage.qml:645
 msgid "~/Public"
-msgstr ""
+msgstr "~/Javno"
 
 #: src/app/qml/ui/FolderListPage.qml:647
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Programi"
 
 #: src/app/qml/ui/FolderListPage.qml:649
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Predloge"
 
 #: src/app/qml/ui/FolderListPage.qml:662
 msgid "Home"
@@ -258,79 +262,79 @@ msgstr ""
 
 #: src/app/qml/ui/FolderListPage.qml:664
 msgid "Device"
-msgstr ""
+msgstr "Naprava"
 
 #: src/app/qml/ui/FolderListPage.qml:709
 #, qt-format
 msgid "Unable to open '%1'"
-msgstr ""
+msgstr "'%1' ni mogoče odpreti"
 
 #: src/app/qml/ui/FolderListPage.qml:721
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Mapa ni dostopna"
 
 #. TRANSLATORS: this refers to a folder name
 #: src/app/qml/ui/FolderListPage.qml:723
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "Do %1 ni mogoče dostopati"
 
 #: src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Pojdi do mesta"
 
 #: src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Vnesite mesto, kamor želite iti:"
 
 #: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:53
 msgid "Location..."
-msgstr ""
+msgstr "Mesto ..."
 
 #: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:68
 msgid "Go"
-msgstr ""
+msgstr "Pojdi"
 
 #: src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
-msgstr ""
+msgstr "Zapri"
 
 #: src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Pokaži napredne zmožnosti"
 
 #: src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Pokaži skrite datoteke"
 
 #: src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr ""
+msgstr "Poglej kot"
 
 #: src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "Razvrsti po"
 
 #: src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr ""
+msgstr "Ime"
 
 #: src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "Zaporedje razvrščanja"
 
 #: src/app/qml/ui/ViewPopover.qml:114 src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr ""
+msgstr "Naraščajoče"
 
 #: src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr ""
+msgstr "Padajoče"
 
 #: src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
