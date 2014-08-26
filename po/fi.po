@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-08-08 17:46+0200\n"
-"PO-Revision-Date: 2014-08-08 07:17+0000\n"
-"Last-Translator: Jiri Grönroos <Unknown>\n"
+"PO-Revision-Date: 2014-08-25 21:22+0000\n"
+"Last-Translator: Pasi Lallinaho <pasi@shimmerproject.org>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-08-12 06:34+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
+"X-Launchpad-Export-Date: 2014-08-26 07:42+0000\n"
+"X-Generator: Launchpad (build 17163)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
@@ -124,8 +124,8 @@ msgstr "Toiminto käynnissä"
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 tiedosto"
+msgstr[1] "%1 tiedostoa"
 
 #: src/app/qml/ui/FolderListPage.qml:118
 msgid "Open in a new tab"
@@ -147,8 +147,8 @@ msgstr "Liitä"
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Liitä %1 tiedosto"
+msgstr[1] "Liitä %1 tiedostoa"
 
 #: src/app/qml/ui/FolderListPage.qml:170
 msgid "Paste files"
@@ -180,7 +180,7 @@ msgstr "Anna nimi uudelle tiedostolle"
 
 #: src/app/qml/ui/FolderListPage.qml:251
 msgid "Up"
-msgstr ""
+msgstr "Ylös"
 
 #: src/app/qml/ui/FolderListPage.qml:280
 msgid "Actions"
@@ -192,7 +192,7 @@ msgstr "Näytä"
 
 #: src/app/qml/ui/FolderListPage.qml:371
 msgid "Select"
-msgstr ""
+msgstr "Valitse"
 
 #: src/app/qml/ui/FolderListPage.qml:440
 msgid "No files"
@@ -221,7 +221,7 @@ msgstr "Nimen muuttaminen epäonnistui"
 
 #: src/app/qml/ui/FolderListPage.qml:495
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Riittämättömät oikeudet tai nimi on jo olemassa?"
 
 #: src/app/qml/ui/FolderListPage.qml:518
 msgid "Cut"
@@ -257,12 +257,12 @@ msgstr "Koti"
 
 #: src/app/qml/ui/FolderListPage.qml:664
 msgid "Device"
-msgstr ""
+msgstr "Laite"
 
 #: src/app/qml/ui/FolderListPage.qml:709
 #, qt-format
 msgid "Unable to open '%1'"
-msgstr ""
+msgstr "Ei voitu avata: ”%1”"
 
 #: src/app/qml/ui/FolderListPage.qml:721
 msgid "Folder not accessible"
