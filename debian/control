@@ -7,7 +7,7 @@ Build-Depends: cmake,
                qtdeclarative5-dev,
                qt5-default,
                pkg-kde-tools,
-           python3-all,
+	       python3-all,
                libtag1-dev,
                libpam0g-dev,
 Standards-Version: 3.9.5
