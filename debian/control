@@ -20,7 +20,6 @@ Section: misc
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         qtdeclarative5-hud1.0,
          qtdeclarative5-nemo-qml-plugin-folderlistmodel,
          qtdeclarative5-placesmodel0.1,
          qtdeclarative5-pamauthentication0.1,
@@ -73,5 +72,6 @@ Depends: ${misc:Depends},
          ubuntu-ui-toolkit-autopilot,
          python3-autopilot,
          python3-fixtures,
+         python3-lxml,
 Description: Autopilot tests for File Manager Application
  This package contains the autopilot tests for the File Manager
