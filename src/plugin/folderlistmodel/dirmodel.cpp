@@ -62,14 +62,12 @@
 #include <QDateTime>
 #include <QMimeType>
 #include <QStandardPaths>
+#include <QList>
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
 # include <QColor>
 # include <QBrush>
 #endif
-
-#include <array>
-
 
 
 #define IS_VALID_ROW(row)             (row >=0 && row < mDirectoryContents.count())
@@ -83,13 +81,14 @@ namespace {
     QHash<QByteArray, int> roleMapping;
     QList<QString> mtpDirectories;
 
-    std::array<QStandardPaths::StandardLocation, 5> mtpStandardLocations = {
-        QStandardPaths::DocumentsLocation,
-        QStandardPaths::DownloadLocation,
-        QStandardPaths::MusicLocation,
-        QStandardPaths::PicturesLocation,
-        QStandardPaths::MoviesLocation
-    };
+    QList<QStandardPaths::StandardLocation> mtpStandardLocations =
+                  QList<QStandardPaths::StandardLocation>()
+                         << QStandardPaths::DocumentsLocation
+                         << QStandardPaths::DownloadLocation
+                         << QStandardPaths::MusicLocation
+                         << QStandardPaths::PicturesLocation
+                         << QStandardPaths::MoviesLocation;
+
 
     void buildMTPDirectories() {
         mtpDirectories.clear();
