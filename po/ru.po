@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-08-08 17:46+0200\n"
-"PO-Revision-Date: 2014-08-26 12:09+0000\n"
+"PO-Revision-Date: 2014-09-02 09:03+0000\n"
 "Last-Translator: Jay ZDLin <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2014-08-27 07:39+0000\n"
-"X-Generator: Launchpad (build 17174)\n"
+"X-Launchpad-Export-Date: 2014-09-03 06:59+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 
 #: src/app/qml/components/FolderIconView.qml:58
 #: src/app/qml/components/FolderListView.qml:36
@@ -70,12 +70,12 @@ msgstr "Отменить"
 
 #: src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Выбрать действие"
 
 #: src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "Для файла: %1"
 
 #: src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
@@ -187,7 +187,7 @@ msgstr "Вверх"
 
 #: src/app/qml/ui/FolderListPage.qml:280
 msgid "Actions"
-msgstr ""
+msgstr "Действия"
 
 #: src/app/qml/ui/FolderListPage.qml:290
 msgid "View"
@@ -199,7 +199,7 @@ msgstr "Выбрать"
 
 #: src/app/qml/ui/FolderListPage.qml:440
 msgid "No files"
-msgstr ""
+msgstr "Файлы отсутствуют"
 
 #: src/app/qml/ui/FolderListPage.qml:460 src/app/qml/ui/FolderListPage.qml:541
 msgid "Delete"
@@ -240,7 +240,7 @@ msgstr ""
 
 #: src/app/qml/ui/FolderListPage.qml:635
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Рабочий стол"
 
 #: src/app/qml/ui/FolderListPage.qml:645
 msgid "~/Public"
@@ -248,11 +248,11 @@ msgstr ""
 
 #: src/app/qml/ui/FolderListPage.qml:647
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Программы"
 
 #: src/app/qml/ui/FolderListPage.qml:649
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Шаблоны"
 
 #: src/app/qml/ui/FolderListPage.qml:662
 msgid "Home"
@@ -265,7 +265,7 @@ msgstr ""
 #: src/app/qml/ui/FolderListPage.qml:709
 #, qt-format
 msgid "Unable to open '%1'"
-msgstr ""
+msgstr "Не удалось открыть «%1»"
 
 #: src/app/qml/ui/FolderListPage.qml:721
 msgid "Folder not accessible"
@@ -279,7 +279,7 @@ msgstr ""
 
 #: src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Перейти в"
 
 #: src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
@@ -291,11 +291,11 @@ msgstr ""
 
 #: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:68
 msgid "Go"
-msgstr ""
+msgstr "Перейти"
 
 #: src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
-msgstr ""
+msgstr "Закрыть"
 
 #: src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
@@ -303,7 +303,7 @@ msgstr ""
 
 #: src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Показать скрытые файлы"
 
 #: src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
@@ -311,27 +311,27 @@ msgstr ""
 
 #: src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "Сортировать по"
 
 #: src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr ""
+msgstr "Имени"
 
 #: src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr ""
+msgstr "Дате"
 
 #: src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "Сортировка"
 
 #: src/app/qml/ui/ViewPopover.qml:114 src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr ""
+msgstr "по возрастанию"
 
 #: src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr ""
+msgstr "по убыванию"
 
 #: src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
