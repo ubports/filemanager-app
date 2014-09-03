@@ -133,6 +133,15 @@ Popover {
             Label {
                 text: permissionsToString(model)
                 color: Theme.palette.normal.overlayText
+                // This is a a work-around for bug #1354508.
+                // This basically forces all permissions to be on different lines, which looks
+                // good enough. But a similar issue as described in the bug can happen
+                // with other fields also. A better solution might be possible by using Qt5's
+                // GridLayout QML component, but I couldn't get it working with the time I had (with Ubuntu 14.04 desktop).
+                // So at least for now this quick-fix solves the bug and improves situation a bit.
+                width: 10
+                wrapMode: Text.WordWrap
+
             }
 
         }
