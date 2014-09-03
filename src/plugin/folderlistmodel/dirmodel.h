@@ -351,6 +351,13 @@ public slots:
     void goTrash();
 
     /*!
+     * \brief goBack() goes to the previous folder if available
+     *
+     */
+    void goBack();
+
+
+    /*!
      * \brief cdUp() sets the parent directory as current directory
      *
      *  It can work as a back function if there is no user input path
@@ -457,6 +464,7 @@ private:
     DirSelection *      mSelection;
     LocationsFactory *  mLocationFactory;
     Location         *  mCurLocation;
+    QStringList         mPathList;    //!< it will be used for goBack()
 
 private:
     FileSystemAction  *  m_fsAction;  //!< it does file system recursive remove/copy/move

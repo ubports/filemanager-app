@@ -433,6 +433,12 @@ void DirModel::setPath(const QString &pathName)
     Location *location = mLocationFactory->setNewPath(pathName);
     if (location == 0)
     {
+        // perhaps a goBack() operation to a folder/location that was removed,
+        // in this case we remove that folder/location from the list
+        if (mPathList.count() > 0 && mPathList.last() == pathName)
+        {
+            mPathList.removeLast();
+        }
         emit error(tr("path or url may not exist or cannot be read"), pathName);
         qDebug() << Q_FUNC_INFO << this << "path or url may not exist or cannot be read:" << pathName;
         return;
@@ -459,10 +465,26 @@ void DirModel::setPathFromCurrentLocation()
 
     mCurLocation->fetchItems(currentDirFilter(), mIsRecursive);
 
-    mCurrentDir = mCurLocation->urlPath();
+    mCurrentDir = mCurLocation->urlPath();    
+    if (mPathList.count() == 0 || mPathList.last() != mCurrentDir)
+    {
+        mPathList.append(mCurrentDir);
+    }
     emit pathChanged(mCurLocation->urlPath());
 }
 
+
+void DirModel::goBack()
+{
+    if (mPathList.count() > 1 && !mAwaitingResults)
+    {
+        mPathList.removeLast();
+#if DEBUG_MESSAGES
+    qDebug() << Q_FUNC_INFO << this << "changing to" << mPathList.last();
+#endif
+        setPath(mPathList.last());
+    }
+}
 
 void DirModel::onItemsFetched() {
     if (mAwaitingResults) {

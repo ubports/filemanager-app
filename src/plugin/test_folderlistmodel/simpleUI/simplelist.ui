@@ -20,7 +20,7 @@
       <item>
        <widget class="QToolButton" name="toolButtonBack">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="text">
          <string>back</string>
