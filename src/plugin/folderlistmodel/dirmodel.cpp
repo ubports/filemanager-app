@@ -127,7 +127,7 @@ DirModel::DirModel(QObject *parent)
     , mIsRecursive(false)
     , mReadsMediaMetadata(false)
     , mShowHiddenFiles(false)
-    , mShowNonMTPPaths(true)
+    , mOnlyMTPPaths(false)
     , mSortBy(SortByName)
     , mSortOrder(SortAscending)
     , mCompareFunction(0)  
@@ -502,7 +502,7 @@ bool DirModel::allowAccess(const DirItemInfo &fi) const {
 }
 
 bool DirModel::allowAccess(const QString &absoluteFilePath) const {
-    return mShowNonMTPPaths || isMTPPath(absoluteFilePath);
+    return !mOnlyMTPPaths || isMTPPath(absoluteFilePath);
 }
 
 void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
@@ -1072,19 +1072,19 @@ void DirModel::setShowHiddenFiles(bool show)
     }
 }
 
-bool DirModel::getShowNonMTPPaths() const
+bool DirModel::getOnlyMTPPaths() const
 {
-    return mShowNonMTPPaths;
+    return mOnlyMTPPaths;
 }
 
 
-void DirModel::setShowNonMTPPaths(bool show)
+void DirModel::setOnlyMTPPaths(bool onlyMTPPaths)
 {
-    if (show != mShowNonMTPPaths)
+    if (onlyMTPPaths != mOnlyMTPPaths)
     {
-        mShowNonMTPPaths = show;
+        mOnlyMTPPaths = onlyMTPPaths;
         refresh();
-        emit showNonMTPPathsChanged();
+        emit onlyMTPPathsChanged();
     }
 }
 
