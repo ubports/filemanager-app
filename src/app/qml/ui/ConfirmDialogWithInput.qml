@@ -27,6 +27,12 @@ Dialog {
     signal accepted
     signal rejected
 
+    Component.onCompleted: {
+        // Need to force active focus to input, otherwise the parent object that created this
+        // dialog will continue to have active focus.
+        input.forceActiveFocus()
+    }
+
     TextField {
         id: input
         objectName: "inputField"

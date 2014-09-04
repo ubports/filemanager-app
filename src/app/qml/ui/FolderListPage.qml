@@ -497,7 +497,7 @@ Page {
     Component {
         id: confirmRenameDialog
         ConfirmDialogWithInput {
-            // IMPROVE: this does not seem good: the backend excepts row and new name.
+            // IMPROVE: this does not seem good: the backend expects row and new name.
             // But what if new files are added/deleted in the background while user is
             // entering the new name? The indices change and wrong file is renamed.
             // Perhaps the backend should take as parameters the "old name" and "new name"?
@@ -517,7 +517,7 @@ Page {
                                         {
                                             title: i18n.tr("Could not rename"),
                                             text: i18n.tr("Insufficient permissions or name already exists?")
-                                         })
+                                        })
 
                     }
                 } else {
