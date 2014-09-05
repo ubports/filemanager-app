@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-08-13 10:37+0200\n"
-"PO-Revision-Date: 2014-08-15 03:43+0000\n"
+"PO-Revision-Date: 2014-09-05 07:21+0000\n"
 "Last-Translator: Walter Cheuk <wwycheuk@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh_TW@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2014-09-04 08:30+0000\n"
+"X-Launchpad-Export-Date: 2014-09-05 07:43+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -339,109 +339,109 @@ msgstr "篩選"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:414
 msgid "path or url may not exist or cannot be read"
-msgstr ""
+msgstr "此路徑或網址不存在，或無法讀取"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:527
 msgid "Rename error"
-msgstr ""
+msgstr "改名時出錯"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:547
 msgid "Error creating new folder"
-msgstr ""
+msgstr "新增資料夾時出錯"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1145
 msgid "items"
-msgstr ""
+msgstr "項目"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
 msgid "File or Directory does not exist"
-msgstr ""
+msgstr "此檔案或目錄不存在"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:264
 msgid " does not exist"
-msgstr ""
+msgstr " 不存在"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:585
 msgid "Could not remove the item "
-msgstr ""
+msgstr "無法移除此項目 "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:626
 msgid "Could not find a suitable name to backup"
-msgstr ""
+msgstr "找不到合適名稱作備份"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:680
 msgid "Could not create the directory"
-msgstr ""
+msgstr "無法建立目錄"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:689
 msgid "Could not create link to"
-msgstr ""
+msgstr "無法建立此項目的連結："
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:701
 msgid "Could not set permissions to dir"
-msgstr ""
+msgstr "無法設定此目錄的權限："
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:715
 msgid "Could not open file"
-msgstr ""
+msgstr "無法開啟檔案"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:734
 msgid "There is no space on disk to copy"
-msgstr ""
+msgstr "無空間以複製："
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:744
 msgid "Could not create file"
-msgstr ""
+msgstr "無法建立檔案"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:808
 msgid "Could not remove the directory/file "
-msgstr ""
+msgstr "無法移除此目錄／檔案： "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:824
 msgid "Could not move the directory/file "
-msgstr ""
+msgstr "無法移動此目錄／檔案： "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:858
 msgid "Cannot copy items"
-msgstr ""
+msgstr "無法複製項目"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:859
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:878
 msgid "no write permission on folder "
-msgstr ""
+msgstr "無此資料夾的寫入權限： "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:877
 msgid "Cannot move items"
-msgstr ""
+msgstr "無法移動項目"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
 msgid "origin and destination folders are the same"
-msgstr ""
+msgstr "來源和目的地資料夾相同"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1099
 msgid "Write error in "
-msgstr ""
+msgstr "寫入此項目時出錯： "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1115
 msgid "Read error in "
-msgstr ""
+msgstr "讀取此項目時出錯： "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1349
 msgid " Copy"
-msgstr ""
+msgstr " 複製"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1405
 msgid "Set permissions error in "
-msgstr ""
+msgstr "設定此項目權限時出錯： "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1489
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "無法建立回收筒資訊檔"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1502
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "無法移除回收筒資訊檔"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
-msgstr ""
+msgstr "檔案管理員"
