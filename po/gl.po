@@ -7,329 +7,443 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-08-08 17:46+0200\n"
-"PO-Revision-Date: 2014-08-11 17:37+0000\n"
+"POT-Creation-Date: 2014-08-13 10:37+0200\n"
+"PO-Revision-Date: 2014-09-06 23:23+0000\n"
 "Last-Translator: Marcos Lans <Unknown>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-08-12 06:34+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
+"X-Launchpad-Export-Date: 2014-09-07 06:53+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 
-#: src/app/qml/components/FolderIconView.qml:58
-#: src/app/qml/components/FolderListView.qml:36
+#: ../src/app/qml/components/FolderIconView.qml:58
+#: ../src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (1 file)"
 msgstr "%1 (1 ficheiro)"
 
-#: src/app/qml/components/FolderIconView.qml:59
-#: src/app/qml/components/FolderListView.qml:37
+#: ../src/app/qml/components/FolderIconView.qml:59
+#: ../src/app/qml/components/FolderListView.qml:37
 #, qt-format
 msgid "%1 (%2 files)"
 msgstr "%1 (%2 ficheiros)"
 
-#: src/app/qml/components/PlacesSidebar.qml:54
-#: src/app/qml/ui/FolderListPage.qml:305
+#: ../src/app/qml/components/PlacesSidebar.qml:54
+#: ../src/app/qml/ui/FolderListPage.qml:305
 msgid "Places"
 msgstr "Lugares"
 
-#: src/app/qml/filemanager.qml:83 src/app/qml/ui/SettingsSheet.qml:31
+#: ../src/app/qml/filemanager.qml:83 ../src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
 msgstr "Axustes"
 
-#: src/app/qml/filemanager.qml:84
+#: ../src/app/qml/filemanager.qml:84
 msgid "Change app settings"
 msgstr "Cambiar preferencias"
 
-#: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:408
-#: src/app/qml/ui/ViewPopover.qml:70
+#: ../src/app/qml/filemanager.qml:246 ../src/app/qml/ui/FolderListPage.qml:408
+#: ../src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr "Iconas"
 
-#: src/app/qml/filemanager.qml:246 src/app/qml/ui/FolderListPage.qml:425
-#: src/app/qml/ui/ViewPopover.qml:71
+#: ../src/app/qml/filemanager.qml:246 ../src/app/qml/ui/FolderListPage.qml:425
+#: ../src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr "Lista"
 
-#: src/app/qml/ui/ConfirmDialog.qml:31
-#: src/app/qml/ui/ConfirmDialogWithInput.qml:41
-#: src/app/qml/ui/NotifyDialog.qml:25
+#: ../src/app/qml/ui/ConfirmDialog.qml:31
+#: ../src/app/qml/ui/ConfirmDialogWithInput.qml:41
+#: ../src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
 msgstr "Aceptar"
 
-#: src/app/qml/ui/ConfirmDialog.qml:41
-#: src/app/qml/ui/ConfirmDialogWithInput.qml:51
-#: src/app/qml/ui/FileActionDialog.qml:45
-#: src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: src/app/qml/ui/FolderListPage.qml:385 src/app/qml/ui/GoToDialog.qml:66
+#: ../src/app/qml/ui/ConfirmDialog.qml:41
+#: ../src/app/qml/ui/ConfirmDialogWithInput.qml:51
+#: ../src/app/qml/ui/FileActionDialog.qml:45
+#: ../src/app/qml/ui/FileOperationProgressDialog.qml:44
+#: ../src/app/qml/ui/FolderListPage.qml:385
+#: ../src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/app/qml/ui/FileActionDialog.qml:30
+#: ../src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
 msgstr "Seleccionar acción"
 
-#: src/app/qml/ui/FileActionDialog.qml:31
+#: ../src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
 msgstr "Para o ficheiro: %1"
 
-#: src/app/qml/ui/FileActionDialog.qml:35
+#: ../src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
 msgstr "Abrir"
 
-#: src/app/qml/ui/FileDetailsPopover.qml:37
+#: ../src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
 msgstr "Lexíbel"
 
-#: src/app/qml/ui/FileDetailsPopover.qml:40
+#: ../src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
 msgstr "Escribíbel"
 
-#: src/app/qml/ui/FileDetailsPopover.qml:43
+#: ../src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
 msgstr "Executábel"
 
-#: src/app/qml/ui/FileDetailsPopover.qml:91
+#: ../src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
 msgstr "Ruta:"
 
-#: src/app/qml/ui/FileDetailsPopover.qml:102
+#: ../src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
 msgstr "Contidos:"
 
-#: src/app/qml/ui/FileDetailsPopover.qml:103
+#: ../src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
 msgstr "Tamaño:"
 
-#: src/app/qml/ui/FileDetailsPopover.qml:112
+#: ../src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
 msgstr "Accedido:"
 
-#: src/app/qml/ui/FileDetailsPopover.qml:121
+#: ../src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
 msgstr "Modificado:"
 
-#: src/app/qml/ui/FileDetailsPopover.qml:130
+#: ../src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
 msgstr "Permisos:"
 
-#: src/app/qml/ui/FileOperationProgressDialog.qml:27
+#: ../src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
 msgstr "Operación en curso"
 
-#: src/app/qml/ui/FolderListPage.qml:93
+#: ../src/app/qml/ui/FolderListPage.qml:93
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
 msgstr[0] "%1 ficheiro"
 msgstr[1] "%1 ficheiros"
 
-#: src/app/qml/ui/FolderListPage.qml:118
+#: ../src/app/qml/ui/FolderListPage.qml:118
 msgid "Open in a new tab"
 msgstr "Abrir nunha nova lapela"
 
-#: src/app/qml/ui/FolderListPage.qml:126
+#: ../src/app/qml/ui/FolderListPage.qml:126
 msgid "Close this tab"
 msgstr "Pechar esta lapela"
 
-#: src/app/qml/ui/FolderListPage.qml:146
+#: ../src/app/qml/ui/FolderListPage.qml:146
 msgid "Create New Folder"
 msgstr "Crear un cartafol novo"
 
-#: src/app/qml/ui/FolderListPage.qml:166
+#: ../src/app/qml/ui/FolderListPage.qml:166
 msgid "Paste"
 msgstr "Pegar"
 
-#: src/app/qml/ui/FolderListPage.qml:167
+#: ../src/app/qml/ui/FolderListPage.qml:167
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
 msgstr[0] "Pegar %1 ficheiro"
 msgstr[1] "Pegar %1 ficheiros"
 
-#: src/app/qml/ui/FolderListPage.qml:170
+#: ../src/app/qml/ui/FolderListPage.qml:170
 msgid "Paste files"
 msgstr "Pegar ficheiros"
 
-#: src/app/qml/ui/FolderListPage.qml:182
+#: ../src/app/qml/ui/FolderListPage.qml:182
 msgid "Open in Terminal"
 msgstr "Abrir nun terminal"
 
-#: src/app/qml/ui/FolderListPage.qml:194 src/app/qml/ui/FolderListPage.qml:567
+#: ../src/app/qml/ui/FolderListPage.qml:194
+#: ../src/app/qml/ui/FolderListPage.qml:567
 msgid "Properties"
 msgstr "Propiedades"
 
-#: src/app/qml/ui/FolderListPage.qml:211
+#: ../src/app/qml/ui/FolderListPage.qml:211
 msgid "Create folder"
 msgstr "Crear un cartafol"
 
-#: src/app/qml/ui/FolderListPage.qml:212
+#: ../src/app/qml/ui/FolderListPage.qml:212
 msgid "Enter name for new folder"
 msgstr "Nome do novo cartafol"
 
-#: src/app/qml/ui/FolderListPage.qml:228
+#: ../src/app/qml/ui/FolderListPage.qml:228
 msgid "Create file"
 msgstr "Crear un ficheiro"
 
-#: src/app/qml/ui/FolderListPage.qml:229
+#: ../src/app/qml/ui/FolderListPage.qml:229
 msgid "Enter name for new file"
 msgstr "Nome do novo ficheiro"
 
-#: src/app/qml/ui/FolderListPage.qml:251
+#: ../src/app/qml/ui/FolderListPage.qml:251
 msgid "Up"
 msgstr "Arriba"
 
-#: src/app/qml/ui/FolderListPage.qml:280
+#: ../src/app/qml/ui/FolderListPage.qml:280
 msgid "Actions"
 msgstr "Accións"
 
-#: src/app/qml/ui/FolderListPage.qml:290
+#: ../src/app/qml/ui/FolderListPage.qml:290
 msgid "View"
 msgstr "Ver"
 
-#: src/app/qml/ui/FolderListPage.qml:371
+#: ../src/app/qml/ui/FolderListPage.qml:371
 msgid "Select"
 msgstr "Seleccionar"
 
-#: src/app/qml/ui/FolderListPage.qml:440
+#: ../src/app/qml/ui/FolderListPage.qml:440
 msgid "No files"
 msgstr "Sen ficheiros"
 
-#: src/app/qml/ui/FolderListPage.qml:460 src/app/qml/ui/FolderListPage.qml:541
+#: ../src/app/qml/ui/FolderListPage.qml:460
+#: ../src/app/qml/ui/FolderListPage.qml:541
 msgid "Delete"
 msgstr "Eliminar"
 
-#: src/app/qml/ui/FolderListPage.qml:461
+#: ../src/app/qml/ui/FolderListPage.qml:461
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "Está certo de eliminar permanentemente «%1»?"
 
-#: src/app/qml/ui/FolderListPage.qml:484 src/app/qml/ui/FolderListPage.qml:554
+#: ../src/app/qml/ui/FolderListPage.qml:484
+#: ../src/app/qml/ui/FolderListPage.qml:554
 msgid "Rename"
 msgstr "Renomear"
 
-#: src/app/qml/ui/FolderListPage.qml:485
+#: ../src/app/qml/ui/FolderListPage.qml:485
 msgid "Enter a new name"
 msgstr "Introduza un novo nome"
 
-#: src/app/qml/ui/FolderListPage.qml:494
+#: ../src/app/qml/ui/FolderListPage.qml:494
 msgid "Could not rename"
 msgstr "Non foi posíbel renomear"
 
-#: src/app/qml/ui/FolderListPage.qml:495
+#: ../src/app/qml/ui/FolderListPage.qml:495
 msgid "Insufficient permissions or name already exists?"
 msgstr "Non ten permisos ou xa existe o nome?"
 
-#: src/app/qml/ui/FolderListPage.qml:518
+#: ../src/app/qml/ui/FolderListPage.qml:518
 msgid "Cut"
 msgstr "Cortar"
 
-#: src/app/qml/ui/FolderListPage.qml:529
+#: ../src/app/qml/ui/FolderListPage.qml:529
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/app/qml/ui/FolderListPage.qml:586 src/app/qml/ui/FolderListPage.qml:709
+#: ../src/app/qml/ui/FolderListPage.qml:586
+#: ../src/app/qml/ui/FolderListPage.qml:709
 msgid "File operation error"
 msgstr "Erro na operación sobre o ficheiro"
 
-#: src/app/qml/ui/FolderListPage.qml:635
+#: ../src/app/qml/ui/FolderListPage.qml:635
 msgid "~/Desktop"
 msgstr "~/Escritorio"
 
-#: src/app/qml/ui/FolderListPage.qml:645
+#: ../src/app/qml/ui/FolderListPage.qml:645
 msgid "~/Public"
 msgstr "~/Público"
 
-#: src/app/qml/ui/FolderListPage.qml:647
+#: ../src/app/qml/ui/FolderListPage.qml:647
 msgid "~/Programs"
 msgstr "~/Programas"
 
-#: src/app/qml/ui/FolderListPage.qml:649
+#: ../src/app/qml/ui/FolderListPage.qml:649
 msgid "~/Templates"
 msgstr "~/Modelos"
 
-#: src/app/qml/ui/FolderListPage.qml:662
+#: ../src/app/qml/ui/FolderListPage.qml:662
 msgid "Home"
 msgstr "Inicio"
 
-#: src/app/qml/ui/FolderListPage.qml:664
+#: ../src/app/qml/ui/FolderListPage.qml:664
 msgid "Device"
 msgstr "Dispositivo"
 
-#: src/app/qml/ui/FolderListPage.qml:709
+#: ../src/app/qml/ui/FolderListPage.qml:709
 #, qt-format
 msgid "Unable to open '%1'"
 msgstr "Non foi posíbel abrir «%1»"
 
-#: src/app/qml/ui/FolderListPage.qml:721
+#: ../src/app/qml/ui/FolderListPage.qml:721
 msgid "Folder not accessible"
 msgstr "O cartafol non é accesíbel"
 
 #. TRANSLATORS: this refers to a folder name
-#: src/app/qml/ui/FolderListPage.qml:723
+#: ../src/app/qml/ui/FolderListPage.qml:723
 #, qt-format
 msgid "Can not access %1"
 msgstr "Non é posíbel acceder a %1"
 
-#: src/app/qml/ui/GoToDialog.qml:25
+#: ../src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
 msgstr "Ir á localización"
 
-#: src/app/qml/ui/GoToDialog.qml:27
+#: ../src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
 msgstr "Introducir a localización onde ir:"
 
-#: src/app/qml/ui/GoToDialog.qml:44 src/app/qml/ui/PlacesPopover.qml:53
+#: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPopover.qml:53
 msgid "Location..."
 msgstr "Localización..."
 
-#: src/app/qml/ui/GoToDialog.qml:53 src/app/qml/ui/PlacesPopover.qml:68
+#: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPopover.qml:68
 msgid "Go"
 msgstr "Ir"
 
-#: src/app/qml/ui/SettingsSheet.qml:34
+#: ../src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
 msgstr "Pechar"
 
-#: src/app/qml/ui/SettingsSheet.qml:43
+#: ../src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
 msgstr "Mostrar características avanzadas"
 
-#: src/app/qml/ui/ViewPopover.qml:39
+#: ../src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
 msgstr "Mostrar os ficheiros ocultos"
 
-#: src/app/qml/ui/ViewPopover.qml:59
+#: ../src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
 msgstr "Ver como"
 
-#: src/app/qml/ui/ViewPopover.qml:81
+#: ../src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
 msgstr "Ordenar por"
 
-#: src/app/qml/ui/ViewPopover.qml:92
+#: ../src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
 msgstr "Nome"
 
-#: src/app/qml/ui/ViewPopover.qml:93
+#: ../src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
 msgstr "Data"
 
-#: src/app/qml/ui/ViewPopover.qml:103
+#: ../src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
 msgstr "Modo de ordenación"
 
-#: src/app/qml/ui/ViewPopover.qml:114 src/app/qml/ui/ViewPopover.qml:119
+#: ../src/app/qml/ui/ViewPopover.qml:114 ../src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
 msgstr "Ascendente"
 
-#: src/app/qml/ui/ViewPopover.qml:115
+#: ../src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
 msgstr "Descendente"
 
-#: src/app/qml/ui/ViewPopover.qml:127
+#: ../src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
 msgstr "Filtrar"
+
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:414
+msgid "path or url may not exist or cannot be read"
+msgstr "quizais a ruta ou a url non existan ou non é posíbel lelas"
+
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:527
+msgid "Rename error"
+msgstr "Erro no renomeado"
+
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:547
+msgid "Error creating new folder"
+msgstr "Erro ao crear o cartafol novo"
+
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:1145
+msgid "items"
+msgstr "elementos"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
+msgid "File or Directory does not exist"
+msgstr "O ficheiro ou o cartafol non existen"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:264
+msgid " does not exist"
+msgstr " non existe"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:585
+msgid "Could not remove the item "
+msgstr "Non foi posíbel eliminar o elemento "
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:626
+msgid "Could not find a suitable name to backup"
+msgstr "Non foi posíbel atopar un nome axeitado para a copia"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:680
+msgid "Could not create the directory"
+msgstr "Non foi posíbel crear o directorio"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:689
+msgid "Could not create link to"
+msgstr "Non foi posíbel crear a ligazón a"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:701
+msgid "Could not set permissions to dir"
+msgstr "Non foi posíbel estabelecer os permisos do directorio"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:715
+msgid "Could not open file"
+msgstr "Non foi posíbel abrir o ficheiro"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:734
+msgid "There is no space on disk to copy"
+msgstr "Non hai espazo no disco para copiar"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:744
+msgid "Could not create file"
+msgstr "Non foi posíbel crear o ficheiro"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:808
+msgid "Could not remove the directory/file "
+msgstr "Non foi posíbel eliminar o cartafol/ficheiro "
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:824
+msgid "Could not move the directory/file "
+msgstr "Non foi posíbel mover o cartafol/ficheiro "
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:858
+msgid "Cannot copy items"
+msgstr "Non é posíbel copiar os elementos"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:859
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:878
+msgid "no write permission on folder "
+msgstr "non ten permisos de escritura no cartafol "
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:877
+msgid "Cannot move items"
+msgstr "Non é posíbel mover os elementos"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
+msgid "origin and destination folders are the same"
+msgstr "os cartafoles de orixe e destino son o mesmo"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1099
+msgid "Write error in "
+msgstr "Erro de escritura en "
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1115
+msgid "Read error in "
+msgstr "Erro de lectura en "
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1349
+msgid " Copy"
+msgstr " Copiar"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1405
+msgid "Set permissions error in "
+msgstr "Estabelecer erro de permisos en "
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1489
+msgid "Could not create trash info file"
+msgstr "Non foi posíbel crear o ficheiro de información .trash"
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1502
+msgid "Could not remove the trash info file"
+msgstr "Non foi posíbel eliminar o ficheiro de información do lixo"
+
+#: com.ubuntu.filemanager.desktop.in.in.h:1
+msgid "File Manager"
+msgstr "Xestor de ficheiros"

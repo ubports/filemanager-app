@@ -179,9 +179,8 @@ public:
     Q_PROPERTY(bool showHiddenFiles READ getShowHiddenFiles WRITE setShowHiddenFiles NOTIFY showHiddenFilesChanged)
     bool getShowHiddenFiles() const;
 
-    // IMPROVE: should be something like onlyMTPPaths (negation of current property) since this affects also deleting/creating directories/moving etc. modifying operations
-    Q_PROPERTY(bool showNonMTPPaths READ getShowNonMTPPaths WRITE setShowNonMTPPaths NOTIFY showNonMTPPathsChanged)
-    bool getShowNonMTPPaths() const;
+    Q_PROPERTY(bool onlyMTPPaths READ getOnlyMTPPaths WRITE setOnlyMTPPaths NOTIFY onlyMTPPathsChanged)
+    bool getOnlyMTPPaths() const;
 
     Q_ENUMS(SortBy)
     enum SortBy
@@ -375,7 +374,10 @@ public slots:
     void setFilterDirectories(bool filterDirectories);
     void setShowDirectories(bool showDirectories);
     void setShowHiddenFiles(bool show);
-    void setShowNonMTPPaths(bool show);
+    /*!
+     * \brief if set to true then only MTP paths are shown or be modified
+     */
+    void setOnlyMTPPaths(bool onlyMTPPaths);
     void setSortBy(SortBy field);
     void setSortOrder(SortOrder order);
     void setEnabledExternalFSWatcher(bool enable);
@@ -407,7 +409,7 @@ signals:
     void     progress(int curItem, int totalItems, int percent);
 
     void     showHiddenFilesChanged();
-    void     showNonMTPPathsChanged();
+    void     onlyMTPPathsChanged();
     void     sortByChanged();
     void     sortOrderChanged();
     void     clipboardChanged();
@@ -448,7 +450,7 @@ private slots:
 
 private:
     bool                mShowHiddenFiles;
-    bool                mShowNonMTPPaths;
+    bool                mOnlyMTPPaths;
     SortBy              mSortBy;
     SortOrder           mSortOrder;
     CompareFunction     mCompareFunction;
