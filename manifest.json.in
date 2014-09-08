@@ -1,28 +1,31 @@
 {
     "description": "File Manager application",
     "framework": "ubuntu-sdk-14.10-dev2",
-    "_comment": "put i386 to architecture if you want build for x86, armhf for arm devices",
-    "architecture": "armhf",
+    "_comment": "Do not change this. Architecture is automatically replaced by cmake",
+    "architecture": "@CLICK_ARCH@",
     "hooks": {
         "filemanager": {
-            "apparmor": "apparmor.json",
+            "apparmor": "filemanager.apparmor",
             "desktop": "com.ubuntu.filemanager.desktop",
             "content-hub": "hub-exporter.json"
         }
     },
     "icon": "filemanager64.png",
     "maintainer": "Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>",
-    "name": "com.ubuntu.filemanager",
+    "name": "com.ubuntu.filemanager.devel",
     "title": "File Manager",
     "version": "0.3.@BZR_REVNO@",
     "x-source": {
         "vcs-bzr": "lp:ubuntu-filemanager-app",
         "vcs-bzr-revno": "@BZR_REVNO@"
     },
-   "x-test": {
-           "autopilot": {
-                "autopilot_module": "@AUTOPILOT_DIR@",
-                "depends": ["python3-lxml", "python3-fixtures"]
-            }
-   }
+    "x-test": {
+        "autopilot": {
+            "autopilot_module": "@AUTOPILOT_DIR@",
+            "depends": [
+                "python3-lxml",
+                "python3-fixtures"
+            ]
+        }
+    }
 }
