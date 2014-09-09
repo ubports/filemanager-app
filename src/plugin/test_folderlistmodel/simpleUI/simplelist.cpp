@@ -123,6 +123,7 @@ void SimpleList::do_connections()
             this,    SLOT(onPathChanged(QString)));
 
     connect(ui->toolButtonUp,     SIGNAL(clicked()),    m_model, SLOT(cdUp()));
+    connect(ui->toolButtonBack,   SIGNAL(clicked()),    m_model, SLOT(goBack()));
     connect(ui->actionCopy,       SIGNAL(triggered()),  m_model, SLOT(copySelection()));
     connect(ui->actionCut,        SIGNAL(triggered()),  m_model, SLOT(cutSelection()));
     connect(ui->actionDelete,     SIGNAL(triggered()),  m_model, SLOT(removeSelection()));

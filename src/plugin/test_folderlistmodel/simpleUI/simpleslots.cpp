@@ -133,10 +133,15 @@ void SimpleList::onOpenItem(QModelIndex index)
 
 void SimpleList::onPathChanged(QString path)
 {
-    if (ui->comboBoxPath->findText(path) == -1)
+    int index = ui->comboBoxPath->findText(path);
+    if (index == -1)
     {
         ui->comboBoxPath->insertItem(0, path);
         ui->comboBoxPath->setCurrentIndex(0);
+    }
+    else
+    {
+        ui->comboBoxPath->setCurrentIndex(index);
     }
     this->setWindowTitle(path);
     allowTrashActions(false);
