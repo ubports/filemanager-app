@@ -77,6 +77,7 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
 
         super(BaseTestCaseWithPatchedHome, self).setUp()
         self.launcher, self.test_type = self.get_launcher_and_type()
+        self.real_home_dir = os.environ.get('HOME')
         self.home_dir = self._patch_home()
 
         self.original_file_count = \
@@ -156,7 +157,7 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
 
     def get_local_desktop_file_directory(self):
         return os.path.join(
-            os.environ.get('HOME'), '.local', 'share', 'applications')
+            self.real_home_dir, '.local', 'share', 'applications')
 
     def get_named_temporary_file(
             self, dir=None, mode='w+t', delete=False, suffix=''):
@@ -196,75 +197,19 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
     def _patch_home(self):
         """ mock /home for testing purposes to preserve user data
         """
-        # click requires apparmor profile, and writing to special dir
-        # but the desktop can write to a traditional /tmp directory
-        if self.test_type == 'click':
-            env_dir = os.path.join(os.environ.get('HOME'), 'autopilot',
-                                   'fakeenv')
+        temp_dir_fixture = fixtures.TempDir()
+        self.useFixture(temp_dir_fixture)
+        temp_dir = temp_dir_fixture.path
+        temp_xdg_config_home = os.path.join(temp_dir, '.config')
 
-            if not os.path.exists(env_dir):
-                os.makedirs(env_dir)
+        # before we set fixture, copy xauthority if needed
+        self._copy_xauthority_file(temp_dir)
 
-            temp_dir_fixture = fixtures.TempDir(env_dir)
-            self.useFixture(temp_dir_fixture)
-
-            # apparmor doesn't allow the app to create needed directories,
-            # so we create them now
-            temp_dir = temp_dir_fixture.path
-            temp_xdg_config_home = os.path.join(temp_dir, '.config')
-            temp_dir_cache = os.path.join(temp_dir, '.cache')
-            temp_dir_cache_font = os.path.join(temp_dir_cache, 'fontconfig')
-            temp_dir_cache_media = os.path.join(temp_dir_cache, 'media-art')
-            temp_dir_cache_write = os.path.join(temp_dir_cache,
-                                                'tncache-write-text.null')
-            temp_dir_config = os.path.join(temp_dir, '.config')
-            temp_dir_toolkit = os.path.join(temp_dir_config,
-                                            'ubuntu-ui-toolkit')
-            temp_dir_font = os.path.join(temp_dir_cache, '.fontconfig')
-            temp_dir_local = os.path.join(temp_dir, '.local', 'share')
-            temp_dir_confined = os.path.join(temp_dir, 'confined')
-
-            if not os.path.exists(temp_xdg_config_home):
-                os.makedirs(temp_xdg_config_home)
-            if not os.path.exists(temp_dir_cache):
-                os.makedirs(temp_dir_cache)
-            if not os.path.exists(temp_dir_cache_font):
-                os.makedirs(temp_dir_cache_font)
-            if not os.path.exists(temp_dir_cache_media):
-                os.makedirs(temp_dir_cache_media)
-            if not os.path.exists(temp_dir_cache_write):
-                os.makedirs(temp_dir_cache_write)
-            if not os.path.exists(temp_dir_config):
-                os.makedirs(temp_dir_config)
-            if not os.path.exists(temp_dir_toolkit):
-                os.makedirs(temp_dir_toolkit)
-            if not os.path.exists(temp_dir_font):
-                os.makedirs(temp_dir_font)
-            if not os.path.exists(temp_dir_local):
-                os.makedirs(temp_dir_local)
-            if not os.path.exists(temp_dir_confined):
-                os.makedirs(temp_dir_confined)
-
-            # before we set fixture, copy xauthority if needed
-            self._copy_xauthority_file(temp_dir)
-            self.useFixture(toolkit_fixtures.InitctlEnvironmentVariable(
-                            HOME=temp_dir))
-            self.useFixture(toolkit_fixtures.InitctlEnvironmentVariable(
-                            XDG_CONFIG_HOME=temp_xdg_config_home))
-        else:
-            temp_dir_fixture = fixtures.TempDir()
-            self.useFixture(temp_dir_fixture)
-            temp_dir = temp_dir_fixture.path
-            temp_xdg_config_home = os.path.join(temp_dir, '.config')
-
-            # before we set fixture, copy xauthority if needed
-            self._copy_xauthority_file(temp_dir)
-
-            self.useFixture(
-                fixtures.EnvironmentVariable('HOME', newvalue=temp_dir))
-            self.useFixture(
-                fixtures.EnvironmentVariable(
-                    'XDG_CONFIG_HOME',  newvalue=temp_xdg_config_home))
+        self.useFixture(
+            fixtures.EnvironmentVariable('HOME', newvalue=temp_dir))
+        self.useFixture(
+            fixtures.EnvironmentVariable(
+                'XDG_CONFIG_HOME',  newvalue=temp_xdg_config_home))
 
         logger.debug("Patched home to fake home directory %s" % temp_dir)
         return temp_dir
