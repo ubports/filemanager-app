@@ -211,6 +211,7 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
             # apparmor doesn't allow the app to create needed directories,
             # so we create them now
             temp_dir = temp_dir_fixture.path
+            temp_xdg_config_home = os.path.join(temp_dir, '.config')
             temp_dir_cache = os.path.join(temp_dir, '.cache')
             temp_dir_cache_font = os.path.join(temp_dir_cache, 'fontconfig')
             temp_dir_cache_media = os.path.join(temp_dir_cache, 'media-art')
@@ -223,6 +224,8 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
             temp_dir_local = os.path.join(temp_dir, '.local', 'share')
             temp_dir_confined = os.path.join(temp_dir, 'confined')
 
+            if not os.path.exists(temp_xdg_config_home):
+                os.makedirs(temp_xdg_config_home)
             if not os.path.exists(temp_dir_cache):
                 os.makedirs(temp_dir_cache)
             if not os.path.exists(temp_dir_cache_font):
@@ -246,15 +249,22 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
             self._copy_xauthority_file(temp_dir)
             self.useFixture(toolkit_fixtures.InitctlEnvironmentVariable(
                             HOME=temp_dir))
+            self.useFixture(toolkit_fixtures.InitctlEnvironmentVariable(
+                            XDG_CONFIG_HOME=temp_xdg_config_home))
         else:
             temp_dir_fixture = fixtures.TempDir()
             self.useFixture(temp_dir_fixture)
             temp_dir = temp_dir_fixture.path
+            temp_xdg_config_home = os.path.join(temp_dir, '.config')
 
             # before we set fixture, copy xauthority if needed
             self._copy_xauthority_file(temp_dir)
-            self.useFixture(fixtures.EnvironmentVariable('HOME',
-                                                         newvalue=temp_dir))
+
+            self.useFixture(
+                fixtures.EnvironmentVariable('HOME', newvalue=temp_dir))
+            self.useFixture(
+                fixtures.EnvironmentVariable(
+                    'XDG_CONFIG_HOME',  newvalue=temp_xdg_config_home))
 
         logger.debug("Patched home to fake home directory %s" % temp_dir)
         return temp_dir
