@@ -25,14 +25,11 @@ import fixtures
 from autopilot import logging as autopilot_logging
 from filemanager import CMakePluginParser
 
-from autopilot.input import Mouse, Touch, Pointer
 from autopilot.matchers import Eventually
-from autopilot.platform import model
 from autopilot.testcase import AutopilotTestCase
 from testtools.matchers import Equals
 import ubuntuuitoolkit
 from ubuntuuitoolkit import (
-    base,
     fixture_setup as toolkit_fixtures
 )
 
@@ -208,9 +205,45 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
             if not os.path.exists(env_dir):
                 os.makedirs(env_dir)
 
-        # click requires using initctl env (upstart), but the desktop can set
-        # an environment variable instead
-        if self.test_type == 'click':
+            temp_dir_fixture = fixtures.TempDir(env_dir)
+            self.useFixture(temp_dir_fixture)
+
+            # apparmor doesn't allow the app to create needed directories,
+            # so we create them now
+            temp_dir = temp_dir_fixture.path
+            temp_dir_cache = os.path.join(temp_dir, '.cache')
+            temp_dir_cache_font = os.path.join(temp_dir_cache, 'fontconfig')
+            temp_dir_cache_media = os.path.join(temp_dir_cache, 'media-art')
+            temp_dir_cache_write = os.path.join(temp_dir_cache,
+                                                'tncache-write-text.null')
+            temp_dir_config = os.path.join(temp_dir, '.config')
+            temp_dir_toolkit = os.path.join(temp_dir_config,
+                                            'ubuntu-ui-toolkit')
+            temp_dir_font = os.path.join(temp_dir_cache, '.fontconfig')
+            temp_dir_local = os.path.join(temp_dir, '.local', 'share')
+            temp_dir_confined = os.path.join(temp_dir, 'confined')
+
+            if not os.path.exists(temp_dir_cache):
+                os.makedirs(temp_dir_cache)
+            if not os.path.exists(temp_dir_cache_font):
+                os.makedirs(temp_dir_cache_font)
+            if not os.path.exists(temp_dir_cache_media):
+                os.makedirs(temp_dir_cache_media)
+            if not os.path.exists(temp_dir_cache_write):
+                os.makedirs(temp_dir_cache_write)
+            if not os.path.exists(temp_dir_config):
+                os.makedirs(temp_dir_config)
+            if not os.path.exists(temp_dir_toolkit):
+                os.makedirs(temp_dir_toolkit)
+            if not os.path.exists(temp_dir_font):
+                os.makedirs(temp_dir_font)
+            if not os.path.exists(temp_dir_local):
+                os.makedirs(temp_dir_local)
+            if not os.path.exists(temp_dir_confined):
+                os.makedirs(temp_dir_confined)
+
+            # before we set fixture, copy xauthority if needed
+            self._copy_xauthority_file(temp_dir)
             self.useFixture(toolkit_fixtures.InitctlEnvironmentVariable(
                             HOME=temp_dir))
         else:
