@@ -30,27 +30,25 @@ from autopilot.matchers import Eventually
 from autopilot.platform import model
 from autopilot.testcase import AutopilotTestCase
 from testtools.matchers import Equals
+import ubuntuuitoolkit
 from ubuntuuitoolkit import (
-    emulators as toolkit_emulators,
+    base,
     fixture_setup as toolkit_fixtures
 )
 
-from filemanager import emulators, fixture_setup
+import filemanager
+from filemanager import fixture_setup
 from gi.repository import Click
 
 logger = logging.getLogger(__name__)
 
 
-class FileManagerTestCase(AutopilotTestCase):
+class BaseTestCaseWithPatchedHome(AutopilotTestCase):
 
     """A common test case class that provides several useful methods for
     filemanager-app tests.
 
     """
-    if model() == 'Desktop':
-        scenarios = [('with mouse', dict(input_device_class=Mouse))]
-    else:
-        scenarios = [('with touch', dict(input_device_class=Touch))]
 
     def get_launcher_and_type(self):
         if os.path.exists(self.local_location_binary):
@@ -65,24 +63,24 @@ class FileManagerTestCase(AutopilotTestCase):
         return launcher, test_type
 
     def setUp(self):
-        self.EXEC = 'filemanager'
+        self.binary = 'filemanager'
         self.source_dir = os.path.dirname(
             os.path.dirname(os.path.abspath('.')))
         self.build_dir = self._get_build_dir()
+
         self.local_location = self.build_dir
         self.local_location_qml = os.path.join(self.build_dir,
                                                'src', 'app',
-                                               'qml', self.EXEC + '.qml')
+                                               'qml', self.binary + '.qml')
         self.local_location_binary = os.path.join(self.build_dir,
-                                                  'src', 'app', self.EXEC)
-        self.installed_location_binary = os.path.join('/usr/bin/', self.EXEC)
+                                                  'src', 'app', self.binary)
+        self.installed_location_binary = os.path.join('/usr/bin/', self.binary)
         self.installed_location_qml = \
             '/usr/share/filemanager/qml/filemanager.qml'
 
-        launcher, self.test_type = self.get_launcher_and_type()
+        super(BaseTestCaseWithPatchedHome, self).setUp()
+        self.launcher, self.test_type = self.get_launcher_and_type()
         self.home_dir = self._patch_home()
-        self.pointing_device = Pointer(self.input_device_class.create())
-        super(FileManagerTestCase, self).setUp()
 
         self.original_file_count = \
             len([i for i in os.listdir(self.home_dir)
@@ -90,8 +88,6 @@ class FileManagerTestCase(AutopilotTestCase):
         logger.debug('Directory Listing for HOME\n%s' %
                      os.listdir(self.home_dir))
         logger.debug('File count in HOME is %s' % self.original_file_count)
-
-        self.app = launcher()
 
     def _get_build_dir(self):
         """
@@ -117,7 +113,7 @@ class FileManagerTestCase(AutopilotTestCase):
             self.local_location_binary,
             '-q', self.local_location_qml,
             app_type='qt',
-            emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
+            emulator_base=ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase)
 
     @autopilot_logging.log_action(logger.info)
     def launch_test_installed(self):
@@ -125,7 +121,7 @@ class FileManagerTestCase(AutopilotTestCase):
             self.installed_location_binary,
             '-q', self.installed_location_qml,
             app_type='qt',
-            emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
+            emulator_base=ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase)
 
     @autopilot_logging.log_action(logger.info)
     def launch_test_click(self):
@@ -138,7 +134,7 @@ class FileManagerTestCase(AutopilotTestCase):
         application_name, _ = os.path.splitext(desktop_file_name)
         return self.launch_upstart_application(
             application_name,
-            emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
+            emulator_base=ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase)
 
     def write_sandbox_desktop_file(self):
         desktop_file_dir = self.get_local_desktop_file_directory()
@@ -184,25 +180,33 @@ class FileManagerTestCase(AutopilotTestCase):
         return version, directory
 
     def _copy_xauthority_file(self, directory):
-        """Copy .Xauthority file to directory, if it exists in /home"""
-        xauth = os.path.join(os.environ.get('HOME'), '.Xauthority')
-        if os.path.isfile(xauth):
-            logger.debug("Copying .Xauthority to " + directory)
-            shutil.copyfile(
-                os.path.join(os.environ.get('HOME'), '.Xauthority'),
-                os.path.join(directory, '.Xauthority'))
-
-    def _patch_home(self):
-        """mock /home for testing purposes to preserve user data"""
-        temp_dir_fixture = fixtures.TempDir()
-        self.useFixture(temp_dir_fixture)
-        temp_dir = temp_dir_fixture.path
-
+        """ Copy .Xauthority file to directory, if it exists in /home
+        """
         # If running under xvfb, as jenkins does,
         # xsession will fail to start without xauthority file
         # Thus if the Xauthority file is in the home directory
         # make sure we copy it to our temp home directory
-        self._copy_xauthority_file(temp_dir)
+
+        xauth = os.path.expanduser(os.path.join(os.environ.get('HOME'),
+                                   '.Xauthority'))
+        if os.path.isfile(xauth):
+            logger.debug("Copying .Xauthority to %s" % directory)
+            shutil.copyfile(
+                os.path.expanduser(os.path.join(os.environ.get('HOME'),
+                                   '.Xauthority')),
+                os.path.join(directory, '.Xauthority'))
+
+    def _patch_home(self):
+        """ mock /home for testing purposes to preserve user data
+        """
+        # click requires apparmor profile, and writing to special dir
+        # but the desktop can write to a traditional /tmp directory
+        if self.test_type == 'click':
+            env_dir = os.path.join(os.environ.get('HOME'), 'autopilot',
+                                   'fakeenv')
+
+            if not os.path.exists(env_dir):
+                os.makedirs(env_dir)
 
         # click requires using initctl env (upstart), but the desktop can set
         # an environment variable instead
@@ -210,16 +214,18 @@ class FileManagerTestCase(AutopilotTestCase):
             self.useFixture(toolkit_fixtures.InitctlEnvironmentVariable(
                             HOME=temp_dir))
         else:
+            temp_dir_fixture = fixtures.TempDir()
+            self.useFixture(temp_dir_fixture)
+            temp_dir = temp_dir_fixture.path
+
+            # before we set fixture, copy xauthority if needed
+            self._copy_xauthority_file(temp_dir)
             self.useFixture(fixtures.EnvironmentVariable('HOME',
                                                          newvalue=temp_dir))
 
-        logger.debug('Patched home to fake home directory ' + temp_dir)
-
+        logger.debug("Patched home to fake home directory %s" % temp_dir)
         return temp_dir
 
-    @property
-    def main_view(self):
-        return self.app.wait_select_single(emulators.MainView)
 
     def make_file_in_home(self):
         return self.make_content_in_home('file')
@@ -231,11 +237,11 @@ class FileManagerTestCase(AutopilotTestCase):
         if type_ != 'file' and type_ != 'directory':
             raise ValueError('Unknown content type: "{0}"', type_)
         if type_ == 'file':
-            temp_file = fixture_setup.TemporaryFileInDirectory(self.home_dir)
+            temp_file = filemanager.fixture_setup.TemporaryFileInDirectory(self.home_dir)
             self.useFixture(temp_file)
             path = temp_file.path
         else:
-            temp_dir = fixture_setup.TemporaryDirectoryInDirectory(
+            temp_dir = filemanager.fixture_setup.TemporaryDirectoryInDirectory(
                 self.home_dir)
             self.useFixture(temp_dir)
             path = temp_dir.path
@@ -247,10 +253,18 @@ class FileManagerTestCase(AutopilotTestCase):
     def _assert_number_of_files(self, expected_number_of_files, home=True):
         if home:
             expected_number_of_files += self.original_file_count
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_number_of_files_from_list,
             Eventually(Equals(expected_number_of_files), timeout=60))
         self.assertThat(
             folder_list_page.get_number_of_files_from_header,
             Eventually(Equals(expected_number_of_files), timeout=60))
+
+class FileManagerTestCase(BaseTestCaseWithPatchedHome):
+
+    """Base test case that launches the filemanager-app."""
+
+    def setUp(self):
+        super(FileManagerTestCase, self).setUp()
+        self.app = filemanager.Filemanager(self.launcher(), self.test_type)

@@ -17,26 +17,26 @@
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals
 
-from filemanager import tests
+from filemanager.tests import FileManagerTestCase
 
 
-class PlacesTestCase(tests.FileManagerTestCase):
+class PlacesTestCase(FileManagerTestCase):
     """Test cases for the places section of the file manager app."""
 
     def test_go_home_must_open_the_home_directory(self):
         """Test that opens the Home bookmark from the places section."""
-        self.main_view.go_to_place('placeHome')
+        self.app.main_view.go_to_place('placeHome')
 
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_current_path,
             Eventually(Equals(self.home_dir)))
 
     def test_go_to_root_must_open_the_root_directory(self):
         """Test that opens the Device bookmark from the places section."""
-        self.main_view.go_to_place('placeDevice')
+        self.app.main_view.go_to_place('placeDevice')
 
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_current_path,
             Eventually(Equals('/')))
