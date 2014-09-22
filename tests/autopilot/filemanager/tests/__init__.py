@@ -29,9 +29,6 @@ from autopilot.matchers import Eventually
 from autopilot.testcase import AutopilotTestCase
 from testtools.matchers import Equals
 import ubuntuuitoolkit
-from ubuntuuitoolkit import (
-    fixture_setup as toolkit_fixtures
-)
 
 import filemanager
 from filemanager import fixture_setup as fm_fixtures
@@ -153,6 +150,9 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
         for key, value in desktop_file_dict.items():
             desktop_file.write('{key}={value}\n'.format(key=key, value=value))
         desktop_file.close()
+        logger.debug(filemanager_sandbox_exec)
+        for key, value in desktop_file_dict.items():
+            logger.debug("%s: %s" % (key, value))
         return desktop_file.name
 
     def get_local_desktop_file_directory(self):
