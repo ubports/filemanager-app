@@ -19,6 +19,7 @@
 import logging
 import os
 import shutil
+import tempfile
 
 import fixtures
 from autopilot import logging as autopilot_logging
@@ -35,6 +36,7 @@ from ubuntuuitoolkit import (
 )
 
 from filemanager import emulators, fixture_setup
+from gi.repository import Click
 
 logger = logging.getLogger(__name__)
 
@@ -127,9 +129,59 @@ class FileManagerTestCase(AutopilotTestCase):
 
     @autopilot_logging.log_action(logger.info)
     def launch_test_click(self):
-        return self.launch_click_package(
-            'com.ubuntu.filemanager',
+        # We need to pass the "--forceAuth false" argument to the filemanager
+        # binary, but ubuntu-app-launch doesn't pass arguments to the exec line
+        # on the desktop file. So we make a test desktop file that has the
+        # "--forceAuth false"  on the exec line.
+        desktop_file_path = self.write_sandbox_desktop_file()
+        desktop_file_name = os.path.basename(desktop_file_path)
+        application_name, _ = os.path.splitext(desktop_file_name)
+        return self.launch_upstart_application(
+            application_name,
             emulator_base=toolkit_emulators.UbuntuUIToolkitEmulatorBase)
+
+    def write_sandbox_desktop_file(self):
+        desktop_file_dir = self.get_local_desktop_file_directory()
+        desktop_file = self.get_named_temporary_file(
+            suffix='.desktop', dir=desktop_file_dir)
+        desktop_file.write('[Desktop Entry]\n')
+        version, installed_path = self.get_installed_version_and_directory()
+        filemanager_sandbox_exec = (
+            'aa-exec-click -p com.ubuntu.filemanager_filemanager_{}'
+            ' -- filemanager --forceAuth false'.format(version))
+        desktop_file_dict = {
+            'Type': 'Application',
+            'Name': 'filemanager',
+            'Exec': filemanager_sandbox_exec,
+            'Icon': 'Not important',
+            'Path': installed_path
+        }
+        for key, value in desktop_file_dict.items():
+            desktop_file.write('{key}={value}\n'.format(key=key, value=value))
+        desktop_file.close()
+        return desktop_file.name
+
+    def get_local_desktop_file_directory(self):
+        return os.path.join(
+            os.environ.get('HOME'), '.local', 'share', 'applications')
+
+    def get_named_temporary_file(
+            self, dir=None, mode='w+t', delete=False, suffix=''):
+        # Discard files with underscores which look like an APP_ID to Unity
+        # See https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1329141
+        chars = tempfile._RandomNameSequence.characters.strip("_")
+        tempfile._RandomNameSequence.characters = chars
+        return tempfile.NamedTemporaryFile(
+            dir=dir, mode=mode, delete=delete, suffix=suffix)
+
+    def get_installed_version_and_directory(self):
+        db = Click.DB()
+        db.read()
+        package_name = 'com.ubuntu.filemanager'
+        registry = Click.User.for_user(db, name=os.environ.get('USER'))
+        version = registry.get_version(package_name)
+        directory = registry.get_path(package_name)
+        return version, directory
 
     def _copy_xauthority_file(self, directory):
         """Copy .Xauthority file to directory, if it exists in /home"""
