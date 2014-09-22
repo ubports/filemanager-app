@@ -10,7 +10,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fno-permissive -pedantic -Wa
 include(GNUInstallDirs)
 
 option(INSTALL_TESTS "Install the tests on make install" on)
-option(CLICK_MODE "Installs to a contained location" off)
+option(CLICK_MODE "Installs to a contained location" on)
 
 set(APP_NAME filemanager)
 set(DESKTOP_FILE "${PROJECT_NAME}.desktop")
@@ -19,6 +19,7 @@ set(ICON_FILE filemanager64.png)
 set(AUTOPILOT_DIR ${APP_NAME})
 set(EXEC "${APP_NAME}")
 set(CONTENT_HUB_EXPORTER hub-exporter.json)
+set(UBUNTU_MANIFEST_PATH "manifest.json.in" CACHE INTERNAL "Relative path to the manifest file")
 
 if(CLICK_MODE)
     if(NOT DEFINED BZR_SOURCE)
@@ -42,8 +43,24 @@ if(CLICK_MODE)
     if(NOT BZR_REVNO)
         set(BZR_REVNO "latest")
     endif(NOT BZR_REVNO)
+
+    #query the target architecture
+    execute_process(
+        COMMAND dpkg-architecture -qDEB_HOST_ARCH
+        OUTPUT_VARIABLE CLICK_ARCH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+
     configure_file(manifest.json.in ${CMAKE_CURRENT_BINARY_DIR}/manifest.json)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json apparmor.json ${CONTENT_HUB_EXPORTER} DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+    # make the click files visible in qtcreator
+    file(GLOB CLICK_FILES
+         RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+         manifest.json.in *.apparmor)
+
+    add_custom_target(com_ubuntu_calendar_CLICKFiles ALL SOURCES ${CLICK_FILES})
+
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json filemanager.apparmor ${CONTENT_HUB_EXPORTER} DESTINATION ${CMAKE_INSTALL_PREFIX})
 else(CLICK_MODE)
     execute_process(
         COMMAND qmake -query QT_INSTALL_QML
