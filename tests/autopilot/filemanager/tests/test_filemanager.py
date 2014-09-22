@@ -188,7 +188,8 @@ class TestFolderListPage(FileManagerTestCase):
         self._cancel_confirm_dialog()
 
         self.assertThat(
-            self.app.main_view.confirm_dialog_exists, Eventually(Equals(False)))
+            self.app.main_view.confirm_dialog_exists,
+            Eventually(Equals(False)))
         self.assertThat(
             lambda: first_dir.fileName, Eventually(Equals(dir_name)))
 
@@ -201,7 +202,8 @@ class TestFolderListPage(FileManagerTestCase):
         self._cancel_confirm_dialog()
 
         self.assertThat(
-            self.app.main_view.confirm_dialog_exists, Eventually(Equals(False)))
+            self.app.main_view.confirm_dialog_exists,
+            Eventually(Equals(False)))
         self.assertThat(
             lambda: first_file.fileName,
             Eventually(Equals(file_name)))
@@ -231,8 +233,8 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.app.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Create New Folder')
+        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover.click_button_by_text('Create New Folder')
         self._confirm_dialog(dir_name)
 
         self._assert_number_of_files(1)
@@ -245,8 +247,8 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.app.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Create New Folder')
+        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover.click_button_by_text('Create New Folder')
         self._cancel_confirm_dialog()
 
         self._assert_number_of_files(0)
@@ -304,10 +306,10 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.app.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Paste 1 File')
+        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
-            self.app.main_view.folder_actions_popover_exists,
+            self.app.main_view.folder_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the directory is there.
@@ -350,10 +352,10 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.app.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Paste 1 File')
+        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
-            self.app.main_view.folder_actions_popover_exists,
+            self.app.main_view.folder_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the directory is there.
@@ -396,11 +398,11 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.app.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Paste 1 File')
+        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover.click_button_by_text('Paste 1 File')
 
         self.assertThat(
-            self.app.main_view.folder_actions_popover_exists,
+            self.app.main_view.folder_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the file is there.
@@ -443,10 +445,10 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.app.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Paste 1 File')
+        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
-            self.app.main_view.folder_actions_popover_exists,
+            self.app.main_view.folder_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the file is there.

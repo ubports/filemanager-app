@@ -37,7 +37,7 @@ from ubuntuuitoolkit import (
 )
 
 import filemanager
-from filemanager import fixture_setup
+from filemanager import fixture_setup as fm_fixtures
 from gi.repository import Click
 
 logger = logging.getLogger(__name__)
@@ -226,7 +226,6 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
         logger.debug("Patched home to fake home directory %s" % temp_dir)
         return temp_dir
 
-
     def make_file_in_home(self):
         return self.make_content_in_home('file')
 
@@ -237,11 +236,11 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
         if type_ != 'file' and type_ != 'directory':
             raise ValueError('Unknown content type: "{0}"', type_)
         if type_ == 'file':
-            temp_file = filemanager.fixture_setup.TemporaryFileInDirectory(self.home_dir)
+            temp_file = fm_fixtures.TemporaryFileInDirectory(self.home_dir)
             self.useFixture(temp_file)
             path = temp_file.path
         else:
-            temp_dir = filemanager.fixture_setup.TemporaryDirectoryInDirectory(
+            temp_dir = fm_fixtures.TemporaryDirectoryInDirectory(
                 self.home_dir)
             self.useFixture(temp_dir)
             path = temp_dir.path
@@ -260,6 +259,7 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
         self.assertThat(
             folder_list_page.get_number_of_files_from_header,
             Eventually(Equals(expected_number_of_files), timeout=60))
+
 
 class FileManagerTestCase(BaseTestCaseWithPatchedHome):
 

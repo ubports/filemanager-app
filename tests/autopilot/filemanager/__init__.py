@@ -29,6 +29,7 @@ from filemanager import _common
 
 logger = logging.getLogger(__name__)
 
+
 class FilemanagerException(ubuntuuitoolkit.ToolkitException):
 
     """Exception raised when there are problems with the Filemanager."""
