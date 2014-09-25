@@ -101,7 +101,7 @@ class TestFolderListPage(FileManagerTestCase):
     def _do_action_on_file(self, file_, action):
         logger.debug("Performing %s on file %s" % (action, file_))
         self._safe_open_popover(file_.open_actions_popover)
-        file_actions_popover = self.app.main_view.get_file_actions_popover()
+        file_actions_popover = self.app.main_view.get_file_popover()
         file_actions_popover.click_button_by_text(action)
 
     def _cancel_confirm_dialog(self):
@@ -233,7 +233,7 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover = self.app.main_view.get_folder_actions_popover()
         folder_popover.click_button_by_text('Create New Folder')
         self._confirm_dialog(dir_name)
 
@@ -247,7 +247,7 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover = self.app.main_view.get_folder_actions_popover()
         folder_popover.click_button_by_text('Create New Folder')
         self._cancel_confirm_dialog()
 
@@ -306,7 +306,7 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover = self.app.main_view.get_folder_actions_popover()
         folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
             self.app.main_view.folder_popover_exists,
@@ -352,7 +352,7 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover = self.app.main_view.get_folder_actions_popover()
         folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
             self.app.main_view.folder_popover_exists,
@@ -398,7 +398,7 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover = self.app.main_view.get_folder_actions_popover()
         folder_popover.click_button_by_text('Paste 1 File')
 
         self.assertThat(
@@ -445,7 +445,7 @@ class TestFolderListPage(FileManagerTestCase):
             self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_popover = self.app.main_view.get_folder_popover()
+        folder_popover = self.app.main_view.get_folder_actions_popover()
         folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
             self.app.main_view.folder_popover_exists,
