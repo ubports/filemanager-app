@@ -101,7 +101,7 @@ class TestFolderListPage(FileManagerTestCase):
     def _do_action_on_file(self, file_, action):
         logger.debug("Performing %s on file %s" % (action, file_))
         self._safe_open_popover(file_.open_actions_popover)
-        file_actions_popover = self.app.main_view.get_file_popover()
+        file_actions_popover = self.app.main_view.get_file_actions_popover()
         file_actions_popover.click_button_by_text(action)
 
     def _cancel_confirm_dialog(self):
