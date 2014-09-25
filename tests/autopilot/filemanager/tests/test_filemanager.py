@@ -309,7 +309,7 @@ class TestFolderListPage(FileManagerTestCase):
         folder_popover = self.app.main_view.get_folder_actions_popover()
         folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
-            self.app.main_view.folder_popover_exists,
+            self.app.main_view.folder_actions_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the directory is there.
@@ -355,7 +355,7 @@ class TestFolderListPage(FileManagerTestCase):
         folder_popover = self.app.main_view.get_folder_actions_popover()
         folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
-            self.app.main_view.folder_popover_exists,
+            self.app.main_view.folder_actions_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the directory is there.
@@ -402,7 +402,7 @@ class TestFolderListPage(FileManagerTestCase):
         folder_popover.click_button_by_text('Paste 1 File')
 
         self.assertThat(
-            self.app.main_view.folder_popover_exists,
+            self.app.main_view.folder_actions_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the file is there.
@@ -448,7 +448,7 @@ class TestFolderListPage(FileManagerTestCase):
         folder_popover = self.app.main_view.get_folder_actions_popover()
         folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
-            self.app.main_view.folder_popover_exists,
+            self.app.main_view.folder_actions_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the file is there.
