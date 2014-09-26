@@ -12,7 +12,7 @@
     },
     "icon": "filemanager64.png",
     "maintainer": "Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>",
-    "name": "com.ubuntu.filemanager.devel",
+    "name": "com.ubuntu.filemanager",
     "title": "File Manager",
     "version": "0.3.@BZR_REVNO@",
     "x-source": {
