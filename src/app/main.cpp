@@ -47,6 +47,7 @@ int main(int argc, char *argv[])
         qDebug() << "usage: " + args.at(0) + " [-p|--phone] [-t|--tablet] [-h|--help] [-I <path>]";
         qDebug() << "    -p|--phone    If running on Desktop, start in a phone sized window.";
         qDebug() << "    -t|--tablet   If running on Desktop, start in a tablet sized window.";
+        qDebug() << "    --forceAuth <true|false> Force authentication on or off.";
         qDebug() << "    -h|--help     Print this help.";
         qDebug() << "    -I <path>     Give a path for an additional QML import directory. May be used multiple times.";
         qDebug() << "    -q <qmlfile>  Give an alternative location for the main qml file.";
@@ -54,6 +55,15 @@ int main(int argc, char *argv[])
     }
 
     QString qmlfile;
+    // Desktop doesn't have yet Unity8 and so no unity greeter either. Consequently it doesn't
+    // also have any "PIN code" or "Password" extra authentication. Don't require any extra
+    // authentication there by default
+    if (qgetenv("QT_QPA_PLATFORM") != "ubuntumirclient") {
+        qDebug() << Q_FUNC_INFO << "Running on non-MIR desktop, not requiring authentication by default";
+        view.engine()->rootContext()->setContextProperty("noAuthentication", QVariant(true));
+    } else {
+        view.engine()->rootContext()->setContextProperty("noAuthentication", QVariant(false));
+    }
     for (int i = 0; i < args.count(); i++) {
         if (args.at(i) == "-I" && args.count() > i + 1) {
             QString addedPath = args.at(i+1);
@@ -64,6 +74,17 @@ int main(int argc, char *argv[])
             importPathList.append(addedPath);
         } else if (args.at(i) == "-q" && args.count() > i + 1) {
             qmlfile = args.at(i+1);
+        } else if (args.at(i) == "--forceAuth" && args.count() > i + 1) {
+            QString value = args.at(i+1);
+            if (value == "true") {
+                qDebug() << Q_FUNC_INFO << "Forcing authentication on";
+                view.engine()->rootContext()->setContextProperty("noAuthentication", QVariant(false));
+            } else if (value == "false") {
+                qDebug() << Q_FUNC_INFO << "Forcing authentication off";
+                view.engine()->rootContext()->setContextProperty("noAuthentication", QVariant(true));
+            } else {
+                qWarning() << Q_FUNC_INFO << "Invalid forceAuth option '" << value << "', keeping default";
+            }
         }
     }
 
@@ -84,6 +105,7 @@ int main(int argc, char *argv[])
 
     view.engine()->rootContext()->setContextProperty("tablet", QVariant(false));
     view.engine()->rootContext()->setContextProperty("phone", QVariant(false));
+
     if (args.contains("-t") || args.contains("--tablet")) {
         qDebug() << "running in tablet mode";
         view.engine()->rootContext()->setContextProperty("tablet", QVariant(true));

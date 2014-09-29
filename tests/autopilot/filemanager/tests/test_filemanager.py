@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 class TestFolderListPage(FileManagerTestCase):
 
     def _get_file_by_name(self, name):
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         fileDelegate = lambda: folder_list_page.get_file_by_name(name)
         self.assertThat(
             fileDelegate,
@@ -42,7 +42,7 @@ class TestFolderListPage(FileManagerTestCase):
         return folder_list_page.get_file_by_name(name)
 
     def _get_file_by_index(self, index):
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         fileDelegate = lambda: folder_list_page.get_file_by_index(index)
         self.assertThat(
             fileDelegate,
@@ -54,15 +54,15 @@ class TestFolderListPage(FileManagerTestCase):
         # on wide UI display, we get the location dialog
         # on phone UI display, we get places popover
         device = model()
-        if self.main_view.showSidebar:
+        if self.app.main_view.showSidebar:
             logger.debug("Using goto to goto %s on %s" % (location, device))
-            (self.main_view.get_folder_list_page().get_pathbar()
+            (self.app.main_view.get_folder_list_page().get_pathbar()
                 .go_to_location())
-            goto_location = self.main_view.get_dialog()
+            goto_location = self.app.main_view.get_dialog()
         else:
             logger.debug("Using places to goto %s on %s" % (location, device))
-            self._safe_open_popover(self.main_view.open_places)
-            goto_location = self.main_view.get_popover()
+            self._safe_open_popover(self.app.main_view.open_places)
+            goto_location = self.app.main_view.get_popover()
         goto_location.enter_text(location)
         goto_location.ok()
 
@@ -71,7 +71,7 @@ class TestFolderListPage(FileManagerTestCase):
         list_view = item.list_view
 
         # item.open_directory()
-        self.pointing_device.click_object(item)
+        self.app.pointing_device.click_object(item)
         self.assertThat(
             list_view.get_current_path, Eventually(Equals(expected_path)))
 
@@ -79,12 +79,12 @@ class TestFolderListPage(FileManagerTestCase):
         """Boolean, checks if popover exists."""
         try:
             popover = \
-                self.main_view.wait_select_single('ActionSelectionPopover')
+                self.app.main_view.wait_select_single('ActionSelectionPopover')
             if popover:
                 return True
         except:
                 try:
-                    popover = self.main_view.wait_select_single('Popover')
+                    popover = self.app.main_view.wait_select_single('Popover')
                     if popover:
                         return True
                 except:
@@ -101,15 +101,15 @@ class TestFolderListPage(FileManagerTestCase):
     def _do_action_on_file(self, file_, action):
         logger.debug("Performing %s on file %s" % (action, file_))
         self._safe_open_popover(file_.open_actions_popover)
-        file_actions_popover = self.main_view.get_file_actions_popover()
+        file_actions_popover = self.app.main_view.get_file_actions_popover()
         file_actions_popover.click_button_by_text(action)
 
     def _cancel_confirm_dialog(self):
-        confirm_dialog = self.main_view.get_confirm_dialog()
+        confirm_dialog = self.app.main_view.get_confirm_dialog()
         confirm_dialog.cancel()
 
     def _confirm_dialog(self, text=None):
-        confirm_dialog = self.main_view.get_confirm_dialog()
+        confirm_dialog = self.app.main_view.get_confirm_dialog()
         if text:
             confirm_dialog.enter_text(text)
         confirm_dialog.ok()
@@ -122,9 +122,9 @@ class TestFolderListPage(FileManagerTestCase):
         self.make_file_in_home()
 
         first_file = self._get_file_by_index(0)
-        self.pointing_device.click_object(first_file)
+        self.app.pointing_device.click_object(first_file)
 
-        dialog = self.main_view.get_file_action_dialog()
+        dialog = self.app.main_view.get_file_action_dialog()
         dialog.visible.wait_for(True)
 
         process_manager = process.ProcessManager.create()
@@ -132,7 +132,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         dialog.open()
         # make sure the dialog is open
-        self.main_view.get_file_action_dialog()
+        self.app.main_view.get_file_action_dialog()
         # Filtering copied from
         # AutopilotTestCase._compare_system_with_app_snapshot.
         current_apps = self.process_manager.get_running_applications()
@@ -158,7 +158,7 @@ class TestFolderListPage(FileManagerTestCase):
 
         self._open_directory(first_dir)
 
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_current_path, Eventually(Equals(dir_path)))
         self._assert_number_of_files(0, home=False)
@@ -188,7 +188,8 @@ class TestFolderListPage(FileManagerTestCase):
         self._cancel_confirm_dialog()
 
         self.assertThat(
-            self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
+            self.app.main_view.confirm_dialog_exists,
+            Eventually(Equals(False)))
         self.assertThat(
             lambda: first_dir.fileName, Eventually(Equals(dir_name)))
 
@@ -201,7 +202,8 @@ class TestFolderListPage(FileManagerTestCase):
         self._cancel_confirm_dialog()
 
         self.assertThat(
-            self.main_view.confirm_dialog_exists, Eventually(Equals(False)))
+            self.app.main_view.confirm_dialog_exists,
+            Eventually(Equals(False)))
         self.assertThat(
             lambda: first_file.fileName,
             Eventually(Equals(file_name)))
@@ -228,11 +230,11 @@ class TestFolderListPage(FileManagerTestCase):
         dir_name = 'Test Directory'
 
         open_popover = lambda: \
-            self.main_view.open_toolbar().click_button('actions')
+            self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Create New Folder')
+        folder_popover = self.app.main_view.get_folder_actions_popover()
+        folder_popover.click_button_by_text('Create New Folder')
         self._confirm_dialog(dir_name)
 
         self._assert_number_of_files(1)
@@ -242,11 +244,11 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_cancel_create_directory(self):
         open_popover = lambda: \
-            self.main_view.open_toolbar().click_button('actions')
+            self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Create New Folder')
+        folder_popover = self.app.main_view.get_folder_actions_popover()
+        folder_popover.click_button_by_text('Create New Folder')
         self._cancel_confirm_dialog()
 
         self._assert_number_of_files(0)
@@ -257,7 +259,7 @@ class TestFolderListPage(FileManagerTestCase):
         first_dir = self._get_file_by_name(dir_name)
 
         self._do_action_on_file(first_dir, 'Properties')
-        file_details_popover = self.main_view.get_file_details_popover()
+        file_details_popover = self.app.main_view.get_file_details_popover()
         self.assertThat(file_details_popover.visible, Eventually(Equals(True)))
         self.assertThat(
             file_details_popover.get_path, Eventually(Equals(dir_path)))
@@ -271,7 +273,7 @@ class TestFolderListPage(FileManagerTestCase):
         first_file = self._get_file_by_name(file_name)
 
         self._do_action_on_file(first_file, 'Properties')
-        file_details_popover = self.main_view.get_file_details_popover()
+        file_details_popover = self.app.main_view.get_file_details_popover()
         self.assertThat(file_details_popover.visible, Eventually(Equals(True)))
         self.assertThat(
             file_details_popover.get_path, Eventually(Equals(file_path)))
@@ -287,7 +289,7 @@ class TestFolderListPage(FileManagerTestCase):
         dir_to_copy_name = os.path.basename(dir_to_copy_path)
         os.mkdir(dir_to_copy_path)
 
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         self._assert_number_of_files(2)
 
         # Copy the directory.
@@ -301,13 +303,13 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Paste the directory.
         open_popover = lambda: \
-            self.main_view.open_toolbar().click_button('actions')
+            self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Paste 1 File')
+        folder_popover = self.app.main_view.get_folder_actions_popover()
+        folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
-            self.main_view.folder_actions_popover_exists,
+            self.app.main_view.folder_actions_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the directory is there.
@@ -317,7 +319,7 @@ class TestFolderListPage(FileManagerTestCase):
             first_dir.fileName, Eventually(Equals(dir_to_copy_name)))
 
         # Go back.
-        toolbar = self.main_view.open_toolbar()
+        toolbar = self.app.main_view.open_toolbar()
         toolbar.click_button('up')
 
         # Check that the directory is still there.
@@ -333,7 +335,7 @@ class TestFolderListPage(FileManagerTestCase):
         dir_to_cut_name = os.path.basename(dir_to_cut_path)
         os.mkdir(dir_to_cut_path)
 
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         self._assert_number_of_files(2)
 
         # Cut the directory.
@@ -347,13 +349,13 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Paste the directory.
         open_popover = lambda: \
-            self.main_view.open_toolbar().click_button('actions')
+            self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Paste 1 File')
+        folder_popover = self.app.main_view.get_folder_actions_popover()
+        folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
-            self.main_view.folder_actions_popover_exists,
+            self.app.main_view.folder_actions_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the directory is there.
@@ -363,7 +365,7 @@ class TestFolderListPage(FileManagerTestCase):
             first_dir.fileName, Eventually(Equals(dir_to_cut_name)))
 
         # Go back.
-        toolbar = self.main_view.open_toolbar()
+        toolbar = self.app.main_view.open_toolbar()
         toolbar.click_button('up')
 
         # Check that the directory is not there.
@@ -379,7 +381,7 @@ class TestFolderListPage(FileManagerTestCase):
         file_to_copy_path = self.make_file_in_home()
         file_to_copy_name = os.path.basename(file_to_copy_path)
 
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         self._assert_number_of_files(2)
 
         # Copy the file.
@@ -393,14 +395,14 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Paste the file.
         open_popover = lambda: \
-            self.main_view.open_toolbar().click_button('actions')
+            self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Paste 1 File')
+        folder_popover = self.app.main_view.get_folder_actions_popover()
+        folder_popover.click_button_by_text('Paste 1 File')
 
         self.assertThat(
-            self.main_view.folder_actions_popover_exists,
+            self.app.main_view.folder_actions_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the file is there.
@@ -410,7 +412,7 @@ class TestFolderListPage(FileManagerTestCase):
             first_dir.fileName, Eventually(Equals(file_to_copy_name)))
 
         # Go back.
-        toolbar = self.main_view.open_toolbar()
+        toolbar = self.app.main_view.open_toolbar()
         toolbar.click_button('up')
 
         # Check that the file is still there.
@@ -426,7 +428,7 @@ class TestFolderListPage(FileManagerTestCase):
         file_to_cut_path = self.make_file_in_home()
         file_to_cut_name = os.path.basename(file_to_cut_path)
 
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         self._assert_number_of_files(2)
 
         # Cut the file.
@@ -440,13 +442,13 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Paste the file.
         open_popover = lambda: \
-            self.main_view.open_toolbar().click_button('actions')
+            self.app.main_view.open_toolbar().click_button('actions')
         self._safe_open_popover(open_popover)
 
-        folder_actions_popover = self.main_view.get_folder_actions_popover()
-        folder_actions_popover.click_button_by_text('Paste 1 File')
+        folder_popover = self.app.main_view.get_folder_actions_popover()
+        folder_popover.click_button_by_text('Paste 1 File')
         self.assertThat(
-            self.main_view.folder_actions_popover_exists,
+            self.app.main_view.folder_actions_popover_exists,
             Eventually(Equals(False)))
 
         # Check that the file is there.
@@ -456,7 +458,7 @@ class TestFolderListPage(FileManagerTestCase):
             first_dir.fileName, Eventually(Equals(file_to_cut_name)))
 
         # Go back.
-        toolbar = self.main_view.open_toolbar()
+        toolbar = self.app.main_view.open_toolbar()
         toolbar.click_button('up')
 
         # Check that the file is not there.
@@ -470,10 +472,10 @@ class TestFolderListPage(FileManagerTestCase):
         first_dir = self._get_file_by_name(dir_name)
         self._open_directory(first_dir)
 
-        toolbar = self.main_view.open_toolbar()
+        toolbar = self.app.main_view.open_toolbar()
         toolbar.click_button('up')
 
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_current_path,
             Eventually(Equals(self.home_dir)))
