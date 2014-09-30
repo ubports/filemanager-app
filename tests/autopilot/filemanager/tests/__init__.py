@@ -29,6 +29,7 @@ from autopilot.matchers import Eventually
 from autopilot.testcase import AutopilotTestCase
 from testtools.matchers import Equals
 import ubuntuuitoolkit
+from ubuntuuitoolkit import fixture_setup as toolkit_fixtures
 
 import filemanager
 from filemanager import fixture_setup as fm_fixtures
@@ -215,7 +216,6 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
         else:
             temp_dir_fixture = fixtures.TempDir()
 
-
         # setup fixture paths
         self.useFixture(temp_dir_fixture)
         temp_dir = temp_dir_fixture.path
@@ -263,7 +263,6 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
                 os.makedirs(temp_dir_local)
             if not os.path.exists(temp_dir_confined):
                 os.makedirs(temp_dir_confined)
-
 
         # before we set fixture, copy xauthority if needed
         self._copy_xauthority_file(temp_dir)
