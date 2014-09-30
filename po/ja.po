@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-09-22 15:39-0400\n"
+"POT-Creation-Date: 2014-09-29 15:28+0200\n"
 "PO-Revision-Date: 2014-01-27 05:54+0000\n"
 "Last-Translator: Shushi Kurose <md81bird@hitaki.net>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2014-09-27 06:25+0000\n"
+"X-Launchpad-Export-Date: 2014-09-30 07:00+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -133,6 +133,10 @@ msgstr ""
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
+msgstr ""
+
+#: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
+msgid "File operation"
 msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:94
