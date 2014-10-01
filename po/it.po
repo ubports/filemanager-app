@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-09-29 15:28+0200\n"
-"PO-Revision-Date: 2014-09-04 07:40+0000\n"
+"PO-Revision-Date: 2014-09-30 11:11+0000\n"
 "Last-Translator: Claudio Arseni <claudio.arseni@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-30 06:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-01 06:22+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -55,15 +55,15 @@ msgstr "Elenco"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 msgid "Authentication required"
-msgstr ""
+msgstr "Autenticazione richiesta"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Enter password:"
-msgstr ""
+msgstr "Inserisci la password:"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "Password"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
@@ -137,7 +137,7 @@ msgstr "Operazione in corso"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
-msgstr ""
+msgstr "Operazione sul file"
 
 #: ../src/app/qml/ui/FolderListPage.qml:94
 #, qt-format
@@ -216,11 +216,11 @@ msgstr "Seleziona"
 
 #: ../src/app/qml/ui/FolderListPage.qml:394
 msgid "Unlock full access"
-msgstr ""
+msgstr "Sblocca accesso completo"
 
 #: ../src/app/qml/ui/FolderListPage.qml:408
 msgid "Authentication failed"
-msgstr ""
+msgstr "Autenticazione non riuscita"
 
 #: ../src/app/qml/ui/FolderListPage.qml:464
 msgid "No files"
