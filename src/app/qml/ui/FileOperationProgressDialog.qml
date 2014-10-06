@@ -26,7 +26,7 @@ Dialog {
     property Page page
     property string descriptionPrepend: i18n.tr("Operation in progress")
 
-    title: "File operation"
+    title: i18n.tr("File operation")
     text: descriptionPrepend
 
     function startOperation(name) {

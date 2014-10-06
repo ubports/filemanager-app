@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-08-13 10:37+0200\n"
-"PO-Revision-Date: 2014-09-04 06:49+0000\n"
+"POT-Creation-Date: 2014-09-29 15:28+0200\n"
+"PO-Revision-Date: 2014-09-30 13:39+0000\n"
 "Last-Translator: Richard Somlói <ricsipontaz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-05 07:43+0000\n"
+"X-Launchpad-Export-Date: 2014-10-01 06:22+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -31,39 +31,53 @@ msgid "%1 (%2 files)"
 msgstr "%1 (%2 fájl)"
 
 #: ../src/app/qml/components/PlacesSidebar.qml:54
-#: ../src/app/qml/ui/FolderListPage.qml:305
+#: ../src/app/qml/ui/FolderListPage.qml:306
 msgid "Places"
 msgstr "Helyek"
 
-#: ../src/app/qml/filemanager.qml:83 ../src/app/qml/ui/SettingsSheet.qml:31
+#: ../src/app/qml/filemanager.qml:89 ../src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
 msgstr "Beállítások"
 
-#: ../src/app/qml/filemanager.qml:84
+#: ../src/app/qml/filemanager.qml:90
 msgid "Change app settings"
 msgstr "Beállítások módosítása"
 
-#: ../src/app/qml/filemanager.qml:246 ../src/app/qml/ui/FolderListPage.qml:408
+#: ../src/app/qml/filemanager.qml:252 ../src/app/qml/ui/FolderListPage.qml:432
 #: ../src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr "Ikonok"
 
-#: ../src/app/qml/filemanager.qml:246 ../src/app/qml/ui/FolderListPage.qml:425
+#: ../src/app/qml/filemanager.qml:252 ../src/app/qml/ui/FolderListPage.qml:449
 #: ../src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr "Lista"
 
+#: ../src/app/qml/ui/AuthenticationDialog.qml:25
+msgid "Authentication required"
+msgstr "Hitelesítés szükséges"
+
+#: ../src/app/qml/ui/AuthenticationDialog.qml:27
+msgid "Enter password:"
+msgstr "Jelszó megadása:"
+
+#: ../src/app/qml/ui/AuthenticationDialog.qml:39
+msgid "password"
+msgstr "jelszó"
+
+#: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
-#: ../src/app/qml/ui/ConfirmDialogWithInput.qml:41
+#: ../src/app/qml/ui/ConfirmDialogWithInput.qml:47
 #: ../src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
 msgstr "Ok"
 
+#: ../src/app/qml/ui/AuthenticationDialog.qml:60
 #: ../src/app/qml/ui/ConfirmDialog.qml:41
-#: ../src/app/qml/ui/ConfirmDialogWithInput.qml:51
+#: ../src/app/qml/ui/ConfirmDialogWithInput.qml:57
 #: ../src/app/qml/ui/FileActionDialog.qml:45
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../src/app/qml/ui/FolderListPage.qml:385
+#: ../src/app/qml/ui/FolderListPage.qml:386
 #: ../src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
 msgstr "Mégse"
@@ -121,74 +135,78 @@ msgstr "Jogosultságok:"
 msgid "Operation in progress"
 msgstr "Művelet folyamatban"
 
-#: ../src/app/qml/ui/FolderListPage.qml:93
+#: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
+msgid "File operation"
+msgstr "Fájlművelet"
+
+#: ../src/app/qml/ui/FolderListPage.qml:94
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
 msgstr[0] "%1 fájl"
 msgstr[1] "%1 fájl"
 
-#: ../src/app/qml/ui/FolderListPage.qml:118
+#: ../src/app/qml/ui/FolderListPage.qml:119
 msgid "Open in a new tab"
 msgstr "Megnyitás új lapon"
 
-#: ../src/app/qml/ui/FolderListPage.qml:126
+#: ../src/app/qml/ui/FolderListPage.qml:127
 msgid "Close this tab"
 msgstr "Lap bezárása"
 
-#: ../src/app/qml/ui/FolderListPage.qml:146
+#: ../src/app/qml/ui/FolderListPage.qml:147
 msgid "Create New Folder"
 msgstr "Új mappa létrehozása"
 
-#: ../src/app/qml/ui/FolderListPage.qml:166
+#: ../src/app/qml/ui/FolderListPage.qml:167
 msgid "Paste"
 msgstr "Beillesztés"
 
-#: ../src/app/qml/ui/FolderListPage.qml:167
+#: ../src/app/qml/ui/FolderListPage.qml:168
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
 msgstr[0] "%1 fájl beillesztése"
 msgstr[1] "%1 fájl beillesztése"
 
-#: ../src/app/qml/ui/FolderListPage.qml:170
+#: ../src/app/qml/ui/FolderListPage.qml:171
 msgid "Paste files"
 msgstr "Fájlok beillesztése"
 
-#: ../src/app/qml/ui/FolderListPage.qml:182
+#: ../src/app/qml/ui/FolderListPage.qml:183
 msgid "Open in Terminal"
 msgstr "Megnyitás terminálban"
 
-#: ../src/app/qml/ui/FolderListPage.qml:194
-#: ../src/app/qml/ui/FolderListPage.qml:567
+#: ../src/app/qml/ui/FolderListPage.qml:195
+#: ../src/app/qml/ui/FolderListPage.qml:591
 msgid "Properties"
 msgstr "Tulajdonságok"
 
-#: ../src/app/qml/ui/FolderListPage.qml:211
+#: ../src/app/qml/ui/FolderListPage.qml:212
 msgid "Create folder"
 msgstr "Mappa létrehozása"
 
-#: ../src/app/qml/ui/FolderListPage.qml:212
+#: ../src/app/qml/ui/FolderListPage.qml:213
 msgid "Enter name for new folder"
 msgstr "Adja meg az új mappa nevét"
 
-#: ../src/app/qml/ui/FolderListPage.qml:228
+#: ../src/app/qml/ui/FolderListPage.qml:229
 msgid "Create file"
 msgstr "Fájl létrehozása"
 
-#: ../src/app/qml/ui/FolderListPage.qml:229
+#: ../src/app/qml/ui/FolderListPage.qml:230
 msgid "Enter name for new file"
 msgstr "Adja meg az új fájl nevét"
 
-#: ../src/app/qml/ui/FolderListPage.qml:251
+#: ../src/app/qml/ui/FolderListPage.qml:252
 msgid "Up"
 msgstr "Fel"
 
-#: ../src/app/qml/ui/FolderListPage.qml:280
+#: ../src/app/qml/ui/FolderListPage.qml:281
 msgid "Actions"
 msgstr "Műveletek"
 
-#: ../src/app/qml/ui/FolderListPage.qml:290
+#: ../src/app/qml/ui/FolderListPage.qml:291
 msgid "View"
 msgstr "Nézet"
 
@@ -196,85 +214,93 @@ msgstr "Nézet"
 msgid "Select"
 msgstr "Kiválasztás"
 
-#: ../src/app/qml/ui/FolderListPage.qml:440
+#: ../src/app/qml/ui/FolderListPage.qml:394
+msgid "Unlock full access"
+msgstr "Teljes hozzáférés feloldása"
+
+#: ../src/app/qml/ui/FolderListPage.qml:408
+msgid "Authentication failed"
+msgstr "Hitelesítés sikertelen"
+
+#: ../src/app/qml/ui/FolderListPage.qml:464
 msgid "No files"
 msgstr "Nincsenek fájlok"
 
-#: ../src/app/qml/ui/FolderListPage.qml:460
-#: ../src/app/qml/ui/FolderListPage.qml:541
+#: ../src/app/qml/ui/FolderListPage.qml:484
+#: ../src/app/qml/ui/FolderListPage.qml:565
 msgid "Delete"
 msgstr "Törlés"
 
-#: ../src/app/qml/ui/FolderListPage.qml:461
+#: ../src/app/qml/ui/FolderListPage.qml:485
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "Biztos, hogy véglegesen törli a következőt: „%1” ?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:484
-#: ../src/app/qml/ui/FolderListPage.qml:554
+#: ../src/app/qml/ui/FolderListPage.qml:508
+#: ../src/app/qml/ui/FolderListPage.qml:578
 msgid "Rename"
 msgstr "Átnevezés"
 
-#: ../src/app/qml/ui/FolderListPage.qml:485
+#: ../src/app/qml/ui/FolderListPage.qml:509
 msgid "Enter a new name"
 msgstr "Új név megadása"
 
-#: ../src/app/qml/ui/FolderListPage.qml:494
+#: ../src/app/qml/ui/FolderListPage.qml:518
 msgid "Could not rename"
 msgstr "Nem sikerült átnevezni"
 
-#: ../src/app/qml/ui/FolderListPage.qml:495
+#: ../src/app/qml/ui/FolderListPage.qml:519
 msgid "Insufficient permissions or name already exists?"
 msgstr "Nem megfelelő a jogosultság vagy már létezik a név?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:518
+#: ../src/app/qml/ui/FolderListPage.qml:542
 msgid "Cut"
 msgstr "Kivágás"
 
-#: ../src/app/qml/ui/FolderListPage.qml:529
+#: ../src/app/qml/ui/FolderListPage.qml:553
 msgid "Copy"
 msgstr "Másolás"
 
-#: ../src/app/qml/ui/FolderListPage.qml:586
-#: ../src/app/qml/ui/FolderListPage.qml:709
+#: ../src/app/qml/ui/FolderListPage.qml:610
+#: ../src/app/qml/ui/FolderListPage.qml:733
 msgid "File operation error"
 msgstr "Fájlművelet-hiba"
 
-#: ../src/app/qml/ui/FolderListPage.qml:635
+#: ../src/app/qml/ui/FolderListPage.qml:659
 msgid "~/Desktop"
 msgstr "~/Asztal"
 
-#: ../src/app/qml/ui/FolderListPage.qml:645
+#: ../src/app/qml/ui/FolderListPage.qml:669
 msgid "~/Public"
 msgstr "~/Nyilvános"
 
-#: ../src/app/qml/ui/FolderListPage.qml:647
+#: ../src/app/qml/ui/FolderListPage.qml:671
 msgid "~/Programs"
 msgstr "~/Programok"
 
-#: ../src/app/qml/ui/FolderListPage.qml:649
+#: ../src/app/qml/ui/FolderListPage.qml:673
 msgid "~/Templates"
 msgstr "~/Sablonok"
 
-#: ../src/app/qml/ui/FolderListPage.qml:662
+#: ../src/app/qml/ui/FolderListPage.qml:686
 msgid "Home"
-msgstr "Saját könyvtár"
+msgstr "Saját mappa"
 
-#: ../src/app/qml/ui/FolderListPage.qml:664
+#: ../src/app/qml/ui/FolderListPage.qml:688
 msgid "Device"
 msgstr "Eszköz"
 
-#: ../src/app/qml/ui/FolderListPage.qml:709
+#: ../src/app/qml/ui/FolderListPage.qml:733
 #, qt-format
 msgid "Unable to open '%1'"
 msgstr "Nem sikerült megnyitni a(z) „%1” fájlt"
 
-#: ../src/app/qml/ui/FolderListPage.qml:721
+#: ../src/app/qml/ui/FolderListPage.qml:745
 msgid "Folder not accessible"
 msgstr "A mappa nem elérhető"
 
 #. TRANSLATORS: this refers to a folder name
-#: ../src/app/qml/ui/FolderListPage.qml:723
+#: ../src/app/qml/ui/FolderListPage.qml:747
 #, qt-format
 msgid "Can not access %1"
 msgstr "%1 nem elérhető"
@@ -339,19 +365,19 @@ msgstr "Csökkenő"
 msgid "Filter"
 msgstr "Szűrő"
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:414
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:441
 msgid "path or url may not exist or cannot be read"
 msgstr "Az elérési útvonal vagy url nem létezik, vagy nem olvasható"
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:527
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:611
 msgid "Rename error"
 msgstr "Átnevezési hiba"
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:547
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:636
 msgid "Error creating new folder"
 msgstr "Hiba a mappa létrehozása közben"
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:1145
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:1264
 msgid "items"
 msgstr "elemek"
 

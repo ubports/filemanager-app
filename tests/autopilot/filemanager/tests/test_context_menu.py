@@ -15,15 +15,14 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
+from filemanager.tests import FileManagerTestCase
 
-from filemanager import tests
 
-
-class ContextMenuTestCase(tests.FileManagerTestCase):
+class ContextMenuTestCase(FileManagerTestCase):
     """Test cases for the context menu of the file manager app."""
 
     def get_current_directory_files_and_folders(self):
-        folder_list_page = self.main_view.get_folder_list_page()
+        folder_list_page = self.app.main_view.get_folder_list_page()
         return folder_list_page.get_files_and_folders()
 
     def test_rename_directory(self):
@@ -36,7 +35,7 @@ class ContextMenuTestCase(tests.FileManagerTestCase):
         original_directory = os.path.basename(self.make_directory_in_home())
         new_name = original_directory + 'edit'
 
-        self.main_view.rename(original_directory, new_name)
+        self.app.main_view.rename(original_directory, new_name)
 
         files_and_folders = self.get_current_directory_files_and_folders()
         self.assertEquals(files_and_folders, [new_name])
@@ -50,7 +49,7 @@ class ContextMenuTestCase(tests.FileManagerTestCase):
         original_file = os.path.basename(self.make_file_in_home())
         new_name = original_file + 'edit'
 
-        self.main_view.rename(original_file, new_name)
+        self.app.main_view.rename(original_file, new_name)
 
         files_and_folders = self.get_current_directory_files_and_folders()
         self.assertEquals(files_and_folders, [new_name])
@@ -64,7 +63,7 @@ class ContextMenuTestCase(tests.FileManagerTestCase):
         """
         dir_name = os.path.basename(self.make_directory_in_home())
 
-        self.main_view.delete(dir_name)
+        self.app.main_view.delete(dir_name)
 
         files_and_folders = self.get_current_directory_files_and_folders()
         self.assertEquals(files_and_folders, [])
@@ -77,7 +76,7 @@ class ContextMenuTestCase(tests.FileManagerTestCase):
         """
         file_name = os.path.basename(self.make_file_in_home())
 
-        self.main_view.delete(file_name)
+        self.app.main_view.delete(file_name)
 
         files_and_folders = self.get_current_directory_files_and_folders()
         self.assertEquals(files_and_folders, [])
