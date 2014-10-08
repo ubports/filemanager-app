@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-09-29 15:28+0200\n"
-"PO-Revision-Date: 2014-08-21 13:13+0000\n"
+"PO-Revision-Date: 2014-10-07 10:02+0000\n"
 "Last-Translator: Damir Jerovšek <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2014-09-30 07:00+0000\n"
+"X-Launchpad-Export-Date: 2014-10-08 07:35+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -56,15 +56,15 @@ msgstr "Seznam"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 msgid "Authentication required"
-msgstr ""
+msgstr "Zahtevana je overitev"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Enter password:"
-msgstr ""
+msgstr "Vnesite geslo:"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "geslo"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
@@ -138,7 +138,7 @@ msgstr "Dejanje se opravilo"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
-msgstr ""
+msgstr "Datotečno opravilo"
 
 #: ../src/app/qml/ui/FolderListPage.qml:94
 #, qt-format
@@ -221,11 +221,11 @@ msgstr "Izbor"
 
 #: ../src/app/qml/ui/FolderListPage.qml:394
 msgid "Unlock full access"
-msgstr ""
+msgstr "Odkleni popolni dostop"
 
 #: ../src/app/qml/ui/FolderListPage.qml:408
 msgid "Authentication failed"
-msgstr ""
+msgstr "Overitev je spodletela"
 
 #: ../src/app/qml/ui/FolderListPage.qml:464
 msgid "No files"
@@ -289,7 +289,7 @@ msgstr "~/Predloge"
 
 #: ../src/app/qml/ui/FolderListPage.qml:686
 msgid "Home"
-msgstr ""
+msgstr "Osebna mapa"
 
 #: ../src/app/qml/ui/FolderListPage.qml:688
 msgid "Device"
@@ -372,92 +372,92 @@ msgstr "Filter"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:441
 msgid "path or url may not exist or cannot be read"
-msgstr ""
+msgstr "pot ali url morda ne obstaja oz. ni mogoče prebrati"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:611
 msgid "Rename error"
-msgstr ""
+msgstr "Napaka preimenovanja"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:636
 msgid "Error creating new folder"
-msgstr ""
+msgstr "Napaka med ustvarjanjem nove mape"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1264
 msgid "items"
-msgstr ""
+msgstr "predmetov"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
 msgid "File or Directory does not exist"
-msgstr ""
+msgstr "Datoteka ali direktorij ne obstaja"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:264
 msgid " does not exist"
-msgstr ""
+msgstr " ne obstaja"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:585
 msgid "Could not remove the item "
-msgstr ""
+msgstr "Odstranitev ni uspela za predmet "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:626
 msgid "Could not find a suitable name to backup"
-msgstr ""
+msgstr "Ni bilo mogoče najti primernega imena za varnostno kopijo"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:680
 msgid "Could not create the directory"
-msgstr ""
+msgstr "Mape ni bilo mogoče ustvariti"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:689
 msgid "Could not create link to"
-msgstr ""
+msgstr "Ni mogoče ustvariti povezave do"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:701
 msgid "Could not set permissions to dir"
-msgstr ""
+msgstr "Ni bilo mogoče nastaviti dovoljenj za mapo"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:715
 msgid "Could not open file"
-msgstr ""
+msgstr "Datoteke ni mogoče odpreti"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:734
 msgid "There is no space on disk to copy"
-msgstr ""
+msgstr "Na disku ni več prostora za kopiranje"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:744
 msgid "Could not create file"
-msgstr ""
+msgstr "Ni mogoče ustvariti datoteke"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:808
 msgid "Could not remove the directory/file "
-msgstr ""
+msgstr "Ni mogoče odstraniti mape/datoteke "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:824
 msgid "Could not move the directory/file "
-msgstr ""
+msgstr "Ni mogoče premakniti mape/datoteke "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:858
 msgid "Cannot copy items"
-msgstr ""
+msgstr "Predmetov ni mogoče kopirati"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:859
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:878
 msgid "no write permission on folder "
-msgstr ""
+msgstr "ni pisalnih dovoljenj za mapo "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:877
 msgid "Cannot move items"
-msgstr ""
+msgstr "Predmetov ni mogoče premakniti"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
 msgid "origin and destination folders are the same"
-msgstr ""
+msgstr "izvirne in ciljne mape so enake"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1099
 msgid "Write error in "
-msgstr ""
+msgstr "Napaka pisanja v "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1115
 msgid "Read error in "
-msgstr ""
+msgstr "Napaka branja v "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1349
 msgid " Copy"
@@ -477,4 +477,4 @@ msgstr ""
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
-msgstr ""
+msgstr "Upravljalnik datotek"
