@@ -77,7 +77,6 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
         self.real_home_dir = os.getenv('HOME')
         self.patch_home()
 
-
     @autopilot_logging.log_action(logger.info)
     def launch_test_local(self):
         self.useFixture(fixtures.EnvironmentVariable(
