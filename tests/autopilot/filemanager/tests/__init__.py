@@ -29,7 +29,6 @@ from autopilot.matchers import Eventually
 from autopilot.testcase import AutopilotTestCase
 from testtools.matchers import Equals
 import ubuntuuitoolkit
-from ubuntuuitoolkit import fixture_setup as toolkit_fixtures
 
 import filemanager
 from filemanager import fixture_setup as fm_fixtures
