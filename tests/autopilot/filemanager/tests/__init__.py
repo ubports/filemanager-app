@@ -233,16 +233,12 @@ class FileManagerTestCase(BaseTestCaseWithPatchedHome):
 
     def setUp(self):
         super(FileManagerTestCase, self).setUp()
-        testdir = fm_fixtures.TemporaryDirectoryInDirectory(
-            os.getenv('HOME'))
-        self.useFixture(testdir)
-        self.testhome = testdir.path
-        logger.debug('Test home set to %s' % self.testhome)
+        self.fakehome = os.getenv('HOME')
         self.original_file_count = \
-            len([i for i in os.listdir(self.testhome)
+            len([i for i in os.listdir(self.fakehome)
                  if not i.startswith('.')])
         logger.debug('Directory Listing for HOME\n%s' %
-                     os.listdir(self.testhome))
+                     os.listdir(self.fakehome))
         logger.debug('File count in HOME is %s' % self.original_file_count)
         self.app = filemanager.Filemanager(self.launcher(), self.test_type)
 
@@ -256,16 +252,16 @@ class FileManagerTestCase(BaseTestCaseWithPatchedHome):
         if type_ != 'file' and type_ != 'directory':
             raise ValueError('Unknown content type: "{0}"', type_)
         if type_ == 'file':
-            temp_file = fm_fixtures.TemporaryFileInDirectory(self.testhome)
+            temp_file = fm_fixtures.TemporaryFileInDirectory(self.fakehome)
             self.useFixture(temp_file)
             path = temp_file.path
         else:
             temp_dir = fm_fixtures.TemporaryDirectoryInDirectory(
-                self.testhome)
+                self.fakehome)
             self.useFixture(temp_dir)
             path = temp_dir.path
         logger.debug('Directory Listing for HOME\n%s' %
-                     os.listdir(self.testhome))
+                     os.listdir(self.fakehome))
         self._assert_number_of_files(1)
         return path
 
