@@ -25,8 +25,6 @@ from autopilot import input
 from autopilot.introspection import dbus
 import ubuntuuitoolkit
 
-from filemanager import _common
-
 logger = logging.getLogger(__name__)
 
 

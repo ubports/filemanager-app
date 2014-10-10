@@ -76,14 +76,7 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
         self.launcher, self.test_type = self.get_launcher_and_type()
         self.real_home_dir = os.getenv('HOME')
         self.patch_home()
-        self.home_dir = os.getenv('HOME')
 
-        self.original_file_count = \
-            len([i for i in os.listdir(self.home_dir)
-                 if not i.startswith('.')])
-        logger.debug('Directory Listing for HOME\n%s' %
-                     os.listdir(self.home_dir))
-        logger.debug('File count in HOME is %s' % self.original_file_count)
 
     @autopilot_logging.log_action(logger.info)
     def launch_test_local(self):
@@ -210,47 +203,13 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
 
             os.environ[key] = value
 
-        orginal = os.getenv(key)
-        if orginal is None:
-            orginal = ''
+        original = os.getenv(key)
+        if original is None:
+            original = ''
         patch_var(key, value)
         # on click, we should cleanup
         if self.test_type is 'click':
-            self.addCleanup(patch_var, key, orginal)
-
-    def make_file_in_home(self):
-        return self.make_content_in_home('file')
-
-    def make_directory_in_home(self):
-        return self.make_content_in_home('directory')
-
-    def make_content_in_home(self, type_):
-        if type_ != 'file' and type_ != 'directory':
-            raise ValueError('Unknown content type: "{0}"', type_)
-        if type_ == 'file':
-            temp_file = fm_fixtures.TemporaryFileInDirectory(self.home_dir)
-            self.useFixture(temp_file)
-            path = temp_file.path
-        else:
-            temp_dir = fm_fixtures.TemporaryDirectoryInDirectory(
-                self.home_dir)
-            self.useFixture(temp_dir)
-            path = temp_dir.path
-        logger.debug('Directory Listing for HOME\n%s' %
-                     os.listdir(self.home_dir))
-        self._assert_number_of_files(1)
-        return path
-
-    def _assert_number_of_files(self, expected_number_of_files, home=True):
-        if home:
-            expected_number_of_files += self.original_file_count
-        folder_list_page = self.app.main_view.get_folder_list_page()
-        self.assertThat(
-            folder_list_page.get_number_of_files_from_list,
-            Eventually(Equals(expected_number_of_files), timeout=60))
-        self.assertThat(
-            folder_list_page.get_number_of_files_from_header,
-            Eventually(Equals(expected_number_of_files), timeout=60))
+            self.addCleanup(patch_var, key, original)
 
     def _get_build_dir(self):
         """
@@ -274,4 +233,45 @@ class FileManagerTestCase(BaseTestCaseWithPatchedHome):
 
     def setUp(self):
         super(FileManagerTestCase, self).setUp()
+        self.fakehome = os.getenv('HOME')
+        self.original_file_count = \
+            len([i for i in os.listdir(self.fakehome)
+                 if not i.startswith('.')])
+        logger.debug('Directory Listing for HOME\n%s' %
+                     os.listdir(self.fakehome))
+        logger.debug('File count in HOME is %s' % self.original_file_count)
         self.app = filemanager.Filemanager(self.launcher(), self.test_type)
+
+    def make_file_in_home(self):
+        return self.make_content_in_home('file')
+
+    def make_directory_in_home(self):
+        return self.make_content_in_home('directory')
+
+    def make_content_in_home(self, type_):
+        if type_ != 'file' and type_ != 'directory':
+            raise ValueError('Unknown content type: "{0}"', type_)
+        if type_ == 'file':
+            temp_file = fm_fixtures.TemporaryFileInDirectory(self.fakehome)
+            self.useFixture(temp_file)
+            path = temp_file.path
+        else:
+            temp_dir = fm_fixtures.TemporaryDirectoryInDirectory(
+                self.fakehome)
+            self.useFixture(temp_dir)
+            path = temp_dir.path
+        logger.debug('Directory Listing for HOME\n%s' %
+                     os.listdir(self.fakehome))
+        self._assert_number_of_files(1)
+        return path
+
+    def _assert_number_of_files(self, expected_number_of_files, home=True):
+        if home:
+            expected_number_of_files += self.original_file_count
+        folder_list_page = self.app.main_view.get_folder_list_page()
+        self.assertThat(
+            folder_list_page.get_number_of_files_from_list,
+            Eventually(Equals(expected_number_of_files), timeout=60))
+        self.assertThat(
+            folder_list_page.get_number_of_files_from_header,
+            Eventually(Equals(expected_number_of_files), timeout=60))
