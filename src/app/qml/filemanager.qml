@@ -149,7 +149,7 @@ MainView {
 
         FolderListPage {
             // TODO: remember last selection
-            folder: "~"
+            folder: userplaces.locationHome
         }
     }
 
