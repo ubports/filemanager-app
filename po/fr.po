@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-09-29 15:28+0200\n"
-"PO-Revision-Date: 2014-09-14 15:45+0000\n"
-"Last-Translator: Anne <anneonyme017@gmail.com>\n"
+"PO-Revision-Date: 2014-10-10 20:20+0000\n"
+"Last-Translator: londumas <helion331990@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2014-09-30 06:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-11 05:05+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -55,15 +55,15 @@ msgstr "Liste"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 msgid "Authentication required"
-msgstr ""
+msgstr "Authentification requise"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Enter password:"
-msgstr ""
+msgstr "Entrer le mot de passe :"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "mot de passe"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
@@ -220,7 +220,7 @@ msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:408
 msgid "Authentication failed"
-msgstr ""
+msgstr "Échec de l'authentification"
 
 #: ../src/app/qml/ui/FolderListPage.qml:464
 msgid "No files"

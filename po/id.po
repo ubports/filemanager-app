@@ -8,32 +8,32 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-09-29 15:28+0200\n"
-"PO-Revision-Date: 2014-04-05 04:53+0000\n"
+"PO-Revision-Date: 2014-10-11 03:48+0000\n"
 "Last-Translator: Dirgita <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2014-09-30 06:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-11 05:05+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
 #: ../src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 berkas)"
 
 #: ../src/app/qml/components/FolderIconView.qml:59
 #: ../src/app/qml/components/FolderListView.qml:37
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 berkas)"
 
 #: ../src/app/qml/components/PlacesSidebar.qml:54
 #: ../src/app/qml/ui/FolderListPage.qml:306
 msgid "Places"
-msgstr ""
+msgstr "Lokasi"
 
 #: ../src/app/qml/filemanager.qml:89 ../src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
@@ -46,7 +46,7 @@ msgstr "Ubah pengaturan app"
 #: ../src/app/qml/filemanager.qml:252 ../src/app/qml/ui/FolderListPage.qml:432
 #: ../src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
-msgstr ""
+msgstr "Ikon"
 
 #: ../src/app/qml/filemanager.qml:252 ../src/app/qml/ui/FolderListPage.qml:449
 #: ../src/app/qml/ui/ViewPopover.qml:71
@@ -55,22 +55,22 @@ msgstr "Senarai"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 msgid "Authentication required"
-msgstr ""
+msgstr "Perlu otentikasi"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Enter password:"
-msgstr ""
+msgstr "Masukkan sandi:"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "sandi"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
 #: ../src/app/qml/ui/ConfirmDialogWithInput.qml:47
 #: ../src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
-msgstr ""
+msgstr "Oke"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:60
 #: ../src/app/qml/ui/ConfirmDialog.qml:41
@@ -80,242 +80,240 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:386
 #: ../src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
-msgstr ""
+msgstr "Batal"
 
 #: ../src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Pilih aksi"
 
 #: ../src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "Untuk berkas: %1"
 
 #: ../src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "Buka"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "Dapat dibaca"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "Dapat ditulis"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "Dapat dieksekusi"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "Jalur:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "Isi:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "Ukuran:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "Diakses:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "Diubah:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "Izin"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "Operasi sedang berlangsung"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
-msgstr ""
+msgstr "Operasi berkas"
 
 #: ../src/app/qml/ui/FolderListPage.qml:94
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 berkas"
 
 #: ../src/app/qml/ui/FolderListPage.qml:119
 msgid "Open in a new tab"
-msgstr ""
+msgstr "Buka di tab baru"
 
 #: ../src/app/qml/ui/FolderListPage.qml:127
 msgid "Close this tab"
-msgstr ""
+msgstr "Tutup tab ini"
 
 #: ../src/app/qml/ui/FolderListPage.qml:147
 msgid "Create New Folder"
-msgstr ""
+msgstr "Buat Folder Baru"
 
 #: ../src/app/qml/ui/FolderListPage.qml:167
 msgid "Paste"
-msgstr ""
+msgstr "Tempel"
 
 #: ../src/app/qml/ui/FolderListPage.qml:168
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tempel %1 Berkas"
 
 #: ../src/app/qml/ui/FolderListPage.qml:171
 msgid "Paste files"
-msgstr ""
+msgstr "Tempel berkas"
 
 #: ../src/app/qml/ui/FolderListPage.qml:183
 msgid "Open in Terminal"
-msgstr ""
+msgstr "Buka di Terminal"
 
 #: ../src/app/qml/ui/FolderListPage.qml:195
 #: ../src/app/qml/ui/FolderListPage.qml:591
 msgid "Properties"
-msgstr ""
+msgstr "Properti"
 
 #: ../src/app/qml/ui/FolderListPage.qml:212
 msgid "Create folder"
-msgstr ""
+msgstr "Buat folder"
 
 #: ../src/app/qml/ui/FolderListPage.qml:213
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Ketikkan nama folder baru"
 
 #: ../src/app/qml/ui/FolderListPage.qml:229
 msgid "Create file"
-msgstr ""
+msgstr "Buat berkas"
 
 #: ../src/app/qml/ui/FolderListPage.qml:230
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Ketikkan nama berkas baru"
 
 #: ../src/app/qml/ui/FolderListPage.qml:252
 msgid "Up"
-msgstr ""
+msgstr "Naik"
 
 #: ../src/app/qml/ui/FolderListPage.qml:281
 msgid "Actions"
-msgstr ""
+msgstr "Aksi"
 
 #: ../src/app/qml/ui/FolderListPage.qml:291
 msgid "View"
-msgstr ""
+msgstr "Tampilan"
 
 #: ../src/app/qml/ui/FolderListPage.qml:371
 msgid "Select"
-msgstr ""
+msgstr "Pilih"
 
 #: ../src/app/qml/ui/FolderListPage.qml:394
 msgid "Unlock full access"
-msgstr ""
+msgstr "Buka akses penuh"
 
 #: ../src/app/qml/ui/FolderListPage.qml:408
 msgid "Authentication failed"
-msgstr ""
+msgstr "Otentikasi gagal"
 
 #: ../src/app/qml/ui/FolderListPage.qml:464
 msgid "No files"
-msgstr ""
+msgstr "Tak ada berkas"
 
 #: ../src/app/qml/ui/FolderListPage.qml:484
 #: ../src/app/qml/ui/FolderListPage.qml:565
 msgid "Delete"
-msgstr ""
+msgstr "Hapus"
 
 #: ../src/app/qml/ui/FolderListPage.qml:485
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "Yakin untuk menghapus permanen '%1'?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:508
 #: ../src/app/qml/ui/FolderListPage.qml:578
 msgid "Rename"
-msgstr ""
+msgstr "Ubah Nama"
 
 #: ../src/app/qml/ui/FolderListPage.qml:509
 msgid "Enter a new name"
-msgstr ""
+msgstr "Ketikkan nama baru"
 
 #: ../src/app/qml/ui/FolderListPage.qml:518
 msgid "Could not rename"
-msgstr ""
+msgstr "Tak dapat mengubah nama"
 
 #: ../src/app/qml/ui/FolderListPage.qml:519
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Tak ada izin atau nama sudah ada?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:542
 msgid "Cut"
-msgstr ""
+msgstr "Potong"
 
 #: ../src/app/qml/ui/FolderListPage.qml:553
 msgid "Copy"
-msgstr ""
+msgstr "Salin"
 
 #: ../src/app/qml/ui/FolderListPage.qml:610
 #: ../src/app/qml/ui/FolderListPage.qml:733
 msgid "File operation error"
-msgstr ""
+msgstr "Kesalahan operasi berkas"
 
 #: ../src/app/qml/ui/FolderListPage.qml:659
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Desktop"
 
 #: ../src/app/qml/ui/FolderListPage.qml:669
 msgid "~/Public"
-msgstr ""
+msgstr "~/Publik"
 
 #: ../src/app/qml/ui/FolderListPage.qml:671
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Program"
 
 #: ../src/app/qml/ui/FolderListPage.qml:673
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Templat"
 
 #: ../src/app/qml/ui/FolderListPage.qml:686
 msgid "Home"
-msgstr ""
+msgstr "Beranda"
 
 #: ../src/app/qml/ui/FolderListPage.qml:688
 msgid "Device"
-msgstr ""
+msgstr "Perangkat"
 
 #: ../src/app/qml/ui/FolderListPage.qml:733
 #, qt-format
 msgid "Unable to open '%1'"
-msgstr ""
+msgstr "Tak dapat membuka '%1'"
 
 #: ../src/app/qml/ui/FolderListPage.qml:745
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Folder tak bisa diakses"
 
 #. TRANSLATORS: this refers to a folder name
 #: ../src/app/qml/ui/FolderListPage.qml:747
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "Tak dapat mengakses %1"
 
 #: ../src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Ke Lokasi"
 
 #: ../src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Ketikkan lokasi:"
 
 #: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPopover.qml:53
 msgid "Location..."
-msgstr ""
+msgstr "Lokasi..."
 
 #: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPopover.qml:68
 msgid "Go"
@@ -323,15 +321,15 @@ msgstr ""
 
 #: ../src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
-msgstr ""
+msgstr "Tutup"
 
 #: ../src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Tampilkan Fitur Lanjutan"
 
 #: ../src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Tampilkan Berkas Tersembunyi"
 
 #: ../src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
