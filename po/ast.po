@@ -8,32 +8,32 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-09-29 15:28+0200\n"
-"PO-Revision-Date: 2014-03-21 01:07+0000\n"
+"PO-Revision-Date: 2014-10-12 17:00+0000\n"
 "Last-Translator: Xuacu Saturio <xuacusk8@gmail.com>\n"
 "Language-Team: Asturian <ast@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-30 06:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-13 06:12+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
 #: ../src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (1 file)"
-msgstr ""
+msgstr "%1 (1 ficheru)"
 
 #: ../src/app/qml/components/FolderIconView.qml:59
 #: ../src/app/qml/components/FolderListView.qml:37
 #, qt-format
 msgid "%1 (%2 files)"
-msgstr ""
+msgstr "%1 (%2 ficheros)"
 
 #: ../src/app/qml/components/PlacesSidebar.qml:54
 #: ../src/app/qml/ui/FolderListPage.qml:306
 msgid "Places"
-msgstr ""
+msgstr "Llugares"
 
 #: ../src/app/qml/filemanager.qml:89 ../src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
@@ -55,22 +55,22 @@ msgstr "Llista"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 msgid "Authentication required"
-msgstr ""
+msgstr "Necesítase autenticación"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Enter password:"
-msgstr ""
+msgstr "Escribi la contraseña:"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "contraseña"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
 #: ../src/app/qml/ui/ConfirmDialogWithInput.qml:47
 #: ../src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
-msgstr ""
+msgstr "Aceutar"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:60
 #: ../src/app/qml/ui/ConfirmDialog.qml:41
@@ -80,396 +80,396 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:386
 #: ../src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
-msgstr ""
+msgstr "Encaboxar"
 
 #: ../src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Escueyi aición"
 
 #: ../src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "Pal ficheru: %1"
 
 #: ../src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "Abrir"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "Lleíble"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "Escribible"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "Executable"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "Camín:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "Conteníu:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "Tamañu:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "Abiertu:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "Camudáu:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "Permisos:"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "La operación ta en progresu"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
-msgstr ""
+msgstr "Operación nel ficheru"
 
 #: ../src/app/qml/ui/FolderListPage.qml:94
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 ficheru"
+msgstr[1] "%1 ficheros"
 
 #: ../src/app/qml/ui/FolderListPage.qml:119
 msgid "Open in a new tab"
-msgstr ""
+msgstr "Abrir nuna llingüeta nueva"
 
 #: ../src/app/qml/ui/FolderListPage.qml:127
 msgid "Close this tab"
-msgstr ""
+msgstr "Zarrar esta llingüeta"
 
 #: ../src/app/qml/ui/FolderListPage.qml:147
 msgid "Create New Folder"
-msgstr ""
+msgstr "Crear carpeta nueva"
 
 #: ../src/app/qml/ui/FolderListPage.qml:167
 msgid "Paste"
-msgstr ""
+msgstr "Apegar"
 
 #: ../src/app/qml/ui/FolderListPage.qml:168
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Apegar %1 ficheru"
+msgstr[1] "Apegar %1 ficheros"
 
 #: ../src/app/qml/ui/FolderListPage.qml:171
 msgid "Paste files"
-msgstr ""
+msgstr "Apegar ficheros"
 
 #: ../src/app/qml/ui/FolderListPage.qml:183
 msgid "Open in Terminal"
-msgstr ""
+msgstr "Abrir nun terminal"
 
 #: ../src/app/qml/ui/FolderListPage.qml:195
 #: ../src/app/qml/ui/FolderListPage.qml:591
 msgid "Properties"
-msgstr ""
+msgstr "Propiedaes"
 
 #: ../src/app/qml/ui/FolderListPage.qml:212
 msgid "Create folder"
-msgstr ""
+msgstr "Crear carpeta"
 
 #: ../src/app/qml/ui/FolderListPage.qml:213
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Escribi un nome pa la carpeta nueva"
 
 #: ../src/app/qml/ui/FolderListPage.qml:229
 msgid "Create file"
-msgstr ""
+msgstr "Crear ficheru"
 
 #: ../src/app/qml/ui/FolderListPage.qml:230
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Escribi un nome pal ficheru nuevu"
 
 #: ../src/app/qml/ui/FolderListPage.qml:252
 msgid "Up"
-msgstr ""
+msgstr "Xubir"
 
 #: ../src/app/qml/ui/FolderListPage.qml:281
 msgid "Actions"
-msgstr ""
+msgstr "Aiciones"
 
 #: ../src/app/qml/ui/FolderListPage.qml:291
 msgid "View"
-msgstr ""
+msgstr "Ver"
 
 #: ../src/app/qml/ui/FolderListPage.qml:371
 msgid "Select"
-msgstr ""
+msgstr "Seleicionar"
 
 #: ../src/app/qml/ui/FolderListPage.qml:394
 msgid "Unlock full access"
-msgstr ""
+msgstr "Desbloquiar accesu completu"
 
 #: ../src/app/qml/ui/FolderListPage.qml:408
 msgid "Authentication failed"
-msgstr ""
+msgstr "Falló l'autenticación"
 
 #: ../src/app/qml/ui/FolderListPage.qml:464
 msgid "No files"
-msgstr ""
+msgstr "Nun hai ficheros"
 
 #: ../src/app/qml/ui/FolderListPage.qml:484
 #: ../src/app/qml/ui/FolderListPage.qml:565
 msgid "Delete"
-msgstr ""
+msgstr "Desaniciar"
 
 #: ../src/app/qml/ui/FolderListPage.qml:485
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "¿De xuru quies desaniciar dafechu '%1'?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:508
 #: ../src/app/qml/ui/FolderListPage.qml:578
 msgid "Rename"
-msgstr ""
+msgstr "Camudar nome"
 
 #: ../src/app/qml/ui/FolderListPage.qml:509
 msgid "Enter a new name"
-msgstr ""
+msgstr "Escribi un nome nuevu"
 
 #: ../src/app/qml/ui/FolderListPage.qml:518
 msgid "Could not rename"
-msgstr ""
+msgstr "Nun se pudo camudar el nome"
 
 #: ../src/app/qml/ui/FolderListPage.qml:519
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "¿Falten permisos o'l nome yá esiste?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:542
 msgid "Cut"
-msgstr ""
+msgstr "Cortar"
 
 #: ../src/app/qml/ui/FolderListPage.qml:553
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: ../src/app/qml/ui/FolderListPage.qml:610
 #: ../src/app/qml/ui/FolderListPage.qml:733
 msgid "File operation error"
-msgstr ""
+msgstr "Fallu na operación de ficheru"
 
 #: ../src/app/qml/ui/FolderListPage.qml:659
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Escritoriu"
 
 #: ../src/app/qml/ui/FolderListPage.qml:669
 msgid "~/Public"
-msgstr ""
+msgstr "~/Públicu"
 
 #: ../src/app/qml/ui/FolderListPage.qml:671
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Programes"
 
 #: ../src/app/qml/ui/FolderListPage.qml:673
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Plantíes"
 
 #: ../src/app/qml/ui/FolderListPage.qml:686
 msgid "Home"
-msgstr ""
+msgstr "Aniciu"
 
 #: ../src/app/qml/ui/FolderListPage.qml:688
 msgid "Device"
-msgstr ""
+msgstr "Preséu"
 
 #: ../src/app/qml/ui/FolderListPage.qml:733
 #, qt-format
 msgid "Unable to open '%1'"
-msgstr ""
+msgstr "Nun se pudo abrir '%1'"
 
 #: ../src/app/qml/ui/FolderListPage.qml:745
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Carpeta non accesible"
 
 #. TRANSLATORS: this refers to a folder name
 #: ../src/app/qml/ui/FolderListPage.qml:747
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "Nun pue accedese a %1"
 
 #: ../src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Dir al allugamientu"
 
 #: ../src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Escribi un allugamientu pa dir:"
 
 #: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPopover.qml:53
 msgid "Location..."
-msgstr ""
+msgstr "Allugamientu..."
 
 #: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPopover.qml:68
 msgid "Go"
-msgstr ""
+msgstr "Dir"
 
 #: ../src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
-msgstr ""
+msgstr "Zarrar"
 
 #: ../src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Amosar carauterístiques avanzaes"
 
 #: ../src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Amosar ficheros anubríos"
 
 #: ../src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr ""
+msgstr "Ver como"
 
 #: ../src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "Ordenar por"
 
 #: ../src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: ../src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: ../src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "Orde de clasificación"
 
 #: ../src/app/qml/ui/ViewPopover.qml:114 ../src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr ""
+msgstr "Ascendente"
 
 #: ../src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr ""
+msgstr "Descendente"
 
 #: ../src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
-msgstr ""
+msgstr "Filtru"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:441
 msgid "path or url may not exist or cannot be read"
-msgstr ""
+msgstr "el camín o url seique nun esista o nun pue lleese"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:611
 msgid "Rename error"
-msgstr ""
+msgstr "Error al camudar nome"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:636
 msgid "Error creating new folder"
-msgstr ""
+msgstr "Error al crear carpeta nueva"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1264
 msgid "items"
-msgstr ""
+msgstr "elementos"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
 msgid "File or Directory does not exist"
-msgstr ""
+msgstr "El ficheru o direutoriu nun esiste"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:264
 msgid " does not exist"
-msgstr ""
+msgstr " nun esiste"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:585
 msgid "Could not remove the item "
-msgstr ""
+msgstr "nun pudo desaniciase l'elementu "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:626
 msgid "Could not find a suitable name to backup"
-msgstr ""
+msgstr "Nun pudo alcontrase un nome afayadizu pa la copia de seguridá"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:680
 msgid "Could not create the directory"
-msgstr ""
+msgstr "El direutoriu nun pudo crease"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:689
 msgid "Could not create link to"
-msgstr ""
+msgstr "Nun pudo crease l'enllaz al destín"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:701
 msgid "Could not set permissions to dir"
-msgstr ""
+msgstr "Nun pudieron afitase los permisos del direutoriu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:715
 msgid "Could not open file"
-msgstr ""
+msgstr "El ficheru nun pudo abrise"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:734
 msgid "There is no space on disk to copy"
-msgstr ""
+msgstr "Nun queda espaciu pa copiar nel discu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:744
 msgid "Could not create file"
-msgstr ""
+msgstr "El ficheru nun pudo crease"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:808
 msgid "Could not remove the directory/file "
-msgstr ""
+msgstr "El ficheru/direutoriu nun pudo desaniciase "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:824
 msgid "Could not move the directory/file "
-msgstr ""
+msgstr "El ficheru/direutoriu nun pudo movese "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:858
 msgid "Cannot copy items"
-msgstr ""
+msgstr "Nun puen copiase los elementos"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:859
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:878
 msgid "no write permission on folder "
-msgstr ""
+msgstr "nun hai permisu d'escritura na carpeta "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:877
 msgid "Cannot move items"
-msgstr ""
+msgstr "Nun puen movese los elementos"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
 msgid "origin and destination folders are the same"
-msgstr ""
+msgstr "les carpetes d'orixe y destín son la mesma"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1099
 msgid "Write error in "
-msgstr ""
+msgstr "Error d'escritura en "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1115
 msgid "Read error in "
-msgstr ""
+msgstr "Error de llectura en "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1349
 msgid " Copy"
-msgstr ""
+msgstr " Copiar"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1405
 msgid "Set permissions error in "
-msgstr ""
+msgstr "Configurar l'error de permisos en "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1489
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "Nun pudo crease'l ficheru d'información de basoria"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1502
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "Nun pudo desaniciase'l ficheru d'información de basoria"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
-msgstr ""
+msgstr "Xestor de ficheros"
