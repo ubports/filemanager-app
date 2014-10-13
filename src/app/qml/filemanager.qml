@@ -38,6 +38,7 @@ MainView {
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
     applicationName: "com.ubuntu.filemanager"
+    useDeprecatedToolbar: false
 
     width: units.gu(100)
     height: units.gu(75)

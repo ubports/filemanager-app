@@ -26,6 +26,75 @@ import "../components"
 Page {
     id: folderListPage
     title: folderDisplayName(folder)
+
+    head.contents: Flickable {
+        id: flickable
+        height: units.gu(7)
+        contentWidth: row.width
+        anchors {
+            left: back.right
+            right: parent.right
+            rightMargin: units.gu(1)
+        }
+        clip: true
+        boundsBehavior: Flickable.StopAtBounds
+        Behavior on contentX { SmoothedAnimation { velocity: 200 } }
+
+        Row {
+            id: row
+            spacing: units.gu(3)
+
+            Repeater {
+                id: repeater
+                model: pathModel(folder)
+                property int level;
+                delegate: Rectangle {
+                    width: childrenRect.width
+                    height: units.gu(7)
+                    color: "transparent"
+
+                    Label {
+                        text: pathText(folder,index)
+                        anchors.verticalCenter: parent.verticalCenter
+                        Icon {
+                            name: "go-next"
+                            height: units.gu(3)
+                            width: height
+                            opacity: 1
+                            color: "white"
+                            anchors.right: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: flickable.contentX = parent.x
+                    }
+                }
+            }
+        }
+    }
+
+    head.backAction: Action {
+        id: back
+        iconName: "back"
+        onTriggered: {
+            flickable.contentX -= repeater.itemAt(1).width
+            goTo(pathBack(folder))
+        }
+    }
+    head.actions: [
+            Action {
+                id: save
+                iconName: "save"
+                text: i18n.tr("Save")
+            },
+            Action {
+                iconName: "add"
+                text: i18n.tr("Add")
+            }
+        ]
+
     flickable: !sidebar.expanded ?
                    (folderListView.visible ? folderListView : folderIconView.flickable) : null
 
@@ -77,8 +146,6 @@ Page {
             folderIconView.flickable.topMargin = units.gu(9.5)
         }
     }
-
-
 
     PlacesModel { id: userplaces }
 
@@ -689,6 +756,22 @@ Page {
         } else {
             return basename(folder)
         }
+    }
+
+    function pathBack(path) {
+        console.log("------------------------------------------")
+        console.log(path.split("/").slice(0,path.split("/").length-1).join("/"))
+       return path.split("/").slice(0,path.split("/").length-1).join("/")
+    }
+
+    function pathModel(path){
+        return path.split("/").length - 1
+    }
+
+    function pathText(path,index) {
+
+        var s = path.split('/')[index]
+        return s
     }
 
     function pathName(folder) {
