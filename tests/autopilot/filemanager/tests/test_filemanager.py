@@ -281,11 +281,11 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_copy_directory(self):
         # Set up a directory to copy and a directory to copy it into.
-        destination_dir_path = os.path.join(self.home_dir,
+        destination_dir_path = os.path.join(self.fakehome,
                                             'destination')
         destination_dir_name = os.path.basename(destination_dir_path)
         os.mkdir(destination_dir_path)
-        dir_to_copy_path = os.path.join(self.home_dir, 'to_copy')
+        dir_to_copy_path = os.path.join(self.fakehome, 'to_copy')
         dir_to_copy_name = os.path.basename(dir_to_copy_path)
         os.mkdir(dir_to_copy_path)
 
@@ -327,11 +327,11 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_cut_directory(self):
         # Set up a directory to cut and a directory to move it into.
-        destination_dir_path = os.path.join(self.home_dir,
+        destination_dir_path = os.path.join(self.fakehome,
                                             'destination')
         destination_dir_name = os.path.basename(destination_dir_path)
         os.mkdir(destination_dir_path)
-        dir_to_cut_path = os.path.join(self.home_dir, 'to_cut')
+        dir_to_cut_path = os.path.join(self.fakehome, 'to_cut')
         dir_to_cut_name = os.path.basename(dir_to_cut_path)
         os.mkdir(dir_to_cut_path)
 
@@ -478,4 +478,4 @@ class TestFolderListPage(FileManagerTestCase):
         folder_list_page = self.app.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_current_path,
-            Eventually(Equals(self.home_dir)))
+            Eventually(Equals(self.fakehome)))

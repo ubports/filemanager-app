@@ -30,7 +30,7 @@ class PlacesTestCase(FileManagerTestCase):
         folder_list_page = self.app.main_view.get_folder_list_page()
         self.assertThat(
             folder_list_page.get_current_path,
-            Eventually(Equals(self.home_dir)))
+            Eventually(Equals(self.fakehome)))
 
     def test_go_to_root_must_open_the_root_directory(self):
         """Test that opens the Device bookmark from the places section."""
