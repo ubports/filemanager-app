@@ -29,70 +29,120 @@ Page {
 
     head.contents: Flickable {
         id: flickable
-        height: units.gu(7)
         contentWidth: row.width
         anchors {
+            top: parent.top
+            bottom: parent.bottom
             left: back.right
             right: parent.right
             rightMargin: units.gu(1)
         }
         clip: true
         boundsBehavior: Flickable.StopAtBounds
-        Behavior on contentX { SmoothedAnimation { velocity: 200 } }
+        Behavior on contentX { SmoothedAnimation { velocity: 250 } }
 
         Row {
             id: row
             spacing: units.gu(3)
+            onWidthChanged: if (flickable.width < width) {
+                                flickable.contentX
+                                        = repeater.itemAt(repeater.model-1).x
+                                        - flickable.width
+                                        + repeater.itemAt(repeater.model-1).width
+                            }
 
             Repeater {
                 id: repeater
                 model: pathModel(folder)
-                property int level;
                 delegate: Rectangle {
-                    width: childrenRect.width
+                    width: childrenRect.width - icon.width
                     height: units.gu(7)
                     color: "transparent"
+                    visible: if (label.text === "home" && repeater.model > 1){false}
+                    onVisibleChanged: console.log(repeater.model)
 
                     Label {
+                        id: label
                         text: pathText(folder,index)
+                        fontSize: "x-large"
                         anchors.verticalCenter: parent.verticalCenter
-                        Icon {
-                            name: "go-next"
-                            height: units.gu(3)
-                            width: height
-                            opacity: 1
-                            color: "white"
-                            anchors.right: parent.left
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
+                        opacity: repeater.model !== index + 1 ? 0.7 : 1
+                        clip: true
+                        width: if (contentWidth > flickable.width) { flickable.width }
+                    }
+                    Icon {
+                        id: icon
+                        name: "go-next"
+                        height: units.gu(2.5)
+                        antialiasing: true
+                        width: height
+                        opacity: 1
+                        color: "white"
+                        anchors.right: label.left
+                        anchors.verticalCenter: parent.verticalCenter
                     }
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: flickable.contentX = parent.x
+                        onClicked: {
+                            goTo(pathRaw(folder,index))
+                        }
                     }
                 }
             }
         }
     }
-
     head.backAction: Action {
         id: back
         iconName: "back"
         onTriggered: {
-            flickable.contentX -= repeater.itemAt(1).width
-            goTo(pathBack(folder))
+            //flickable.contentX -= repeater.itemAt(1).width
+            goTo(pageModel.parentPath)
         }
     }
     head.actions: [
             Action {
-                id: save
-                iconName: "save"
-                text: i18n.tr("Save")
+                id: optionsButton
+                iconName: "view-list-symbolic"
+                text: i18n.tr("Properties")
+                onTriggered: {
+                    PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"),parent)
+                }
             },
             Action {
-                iconName: "add"
-                text: i18n.tr("Add")
+                id: actionsButton
+                iconName: "edit"
+                objectName: "actions"
+                text: i18n.tr("Actions")
+                onTriggered: {
+                    print(text)
+                    PopupUtils.open(folderActionsPopoverComponent, parent)
+                }
+            },
+            Action {
+                id: placesButton
+                iconName: "location"
+                objectName: "places"
+                text: i18n.tr("Places")
+                visible: !sidebar.expanded
+                onTriggered: {
+                    PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), parent)
+                }
+            },
+            Action {
+                id: settingsButton
+                iconName: "settings"
+                objectName: "settings"
+                text: i18n.tr("Settings")
+                visible: sidebar.expanded
+                onTriggered: PopupUtils.open(Qt.resolvedUrl("SettingsSheet.qml"), parent)
+            },
+            Action {
+                id: searchButton
+                iconName: "find"
+                text: i18n.tr("Go To")
+                onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
             }
+
         ]
 
     flickable: !sidebar.expanded ?
@@ -304,102 +354,6 @@ Page {
                     console.log("Empty file name, ignored")
                 }
             }
-        }
-    }
-
-    tools: ToolbarItems {
-        id: toolbar
-        locked: showToolbar
-        opened: showToolbar
-
-        onLockedChanged: opened = locked
-
-        back: ToolbarButton {
-            objectName: "up"
-            text: i18n.tr("Up")
-            iconSource: getIcon("keyboard-caps")
-            enabled: folder != "/"
-            onTriggered: {
-                goTo(pageModel.parentPath)
-            }
-        }
-
-        Item {
-            id: pathItem
-            // TODO: Uncomment after re-enabling tab support (caused by lp:1295242)
-            width: folderListPage.width - units.gu(31)//folderListPage.width - units.gu(37)
-            height: units.gu(5)
-            anchors.verticalCenter: parent.verticalCenter
-            PathBar {
-                height: units.gu(5)
-                width: Math.min(pathItem.width, implicitWidth)
-                visible: sidebar.expanded
-            }
-        }
-
-        Item {
-            width: units.gu(1)
-            height: parent.height
-        }
-
-        ToolbarButton {
-            id: actionsButton
-            objectName: "actions"
-            text: i18n.tr("Actions")
-            iconSource: getIcon("navigation-menu")
-
-            onTriggered: {
-                print(text)
-                PopupUtils.open(folderActionsPopoverComponent, actionsButton)
-            }
-        }
-
-        ToolbarButton {
-            text: i18n.tr("View")
-            iconSource: getIcon("properties")
-            id: optionsButton
-
-            onTriggered: {
-                print(text)
-
-                PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), optionsButton)
-            }
-        }
-
-        ToolbarButton {
-            id: placesButton
-            visible: !sidebar.expanded
-            objectName: "places"
-            text: i18n.tr("Places")
-            iconSource: getIcon("location")
-            onTriggered: {
-                print(text)
-
-                PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), placesButton)
-            }
-        }
-
-        // TODO: Uncomment after re-enabling tab support (caused by lp:1295242)
-//        ToolbarButton {
-//            id: tabsButton
-//            objectName: "tabs"
-//            text: i18n.tr("Tabs")
-//            iconSource: getIcon("browser-tabs")
-
-//            onTriggered: {
-//                print(text)
-
-//                PopupUtils.open(tabsPopover, tabsButton, {
-//                                    tab: folderListPage.parent
-//                                })
-//            }
-//        }
-
-        ToolbarButton {
-            id: settingsButton
-            visible: sidebar.expanded
-            objectName: "settings"
-            action: settingsAction
         }
     }
 
@@ -758,20 +712,19 @@ Page {
         }
     }
 
-    function pathBack(path) {
-        console.log("------------------------------------------")
-        console.log(path.split("/").slice(0,path.split("/").length-1).join("/"))
-       return path.split("/").slice(0,path.split("/").length-1).join("/")
-    }
-
+    /* Return depth of current path */
     function pathModel(path){
         return path.split("/").length - 1
     }
 
+    /* Return folder name by its depth in current path */
     function pathText(path,index) {
+        return folderDisplayName(path.split('/').slice(0,index+2).join("/"))
+    }
 
-        var s = path.split('/')[index]
-        return s
+    /* Return folder path by its depth in current path */
+    function pathRaw(path,index) {
+        return path.split('/').slice(0,index+2).join("/")
     }
 
     function pathName(folder) {
@@ -787,6 +740,7 @@ Page {
         // E.g. basename('/home/phablet/Música') returns 'Música'
 
         // Remove the last trailing '/' if there is one
+
         folder.replace(/\/$/, "")
         return folder.substr(folder.lastIndexOf('/') + 1)
     }
