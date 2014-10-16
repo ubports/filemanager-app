@@ -25,51 +25,87 @@ import "../components"
 
 Page {
     id: folderListPage
-    title: folderDisplayName(folder)
+    title: basename(folder)
 
     head.contents: Flickable {
         id: flickable
-        contentWidth: row.width
+        contentWidth: width + repeater.itemAt(0).flickableWidth
+        height: units.gu(7)
         anchors {
-            top: parent.top
-            bottom: parent.bottom
             left: back.right
             right: parent.right
             rightMargin: units.gu(1)
         }
         clip: true
         boundsBehavior: Flickable.StopAtBounds
-        Behavior on contentX { SmoothedAnimation { velocity: 250 } }
+        contentX: {
+            /* Reset position to home */
+            if (folder === userplaces.locationHome) (repeater.itemAt(0).flickableWidth)
+        }
+        Component.onCompleted: contentX = contentWidth
 
+        /* Flickable Contents */
         Row {
             id: row
             spacing: units.gu(3)
-            onWidthChanged: if (flickable.width < width) {
+
+            /* Adjust contentX according to the current folder */
+            onWidthChanged: if ( flickable.width < width ) {
                                 flickable.contentX
                                         = repeater.itemAt(repeater.model-1).x
-                                        - flickable.width
                                         + repeater.itemAt(repeater.model-1).width
+                                        - flickable.width
                             }
+            Rectangle {
+                id: device
+                width: childrenRect.width
+                height: units.gu(7)
+                color: "transparent"
 
+                Label {
+                    id: deviceLabel
+                    text: i18n.tr("Device")
+                    fontSize: "x-large"
+                    anchors.verticalCenter: parent.verticalCenter
+                    opacity: folder === "/" ? 1 : 0.7
+                    clip: true
+                    width: if (contentWidth > flickable.width) { flickable.width }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        goTo("/")
+                    }
+                }
+            }
+
+            /* Current Directory and its parents */
             Repeater {
                 id: repeater
                 model: pathModel(folder)
+                onModelChanged: {
+                    if (model === 2) (flickable.contentX = repeater.itemAt(0).flickableWidth)
+                    console.log("--------------------------------------------")
+                    console.log(model)
+                }
+
                 delegate: Rectangle {
                     width: childrenRect.width - icon.width
                     height: units.gu(7)
                     color: "transparent"
-                    visible: if (label.text === "home" && repeater.model > 1){false}
-                    onVisibleChanged: console.log(repeater.model)
+                    property int flickableWidth: childrenRect.width + row.spacing + device.width
 
                     Label {
                         id: label
                         text: pathText(folder,index)
                         fontSize: "x-large"
                         anchors.verticalCenter: parent.verticalCenter
-                        opacity: repeater.model !== index + 1 ? 0.7 : 1
+                        opacity: repeater.model === index + 1? 1 : 0.7
                         clip: true
                         width: if (contentWidth > flickable.width) { flickable.width }
                     }
+
                     Icon {
                         id: icon
                         name: "go-next"
@@ -81,6 +117,7 @@ Page {
                         anchors.right: label.left
                         anchors.verticalCenter: parent.verticalCenter
                     }
+
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
@@ -95,7 +132,6 @@ Page {
         id: back
         iconName: "back"
         onTriggered: {
-            //flickable.contentX -= repeater.itemAt(1).width
             goTo(pageModel.parentPath)
         }
     }
@@ -610,6 +646,7 @@ Page {
 
                 Action {
                     text: i18n.tr("Properties")
+
                     onTriggered: {
                         print(text)
                         PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
@@ -719,7 +756,7 @@ Page {
 
     /* Return folder name by its depth in current path */
     function pathText(path,index) {
-        return folderDisplayName(path.split('/').slice(0,index+2).join("/"))
+        return basename(path.split('/').slice(0,index+2).join("/"))
     }
 
     /* Return folder path by its depth in current path */
@@ -820,5 +857,8 @@ Page {
         return false;
     }
 
-    Component.onCompleted: forceActiveFocus()
+    Component.onCompleted: {
+        forceActiveFocus()
+    }
+
 }

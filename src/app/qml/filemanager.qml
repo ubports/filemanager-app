@@ -157,8 +157,6 @@ MainView {
     PageStack {
         id: pageStack
 
-        anchors.bottomMargin: toolbar.tools.opened && toolbar.tools.locked ? -mainView.toolbar.triggerSize : 0
-
         Tabs {
             id: tabs
 
