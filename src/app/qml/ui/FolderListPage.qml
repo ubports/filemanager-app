@@ -29,7 +29,9 @@ Page {
 
     head.contents: Flickable {
         id: flickable
-        contentWidth: width + repeater.itemAt(0).flickableWidth
+
+        /* contentWidth equals this to allow it to hide Device and Home */
+        contentWidth: width + device.width + repeater.itemAt(0).width + row.spacing * 2
         height: units.gu(7)
         anchors {
             left: back.right
@@ -38,11 +40,7 @@ Page {
         }
         clip: true
         boundsBehavior: Flickable.StopAtBounds
-        contentX: {
-            /* Reset position to home */
-            if (folder === userplaces.locationHome) (repeater.itemAt(0).flickableWidth)
-        }
-        Component.onCompleted: contentX = contentWidth
+        Behavior on contentX { SmoothedAnimation { velocity: 200 }}
 
         /* Flickable Contents */
         Row {
@@ -50,12 +48,42 @@ Page {
             spacing: units.gu(3)
 
             /* Adjust contentX according to the current folder */
-            onWidthChanged: if ( flickable.width < width ) {
-                                flickable.contentX
-                                        = repeater.itemAt(repeater.model-1).x
-                                        + repeater.itemAt(repeater.model-1).width
-                                        - flickable.width
-                            }
+            onWidthChanged: {
+                /* Set contentX to Home */
+                if (folder === userplaces.locationHome) {
+                    flickable.contentX = repeater.itemAt(1).x
+                    console.log("folder === userplaces.locationHome")
+                }
+                /* Set contentX to 0 */
+                else if (repeater.model < 2) {
+                    flickable.contentX = 0
+                }
+                /* For children of Home */
+                else if (pathRaw(folder,1) === userplaces.locationHome) {
+                    /* Set contentX to First Child*/
+                    flickable.contentX = repeater.itemAt(2).x
+                    /* Set contentX to End */
+                    if (row.width  > flickable.contentWidth) {
+                        flickable.contentX
+                                = repeater.itemAt(repeater.model-1).x
+                                + repeater.itemAt(repeater.model-1).width
+                                - flickable.width
+                    }
+                }
+                /* Set contentX to End */
+                else if ( flickable.width < width ) {
+                    flickable.contentX
+                            = repeater.itemAt(repeater.model-1).x
+                            + repeater.itemAt(repeater.model-1).width
+                            - flickable.width
+                }
+                /* Exceptions Set contentX to 0 */
+                else {
+                    flickable.contentX = 0
+                }
+            }
+
+            /* Root Folder displayed as "Device" */
             Rectangle {
                 id: device
                 width: childrenRect.width
@@ -67,8 +95,9 @@ Page {
                     text: i18n.tr("Device")
                     fontSize: "x-large"
                     anchors.verticalCenter: parent.verticalCenter
-                    opacity: folder === "/" ? 1 : 0.7
+                    color: folder === "/" ? "white" : UbuntuColors.warmGrey
                     clip: true
+                    /* Maximum Width = Flickable Width */
                     width: if (contentWidth > flickable.width) { flickable.width }
                 }
 
@@ -101,8 +130,10 @@ Page {
                         text: pathText(folder,index)
                         fontSize: "x-large"
                         anchors.verticalCenter: parent.verticalCenter
-                        opacity: repeater.model === index + 1? 1 : 0.7
+                        color: repeater.model === index + 1? "white" : UbuntuColors.warmGrey
                         clip: true
+
+                        /* Maximum Width = Flickable Width */
                         width: if (contentWidth > flickable.width) { flickable.width }
                     }
 
