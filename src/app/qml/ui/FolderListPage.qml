@@ -244,7 +244,7 @@ Page {
     }
     head.backAction: Action {
         id: back
-        iconName: "back"
+        iconName: "up"
         onTriggered: {
             goTo(pageModel.parentPath)
         }
