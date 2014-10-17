@@ -30,8 +30,12 @@ Page {
     head.contents: Flickable {
         id: flickable
 
+        /* Icon Width ; used a large amount of times to warrant a variable */
+        property int iconWidth: units.gu(2.5)
+
         /* contentWidth equals this to allow it to hide Device and Home */
-        contentWidth: width + row.width - repeater.itemAt(repeater.model-1).width
+        contentWidth: repeater.model > 0 ? width + row.width - repeater.itemAt(repeater.model-1).width
+                                         : width + row.width
         height: units.gu(7)
         anchors {
             left: back.right
@@ -40,58 +44,62 @@ Page {
         }
         clip: true
         boundsBehavior: Flickable.StopAtBounds
-        Behavior on contentX { SmoothedAnimation { velocity: 200 }}
+
+        Behavior on contentX { SmoothedAnimation { velocity: 250 }} // Needs adjustments
 
         /* Flickable Contents */
         Row {
             id: row
+            spacing: 0 // Safety; having any spacing will throw off the contentX calculations.
 
             /* Adjust contentX according to the current folder */
             onWidthChanged: {
                 /* Set contentX to Home */
                 if (folder === userplaces.locationHome) {
                     flickable.contentX = repeater.itemAt(1).x
-                    console.log("folder === userplaces.locationHome")
+                    // console.log("folder === userplaces.locationHome")
                 }
                 /* Set contentX to 0 */
                 else if (repeater.model < 2) {
                     flickable.contentX = 0
-                    console.log("repeater.model < 2")
+                    // console.log("repeater.model < 2")
                 }
                 /* For children of Home */
                 else if (pathRaw(folder,1) === userplaces.locationHome) {
                     /* Set contentX to First Child*/
                     flickable.contentX = repeater.itemAt(2).x
-                    console.log("pathRaw(folder,1) === userplaces.locationHome")
+                    // console.log("pathRaw(folder,1) === userplaces.locationHome")
 
                     /* Set contentX to End */
-                    if (flickable.width < width - repeater.itemAt(2).x) {
+                    if (flickable.width < width - repeater.itemAt(2).x - flickable.iconWidth) {
                         flickable.contentX
                                 = repeater.itemAt(repeater.model-1).x
                                 + repeater.itemAt(repeater.model-1).width
                                 - flickable.width
-                        console.log("+ row.width > flickable.contentWidth")
+                                - flickable.iconWidth
+                        // console.log("+ row.width > flickable.contentWidth")
                     }
                 }
                 /* Set contentX to End */
-                else if ( flickable.width < width ) {
+                else if ( flickable.width < width - flickable.iconWidth) {
                     flickable.contentX
                             = repeater.itemAt(repeater.model-1).x
                             + repeater.itemAt(repeater.model-1).width
                             - flickable.width
-                    console.log("flickable.width < width")
+                            - flickable.iconWidth
+                    // console.log("flickable.width < width")
                 }
                 /* Exceptions Set contentX to 0 */
                 else {
                     flickable.contentX = 0
-                    console.log("else 0")
+                    // console.log("else 0")
                 }
             }
 
             /* Root Folder displayed as "Device" */
             Rectangle {
                 id: device
-                width: childrenRect.width + units.gu(2.5) //2.5 is size of icon
+                width: childrenRect.width + flickable.iconWidth
                 height: units.gu(7)
                 color: "transparent"
 
@@ -117,27 +125,45 @@ Page {
             /* Current Directory and its parents */
             Repeater {
                 id: repeater
+
                 model: pathModel(folder)
-                property int memoryModel: memoryModel === memoryModel ? memoryModel : 2
+                property int memoryModel: memoryModel ? memoryModel : pathModel(userplaces.locationHome)
+                property string memoryPath: memoryPath ? memoryPath : userplaces.locationHome
+
+                /* Memory Management */
                 onModelChanged: {
-                    if (model === 2) (flickable.contentX = repeater.itemAt(0).flickableWidth)
-                    console.log("--------------------------------------------")
-                    console.log(model)
+                    /* Extend Memory */
+                    if (model > memoryModel && memoryPath === pathRaw(folder, memoryModel-1)) {
+                        memoryModel = model
+                        memoryPath = folder
+                        // console.log("/* Extend Memory */")
+                        // console.log("model > memoryModel && memoryPath === pathRaw(folder, memoryModel-1")
+                    }
+                    /* Reset Memory to Current */
+                    else if (folder !== pathRaw(memoryPath,model-1) && model > 0) {
+                        memoryModel = pathModel(folder)
+                        memoryPath = folder
+                        // console.log("/* Reset Memory to Current */")
+                        // console.log("folder !== pathRaw(memoryPath,model")
+                    }
+                    // console.log("Repeat Model = " + repeater.model)
+                    // console.log("Current Path = " + folder)
+                    // console.log("Memory Model = " + memoryModel)
+                    // console.log("Memory Path  = " + memoryPath)
                 }
 
                 delegate: Rectangle {
-                    visible: folder !== "/"
+                    visible: folder !== "/" // This is to avoid issues with naming the root folder, "Device"
                     width: childrenRect.width
                     height: units.gu(7)
                     color: "transparent"
-                    property int flickableWidth: childrenRect.width + device.width
 
                     Label {
                         id: label
                         text: pathText(folder,index)
                         fontSize: "x-large"
                         anchors.verticalCenter: parent.verticalCenter
-                        color: repeater.model === index + 1? "white" : UbuntuColors.warmGrey
+                        color: repeater.model === index + 1 ? "white" : UbuntuColors.warmGrey
                         clip: true
 
                         /* Maximum Width = Flickable Width */
@@ -147,7 +173,7 @@ Page {
                     Icon {
                         id: icon
                         name: "go-next"
-                        height: units.gu(2.5)
+                        height: flickable.iconWidth
                         antialiasing: true
                         width: height
                         opacity: 1
@@ -169,10 +195,13 @@ Page {
         /* Memory of Previously visited folders */
         Row {
             id: memoryRow
-            anchors.left: row.right
+            anchors.left: row.right // Not placed in the other row, to help avoid making contentX calculations more complicated.
+
             /* Previously visited folders */
             Repeater {
-                model: repeater.memoryModel
+                id: memoryRepeater
+                model: repeater.memoryModel - repeater.model
+
                 delegate: Rectangle {
                     width: childrenRect.width
                     height: units.gu(7)
@@ -180,7 +209,8 @@ Page {
 
                     Label {
                         id: memoryLabel
-                        text: "memory"
+                        text: repeater.model > 0 ? pathText(repeater.memoryPath,repeater.memoryModel-memoryRepeater.model+index)
+                                                 : pathText(repeater.memoryPath,index)
                         fontSize: "x-large"
                         anchors.verticalCenter: parent.verticalCenter
                         color: UbuntuColors.warmGrey
@@ -193,13 +223,20 @@ Page {
                     Icon {
                         id: memoryIcon
                         name: "go-next"
-                        height: units.gu(2.5)
+                        height: flickable.iconWidth
                         antialiasing: true
                         width: height
                         opacity: 1
                         color: "white"
                         anchors.right: memoryLabel.left
                         anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            goTo(pathRaw(repeater.memoryPath, repeater.memoryModel-memoryRepeater.model+index))
+                        }
                     }
                 }
             }
@@ -828,6 +865,7 @@ Page {
 
     /* Return depth of current path */
     function pathModel(path){
+        if (path === "/") { return 0 } // Otherwise it will return 1
         return path.split("/").length - 1
     }
 
