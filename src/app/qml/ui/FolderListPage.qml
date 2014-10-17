@@ -31,7 +31,7 @@ Page {
         id: flickable
 
         /* contentWidth equals this to allow it to hide Device and Home */
-        contentWidth: width + device.width + repeater.itemAt(0).width + row.spacing * 2
+        contentWidth: width + row.width - repeater.itemAt(repeater.model-1).width
         height: units.gu(7)
         anchors {
             left: back.right
@@ -45,7 +45,6 @@ Page {
         /* Flickable Contents */
         Row {
             id: row
-            spacing: units.gu(3)
 
             /* Adjust contentX according to the current folder */
             onWidthChanged: {
@@ -57,17 +56,21 @@ Page {
                 /* Set contentX to 0 */
                 else if (repeater.model < 2) {
                     flickable.contentX = 0
+                    console.log("repeater.model < 2")
                 }
                 /* For children of Home */
                 else if (pathRaw(folder,1) === userplaces.locationHome) {
                     /* Set contentX to First Child*/
                     flickable.contentX = repeater.itemAt(2).x
+                    console.log("pathRaw(folder,1) === userplaces.locationHome")
+
                     /* Set contentX to End */
-                    if (row.width  > flickable.contentWidth) {
+                    if (flickable.width < width - repeater.itemAt(2).x) {
                         flickable.contentX
                                 = repeater.itemAt(repeater.model-1).x
                                 + repeater.itemAt(repeater.model-1).width
                                 - flickable.width
+                        console.log("+ row.width > flickable.contentWidth")
                     }
                 }
                 /* Set contentX to End */
@@ -76,17 +79,19 @@ Page {
                             = repeater.itemAt(repeater.model-1).x
                             + repeater.itemAt(repeater.model-1).width
                             - flickable.width
+                    console.log("flickable.width < width")
                 }
                 /* Exceptions Set contentX to 0 */
                 else {
                     flickable.contentX = 0
+                    console.log("else 0")
                 }
             }
 
             /* Root Folder displayed as "Device" */
             Rectangle {
                 id: device
-                width: childrenRect.width
+                width: childrenRect.width + units.gu(2.5) //2.5 is size of icon
                 height: units.gu(7)
                 color: "transparent"
 
@@ -113,6 +118,7 @@ Page {
             Repeater {
                 id: repeater
                 model: pathModel(folder)
+                property int memoryModel: memoryModel === memoryModel ? memoryModel : 2
                 onModelChanged: {
                     if (model === 2) (flickable.contentX = repeater.itemAt(0).flickableWidth)
                     console.log("--------------------------------------------")
@@ -120,10 +126,11 @@ Page {
                 }
 
                 delegate: Rectangle {
-                    width: childrenRect.width - icon.width
+                    visible: folder !== "/"
+                    width: childrenRect.width
                     height: units.gu(7)
                     color: "transparent"
-                    property int flickableWidth: childrenRect.width + row.spacing + device.width
+                    property int flickableWidth: childrenRect.width + device.width
 
                     Label {
                         id: label
@@ -154,6 +161,45 @@ Page {
                         onClicked: {
                             goTo(pathRaw(folder,index))
                         }
+                    }
+                }
+            }
+        }
+
+        /* Memory of Previously visited folders */
+        Row {
+            id: memoryRow
+            anchors.left: row.right
+            /* Previously visited folders */
+            Repeater {
+                model: repeater.memoryModel
+                delegate: Rectangle {
+                    width: childrenRect.width
+                    height: units.gu(7)
+                    color: "transparent"
+
+                    Label {
+                        id: memoryLabel
+                        text: "memory"
+                        fontSize: "x-large"
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: UbuntuColors.warmGrey
+                        clip: true
+
+                        /* Maximum Width = Flickable Width */
+                        width: if (contentWidth > flickable.width) { flickable.width }
+                    }
+
+                    Icon {
+                        id: memoryIcon
+                        name: "go-next"
+                        height: units.gu(2.5)
+                        antialiasing: true
+                        width: height
+                        opacity: 1
+                        color: "white"
+                        anchors.right: memoryLabel.left
+                        anchors.verticalCenter: parent.verticalCenter
                     }
                 }
             }
