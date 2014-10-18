@@ -99,7 +99,7 @@ Page {
             /* Root Folder displayed as "Device" */
             Rectangle {
                 id: device
-                width: childrenRect.width + flickable.iconWidth
+                width: deviceLabel.contentWidth + flickable.iconWidth
                 height: units.gu(7)
                 color: "transparent"
 
@@ -154,7 +154,7 @@ Page {
 
                 delegate: Rectangle {
                     visible: folder !== "/" // This is to avoid issues with naming the root folder, "Device"
-                    width: childrenRect.width
+                    width: label.contentWidth + icon.width
                     height: units.gu(7)
                     color: "transparent"
 
@@ -203,7 +203,7 @@ Page {
                 model: repeater.memoryModel - repeater.model
 
                 delegate: Rectangle {
-                    width: childrenRect.width
+                    width: memoryLabel.contentWidth + memoryIcon.width
                     height: units.gu(7)
                     color: "transparent"
 
@@ -250,50 +250,70 @@ Page {
         }
     }
     head.actions: [
-            Action {
-                id: optionsButton
-                iconName: "view-list-symbolic"
-                text: i18n.tr("Properties")
-                onTriggered: {
-                    PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"),parent)
-                }
-            },
-            Action {
-                id: actionsButton
-                iconName: "edit"
-                objectName: "actions"
-                text: i18n.tr("Actions")
-                onTriggered: {
-                    print(text)
-                    PopupUtils.open(folderActionsPopoverComponent, parent)
-                }
-            },
-            Action {
-                id: placesButton
-                iconName: "location"
-                objectName: "places"
-                text: i18n.tr("Places")
-                visible: !sidebar.expanded
-                onTriggered: {
-                    PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), parent)
-                }
-            },
-            Action {
-                id: settingsButton
-                iconName: "settings"
-                objectName: "settings"
-                text: i18n.tr("Settings")
-                visible: sidebar.expanded
-                onTriggered: pageStack.push(settingsPage);
-            },
-            Action {
-                id: searchButton
-                iconName: "find"
-                text: i18n.tr("Go To")
-                onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
+        Action {
+            id: optionsButton
+            iconName: "view-list-symbolic"
+            text: i18n.tr("Properties")
+            onTriggered: {
+                PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"),parent)
             }
+        },
+        Action {
+            id: actionsButton
+            iconName: "edit"
+            objectName: "actions"
+            text: i18n.tr("Actions")
+            /* Other actions need to be reconciled. New folder and properties now have their own actions */
+            visible: false
+            onTriggered: {
+                print(text)
+                PopupUtils.open(folderActionsPopoverComponent, parent)
+            }
+        },
+        Action {
+            id: placesButton
+            iconName: "location"
+            objectName: "places"
+            text: i18n.tr("Places")
+            visible: !sidebar.expanded
+            onTriggered: {
+                PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), parent)
+            }
+        },
+        Action {
+            id: settingsButton
+            iconName: "settings"
+            objectName: "settings"
+            text: i18n.tr("Settings")
+            visible: sidebar.expanded
+            onTriggered: pageStack.push(settingsPage);
+        },
+        Action {
+            id: searchButton
+            iconName: "find"
+            text: i18n.tr("Go To")
+            onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
+        },
+        Action {
+            id: createNewFolder
+            iconName: "add"
+            text: i18n.tr("New Folder")
+            onTriggered: {
+                print(text)
+                PopupUtils.open(createFolderDialog, folderListPage)
+            }
+        },
+        Action {
+            id: viewProperties
+            iconName: "info"
+            text: i18n.tr("Properties")
+            onTriggered: {
+                print(text)
+                PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), folderListPage,{ "model": pageModel})
+            }
+        }
 
-        ]
+    ]
 
     flickable: !sidebar.expanded ?
                    (folderListView.visible ? folderListView : folderIconView.flickable) : null
@@ -409,67 +429,47 @@ Page {
 
             grabDismissAreaEvents: true
 
-            actions: ActionList {
-                Action {
-                    text: i18n.tr("Create New Folder")
-                    onTriggered: {
-                        print(text)
-
-                        PopupUtils.open(createFolderDialog, folderListPage)
-                    }
-                }
-
+            actions:
                 // TODO: Disabled until backend supports creating files
-    //            Action {
-    //                text: i18n.tr("Create New File")
-    //                onTriggered: {
-    //                    print(text)
+                //            Action {
+                //                text: i18n.tr("Create New File")
+                //                onTriggered: {
+                //                    print(text)
 
-    //                    PopupUtils.open(createFileDialog, root)
-    //                }
-    //            }
-
-                Action {
-                    text: pageModel.clipboardUrlsCounter === 0 ?
-                            i18n.tr("Paste") :
-                            i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
-                    onTriggered: {
-                        console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
-                        fileOperationDialog.startOperation(i18n.tr("Paste files"))
-                        pageModel.paste()
-                    }
-
-                    // FIXME: This property is depreciated and doesn't seem to work!
-                    //visible: pageModel.clipboardUrlsCounter > 0
-
-                    enabled: pageModel.clipboardUrlsCounter > 0
-                }
-
-                // TODO: Disabled until support for opening apps is added
-                Action {
-                    text: i18n.tr("Open in Terminal")
-                    onTriggered: {
-                        print(text)
-
-                        // Is this the way it will work??
-                        Qt.openUrlExternally("app://terminal")
-                    }
-
-                    enabled: showAdvancedFeatures && false
-                }
+                //                    PopupUtils.open(createFileDialog, root)
+                //                }
+                //            }
 
                 Action {
-                    text: i18n.tr("Properties")
-                    onTriggered: {
-                        print(text)
-                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
-                                        folderListPage,
-                                            { "model": pageModel
-                                            }
-                                        )
-                    }
+                text: pageModel.clipboardUrlsCounter === 0 ?
+                          i18n.tr("Paste") :
+                          i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
+                onTriggered: {
+                    console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
+                    fileOperationDialog.startOperation(i18n.tr("Paste files"))
+                    pageModel.paste()
                 }
+
+                // FIXME: This property is depreciated and doesn't seem to work!
+                //visible: pageModel.clipboardUrlsCounter > 0
+
+                enabled: pageModel.clipboardUrlsCounter > 0
             }
+
+            // TODO: Disabled until support for opening apps is added
+            Action {
+                text: i18n.tr("Open in Terminal")
+                onTriggered: {
+                    print(text)
+
+                    // Is this the way it will work??
+                    Qt.openUrlExternally("app://terminal")
+                }
+
+                enabled: showAdvancedFeatures && false
+            }
+
+
         }
     }
 
@@ -511,11 +511,11 @@ Page {
         id: sidebar
         objectName: "placesSidebar"
 
-//        anchors {
-//            top: parent.top
-//            bottom: parent.bottom
-//            bottomMargin: units.gu(-2)
-//        }
+        //        anchors {
+        //            top: parent.top
+        //            bottom: parent.bottom
+        //            bottomMargin: units.gu(-2)
+        //        }
 
         expanded: showSidebar
     }
@@ -543,23 +543,23 @@ Page {
             enabled: selectionManager.counter > 0
             visible: fileSelectorMode
             onClicked: {
-               var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-               // For now support only selection in filesystem
-               var selectedAbsUrls = selectedAbsPaths.map(function(item) {
-                   return "file://" + item;
-               });
-               console.log("FileSelector OK clicked, selected items: " + selectedAbsUrls)
+                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                // For now support only selection in filesystem
+                var selectedAbsUrls = selectedAbsPaths.map(function(item) {
+                    return "file://" + item;
+                });
+                console.log("FileSelector OK clicked, selected items: " + selectedAbsUrls)
 
-               acceptFileSelector(selectedAbsUrls)
-           }
+                acceptFileSelector(selectedAbsUrls)
+            }
         }
         Button {
-           text: i18n.tr("Cancel")
-           visible: fileSelectorMode
-           onClicked: {
-               console.log("FileSelector cancelled")
-               cancelFileSelector()
-           }
+            text: i18n.tr("Cancel")
+            visible: fileSelectorMode
+            onClicked: {
+                console.log("FileSelector cancelled")
+                cancelFileSelector()
+            }
         }
         Button {
             text: i18n.tr("Unlock full access")
@@ -567,7 +567,7 @@ Page {
             onClicked: {
                 console.log("Full access clicked")
                 var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
-                                                folderListPage)
+                                                 folderListPage)
 
                 authDialog.passwordEntered.connect(function(password) {
                     if (pamAuthentication.validatePasswordToken(password)) {
@@ -688,7 +688,8 @@ Page {
                                         {
                                             title: i18n.tr("Could not rename"),
                                             text: i18n.tr("Insufficient permissions or name already exists?")
-                                        })
+                                        }
+                                        )
 
                     }
                 } else {
@@ -740,7 +741,7 @@ Page {
                         print(text)
                         PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller,
                                         { "filePath" : actionSelectionPopover.model.filePath,
-                                          "fileName" : actionSelectionPopover.model.fileName }
+                                            "fileName" : actionSelectionPopover.model.fileName }
                                         )
                     }
                 }
@@ -753,7 +754,7 @@ Page {
                         print(text)
                         PopupUtils.open(confirmRenameDialog, actionSelectionPopover.caller,
                                         { "modelRow"  : actionSelectionPopover.model.index,
-                                          "inputText" : actionSelectionPopover.model.fileName
+                                            "inputText" : actionSelectionPopover.model.fileName
                                         })
                     }
                 }
@@ -765,8 +766,8 @@ Page {
                         print(text)
                         PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
                                         actionSelectionPopover.caller,
-                                            { "model": actionSelectionPopover.model
-                                            }
+                                        { "model": actionSelectionPopover.model
+                                        }
                                         )
                     }
                 }
@@ -932,10 +933,10 @@ Page {
                 PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
                                 {
                                     title: i18n.tr("Folder not accessible"),
-				    // TRANSLATORS: this refers to a folder name
-		         	    text: i18n.tr("Can not access %1").arg(model.fileName)
+                                    // TRANSLATORS: this refers to a folder name
+                                    text: i18n.tr("Can not access %1").arg(model.fileName)
 
-                                 })
+                                })
             }
         } else {
             console.log("Non dir clicked")
@@ -946,12 +947,12 @@ Page {
             } else {
                 openFile(model.fileName)
             }
-//            PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
-//                            {
-//                                fileName: model.fileName,
-//                                filePath: model.filePath,
-//                                folderListModel: root.folderListModel
-//                            })
+            //            PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
+            //                            {
+            //                                fileName: model.fileName,
+            //                                filePath: model.filePath,
+            //                                folderListModel: root.folderListModel
+            //                            })
         }
     }
 
@@ -975,5 +976,4 @@ Page {
     Component.onCompleted: {
         forceActiveFocus()
     }
-
 }

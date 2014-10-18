@@ -157,10 +157,6 @@ MainView {
     PageStack {
         id: pageStack
 
-        SettingsSheet {
-            id: settingsPage
-        }
-
         Tabs {
             id: tabs
 
@@ -176,6 +172,12 @@ MainView {
                 title: "page.title"
                 page: Page {
                     objectName: "settingsPage"
+                }
+            }
+            Tab {
+                title: "page.title"
+                page: SettingsSheet {
+                    id: settingsPage
                 }
             }
 
