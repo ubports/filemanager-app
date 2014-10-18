@@ -311,6 +311,30 @@ Page {
                 print(text)
                 PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), folderListPage,{ "model": pageModel})
             }
+        },
+        Action {
+            text: i18n.tr("Unlock full access")
+            //visible: pageModel.onlyMTPPaths
+            iconName: "lock"
+            onTriggered: {
+                console.log("Full access clicked")
+                var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
+                                                 folderListPage)
+
+                authDialog.passwordEntered.connect(function(password) {
+                    if (pamAuthentication.validatePasswordToken(password)) {
+                        console.log("Authenticated for full access")
+                        pageModel.onlyMTPPaths = false
+                    } else {
+                        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
+                                        {
+                                            title: i18n.tr("Authentication failed")
+                                        })
+
+                        console.log("Could not authenticate")
+                    }
+                })
+            }
         }
 
     ]
