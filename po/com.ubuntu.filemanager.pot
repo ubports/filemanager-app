@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-17 15:41-0700\n"
+"POT-Creation-Date: 2014-10-17 17:33-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,12 +44,12 @@ msgstr ""
 msgid "Change app settings"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:251 ../src/app/qml/ui/FolderListPage.qml:603
+#: ../src/app/qml/filemanager.qml:262 ../src/app/qml/ui/FolderListPage.qml:603
 #: ../src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:251 ../src/app/qml/ui/FolderListPage.qml:620
+#: ../src/app/qml/filemanager.qml:262 ../src/app/qml/ui/FolderListPage.qml:620
 #: ../src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr ""

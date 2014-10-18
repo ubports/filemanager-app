@@ -284,7 +284,7 @@ Page {
                 objectName: "settings"
                 text: i18n.tr("Settings")
                 visible: sidebar.expanded
-                onTriggered: PopupUtils.open(Qt.resolvedUrl("SettingsSheet.qml"), parent)
+                onTriggered: pageStack.push(settingsPage);
             },
             Action {
                 id: searchButton

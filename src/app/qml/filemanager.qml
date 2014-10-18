@@ -157,6 +157,10 @@ MainView {
     PageStack {
         id: pageStack
 
+        SettingsSheet {
+            id: settingsPage
+        }
+
         Tabs {
             id: tabs
 
@@ -168,6 +172,13 @@ MainView {
                     folder: userplaces.locationHome //modelData
                 }
             }
+            Tab {
+                title: "page.title"
+                page: Page {
+                    objectName: "settingsPage"
+                }
+            }
+
 
             // TODO: Temporarily disabled tabs support since this is broken in the SDK (lp:1295242)
 //            Repeater {
