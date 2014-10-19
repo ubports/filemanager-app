@@ -30,12 +30,16 @@ Page {
     head.contents: Flickable {
         id: flickable
 
-        /* Icon Width ; used a large amount of times to warrant a variable */
+        /* Convenience properties ; used a large amount of times to warrant a variable */
         property int iconWidth: units.gu(2.5)
+        property string textSize: "large"
 
         /* contentWidth equals this to allow it to hide Device and Home */
-        contentWidth: repeater.model > 0 ? width + row.width - repeater.itemAt(repeater.model-1).width
-                                         : width + row.width
+        contentWidth: repeater.model > 0 ?
+                          memoryRepeater.model > 0 ?
+                              width + row.width - memoryRepeater.itemAt(memoryRepeater.model-1).width + memoryRow.width
+                            : width + row.width - repeater.itemAt(repeater.model-1).width
+                        : width + memoryRow.width - memoryRepeater.itemAt(memoryRepeater.model-1).width
         height: units.gu(7)
         anchors {
             left: back.right
@@ -45,8 +49,12 @@ Page {
         clip: true
         boundsBehavior: Flickable.StopAtBounds
 
-        Behavior on contentX { SmoothedAnimation { velocity: 250 }} // Needs adjustments
+        Behavior on contentX { SmoothedAnimation { duration: 555 }}
 
+        /* This prevents the contentWidth from causing sudden flicks */
+        Behavior on contentWidth { SmoothedAnimation { duration: 500 }}
+
+        // onContentWidthChanged:  console.log(contentWidth)
         /* Flickable Contents */
         Row {
             id: row
@@ -54,6 +62,8 @@ Page {
 
             /* Adjust contentX according to the current folder */
             onWidthChanged: {
+                console.log("---------------------------------------------")
+                console.log(width)
                 /* Set contentX to Home */
                 if (folder === userplaces.locationHome) {
                     flickable.contentX = repeater.itemAt(1).x
@@ -77,7 +87,7 @@ Page {
                                 + repeater.itemAt(repeater.model-1).width
                                 - flickable.width
                                 - flickable.iconWidth
-                        // console.log("+ row.width > flickable.contentWidth")
+                        console.log("+ row.width > flickable.contentWidth")
                     }
                 }
                 /* Set contentX to End */
@@ -87,12 +97,7 @@ Page {
                             + repeater.itemAt(repeater.model-1).width
                             - flickable.width
                             - flickable.iconWidth
-                    // console.log("flickable.width < width")
-                }
-                /* Exceptions Set contentX to 0 */
-                else {
-                    flickable.contentX = 0
-                    // console.log("else 0")
+                    console.log("flickable.width < width")
                 }
             }
 
@@ -106,7 +111,7 @@ Page {
                 Label {
                     id: deviceLabel
                     text: i18n.tr("Device")
-                    fontSize: "x-large"
+                    fontSize: flickable.textSize
                     anchors.verticalCenter: parent.verticalCenter
                     color: folder === "/" ? "white" : UbuntuColors.warmGrey
                     clip: true
@@ -154,20 +159,20 @@ Page {
 
                 delegate: Rectangle {
                     visible: folder !== "/" // This is to avoid issues with naming the root folder, "Device"
-                    width: label.contentWidth + icon.width
+                    width: label.width + icon.width
                     height: units.gu(7)
                     color: "transparent"
 
                     Label {
                         id: label
                         text: pathText(folder,index)
-                        fontSize: "x-large"
+                        fontSize: flickable.textSize
                         anchors.verticalCenter: parent.verticalCenter
                         color: repeater.model === index + 1 ? "white" : UbuntuColors.warmGrey
                         clip: true
 
                         /* Maximum Width = Flickable Width */
-                        width: if (contentWidth > flickable.width) { flickable.width }
+                        width: if (contentWidth > flickable.width) { flickable.width } else { contentWidth }
                     }
 
                     Icon {
@@ -203,7 +208,7 @@ Page {
                 model: repeater.memoryModel - repeater.model
 
                 delegate: Rectangle {
-                    width: memoryLabel.contentWidth + memoryIcon.width
+                    width: memoryLabel.width + memoryIcon.width
                     height: units.gu(7)
                     color: "transparent"
 
@@ -211,13 +216,13 @@ Page {
                         id: memoryLabel
                         text: repeater.model > 0 ? pathText(repeater.memoryPath,repeater.memoryModel-memoryRepeater.model+index)
                                                  : pathText(repeater.memoryPath,index)
-                        fontSize: "x-large"
+                        fontSize: flickable.textSize
                         anchors.verticalCenter: parent.verticalCenter
                         color: UbuntuColors.warmGrey
                         clip: true
 
                         /* Maximum Width = Flickable Width */
-                        width: if (contentWidth > flickable.width) { flickable.width }
+                        width: if (contentWidth > flickable.width) { flickable.width } else { contentWidth }
                     }
 
                     Icon {

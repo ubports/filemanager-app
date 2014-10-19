@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-09-29 15:28+0200\n"
-"PO-Revision-Date: 2014-10-11 03:48+0000\n"
+"PO-Revision-Date: 2014-10-13 23:50+0000\n"
 "Last-Translator: Dirgita <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2014-10-12 06:52+0000\n"
+"X-Launchpad-Export-Date: 2014-10-14 07:08+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -337,55 +337,55 @@ msgstr ""
 
 #: ../src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "Urut Berdasarkan"
 
 #: ../src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #: ../src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr ""
+msgstr "Tanggal"
 
 #: ../src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "Urutan"
 
 #: ../src/app/qml/ui/ViewPopover.qml:114 ../src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr ""
+msgstr "Menaik"
 
 #: ../src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr ""
+msgstr "Menurun"
 
 #: ../src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
-msgstr ""
+msgstr "Penyaring"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:441
 msgid "path or url may not exist or cannot be read"
-msgstr ""
+msgstr "lokasi yang dituju mungkin tidak ada atau tak dapat dibaca"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:611
 msgid "Rename error"
-msgstr ""
+msgstr "Kesalahan mengubah nama"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:636
 msgid "Error creating new folder"
-msgstr ""
+msgstr "Kesalahan membuat folder baru"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1264
 msgid "items"
-msgstr ""
+msgstr "item"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
 msgid "File or Directory does not exist"
-msgstr ""
+msgstr "Berkas atau direktori tak ada"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:264
 msgid " does not exist"
-msgstr ""
+msgstr " tak ada"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:585
 msgid "Could not remove the item "
@@ -397,11 +397,11 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:680
 msgid "Could not create the directory"
-msgstr ""
+msgstr "Tak dapat membuat direktori"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:689
 msgid "Could not create link to"
-msgstr ""
+msgstr "Tak dapat membuat taut ke"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:701
 msgid "Could not set permissions to dir"
@@ -409,7 +409,7 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:715
 msgid "Could not open file"
-msgstr ""
+msgstr "Tak dpaat membuka berkas"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:734
 msgid "There is no space on disk to copy"
@@ -417,19 +417,19 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:744
 msgid "Could not create file"
-msgstr ""
+msgstr "Tak dapat membuat berkas"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:808
 msgid "Could not remove the directory/file "
-msgstr ""
+msgstr "Tak dapat menghapus berkas/direktori "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:824
 msgid "Could not move the directory/file "
-msgstr ""
+msgstr "Tak dapat memindahkan berkas/direktori "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:858
 msgid "Cannot copy items"
-msgstr ""
+msgstr "Tak dapat menyalin item"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:859
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:878
@@ -438,7 +438,7 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:877
 msgid "Cannot move items"
-msgstr ""
+msgstr "Tak dapat memindahkan item"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
 msgid "origin and destination folders are the same"

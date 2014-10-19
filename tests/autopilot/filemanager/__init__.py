@@ -25,8 +25,6 @@ from autopilot import input
 from autopilot.introspection import dbus
 import ubuntuuitoolkit
 
-from filemanager import _common
-
 logger = logging.getLogger(__name__)
 
 
@@ -88,7 +86,8 @@ class MainView(ubuntuuitoolkit.MainView):
             self.open_toolbar().click_button('places')
             return self._get_places_popover()
         else:
-            raise _common('The places popover cannot be opened on wide mode.')
+            raise FilemanagerException(
+                'The places popover cannot be opened on wide mode.')
 
     def _get_places_popover(self):
         """Return the Places popover."""
