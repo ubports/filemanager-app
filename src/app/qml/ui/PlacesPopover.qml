@@ -33,11 +33,10 @@ Popover {
         // full list again.
         Connections {
             id: placesVisibleController
-            // It'd be better to be able to detect virtual keyboard opening.
-            target: locationField
-            onActiveFocusChanged: {
-                showPlaces.visible = locationField.activeFocus
-                placesList.visible = !locationField.activeFocus
+            target: Qt.inputMethod
+            onVisibleChanged: {
+                showPlaces.visible = Qt.inputMethod.visible
+                placesList.visible = !Qt.inputMethod.visible
             }
         }
 
