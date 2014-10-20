@@ -27,6 +27,7 @@ Page {
     id: folderListPage
     title: basename(folder)
 
+    /* Full path of your current folder and recent history, that you can jump to by clicking its members */
     head.contents: Flickable {
         id: flickable
 
@@ -35,11 +36,13 @@ Page {
         property string textSize: "large"
 
         /* contentWidth equals this to allow it to hide Device and Home */
-        contentWidth: repeater.model > 0 ?
-                          memoryRepeater.model > 0 ?
-                              width + row.width - memoryRepeater.itemAt(memoryRepeater.model-1).width + memoryRow.width
-                            : width + row.width - repeater.itemAt(repeater.model-1).width
-                        : width + memoryRow.width - memoryRepeater.itemAt(memoryRepeater.model-1).width
+        contentWidth: {
+            repeater.model > 0 ?
+                        memoryRepeater.model > 0 ?
+                            width + row.width - memoryRepeater.itemAt(memoryRepeater.model-1).width + memoryRow.width
+                          : width + row.width - repeater.itemAt(repeater.model-1).width
+            : width + memoryRow.width - memoryRepeater.itemAt(memoryRepeater.model-1).width
+        }
         height: units.gu(7)
         anchors {
             left: back.right
@@ -247,13 +250,16 @@ Page {
             }
         }
     }
+
+    /* Go to last folder visited */
     head.backAction: Action {
         id: back
-        iconName: "up"
+        iconName: "back"
         onTriggered: {
-            goTo(pageModel.parentPath)
+            goBack()
         }
     }
+
     head.actions: [
         Action {
             id: optionsButton
@@ -341,9 +347,7 @@ Page {
                 })
             }
         }
-
     ]
-
     flickable: !sidebar.expanded ?
                    (folderListView.visible ? folderListView : folderIconView.flickable) : null
 
@@ -825,6 +829,19 @@ Page {
         // when entering a location on the Go To dialog
         folderListPage.folder = location.replace("~", userplaces.locationHome)
         refresh()
+        history.push(folder)
+        console.log(history)
+    }
+
+    /* Go to last folder visited */
+    function goBack() {
+        pageModel.goBack()
+        folder = pageModel.path
+    }
+
+    /* Go up one directory */
+    function goUp() {
+        goTo(pageModel.parentPath)
     }
 
     function refresh() {
