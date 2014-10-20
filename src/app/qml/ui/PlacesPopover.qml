@@ -26,6 +26,21 @@ Popover {
     objectName: "placesPopover"
 
     Column {
+        // Places must not be visible when virtual keyboard is open, because then
+        // the virtual keyboard can push the text input out of visible area and
+        // you don't see what you type. So when virtual keyboard is open we show
+        // only the text input and a "Places" icon that you can click to get the
+        // full list again.
+        Connections {
+            id: placesVisibleController
+            // It'd be better to be able to detect virtual keyboard opening.
+            target: locationField
+            onActiveFocusChanged: {
+                showPlaces.visible = locationField.activeFocus
+                placesList.visible = !locationField.activeFocus
+            }
+        }
+
         anchors {
             left: parent.left
             right: parent.right
@@ -76,13 +91,38 @@ Popover {
             }
         }
 
+        Empty {
+            id: showPlaces
+            visible: false
+            Standard {
+                objectName: "showPlaces"
+
+                Label {
+                    anchors.left: parent.left
+                    anchors.leftMargin: units.gu(8)
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: i18n.tr("Places")
+                    color: Theme.palette.normal.overlayText
+                }
+
+                onClicked: {
+                    locationField.activeFocus = false
+                }
+
+                iconSource: getIcon("location")
+
+                iconFrame: false
+            }
+        }
+
         Repeater {
             id: placesList
             objectName: "placesList"
-
+            visible: true
             model: PlacesModel {}
 
             delegate: Standard {
+                visible: placesList.visible
                 objectName: "place" + folderDisplayName(path).replace(/ /g,'')
                 property string name: folderDisplayName(path)
 
