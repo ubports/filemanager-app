@@ -192,8 +192,12 @@ Page {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: {
-                            goTo(pathRaw(folder,index))
+                        onClicked: { goTo(pathRaw(folder,index))
+                        }
+                        onDoubleClicked: {
+                            if (repeater.model === index + 1) {
+                                goUp()
+                            }
                         }
                     }
                 }
@@ -829,8 +833,6 @@ Page {
         // when entering a location on the Go To dialog
         folderListPage.folder = location.replace("~", userplaces.locationHome)
         refresh()
-        history.push(folder)
-        console.log(history)
     }
 
     /* Go to last folder visited */
