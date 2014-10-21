@@ -22,10 +22,14 @@ import Ubuntu.Components.ListItems 1.0
 import org.nemomobile.folderlistmodel 1.0
 import com.ubuntu.PlacesModel 0.1
 import "../components"
+import "../upstream"
 
-Page {
+PageWithBottomEdge {
     id: folderListPage
     title: basename(folder)
+    bottomEdgeTitle: "Places"
+    bottomEdgeEnabled: !sidebar.expanded
+    bottomEdgePageSource: Qt.resolvedUrl("PlacesPage.qml")
 
     /* Full path of your current folder and recent history, that you can jump to by clicking its members */
     head.contents: Flickable {
