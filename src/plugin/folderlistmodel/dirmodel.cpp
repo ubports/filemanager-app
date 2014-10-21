@@ -866,6 +866,10 @@ void DirModel::paste()
     }   
 }
 
+void DirModel::clearClipboard()
+{
+    mClipboard->clear();
+}
 
 bool  DirModel::cdIntoIndex(int row)
 {

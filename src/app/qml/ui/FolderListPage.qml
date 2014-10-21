@@ -44,23 +44,32 @@ PageWithBottomEdge {
 
     head.actions: [
         Action {
+            id: pasteButton
+            iconName: "edit-paste"
+            text: i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
+            visible: pageModel.clipboardUrlsCounter > 0
+            onTriggered: {
+                console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
+                fileOperationDialog.startOperation(i18n.tr("Paste files"))
+                pageModel.paste()
+            }
+        },
+        Action {
+            id: clearClipboardButton
+            iconName: "edit-clear"
+            text: i18n.tr("Clear clipboard")
+            visible: pageModel.clipboardUrlsCounter > 0
+            onTriggered: {
+                console.log("Clearing clipboard")
+                pageModel.clearClipboard()
+            }
+        },
+        Action {
             id: optionsButton
             iconName: "view-list-symbolic"
             text: i18n.tr("Properties")
             onTriggered: {
                 PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent)
-            }
-        },
-        Action {
-            id: actionsButton
-            iconName: "edit"
-            objectName: "actions"
-            text: i18n.tr("Actions")
-            /* Other actions need to be reconciled. New folder and properties now have their own actions */
-            visible: false
-            onTriggered: {
-                print(text)
-                PopupUtils.open(folderActionsPopoverComponent, parent)
             }
         },
         Action {
@@ -223,58 +232,6 @@ PageWithBottomEdge {
                     enabled: tabs.count > 1
                 }
             }
-        }
-    }
-
-    Component {
-        id: folderActionsPopoverComponent
-        ActionSelectionPopover {
-            id: folderActionsPopover
-            objectName: "folderActionsPopover"
-
-            grabDismissAreaEvents: true
-
-            actions:
-                // TODO: Disabled until backend supports creating files
-                //            Action {
-                //                text: i18n.tr("Create New File")
-                //                onTriggered: {
-                //                    print(text)
-
-                //                    PopupUtils.open(createFileDialog, root)
-                //                }
-                //            }
-
-                Action {
-                text: pageModel.clipboardUrlsCounter === 0 ?
-                          i18n.tr("Paste") :
-                          i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
-                onTriggered: {
-                    console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
-                    fileOperationDialog.startOperation(i18n.tr("Paste files"))
-                    pageModel.paste()
-                }
-
-                // FIXME: This property is depreciated and doesn't seem to work!
-                //visible: pageModel.clipboardUrlsCounter > 0
-
-                enabled: pageModel.clipboardUrlsCounter > 0
-            }
-
-            // TODO: Disabled until support for opening apps is added
-            Action {
-                text: i18n.tr("Open in Terminal")
-                onTriggered: {
-                    print(text)
-
-                    // Is this the way it will work??
-                    Qt.openUrlExternally("app://terminal")
-                }
-
-                enabled: showAdvancedFeatures && false
-            }
-
-
         }
     }
 
