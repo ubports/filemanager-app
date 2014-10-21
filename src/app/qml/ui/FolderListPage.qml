@@ -72,7 +72,7 @@ PageWithBottomEdge {
             onTriggered: pageStack.push(settingsPage);
         },
         Action {
-            id: searchButton
+            id: gotoButton
             iconName: "find"
             text: i18n.tr("Go To")
             onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
