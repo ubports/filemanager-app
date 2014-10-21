@@ -26,7 +26,7 @@ Flickable {
     /* Convenience properties ; used a large amount of times to warrant a variable */
     property int iconWidth: units.gu(2.5)
     property string textSize: "large"
-
+    property string separatorText: "  /"
     /* contentWidth equals this to allow it to hide Device and Home */
     contentWidth: {
         repeater.model > 0 ?
@@ -154,7 +154,7 @@ Flickable {
 
             delegate: Rectangle {
                 visible: folder !== "/" // This is to avoid issues with naming the root folder, "Device"
-                width: label.width + icon.width
+                width: label.width + pathSeparator.width
                 height: units.gu(7)
                 color: "transparent"
 
@@ -170,16 +170,15 @@ Flickable {
                     width: if (contentWidth > flickable.width) { flickable.width } else { contentWidth }
                 }
 
-                Icon {
-                    id: icon
-                    name: "go-next"
-                    height: flickable.iconWidth
-                    antialiasing: true
-                    width: height
-                    opacity: 1
-                    color: "white"
-                    anchors.right: label.left
+                Label {
+                    id: pathSeparator
+                    text: separatorText
+                    fontSize: flickable.textSize
+                    width: flickable.iconWidth
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: label.left
+                    color: "white"
+                    // clip: true
                 }
 
                 MouseArea {
@@ -207,7 +206,7 @@ Flickable {
             model: repeater.memoryModel - repeater.model
 
             delegate: Rectangle {
-                width: memoryLabel.width + memoryIcon.width
+                width: memoryLabel.width + memoryPathSeparator.width
                 height: units.gu(7)
                 color: "transparent"
 
@@ -224,16 +223,15 @@ Flickable {
                     width: if (contentWidth > flickable.width) { flickable.width } else { contentWidth }
                 }
 
-                Icon {
-                    id: memoryIcon
-                    name: "go-next"
-                    height: flickable.iconWidth
-                    antialiasing: true
-                    width: height
-                    opacity: 1
-                    color: "white"
-                    anchors.right: memoryLabel.left
+                Label {
+                    id: memoryPathSeparator
+                    text: separatorText
+                    fontSize: flickable.textSize
+                    width: flickable.iconWidth
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: memoryLabel.left
+                    color: "white"
+                    // clip: true
                 }
 
                 MouseArea {
