@@ -183,11 +183,15 @@ Flickable {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: { goTo(pathRaw(folder,index))
-                    }
-                    onDoubleClicked: {
+                    onClicked: {
+                        // When clicking on an already selected item, go up one level. Otherwise go to
+                        // the clicked item. This behaviour is to make it easy to go up in the folder
+                        // hierarchy now that the "back" button goes back in history and not up the directory
+                        // hierarchy
                         if (repeater.model === index + 1) {
                             goUp()
+                        } else {
+                            goTo(pathRaw(folder, index))
                         }
                     }
                 }

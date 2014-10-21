@@ -48,7 +48,7 @@ PageWithBottomEdge {
             iconName: "view-list-symbolic"
             text: i18n.tr("Properties")
             onTriggered: {
-                PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"),parent)
+                PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent)
             }
         },
         Action {
