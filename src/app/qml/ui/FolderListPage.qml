@@ -64,16 +64,6 @@ PageWithBottomEdge {
             }
         },
         Action {
-            id: placesButton
-            iconName: "location"
-            objectName: "places"
-            text: i18n.tr("Places")
-            visible: !sidebar.expanded
-            onTriggered: {
-                PopupUtils.open(Qt.resolvedUrl("PlacesPopover.qml"), parent)
-            }
-        },
-        Action {
             id: settingsButton
             iconName: "settings"
             objectName: "settings"
