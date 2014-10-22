@@ -29,8 +29,8 @@ Rectangle {
         id: flickable
 
         /* Convenience properties ; used a large amount of times to warrant a variable */
-        property int iconWidth: units.gu(2.5)
-        property string textSize: "large"
+        property int iconWidth: units.gu(3)
+        property string textSize: "x-large"
         property string separatorText: "  /"
         /* contentWidth equals this to allow it to hide Device and Home */
         contentWidth: {
@@ -66,7 +66,7 @@ Rectangle {
             onWidthChanged: {
                 /* Set contentX to Home */
                 if (folder === userplaces.locationHome) {
-                    flickable.contentX = repeater.itemAt(1).x
+                    flickable.contentX = repeater.itemAt(1).x - flickable.iconWidth
                     // console.log("folder === userplaces.locationHome")
                 }
                 /* Set contentX to 0 */
@@ -77,7 +77,7 @@ Rectangle {
                 /* For children of Home */
                 else if (pathRaw(folder,1) === userplaces.locationHome) {
                     /* Set contentX to First Child*/
-                    flickable.contentX = repeater.itemAt(2).x
+                    flickable.contentX = repeater.itemAt(2).x - flickable.iconWidth
                     // console.log("pathRaw(folder,1) === userplaces.locationHome")
 
                     /* Set contentX to End */
@@ -86,7 +86,6 @@ Rectangle {
                                 = repeater.itemAt(repeater.model-1).x
                                 + repeater.itemAt(repeater.model-1).width
                                 - flickable.width
-                                - flickable.iconWidth
                         console.log("+ row.width > flickable.contentWidth")
                     }
                 }
@@ -116,7 +115,20 @@ Rectangle {
                     color: folder === "/" ? "white" : UbuntuColors.warmGrey
                     clip: true
                     /* Maximum Width = Flickable Width */
-                    width: if (contentWidth > flickable.width) { flickable.width }
+                    width: if (contentWidth > flickable.width - flickable.iconWidth) { flickable.width - flickable.iconWidth }
+                           else { contentWidth }
+                }
+
+                Icon {
+                    name:  "go-next"
+                    visible: repeater.model !== 0
+                    height: flickable.iconWidth
+                    antialiasing: true
+                    width: height
+                    opacity: 1
+                    color: folder === "/" ? "white" : UbuntuColors.warmGrey
+                    anchors.left: deviceLabel.right
+                    anchors.verticalCenter: parent.verticalCenter
                 }
 
                 MouseArea {
@@ -172,19 +184,24 @@ Rectangle {
                         clip: true
 
                         /* Maximum Width = Flickable Width */
-                        width: if (contentWidth > flickable.width) { flickable.width } else { contentWidth }
+                        width: if (contentWidth > flickable.width - flickable.iconWidth*2) {
+                                   flickable.width - flickable.iconWidth * 2
+                               }
+                               else { contentWidth }
                     }
 
                     Icon {
                         id: icon
                         name: "go-next"
+                        visible: index !== repeater.model -1
                         height: flickable.iconWidth
                         antialiasing: true
                         width: height
                         opacity: 1
-                        color: "white"
-                        anchors.right: label.left
+                        color: repeater.model === index + 2 ? "white" : UbuntuColors.warmGrey
+                        anchors.left: label.right
                         anchors.verticalCenter: parent.verticalCenter
+
                     }
                     /* Alternate Design ; Will let the design team decide. I prefer the >'s myself because
  it is very familiar, and does away with the /'s which look codey */
@@ -206,11 +223,7 @@ Rectangle {
                             // the clicked item. This behaviour is to make it easy to go up in the folder
                             // hierarchy now that the "back" button goes back in history and not up the directory
                             // hierarchy
-                            if (repeater.model === index + 1) {
-                                goUp()
-                            } else {
                                 goTo(pathRaw(folder, index))
-                            }
                         }
                     }
                 }
@@ -242,7 +255,8 @@ Rectangle {
                         clip: true
 
                         /* Maximum Width = Flickable Width */
-                        width: if (contentWidth > flickable.width) { flickable.width } else { contentWidth }
+                        width: if (contentWidth > flickable.width - flickable.iconWidth*2) { flickable.width - flickable.iconWidth*2}
+                               else { contentWidth }
                     }
 
                     Icon {
@@ -252,7 +266,7 @@ Rectangle {
                         antialiasing: true
                         width: height
                         opacity: 1
-                        color: "white"
+                        color: UbuntuColors.warmGrey
                         anchors.right: memoryLabel.left
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -269,7 +283,12 @@ Rectangle {
                     //                }
 
                     MouseArea {
-                        anchors.fill: parent
+                        anchors {
+                            left: memoryIcon.left
+                            right: parent.right
+                            top: parent.top
+                            bottom: parent.bottom
+                        }
                         onClicked: {
                             goTo(pathRaw(repeater.memoryPath, repeater.memoryModel-memoryRepeater.model+index))
                         }
@@ -286,31 +305,10 @@ Rectangle {
             leftMargin: units.gu(-1)
         }
         height: units.gu(2)
-        Rectangle {
-            width: mainView.width/4
+        Label {
+            width: mainView.width/2
             height: parent.height
-            color: "transparent"
-            opacity: folder === "/" ? 0 : 1
-            Behavior on opacity {OpacityAnimator{}}
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    goUp()
-                }
-            }
-            Icon {
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: parent.height
-                width: height
-                name: "up"
-                color: "white"
-            }
-        }
-        Rectangle {
-            width: mainView.width/4
-            height: parent.height
-            color: "transparent"
-
+            text: "Go Back"
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
@@ -325,11 +323,11 @@ Rectangle {
                 color: "white"
             }
         }
-        Rectangle {
-            width: mainView.width/4
+        Label {
+            width: mainView.width/2
             height: parent.height
-            color: "transparent"
-            opacity: forwardHistory.length === 0 ? 0 : 1
+            // opacity: forwardHistory.length === 0 ? 0 : 1
+            text: "Forward"
             Behavior on opacity {OpacityAnimator{}}
             MouseArea {
                 anchors.fill: parent
@@ -341,26 +339,6 @@ Rectangle {
                 height: parent.height
                 width: height
                 name: "go-next"
-                color: "white"
-            }
-        }
-        Rectangle {
-            width: mainView.width/4
-            height: parent.height
-            color: "transparent"
-            opacity: memoryRepeater.model === 0 ? 0 : 1
-            Behavior on opacity {OpacityAnimator{}}
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    goDown()
-                }
-            }
-            Icon {
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: parent.height
-                width: height
-                name: "down"
                 color: "white"
             }
         }

@@ -37,11 +37,12 @@ PageWithBottomEdge {
     /* Go to last folder visited */
     head.backAction: Action {
         id: back
-        iconName: "none"
         enabled: false
+        iconName: "gsm-3g-disabled" // trying to find a way to hide this action
         onTriggered: {
             goBack()
         }
+
     }
 
     head.actions: [
