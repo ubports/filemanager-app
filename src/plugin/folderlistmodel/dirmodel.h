@@ -371,6 +371,11 @@ public slots:
      */
     void paste();
 
+   /*!
+    * \brief clears clipboard entries
+    */
+    void clearClipboard();
+
     /*!
      * \brief cancelAction() any copy/cut/remove can be cancelled
      */

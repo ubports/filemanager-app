@@ -66,7 +66,7 @@ public:
 public slots:
    void         cut(const QStringList&  names, const QString &path);
    void         copy(const QStringList& names, const QString &path);
-
+   void         clear();
 
 signals:
    void         clipboardChanged();
