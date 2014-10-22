@@ -82,20 +82,39 @@ Rectangle {
 
                     /* Set contentX to End */
                     if (flickable.width < width - repeater.itemAt(2).x - flickable.iconWidth) {
+                        if (memoryRepeater.model === 0) {
                         flickable.contentX
                                 = repeater.itemAt(repeater.model-1).x
                                 + repeater.itemAt(repeater.model-1).width
                                 - flickable.width
+                                - flickable.iconWidth
+                        }
+                        else {
+                            flickable.contentX
+                                    = repeater.itemAt(repeater.model-1).x
+                                    + repeater.itemAt(repeater.model-1).width
+                                    - flickable.width
+                        }
+
                         console.log("+ row.width > flickable.contentWidth")
                     }
                 }
                 /* Set contentX to End */
-                else if ( flickable.width < width - flickable.iconWidth) {
+                else if ( flickable.width < width - flickable.iconWidth/2) {
+                    if (memoryRepeater.model === 0) {
                     flickable.contentX
                             = repeater.itemAt(repeater.model-1).x
                             + repeater.itemAt(repeater.model-1).width
                             - flickable.width
                             - flickable.iconWidth
+                    }
+                    else {
+                        flickable.contentX
+                                = repeater.itemAt(repeater.model-1).x
+                                + repeater.itemAt(repeater.model-1).width
+                                - flickable.width
+                    }
+
                     console.log("flickable.width < width")
                 }
             }
