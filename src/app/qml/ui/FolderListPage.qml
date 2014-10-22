@@ -83,6 +83,14 @@ PageWithBottomEdge {
             onTriggered: pageStack.push(settingsPage);
         },
         Action {
+            id: gotoButton
+            iconName: "find"
+            text: i18n.tr("Go To")
+            visible: sidebar.expanded
+
+            onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
+        },
+        Action {
             id: createNewFolder
             iconName: "add"
             text: i18n.tr("New Folder")
