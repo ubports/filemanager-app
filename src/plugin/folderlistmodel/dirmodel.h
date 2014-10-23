@@ -208,6 +208,9 @@ public:
 
     Q_INVOKABLE QString homePath() const;
 
+    Q_INVOKABLE QString lastFolderVisited() const;
+
+
     /*!
      *    \brief Tries to make the directory pointed by row as the current to be browsed
      *    \return true if row points to a directory and the directory is readble, false otherwise
@@ -354,7 +357,6 @@ public slots:
      *
      */
     void goBack();
-
 
     /*!
      * \brief cdUp() sets the parent directory as current directory

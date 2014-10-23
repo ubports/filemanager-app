@@ -32,17 +32,13 @@ PageWithBottomEdge {
     bottomEdgeEnabled: !sidebar.expanded
     bottomEdgePageSource: Qt.resolvedUrl("PlacesPage.qml")
 
-    head.contents: PathHistoryRow {}
-
     /* Go to last folder visited */
     head.backAction: Action {
         id: back
         enabled: false
         iconName: "gsm-3g-disabled" // trying to find a way to hide this action
         onTriggered: {
-            goBack()
         }
-
     }
 
     head.actions: [
@@ -135,6 +131,7 @@ PageWithBottomEdge {
             }
         }
     ]
+    head.contents: PathHistoryRow {id: pathHistoryRow}
 
     flickable: !sidebar.expanded ?
                    (folderListView.visible ? folderListView : folderIconView.flickable) : null
@@ -145,7 +142,6 @@ PageWithBottomEdge {
     property string sortingMethod: "Name"
     property bool sortAscending: true
     property string folder
-    property var forwardHistory: []
     property bool loading: pageModel.awaitingResults
 
     // Set to true if called as file selector for ContentHub
@@ -576,7 +572,7 @@ PageWithBottomEdge {
 
     /* Go Forward in history */
     function goForward() {
-
+        console.log(pathHistoryRow.forwardHistory)
     }
 
     /* Go up one directory */

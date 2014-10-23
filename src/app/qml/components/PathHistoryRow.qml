@@ -24,14 +24,18 @@ Rectangle {
     width: parent.width
     height: parent.height
     color: "transparent"
+
+    property var forwardHistory: []
+
     /* Full path of your current folder and recent history, that you can jump to by clicking its members */
     Flickable {
         id: flickable
 
         /* Convenience properties ; used a large amount of times to warrant a variable */
-        property int iconWidth: units.gu(3)
+        property int iconWidth: units.gu(4)
         property string textSize: "x-large"
         property string separatorText: "  /"
+
         /* contentWidth equals this to allow it to hide Device and Home */
         contentWidth: {
             repeater.model > 0 ?
@@ -57,6 +61,7 @@ Rectangle {
         Behavior on contentWidth { SmoothedAnimation { duration: 500 }}
 
         // onContentWidthChanged:  console.log(contentWidth)
+
         /* Flickable Contents */
         Row {
             id: row
@@ -64,49 +69,57 @@ Rectangle {
 
             /* Adjust contentX according to the current folder */
             onWidthChanged: {
+                back.text = pageModel.lastFolderVisited()
+
                 /* Set contentX to Home */
                 if (folder === userplaces.locationHome) {
                     flickable.contentX = repeater.itemAt(1).x - flickable.iconWidth
                     // console.log("folder === userplaces.locationHome")
                 }
+
                 /* Set contentX to 0 */
                 else if (repeater.model < 2) {
                     flickable.contentX = 0
                     // console.log("repeater.model < 2")
                 }
+
                 /* For children of Home */
                 else if (pathRaw(folder,1) === userplaces.locationHome) {
                     /* Set contentX to First Child*/
                     flickable.contentX = repeater.itemAt(2).x - flickable.iconWidth
                     // console.log("pathRaw(folder,1) === userplaces.locationHome")
-
                     /* Set contentX to End */
-                    if (flickable.width < width - repeater.itemAt(2).x - flickable.iconWidth) {
-                        if (memoryRepeater.model === 0) {
-                        flickable.contentX
-                                = repeater.itemAt(repeater.model-1).x
-                                + repeater.itemAt(repeater.model-1).width
-                                - flickable.width
-                                - flickable.iconWidth
+                    if (memoryRepeater.model === 0) {
+                        // console.log("emoryRepeater.model === 0")
+                        if (flickable.width < width - repeater.itemAt(2).x) {
+                            // console.log("flickable.width < width - repeater.itemAt(2).x")
+                            flickable.contentX
+                                    = repeater.itemAt(repeater.model-1).x
+                                    + repeater.itemAt(repeater.model-1).width
+                                    - flickable.width
+                                    - flickable.iconWidth
                         }
-                        else {
+                    }
+                    else {
+                        // console.log("else")
+                        if (flickable.width < width - repeater.itemAt(2).x + flickable.iconWidth) {
+                            // console.log("flickable.width < width - repeater.itemAt(2).x - flickable.iconWidth")
                             flickable.contentX
                                     = repeater.itemAt(repeater.model-1).x
                                     + repeater.itemAt(repeater.model-1).width
                                     - flickable.width
                         }
-
-                        console.log("+ row.width > flickable.contentWidth")
                     }
                 }
+
                 /* Set contentX to End */
                 else if ( flickable.width < width - flickable.iconWidth/2) {
                     if (memoryRepeater.model === 0) {
-                    flickable.contentX
-                            = repeater.itemAt(repeater.model-1).x
-                            + repeater.itemAt(repeater.model-1).width
-                            - flickable.width
-                            - flickable.iconWidth
+                        flickable.contentX
+                                = repeater.itemAt(repeater.model-1).x
+                                + repeater.itemAt(repeater.model-1).width
+                                - flickable.width
+                                - flickable.iconWidth
                     }
                     else {
                         flickable.contentX
@@ -115,7 +128,10 @@ Rectangle {
                                 - flickable.width
                     }
 
-                    console.log("flickable.width < width")
+                    // console.log("flickable.width < width")
+                }
+                else {
+                    // console.log("Warning: No adjustment to contentX")
                 }
             }
 
@@ -145,7 +161,7 @@ Rectangle {
                     antialiasing: true
                     width: height
                     opacity: 1
-                    color: folder === "/" ? "white" : UbuntuColors.warmGrey
+                    color: repeater.model < 2 ? "white" : UbuntuColors.warmGrey
                     anchors.left: deviceLabel.right
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -212,7 +228,7 @@ Rectangle {
                     Icon {
                         id: icon
                         name: "go-next"
-                        visible: index !== repeater.model -1
+                        visible: index !== repeater.model - 1
                         height: flickable.iconWidth
                         antialiasing: true
                         width: height
@@ -242,7 +258,7 @@ Rectangle {
                             // the clicked item. This behaviour is to make it easy to go up in the folder
                             // hierarchy now that the "back" button goes back in history and not up the directory
                             // hierarchy
-                                goTo(pathRaw(folder, index))
+                            goTo(pathRaw(folder, index))
                         }
                     }
                 }
@@ -316,49 +332,102 @@ Rectangle {
             }
         }
     }
-    /* Navigation Buttons on the Bottom */
+
+    /* Go Back in History */
     Row {
+        id: rowBack
         anchors {
             top: flickable.bottom
             left: flickable.left
             leftMargin: units.gu(-1)
         }
         height: units.gu(2)
-        Label {
-            width: mainView.width/2
+        opacity: back.text !== "" ? 1 : 0
+        Behavior on opacity {OpacityAnimator{}}
+
+        Icon {
+            id: backIcon
             height: parent.height
-            text: "Go Back"
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    goBack()
-                }
-            }
-            Icon {
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: parent.height
-                width: height
-                name: "back"
-                color: "white"
-            }
+            width: height
+            name: "back"
+            color: UbuntuColors.lightGrey
         }
+
         Label {
-            width: mainView.width/2
+            font.bold: true
+            text: "Back  "
+            color: UbuntuColors.lightGrey
+        }
+
+        Label {
+            id: back
             height: parent.height
-            // opacity: forwardHistory.length === 0 ? 0 : 1
-            text: "Forward"
-            Behavior on opacity {OpacityAnimator{}}
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                }
+            color: UbuntuColors.lightGrey
+        }
+    }
+
+    MouseArea {
+        anchors.fill: rowBack
+        onClicked: {
+            console.log(forwardHistory)
+            if (forwardHistory[0] !== folder) {
+                forwardHistory.unshift(folder)
             }
-            Icon {
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: parent.height
-                width: height
-                name: "go-next"
-                color: "white"
+            forwardLabel.text = forwardHistory[0]
+            console.log(forwardHistory)
+            goBack()
+        }
+    }
+
+    Row {
+        id: rowForward
+        anchors {
+            top: flickable.bottom
+            right: parent.right
+            rightMargin: units.gu(-9)
+        }
+        height: units.gu(2)
+        opacity: forwardLabel.text !== "" ? 1 : 0
+
+        Behavior on opacity {OpacityAnimator{}}
+
+        Label {
+            id: forwardLabel
+            color: UbuntuColors.lightGrey
+        }
+
+        Label {
+            height: parent.height
+            text: "  Forward"
+            font.bold: true
+            color: UbuntuColors.lightGrey
+            Behavior on opacity {OpacityAnimator{}}
+        }
+
+        Icon {
+            height: units.gu(2)
+            width: height
+            name: "go-next"
+            color: UbuntuColors.lightGrey
+        }
+    }
+
+    MouseArea {
+        anchors.fill: rowForward
+        onClicked: {
+            console.log(forwardHistory)
+            if (forwardHistory.length < 2) {
+                forwardLabel.text = ""
+                goTo(forwardHistory[0])
+            }
+            else {
+                goTo(forwardHistory[0])
+                forwardHistory.shift()
+                forwardLabel.text = forwardHistory[0]
+                if (forwardHistory.length === 0) {
+                    forwardLabel.text = ""
+                }
+                console.log(forwardHistory)
             }
         }
     }

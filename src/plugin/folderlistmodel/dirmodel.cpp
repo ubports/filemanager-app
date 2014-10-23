@@ -727,6 +727,16 @@ QString DirModel::homePath() const
     return QDir::homePath();
 }
 
+QString DirModel::lastFolderVisited() const
+{
+    if (mPathList.length() > 1) {
+        return mPathList[mPathList.length()-2];
+    }
+    else {
+        return "";
+    }
+}
+
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
 int DirModel::columnCount(const QModelIndex &parent) const
 {
