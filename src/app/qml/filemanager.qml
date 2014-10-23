@@ -137,6 +137,10 @@ MainView {
         }
     }
 
+    function openFile(filePath) {
+        pageStack.push(Qt.resolvedUrl("content-hub/FileOpener.qml"), { fileUrl: "file://" + filePath} )
+    }
+
     Connections {
         target: ContentHub
         onExportRequested: {

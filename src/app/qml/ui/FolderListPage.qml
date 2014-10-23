@@ -74,20 +74,6 @@ PageWithBottomEdge {
             }
         },
         Action {
-            id: settingsButton
-            iconName: "settings"
-            objectName: "settings"
-            text: i18n.tr("Settings")
-            visible: sidebar.expanded
-            onTriggered: pageStack.push(settingsPage);
-        },
-        Action {
-            id: gotoButton
-            iconName: "find"
-            text: i18n.tr("Go To")
-            onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
-        },
-        Action {
             id: createNewFolder
             iconName: "add"
             text: i18n.tr("New Folder")
@@ -104,6 +90,20 @@ PageWithBottomEdge {
                 print(text)
                 PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), folderListPage,{ "model": pageModel})
             }
+        },
+        Action {
+            id: settingsButton
+            iconName: "settings"
+            objectName: "settings"
+            text: i18n.tr("Settings")
+            visible: sidebar.expanded
+            onTriggered: pageStack.push(settingsPage);
+        },
+        Action {
+            id: gotoButton
+            iconName: "find"
+            text: i18n.tr("Go To")
+            onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
         }
     ]
     flickable: !sidebar.expanded ?
@@ -667,12 +667,6 @@ PageWithBottomEdge {
             }
         } else {
             return false
-        }
-    }
-
-    function openFile(filePath) {
-        if (!pageModel.openPath(filePath)) {
-            error(i18n.tr("File operation error"), i18n.tr("Unable to open '%1'").arg(filePath))
         }
     }
 
