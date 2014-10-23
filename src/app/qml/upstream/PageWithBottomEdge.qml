@@ -75,6 +75,7 @@ Page {
     property int bottomEdgeExpandThreshold: page.height * 0.2
     property int bottomEdgeExposedArea: bottomEdge.state !== "expanded" ? (page.height - bottomEdge.y - bottomEdge.tipHeight) : _areaWhenExpanded
     property bool reloadBottomEdgePage: true
+    property int bottomEdgeTipArea: bottomEdgeEnabled ? page.height - tip.y : 0
 
     readonly property alias bottomEdgePage: edgeLoader.item
     readonly property bool isReady: ((bottomEdge.y === fakeHeader.height) && bottomEdgePageLoaded && edgeLoader.item.active)

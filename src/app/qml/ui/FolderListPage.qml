@@ -104,30 +104,6 @@ PageWithBottomEdge {
                 print(text)
                 PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), folderListPage,{ "model": pageModel})
             }
-        },
-        Action {
-            text: i18n.tr("Unlock full access")
-            //visible: pageModel.onlyMTPPaths
-            iconName: "lock"
-            onTriggered: {
-                console.log("Full access clicked")
-                var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
-                                                 folderListPage)
-
-                authDialog.passwordEntered.connect(function(password) {
-                    if (pamAuthentication.validatePasswordToken(password)) {
-                        console.log("Authenticated for full access")
-                        pageModel.onlyMTPPaths = false
-                    } else {
-                        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
-                                        {
-                                            title: i18n.tr("Authentication failed")
-                                        })
-
-                        console.log("Could not authenticate")
-                    }
-                })
-            }
         }
     ]
     flickable: !sidebar.expanded ?
@@ -287,11 +263,12 @@ PageWithBottomEdge {
         id: bottomBar
         anchors {
             bottom: parent.bottom
+            bottomMargin: bottomEdgeTipArea + units.gu(1) // Avoid being over the bottom edge pull page
             left: sidebar.right
             right: parent.right
         }
         height: bottomBarButtons.visible ? bottomBarButtons.height : 0
-        visible: fileSelectorMode
+        visible: bottomBarButtons.visible
     }
 
     Flow {
@@ -360,8 +337,7 @@ PageWithBottomEdge {
         folderListModel: pageModel
         anchors {
             top: parent.top
-            bottom: parent.bottom
-            bottomMargin: bottomBar.height
+            bottom: bottomBar.top
             left: sidebar.right
             right: parent.right
         }
@@ -377,8 +353,7 @@ PageWithBottomEdge {
         folderListModel: pageModel
         anchors {
             top: parent.top
-            bottom: parent.bottom
-            bottomMargin: bottomBar.height
+            bottom: bottomBar.top
             left: sidebar.right
             right: parent.right
         }
