@@ -25,8 +25,8 @@ Flickable {
 
     /* Convenience properties ; used a large amount of times to warrant a variable */
     property int iconWidth: units.gu(2.5)
-    property string textSize: "large"
-    property string separatorText: "  /"
+    property string textSize: "x-large"
+    property string separatorText: " /"
     /* contentWidth equals this to allow it to hide Device and Home */
     contentWidth: {
         repeater.model > 0 ?
@@ -37,7 +37,7 @@ Flickable {
     }
     height: units.gu(7)
     anchors {
-        left: back.right
+        left: parent.left // back.right
         right: parent.right
         rightMargin: units.gu(1)
     }
@@ -49,51 +49,27 @@ Flickable {
     /* This prevents the contentWidth from causing sudden flicks */
     Behavior on contentWidth { SmoothedAnimation { duration: 500 }}
 
-    // onContentWidthChanged:  console.log(contentWidth)
     /* Flickable Contents */
     Row {
         id: row
         spacing: 0 // Safety; having any spacing will throw off the contentX calculations.
 
+        function repositionScrollable() {
+            if (repeater.count === 0) {
+                flickable.contentX = 0;
+            } else {
+                flickable.contentX = row.width - repeater.itemAt(repeater.model - 1).width
+            }
+        }
+
+        Timer {
+            id: repositionTimer
+            onTriggered: repositionScrollabe()
+        }
+
         /* Adjust contentX according to the current folder */
         onWidthChanged: {
-            console.log("---------------------------------------------")
-            console.log(width)
-            /* Set contentX to Home */
-            if (folder === userplaces.locationHome) {
-                flickable.contentX = repeater.itemAt(1).x
-                // console.log("folder === userplaces.locationHome")
-            }
-            /* Set contentX to 0 */
-            else if (repeater.model < 2) {
-                flickable.contentX = 0
-                // console.log("repeater.model < 2")
-            }
-            /* For children of Home */
-            else if (pathRaw(folder,1) === userplaces.locationHome) {
-                /* Set contentX to First Child*/
-                flickable.contentX = repeater.itemAt(2).x
-                // console.log("pathRaw(folder,1) === userplaces.locationHome")
-
-                /* Set contentX to End */
-                if (flickable.width < width - repeater.itemAt(2).x - flickable.iconWidth) {
-                    flickable.contentX
-                            = repeater.itemAt(repeater.model-1).x
-                            + repeater.itemAt(repeater.model-1).width
-                            - flickable.width
-                            - flickable.iconWidth
-                    console.log("+ row.width > flickable.contentWidth")
-                }
-            }
-            /* Set contentX to End */
-            else if ( flickable.width < width - flickable.iconWidth) {
-                flickable.contentX
-                        = repeater.itemAt(repeater.model-1).x
-                        + repeater.itemAt(repeater.model-1).width
-                        - flickable.width
-                        - flickable.iconWidth
-                console.log("flickable.width < width")
-            }
+            repositionScrollable()
         }
 
         /* Root Folder displayed as "Device" */

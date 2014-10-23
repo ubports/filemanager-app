@@ -37,6 +37,7 @@ PageWithBottomEdge {
     head.backAction: Action {
         id: back
         iconName: "back"
+
         onTriggered: {
             goBack()
         }
