@@ -360,11 +360,14 @@ Page {
         visible: fileSelectorMode
     }
 
-    Row {
+    Flow {
         id: bottomBarButtons
-        anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: bottomBar.bottom
-        spacing: units.gu(5)
+        anchors.leftMargin: (parent.width - sidebar.width - childrenRect.width) / 2
+        anchors.left: sidebar.right
+        width: parent.width - sidebar.width
+
+        spacing: units.gu(2)
         visible: fileSelectorMode || pageModel.onlyMTPPaths
 
         Button {
