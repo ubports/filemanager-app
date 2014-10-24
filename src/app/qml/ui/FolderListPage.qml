@@ -36,6 +36,7 @@ PageWithBottomEdge {
     /* Go to last folder visited */
     head.backAction: Action {
         id: back
+        objectName: "back"
         iconName: "back"
 
         onTriggered: {
@@ -46,6 +47,7 @@ PageWithBottomEdge {
     head.actions: [
         Action {
             id: pasteButton
+            objectName: "paste"
             iconName: "edit-paste"
             text: i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
             visible: pageModel.clipboardUrlsCounter > 0
@@ -57,6 +59,7 @@ PageWithBottomEdge {
         },
         Action {
             id: clearClipboardButton
+            objectName: "clearClipboard"
             iconName: "edit-clear"
             text: i18n.tr("Clear clipboard")
             visible: pageModel.clipboardUrlsCounter > 0
@@ -75,6 +78,7 @@ PageWithBottomEdge {
         },
         Action {
             id: createNewFolder
+            objectName: "createFolder"
             iconName: "add"
             text: i18n.tr("New Folder")
             onTriggered: {

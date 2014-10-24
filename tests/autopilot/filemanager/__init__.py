@@ -137,10 +137,20 @@ class MainView(ubuntuuitoolkit.MainView):
         """Return the ActionSelectionPopover emulator of the file actions."""
         return self.get_action_selection_popover('fileActionsPopover')
 
+    def click_header_action(self, objectName):
+        header = self.get_header()
+        header.click_action_button(objectName)
+
+    def click_back(self):
+        header = self.get_header()
+        header.click_custom_back_button()
+
+    # TODO: can probably be removed
     def get_folder_actions_popover(self):
         """Return the ActionSelectionPopover emulator of the folder actions."""
         return self.get_action_selection_popover('folderActionsPopover')
 
+    # TODO: can probably be removed
     def folder_actions_popover_exists(self):
         """Boolean, checks if the folder actions popover exists."""
         try:
@@ -150,6 +160,7 @@ class MainView(ubuntuuitoolkit.MainView):
         except:
             return False
 
+    # TODO: can probably be removed
     def file_actions_popover_exists(self):
         """Boolean, checks if the file actions popover exists."""
         try:
