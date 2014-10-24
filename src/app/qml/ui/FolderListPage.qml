@@ -695,7 +695,7 @@ PageWithBottomEdge {
                                         false,
                                         true);
             } else {
-                openFile(model.fileName)
+                openFile(model.filePath)
             }
             //            PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
             //                            {

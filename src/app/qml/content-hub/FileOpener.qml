@@ -41,7 +41,7 @@ Page {
         ContentItem {}
     }
 
-    function __exportItems(url) {
+    function __exportItemsWhenPossible(url) {
         if (root.activeTransfer.state === ContentTransfer.InProgress)
         {
             root.activeTransfer.items = [ resultComponent.createObject(root, {"url": url}) ];
@@ -59,13 +59,19 @@ Page {
         onPeerSelected: {
             root.activeTransfer = peer.request();
             pageStack.pop();
-            if (root.activeTransfer.state === ContentTransfer.InProgress) {
-                root.__exportItems(root.fileUrl);
-            }
+            __exportItemsWhenPossible(root.fileUrl)
         }
 
         onCancelPressed: {
             pageStack.pop();
+        }
+    }
+
+    Connections {
+        target: root.activeTransfer
+        onStateChanged: {
+            console.log("curTransfer StateChanged: " + root.activeTransfer.state);
+            __exportItemsWhenPossible(root.fileUrl)
         }
     }
 }
