@@ -570,11 +570,6 @@ PageWithBottomEdge {
         folder = pageModel.path
     }
 
-    /* Go Forward in history */
-    function goForward() {
-        console.log(pathHistoryRow.forwardHistory)
-    }
-
     /* Go up one directory */
     function goUp() {
         goTo(pageModel.parentPath)

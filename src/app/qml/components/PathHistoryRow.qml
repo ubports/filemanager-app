@@ -25,8 +25,6 @@ Rectangle {
     height: parent.height
     color: "transparent"
 
-    property var forwardHistory: []
-
     /* Full path of your current folder and recent history, that you can jump to by clicking its members */
     Flickable {
         id: flickable
@@ -40,9 +38,9 @@ Rectangle {
         contentWidth: {
             repeater.model > 0 ?
                         memoryRepeater.model > 0 ?
-                            width + row.width - memoryRepeater.itemAt(memoryRepeater.model-1).width + memoryRow.width
-                          : width + row.width - repeater.itemAt(repeater.model-1).width
-            : width + memoryRow.width - memoryRepeater.itemAt(memoryRepeater.model-1).width
+                            width + row.width - memoryRepeater.itemAt(memoryRepeater.model-1).width + memoryRow.width - iconWidth
+                          : width + row.width - repeater.itemAt(repeater.model-1).width - iconWidth
+            : width + memoryRow.width - memoryRepeater.itemAt(memoryRepeater.model-1).width - iconWidth
         }
         height: parent.height
         width: parent.width
@@ -362,6 +360,7 @@ Rectangle {
         Label {
             id: back
             height: parent.height
+            width: flickable.width
             color: UbuntuColors.lightGrey
         }
     }
@@ -369,66 +368,7 @@ Rectangle {
     MouseArea {
         anchors.fill: rowBack
         onClicked: {
-            console.log(forwardHistory)
-            if (forwardHistory[0] !== folder) {
-                forwardHistory.unshift(folder)
-            }
-            forwardLabel.text = forwardHistory[0]
-            console.log(forwardHistory)
             goBack()
-        }
-    }
-
-    Row {
-        id: rowForward
-        anchors {
-            top: flickable.bottom
-            right: parent.right
-            rightMargin: units.gu(-9)
-        }
-        height: units.gu(2)
-        opacity: forwardLabel.text !== "" ? 1 : 0
-
-        Behavior on opacity {OpacityAnimator{}}
-
-        Label {
-            id: forwardLabel
-            color: UbuntuColors.lightGrey
-        }
-
-        Label {
-            height: parent.height
-            text: "  Forward"
-            font.bold: true
-            color: UbuntuColors.lightGrey
-            Behavior on opacity {OpacityAnimator{}}
-        }
-
-        Icon {
-            height: units.gu(2)
-            width: height
-            name: "go-next"
-            color: UbuntuColors.lightGrey
-        }
-    }
-
-    MouseArea {
-        anchors.fill: rowForward
-        onClicked: {
-            console.log(forwardHistory)
-            if (forwardHistory.length < 2) {
-                forwardLabel.text = ""
-                goTo(forwardHistory[0])
-            }
-            else {
-                goTo(forwardHistory[0])
-                forwardHistory.shift()
-                forwardLabel.text = forwardHistory[0]
-                if (forwardHistory.length === 0) {
-                    forwardLabel.text = ""
-                }
-                console.log(forwardHistory)
-            }
         }
     }
 }

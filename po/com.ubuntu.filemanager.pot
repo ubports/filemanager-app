@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-22 21:24-0700\n"
+"POT-Creation-Date: 2014-10-23 19:03-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,8 +30,8 @@ msgstr ""
 msgid "%1 (%2 files)"
 msgstr ""
 
-#: ../src/app/qml/components/PathHistoryRow.qml:147
-#: ../src/app/qml/ui/FolderListPage.qml:648
+#: ../src/app/qml/components/PathHistoryRow.qml:145
+#: ../src/app/qml/ui/FolderListPage.qml:643
 msgid "Device"
 msgstr ""
 
@@ -259,41 +259,41 @@ msgid "Copy"
 msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:549
-#: ../src/app/qml/ui/FolderListPage.qml:710
+#: ../src/app/qml/ui/FolderListPage.qml:705
 msgid "File operation error"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:619
+#: ../src/app/qml/ui/FolderListPage.qml:614
 msgid "~/Desktop"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:629
+#: ../src/app/qml/ui/FolderListPage.qml:624
 msgid "~/Public"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:631
+#: ../src/app/qml/ui/FolderListPage.qml:626
 msgid "~/Programs"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:633
+#: ../src/app/qml/ui/FolderListPage.qml:628
 msgid "~/Templates"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:646
+#: ../src/app/qml/ui/FolderListPage.qml:641
 msgid "Home"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:710
+#: ../src/app/qml/ui/FolderListPage.qml:705
 #, qt-format
 msgid "Unable to open '%1'"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:722
+#: ../src/app/qml/ui/FolderListPage.qml:717
 msgid "Folder not accessible"
 msgstr ""
 
 #. TRANSLATORS: this refers to a folder name
-#: ../src/app/qml/ui/FolderListPage.qml:724
+#: ../src/app/qml/ui/FolderListPage.qml:719
 #, qt-format
 msgid "Can not access %1"
 msgstr ""
