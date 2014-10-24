@@ -32,15 +32,6 @@ PageWithBottomEdge {
     bottomEdgeEnabled: !sidebar.expanded
     bottomEdgePageSource: Qt.resolvedUrl("PlacesPage.qml")
 
-    /* Go to last folder visited */
-    head.backAction: Action {
-        id: back
-        enabled: false
-        iconName: "gsm-3g-disabled" // trying to find a way to hide this action
-        onTriggered: {
-        }
-    }
-
     head.actions: [
         Action {
             id: pasteButton
@@ -77,7 +68,7 @@ PageWithBottomEdge {
             objectName: "settings"
             text: i18n.tr("Settings")
             visible: sidebar.expanded
-            onTriggered: pageStack.push(settingsPage);
+            onTriggered: showSettings()
         },
         Action {
             id: gotoButton
