@@ -238,12 +238,7 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(dir_.fileName, Eventually(Equals(dir_name)))
 
     def test_cancel_create_directory(self):
-        open_popover = lambda: \
-            self.app.main_view.open_toolbar().click_button('actions')
-        self._safe_open_popover(open_popover)
-
-        folder_popover = self.app.main_view.get_folder_actions_popover()
-        folder_popover.click_button_by_text('Create New Folder')
+        self.app.main_view.click_header_action('createFolder')
         self._cancel_confirm_dialog()
 
         self._assert_number_of_files(0)
