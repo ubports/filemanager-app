@@ -430,13 +430,12 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             first_dir.fileName, Eventually(Equals(destination_dir_name)))
 
-    def test_go_up(self):
+    def test_go_back(self):
         dir_name = os.path.basename(self.make_directory_in_home())
         first_dir = self._get_file_by_name(dir_name)
         self._open_directory(first_dir)
 
-        toolbar = self.app.main_view.open_toolbar()
-        toolbar.click_button('up')
+        self.app.main_view.click_back()
 
         folder_list_page = self.app.main_view.get_folder_list_page()
         self.assertThat(
