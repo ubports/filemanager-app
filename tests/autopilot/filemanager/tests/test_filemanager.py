@@ -229,12 +229,7 @@ class TestFolderListPage(FileManagerTestCase):
     def test_create_directory(self):
         dir_name = 'Test Directory'
 
-        open_popover = lambda: \
-            self.app.main_view.open_toolbar().click_button('actions')
-        self._safe_open_popover(open_popover)
-
-        folder_popover = self.app.main_view.get_folder_actions_popover()
-        folder_popover.click_button_by_text('Create New Folder')
+        self.app.main_view.click_header_action('createFolder')
         self._confirm_dialog(dir_name)
 
         self._assert_number_of_files(1)

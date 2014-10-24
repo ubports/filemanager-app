@@ -78,6 +78,7 @@ PageWithBottomEdge {
         },
         Action {
             id: createNewFolder
+            objectName: "createFolder"
             iconName: "add"
             text: i18n.tr("New Folder")
             onTriggered: {
