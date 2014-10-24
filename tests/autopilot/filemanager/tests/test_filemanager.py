@@ -302,15 +302,16 @@ class TestFolderListPage(FileManagerTestCase):
         self._open_directory(destination_dir)
 
         # Paste the directory.
-        open_popover = lambda: \
-            self.app.main_view.open_toolbar().click_button('actions')
-        self._safe_open_popover(open_popover)
+        self.app.main_view.click_header_action('paste')
+        # open_popover = lambda: \
+        #     self.app.main_view.open_toolbar().click_button('actions')
+        # self._safe_open_popover(open_popover)
 
-        folder_popover = self.app.main_view.get_folder_actions_popover()
-        folder_popover.click_button_by_text('Paste 1 File')
-        self.assertThat(
-            self.app.main_view.folder_actions_popover_exists,
-            Eventually(Equals(False)))
+        # folder_popover = self.app.main_view.get_folder_actions_popover()
+        # folder_popover.click_button_by_text('Paste 1 File')
+        # self.assertThat(
+        #     self.app.main_view.folder_actions_popover_exists,
+        #    Eventually(Equals(False)))
 
         # Check that the directory is there.
         self._assert_number_of_files(1, home=False)
@@ -319,8 +320,7 @@ class TestFolderListPage(FileManagerTestCase):
             first_dir.fileName, Eventually(Equals(dir_to_copy_name)))
 
         # Go back.
-        toolbar = self.app.main_view.open_toolbar()
-        toolbar.click_button('up')
+        self.app.main_view.click_back()
 
         # Check that the directory is still there.
         self._assert_number_of_files(2)
