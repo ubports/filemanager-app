@@ -19,356 +19,208 @@ import QtQuick 2.3
 import Ubuntu.Components 1.1
 import Ubuntu.Components.ListItems 1.0
 
+/* Full path of your current folder and recent history, that you can jump to by clicking its members */
+Flickable {
+    id: flickable
 
-Rectangle {
-    width: parent.width
-    height: parent.height
-    color: "transparent"
+    /* Convenience properties ; used a large amount of times to warrant a variable */
+    property int iconWidth: units.gu(2.5)
+    property string textSize: "x-large"
+    property string separatorText: " /"
+    /* contentWidth equals this to allow it to hide Device and Home */
+    contentWidth: {
+        repeater.model > 0 ?
+                    memoryRepeater.model > 0 ?
+                        width + row.width - memoryRepeater.itemAt(memoryRepeater.model-1).width + memoryRow.width
+                      : width + row.width - repeater.itemAt(repeater.model-1).width
+        : width + memoryRow.width - memoryRepeater.itemAt(memoryRepeater.model-1).width
+    }
+    height: units.gu(7)
+    anchors {
+        left: parent.left // back.right
+        right: parent.right
+        rightMargin: units.gu(1)
+    }
+    clip: true
+    boundsBehavior: Flickable.StopAtBounds
 
-    /* Full path of your current folder and recent history, that you can jump to by clicking its members */
-    Flickable {
-        id: flickable
+    Behavior on contentX { SmoothedAnimation { duration: 555 }}
 
-        /* Convenience properties ; used a large amount of times to warrant a variable */
-        property int iconWidth: units.gu(4)
-        property string textSize: "x-large"
-        property string separatorText: "  /"
+    /* This prevents the contentWidth from causing sudden flicks */
+    Behavior on contentWidth { SmoothedAnimation { duration: 500 }}
 
-        /* contentWidth equals this to allow it to hide Device and Home */
-        contentWidth: {
-            repeater.model > 0 ?
-                        memoryRepeater.model > 0 ?
-                            width + row.width - memoryRepeater.itemAt(memoryRepeater.model-1).width + memoryRow.width - iconWidth
-                          : width + row.width - repeater.itemAt(repeater.model-1).width - iconWidth
-            : width + memoryRow.width - memoryRepeater.itemAt(memoryRepeater.model-1).width - iconWidth
+    /* Flickable Contents */
+    Row {
+        id: row
+        spacing: 0 // Safety; having any spacing will throw off the contentX calculations.
+
+        function repositionScrollable() {
+            if (repeater.count === 0) {
+                flickable.contentX = 0;
+            } else {
+                flickable.contentX = row.width - repeater.itemAt(repeater.model - 1).width
+            }
         }
-        height: parent.height
-        width: parent.width
-        anchors {
-            left: parent.left
-            leftMargin: units.gu(-5)
-            right: parent.right
-            rightMargin: units.gu(1)
+
+        Timer {
+            id: repositionTimer
+            onTriggered: repositionScrollabe()
         }
-        clip: true
-        boundsBehavior: Flickable.StopAtBounds
 
-        Behavior on contentX { SmoothedAnimation { duration: 555 }}
+        /* Adjust contentX according to the current folder */
+        onWidthChanged: {
+            repositionScrollable()
+        }
 
-        /* This prevents the contentWidth from causing sudden flicks */
-        Behavior on contentWidth { SmoothedAnimation { duration: 500 }}
+        /* Root Folder displayed as "Device" */
+        Rectangle {
+            id: device
+            width: deviceLabel.contentWidth + flickable.iconWidth
+            height: units.gu(7)
+            color: "transparent"
 
-        // onContentWidthChanged:  console.log(contentWidth)
-
-        /* Flickable Contents */
-        Row {
-            id: row
-            spacing: 0 // Safety; having any spacing will throw off the contentX calculations.
-
-            /* Adjust contentX according to the current folder */
-            onWidthChanged: {
-                back.text = pageModel.lastFolderVisited()
-
-                /* Set contentX to Home */
-                if (folder === userplaces.locationHome) {
-                    flickable.contentX = repeater.itemAt(1).x - flickable.iconWidth
-                    // console.log("folder === userplaces.locationHome")
-                }
-
-                /* Set contentX to 0 */
-                else if (repeater.model < 2) {
-                    flickable.contentX = 0
-                    // console.log("repeater.model < 2")
-                }
-
-                /* For children of Home */
-                else if (pathRaw(folder,1) === userplaces.locationHome) {
-                    /* Set contentX to First Child*/
-                    flickable.contentX = repeater.itemAt(2).x - flickable.iconWidth
-                    // console.log("pathRaw(folder,1) === userplaces.locationHome")
-                    /* Set contentX to End */
-                    if (memoryRepeater.model === 0) {
-                        // console.log("emoryRepeater.model === 0")
-                        if (flickable.width < width - repeater.itemAt(2).x) {
-                            // console.log("flickable.width < width - repeater.itemAt(2).x")
-                            flickable.contentX
-                                    = repeater.itemAt(repeater.model-1).x
-                                    + repeater.itemAt(repeater.model-1).width
-                                    - flickable.width
-                                    - flickable.iconWidth
-                        }
-                    }
-                    else {
-                        // console.log("else")
-                        if (flickable.width < width - repeater.itemAt(2).x + flickable.iconWidth) {
-                            // console.log("flickable.width < width - repeater.itemAt(2).x - flickable.iconWidth")
-                            flickable.contentX
-                                    = repeater.itemAt(repeater.model-1).x
-                                    + repeater.itemAt(repeater.model-1).width
-                                    - flickable.width
-                        }
-                    }
-                }
-
-                /* Set contentX to End */
-                else if ( flickable.width < width - flickable.iconWidth/2) {
-                    if (memoryRepeater.model === 0) {
-                        flickable.contentX
-                                = repeater.itemAt(repeater.model-1).x
-                                + repeater.itemAt(repeater.model-1).width
-                                - flickable.width
-                                - flickable.iconWidth
-                    }
-                    else {
-                        flickable.contentX
-                                = repeater.itemAt(repeater.model-1).x
-                                + repeater.itemAt(repeater.model-1).width
-                                - flickable.width
-                    }
-
-                    // console.log("flickable.width < width")
-                }
-                else {
-                    // console.log("Warning: No adjustment to contentX")
-                }
+            Label {
+                id: deviceLabel
+                text: i18n.tr("Device")
+                fontSize: flickable.textSize
+                anchors.verticalCenter: parent.verticalCenter
+                color: folder === "/" ? "white" : UbuntuColors.warmGrey
+                clip: true
+                /* Maximum Width = Flickable Width */
+                width: if (contentWidth > flickable.width) { flickable.width }
             }
 
-            /* Root Folder displayed as "Device" */
-            Rectangle {
-                id: device
-                width: deviceLabel.contentWidth + flickable.iconWidth
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    goTo("/")
+                }
+            }
+        }
+
+        /* Current Directory and its parents */
+        Repeater {
+            id: repeater
+
+            model: pathModel(folder)
+            property int memoryModel: memoryModel ? memoryModel : pathModel(userplaces.locationHome)
+            property string memoryPath: memoryPath ? memoryPath : userplaces.locationHome
+
+            /* Memory Management */
+            onModelChanged: {
+                /* Extend Memory */
+                if (model > memoryModel && memoryPath === pathRaw(folder, memoryModel-1)) {
+                    memoryModel = model
+                    memoryPath = folder
+                    // console.log("/* Extend Memory */")
+                    // console.log("model > memoryModel && memoryPath === pathRaw(folder, memoryModel-1")
+                }
+                /* Reset Memory to Current */
+                else if (folder !== pathRaw(memoryPath,model-1) && model > 0) {
+                    memoryModel = pathModel(folder)
+                    memoryPath = folder
+                    // console.log("/* Reset Memory to Current */")
+                    // console.log("folder !== pathRaw(memoryPath,model")
+                }
+                // console.log("Repeat Model = " + repeater.model)
+                // console.log("Current Path = " + folder)
+                // console.log("Memory Model = " + memoryModel)
+                // console.log("Memory Path  = " + memoryPath)
+            }
+
+            delegate: Rectangle {
+                visible: folder !== "/" // This is to avoid issues with naming the root folder, "Device"
+                width: label.width + pathSeparator.width
                 height: units.gu(7)
                 color: "transparent"
 
                 Label {
-                    id: deviceLabel
-                    text: i18n.tr("Device")
+                    id: label
+                    text: pathText(folder,index)
                     fontSize: flickable.textSize
                     anchors.verticalCenter: parent.verticalCenter
-                    color: folder === "/" ? "white" : UbuntuColors.warmGrey
+                    color: repeater.model === index + 1 ? "white" : UbuntuColors.warmGrey
                     clip: true
+
                     /* Maximum Width = Flickable Width */
-                    width: if (contentWidth > flickable.width - flickable.iconWidth) { flickable.width - flickable.iconWidth }
-                           else { contentWidth }
+                    width: if (contentWidth > flickable.width) { flickable.width } else { contentWidth }
                 }
 
-                Icon {
-                    name:  "go-next"
-                    visible: repeater.model !== 0
-                    height: flickable.iconWidth
-                    antialiasing: true
-                    width: height
-                    opacity: 1
-                    color: repeater.model < 2 ? "white" : UbuntuColors.warmGrey
-                    anchors.left: deviceLabel.right
+                Label {
+                    id: pathSeparator
+                    text: separatorText
+                    fontSize: flickable.textSize
+                    width: flickable.iconWidth
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: label.left
+                    color: "white"
+                    // clip: true
                 }
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        goTo("/")
-                    }
-                }
-            }
-
-            /* Current Directory and its parents */
-            Repeater {
-                id: repeater
-
-                model: pathModel(folder)
-                property int memoryModel: memoryModel ? memoryModel : pathModel(userplaces.locationHome)
-                property string memoryPath: memoryPath ? memoryPath : userplaces.locationHome
-
-                /* Memory Management */
-                onModelChanged: {
-                    /* Extend Memory */
-                    if (model > memoryModel && memoryPath === pathRaw(folder, memoryModel-1)) {
-                        memoryModel = model
-                        memoryPath = folder
-                        // console.log("/* Extend Memory */")
-                        // console.log("model > memoryModel && memoryPath === pathRaw(folder, memoryModel-1")
-                    }
-                    /* Reset Memory to Current */
-                    else if (folder !== pathRaw(memoryPath,model-1) && model > 0) {
-                        memoryModel = pathModel(folder)
-                        memoryPath = folder
-                        // console.log("/* Reset Memory to Current */")
-                        // console.log("folder !== pathRaw(memoryPath,model")
-                    }
-                    // console.log("Repeat Model = " + repeater.model)
-                    // console.log("Current Path = " + folder)
-                    // console.log("Memory Model = " + memoryModel)
-                    // console.log("Memory Path  = " + memoryPath)
-                }
-
-                delegate: Rectangle {
-                    visible: folder !== "/" // This is to avoid issues with naming the root folder, "Device"
-                    width: label.width + icon.width
-                    height: units.gu(7)
-                    color: "transparent"
-
-                    Label {
-                        id: label
-                        text: pathText(folder,index)
-                        fontSize: flickable.textSize
-                        anchors.verticalCenter: parent.verticalCenter
-                        color: repeater.model === index + 1 ? "white" : UbuntuColors.warmGrey
-                        clip: true
-
-                        /* Maximum Width = Flickable Width */
-                        width: if (contentWidth > flickable.width - flickable.iconWidth*2) {
-                                   flickable.width - flickable.iconWidth * 2
-                               }
-                               else { contentWidth }
-                    }
-
-                    Icon {
-                        id: icon
-                        name: "go-next"
-                        visible: index !== repeater.model - 1
-                        height: flickable.iconWidth
-                        antialiasing: true
-                        width: height
-                        opacity: 1
-                        color: repeater.model === index + 2 ? "white" : UbuntuColors.warmGrey
-                        anchors.left: label.right
-                        anchors.verticalCenter: parent.verticalCenter
-
-                    }
-                    /* Alternate Design ; Will let the design team decide. I prefer the >'s myself because
- it is very familiar, and does away with the /'s which look codey */
-                    //                Label {
-                    //                    id: pathSeparator
-                    //                    text: separatorText
-                    //                    fontSize: flickable.textSize
-                    //                    width: flickable.iconWidth
-                    //                    anchors.verticalCenter: parent.verticalCenter
-                    //                    anchors.right: label.left
-                    //                    color: "white"
-                    //                    // clip: true
-                    //                }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            // When clicking on an already selected item, go up one level. Otherwise go to
-                            // the clicked item. This behaviour is to make it easy to go up in the folder
-                            // hierarchy now that the "back" button goes back in history and not up the directory
-                            // hierarchy
+                        // When clicking on an already selected item, go up one level. Otherwise go to
+                        // the clicked item. This behaviour is to make it easy to go up in the folder
+                        // hierarchy now that the "back" button goes back in history and not up the directory
+                        // hierarchy
+                        if (repeater.model === index + 1) {
+                            goUp()
+                        } else {
                             goTo(pathRaw(folder, index))
                         }
                     }
                 }
             }
         }
+    }
 
-        /* Memory of Previously visited folders */
-        Row {
-            id: memoryRow
-            anchors.left: row.right // Not placed in the other row, to help avoid making contentX calculations more complicated.
+    /* Memory of Previously visited folders */
+    Row {
+        id: memoryRow
+        anchors.left: row.right // Not placed in the other row, to help avoid making contentX calculations more complicated.
 
-            /* Previously visited folders */
-            Repeater {
-                id: memoryRepeater
-                model: repeater.memoryModel - repeater.model
+        /* Previously visited folders */
+        Repeater {
+            id: memoryRepeater
+            model: repeater.memoryModel - repeater.model
 
-                delegate: Rectangle {
-                    width: memoryLabel.width + memoryIcon.width
-                    height: units.gu(7)
-                    color: "transparent"
+            delegate: Rectangle {
+                width: memoryLabel.width + memoryPathSeparator.width
+                height: units.gu(7)
+                color: "transparent"
 
-                    Label {
-                        id: memoryLabel
-                        text: repeater.model > 0 ? pathText(repeater.memoryPath,repeater.memoryModel-memoryRepeater.model+index)
-                                                 : pathText(repeater.memoryPath,index)
-                        fontSize: flickable.textSize
-                        anchors.verticalCenter: parent.verticalCenter
-                        color: UbuntuColors.warmGrey
-                        clip: true
+                Label {
+                    id: memoryLabel
+                    text: repeater.model > 0 ? pathText(repeater.memoryPath,repeater.memoryModel-memoryRepeater.model+index)
+                                             : pathText(repeater.memoryPath,index)
+                    fontSize: flickable.textSize
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: UbuntuColors.warmGrey
+                    clip: true
 
-                        /* Maximum Width = Flickable Width */
-                        width: if (contentWidth > flickable.width - flickable.iconWidth*2) { flickable.width - flickable.iconWidth*2}
-                               else { contentWidth }
-                    }
+                    /* Maximum Width = Flickable Width */
+                    width: if (contentWidth > flickable.width) { flickable.width } else { contentWidth }
+                }
 
-                    Icon {
-                        id: memoryIcon
-                        name: "go-next"
-                        height: flickable.iconWidth
-                        antialiasing: true
-                        width: height
-                        opacity: 1
-                        color: UbuntuColors.warmGrey
-                        anchors.right: memoryLabel.left
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
+                Label {
+                    id: memoryPathSeparator
+                    text: separatorText
+                    fontSize: flickable.textSize
+                    width: flickable.iconWidth
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: memoryLabel.left
+                    color: "white"
+                    // clip: true
+                }
 
-                    //                Label {
-                    //                    id: memoryPathSeparator
-                    //                    text: separatorText
-                    //                    fontSize: flickable.textSize
-                    //                    width: flickable.iconWidth
-                    //                    anchors.verticalCenter: parent.verticalCenter
-                    //                    anchors.right: memoryLabel.left
-                    //                    color: "white"
-                    //                    // clip: true
-                    //                }
-
-                    MouseArea {
-                        anchors {
-                            left: memoryIcon.left
-                            right: parent.right
-                            top: parent.top
-                            bottom: parent.bottom
-                        }
-                        onClicked: {
-                            goTo(pathRaw(repeater.memoryPath, repeater.memoryModel-memoryRepeater.model+index))
-                        }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        goTo(pathRaw(repeater.memoryPath, repeater.memoryModel-memoryRepeater.model+index))
                     }
                 }
             }
-        }
-    }
-
-    /* Go Back in History */
-    Row {
-        id: rowBack
-        anchors {
-            top: flickable.bottom
-            left: flickable.left
-            leftMargin: units.gu(-1)
-        }
-        height: units.gu(2)
-        opacity: back.text !== "" ? 1 : 0
-        Behavior on opacity {OpacityAnimator{}}
-
-        Icon {
-            id: backIcon
-            height: parent.height
-            width: height
-            name: "back"
-            color: UbuntuColors.lightGrey
-        }
-
-        Label {
-            font.bold: true
-            text: "Back  "
-            color: UbuntuColors.lightGrey
-        }
-
-        Label {
-            id: back
-            height: parent.height
-            width: flickable.width
-            color: UbuntuColors.lightGrey
-        }
-    }
-
-    MouseArea {
-        anchors.fill: rowBack
-        onClicked: {
-            goBack()
         }
     }
 }

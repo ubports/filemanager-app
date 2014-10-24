@@ -25,11 +25,11 @@ Column {
     Rectangle {
         height: units.gu(7)
         width: parent.width
-        color: Theme.palette.normal.background
+        color: "#464646"
     }
     
     Rectangle {
-        color: "#C9C9C9"
+        color: Qt.rgba(0.2,0.2,0.2,0.97)
         height: units.gu(2)
         anchors.left: parent.left
         anchors.right: parent.right

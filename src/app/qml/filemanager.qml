@@ -137,8 +137,8 @@ MainView {
         }
     }
 
-    function openFileManager() {
-        pageStack.push(fileManagerComponent, { fileSelectorMode: true} )
+    function openFile(filePath) {
+        pageStack.push(Qt.resolvedUrl("content-hub/FileOpener.qml"), { fileUrl: "file://" + filePath} )
     }
 
     Connections {
@@ -158,28 +158,32 @@ MainView {
         }
     }
 
-    Component {
-        id: fileManagerComponent
-
-        FolderListPage {
-            folder: userplaces.locationHome
-        }
-    }
-
     PageStack {
         id: pageStack
 
-//        Tabs {
-//            id: tabs
+        Tabs {
+            id: tabs
 
-//            Tab {
-//                title: page.title
-//                page: FolderListPage {
-//                    objectName: "folderPage"
+            Tab {
+                title: page.title
+                page: FolderListPage {
+                    objectName: "folderPage"
 
-//                    folder: userplaces.locationHome //modelData
-//                }
-//            }
+                    folder: userplaces.locationHome //modelData
+                }
+            }
+            Tab {
+                title: "page.title"
+                page: Page {
+                    objectName: "settingsPage"
+                }
+            }
+            Tab {
+                title: "page.title"
+                page: SettingsSheet {
+                    id: settingsPage
+                }
+            }
 
 
             // TODO: Temporarily disabled tabs support since this is broken in the SDK (lp:1295242)
@@ -194,8 +198,14 @@ MainView {
 //                    }
 //                }
 //            }
-//        }
+        }
 
+        Component.onCompleted: {
+            pageStack.push(tabs)
+            pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"))
+            pageStack.pop()
+            loaded = true
+        }
     }
 
     /* Settings Storage */
@@ -250,7 +260,7 @@ MainView {
     }
 
     function showSettings() {
-        pageStack.push(Qt.resolvedUrl("ui/SettingsSheet.qml"))
+        PopupUtils.open(Qt.resolvedUrl("ui/SettingsSheet.qml"), mainView)
     }
 
     function reloadSettings() {
@@ -261,7 +271,6 @@ MainView {
 
     Component.onCompleted: {
         reloadSettings()
-        openFileManager()
     }
 
     function getIcon(name) {
