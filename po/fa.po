@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-09-29 15:28+0200\n"
+"POT-Creation-Date: 2014-10-21 00:14+0300\n"
 "PO-Revision-Date: 2014-08-03 17:09+0000\n"
 "Last-Translator: Danial Behzadi <dani.behzi@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2014-09-30 07:00+0000\n"
-"X-Generator: Launchpad (build 17196)\n"
+"X-Launchpad-Export-Date: 2014-10-24 06:35+0000\n"
+"X-Generator: Launchpad (build 17203)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
 #: ../src/app/qml/components/FolderListView.qml:36
@@ -32,6 +32,7 @@ msgstr "%1 (%2 پرونده)"
 
 #: ../src/app/qml/components/PlacesSidebar.qml:54
 #: ../src/app/qml/ui/FolderListPage.qml:306
+#: ../src/app/qml/ui/PlacesPopover.qml:109
 msgid "Places"
 msgstr "مکان‌ها"
 
@@ -313,11 +314,11 @@ msgstr "رفتن به موقعیت"
 msgid "Enter a location to go to:"
 msgstr "موقعیتی را برای رفتن وارد کنید:"
 
-#: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPopover.qml:53
+#: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPopover.qml:73
 msgid "Location..."
 msgstr "موقعیت…"
 
-#: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPopover.qml:68
+#: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPopover.qml:88
 msgid "Go"
 msgstr "رفتن"
 
