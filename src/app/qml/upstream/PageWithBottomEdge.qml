@@ -75,6 +75,7 @@ Page {
     property int bottomEdgeExpandThreshold: page.height * 0.2
     property int bottomEdgeExposedArea: bottomEdge.state !== "expanded" ? (page.height - bottomEdge.y - bottomEdge.tipHeight) : _areaWhenExpanded
     property bool reloadBottomEdgePage: true
+    property int bottomEdgeTipArea: bottomEdgeEnabled ? page.height - tip.y : 0
 
     readonly property alias bottomEdgePage: edgeLoader.item
     readonly property bool isReady: ((bottomEdge.y === fakeHeader.height) && bottomEdgePageLoaded && edgeLoader.item.active)
@@ -175,7 +176,7 @@ Page {
         z: 1
         width: tipLabel.paintedWidth + units.gu(6)
         height: bottomEdge.tipHeight + units.gu(1)
-//        color: Theme.palette.normal.overlay
+        color: "#464646"
         Label {
             id: tipLabel
 
@@ -291,7 +292,7 @@ Page {
         readonly property int pageStartY: fakeHeader.height
 
         z: 1
-        color: "#797979" // Qt.rgba(0.2,0.2,0.2,0.97)
+        color: "#606060" // "#797979" // Qt.rgba(0.2,0.2,0.2,0.97)
         // color: Theme.palette.normal.background
         clip: true
         anchors {

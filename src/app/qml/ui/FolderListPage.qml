@@ -27,14 +27,27 @@ import "../upstream"
 PageWithBottomEdge {
     id: folderListPage
     title: basename(folder)
-
     bottomEdgeTitle: "Places"
     bottomEdgeEnabled: !sidebar.expanded
     bottomEdgePageSource: Qt.resolvedUrl("PlacesPage.qml")
 
+    head.contents: PathHistoryRow {}
+
+    /* Go to last folder visited */
+    head.backAction: Action {
+        id: back
+        objectName: "back"
+        iconName: "back"
+
+        onTriggered: {
+            goBack()
+        }
+    }
+
     head.actions: [
         Action {
             id: pasteButton
+            objectName: "paste"
             iconName: "edit-paste"
             text: i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
             visible: pageModel.clipboardUrlsCounter > 0
@@ -46,6 +59,7 @@ PageWithBottomEdge {
         },
         Action {
             id: clearClipboardButton
+            objectName: "clearClipboard"
             iconName: "edit-clear"
             text: i18n.tr("Clear clipboard")
             visible: pageModel.clipboardUrlsCounter > 0
@@ -63,23 +77,8 @@ PageWithBottomEdge {
             }
         },
         Action {
-            id: settingsButton
-            iconName: "settings"
-            objectName: "settings"
-            text: i18n.tr("Settings")
-            visible: sidebar.expanded
-            onTriggered: showSettings()
-        },
-        Action {
-            id: gotoButton
-            iconName: "find"
-            text: i18n.tr("Go To")
-            visible: sidebar.expanded
-
-            onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
-        },
-        Action {
             id: createNewFolder
+            objectName: "createFolder"
             iconName: "add"
             text: i18n.tr("New Folder")
             onTriggered: {
@@ -97,33 +96,20 @@ PageWithBottomEdge {
             }
         },
         Action {
-            text: i18n.tr("Unlock full access")
-            visible: pageModel.onlyMTPPaths
-            iconName: "lock"
-            onTriggered: {
-                console.log(pageModel.onlyMTPPaths)
-                console.log("Full access clicked")
-                var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
-                                                 folderListPage)
-
-                authDialog.passwordEntered.connect(function(password) {
-                    if (pamAuthentication.validatePasswordToken(password)) {
-                        console.log("Authenticated for full access")
-                        pageModel.onlyMTPPaths = false
-                    } else {
-                        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
-                                        {
-                                            title: i18n.tr("Authentication failed")
-                                        })
-
-                        console.log("Could not authenticate")
-                    }
-                })
-            }
+            id: settingsButton
+            iconName: "settings"
+            objectName: "settings"
+            text: i18n.tr("Settings")
+            visible: sidebar.expanded
+            onTriggered: pageStack.push(settingsPage);
+        },
+        Action {
+            id: gotoButton
+            iconName: "find"
+            text: i18n.tr("Go To")
+            onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
         }
     ]
-    head.contents: PathHistoryRow {id: pathHistoryRow}
-
     flickable: !sidebar.expanded ?
                    (folderListView.visible ? folderListView : folderIconView.flickable) : null
 
@@ -281,18 +267,22 @@ PageWithBottomEdge {
         id: bottomBar
         anchors {
             bottom: parent.bottom
+            bottomMargin: bottomEdgeTipArea + units.gu(1) // Avoid being over the bottom edge pull page
             left: sidebar.right
             right: parent.right
         }
         height: bottomBarButtons.visible ? bottomBarButtons.height : 0
-        visible: fileSelectorMode
+        visible: bottomBarButtons.visible
     }
 
-    Row {
+    Flow {
         id: bottomBarButtons
-        anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: bottomBar.bottom
-        spacing: units.gu(5)
+        anchors.leftMargin: (parent.width - sidebar.width - childrenRect.width) / 2
+        anchors.left: sidebar.right
+        width: parent.width - sidebar.width
+
+        spacing: units.gu(2)
         visible: fileSelectorMode || pageModel.onlyMTPPaths
 
         Button {
@@ -351,8 +341,7 @@ PageWithBottomEdge {
         folderListModel: pageModel
         anchors {
             top: parent.top
-            bottom: parent.bottom
-            bottomMargin: bottomBar.height
+            bottom: bottomBar.top
             left: sidebar.right
             right: parent.right
         }
@@ -368,8 +357,7 @@ PageWithBottomEdge {
         folderListModel: pageModel
         anchors {
             top: parent.top
-            bottom: parent.bottom
-            bottomMargin: bottomBar.height
+            bottom: bottomBar.top
             left: sidebar.right
             right: parent.right
         }
@@ -566,11 +554,6 @@ PageWithBottomEdge {
         goTo(pageModel.parentPath)
     }
 
-    /* Go down one directory */
-    function goDown() {
-        goTo(pathRaw(repeater.memoryPath, pathModel(repeater.memoryPath) - memoryRepeater.model))
-    }
-
     function refresh() {
         pageModel.refresh()
     }
@@ -691,12 +674,6 @@ PageWithBottomEdge {
         }
     }
 
-    function openFile(filePath) {
-        if (!pageModel.openPath(filePath)) {
-            error(i18n.tr("File operation error"), i18n.tr("Unable to open '%1'").arg(filePath))
-        }
-    }
-
     function itemClicked(model) {
         if (model.isDir) {
             if (model.isReadable && model.isExecutable) {
@@ -718,7 +695,7 @@ PageWithBottomEdge {
                                         false,
                                         true);
             } else {
-                openFile(model.fileName)
+                openFile(model.filePath)
             }
             //            PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
             //                            {
