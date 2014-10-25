@@ -38,6 +38,7 @@ MainView {
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
     applicationName: "com.ubuntu.filemanager"
+    useDeprecatedToolbar: false
 
     width: units.gu(100)
     height: units.gu(75)
@@ -160,8 +161,6 @@ MainView {
     PageStack {
         id: pageStack
 
-        anchors.bottomMargin: toolbar.tools.opened && toolbar.tools.locked ? -mainView.toolbar.triggerSize : 0
-
         Tabs {
             id: tabs
 
@@ -173,6 +172,19 @@ MainView {
                     folder: userplaces.locationHome //modelData
                 }
             }
+            Tab {
+                title: "page.title"
+                page: Page {
+                    objectName: "settingsPage"
+                }
+            }
+            Tab {
+                title: "page.title"
+                page: SettingsSheet {
+                    id: settingsPage
+                }
+            }
+
 
             // TODO: Temporarily disabled tabs support since this is broken in the SDK (lp:1295242)
 //            Repeater {

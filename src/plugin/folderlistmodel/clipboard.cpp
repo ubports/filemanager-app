@@ -236,7 +236,6 @@ DirModelMimeData::setIntoClipboard(const QStringList &files, const QString& path
 
 bool DirModelMimeData::fillClipboard(const QStringList& files, const QString &path, ClipboardOperation operation)
 {
-    bool ret = false;
     int index = m_formats.indexOf(KDE_CUT_MIME_TYPE);
     if (index != -1 && operation != ClipboardCut)
     {
@@ -259,17 +258,10 @@ bool DirModelMimeData::fillClipboard(const QStringList& files, const QString &pa
         m_urls.append(item);
         m_gnomeData += QLatin1Char('\n') + item.toEncoded() ;
     }
-    if (m_urls.count() > 0)
-    {
-        setData(GNOME_COPIED_MIME_TYPE, m_gnomeData);
-        setUrls(m_urls);
-        ret = true;
-    }
-    else
-    {
-     // emit error( QObject::tr("Item does not exist"), item);
-    }
-    return ret;
+    setData(GNOME_COPIED_MIME_TYPE, m_gnomeData);
+    setUrls(m_urls);
+
+    return true;
 }
 
 //===============================================================================================
@@ -492,4 +484,13 @@ QStringList Clipboard::paste(ClipboardOperation &operation)
         m_clipboardModifiedByOther = false;
     }
     return items;
+}
+
+/*!
+ * \brief Clears clipboard entries
+ */
+void Clipboard::clear()
+{
+    qDebug() << Q_FUNC_INFO << "Clearing clipboard";
+    storeOnClipboard(QStringList(), ClipboardCopy, "");
 }

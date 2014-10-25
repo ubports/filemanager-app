@@ -208,6 +208,9 @@ public:
 
     Q_INVOKABLE QString homePath() const;
 
+    Q_INVOKABLE QString lastFolderVisited() const;
+
+
     /*!
      *    \brief Tries to make the directory pointed by row as the current to be browsed
      *    \return true if row points to a directory and the directory is readble, false otherwise
@@ -355,7 +358,6 @@ public slots:
      */
     void goBack();
 
-
     /*!
      * \brief cdUp() sets the parent directory as current directory
      *
@@ -370,6 +372,11 @@ public slots:
      *  If the operation was \ref cut(), then remove the original item
      */
     void paste();
+
+   /*!
+    * \brief clears clipboard entries
+    */
+    void clearClipboard();
 
     /*!
      * \brief cancelAction() any copy/cut/remove can be cancelled

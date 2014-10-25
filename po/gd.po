@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-10-21 00:14+0300\n"
+"POT-Creation-Date: 2014-09-29 15:28+0200\n"
 "PO-Revision-Date: 2014-07-16 14:48+0000\n"
 "Last-Translator: GunChleoc <Unknown>\n"
 "Language-Team: Fòram na Gàidhlig http://www.foramnagaidhlig.net\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : "
 "(n > 2 && n < 20) ? 2 : 3;\n"
-"X-Launchpad-Export-Date: 2014-10-24 06:34+0000\n"
-"X-Generator: Launchpad (build 17203)\n"
+"X-Launchpad-Export-Date: 2014-09-30 06:59+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 "Language: gd\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -34,7 +34,6 @@ msgstr "%1 (%2 faidhlichean)"
 
 #: ../src/app/qml/components/PlacesSidebar.qml:54
 #: ../src/app/qml/ui/FolderListPage.qml:306
-#: ../src/app/qml/ui/PlacesPopover.qml:109
 msgid "Places"
 msgstr "Àiteachan"
 
@@ -318,11 +317,11 @@ msgstr "Gach gun ionad"
 msgid "Enter a location to go to:"
 msgstr "Cuir a-steach ionad gu dol ann:"
 
-#: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPopover.qml:73
+#: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPopover.qml:53
 msgid "Location..."
 msgstr "Ionad..."
 
-#: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPopover.qml:88
+#: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPopover.qml:68
 msgid "Go"
 msgstr "Siuthad"
 

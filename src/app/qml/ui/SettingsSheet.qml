@@ -26,7 +26,7 @@ import Ubuntu.Components.Popups 1.0
  * TODO: Make sure this fits with the UI guidelines if
  * they are updated to include About/Settings info.
  */
-DefaultSheet {
+Page {
     id: sheet
     title: i18n.tr("Settings")
 
