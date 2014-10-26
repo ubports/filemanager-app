@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : "
 "(n > 2 && n < 20) ? 2 : 3;\n"
-"X-Launchpad-Export-Date: 2014-10-25 05:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-26 05:54+0000\n"
 "X-Generator: Launchpad (build 17203)\n"
 "Language: gd\n"
 
@@ -468,18 +468,3 @@ msgstr ""
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr ""
-
-#~ msgid "Paste"
-#~ msgstr "Cuir ann"
-
-#~ msgid "View"
-#~ msgstr "Sealladh"
-
-#~ msgid "Actions"
-#~ msgstr "Gnìomhan"
-
-#~ msgid "Create New Folder"
-#~ msgstr "Cruthaich pasgan ùr"
-
-#~ msgid "Open in Terminal"
-#~ msgstr "Fosgail ann an Terminal"

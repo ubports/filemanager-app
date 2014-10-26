@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2014-10-25 05:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-26 05:55+0000\n"
 "X-Generator: Launchpad (build 17203)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -462,25 +462,3 @@ msgstr "無法移除回收筒資訊檔"
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr "檔案管理員"
-
-#~ msgid "Create New Folder"
-#~ msgstr "建立新資料夾"
-
-#~ msgid "Open in Terminal"
-#~ msgstr "在終端機開啟"
-
-#~ msgid "Paste"
-#~ msgstr "貼上"
-
-#~ msgid "View"
-#~ msgstr "檢視"
-
-#~ msgid "Actions"
-#~ msgstr "動作"
-
-#, qt-format
-#~ msgid "Unable to open '%1'"
-#~ msgstr "無法開啟「%1」"
-
-#~ msgid "Up"
-#~ msgstr "上一層"

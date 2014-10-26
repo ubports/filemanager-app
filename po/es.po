@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-10-25 05:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-26 05:55+0000\n"
 "X-Generator: Launchpad (build 17203)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -464,25 +464,3 @@ msgstr "No se pudo eliminar el archivo de información .trash"
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr "Gestor de archivos"
-
-#~ msgid "Create New Folder"
-#~ msgstr "Crear carpeta"
-
-#~ msgid "Paste"
-#~ msgstr "Pegar"
-
-#~ msgid "Open in Terminal"
-#~ msgstr "Abrir en terminal"
-
-#~ msgid "Actions"
-#~ msgstr "Acciones"
-
-#~ msgid "View"
-#~ msgstr "Ver"
-
-#~ msgid "Up"
-#~ msgstr "Subir"
-
-#, qt-format
-#~ msgid "Unable to open '%1'"
-#~ msgstr "No se pudo abrir «%1»"

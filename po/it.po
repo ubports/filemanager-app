@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-10-25 05:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-26 05:54+0000\n"
 "X-Generator: Launchpad (build 17203)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -464,25 +464,3 @@ msgstr "Impossibile rimuovere il file info del cestino"
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr "Gestore file"
-
-#~ msgid "Paste"
-#~ msgstr "Incolla"
-
-#~ msgid "Create New Folder"
-#~ msgstr "Crea nuova cartella"
-
-#~ msgid "Open in Terminal"
-#~ msgstr "Apri nel terminale"
-
-#~ msgid "View"
-#~ msgstr "Visualizza"
-
-#~ msgid "Actions"
-#~ msgstr "Azioni"
-
-#~ msgid "Up"
-#~ msgstr "Su"
-
-#, qt-format
-#~ msgid "Unable to open '%1'"
-#~ msgstr "Impossibile aprire «%1»"

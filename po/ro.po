@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2014-10-25 05:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-26 05:55+0000\n"
 "X-Generator: Launchpad (build 17203)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -465,18 +465,3 @@ msgstr ""
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr ""
-
-#~ msgid "Paste"
-#~ msgstr "Lipește"
-
-#~ msgid "Create New Folder"
-#~ msgstr "Creează un dosar nou"
-
-#~ msgid "Open in Terminal"
-#~ msgstr "Deschide în terminal"
-
-#~ msgid "View"
-#~ msgstr "Vizualizare"
-
-#~ msgid "Actions"
-#~ msgstr "Acțiuni"

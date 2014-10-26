@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2014-10-25 05:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-26 05:54+0000\n"
 "X-Generator: Launchpad (build 17203)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -462,25 +462,3 @@ msgstr ""
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr ""
-
-#~ msgid "Paste"
-#~ msgstr "​បិទភ្ជាប់"
-
-#~ msgid "Create New Folder"
-#~ msgstr "បង្កើត​ថត​ថ្មី"
-
-#~ msgid "View"
-#~ msgstr "មើល"
-
-#~ msgid "Actions"
-#~ msgstr "សកម្មភាព"
-
-#~ msgid "Open in Terminal"
-#~ msgstr "បើក​ក្នុង​ស្ថានីយ"
-
-#~ msgid "Up"
-#~ msgstr "ឡើងលើ"
-
-#, qt-format
-#~ msgid "Unable to open '%1'"
-#~ msgstr "មិន​អាច​បើក '%1'"

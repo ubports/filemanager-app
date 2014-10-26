@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-10-25 05:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-26 05:55+0000\n"
 "X-Generator: Launchpad (build 17203)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -464,18 +464,3 @@ msgstr ""
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr ""
-
-#~ msgid "Paste"
-#~ msgstr "Colar"
-
-#~ msgid "Create New Folder"
-#~ msgstr "Criar uma nova pasta"
-
-#~ msgid "Open in Terminal"
-#~ msgstr "Abrir no Terminal"
-
-#~ msgid "View"
-#~ msgstr "Ver"
-
-#~ msgid "Actions"
-#~ msgstr "Ações"
