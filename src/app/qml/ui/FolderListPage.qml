@@ -21,6 +21,7 @@ import Ubuntu.Components.Popups 1.0
 import Ubuntu.Components.ListItems 1.0
 import org.nemomobile.folderlistmodel 1.0
 import com.ubuntu.PlacesModel 0.1
+import com.ubuntu.Archives 0.1
 import "../components"
 import "../upstream"
 
@@ -445,6 +446,45 @@ PageWithBottomEdge {
     }
 
     Component {
+        id: confirmExtractDialog
+        ConfirmDialog {
+            property string filePath
+            property string fileName
+            title: i18n.tr("Extract Archive")
+            text: i18n.tr("Are you sure you want to extract '%1' here?").arg(fileName)
+
+            onAccepted: {
+                console.log("Extract accepted for filePath, fileName", filePath, fileName)
+                PopupUtils.open(extractingDialog, mainView, { "fileName" : fileName })
+                console.log("Extracting...")
+
+                var parentDirectory = filePath.substring(0, filePath.lastIndexOf("/"))
+                var fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf("."))
+                var extractDirectory = parentDirectory + "/" + fileNameWithoutExtension
+
+                // Add numbers if the directory already exist: myfile, myfile-1, myfile-2, etc.
+                while (pageModel.existsDir(extractDirectory)) {
+                    var i = 0
+                    while ("1234567890".indexOf(extractDirectory.charAt(extractDirectory.length - i - 1)) !== -1) {
+                        i++
+                    }
+                    if (i === 0 || extractDirectory.charAt(extractDirectory.length - i - 1) !== "-") {
+                        extractDirectory += "-1"
+                    } else {
+                        extractDirectory = extractDirectory.substring(0, extractDirectory.lastIndexOf("-") + 1) + (parseInt(extractDirectory.substring(extractDirectory.length - i)) + 1)
+                    }
+                }
+
+                archives.extractZip(filePath, extractDirectory)
+            }
+        }
+    }
+
+    Archives {
+        id: archives
+    }
+
+    Component {
         id: actionSelectionPopoverComponent
 
         ActionSelectionPopover {
@@ -454,6 +494,15 @@ PageWithBottomEdge {
             grabDismissAreaEvents: true
 
             property var model
+
+            property bool isArchive: false
+
+            Component.onCompleted: {
+                var splitName = actionSelectionPopover.model.fileName.split(".")
+                var fileExtension = splitName[splitName.length - 1]
+                isArchive = fileExtension === "zip"
+            }
+
             actions: ActionList {
                 Action {
                     text: i18n.tr("Cut")
@@ -505,6 +554,18 @@ PageWithBottomEdge {
                 }
 
                 Action {
+                    id: extractAction
+                    visible: actionSelectionPopover.isArchive
+                    text: actionSelectionPopover.isArchive ? i18n.tr("Extract archive") : "" // Workaround: Otherwise the text will still be shown behind the cut action
+                    onTriggered: {
+                        PopupUtils.open(confirmExtractDialog, actionSelectionPopover.caller,
+                                        { "filePath" : actionSelectionPopover.model.filePath,
+                                            "fileName" : actionSelectionPopover.model.fileName }
+                                        )
+                    }
+                }
+
+                Action {
                     text: i18n.tr("Properties")
 
                     onTriggered: {
@@ -534,6 +595,61 @@ PageWithBottomEdge {
 
         page: folderListPage
         model: pageModel
+    }
+
+    Component {
+        id: extractingDialog
+
+        Dialog {
+            id: dialog
+            modal: true
+            property string fileName: ""
+
+            Row {
+                id: row
+                width: parent.width
+                spacing: units.gu(2)
+
+                ActivityIndicator {
+                    id: loadingSpinner
+                    running: true
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                Label {
+                    text: qsTr(i18n.tr("Extracting archive '%1'")).arg(fileName)
+                    color: UbuntuColors.darkGrey
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: row.width - loadingSpinner.width - row.spacing
+                    maximumLineCount: 2
+                    wrapMode: Text.WrapAnywhere
+                    elide: Text.ElideRight
+                }
+            }
+
+            Button {
+                id: button
+                text: i18n.tr("OK")
+                visible: false
+                onClicked: {
+                    PopupUtils.close(dialog)
+                }
+            }
+
+            Connections {
+                target: archives
+                onFinished: {
+                    if (success) {
+                        PopupUtils.close(dialog)
+                    } else {
+                        row.visible = false
+                        title = i18n.tr("Extracting failed")
+                        text = qsTr(i18n.tr("Extracting the archive '%1' failed.")).arg(fileName)
+                        button.visible = true
+                    }
+                }
+            }
+        }
     }
 
     function goTo(location) {
