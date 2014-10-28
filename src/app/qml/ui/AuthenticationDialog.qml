@@ -24,7 +24,7 @@ Dialog {
 
     title: i18n.tr("Authentication required")
 
-    text: i18n.tr("Enter password:")
+    text: i18n.tr("Password is required to access all files")
 
     signal passwordEntered(string password)
 

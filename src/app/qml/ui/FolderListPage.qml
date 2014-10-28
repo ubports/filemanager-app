@@ -108,6 +108,31 @@ PageWithBottomEdge {
             iconName: "find"
             text: i18n.tr("Go To")
             onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
+        },
+        Action {
+            id: unlockButton
+            iconName: "lock"
+            text: i18n.tr("Unlock full access")
+            visible: pageModel.onlyMTPPaths
+            onTriggered: {
+                console.log("Full access clicked")
+                var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
+                                                 folderListPage)
+
+                authDialog.passwordEntered.connect(function(password) {
+                    if (pamAuthentication.validatePasswordToken(password)) {
+                        console.log("Authenticated for full access")
+                        pageModel.onlyMTPPaths = false
+                    } else {
+                        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
+                                        {
+                                            title: i18n.tr("Authentication failed")
+                                        })
+
+                        console.log("Could not authenticate")
+                    }
+                })
+            }
         }
     ]
     flickable: !sidebar.expanded ?
@@ -306,29 +331,6 @@ PageWithBottomEdge {
             onClicked: {
                 console.log("FileSelector cancelled")
                 cancelFileSelector()
-            }
-        }
-        Button {
-            text: i18n.tr("Unlock full access")
-            visible: pageModel.onlyMTPPaths
-            onClicked: {
-                console.log("Full access clicked")
-                var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
-                                                 folderListPage)
-
-                authDialog.passwordEntered.connect(function(password) {
-                    if (pamAuthentication.validatePasswordToken(password)) {
-                        console.log("Authenticated for full access")
-                        pageModel.onlyMTPPaths = false
-                    } else {
-                        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
-                                        {
-                                            title: i18n.tr("Authentication failed")
-                                        })
-
-                        console.log("Could not authenticate")
-                    }
-                })
             }
         }
     }
