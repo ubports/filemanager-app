@@ -403,7 +403,7 @@ PageWithBottomEdge {
             onAccepted: {
                 console.log("Delete accepted for filePath, fileName", filePath, fileName)
 
-                fileOperationDialog.startOperation("Deleting files")
+                fileOperationDialog.startOperation(i18n.tr("Deleting files"))
                 console.log("Doing delete")
                 pageModel.rm(filePath)
             }
