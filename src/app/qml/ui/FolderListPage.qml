@@ -450,6 +450,7 @@ PageWithBottomEdge {
         ConfirmDialog {
             property string filePath
             property string fileName
+            property string archiveType
             title: i18n.tr("Extract Archive")
             text: i18n.tr("Are you sure you want to extract '%1' here?").arg(fileName)
 
@@ -475,7 +476,13 @@ PageWithBottomEdge {
                     }
                 }
 
-                archives.extractZip(filePath, extractDirectory)
+                pageModel.mkdir(extractDirectory) // This is needed for the tar command as the given destination has to be an already existing directory
+
+                if (archiveType === "zip") {
+                    archives.extractZip(filePath, extractDirectory)
+                } else if (archiveType === "tar") {
+                    archives.extractTar(filePath, extractDirectory)
+                }
             }
         }
     }
@@ -495,12 +502,19 @@ PageWithBottomEdge {
 
             property var model
 
-            property bool isArchive: false
+            property bool isArchive: archiveType !== ""
+            property string archiveType: ""
 
             Component.onCompleted: {
                 var splitName = actionSelectionPopover.model.fileName.split(".")
                 var fileExtension = splitName[splitName.length - 1]
-                isArchive = fileExtension === "zip"
+                if (fileExtension === "zip") {
+                    archiveType = "zip"
+                } else if (fileExtension === "tar") {
+                    archiveType = "tar"
+                } else {
+                    archiveType = ""
+                }
             }
 
             actions: ActionList {
@@ -560,8 +574,9 @@ PageWithBottomEdge {
                     onTriggered: {
                         PopupUtils.open(confirmExtractDialog, actionSelectionPopover.caller,
                                         { "filePath" : actionSelectionPopover.model.filePath,
-                                            "fileName" : actionSelectionPopover.model.fileName }
-                                        )
+                                            "fileName" : actionSelectionPopover.model.fileName,
+                                            "archiveType" : actionSelectionPopover.archiveType
+                                        })
                     }
                 }
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-26 15:25+0100\n"
+"POT-Creation-Date: 2014-11-06 21:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgid "%1 (%2 files)"
 msgstr ""
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
-#: ../src/app/qml/ui/FolderListPage.qml:733
+#: ../src/app/qml/ui/FolderListPage.qml:748
 msgid "Device"
 msgstr ""
 
@@ -166,7 +166,7 @@ msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:75
 #: ../src/app/qml/ui/FolderListPage.qml:93
-#: ../src/app/qml/ui/FolderListPage.qml:569
+#: ../src/app/qml/ui/FolderListPage.qml:584
 msgid "Properties"
 msgstr ""
 
@@ -226,7 +226,7 @@ msgid "No files"
 msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:401
-#: ../src/app/qml/ui/FolderListPage.qml:531
+#: ../src/app/qml/ui/FolderListPage.qml:545
 msgid "Delete"
 msgstr ""
 
@@ -236,7 +236,7 @@ msgid "Are you sure you want to permanently delete '%1'?"
 msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:425
-#: ../src/app/qml/ui/FolderListPage.qml:544
+#: ../src/app/qml/ui/FolderListPage.qml:558
 msgid "Rename"
 msgstr ""
 
@@ -252,75 +252,75 @@ msgstr ""
 msgid "Insufficient permissions or name already exists?"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:453
+#: ../src/app/qml/ui/FolderListPage.qml:454
 msgid "Extract Archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:454
+#: ../src/app/qml/ui/FolderListPage.qml:455
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:508
+#: ../src/app/qml/ui/FolderListPage.qml:522
 msgid "Cut"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:519
+#: ../src/app/qml/ui/FolderListPage.qml:533
 msgid "Copy"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:559
+#: ../src/app/qml/ui/FolderListPage.qml:573
 msgid "Extract archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:589
+#: ../src/app/qml/ui/FolderListPage.qml:604
 msgid "File operation error"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:620
+#: ../src/app/qml/ui/FolderListPage.qml:635
 #, qt-format
 msgid "Extracting archive '%1'"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:632
+#: ../src/app/qml/ui/FolderListPage.qml:647
 msgid "OK"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:646
+#: ../src/app/qml/ui/FolderListPage.qml:661
 msgid "Extracting failed"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:647
+#: ../src/app/qml/ui/FolderListPage.qml:662
 #, qt-format
 msgid "Extracting the archive '%1' failed."
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:704
+#: ../src/app/qml/ui/FolderListPage.qml:719
 msgid "~/Desktop"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:714
+#: ../src/app/qml/ui/FolderListPage.qml:729
 msgid "~/Public"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:716
+#: ../src/app/qml/ui/FolderListPage.qml:731
 msgid "~/Programs"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:718
+#: ../src/app/qml/ui/FolderListPage.qml:733
 msgid "~/Templates"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:731
+#: ../src/app/qml/ui/FolderListPage.qml:746
 msgid "Home"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:801
+#: ../src/app/qml/ui/FolderListPage.qml:816
 msgid "Folder not accessible"
 msgstr ""
 
 #. TRANSLATORS: this refers to a folder name
-#: ../src/app/qml/ui/FolderListPage.qml:803
+#: ../src/app/qml/ui/FolderListPage.qml:818
 #, qt-format
 msgid "Can not access %1"
 msgstr ""
