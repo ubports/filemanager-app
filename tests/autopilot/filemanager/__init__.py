@@ -63,7 +63,7 @@ class MainView(ubuntuuitoolkit.MainView):
         if self.showSidebar:
             self._go_to_place_from_side_bar(object_name)
         else:
-            self._go_to_place_from_popover(object_name)
+            self._go_to_place_from_PlacesPage(object_name)
 
     def _go_to_place_from_side_bar(self, object_name):
         side_bar = self.get_folder_list_page().get_sidebar()
@@ -75,27 +75,36 @@ class MainView(ubuntuuitoolkit.MainView):
         page.main_view = self
         return page
 
-    def _go_to_place_from_popover(self, object_name):
-        popover = self.open_places()
-        place = popover.wait_select_single('Standard', objectName=object_name)
-        self.pointing_device.click_object(place)
+    def _go_to_place_from_PlacesPage(self, object_name):
+        placesPage = self.open_places()
+        placesPage.go_to_place(object_name)
 
     @autopilot.logging.log_action(logger.info)
     def open_places(self):
         if not self.showSidebar:
-            self.open_toolbar().click_button('places')
-            return self._get_places_popover()
+            self._drag_Bottomedge_to_open_places()
+            return self.wait_select_single(Page11)
         else:
             raise FilemanagerException(
                 'The places popover cannot be opened on wide mode.')
 
-    def _get_places_popover(self):
-        """Return the Places popover."""
-        # XXX It would be easier if the places popover was an object
-        # that inherits from Popover, like the
-        # ActionSelectionPopover does.
-        # --elopio - 2013-07-25
-        return self.wait_select_single('Popover', objectName='placesPopover')
+    def _drag_Bottomedge_to_open_places(self):
+        """Bring the places popover to the screen"""
+        try:
+            action_item = self.wait_select_single('ShapeItem',
+                objectName='bottomEdgeTip')
+            action_item.enabled.wait_for(True)
+            start_x = (action_item.globalRect.x +
+                       (action_item.globalRect.width * 0.5))
+            start_y = (action_item.globalRect.y +
+                       (action_item.height * 0.5))
+            stop_y = start_y - (self.height * 0.7)
+            self.pointing_device.drag(start_x, start_y,
+                                      start_x, stop_y, rate=2)
+
+        except dbus.StateNotFoundError:
+            logger.error('BottomEdge element not found.')
+            raise
 
     @autopilot.logging.log_action(logger.info)
     def rename(self, original_name, new_name):
@@ -315,6 +324,13 @@ class FolderListPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
             raise ValueError(
                 'Path bar is hidden in small mode.')
 
+
+class Page11(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
+    """Places Page Autopilot emulator."""
+
+    def go_to_place(self, object_name ):
+        place=self.wait_select_single('Standard', ojbectName=object_name)
+        self.pointing_device.click_object(place)
 
 class FolderListView(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """FolderListView Autopilot emulator."""
