@@ -91,8 +91,8 @@ class MainView(ubuntuuitoolkit.MainView):
     def _drag_Bottomedge_to_open_places(self):
         """Bring the places page to the screen"""
         try:
-            action_item = self.wait_select_single('ShapeItem',
-                objectName='bottomEdgeTip')
+            action_item = self.wait_select_single(
+                'ShapeItem', objectName='bottomEdgeTip')
             action_item.enabled.wait_for(True)
             start_x = (action_item.globalRect.x +
                        (action_item.globalRect.width * 0.5))
@@ -328,9 +328,10 @@ class FolderListPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
 class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """Places Page Autopilot emulator."""
 
-    def go_to_place(self, object_name ):
-        place=self.wait_select_single('Standard', ojbectName=object_name)
+    def go_to_place(self, object_name):
+        place = self.wait_select_single('Standard', ojbectName=object_name)
         self.pointing_device.click_object(place)
+
 
 class FolderListView(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """FolderListView Autopilot emulator."""
