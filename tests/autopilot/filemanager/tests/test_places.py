@@ -37,10 +37,10 @@ class PlacesTestCase(FileManagerTestCase):
         self.app.main_view.go_to_place('placeDevice')
 
         folder_list_page = self.app.main_view.get_folder_list_page()
-        if self.test_type is not 'click':
+        if self.test_type is 'click':
             self.assertThat(
                 folder_list_page.get_current_path,
-                Eventually(Equals(temp_dir)))
+                Eventually(Equals(self.fakehome)))
         else:
             self.assertThat(
                 folder_list_page.get_current_path,
