@@ -329,7 +329,7 @@ class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """Places Page Autopilot emulator."""
 
     def go_to_place(self, object_name):
-        place = self.wait_select_single('Standard', ojbectName=object_name)
+        place = self.wait_select_single('Standard', objectName=object_name)
         self.pointing_device.click_object(place)
 
 
