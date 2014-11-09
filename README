@@ -13,6 +13,12 @@ Install the following build dependencies:
 Then open the CMakeLists.txt file in Qt Creator, and ensure that the kit
 selected on the left sidebar (just above the green "Run" button) is "Desktop"
 
+or you can compile manually from filemanager root directory with:
+
+cmake.
+make
+
+
 ### For a device
 
 If you don't have one already, you'll need to create an armhf chroot to
@@ -27,7 +33,7 @@ and then create a current one). Here's how:
    password
 4. Once created, you'll need to add the build dependencies for the app:
   - Click on the Maintain button on your chroot
-  - On the terminal prompt that is started, type 
+  - On the terminal prompt that is started, type
     apt-get install libtag1-dev:armhf libpam0g-dev:armhf python3
   - Close the terminal when the installation finishes
 5. Now you can either do a clean checkout and wait to be prompted by Qt Creator
@@ -56,11 +62,17 @@ button on Qt Creator's left sidebar (or alternatively Ctrl+B).
 
 No additional steps are required before running the app on the desktop.
 
+You can pass two switches to run in phone or tablet mode from the desktop:
+
+-p for phone mode
+-t for tablet mode
+
+
 ### On a device
 
 Due to Qt Creator's bug #1312094 in launchpad.net, there needs to be a manual
 workaround done before the app can run on the device:
- 
+
 1. Modify the desktop.in file: change the Exec line to read:
    Exec=lib/arm-linux-gnueabihf/bin/@EXEC@
 
@@ -147,5 +159,17 @@ Prerequisites:
 Once the app has been built, you can go to the build directory and run:
 
     cd tests/autopilot
-    autopilot run filemanager
+    autopilot3 run filemanager
+
+You can run filemanager in phone or tablet mode passing one of these two switches:
+
+-p for phone mode
+-t for tablet mode
+
+so:
+
+autopilot3 launch ../../src/app/filemanager -p
+
+will launch filemanager with autopilot in phone mode.
+
 
