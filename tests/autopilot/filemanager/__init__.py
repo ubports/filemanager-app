@@ -83,13 +83,13 @@ class MainView(ubuntuuitoolkit.MainView):
     def open_places(self):
         if not self.showSidebar:
             self._drag_Bottomedge_to_open_places()
-            return self.wait_select_single(Page11)
+            return self.wait_select_single(PlacesPage)
         else:
             raise FilemanagerException(
                 'The places popover cannot be opened on wide mode.')
 
     def _drag_Bottomedge_to_open_places(self):
-        """Bring the places popover to the screen"""
+        """Bring the places page to the screen"""
         try:
             action_item = self.wait_select_single('ShapeItem',
                 objectName='bottomEdgeTip')
@@ -325,7 +325,7 @@ class FolderListPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
                 'Path bar is hidden in small mode.')
 
 
-class Page11(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
+class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """Places Page Autopilot emulator."""
 
     def go_to_place(self, object_name ):

@@ -27,6 +27,8 @@ Page {
 
     title: i18n.tr("Places")
     objectName: 'PlacesPage'
+    // ADDED THIS PROPERTY FOR BUG #1341671  WORKAROUND
+    property string testProperty: "justForAutopilotTests"
 
     Flickable {
         anchors.fill: parent
