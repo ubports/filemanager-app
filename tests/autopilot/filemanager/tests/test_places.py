@@ -18,7 +18,6 @@ from autopilot.matchers import Eventually
 from testtools.matchers import Equals
 
 from filemanager.tests import FileManagerTestCase
-from time import sleep
 
 
 class PlacesTestCase(FileManagerTestCase):
@@ -38,7 +37,6 @@ class PlacesTestCase(FileManagerTestCase):
         self.app.main_view.go_to_place('placeDevice')
 
         folder_list_page = self.app.main_view.get_folder_list_page()
-        sleep(5)
         self.assertThat(
             folder_list_page.get_current_path,
             Eventually(Equals('/')))
