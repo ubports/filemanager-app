@@ -20,6 +20,7 @@ from testtools.matchers import Equals
 from filemanager.tests import FileManagerTestCase
 from time import sleep
 
+
 class PlacesTestCase(FileManagerTestCase):
     """Test cases for the places section of the file manager app."""
 
