@@ -13,12 +13,6 @@ Install the following build dependencies:
 Then open the CMakeLists.txt file in Qt Creator, and ensure that the kit
 selected on the left sidebar (just above the green "Run" button) is "Desktop"
 
-or you can compile manually from filemanager root directory with:
-
-cmake.
-make
-
-
 ### For a device
 
 If you don't have one already, you'll need to create an armhf chroot to
