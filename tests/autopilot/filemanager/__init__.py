@@ -63,7 +63,7 @@ class MainView(ubuntuuitoolkit.MainView):
         if self.showSidebar:
             self._go_to_place_from_side_bar(object_name)
         else:
-            self._go_to_place_from_PlacesPage(object_name)
+            self._go_to_place_from_placespage(object_name)
 
     def _go_to_place_from_side_bar(self, object_name):
         side_bar = self.get_folder_list_page().get_sidebar()
@@ -75,9 +75,10 @@ class MainView(ubuntuuitoolkit.MainView):
         page.main_view = self
         return page
 
-    def _go_to_place_from_PlacesPage(self, object_name):
-        placesPage = self.open_places()
-        placesPage.go_to_place(object_name)
+    def _go_to_place_from_placespage(self, object_name):
+        placespage = self.open_places()
+        placespage.wait_for.visible(True)
+        placespage.go_to_place(object_name)
 
     @autopilot.logging.log_action(logger.info)
     def open_places(self):
