@@ -77,7 +77,7 @@ class MainView(ubuntuuitoolkit.MainView):
 
     def _go_to_place_from_placespage(self, object_name):
         placespage = self.open_places()
-        placespage.wait_for.visible(True)
+        placespage.visible.wait_for(True)
         placespage.go_to_place(object_name)
 
     @autopilot.logging.log_action(logger.info)
