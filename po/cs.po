@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-10-24 16:57-0700\n"
-"PO-Revision-Date: 2014-09-24 07:13+0000\n"
+"PO-Revision-Date: 2014-10-26 18:22+0000\n"
 "Last-Translator: Vojtěch Daněk <vdanek@outlook.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2014-10-26 05:54+0000\n"
+"X-Launchpad-Export-Date: 2014-10-27 06:28+0000\n"
 "X-Generator: Launchpad (build 17203)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -33,7 +33,7 @@ msgstr "%1 (%2 soubory)"
 #: ../src/app/qml/components/PathHistoryRow.qml:84
 #: ../src/app/qml/ui/FolderListPage.qml:617
 msgid "Device"
-msgstr ""
+msgstr "Zařízení"
 
 #: ../src/app/qml/components/PlacesSidebar.qml:54
 #: ../src/app/qml/ui/PlacesPage.qml:28 ../src/app/qml/ui/PlacesPopover.qml:103
@@ -42,7 +42,7 @@ msgstr "Místa"
 
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
-msgstr ""
+msgstr "Otevřít s"
 
 #: ../src/app/qml/filemanager.qml:90 ../src/app/qml/ui/FolderListPage.qml:102
 #: ../src/app/qml/ui/SettingsSheet.qml:31
@@ -65,15 +65,15 @@ msgstr "Seznam"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 msgid "Authentication required"
-msgstr ""
+msgstr "Je požadována autentizace"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Enter password:"
-msgstr ""
+msgstr "Zadejte heslo:"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "Heslo"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
@@ -115,35 +115,35 @@ msgstr "Zapisovatelný"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "Spustitelný"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
-msgstr ""
+msgstr "Cesta:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr ""
+msgstr "Obsah:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
-msgstr ""
+msgstr "Velikost:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "Poslední přístup:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr ""
+msgstr "Změněno:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
-msgstr ""
+msgstr "Oprávnění:"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "Probíhá operace"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
@@ -153,65 +153,67 @@ msgstr ""
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Vložit %1 soubor"
+msgstr[1] "Vložit %1 soubory"
+msgstr[2] "Vložit %1 souborů"
 
 #: ../src/app/qml/ui/FolderListPage.qml:56
 msgid "Paste files"
-msgstr ""
+msgstr "Vložit soubory"
 
 #: ../src/app/qml/ui/FolderListPage.qml:64
 msgid "Clear clipboard"
-msgstr ""
+msgstr "Vyčistit schránku"
 
 #: ../src/app/qml/ui/FolderListPage.qml:74
 #: ../src/app/qml/ui/FolderListPage.qml:92
 #: ../src/app/qml/ui/FolderListPage.qml:508
 msgid "Properties"
-msgstr ""
+msgstr "Vlastnosti"
 
 #: ../src/app/qml/ui/FolderListPage.qml:83
 msgid "New Folder"
-msgstr ""
+msgstr "Nový adresář"
 
 #: ../src/app/qml/ui/FolderListPage.qml:109
 msgid "Go To"
-msgstr ""
+msgstr "Jdi na"
 
 #: ../src/app/qml/ui/FolderListPage.qml:176
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 soubor"
+msgstr[1] "%1 soubory"
+msgstr[2] "%1 souborů"
 
 #: ../src/app/qml/ui/FolderListPage.qml:201
 msgid "Open in a new tab"
-msgstr ""
+msgstr "Otevřít v novém panelu"
 
 #: ../src/app/qml/ui/FolderListPage.qml:209
 msgid "Close this tab"
-msgstr ""
+msgstr "Zavřít tuto záložku"
 
 #: ../src/app/qml/ui/FolderListPage.qml:222
 msgid "Create folder"
-msgstr ""
+msgstr "Vytvořit složku"
 
 #: ../src/app/qml/ui/FolderListPage.qml:223
 msgid "Enter name for new folder"
-msgstr ""
+msgstr "Vložte jméno nové složky"
 
 #: ../src/app/qml/ui/FolderListPage.qml:239
 msgid "Create file"
-msgstr ""
+msgstr "Vytvořit soubor"
 
 #: ../src/app/qml/ui/FolderListPage.qml:240
 msgid "Enter name for new file"
-msgstr ""
+msgstr "Vložte jméno pro nový soubor"
 
 #: ../src/app/qml/ui/FolderListPage.qml:289
 msgid "Select"
-msgstr ""
+msgstr "Vybrat"
 
 #: ../src/app/qml/ui/FolderListPage.qml:312
 msgid "Unlock full access"
@@ -219,248 +221,248 @@ msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:326
 msgid "Authentication failed"
-msgstr ""
+msgstr "Ověření selhalo"
 
 #: ../src/app/qml/ui/FolderListPage.qml:380
 msgid "No files"
-msgstr ""
+msgstr "Žádné soubory"
 
 #: ../src/app/qml/ui/FolderListPage.qml:400
 #: ../src/app/qml/ui/FolderListPage.qml:482
 msgid "Delete"
-msgstr ""
+msgstr "Odstranit"
 
 #: ../src/app/qml/ui/FolderListPage.qml:401
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "Jste si jistý, že chcete trvale odstranit '%1'?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:424
 #: ../src/app/qml/ui/FolderListPage.qml:495
 msgid "Rename"
-msgstr ""
+msgstr "Přejmenovat"
 
 #: ../src/app/qml/ui/FolderListPage.qml:425
 msgid "Enter a new name"
-msgstr ""
+msgstr "Zadejte nový název"
 
 #: ../src/app/qml/ui/FolderListPage.qml:434
 msgid "Could not rename"
-msgstr ""
+msgstr "Nelze přejmenovat"
 
 #: ../src/app/qml/ui/FolderListPage.qml:435
 msgid "Insufficient permissions or name already exists?"
-msgstr ""
+msgstr "Nedostatečná oprávnění nebo jméno již existuje?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:459
 msgid "Cut"
-msgstr ""
+msgstr "Vyjmout"
 
 #: ../src/app/qml/ui/FolderListPage.qml:470
 msgid "Copy"
-msgstr ""
+msgstr "Kopírovat"
 
 #: ../src/app/qml/ui/FolderListPage.qml:528
 msgid "File operation error"
-msgstr ""
+msgstr "Chyba práce se soubory"
 
 #: ../src/app/qml/ui/FolderListPage.qml:588
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Plocha"
 
 #: ../src/app/qml/ui/FolderListPage.qml:598
 msgid "~/Public"
-msgstr ""
+msgstr "~/Veřejné"
 
 #: ../src/app/qml/ui/FolderListPage.qml:600
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Programy"
 
 #: ../src/app/qml/ui/FolderListPage.qml:602
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Vzhledy"
 
 #: ../src/app/qml/ui/FolderListPage.qml:615
 msgid "Home"
-msgstr ""
+msgstr "Domů"
 
 #: ../src/app/qml/ui/FolderListPage.qml:685
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Složka nedostupná"
 
 #. TRANSLATORS: this refers to a folder name
 #: ../src/app/qml/ui/FolderListPage.qml:687
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "Nelze otevřít %1"
 
 #: ../src/app/qml/ui/GoToDialog.qml:25
 msgid "Go To Location"
-msgstr ""
+msgstr "Jít do místa"
 
 #: ../src/app/qml/ui/GoToDialog.qml:27
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Zadejte místo, do kterého chcete jít:"
 
 #: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPage.qml:59
 #: ../src/app/qml/ui/PlacesPopover.qml:67
 msgid "Location..."
-msgstr ""
+msgstr "Místo..."
 
 #: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPage.qml:74
 #: ../src/app/qml/ui/PlacesPopover.qml:82
 msgid "Go"
-msgstr ""
+msgstr "Přejít"
 
 #: ../src/app/qml/ui/SettingsSheet.qml:34
 msgid "Close"
-msgstr ""
+msgstr "Zavřít"
 
 #: ../src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Zobrazit pokročilé funkce"
 
 #: ../src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Zobrazit skryté soubory"
 
 #: ../src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr ""
+msgstr "Zobrazit jako"
 
 #: ../src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "Seřadit podle"
 
 #: ../src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr ""
+msgstr "Název"
 
 #: ../src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: ../src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "Řazení"
 
 #: ../src/app/qml/ui/ViewPopover.qml:114 ../src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr ""
+msgstr "Vzestupně"
 
 #: ../src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr ""
+msgstr "Sestupně"
 
 #: ../src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
-msgstr ""
+msgstr "Filtr"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:441
 msgid "path or url may not exist or cannot be read"
-msgstr ""
+msgstr "cesta nebo url nemusí existovat nebo nelze přečíst"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:611
 msgid "Rename error"
-msgstr ""
+msgstr "Chyba při změně jména"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:636
 msgid "Error creating new folder"
-msgstr ""
+msgstr "Chyba při vytváření nové složky"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1278
 msgid "items"
-msgstr ""
+msgstr "položky"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
 msgid "File or Directory does not exist"
-msgstr ""
+msgstr "Soubor nebo složka neexistuje"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:264
 msgid " does not exist"
-msgstr ""
+msgstr " neexistuje"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:585
 msgid "Could not remove the item "
-msgstr ""
+msgstr "Nelze odstranit předmět "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:626
 msgid "Could not find a suitable name to backup"
-msgstr ""
+msgstr "Nelze najít vhodné jméno pro zálohu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:680
 msgid "Could not create the directory"
-msgstr ""
+msgstr "Nelze vytvořit složku"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:689
 msgid "Could not create link to"
-msgstr ""
+msgstr "Nelze vytvořit odkaz na"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:701
 msgid "Could not set permissions to dir"
-msgstr ""
+msgstr "Nelze nastavit práva složky"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:715
 msgid "Could not open file"
-msgstr ""
+msgstr "Nelze otevřít soubor"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:734
 msgid "There is no space on disk to copy"
-msgstr ""
+msgstr "Pro kopírování není dostatek místa na disku"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:744
 msgid "Could not create file"
-msgstr ""
+msgstr "Nelze vytvořit soubor"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:808
 msgid "Could not remove the directory/file "
-msgstr ""
+msgstr "Nelze odstranit složku/soubor "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:824
 msgid "Could not move the directory/file "
-msgstr ""
+msgstr "Nelze přesunout složku/soubor "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:858
 msgid "Cannot copy items"
-msgstr ""
+msgstr "Nelze kopírovat soubory"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:859
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:878
 msgid "no write permission on folder "
-msgstr ""
+msgstr "Chybí práva zápisu složky "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:877
 msgid "Cannot move items"
-msgstr ""
+msgstr "Nelze přenést soubory"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
 msgid "origin and destination folders are the same"
-msgstr ""
+msgstr "Výchozí a cílová složka je totožná"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1099
 msgid "Write error in "
-msgstr ""
+msgstr "Chyba zápisu v "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1115
 msgid "Read error in "
-msgstr ""
+msgstr "Chyba čtení v "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1349
 msgid " Copy"
-msgstr ""
+msgstr " Kopírování"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1405
 msgid "Set permissions error in "
-msgstr ""
+msgstr "Chyba přidání oprávnění v "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1489
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "Nelze vytvořit informace o souboru"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1502
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "Nelze odstranit informace o souboru"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
-msgstr ""
+msgstr "Správce souborů"
