@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-10-24 16:57-0700\n"
-"PO-Revision-Date: 2014-09-06 21:48+0000\n"
-"Last-Translator: Ibai Oihanguren Sala <Unknown>\n"
+"PO-Revision-Date: 2014-11-12 21:44+0000\n"
+"Last-Translator: Asier Iturralde Sarasola <Unknown>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-10-26 05:54+0000\n"
-"X-Generator: Launchpad (build 17203)\n"
+"X-Launchpad-Export-Date: 2014-11-13 06:32+0000\n"
+"X-Generator: Launchpad (build 17241)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
 #: ../src/app/qml/components/FolderListView.qml:36
@@ -42,7 +42,7 @@ msgstr "Lekuak"
 
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
-msgstr ""
+msgstr "Ireki honekin"
 
 #: ../src/app/qml/filemanager.qml:90 ../src/app/qml/ui/FolderListPage.qml:102
 #: ../src/app/qml/ui/SettingsSheet.qml:31
@@ -65,15 +65,15 @@ msgstr "Zerrenda"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 msgid "Authentication required"
-msgstr ""
+msgstr "Autentifikazioa behar da"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Enter password:"
-msgstr ""
+msgstr "Sartu pasahitza:"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "pasahitza"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
@@ -147,7 +147,7 @@ msgstr "Eragiketa burutzen"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
-msgstr ""
+msgstr "Fitxategi-eragiketa"
 
 #: ../src/app/qml/ui/FolderListPage.qml:52
 #, qt-format
@@ -162,7 +162,7 @@ msgstr "Itsatsi fitxategiak"
 
 #: ../src/app/qml/ui/FolderListPage.qml:64
 msgid "Clear clipboard"
-msgstr ""
+msgstr "Garbitu arbela"
 
 #: ../src/app/qml/ui/FolderListPage.qml:74
 #: ../src/app/qml/ui/FolderListPage.qml:92
@@ -172,11 +172,11 @@ msgstr "Propietateak"
 
 #: ../src/app/qml/ui/FolderListPage.qml:83
 msgid "New Folder"
-msgstr ""
+msgstr "Karpeta berria"
 
 #: ../src/app/qml/ui/FolderListPage.qml:109
 msgid "Go To"
-msgstr ""
+msgstr "Joan hona"
 
 #: ../src/app/qml/ui/FolderListPage.qml:176
 #, qt-format
@@ -215,11 +215,11 @@ msgstr "Hautatu"
 
 #: ../src/app/qml/ui/FolderListPage.qml:312
 msgid "Unlock full access"
-msgstr ""
+msgstr "Desblokeatu sarbide osoa"
 
 #: ../src/app/qml/ui/FolderListPage.qml:326
 msgid "Authentication failed"
-msgstr ""
+msgstr "Autentifikazioak huts egin du"
 
 #: ../src/app/qml/ui/FolderListPage.qml:380
 msgid "No files"
@@ -386,7 +386,7 @@ msgstr "Ezin izan da ezabatu elementu hau: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:626
 msgid "Could not find a suitable name to backup"
-msgstr ""
+msgstr "Ezin izan da izen egokirik aurkitu babeskopia egiteko"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:680
 msgid "Could not create the directory"
@@ -455,11 +455,11 @@ msgstr "Errorea honi baimenak ezartzean: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1489
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "Ezin izan da zakarrontzi-informazio fitxategirik sortu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1502
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "Ezin izan da zakarrontzi-informazio fitxategirik kendu"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
