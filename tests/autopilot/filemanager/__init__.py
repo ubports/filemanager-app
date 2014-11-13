@@ -78,7 +78,7 @@ class MainView(ubuntuuitoolkit.MainView):
     def _go_to_place_from_placespage(self, object_name):
         placespage = self.open_places()
         placespage.self.wait_select_single(
-            "QQuickFlickable", objectName="PlacesFlickable")\
+            "QQuickFlickable", objectName="placesFlickable")\
             .moving.wait_for(False)
         placespage.go_to_place(object_name)
 
@@ -89,7 +89,7 @@ class MainView(ubuntuuitoolkit.MainView):
             return self.wait_select_single(PlacesPage)
         else:
             raise FilemanagerException(
-                'The places popover cannot be opened on wide mode.')
+                'The places page cannot be opened on wide mode.')
 
     def _drag_Bottomedge_to_open_places(self):
         """Bring the places page to the screen"""
