@@ -31,6 +31,7 @@ Page {
     property string testProperty: "justForAutopilotTests"
 
     Flickable {
+        objectName: "PlacesFlickable"
         anchors.fill: parent
 
         Column {

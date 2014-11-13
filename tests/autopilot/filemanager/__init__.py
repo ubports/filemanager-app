@@ -77,7 +77,9 @@ class MainView(ubuntuuitoolkit.MainView):
 
     def _go_to_place_from_placespage(self, object_name):
         placespage = self.open_places()
-        placespage.visible.wait_for(True)
+        placespage.self.wait_select_single(
+            "QQuickFlickable", objectName="PlacesFlickable")\
+            .moving.wait_for(False)
         placespage.go_to_place(object_name)
 
     @autopilot.logging.log_action(logger.info)
