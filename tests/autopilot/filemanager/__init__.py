@@ -63,7 +63,7 @@ class MainView(ubuntuuitoolkit.MainView):
         if self.showSidebar:
             self._go_to_place_from_side_bar(object_name)
         else:
-            self._go_to_place_from_placespage(object_name)
+            self._go_to_place_from_places_page(object_name)
 
     def _go_to_place_from_side_bar(self, object_name):
         side_bar = self.get_folder_list_page().get_sidebar()
@@ -75,23 +75,23 @@ class MainView(ubuntuuitoolkit.MainView):
         page.main_view = self
         return page
 
-    def _go_to_place_from_placespage(self, object_name):
+    def _go_to_place_from_places_page(self, object_name):
         placespage = self.open_places()
         placespage.wait_select_single(
             "QQuickFlickable", objectName="placesFlickable")\
-            .moving.wait_for(False)
+            .dragging.wait_for(False)
         placespage.go_to_place(object_name)
 
     @autopilot.logging.log_action(logger.info)
     def open_places(self):
         if not self.showSidebar:
-            self._drag_Bottomedge_to_open_places()
+            self._drag_bottomedge_to_open_places()
             return self.wait_select_single(PlacesPage)
         else:
             raise FilemanagerException(
                 'The places page cannot be opened on wide mode.')
 
-    def _drag_Bottomedge_to_open_places(self):
+    def _drag_bottomedge_to_open_places(self):
         """Bring the places page to the screen"""
         try:
             action_item = self.wait_select_single(
