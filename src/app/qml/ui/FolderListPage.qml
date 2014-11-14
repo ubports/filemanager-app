@@ -49,7 +49,11 @@ PageWithBottomEdge {
             id: pasteButton
             objectName: "paste"
             iconName: "edit-paste"
-            text: i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
+            // Translation message was implemented according to:
+            // http://qt-project.org/doc/qt-4.8/i18n-source-translation.html#handling-plurals
+            // It allows correct translation for languages with more than two plural forms:
+            // http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
+            text: i18n.tr("Paste %n File(s)", "0", pageModel.clipboardUrlsCounter)
             visible: pageModel.clipboardUrlsCounter > 0
             onTriggered: {
                 console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
@@ -199,7 +203,7 @@ PageWithBottomEdge {
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
         property string fileName: pathName(pageModel.path)
-        property string fileSize: i18n.tr("%1 file", "%1 files", folderListView.count).arg(folderListView.count)
+        property string fileSize: i18n.tr("%n file(s)", "0", folderListView.count)
         property bool isReadable: true
         property bool isExecutable: true
     }
