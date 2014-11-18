@@ -34,16 +34,15 @@ MainView {
     applicationName: "com.ubuntu.filemanager"
     useDeprecatedToolbar: false
 
-    width: units.gu(100)
+    width: phone ? units.gu(40) : units.gu(100)
     height: units.gu(75)
 
     property alias filemanager: mainView
 
-    property bool internal_wideAspect: width >= units.gu(80)
-    property bool wideAspect: width >= units.gu(80) && loaded
+    property bool wideAspect: width > units.gu(50) && loaded
     property bool loaded: false
 
-    property bool allowSidebarExpanded: width >= units.gu(80)
+    property bool allowSidebarExpanded: width > units.gu(50)
 
     onAllowSidebarExpandedChanged: {
         if (!allowSidebarExpanded)

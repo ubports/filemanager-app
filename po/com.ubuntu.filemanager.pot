@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-14 21:39+0100\n"
+"POT-Creation-Date: 2014-11-18 21:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,21 +44,21 @@ msgstr ""
 msgid "Open with"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:82 ../src/app/qml/ui/FolderListPage.qml:102
+#: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:102
 #: ../src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:83
+#: ../src/app/qml/filemanager.qml:82
 msgid "Change app settings"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:260 ../src/app/qml/ui/FolderListPage.qml:352
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:352
 #: ../src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:260 ../src/app/qml/ui/FolderListPage.qml:368
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:368
 #: ../src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr ""

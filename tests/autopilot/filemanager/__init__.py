@@ -77,9 +77,6 @@ class MainView(ubuntuuitoolkit.MainView):
 
     def _go_to_place_from_places_page(self, object_name):
         placespage = self.open_places()
-        placespage.wait_select_single(
-            "QQuickFlickable", objectName="placesFlickable")\
-            .dragging.wait_for(False)
         placespage.go_to_place(object_name)
 
     @autopilot.logging.log_action(logger.info)
@@ -108,6 +105,10 @@ class MainView(ubuntuuitoolkit.MainView):
         except dbus.StateNotFoundError:
             logger.error('BottomEdge element not found.')
             raise
+
+        self.wait_select_single(
+            "QQuickFlickable", objectName="placesFlickable")\
+            .dragging.wait_for(True)
 
     @autopilot.logging.log_action(logger.info)
     def rename(self, original_name, new_name):
