@@ -108,7 +108,7 @@ class MainView(ubuntuuitoolkit.MainView):
 
         self.wait_select_single(
             "QQuickFlickable", objectName="placesFlickable")\
-            .dragging.wait_for(True)
+            .dragging.wait_for(False)
 
     @autopilot.logging.log_action(logger.info)
     def rename(self, original_name, new_name):
