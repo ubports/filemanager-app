@@ -72,12 +72,12 @@ class MainView(ubuntuuitoolkit.MainView):
     def get_folder_list_page(self):
         """Return the FolderListPage emulator of the MainView."""
         page = self.wait_select_single(FolderListPage)
-        page.active.wait_for(True)
         page.main_view = self
         return page
 
     def _go_to_place_from_places_page(self, object_name):
         placespage = self.open_places()
+        self.placespage.active.wait_for(True)
         placespage.go_to_place(object_name)
 
     @autopilot.logging.log_action(logger.info)
