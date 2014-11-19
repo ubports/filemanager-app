@@ -72,6 +72,7 @@ class MainView(ubuntuuitoolkit.MainView):
     def get_folder_list_page(self):
         """Return the FolderListPage emulator of the MainView."""
         page = self.wait_select_single(FolderListPage)
+        page.active.wait_for(True)
         page.main_view = self
         return page
 
