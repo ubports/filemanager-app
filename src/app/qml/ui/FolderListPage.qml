@@ -506,6 +506,23 @@ PageWithBottomEdge {
                 isArchive = fileExtension === "zip"
             }
 
+            delegate: Empty { // NOTE: This is a workaround for an upstream Ubuntu UI Toolkit bug and should be removed as soon as the patch for upstream gets released
+                id: listItem
+                Label {
+                    text: listItem.text
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                    wrapMode: Text.Wrap
+                    color: Theme.palette.normal.overlayText
+                }
+                /*! \internal */
+                onTriggered: popover.hide()
+                visible: enabled && ((action !== undefined) ? action.visible : true)
+                height: visible ? implicitHeight : 0
+            }
+
             actions: ActionList {
                 Action {
                     text: i18n.tr("Cut")
@@ -559,7 +576,7 @@ PageWithBottomEdge {
                 Action {
                     id: extractAction
                     visible: actionSelectionPopover.isArchive
-                    text: actionSelectionPopover.isArchive ? i18n.tr("Extract archive") : "" // Workaround: Otherwise the text will still be shown behind the cut action
+                    text: i18n.tr("Extract archive")
                     onTriggered: {
                         PopupUtils.open(confirmExtractDialog, actionSelectionPopover.caller,
                                         { "filePath" : actionSelectionPopover.model.filePath,
