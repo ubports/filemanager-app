@@ -27,12 +27,6 @@ import com.ubuntu.PamAuthentication 0.1
 
 import "ui"
 
-/*!
-    \brief MainView with Tabs element.
-           First Tab has a single Label and
-           second Tab has a single ToolbarAction.
-*/
-
 MainView {
     id: mainView
     // objectName for functional testing purposes (autopilot-qt5)
@@ -40,16 +34,15 @@ MainView {
     applicationName: "com.ubuntu.filemanager"
     useDeprecatedToolbar: false
 
-    width: units.gu(100)
+    width: phone ? units.gu(40) : units.gu(100)
     height: units.gu(75)
 
     property alias filemanager: mainView
 
-    property bool internal_wideAspect: width >= units.gu(80)
-    property bool wideAspect: width >= units.gu(80) && loaded
+    property bool wideAspect: width > units.gu(50) && loaded
     property bool loaded: false
 
-    property bool allowSidebarExpanded: width >= units.gu(80)
+    property bool allowSidebarExpanded: width > units.gu(50)
 
     onAllowSidebarExpandedChanged: {
         if (!allowSidebarExpanded)
@@ -58,11 +51,9 @@ MainView {
 
     property bool showSidebar: width >= units.gu(50)
 
-    property bool showToolbar: width >= units.gu(80)
-
     headerColor: "#464646"
-    backgroundColor: "#797979"
-    footerColor: "#808080"
+    backgroundColor: "#464646"
+    footerColor: "#464646"
 
     QtObject {
         id: fileSelector

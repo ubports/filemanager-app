@@ -108,7 +108,33 @@ PageWithBottomEdge {
             id: gotoButton
             iconName: "find"
             text: i18n.tr("Go To")
+            visible: sidebar.expanded
             onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
+        },
+        Action {
+            id: unlockButton
+            iconName: "lock"
+            text: i18n.tr("Unlock full access")
+            visible: pageModel.onlyMTPPaths
+            onTriggered: {
+                console.log("Full access clicked")
+                var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
+                                                 folderListPage)
+
+                authDialog.passwordEntered.connect(function(password) {
+                    if (pamAuthentication.validatePasswordToken(password)) {
+                        console.log("Authenticated for full access")
+                        pageModel.onlyMTPPaths = false
+                    } else {
+                        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
+                                        {
+                                            title: i18n.tr("Authentication failed")
+                                        })
+
+                        console.log("Could not authenticate")
+                    }
+                })
+            }
         }
     ]
     flickable: !sidebar.expanded ?
@@ -309,29 +335,6 @@ PageWithBottomEdge {
                 cancelFileSelector()
             }
         }
-        Button {
-            text: i18n.tr("Unlock full access")
-            visible: pageModel.onlyMTPPaths
-            onClicked: {
-                console.log("Full access clicked")
-                var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
-                                                 folderListPage)
-
-                authDialog.passwordEntered.connect(function(password) {
-                    if (pamAuthentication.validatePasswordToken(password)) {
-                        console.log("Authenticated for full access")
-                        pageModel.onlyMTPPaths = false
-                    } else {
-                        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
-                                        {
-                                            title: i18n.tr("Authentication failed")
-                                        })
-
-                        console.log("Could not authenticate")
-                    }
-                })
-            }
-        }
     }
 
     FolderIconView {
@@ -404,7 +407,7 @@ PageWithBottomEdge {
             onAccepted: {
                 console.log("Delete accepted for filePath, fileName", filePath, fileName)
 
-                fileOperationDialog.startOperation("Deleting files")
+                fileOperationDialog.startOperation(i18n.tr("Deleting files"))
                 console.log("Doing delete")
                 pageModel.rm(filePath)
             }
@@ -517,6 +520,23 @@ PageWithBottomEdge {
                 }
             }
 
+            delegate: Empty { // NOTE: This is a workaround for LP: #1395118 and should be removed as soon as the patch for upstream gets released (https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1395118)
+                id: listItem
+                Label {
+                    text: listItem.text
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                    wrapMode: Text.Wrap
+                    color: Theme.palette.normal.overlayText
+                }
+                /*! \internal */
+                onTriggered: popover.hide()
+                visible: enabled && ((action === undefined) || action.visible)
+                height: visible ? implicitHeight : 0
+            }
+
             actions: ActionList {
                 Action {
                     text: i18n.tr("Cut")
@@ -570,7 +590,7 @@ PageWithBottomEdge {
                 Action {
                     id: extractAction
                     visible: actionSelectionPopover.isArchive
-                    text: actionSelectionPopover.isArchive ? i18n.tr("Extract archive") : "" // Workaround: Otherwise the text will still be shown behind the cut action
+                    text: i18n.tr("Extract archive")
                     onTriggered: {
                         PopupUtils.open(confirmExtractDialog, actionSelectionPopover.caller,
                                         { "filePath" : actionSelectionPopover.model.filePath,

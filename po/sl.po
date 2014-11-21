@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-10-24 16:57-0700\n"
-"PO-Revision-Date: 2014-10-07 10:02+0000\n"
+"PO-Revision-Date: 2014-10-28 14:30+0000\n"
 "Last-Translator: Damir Jerovšek <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2014-10-26 05:55+0000\n"
+"X-Launchpad-Export-Date: 2014-10-29 07:24+0000\n"
 "X-Generator: Launchpad (build 17203)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -43,7 +43,7 @@ msgstr "Mesta"
 
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
-msgstr ""
+msgstr "Odpri z"
 
 #: ../src/app/qml/filemanager.qml:90 ../src/app/qml/ui/FolderListPage.qml:102
 #: ../src/app/qml/ui/SettingsSheet.qml:31
@@ -165,7 +165,7 @@ msgstr "Prilepi datoteke"
 
 #: ../src/app/qml/ui/FolderListPage.qml:64
 msgid "Clear clipboard"
-msgstr ""
+msgstr "Počisti odložišče"
 
 #: ../src/app/qml/ui/FolderListPage.qml:74
 #: ../src/app/qml/ui/FolderListPage.qml:92
@@ -175,11 +175,11 @@ msgstr "Lastnosti"
 
 #: ../src/app/qml/ui/FolderListPage.qml:83
 msgid "New Folder"
-msgstr ""
+msgstr "Nova mapa"
 
 #: ../src/app/qml/ui/FolderListPage.qml:109
 msgid "Go To"
-msgstr ""
+msgstr "Pojdi na"
 
 #: ../src/app/qml/ui/FolderListPage.qml:176
 #, qt-format
@@ -452,19 +452,19 @@ msgstr "Napaka branja v "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1349
 msgid " Copy"
-msgstr ""
+msgstr " Kopiraj"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1405
 msgid "Set permissions error in "
-msgstr ""
+msgstr "Nastavi napako dovoljenj v "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1489
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "Datoteke s podatkovnimi smetmi ni bilo mogoče ustvariti"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1502
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "Datoteke s podatkovnimi smetmi ni bilo mogoče odstraniti"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"

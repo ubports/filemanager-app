@@ -6,3 +6,5 @@ install(DIRECTORY ${AUTOPILOT_DIR}
     DESTINATION ${PYTHON_PACKAGE_DIR}
     )
 endif(INSTALL_TESTS)
+
+add_subdirectory(filemanager)
