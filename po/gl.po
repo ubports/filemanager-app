@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-11-19 21:32+0100\n"
-"PO-Revision-Date: 2014-11-07 02:25+0000\n"
+"PO-Revision-Date: 2014-11-20 17:56+0000\n"
 "Last-Translator: Marcos Lans <Unknown>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-11-20 06:23+0000\n"
+"X-Launchpad-Export-Date: 2014-11-21 06:44+0000\n"
 "X-Generator: Launchpad (build 17252)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
@@ -69,7 +69,7 @@ msgstr "Requírese autenticación"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr ""
+msgstr "Precisa contrasinal para acceder a todos os ficheiros"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
@@ -237,7 +237,7 @@ msgstr "Está certo de eliminar permanentemente «%1»?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:409
 msgid "Deleting files"
-msgstr ""
+msgstr "Eliminando os ficheiros"
 
 #: ../src/app/qml/ui/FolderListPage.qml:427
 #: ../src/app/qml/ui/FolderListPage.qml:498
