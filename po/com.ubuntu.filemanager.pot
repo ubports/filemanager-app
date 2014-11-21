@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-20 20:47+0100\n"
+"POT-Creation-Date: 2014-11-21 20:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -337,12 +337,12 @@ msgstr ""
 msgid "Enter a location to go to:"
 msgstr ""
 
-#: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPage.qml:59
+#: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPage.qml:62
 #: ../src/app/qml/ui/PlacesPopover.qml:67
 msgid "Location..."
 msgstr ""
 
-#: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPage.qml:74
+#: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPage.qml:77
 #: ../src/app/qml/ui/PlacesPopover.qml:82
 msgid "Go"
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-10-24 16:57-0700\n"
+"POT-Creation-Date: 2014-11-19 21:32+0100\n"
 "PO-Revision-Date: 2014-10-27 07:39+0000\n"
 "Last-Translator: Fohanno Thierry <thierry.fohanno@ofis-bzh.org>\n"
 "Language-Team: Breton <br@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2014-10-28 07:12+0000\n"
-"X-Generator: Launchpad (build 17203)\n"
+"X-Launchpad-Export-Date: 2014-11-20 06:23+0000\n"
+"X-Generator: Launchpad (build 17252)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
 #: ../src/app/qml/components/FolderListView.qml:36
@@ -31,7 +31,7 @@ msgid "%1 (%2 files)"
 msgstr "%1 (%2 restr)"
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
-#: ../src/app/qml/ui/FolderListPage.qml:617
+#: ../src/app/qml/ui/FolderListPage.qml:620
 msgid "Device"
 msgstr "Benveg"
 
@@ -44,21 +44,21 @@ msgstr "Plasoù"
 msgid "Open with"
 msgstr "Digeriñ gant"
 
-#: ../src/app/qml/filemanager.qml:90 ../src/app/qml/ui/FolderListPage.qml:102
+#: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:102
 #: ../src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
 msgstr "Arventennoù"
 
-#: ../src/app/qml/filemanager.qml:91
+#: ../src/app/qml/filemanager.qml:82
 msgid "Change app settings"
 msgstr "Cheñch arventennoù an arload"
 
-#: ../src/app/qml/filemanager.qml:268 ../src/app/qml/ui/FolderListPage.qml:349
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:352
 #: ../src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr "Arlunioù"
 
-#: ../src/app/qml/filemanager.qml:268 ../src/app/qml/ui/FolderListPage.qml:365
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:368
 #: ../src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr "Roll"
@@ -68,8 +68,8 @@ msgid "Authentication required"
 msgstr "Dilesadur rekis"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
-msgid "Enter password:"
-msgstr "Merkañ ar ger-tremen :"
+msgid "Password is required to access all files"
+msgstr ""
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
@@ -87,7 +87,7 @@ msgstr "Mat eo"
 #: ../src/app/qml/ui/ConfirmDialogWithInput.qml:57
 #: ../src/app/qml/ui/FileActionDialog.qml:45
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../src/app/qml/ui/FolderListPage.qml:304
+#: ../src/app/qml/ui/FolderListPage.qml:330
 #: ../src/app/qml/ui/GoToDialog.qml:66
 msgid "Cancel"
 msgstr "Nullañ"
@@ -166,7 +166,7 @@ msgstr "Goulloiñ ar golver"
 
 #: ../src/app/qml/ui/FolderListPage.qml:74
 #: ../src/app/qml/ui/FolderListPage.qml:92
-#: ../src/app/qml/ui/FolderListPage.qml:508
+#: ../src/app/qml/ui/FolderListPage.qml:511
 msgid "Properties"
 msgstr "Perzhioù"
 
@@ -178,118 +178,122 @@ msgstr "Renkell nevez"
 msgid "Go To"
 msgstr "Mont da"
 
-#: ../src/app/qml/ui/FolderListPage.qml:176
+#: ../src/app/qml/ui/FolderListPage.qml:116
+msgid "Unlock full access"
+msgstr "Dibrennañ ar moned klok"
+
+#: ../src/app/qml/ui/FolderListPage.qml:130
+msgid "Authentication failed"
+msgstr "C'hwitet eo an dilesadur"
+
+#: ../src/app/qml/ui/FolderListPage.qml:202
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
 msgstr[0] "%1 restr"
 msgstr[1] "%1 restr"
 
-#: ../src/app/qml/ui/FolderListPage.qml:201
+#: ../src/app/qml/ui/FolderListPage.qml:227
 msgid "Open in a new tab"
 msgstr "Digeriñ en un ivinell nevez"
 
-#: ../src/app/qml/ui/FolderListPage.qml:209
+#: ../src/app/qml/ui/FolderListPage.qml:235
 msgid "Close this tab"
 msgstr "Serriñ an ivinell-mañ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:222
+#: ../src/app/qml/ui/FolderListPage.qml:248
 msgid "Create folder"
 msgstr "Krouiñ ur renkell"
 
-#: ../src/app/qml/ui/FolderListPage.qml:223
+#: ../src/app/qml/ui/FolderListPage.qml:249
 msgid "Enter name for new folder"
 msgstr "Lakaat un anv evit ar renkell nevez"
 
-#: ../src/app/qml/ui/FolderListPage.qml:239
+#: ../src/app/qml/ui/FolderListPage.qml:265
 msgid "Create file"
 msgstr "Krouiñ ur restr"
 
-#: ../src/app/qml/ui/FolderListPage.qml:240
+#: ../src/app/qml/ui/FolderListPage.qml:266
 msgid "Enter name for new file"
 msgstr "Lakaat un anv evit ar restr nevez"
 
-#: ../src/app/qml/ui/FolderListPage.qml:289
+#: ../src/app/qml/ui/FolderListPage.qml:315
 msgid "Select"
 msgstr "Diuzañ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:312
-msgid "Unlock full access"
-msgstr "Dibrennañ ar moned klok"
-
-#: ../src/app/qml/ui/FolderListPage.qml:326
-msgid "Authentication failed"
-msgstr "C'hwitet eo an dilesadur"
-
-#: ../src/app/qml/ui/FolderListPage.qml:380
+#: ../src/app/qml/ui/FolderListPage.qml:383
 msgid "No files"
 msgstr "Restr ebet"
 
-#: ../src/app/qml/ui/FolderListPage.qml:400
-#: ../src/app/qml/ui/FolderListPage.qml:482
+#: ../src/app/qml/ui/FolderListPage.qml:403
+#: ../src/app/qml/ui/FolderListPage.qml:485
 msgid "Delete"
 msgstr "Diverkañ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:401
+#: ../src/app/qml/ui/FolderListPage.qml:404
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "Ha sur oc'h e fell deoc'h diverkañ '%1' da vat ?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:424
-#: ../src/app/qml/ui/FolderListPage.qml:495
+#: ../src/app/qml/ui/FolderListPage.qml:409
+msgid "Deleting files"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:427
+#: ../src/app/qml/ui/FolderListPage.qml:498
 msgid "Rename"
 msgstr "Adenvel"
 
-#: ../src/app/qml/ui/FolderListPage.qml:425
+#: ../src/app/qml/ui/FolderListPage.qml:428
 msgid "Enter a new name"
 msgstr "Lakaat un anv nevez"
 
-#: ../src/app/qml/ui/FolderListPage.qml:434
+#: ../src/app/qml/ui/FolderListPage.qml:437
 msgid "Could not rename"
 msgstr "N'eus ket bet gallet adenvel"
 
-#: ../src/app/qml/ui/FolderListPage.qml:435
+#: ../src/app/qml/ui/FolderListPage.qml:438
 msgid "Insufficient permissions or name already exists?"
 msgstr "Aotreoù re skort pe anv a zo anezhañ dija ?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:459
+#: ../src/app/qml/ui/FolderListPage.qml:462
 msgid "Cut"
 msgstr "Troc'hañ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:470
+#: ../src/app/qml/ui/FolderListPage.qml:473
 msgid "Copy"
 msgstr "Eilañ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:528
+#: ../src/app/qml/ui/FolderListPage.qml:531
 msgid "File operation error"
 msgstr "Fazi oc'h ober gant restroù"
 
-#: ../src/app/qml/ui/FolderListPage.qml:588
+#: ../src/app/qml/ui/FolderListPage.qml:591
 msgid "~/Desktop"
 msgstr "~/Burev"
 
-#: ../src/app/qml/ui/FolderListPage.qml:598
+#: ../src/app/qml/ui/FolderListPage.qml:601
 msgid "~/Public"
 msgstr "~/Foran"
 
-#: ../src/app/qml/ui/FolderListPage.qml:600
+#: ../src/app/qml/ui/FolderListPage.qml:603
 msgid "~/Programs"
 msgstr "~/Programmoù"
 
-#: ../src/app/qml/ui/FolderListPage.qml:602
+#: ../src/app/qml/ui/FolderListPage.qml:605
 msgid "~/Templates"
 msgstr "~/Patromoù"
 
-#: ../src/app/qml/ui/FolderListPage.qml:615
+#: ../src/app/qml/ui/FolderListPage.qml:618
 msgid "Home"
 msgstr "Er gêr"
 
-#: ../src/app/qml/ui/FolderListPage.qml:685
+#: ../src/app/qml/ui/FolderListPage.qml:688
 msgid "Folder not accessible"
 msgstr "Ne c'haller ket mont d'ar renkell"
 
 #. TRANSLATORS: this refers to a folder name
-#: ../src/app/qml/ui/FolderListPage.qml:687
+#: ../src/app/qml/ui/FolderListPage.qml:690
 #, qt-format
 msgid "Can not access %1"
 msgstr "Ne c'haller ket mont da %1"
@@ -302,12 +306,12 @@ msgstr "Mont d'al lec'h"
 msgid "Enter a location to go to:"
 msgstr "Lakaat ul lec'h da vont dezhañ :"
 
-#: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPage.qml:59
+#: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPage.qml:62
 #: ../src/app/qml/ui/PlacesPopover.qml:67
 msgid "Location..."
 msgstr "Lec'h..."
 
-#: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPage.qml:74
+#: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPage.qml:77
 #: ../src/app/qml/ui/PlacesPopover.qml:82
 msgid "Go"
 msgstr "Mont"
