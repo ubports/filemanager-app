@@ -506,7 +506,7 @@ PageWithBottomEdge {
                 isArchive = fileExtension === "zip"
             }
 
-            delegate: Empty { // NOTE: This is a workaround for an upstream Ubuntu UI Toolkit bug and should be removed as soon as the patch for upstream gets released
+            delegate: Empty { // NOTE: This is a workaround for LP: #1395118 and should be removed as soon as the patch for upstream gets released (https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1395118)
                 id: listItem
                 Label {
                     text: listItem.text
@@ -519,7 +519,7 @@ PageWithBottomEdge {
                 }
                 /*! \internal */
                 onTriggered: popover.hide()
-                visible: enabled && ((action !== undefined) ? action.visible : true)
+                visible: enabled && ((action === undefined) || action.visible)
                 height: visible ? implicitHeight : 0
             }
 
