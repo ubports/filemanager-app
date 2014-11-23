@@ -518,7 +518,7 @@ PageWithBottomEdge {
                     color: Theme.palette.normal.overlayText
                 }
                 /*! \internal */
-                onTriggered: popover.hide()
+                onTriggered: actionSelectionPopover.hide()
                 visible: enabled && ((action === undefined) || action.visible)
                 height: visible ? implicitHeight : 0
             }
