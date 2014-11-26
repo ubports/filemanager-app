@@ -19,6 +19,7 @@
 import logging
 import re
 import time
+import os
 
 import autopilot.logging
 from autopilot import input
@@ -229,13 +230,23 @@ class PlacesSidebar(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
 
     @autopilot.logging.log_action(logger.info)
     def go_to_place(self, object_name):
-        """Open one of the bookmarked place folders.
+        """Open one of the bookmarked place folders or content folder depending
+           on object_name parameter
 
-        :param object_name: The objectName property of the place to open.
+        :param object_name: The objectName property of the place to open
+                            If value is inputField then open content folder
 
         """
-        place = self.select_single('Standard', objectName=object_name)
-        self.pointing_device.click_object(place)
+        if object_name == 'inputField':
+            place = self.wait_select_single(
+                'TextField', objectName=object_name)
+            place.write(self.content_dir, clear=True)
+            ok_button = self.wait_select_single(
+                "Button", objectName="okButton")
+            self.pointing_device.click_object(ok_button)
+        else:
+            place = self.wait_select_single('Standard', objectName=object_name)
+            self.pointing_device.click_object(place)
 
 
 class FolderListPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
@@ -332,9 +343,25 @@ class FolderListPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
 class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """Places Page Autopilot emulator."""
 
+   @autopilot.logging.log_action(logger.info)
     def go_to_place(self, object_name):
-        place = self.wait_select_single('Standard', objectName=object_name)
-        self.pointing_device.click_object(place)
+        """Open one of the bookmarked place folders or content folder depending
+            on object_name value
+
+        :param object_name: The objectName property of the place to open
+                            If equals inputField then open content folder
+
+        """
+        if object_name == 'inputField':
+            place = self.wait_select_single(
+                'TextField', objectName=object_name)
+            place.write(self.content_dir, clear=True)
+            ok_button = self.wait_select_single(
+                "Button", objectName="okButton")
+            self.pointing_device.click_object(ok_button)
+        else:
+            place = self.wait_select_single('Standard', objectName=object_name)
+            self.pointing_device.click_object(place)
 
 
 class FolderListView(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
