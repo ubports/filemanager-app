@@ -29,6 +29,8 @@ ListView {
     model: folderListModel
     property bool smallMode: !wideAspect
 
+    signal delegateClicked(var model)
+
     // This must be visible so Autopilot can see it
     header: Header {
         objectName: "listViewSmallHeader"
@@ -42,7 +44,7 @@ ListView {
     delegate: FolderListDelegate {
         id: delegate
 
-        onClicked: itemClicked(model)
+        onClicked: delegateClicked(model)
 
         onPressAndHold: itemLongPress(delegate, model)
     }

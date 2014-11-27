@@ -367,6 +367,31 @@ PageWithBottomEdge {
         }
         smallMode: !sidebar.expanded
         visible: viewMethod === i18n.tr("List")
+
+        onDelegateClicked: {
+            var archiveType = getArchiveType(model.fileName)
+            if (archiveType === "") {
+                itemClicked(model)
+            } else {
+                PopupUtils.open(confirmExtractDialog, folderListView,
+                                { "filePath" : model.filePath,
+                                    "fileName" : model.fileName,
+                                    "archiveType" : archiveType
+                                })
+            }
+        }
+    }
+
+    function getArchiveType(fileName) {
+        var splitName = fileName.split(".")
+        var fileExtension = splitName[splitName.length - 1]
+        if (fileExtension === "zip") {
+            return "zip"
+        } else if (fileExtension === "tar") {
+            return "tar"
+        } else {
+            return ""
+        }
     }
 
     Item {
@@ -509,15 +534,7 @@ PageWithBottomEdge {
             property string archiveType: ""
 
             Component.onCompleted: {
-                var splitName = actionSelectionPopover.model.fileName.split(".")
-                var fileExtension = splitName[splitName.length - 1]
-                if (fileExtension === "zip") {
-                    archiveType = "zip"
-                } else if (fileExtension === "tar") {
-                    archiveType = "tar"
-                } else {
-                    archiveType = ""
-                }
+                archiveType = getArchiveType(actionSelectionPopover.model.fileName)
             }
 
             delegate: Empty { // NOTE: This is a workaround for LP: #1395118 and should be removed as soon as the patch for upstream gets released (https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1395118)
