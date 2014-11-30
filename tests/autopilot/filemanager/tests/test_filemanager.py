@@ -18,6 +18,7 @@
 
 import unittest
 import logging
+import mimetypes
 
 import os
 
@@ -454,8 +455,32 @@ class TestFolderListPage(FileManagerTestCase):
         self._confirm_dialog()
         self._assert_number_of_files(2)
 
+        # Verify that the extraced directory name is correct
         self.assertThat(
             self._get_file_by_name(unzipped_dir_name).text,
             Eventually(Equals(unzipped_dir_name)))
 
+        # Verify that the extraced text file name is a text file
+        self._open_directory(self._get_file_by_name(unzipped_dir_name))
+        self.assertThat(
+            self._get_file_by_name(unzipped_text_file_name).text,
+            Eventually(Equals(unzipped_text_file_name)))
 
+        self.assertThat(
+            mimetypes.guess_type(unzipped_text_file_name)[0],
+            Equals('text/plain'))
+
+        # Verify that the extraced image directory name is correct
+        self.assertThat(
+            self._get_file_by_name(unzipped_image_dir_name).text,
+            Eventually(Equals(unzipped_image_dir_name)))
+
+        # Verify that the extraced image file name is an image
+        self._open_directory(self._get_file_by_name(unzipped_image_dir_name))
+        self.assertThat(
+            self._get_file_by_name(unzipped_image_name).text,
+            Eventually(Equals(unzipped_image_name)))
+
+        self.assertThat(
+            mimetypes.guess_type(unzipped_image_name)[0],
+            Equals('image/jpeg'))
