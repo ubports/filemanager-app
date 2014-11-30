@@ -447,12 +447,12 @@ class TestFolderListPage(FileManagerTestCase):
         places_page = self.app.main_view.get_places_page()
         self.assertThat(
             folder_list_page.get_current_path,
-            Eventually(Equals(places_page.content_dir)))
+            Eventually(Equals(os.getenv('HOME'))))
 
         self._do_action_on_file(
             self._get_file_by_name(file_to_unzip), 'Extract archive')
         self._confirm_dialog()
-        folder_list_page.get_file_by_name(unzipped_dir_name).visible.wait_for(True)
+        self._assert_number_of_files(2)
 
         self.assertThat(
             self._get_file_by_name(unzipped_dir_name).text,

@@ -365,10 +365,11 @@ class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
         """
 
         if object_name == 'placePath':
-            self._create_zip_file_dir()
+            zip_dir_path = os.getenv('HOME')
+            self._copy_zip_file_from_source_dir(zip_dir_path)
             place = self.wait_select_single(
                 'TextField', objectName=object_name)
-            place.write(self.zip_dir_name, clear=True)
+            place.write(zip_dir_path, clear=True)
             ok_button = self.wait_select_single(
                 "Button", objectName="okButton")
             self.pointing_device.click_object(ok_button)
@@ -376,17 +377,13 @@ class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
             place = self.wait_select_single('Standard', objectName=object_name)
             self.pointing_device.click_object(place)
 
-    def _create_zip_file_dir(self):
-        zip_dir_path = os.path.join(self.fakehome, 'unzip')
-        zip_dir_name = os.path.basename(zip_dir_path)
-        os.mkdir(zip_dir_name)
-
+    def _copy_zip_file_from_source_dir(self, zip_dir_path):
         source_dir = os.path.dirname(os.path.dirname(os.path.abspath('.')))
         content_dir_zip_file = os.path.join(
             source_dir, 'tests', 'autopilot', 'filemanager', 'content',
                         'Test.zip')
+        shutil.copy(content_dir_zip_file, zip_dir_path)
 
-        shutil.copy(content_dir_zip_file, zip_dir_name)
 
 class FolderListView(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """FolderListView Autopilot emulator."""
