@@ -94,7 +94,7 @@ class MainView(ubuntuuitoolkit.MainView):
             zip_dir_path = os.getenv('HOME')
             self.copy_zip_file_from_source_dir(zip_dir_path)
         placespage = self.open_places()
-        placespage.go_to_place(object_name, zip_dir_path=None)
+        placespage.go_to_place(object_name, zip_dir_path)
 
     @autopilot.logging.log_action(logger.info)
     def open_places(self):
@@ -245,10 +245,8 @@ class MainView(ubuntuuitoolkit.MainView):
         return self.wait_select_single(objectName='goToDialog')
 
     def copy_zip_file_from_source_dir(self, zip_dir_path):
-        source_dir = os.path.dirname(os.path.dirname(os.path.abspath('.')))
-        content_dir_zip_file = os.path.join(
-            source_dir, 'tests', 'autopilot', 'filemanager', 'content',
-                        'Test.zip')
+        content_dir_zip_file = os.path.join(os.path.dirname(__file__),
+            'content', 'Test.zip')
         shutil.copy(content_dir_zip_file, zip_dir_path)
 
 
