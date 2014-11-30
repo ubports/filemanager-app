@@ -431,3 +431,31 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             folder_list_page.get_current_path,
             Eventually(Equals(self.fakehome)))
+
+    def test_open_zip_file(self):
+        """Test that opens a zip file from content directory."""
+
+        file_to_unzip = 'Test.zip'
+        unzipped_dir_name = 'Test'
+        unzipped_text_file_name = 'CodeOfConduct.txt'
+        unzipped_image_dir_name = 'images'
+        unzipped_image_name = "ubuntu.jpg"
+
+        self.app.main_view.go_to_place('placePath')
+
+        folder_list_page = self.app.main_view.get_folder_list_page()
+        places_page = self.app.main_view.get_places_page()
+        self.assertThat(
+            folder_list_page.get_current_path,
+            Eventually(Equals(places_page.content_dir)))
+
+        self._do_action_on_file(
+            self._get_file_by_name(file_to_unzip), 'Extract archive')
+        self._confirm_dialog()
+        folder_list_page.get_file_by_name(unzipped_dir_name).visible.wait_for(True)
+
+        self.assertThat(
+            self._get_file_by_name(unzipped_dir_name).text,
+            Eventually(Equals(unzipped_dir_name)))
+
+

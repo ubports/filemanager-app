@@ -20,6 +20,7 @@ import logging
 import re
 import time
 import os
+import shutil
 
 import autopilot.logging
 from autopilot import input
@@ -75,6 +76,9 @@ class MainView(ubuntuuitoolkit.MainView):
         page = self.wait_select_single(FolderListPage)
         page.main_view = self
         return page
+
+    def get_places_page(self):
+        return self.wait_select_single(PlacesPage)
 
     def _go_to_place_from_places_page(self, object_name):
         placespage = self.open_places()
@@ -224,6 +228,18 @@ class MainView(ubuntuuitoolkit.MainView):
         """Return a popover emulator"""
         return self.wait_select_single(Popover)
 
+    def get_go_to_dialog(self):
+        """Return a go to dialog """
+        return self.wait_select_single(objectName='goToDialog')
+
+
+
+    def go_to_place_with_inputField(self):
+        self.click_header_action('Find')
+        go_to_dialog = self.get_go_to_dialog()
+        go_to_dialog.enter_text(self.content_dir)
+        go_to_dialog.ok()
+
 
 class PlacesSidebar(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """PlacesSidebar Autopilot emulator."""
@@ -231,19 +247,14 @@ class PlacesSidebar(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     @autopilot.logging.log_action(logger.info)
     def go_to_place(self, object_name):
         """Open one of the bookmarked place folders or content folder depending
-           on object_name parameter
+        on object_name parameter
 
         :param object_name: The objectName property of the place to open
                             If value is inputField then open content folder
 
         """
-        if object_name == 'inputField':
-            place = self.wait_select_single(
-                'TextField', objectName=object_name)
-            place.write(self.content_dir, clear=True)
-            ok_button = self.wait_select_single(
-                "Button", objectName="okButton")
-            self.pointing_device.click_object(ok_button)
+        if object_name == 'placePath':
+            MainView.go_to_place_with_inputField()
         else:
             place = self.wait_select_single('Standard', objectName=object_name)
             self.pointing_device.click_object(place)
@@ -341,9 +352,9 @@ class FolderListPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
 
 
 class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
-    """Places Page Autopilot emulator."""
+    """ Places Page Autopilot emulator.     """
 
-   @autopilot.logging.log_action(logger.info)
+    @autopilot.logging.log_action(logger.info)
     def go_to_place(self, object_name):
         """Open one of the bookmarked place folders or content folder depending
             on object_name value
@@ -352,10 +363,12 @@ class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
                             If equals inputField then open content folder
 
         """
-        if object_name == 'inputField':
+
+        if object_name == 'placePath':
+            self._create_zip_file_dir()
             place = self.wait_select_single(
                 'TextField', objectName=object_name)
-            place.write(self.content_dir, clear=True)
+            place.write(self.zip_dir_name, clear=True)
             ok_button = self.wait_select_single(
                 "Button", objectName="okButton")
             self.pointing_device.click_object(ok_button)
@@ -363,6 +376,17 @@ class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
             place = self.wait_select_single('Standard', objectName=object_name)
             self.pointing_device.click_object(place)
 
+    def _create_zip_file_dir(self):
+        zip_dir_path = os.path.join(self.fakehome, 'unzip')
+        zip_dir_name = os.path.basename(zip_dir_path)
+        os.mkdir(zip_dir_name)
+
+        source_dir = os.path.dirname(os.path.dirname(os.path.abspath('.')))
+        content_dir_zip_file = os.path.join(
+            source_dir, 'tests', 'autopilot', 'filemanager', 'content',
+                        'Test.zip')
+
+        shutil.copy(content_dir_zip_file, zip_dir_name)
 
 class FolderListView(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """FolderListView Autopilot emulator."""
