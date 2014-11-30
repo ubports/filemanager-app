@@ -445,7 +445,6 @@ class TestFolderListPage(FileManagerTestCase):
         self.app.main_view.go_to_place('placePath')
 
         folder_list_page = self.app.main_view.get_folder_list_page()
-        places_page = self.app.main_view.get_places_page()
         self.assertThat(
             folder_list_page.get_current_path,
             Eventually(Equals(os.getenv('HOME'))))

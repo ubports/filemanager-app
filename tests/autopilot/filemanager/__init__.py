@@ -62,14 +62,23 @@ class MainView(ubuntuuitoolkit.MainView):
         :param object_name: The objectName property of the place to open.
 
         """
+
         if self.showSidebar:
             self._go_to_place_from_side_bar(object_name)
         else:
             self._go_to_place_from_places_page(object_name)
 
     def _go_to_place_from_side_bar(self, object_name):
-        side_bar = self.get_folder_list_page().get_sidebar()
-        side_bar.go_to_place(object_name)
+        zip_dir_path = os.getenv('HOME')
+        self.copy_zip_file_from_source_dir(zip_dir_path)
+        if object_name == 'placePath':
+            self.click_header_action('Find')
+            go_to_dialog = self.get_go_to_dialog()
+            go_to_dialog.enter_text(zip_dir_path)
+            go_to_dialog.ok()
+        else:
+            side_bar = self.get_folder_list_page().get_sidebar()
+            side_bar.go_to_place(object_name)
 
     def get_folder_list_page(self):
         """Return the FolderListPage emulator of the MainView."""
@@ -81,8 +90,10 @@ class MainView(ubuntuuitoolkit.MainView):
         return self.wait_select_single(PlacesPage)
 
     def _go_to_place_from_places_page(self, object_name):
+        zip_dir_path = os.getenv('HOME')
+        self.copy_zip_file_from_source_dir(zip_dir_path)
         placespage = self.open_places()
-        placespage.go_to_place(object_name)
+        placespage.go_to_place(object_name, zip_dir_path)
 
     @autopilot.logging.log_action(logger.info)
     def open_places(self):
@@ -232,13 +243,12 @@ class MainView(ubuntuuitoolkit.MainView):
         """Return a go to dialog """
         return self.wait_select_single(objectName='goToDialog')
 
-
-
-    def go_to_place_with_inputField(self):
-        self.click_header_action('Find')
-        go_to_dialog = self.get_go_to_dialog()
-        go_to_dialog.enter_text(self.content_dir)
-        go_to_dialog.ok()
+    def copy_zip_file_from_source_dir(self, zip_dir_path):
+        source_dir = os.path.dirname(os.path.dirname(os.path.abspath('.')))
+        content_dir_zip_file = os.path.join(
+            source_dir, 'tests', 'autopilot', 'filemanager', 'content',
+                        'Test.zip')
+        shutil.copy(content_dir_zip_file, zip_dir_path)
 
 
 class PlacesSidebar(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
@@ -253,11 +263,8 @@ class PlacesSidebar(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
                             If value is inputField then open content folder
 
         """
-        if object_name == 'placePath':
-            MainView.go_to_place_with_inputField()
-        else:
-            place = self.wait_select_single('Standard', objectName=object_name)
-            self.pointing_device.click_object(place)
+        place = self.wait_select_single('Standard', objectName=object_name)
+        self.pointing_device.click_object(place)
 
 
 class FolderListPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
@@ -355,7 +362,7 @@ class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """ Places Page Autopilot emulator.     """
 
     @autopilot.logging.log_action(logger.info)
-    def go_to_place(self, object_name):
+    def go_to_place(self, object_name, zip_dir_path):
         """Open one of the bookmarked place folders or content folder depending
             on object_name value
 
@@ -365,8 +372,6 @@ class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
         """
 
         if object_name == 'placePath':
-            zip_dir_path = os.getenv('HOME')
-            self._copy_zip_file_from_source_dir(zip_dir_path)
             place = self.wait_select_single(
                 'TextField', objectName=object_name)
             place.write(zip_dir_path, clear=True)
@@ -376,13 +381,6 @@ class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
         else:
             place = self.wait_select_single('Standard', objectName=object_name)
             self.pointing_device.click_object(place)
-
-    def _copy_zip_file_from_source_dir(self, zip_dir_path):
-        source_dir = os.path.dirname(os.path.dirname(os.path.abspath('.')))
-        content_dir_zip_file = os.path.join(
-            source_dir, 'tests', 'autopilot', 'filemanager', 'content',
-                        'Test.zip')
-        shutil.copy(content_dir_zip_file, zip_dir_path)
 
 
 class FolderListView(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
