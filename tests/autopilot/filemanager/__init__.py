@@ -94,7 +94,7 @@ class MainView(ubuntuuitoolkit.MainView):
             zip_dir_path = os.getenv('HOME')
             self.copy_zip_file_from_source_dir(zip_dir_path)
         placespage = self.open_places()
-        placespage.go_to_place(object_name, zip_dir_path)
+        placespage.go_to_place(object_name, zip_dir_path=None)
 
     @autopilot.logging.log_action(logger.info)
     def open_places(self):
