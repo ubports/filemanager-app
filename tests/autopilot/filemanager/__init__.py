@@ -90,9 +90,9 @@ class MainView(ubuntuuitoolkit.MainView):
         return self.wait_select_single(PlacesPage)
 
     def _go_to_place_from_places_page(self, object_name):
+        zip_dir_path = os.getenv('HOME')
         if object_name == 'placePath':
             self.copy_zip_file_from_source_dir(zip_dir_path)
-        zip_dir_path = os.getenv('HOME')
         placespage = self.open_places()
         placespage.go_to_place(object_name, zip_dir_path)
 
