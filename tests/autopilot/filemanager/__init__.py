@@ -245,8 +245,8 @@ class MainView(ubuntuuitoolkit.MainView):
         return self.wait_select_single(objectName='goToDialog')
 
     def copy_zip_file_from_source_dir(self, zip_dir_path):
-        content_dir_zip_file = os.path.join(os.path.dirname(__file__),
-            'content', 'Test.zip')
+        content_dir_zip_file = os.path.join(os.path.dirname(
+                    __file__), 'content', 'Test.zip')
         shutil.copy(content_dir_zip_file, zip_dir_path)
 
 
