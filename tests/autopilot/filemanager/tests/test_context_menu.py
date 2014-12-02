@@ -38,7 +38,7 @@ class ContextMenuTestCase(FileManagerTestCase):
         self.app.main_view.rename(original_directory, new_name)
 
         files_and_folders = self.get_current_directory_files_and_folders()
-        self.assertEquals(files_and_folders, [new_name])
+        self.assertTrue(new_name in files_and_folders)
 
     def test_rename_file(self):
         """Test renaming a file.
