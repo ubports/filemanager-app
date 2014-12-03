@@ -69,6 +69,7 @@ class MainView(ubuntuuitoolkit.MainView):
             self._go_to_place_from_places_page(object_name)
 
     def _go_to_place_from_side_bar(self, object_name):
+        zip_dir_path = os.getenv('HOME')
         if object_name == 'placePath':
             self.click_header_action('Find')
             go_to_dialog = self.get_go_to_dialog()
