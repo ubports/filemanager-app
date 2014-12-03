@@ -70,8 +70,6 @@ class MainView(ubuntuuitoolkit.MainView):
 
     def _go_to_place_from_side_bar(self, object_name):
         if object_name == 'placePath':
-            zip_dir_path = os.getenv('HOME')
-            self.copy_zip_file_from_source_dir(zip_dir_path)
             self.click_header_action('Find')
             go_to_dialog = self.get_go_to_dialog()
             go_to_dialog.enter_text(zip_dir_path)

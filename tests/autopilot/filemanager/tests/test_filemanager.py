@@ -115,6 +115,10 @@ class TestFolderListPage(FileManagerTestCase):
             confirm_dialog.enter_text(text)
         confirm_dialog.ok()
 
+    def _create_zip_file(self):
+        zip_dir_path = os.getenv('HOME')
+        self.app.main_view.copy_zip_file_from_source_dir(zip_dir_path)
+
     # We can't do this testcase on phablet devices because of a lack of
     # Mir backend in autopilot
     # see https://bugs.launchpad.net/autopilot/+bug/1209004
@@ -433,21 +437,16 @@ class TestFolderListPage(FileManagerTestCase):
             folder_list_page.get_current_path,
             Eventually(Equals(self.fakehome)))
 
-    def test_open_zip_file(self):
+    def test_extract_zip_file(self):
         """Test that opens a zip file from content directory."""
-
         file_to_unzip = 'Test.zip'
         unzipped_dir_name = 'Test'
         unzipped_text_file_name = 'CodeOfConduct.txt'
         unzipped_image_dir_name = 'images'
         unzipped_image_name = "ubuntu.jpg"
 
+        self._create_zip_file()
         self.app.main_view.go_to_place('placePath')
-
-        folder_list_page = self.app.main_view.get_folder_list_page()
-        self.assertThat(
-            folder_list_page.get_current_path,
-            Eventually(Equals(os.getenv('HOME'))))
 
         self._do_action_on_file(
             self._get_file_by_name(file_to_unzip), 'Extract archive')
