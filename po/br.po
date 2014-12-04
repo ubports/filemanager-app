@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-11-23 15:38+0100\n"
-"PO-Revision-Date: 2014-11-24 07:27+0000\n"
+"PO-Revision-Date: 2014-12-03 07:13+0000\n"
 "Last-Translator: Fohanno Thierry <thierry.fohanno@ofis-bzh.org>\n"
 "Language-Team: Breton <br@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2014-11-26 06:50+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Launchpad-Export-Date: 2014-12-04 06:32+0000\n"
+"X-Generator: Launchpad (build 17274)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
 #: ../src/app/qml/components/FolderListView.qml:36
@@ -258,12 +258,12 @@ msgstr "Aotreoù re skort pe anv a zo anezhañ dija ?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:456
 msgid "Extract Archive"
-msgstr ""
+msgstr "Eztennañ an diell"
 
 #: ../src/app/qml/ui/FolderListPage.qml:457
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr ""
+msgstr "Ha sur oc'h e fell deoc'h eztennañ \"%1\" amañ ?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:528
 msgid "Cut"
@@ -275,7 +275,7 @@ msgstr "Eilañ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:579
 msgid "Extract archive"
-msgstr ""
+msgstr "Eztennañ an diell"
 
 #: ../src/app/qml/ui/FolderListPage.qml:609
 msgid "File operation error"
@@ -284,20 +284,20 @@ msgstr "Fazi oc'h ober gant restroù"
 #: ../src/app/qml/ui/FolderListPage.qml:640
 #, qt-format
 msgid "Extracting archive '%1'"
-msgstr ""
+msgstr "Oc'h eztennañ an diell \"%1\""
 
 #: ../src/app/qml/ui/FolderListPage.qml:652
 msgid "OK"
-msgstr ""
+msgstr "Mat eo"
 
 #: ../src/app/qml/ui/FolderListPage.qml:666
 msgid "Extracting failed"
-msgstr ""
+msgstr "Eztennadur c'hwitet"
 
 #: ../src/app/qml/ui/FolderListPage.qml:667
 #, qt-format
 msgid "Extracting the archive '%1' failed."
-msgstr ""
+msgstr "C'hwitet eo eztennadur an diell \"%1\""
 
 #: ../src/app/qml/ui/FolderListPage.qml:724
 msgid "~/Desktop"
