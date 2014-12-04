@@ -482,3 +482,13 @@ class TestFolderListPage(FileManagerTestCase):
         self.assertThat(
             mimetypes.guess_type(unzipped_image_name)[0],
             Equals('image/jpeg'))
+
+    def test_cancel_extract_zip_file(self):
+        """Test that cancels opening a zip file from content directory."""
+        file_to_unzip = 'Test.zip'
+        self._create_zip_file()
+
+        self.app.main_view.go_to_place('placePath')
+        self._do_action_on_file(
+            self._get_file_by_name(file_to_unzip), 'Extract archive')
+        self._cancel_confirm_dialog()
