@@ -32,7 +32,7 @@ ListView {
     // This must be visible so Autopilot can see it
     header: Header {
         objectName: "listViewSmallHeader"
-        text: i18n.tr("%1 (%n file(s))", "0", root.count).arg(root.folderPath)
+        text: i18n.tr("%1 (%n file(s))", "", root.count).arg(root.folderPath)
         height: smallMode ? units.gu(4) : 0
         clip: true
     }
