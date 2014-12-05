@@ -492,3 +492,7 @@ class TestFolderListPage(FileManagerTestCase):
         self._do_action_on_file(
             self._get_file_by_name(file_to_unzip), 'Extract archive')
         self._cancel_confirm_dialog()
+
+        self._assert_number_of_files(1)
+
+
