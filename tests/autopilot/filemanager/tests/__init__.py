@@ -83,7 +83,7 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
                                                       'src', 'plugin')))
         return self.launch_test_application(
             self.local_location_binary,
-            #'-p',
+            '-p',
             '-q', self.local_location_qml,
             app_type='qt',
             emulator_base=ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase)
