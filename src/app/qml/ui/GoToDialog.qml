@@ -21,6 +21,7 @@ import Ubuntu.Components.Popups 1.0
 
 Dialog {
     id: root
+    objectName: "goToDialog"
 
     title: i18n.tr("Go To Location")
 

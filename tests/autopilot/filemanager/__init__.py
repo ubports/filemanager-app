@@ -19,6 +19,8 @@
 import logging
 import re
 import time
+import os
+import shutil
 
 import autopilot.logging
 from autopilot import input
@@ -60,14 +62,22 @@ class MainView(ubuntuuitoolkit.MainView):
         :param object_name: The objectName property of the place to open.
 
         """
+
         if self.showSidebar:
             self._go_to_place_from_side_bar(object_name)
         else:
             self._go_to_place_from_places_page(object_name)
 
     def _go_to_place_from_side_bar(self, object_name):
-        side_bar = self.get_folder_list_page().get_sidebar()
-        side_bar.go_to_place(object_name)
+        dir_path = os.getenv('HOME')
+        if object_name == 'placePath':
+            self.click_header_action('Find')
+            go_to_dialog = self.get_go_to_dialog()
+            go_to_dialog.enter_text(dir_path)
+            go_to_dialog.ok()
+        else:
+            side_bar = self.get_folder_list_page().get_sidebar()
+            side_bar.go_to_place(object_name)
 
     def get_folder_list_page(self):
         """Return the FolderListPage emulator of the MainView."""
@@ -75,9 +85,15 @@ class MainView(ubuntuuitoolkit.MainView):
         page.main_view = self
         return page
 
+    def get_places_page(self):
+        return self.wait_select_single(PlacesPage)
+
     def _go_to_place_from_places_page(self, object_name):
+        dir_path = os.getenv('HOME')
+        if object_name == 'placePath':
+            self.copy_file_from_source_dir(dir_path)
         placespage = self.open_places()
-        placespage.go_to_place(object_name)
+        placespage.go_to_place(object_name, dir_path)
 
     @autopilot.logging.log_action(logger.info)
     def open_places(self):
@@ -223,18 +239,29 @@ class MainView(ubuntuuitoolkit.MainView):
         """Return a popover emulator"""
         return self.wait_select_single(Popover)
 
+    def get_go_to_dialog(self):
+        """Return a go to dialog """
+        return self.wait_select_single(objectName='goToDialog')
+
+    def copy_file_from_source_dir(self, dir_path):
+        content_dir_file = os.path.join(os.path.dirname(
+            __file__), 'content', 'Test.zip')
+        shutil.copy(content_dir_file, dir_path)
+
 
 class PlacesSidebar(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """PlacesSidebar Autopilot emulator."""
 
     @autopilot.logging.log_action(logger.info)
     def go_to_place(self, object_name):
-        """Open one of the bookmarked place folders.
+        """Open one of the bookmarked place folders or content folder depending
+        on object_name parameter
 
-        :param object_name: The objectName property of the place to open.
+        :param object_name: The objectName property of the place to open
+                            If value is inputField then open content folder
 
         """
-        place = self.select_single('Standard', objectName=object_name)
+        place = self.wait_select_single('Standard', objectName=object_name)
         self.pointing_device.click_object(place)
 
 
@@ -330,11 +357,28 @@ class FolderListPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
 
 
 class PlacesPage(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
-    """Places Page Autopilot emulator."""
+    """ Places Page Autopilot emulator.     """
 
-    def go_to_place(self, object_name):
-        place = self.wait_select_single('Standard', objectName=object_name)
-        self.pointing_device.click_object(place)
+    @autopilot.logging.log_action(logger.info)
+    def go_to_place(self, object_name, dir_path):
+        """Open one of the bookmarked place folders or content folder depending
+            on object_name value
+
+        :param object_name: The objectName property of the place to open
+                            If equals inputField then open content folder
+
+        """
+
+        if object_name == 'placePath':
+            place = self.wait_select_single(
+                'TextField', objectName=object_name)
+            place.write(dir_path, clear=True)
+            ok_button = self.wait_select_single(
+                "Button", objectName="okButton")
+            self.pointing_device.click_object(ok_button)
+        else:
+            place = self.wait_select_single('Standard', objectName=object_name)
+            self.pointing_device.click_object(place)
 
 
 class FolderListView(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
