@@ -494,5 +494,3 @@ class TestFolderListPage(FileManagerTestCase):
         self._cancel_confirm_dialog()
 
         self._assert_number_of_files(1)
-
-
