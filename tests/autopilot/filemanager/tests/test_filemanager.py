@@ -115,9 +115,9 @@ class TestFolderListPage(FileManagerTestCase):
             confirm_dialog.enter_text(text)
         confirm_dialog.ok()
 
-    def _create_zip_file(self):
-        zip_dir_path = os.getenv('HOME')
-        self.app.main_view.copy_zip_file_from_source_dir(zip_dir_path)
+    def _create_file(self):
+        dir_path = os.getenv('HOME')
+        self.app.main_view.copy_file_from_source_dir(dir_path)
 
     # We can't do this testcase on phablet devices because of a lack of
     # Mir backend in autopilot
@@ -445,7 +445,7 @@ class TestFolderListPage(FileManagerTestCase):
         unzipped_image_dir_name = 'images'
         unzipped_image_name = "ubuntu.jpg"
 
-        self._create_zip_file()
+        self._create_file()
         self.app.main_view.go_to_place('placePath')
 
         self._do_action_on_file(
@@ -486,7 +486,7 @@ class TestFolderListPage(FileManagerTestCase):
     def test_cancel_extract_zip_file(self):
         """Test that cancels opening a zip file from content directory."""
         file_to_unzip = 'Test.zip'
-        self._create_zip_file()
+        self._create_file()
 
         self.app.main_view.go_to_place('placePath')
         self._do_action_on_file(
