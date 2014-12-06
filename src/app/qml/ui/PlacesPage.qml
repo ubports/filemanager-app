@@ -45,7 +45,7 @@ Page {
 
                 TextField {
                     id: locationField
-                    objectName: "inputField"
+                    objectName: "placePath"
                     anchors {
                         verticalCenter: parent.verticalCenter
                         left: parent.left

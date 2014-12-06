@@ -24,6 +24,7 @@ Depends: ${misc:Depends},
          qtdeclarative5-nemo-qml-plugin-folderlistmodel,
          qtdeclarative5-placesmodel0.1,
          qtdeclarative5-pamauthentication0.1,
+         qtdeclarative5-archives0.1,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-u1db1.0,
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
@@ -63,6 +64,16 @@ Depends: ${misc:Depends},
 Description: PAM authentication QML plugin
  This package contains a plugin that enables QML apps to do
  password authentication via the PAM API.
+
+Package: qtdeclarative5-archives0.1
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         ${misc:Pre-Depends},
+Description: Archives QML plugin
+ This package contains a plugin that enables QML apps to extract
+ archive files.
 
 Package: ubuntu-filemanager-app-autopilot
 Architecture: all

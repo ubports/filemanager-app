@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-11-19 21:32+0100\n"
+"POT-Creation-Date: 2014-12-05 21:44+0100\n"
 "PO-Revision-Date: 2014-07-25 05:47+0000\n"
 "Last-Translator: Gursharnjit_singh <ubuntuser13@gmail.com>\n"
 "Language-Team: Punjabi <pa@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-11-20 06:23+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Launchpad-Export-Date: 2014-12-06 06:34+0000\n"
+"X-Generator: Launchpad (build 17274)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
 #: ../src/app/qml/components/FolderListView.qml:36
@@ -31,7 +31,7 @@ msgid "%1 (%2 files)"
 msgstr "%1 (%2 ਫ਼ਾਈਲਾਂ)"
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
-#: ../src/app/qml/ui/FolderListPage.qml:620
+#: ../src/app/qml/ui/FolderListPage.qml:754
 msgid "Device"
 msgstr ""
 
@@ -44,7 +44,7 @@ msgstr "ਥਾਵਾਂ"
 msgid "Open with"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:102
+#: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:103
 #: ../src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
 msgstr "ਸੈਟਿੰਗ"
@@ -53,12 +53,12 @@ msgstr "ਸੈਟਿੰਗ"
 msgid "Change app settings"
 msgstr "ਐਪ ਸੈਟਿੰਗ ਬਦਲੋ"
 
-#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:352
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:354
 #: ../src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr "ਆਈਕਾਨ"
 
-#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:368
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:370
 #: ../src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr "ਸੂਚੀ"
@@ -87,8 +87,8 @@ msgstr "ਠੀਕ"
 #: ../src/app/qml/ui/ConfirmDialogWithInput.qml:57
 #: ../src/app/qml/ui/FileActionDialog.qml:45
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../src/app/qml/ui/FolderListPage.qml:330
-#: ../src/app/qml/ui/GoToDialog.qml:66
+#: ../src/app/qml/ui/FolderListPage.qml:332
+#: ../src/app/qml/ui/GoToDialog.qml:67
 msgid "Cancel"
 msgstr "ਰੱਦ"
 
@@ -149,169 +149,200 @@ msgstr "ਕਾਰਵਾਈ ਜਾਰੀ ਹੈ"
 msgid "File operation"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:52
+#: ../src/app/qml/ui/FolderListPage.qml:53
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:56
+#: ../src/app/qml/ui/FolderListPage.qml:57
 msgid "Paste files"
 msgstr "ਫ਼ਾਈਲਾਂ ਪੇਸਟ ਕਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:64
+#: ../src/app/qml/ui/FolderListPage.qml:65
 msgid "Clear clipboard"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:74
-#: ../src/app/qml/ui/FolderListPage.qml:92
-#: ../src/app/qml/ui/FolderListPage.qml:511
+#: ../src/app/qml/ui/FolderListPage.qml:75
+#: ../src/app/qml/ui/FolderListPage.qml:93
+#: ../src/app/qml/ui/FolderListPage.qml:590
 msgid "Properties"
 msgstr "ਵਿਸ਼ੇਸ਼ਤਾ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:83
+#: ../src/app/qml/ui/FolderListPage.qml:84
 msgid "New Folder"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:109
+#: ../src/app/qml/ui/FolderListPage.qml:111
 msgid "Go To"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:116
+#: ../src/app/qml/ui/FolderListPage.qml:118
 msgid "Unlock full access"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:130
+#: ../src/app/qml/ui/FolderListPage.qml:132
 msgid "Authentication failed"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:202
+#: ../src/app/qml/ui/FolderListPage.qml:204
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:227
+#: ../src/app/qml/ui/FolderListPage.qml:229
 msgid "Open in a new tab"
 msgstr "ਨਵੀ ਟੈਬ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:235
+#: ../src/app/qml/ui/FolderListPage.qml:237
 msgid "Close this tab"
 msgstr "ਇਹ ਟੈਬ ਬੰਦ ਕਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:248
+#: ../src/app/qml/ui/FolderListPage.qml:250
 msgid "Create folder"
 msgstr "ਫੋਲਡਰ ਬਣਾਓ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:249
+#: ../src/app/qml/ui/FolderListPage.qml:251
 msgid "Enter name for new folder"
 msgstr "ਨਵੇ ਫ਼ੋਲਡਰ ਲਈ ਨਾਂ ਭਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:265
+#: ../src/app/qml/ui/FolderListPage.qml:267
 msgid "Create file"
 msgstr "ਫ਼ਾਈਲ ਬਣਾਓ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:266
+#: ../src/app/qml/ui/FolderListPage.qml:268
 msgid "Enter name for new file"
 msgstr "ਨਵੀ ਫ਼ਾਈਲ ਲਈ ਨਾਂ ਭਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:315
+#: ../src/app/qml/ui/FolderListPage.qml:317
 msgid "Select"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:383
+#: ../src/app/qml/ui/FolderListPage.qml:385
 msgid "No files"
 msgstr "ਕੋਈ ਫਾਈਲ ਨਹੀਂ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:403
-#: ../src/app/qml/ui/FolderListPage.qml:485
+#: ../src/app/qml/ui/FolderListPage.qml:405
+#: ../src/app/qml/ui/FolderListPage.qml:552
 msgid "Delete"
 msgstr "ਹਟਾਓ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:404
+#: ../src/app/qml/ui/FolderListPage.qml:406
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "ਕੀ ਤੁਹਾਨੂੰ ਯਕੀਨ ਹੈ ਤੁਸੀ ਪੱਕੇ ਤੌਰ ਤੇ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ '%1'?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:409
+#: ../src/app/qml/ui/FolderListPage.qml:411
 msgid "Deleting files"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:427
-#: ../src/app/qml/ui/FolderListPage.qml:498
+#: ../src/app/qml/ui/FolderListPage.qml:429
+#: ../src/app/qml/ui/FolderListPage.qml:565
 msgid "Rename"
 msgstr "ਨਾਂ ਬਦਲੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:428
+#: ../src/app/qml/ui/FolderListPage.qml:430
 msgid "Enter a new name"
 msgstr "ਇੱਕ ਨਵਾਂ ਨਾਂ ਭਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:437
+#: ../src/app/qml/ui/FolderListPage.qml:439
 msgid "Could not rename"
 msgstr "ਨਾਂ ਨਹੀ ਬਦਲ ਸਕਦਾ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:438
+#: ../src/app/qml/ui/FolderListPage.qml:440
 msgid "Insufficient permissions or name already exists?"
 msgstr "ਨਾਕਾਫ਼ੀ ਮਨਜ਼ੂਰੀ ਜਾਂ ਨਾਂ ਪਹਿਲਾਂ ਤੋਂ ਮੌਜੂਦ?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:462
+#: ../src/app/qml/ui/FolderListPage.qml:457
+msgid "Extract Archive"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:458
+#, qt-format
+msgid "Are you sure you want to extract '%1' here?"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:529
 msgid "Cut"
 msgstr "ਕੱਟ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:473
+#: ../src/app/qml/ui/FolderListPage.qml:540
 msgid "Copy"
 msgstr "ਕਾਪੀ ਕਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:531
+#: ../src/app/qml/ui/FolderListPage.qml:580
+msgid "Extract archive"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:610
 msgid "File operation error"
 msgstr "ਫ਼ਾਈਲ ਕਾਰਵਾਈ ਖਾਮੀ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:591
+#: ../src/app/qml/ui/FolderListPage.qml:641
+#, qt-format
+msgid "Extracting archive '%1'"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:653
+msgid "OK"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:667
+msgid "Extracting failed"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:668
+#, qt-format
+msgid "Extracting the archive '%1' failed."
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:725
 msgid "~/Desktop"
 msgstr "~/ਡੈਸਕਟੋਪ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:601
+#: ../src/app/qml/ui/FolderListPage.qml:735
 msgid "~/Public"
 msgstr "~/ਆਮ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:603
+#: ../src/app/qml/ui/FolderListPage.qml:737
 msgid "~/Programs"
 msgstr "~/ਪ੍ਰੋਗਰਾਮ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:605
+#: ../src/app/qml/ui/FolderListPage.qml:739
 msgid "~/Templates"
 msgstr "~/ਤਿਅਾਰ ਖਾਕੇ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:618
+#: ../src/app/qml/ui/FolderListPage.qml:752
 msgid "Home"
 msgstr "ਘਰ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:688
+#: ../src/app/qml/ui/FolderListPage.qml:822
 msgid "Folder not accessible"
 msgstr "ਫ਼ੋਲਡਰ ਪਹੁੰਚ ਕਰਨ ਯੋਗ ਨਹੀ"
 
 #. TRANSLATORS: this refers to a folder name
-#: ../src/app/qml/ui/FolderListPage.qml:690
+#: ../src/app/qml/ui/FolderListPage.qml:824
 #, qt-format
 msgid "Can not access %1"
 msgstr "ਪਹੁੰਚ ਨਹੀ ਸਕਦਾ %1"
 
-#: ../src/app/qml/ui/GoToDialog.qml:25
+#: ../src/app/qml/ui/GoToDialog.qml:26
 msgid "Go To Location"
 msgstr "ਥਾਂ ਤੇ ਜਾਓ"
 
-#: ../src/app/qml/ui/GoToDialog.qml:27
+#: ../src/app/qml/ui/GoToDialog.qml:28
 msgid "Enter a location to go to:"
 msgstr "ਜਾਣ ਲਈ ਇੱਕ ਥਾਂ ਲਿੱਖੋ:"
 
-#: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPage.qml:62
+#: ../src/app/qml/ui/GoToDialog.qml:45 ../src/app/qml/ui/PlacesPage.qml:62
 #: ../src/app/qml/ui/PlacesPopover.qml:67
 msgid "Location..."
 msgstr "ਸਥਿਤੀ..."
 
-#: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPage.qml:77
+#: ../src/app/qml/ui/GoToDialog.qml:54 ../src/app/qml/ui/PlacesPage.qml:77
 #: ../src/app/qml/ui/PlacesPopover.qml:82
 msgid "Go"
 msgstr "ਜਾਓ"
