@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-11-23 15:38+0100\n"
+"POT-Creation-Date: 2014-12-05 21:44+0100\n"
 "PO-Revision-Date: 2014-10-28 14:30+0000\n"
 "Last-Translator: Damir Jerovšek <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2014-11-26 06:51+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Launchpad-Export-Date: 2014-12-06 06:34+0000\n"
+"X-Generator: Launchpad (build 17274)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
 #: ../src/app/qml/components/FolderListView.qml:36
@@ -32,7 +32,7 @@ msgid "%1 (%2 files)"
 msgstr "%1 (%2 datoteki)"
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
-#: ../src/app/qml/ui/FolderListPage.qml:753
+#: ../src/app/qml/ui/FolderListPage.qml:754
 msgid "Device"
 msgstr "Naprava"
 
@@ -54,12 +54,12 @@ msgstr "Nastavitve"
 msgid "Change app settings"
 msgstr "Spremeni nastavitve programa"
 
-#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:353
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:354
 #: ../src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr "Ikone"
 
-#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:369
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:370
 #: ../src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr "Seznam"
@@ -88,8 +88,8 @@ msgstr "V redu"
 #: ../src/app/qml/ui/ConfirmDialogWithInput.qml:57
 #: ../src/app/qml/ui/FileActionDialog.qml:45
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../src/app/qml/ui/FolderListPage.qml:331
-#: ../src/app/qml/ui/GoToDialog.qml:66
+#: ../src/app/qml/ui/FolderListPage.qml:332
+#: ../src/app/qml/ui/GoToDialog.qml:67
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -169,7 +169,7 @@ msgstr "Počisti odložišče"
 
 #: ../src/app/qml/ui/FolderListPage.qml:75
 #: ../src/app/qml/ui/FolderListPage.qml:93
-#: ../src/app/qml/ui/FolderListPage.qml:589
+#: ../src/app/qml/ui/FolderListPage.qml:590
 msgid "Properties"
 msgstr "Lastnosti"
 
@@ -177,19 +177,19 @@ msgstr "Lastnosti"
 msgid "New Folder"
 msgstr "Nova mapa"
 
-#: ../src/app/qml/ui/FolderListPage.qml:110
+#: ../src/app/qml/ui/FolderListPage.qml:111
 msgid "Go To"
 msgstr "Pojdi na"
 
-#: ../src/app/qml/ui/FolderListPage.qml:117
+#: ../src/app/qml/ui/FolderListPage.qml:118
 msgid "Unlock full access"
 msgstr "Odkleni popolni dostop"
 
-#: ../src/app/qml/ui/FolderListPage.qml:131
+#: ../src/app/qml/ui/FolderListPage.qml:132
 msgid "Authentication failed"
 msgstr "Overitev je spodletela"
 
-#: ../src/app/qml/ui/FolderListPage.qml:203
+#: ../src/app/qml/ui/FolderListPage.qml:204
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
@@ -198,156 +198,156 @@ msgstr[1] "%1 datoteka"
 msgstr[2] "%1 datoteki"
 msgstr[3] "%1 datoteke"
 
-#: ../src/app/qml/ui/FolderListPage.qml:228
+#: ../src/app/qml/ui/FolderListPage.qml:229
 msgid "Open in a new tab"
 msgstr "Odpri v novem zavihku"
 
-#: ../src/app/qml/ui/FolderListPage.qml:236
+#: ../src/app/qml/ui/FolderListPage.qml:237
 msgid "Close this tab"
 msgstr "Zapri ta zavihek"
 
-#: ../src/app/qml/ui/FolderListPage.qml:249
+#: ../src/app/qml/ui/FolderListPage.qml:250
 msgid "Create folder"
 msgstr "Ustvari mapo"
 
-#: ../src/app/qml/ui/FolderListPage.qml:250
+#: ../src/app/qml/ui/FolderListPage.qml:251
 msgid "Enter name for new folder"
 msgstr "Vnesite ime za novo mapo"
 
-#: ../src/app/qml/ui/FolderListPage.qml:266
+#: ../src/app/qml/ui/FolderListPage.qml:267
 msgid "Create file"
 msgstr "Ustvari datoteko"
 
-#: ../src/app/qml/ui/FolderListPage.qml:267
+#: ../src/app/qml/ui/FolderListPage.qml:268
 msgid "Enter name for new file"
 msgstr "Vnesite ime za novo datoteko"
 
-#: ../src/app/qml/ui/FolderListPage.qml:316
+#: ../src/app/qml/ui/FolderListPage.qml:317
 msgid "Select"
 msgstr "Izbor"
 
-#: ../src/app/qml/ui/FolderListPage.qml:384
+#: ../src/app/qml/ui/FolderListPage.qml:385
 msgid "No files"
 msgstr "Ni datotek"
 
-#: ../src/app/qml/ui/FolderListPage.qml:404
-#: ../src/app/qml/ui/FolderListPage.qml:551
+#: ../src/app/qml/ui/FolderListPage.qml:405
+#: ../src/app/qml/ui/FolderListPage.qml:552
 msgid "Delete"
 msgstr "Izbriši"
 
-#: ../src/app/qml/ui/FolderListPage.qml:405
+#: ../src/app/qml/ui/FolderListPage.qml:406
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "Ali ste prepričani, da želite trajno izbrisati '%1'?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:410
+#: ../src/app/qml/ui/FolderListPage.qml:411
 msgid "Deleting files"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:428
-#: ../src/app/qml/ui/FolderListPage.qml:564
+#: ../src/app/qml/ui/FolderListPage.qml:429
+#: ../src/app/qml/ui/FolderListPage.qml:565
 msgid "Rename"
 msgstr "Preimenuj"
 
-#: ../src/app/qml/ui/FolderListPage.qml:429
+#: ../src/app/qml/ui/FolderListPage.qml:430
 msgid "Enter a new name"
 msgstr "Vnesite novo ime"
 
-#: ../src/app/qml/ui/FolderListPage.qml:438
+#: ../src/app/qml/ui/FolderListPage.qml:439
 msgid "Could not rename"
 msgstr "Ni mogoče preimenovati"
 
-#: ../src/app/qml/ui/FolderListPage.qml:439
+#: ../src/app/qml/ui/FolderListPage.qml:440
 msgid "Insufficient permissions or name already exists?"
 msgstr "Nezadostna dovoljenja ali pa ime že obstaja?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:456
+#: ../src/app/qml/ui/FolderListPage.qml:457
 msgid "Extract Archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:457
+#: ../src/app/qml/ui/FolderListPage.qml:458
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:528
+#: ../src/app/qml/ui/FolderListPage.qml:529
 msgid "Cut"
 msgstr "Izreži"
 
-#: ../src/app/qml/ui/FolderListPage.qml:539
+#: ../src/app/qml/ui/FolderListPage.qml:540
 msgid "Copy"
 msgstr "Kopiraj"
 
-#: ../src/app/qml/ui/FolderListPage.qml:579
+#: ../src/app/qml/ui/FolderListPage.qml:580
 msgid "Extract archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:609
+#: ../src/app/qml/ui/FolderListPage.qml:610
 msgid "File operation error"
 msgstr "Napaka med opravilom z datoteko"
 
-#: ../src/app/qml/ui/FolderListPage.qml:640
+#: ../src/app/qml/ui/FolderListPage.qml:641
 #, qt-format
 msgid "Extracting archive '%1'"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:652
+#: ../src/app/qml/ui/FolderListPage.qml:653
 msgid "OK"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:666
+#: ../src/app/qml/ui/FolderListPage.qml:667
 msgid "Extracting failed"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:667
+#: ../src/app/qml/ui/FolderListPage.qml:668
 #, qt-format
 msgid "Extracting the archive '%1' failed."
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:724
+#: ../src/app/qml/ui/FolderListPage.qml:725
 msgid "~/Desktop"
 msgstr "~/Namizje"
 
-#: ../src/app/qml/ui/FolderListPage.qml:734
+#: ../src/app/qml/ui/FolderListPage.qml:735
 msgid "~/Public"
 msgstr "~/Javno"
 
-#: ../src/app/qml/ui/FolderListPage.qml:736
+#: ../src/app/qml/ui/FolderListPage.qml:737
 msgid "~/Programs"
 msgstr "~/Programi"
 
-#: ../src/app/qml/ui/FolderListPage.qml:738
+#: ../src/app/qml/ui/FolderListPage.qml:739
 msgid "~/Templates"
 msgstr "~/Predloge"
 
-#: ../src/app/qml/ui/FolderListPage.qml:751
+#: ../src/app/qml/ui/FolderListPage.qml:752
 msgid "Home"
 msgstr "Osebna mapa"
 
-#: ../src/app/qml/ui/FolderListPage.qml:821
+#: ../src/app/qml/ui/FolderListPage.qml:822
 msgid "Folder not accessible"
 msgstr "Mapa ni dostopna"
 
 #. TRANSLATORS: this refers to a folder name
-#: ../src/app/qml/ui/FolderListPage.qml:823
+#: ../src/app/qml/ui/FolderListPage.qml:824
 #, qt-format
 msgid "Can not access %1"
 msgstr "Do %1 ni mogoče dostopati"
 
-#: ../src/app/qml/ui/GoToDialog.qml:25
+#: ../src/app/qml/ui/GoToDialog.qml:26
 msgid "Go To Location"
 msgstr "Pojdi do mesta"
 
-#: ../src/app/qml/ui/GoToDialog.qml:27
+#: ../src/app/qml/ui/GoToDialog.qml:28
 msgid "Enter a location to go to:"
 msgstr "Vnesite mesto, kamor želite iti:"
 
-#: ../src/app/qml/ui/GoToDialog.qml:44 ../src/app/qml/ui/PlacesPage.qml:62
+#: ../src/app/qml/ui/GoToDialog.qml:45 ../src/app/qml/ui/PlacesPage.qml:62
 #: ../src/app/qml/ui/PlacesPopover.qml:67
 msgid "Location..."
 msgstr "Mesto ..."
 
-#: ../src/app/qml/ui/GoToDialog.qml:53 ../src/app/qml/ui/PlacesPage.qml:77
+#: ../src/app/qml/ui/GoToDialog.qml:54 ../src/app/qml/ui/PlacesPage.qml:77
 #: ../src/app/qml/ui/PlacesPopover.qml:82
 msgid "Go"
 msgstr "Pojdi"
