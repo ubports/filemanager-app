@@ -135,9 +135,9 @@ class TestFolderListPage(FileManagerTestCase):
         confirm_dialog.ok()
 
     def _create_zip_file(self):
-        zip_dir_path = os.getenv('HOME')
-        self.app.main_view.copy_zip_file_from_source_dir(
-            zip_dir_path, self.file_to_extract)
+        dir_path = os.getenv('HOME')
+        self.app.main_view.copy_file_from_source_dir(
+            dir_path, self.file_to_extract)
 
     # We can't do this testcase on phablet devices because of a lack of
     # Mir backend in autopilot
