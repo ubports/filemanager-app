@@ -33,6 +33,25 @@ logger = logging.getLogger(__name__)
 
 
 class TestFolderListPage(FileManagerTestCase):
+    """Tests the Folder List  page features"""
+
+    scenarios = [
+        ('zip',
+            {'file_to_extract': 'Test.zip',
+             'unzipped_dir_name': 'Test',
+             'unzipped_text_file_name': 'CodeOfConduct.txt',
+             'unzipped_image_dir_name': 'images',
+             'unzipped_image_name': 'ubuntu.jpg'
+             }),
+
+        ('tar',
+            {'file_to_extract': 'Test.tar',
+             'unzipped_dir_name': 'Test',
+             'unzipped_text_file_name': 'CodeOfConduct.txt',
+             'unzipped_image_dir_name': 'images',
+             'unzipped_image_name': 'ubuntu.jpg'
+             })
+    ]
 
     def _get_file_by_name(self, name):
         folder_list_page = self.app.main_view.get_folder_list_page()
@@ -117,7 +136,8 @@ class TestFolderListPage(FileManagerTestCase):
 
     def _create_zip_file(self):
         zip_dir_path = os.getenv('HOME')
-        self.app.main_view.copy_zip_file_from_source_dir(zip_dir_path)
+        self.app.main_view.copy_zip_file_from_source_dir(
+            zip_dir_path, self.file_to_extract)
 
     # We can't do this testcase on phablet devices because of a lack of
     # Mir backend in autopilot
@@ -439,56 +459,51 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_extract_zip_file(self):
         """Test that opens a zip file from content directory."""
-        file_to_unzip = 'Test.zip'
-        unzipped_dir_name = 'Test'
-        unzipped_text_file_name = 'CodeOfConduct.txt'
-        unzipped_image_dir_name = 'images'
-        unzipped_image_name = "ubuntu.jpg"
-
         self._create_zip_file()
-        self.app.main_view.go_to_place('placePath')
+        self.app.main_view.go_to_place('placePath', self.file_to_extract)
 
         self._do_action_on_file(
-            self._get_file_by_name(file_to_unzip), 'Extract archive')
+            self._get_file_by_name(self.file_to_extract), 'Extract archive')
         self._confirm_dialog()
         self._assert_number_of_files(2)
 
         # Verify that the extraced directory name is correct
         self.assertThat(
-            self._get_file_by_name(unzipped_dir_name).text,
-            Eventually(Equals(unzipped_dir_name)))
+            self._get_file_by_name(self.unzipped_dir_name).text,
+            Eventually(Equals(self.unzipped_dir_name)))
 
         # Verify that the extraced text file name is a text file
-        self._open_directory(self._get_file_by_name(unzipped_dir_name))
+        self._open_directory(self._get_file_by_name(
+            self.unzipped_dir_name))
         self.assertThat(
-            self._get_file_by_name(unzipped_text_file_name).text,
-            Eventually(Equals(unzipped_text_file_name)))
+            self._get_file_by_name(self.unzipped_text_file_name).text,
+            Eventually(Equals(self.unzipped_text_file_name)))
 
         self.assertThat(
-            mimetypes.guess_type(unzipped_text_file_name)[0],
+            mimetypes.guess_type(self.unzipped_text_file_name)[0],
             Equals('text/plain'))
 
         # Verify that the extraced image directory name is correct
         self.assertThat(
-            self._get_file_by_name(unzipped_image_dir_name).text,
-            Eventually(Equals(unzipped_image_dir_name)))
+            self._get_file_by_name(self.unzipped_image_dir_name).text,
+            Eventually(Equals(self.unzipped_image_dir_name)))
 
         # Verify that the extraced image file name is an image
-        self._open_directory(self._get_file_by_name(unzipped_image_dir_name))
+        self._open_directory(self._get_file_by_name(
+            self.unzipped_image_dir_name))
         self.assertThat(
-            self._get_file_by_name(unzipped_image_name).text,
-            Eventually(Equals(unzipped_image_name)))
+            self._get_file_by_name(self.unzipped_image_name).text,
+            Eventually(Equals(self.unzipped_image_name)))
 
         self.assertThat(
-            mimetypes.guess_type(unzipped_image_name)[0],
+            mimetypes.guess_type(self.unzipped_image_name)[0],
             Equals('image/jpeg'))
 
     def test_cancel_extract_zip_file(self):
         """Test that cancels opening a zip file from content directory."""
-        file_to_unzip = 'Test.zip'
         self._create_zip_file()
 
-        self.app.main_view.go_to_place('placePath')
+        self.app.main_view.go_to_place('placePath', self.file_to_extract)
         self._do_action_on_file(
-            self._get_file_by_name(file_to_unzip), 'Extract archive')
+            self._get_file_by_name(self.file_to_extract), 'Extract archive')
         self._cancel_confirm_dialog()
