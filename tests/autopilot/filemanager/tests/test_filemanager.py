@@ -134,7 +134,7 @@ class TestFolderListPage(FileManagerTestCase):
             confirm_dialog.enter_text(text)
         confirm_dialog.ok()
 
-    def _create_zip_file(self):
+    def _create_file(self):
         dir_path = os.getenv('HOME')
         self.app.main_view.copy_file_from_source_dir(
             dir_path, self.file_to_extract)
@@ -459,7 +459,7 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_extract_zip_file(self):
         """Test that opens a zip file from content directory."""
-        self._create_zip_file()
+        self._create_file()
         self.app.main_view.go_to_place('placePath', self.file_to_extract)
 
         self._do_action_on_file(
@@ -501,9 +501,12 @@ class TestFolderListPage(FileManagerTestCase):
 
     def test_cancel_extract_zip_file(self):
         """Test that cancels opening a zip file from content directory."""
-        self._create_zip_file()
+        file_to_unzip = 'Test.zip'
+        self._create_file()
 
         self.app.main_view.go_to_place('placePath', self.file_to_extract)
         self._do_action_on_file(
             self._get_file_by_name(self.file_to_extract), 'Extract archive')
         self._cancel_confirm_dialog()
+
+        self._assert_number_of_files(1)
