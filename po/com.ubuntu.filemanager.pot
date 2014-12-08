@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-06 09:16+0100\n"
+"POT-Creation-Date: 2014-12-08 22:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,8 +21,8 @@ msgstr ""
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
 #, qt-format, qt-plural-format
-msgid "%1 (%n file(s))"
-msgid_plural ""
+msgid "%1 (%n file)"
+msgid_plural "%1 (%n files)"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -147,8 +147,8 @@ msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:57
 #, c-format, qt-plural-format
-msgid "Paste %n File(s)"
-msgid_plural ""
+msgid "Paste %n File"
+msgid_plural "Paste %n Files"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -184,8 +184,8 @@ msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:208
 #, c-format, qt-plural-format
-msgid "%n file(s)"
-msgid_plural ""
+msgid "%n file"
+msgid_plural "%n files"
 msgstr[0] ""
 msgstr[1] ""
 

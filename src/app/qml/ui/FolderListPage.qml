@@ -54,7 +54,7 @@ PageWithBottomEdge {
             // http://qt-project.org/doc/qt-4.8/i18n-source-translation.html#handling-plurals
             // It allows correct translation for languages with more than two plural forms:
             // http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
-            text: i18n.tr("Paste %n File(s)", "", pageModel.clipboardUrlsCounter)
+            text: i18n.tr("Paste %n File", "Paste %n Files", pageModel.clipboardUrlsCounter)
             visible: pageModel.clipboardUrlsCounter > 0
             onTriggered: {
                 console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
@@ -205,7 +205,7 @@ PageWithBottomEdge {
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
         property string fileName: pathName(pageModel.path)
-        property string fileSize: i18n.tr("%n file(s)", "", folderListView.count)
+        property string fileSize: i18n.tr("%n file", "%n files", folderListView.count)
         property bool isReadable: true
         property bool isExecutable: true
     }
