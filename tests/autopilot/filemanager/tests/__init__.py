@@ -71,7 +71,6 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
         self.installed_location_binary = os.path.join('/usr/bin/', self.binary)
         self.installed_location_qml = \
             '/usr/share/filemanager/qml/filemanager.qml'
-
         super(BaseTestCaseWithPatchedHome, self).setUp()
         self.launcher, self.test_type = self.get_launcher_and_type()
         self.real_home_dir = os.getenv('HOME')

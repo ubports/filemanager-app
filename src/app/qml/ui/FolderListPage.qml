@@ -107,6 +107,7 @@ PageWithBottomEdge {
         Action {
             id: gotoButton
             iconName: "find"
+            objectName:"Find"
             text: i18n.tr("Go To")
             visible: sidebar.expanded
             onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
