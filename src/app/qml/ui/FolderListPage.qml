@@ -678,7 +678,7 @@ PageWithBottomEdge {
             property string archiveType
 
             Button {
-                id: button
+                id: extractButton
                 text: i18n.tr("Extract archive")
                 color: UbuntuColors.green
                 onClicked: {
@@ -688,7 +688,7 @@ PageWithBottomEdge {
             }
 
             Button {
-                id: button2
+                id: openExternallyButton
                 text: i18n.tr("Open with another app")
                 color: UbuntuColors.red
                 onClicked: {
