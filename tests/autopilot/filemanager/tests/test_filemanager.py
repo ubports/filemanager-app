@@ -38,18 +38,18 @@ class TestFolderListPage(FileManagerTestCase):
     scenarios = [
         ('zip',
             {'file_to_extract': 'Test.zip',
-             'unzipped_dir_name': 'Test',
-             'unzipped_text_file_name': 'CodeOfConduct.txt',
-             'unzipped_image_dir_name': 'images',
-             'unzipped_image_name': 'ubuntu.jpg'
+             'extracted_dir_name': 'Test',
+             'extracted_text_file_name': 'CodeOfConduct.txt',
+             'extracted_image_dir_name': 'images',
+             'extracted_image_name': 'ubuntu.jpg'
              }),
 
         ('tar',
             {'file_to_extract': 'Test.tar',
-             'unzipped_dir_name': 'Test',
-             'unzipped_text_file_name': 'CodeOfConduct.txt',
-             'unzipped_image_dir_name': 'images',
-             'unzipped_image_name': 'ubuntu.jpg'
+             'extracted_dir_name': 'Test',
+             'extracted_text_file_name': 'CodeOfConduct.txt',
+             'extracted_image_dir_name': 'images',
+             'extracted_image_name': 'ubuntu.jpg'
              })
     ]
 
@@ -457,8 +457,8 @@ class TestFolderListPage(FileManagerTestCase):
             folder_list_page.get_current_path,
             Eventually(Equals(self.fakehome)))
 
-    def test_extract_zip_file(self):
-        """Test that opens a zip file from content directory."""
+    def test_extract_archive_file(self):
+        """Test that extracts an archive file from content directory."""
         self._create_file()
         self.app.main_view.go_to_place('placePath', self.file_to_extract)
 
@@ -469,39 +469,38 @@ class TestFolderListPage(FileManagerTestCase):
 
         # Verify that the extraced directory name is correct
         self.assertThat(
-            self._get_file_by_name(self.unzipped_dir_name).text,
-            Eventually(Equals(self.unzipped_dir_name)))
+            self._get_file_by_name(self.extracted_dir_name).text,
+            Eventually(Equals(self.extracted_dir_name)))
 
         # Verify that the extraced text file name is a text file
         self._open_directory(self._get_file_by_name(
-            self.unzipped_dir_name))
+            self.extracted_dir_name))
         self.assertThat(
-            self._get_file_by_name(self.unzipped_text_file_name).text,
-            Eventually(Equals(self.unzipped_text_file_name)))
+            self._get_file_by_name(self.extracted_text_file_name).text,
+            Eventually(Equals(self.extracted_text_file_name)))
 
         self.assertThat(
-            mimetypes.guess_type(self.unzipped_text_file_name)[0],
+            mimetypes.guess_type(self.extracted_text_file_name)[0],
             Equals('text/plain'))
 
         # Verify that the extraced image directory name is correct
         self.assertThat(
-            self._get_file_by_name(self.unzipped_image_dir_name).text,
-            Eventually(Equals(self.unzipped_image_dir_name)))
+            self._get_file_by_name(self.extracted_image_dir_name).text,
+            Eventually(Equals(self.extracted_image_dir_name)))
 
         # Verify that the extraced image file name is an image
         self._open_directory(self._get_file_by_name(
-            self.unzipped_image_dir_name))
+            self.extracted_image_dir_name))
         self.assertThat(
-            self._get_file_by_name(self.unzipped_image_name).text,
-            Eventually(Equals(self.unzipped_image_name)))
+            self._get_file_by_name(self.extracted_image_name).text,
+            Eventually(Equals(self.extracted_image_name)))
 
         self.assertThat(
-            mimetypes.guess_type(self.unzipped_image_name)[0],
+            mimetypes.guess_type(self.extracted_image_name)[0],
             Equals('image/jpeg'))
 
-    def test_cancel_extract_zip_file(self):
-        """Test that cancels opening a zip file from content directory."""
-        file_to_unzip = 'Test.zip'
+    def test_cancel_extract_archive_file(self):
+        """Test that cancels opening an archive file from content directory."""
         self._create_file()
 
         self.app.main_view.go_to_place('placePath', self.file_to_extract)
