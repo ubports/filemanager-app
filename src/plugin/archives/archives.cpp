@@ -21,13 +21,27 @@
 
 void Archives::extractZip(const QString path, const QString destination)
 {
-    if (_process != nullptr && _process->state() == QProcess::ProcessState::Running) {
-        return; // Do not allow two extractions running in parallel. Due to the way this is used in QML parallelization is not needed.
-    }
-
     QString program = "unzip"; // This programm is available in the images as it is one of the dependencies of the ubuntu-download-manager package.
     QStringList arguments;
     arguments << path << "-d" << destination;
+
+    extractArchive(program, arguments);
+}
+
+void Archives::extractTar(const QString path, const QString destination)
+{
+    QString program = "tar";
+    QStringList arguments;
+    arguments << "xf" << path << "-C" << destination;
+
+    extractArchive(program, arguments);
+}
+
+void Archives::extractArchive(const QString program, const QStringList arguments)
+{
+    if (_process != nullptr && _process->state() == QProcess::ProcessState::Running) {
+        return; // Do not allow two extractions running in parallel. Due to the way this is used in QML parallelization is not needed.
+    }
 
     _process = new QProcess(this);
 
@@ -44,14 +58,16 @@ void Archives::extractZip(const QString path, const QString destination)
 
 void Archives::_onError(QProcess::ProcessError error)
 {
+    qDebug() << "Extraction failed (1) with the following error:" << _process->readAllStandardError();
     emit finished(false, error);
 }
 
 void Archives::_onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    if ((exitStatus == QProcess::NormalExit || exitCode == 0) && _process->readAllStandardError().isEmpty()) {
+    if ((exitStatus == QProcess::NormalExit || exitCode == 0) && _process->readAllStandardError().trimmed().isEmpty()) {
         emit finished(true, -1);
     } else {
+        qDebug() << "Extraction failed (2) with the following error:" << _process->readAllStandardError();
         emit finished(false, -1);
     }
 }
