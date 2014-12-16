@@ -25,7 +25,7 @@ class PlacesTestCase(FileManagerTestCase):
 
     def test_go_home_must_open_the_home_directory(self):
         """Test that opens the Home bookmark from the places section."""
-        self.app.main_view.go_to_place('placeHome')
+        self.app.main_view.go_to_place('placeHome', None)
 
         folder_list_page = self.app.main_view.get_folder_list_page()
         self.assertThat(
@@ -34,7 +34,7 @@ class PlacesTestCase(FileManagerTestCase):
 
     def test_go_to_root_must_open_the_root_directory(self):
         """Test that opens the Device bookmark from the places section."""
-        self.app.main_view.go_to_place('placeDevice')
+        self.app.main_view.go_to_place('placeDevice', None)
 
         folder_list_page = self.app.main_view.get_folder_list_page()
         self.assertThat(
