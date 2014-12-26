@@ -1,6 +1,6 @@
 {
     "description": "File Manager application",
-    "framework": "ubuntu-sdk-14.10-dev2",
+    "framework": "ubuntu-sdk-14.10",
     "_comment": "Do not change this. Architecture is automatically replaced by cmake",
     "architecture": "@CLICK_ARCH@",
     "hooks": {
