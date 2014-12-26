@@ -29,9 +29,11 @@ class Archives : public QObject
 public:
     Q_INVOKABLE void extractZip(const QString path, const QString destination);
     Q_INVOKABLE void extractTar(const QString path, const QString destination);
+    Q_INVOKABLE void cancelArchiveExtraction();
 
 signals:
     void finished(bool success, int errorCode);
+    void killProcess();
 
 private slots:
     void _onError(QProcess::ProcessError error);

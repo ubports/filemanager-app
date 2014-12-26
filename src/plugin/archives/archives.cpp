@@ -52,8 +52,16 @@ void Archives::extractArchive(const QString program, const QStringList arguments
     connect(_process,
             static_cast<void(QProcess::*)(QProcess::ProcessError)>
             (&QProcess::error), this, &Archives::_onError);
+    connect(this, &Archives::killProcess,
+            _process, &QProcess::kill);
 
     _process->start(program, arguments);
+}
+
+void Archives::cancelArchiveExtraction()
+{
+    qDebug() << "Cancelling archive extraction";
+    emit killProcess();
 }
 
 void Archives::_onError(QProcess::ProcessError error)
