@@ -642,7 +642,16 @@ PageWithBottomEdge {
             }
 
             Button {
-                id: button
+                id: cancelButton
+                text: i18n.tr("Cancel")
+                visible: true
+                onClicked: {
+                    archives.cancelArchiveExtraction()
+                }
+            }
+
+            Button {
+                id: okButton
                 text: i18n.tr("OK")
                 visible: false
                 onClicked: {
@@ -657,9 +666,10 @@ PageWithBottomEdge {
                         PopupUtils.close(dialog)
                     } else {
                         row.visible = false
+                        cancelButton.visible = false
                         title = i18n.tr("Extracting failed")
                         text = qsTr(i18n.tr("Extracting the archive '%1' failed.")).arg(fileName)
-                        button.visible = true
+                        okButton.visible = true
                     }
                 }
             }
