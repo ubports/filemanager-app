@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Authored by: Arto Jalkanen <ajalkane@gmail.com>
+ *              Niklas Wenzel <nikwen.developer@gmail.com>
  */
 import QtQuick 2.3
 import Ubuntu.Components 1.1
@@ -370,6 +371,18 @@ PageWithBottomEdge {
         visible: viewMethod === i18n.tr("List")
     }
 
+    function getArchiveType(fileName) {
+        var splitName = fileName.split(".")
+        var fileExtension = splitName[splitName.length - 1]
+        if (fileExtension === "zip") {
+            return "zip"
+        } else if (fileExtension === "tar") {
+            return "tar"
+        } else {
+            return ""
+        }
+    }
+
     Item {
         id: contents
 
@@ -459,34 +472,7 @@ PageWithBottomEdge {
             text: i18n.tr("Are you sure you want to extract '%1' here?").arg(fileName)
 
             onAccepted: {
-                console.log("Extract accepted for filePath, fileName", filePath, fileName)
-                PopupUtils.open(extractingDialog, mainView, { "fileName" : fileName })
-                console.log("Extracting...")
-
-                var parentDirectory = filePath.substring(0, filePath.lastIndexOf("/"))
-                var fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf("."))
-                var extractDirectory = parentDirectory + "/" + fileNameWithoutExtension
-
-                // Add numbers if the directory already exist: myfile, myfile-1, myfile-2, etc.
-                while (pageModel.existsDir(extractDirectory)) {
-                    var i = 0
-                    while ("1234567890".indexOf(extractDirectory.charAt(extractDirectory.length - i - 1)) !== -1) {
-                        i++
-                    }
-                    if (i === 0 || extractDirectory.charAt(extractDirectory.length - i - 1) !== "-") {
-                        extractDirectory += "-1"
-                    } else {
-                        extractDirectory = extractDirectory.substring(0, extractDirectory.lastIndexOf("-") + 1) + (parseInt(extractDirectory.substring(extractDirectory.length - i)) + 1)
-                    }
-                }
-
-                pageModel.mkdir(extractDirectory) // This is needed for the tar command as the given destination has to be an already existing directory
-
-                if (archiveType === "zip") {
-                    archives.extractZip(filePath, extractDirectory)
-                } else if (archiveType === "tar") {
-                    archives.extractTar(filePath, extractDirectory)
-                }
+                extractArchive(filePath, fileName, archiveType)
             }
         }
     }
@@ -510,15 +496,7 @@ PageWithBottomEdge {
             property string archiveType: ""
 
             Component.onCompleted: {
-                var splitName = actionSelectionPopover.model.fileName.split(".")
-                var fileExtension = splitName[splitName.length - 1]
-                if (fileExtension === "zip") {
-                    archiveType = "zip"
-                } else if (fileExtension === "tar") {
-                    archiveType = "tar"
-                } else {
-                    archiveType = ""
-                }
+                archiveType = getArchiveType(actionSelectionPopover.model.fileName)
             }
 
             delegate: Empty { // NOTE: This is a workaround for LP: #1395118 and should be removed as soon as the patch for upstream gets released (https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1395118)
@@ -688,6 +666,49 @@ PageWithBottomEdge {
         }
     }
 
+    Component {
+        id: openArchiveDialog
+
+        Dialog {
+            id: dialog
+            modal: true
+            title: i18n.tr("Archive file")
+            text: i18n.tr("Do you want to extract the archive here?")
+            property string filePath
+            property string fileName
+            property string archiveType
+
+            Button {
+                id: extractButton
+                text: i18n.tr("Extract archive")
+                color: UbuntuColors.green
+                onClicked: {
+                    PopupUtils.close(dialog)
+                    extractArchive(filePath, fileName, archiveType)
+                }
+            }
+
+            Button {
+                id: openExternallyButton
+                text: i18n.tr("Open with another app")
+                color: UbuntuColors.red
+                onClicked: {
+                    PopupUtils.close(dialog)
+                    openFile(filePath)
+                }
+            }
+
+            Button {
+                id: cancelButton
+                text: i18n.tr("Cancel")
+                color: UbuntuColors.lightGrey
+                onClicked: {
+                    PopupUtils.close(dialog)
+                }
+            }
+        }
+    }
+
     function goTo(location) {
         // This allows us to enter "~" as a shortcut to the home folder
         // when entering a location on the Go To dialog
@@ -847,7 +868,18 @@ PageWithBottomEdge {
                                         false,
                                         true);
             } else {
-                openFile(model.filePath)
+                // Check if file is an archive. If yes, ask the user whether he wants to extract it
+                var archiveType = getArchiveType(model.fileName)
+                if (archiveType === "") {
+                    openFile(model.filePath)
+                } else {
+                    PopupUtils.open(openArchiveDialog, folderListView,
+                                    { "filePath" : model.filePath,
+                                        "fileName" : model.fileName,
+                                        "archiveType" : archiveType
+                                    })
+                }
+
             }
             //            PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
             //                            {
@@ -873,6 +905,37 @@ PageWithBottomEdge {
         }
 
         return false;
+    }
+
+    function extractArchive(filePath, fileName, archiveType) {
+        console.log("Extract accepted for filePath, fileName", filePath, fileName)
+        PopupUtils.open(extractingDialog, mainView, { "fileName" : fileName })
+        console.log("Extracting...")
+
+        var parentDirectory = filePath.substring(0, filePath.lastIndexOf("/"))
+        var fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf("."))
+        var extractDirectory = parentDirectory + "/" + fileNameWithoutExtension
+
+        // Add numbers if the directory already exist: myfile, myfile-1, myfile-2, etc.
+        while (pageModel.existsDir(extractDirectory)) {
+            var i = 0
+            while ("1234567890".indexOf(extractDirectory.charAt(extractDirectory.length - i - 1)) !== -1) {
+                i++
+            }
+            if (i === 0 || extractDirectory.charAt(extractDirectory.length - i - 1) !== "-") {
+                extractDirectory += "-1"
+            } else {
+                extractDirectory = extractDirectory.substring(0, extractDirectory.lastIndexOf("-") + 1) + (parseInt(extractDirectory.substring(extractDirectory.length - i)) + 1)
+            }
+        }
+
+        pageModel.mkdir(extractDirectory) // This is needed for the tar command as the given destination has to be an already existing directory
+
+        if (archiveType === "zip") {
+            archives.extractZip(filePath, extractDirectory)
+        } else if (archiveType === "tar") {
+            archives.extractTar(filePath, extractDirectory)
+        }
     }
 
     Component.onCompleted: {
