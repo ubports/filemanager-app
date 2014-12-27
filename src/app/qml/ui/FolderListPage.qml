@@ -856,7 +856,7 @@ PageWithBottomEdge {
             PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), mainView);
             return true;
         } else if (key === Qt.Key_Backspace) {
-            goBack()
+            goUp()
         }
 
         return false;
