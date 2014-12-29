@@ -425,7 +425,7 @@ void FileSystemAction::processActionEntry()
     else
     {
         //Needed to set m_busy to false. Otherwise, further actions will never be executed.
-        scheduleSlot(SLOT(processAction()));
+        endActionEntry();
     }
 }
 
