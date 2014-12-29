@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-29 12:26+0100\n"
+"POT-Creation-Date: 2014-12-15 21:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgid "%1 (%2 files)"
 msgstr ""
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
-#: ../src/app/qml/ui/FolderListPage.qml:790
+#: ../src/app/qml/ui/FolderListPage.qml:769
 msgid "Device"
 msgstr ""
 
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Open with"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:104
+#: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:103
 #: ../src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
 msgstr ""
@@ -53,12 +53,12 @@ msgstr ""
 msgid "Change app settings"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:355
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:354
 #: ../src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:371
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:370
 #: ../src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr ""
@@ -87,8 +87,7 @@ msgstr ""
 #: ../src/app/qml/ui/ConfirmDialogWithInput.qml:57
 #: ../src/app/qml/ui/FileActionDialog.qml:45
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../src/app/qml/ui/FolderListPage.qml:333
-#: ../src/app/qml/ui/FolderListPage.qml:703
+#: ../src/app/qml/ui/FolderListPage.qml:332
 #: ../src/app/qml/ui/GoToDialog.qml:67
 msgid "Cancel"
 msgstr ""
@@ -150,195 +149,182 @@ msgstr ""
 msgid "File operation"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:54
+#: ../src/app/qml/ui/FolderListPage.qml:53
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:58
+#: ../src/app/qml/ui/FolderListPage.qml:57
 msgid "Paste files"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:66
+#: ../src/app/qml/ui/FolderListPage.qml:65
 msgid "Clear clipboard"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:76
-#: ../src/app/qml/ui/FolderListPage.qml:94
-#: ../src/app/qml/ui/FolderListPage.qml:583
+#: ../src/app/qml/ui/FolderListPage.qml:75
+#: ../src/app/qml/ui/FolderListPage.qml:93
+#: ../src/app/qml/ui/FolderListPage.qml:605
 msgid "Properties"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:85
+#: ../src/app/qml/ui/FolderListPage.qml:84
 msgid "New Folder"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:112
+#: ../src/app/qml/ui/FolderListPage.qml:111
 msgid "Go To"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:119
+#: ../src/app/qml/ui/FolderListPage.qml:118
 msgid "Unlock full access"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:133
+#: ../src/app/qml/ui/FolderListPage.qml:132
 msgid "Authentication failed"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:205
+#: ../src/app/qml/ui/FolderListPage.qml:204
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:230
+#: ../src/app/qml/ui/FolderListPage.qml:229
 msgid "Open in a new tab"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:238
+#: ../src/app/qml/ui/FolderListPage.qml:237
 msgid "Close this tab"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:251
+#: ../src/app/qml/ui/FolderListPage.qml:250
 msgid "Create folder"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:252
+#: ../src/app/qml/ui/FolderListPage.qml:251
 msgid "Enter name for new folder"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:268
+#: ../src/app/qml/ui/FolderListPage.qml:267
 msgid "Create file"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:269
+#: ../src/app/qml/ui/FolderListPage.qml:268
 msgid "Enter name for new file"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:318
+#: ../src/app/qml/ui/FolderListPage.qml:317
 msgid "Select"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:398
+#: ../src/app/qml/ui/FolderListPage.qml:385
 msgid "No files"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:418
-#: ../src/app/qml/ui/FolderListPage.qml:544
+#: ../src/app/qml/ui/FolderListPage.qml:405
+#: ../src/app/qml/ui/FolderListPage.qml:566
 msgid "Delete"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:419
+#: ../src/app/qml/ui/FolderListPage.qml:406
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:424
+#: ../src/app/qml/ui/FolderListPage.qml:411
 msgid "Deleting files"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:442
-#: ../src/app/qml/ui/FolderListPage.qml:557
+#: ../src/app/qml/ui/FolderListPage.qml:429
+#: ../src/app/qml/ui/FolderListPage.qml:579
 msgid "Rename"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:443
+#: ../src/app/qml/ui/FolderListPage.qml:430
 msgid "Enter a new name"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:452
+#: ../src/app/qml/ui/FolderListPage.qml:439
 msgid "Could not rename"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:453
+#: ../src/app/qml/ui/FolderListPage.qml:440
 msgid "Insufficient permissions or name already exists?"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:471
+#: ../src/app/qml/ui/FolderListPage.qml:458
 msgid "Extract Archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:472
+#: ../src/app/qml/ui/FolderListPage.qml:459
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:521
+#: ../src/app/qml/ui/FolderListPage.qml:543
 msgid "Cut"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:532
+#: ../src/app/qml/ui/FolderListPage.qml:554
 msgid "Copy"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:572
-#: ../src/app/qml/ui/FolderListPage.qml:683
+#: ../src/app/qml/ui/FolderListPage.qml:594
 msgid "Extract archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:603
+#: ../src/app/qml/ui/FolderListPage.qml:625
 msgid "File operation error"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:634
+#: ../src/app/qml/ui/FolderListPage.qml:656
 #, qt-format
 msgid "Extracting archive '%1'"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:646
+#: ../src/app/qml/ui/FolderListPage.qml:668
 msgid "OK"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:660
+#: ../src/app/qml/ui/FolderListPage.qml:682
 msgid "Extracting failed"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:661
+#: ../src/app/qml/ui/FolderListPage.qml:683
 #, qt-format
 msgid "Extracting the archive '%1' failed."
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:675
-msgid "Archive file"
-msgstr ""
-
-#: ../src/app/qml/ui/FolderListPage.qml:676
-msgid "Do you want to extract the archive here?"
-msgstr ""
-
-#: ../src/app/qml/ui/FolderListPage.qml:693
-msgid "Open with another app"
-msgstr ""
-
-#: ../src/app/qml/ui/FolderListPage.qml:761
+#: ../src/app/qml/ui/FolderListPage.qml:740
 msgid "~/Desktop"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:771
+#: ../src/app/qml/ui/FolderListPage.qml:750
 msgid "~/Public"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:773
+#: ../src/app/qml/ui/FolderListPage.qml:752
 msgid "~/Programs"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:775
+#: ../src/app/qml/ui/FolderListPage.qml:754
 msgid "~/Templates"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:788
+#: ../src/app/qml/ui/FolderListPage.qml:767
 msgid "Home"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:858
+#: ../src/app/qml/ui/FolderListPage.qml:837
 msgid "Folder not accessible"
 msgstr ""
 
 #. TRANSLATORS: this refers to a folder name
-#: ../src/app/qml/ui/FolderListPage.qml:860
+#: ../src/app/qml/ui/FolderListPage.qml:839
 #, qt-format
 msgid "Can not access %1"
 msgstr ""
@@ -429,84 +415,84 @@ msgstr ""
 msgid " does not exist"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:590
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:585
 msgid "Could not remove the item "
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:631
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:626
 msgid "Could not find a suitable name to backup"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:685
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:680
 msgid "Could not create the directory"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:694
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:689
 msgid "Could not create link to"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:706
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:701
 msgid "Could not set permissions to dir"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:720
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:715
 msgid "Could not open file"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:739
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:734
 msgid "There is no space on disk to copy"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:749
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:744
 msgid "Could not create file"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:813
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:808
 msgid "Could not remove the directory/file "
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:829
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:824
 msgid "Could not move the directory/file "
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:863
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:858
 msgid "Cannot copy items"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:864
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:859
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:878
 msgid "no write permission on folder "
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:882
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:877
 msgid "Cannot move items"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:888
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
 msgid "origin and destination folders are the same"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1104
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1099
 msgid "Write error in "
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1120
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1115
 msgid "Read error in "
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1354
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1349
 msgid " Copy"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1410
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1405
 msgid "Set permissions error in "
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1494
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1489
 msgid "Could not create trash info file"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1507
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1502
 msgid "Could not remove the trash info file"
 msgstr ""
 
