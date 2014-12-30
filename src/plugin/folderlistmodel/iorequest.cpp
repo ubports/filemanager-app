@@ -112,21 +112,14 @@ DirItemInfoList IORequestLoader::add(const QString &pathName,
 {
     QDir tmpDir = QDir(pathName, QString(), QDir::NoSort, filter);
     QDirIterator it(tmpDir);
-    while (it.hasNext()) {
+    while (it.hasNext())
+    {
         it.next();
-
         if(it.fileInfo().isDir() && isRecursive) {
             directoryContents = add(it.fileInfo().filePath(),
                                     filter, isRecursive, directoryContents);
         } else {
             directoryContents.append(DirItemInfo(it.fileInfo()));
-        }
-
-        if (directoryContents.count() >= 50) {
-            emit itemsAdded(directoryContents);
-
-            // clear() would force a deallocation, micro-optimization
-            directoryContents.erase(directoryContents.begin(), directoryContents.end());
         }
     }
     return directoryContents;
