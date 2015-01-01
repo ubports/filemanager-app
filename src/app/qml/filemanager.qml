@@ -68,6 +68,11 @@ MainView {
 
     PlacesModel {
        id: userplaces
+       // By default, the model only contains the
+       // user directories. Add the file system location too
+       Component.onCompleted: {
+           addLocation("/");
+       }
     }
 
     PamAuthentication {

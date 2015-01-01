@@ -27,7 +27,6 @@
 PlacesModel::PlacesModel(QAbstractListModel *parent) :
     QAbstractListModel(parent)
 {
-
     QStringList defaultLocations;
     // Set the storage location to a path that works well
     // with app isolation
@@ -55,10 +54,90 @@ PlacesModel::PlacesModel(QAbstractListModel *parent) :
         qDebug() << "Location: " << location;
     }
 
+    initNewUserMountsWatcher();
+    rescanUserMountDirectories();
 }
 
 PlacesModel::~PlacesModel() {
 
+}
+
+void
+PlacesModel::initNewUserMountsWatcher() {
+    m_scanMountDirsTimer = new QTimer(this);
+    m_scanMountDirsTimer->setSingleShot(true);
+    m_scanMountDirsTimer->setInterval(500); // 0.5 secs
+
+    m_newUserMountsWatcher = new QFileSystemWatcher(this);
+
+    QString user = qgetenv("USER");
+    QString watchPath = "/media/" + user;
+    qDebug() << Q_FUNC_INFO << "Start watching path for new mounts" << watchPath;
+
+    m_newUserMountsWatcher->addPath(watchPath);
+
+    connect(m_newUserMountsWatcher, &QFileSystemWatcher::directoryChanged, this, &PlacesModel::userMountsChanged);
+    connect(m_scanMountDirsTimer, &QTimer::timeout, this, &PlacesModel::rescanUserMountDirectories);
+//    connect(m_newUserMountsWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(userMountsChanged()));
+//    connect(m_scanMountDirsTimer, SIGNAL(timeout()), this, SLOT(rescanUserMountDirectories()));
+}
+
+void
+PlacesModel::userMountsChanged() {
+    qDebug() << Q_FUNC_INFO;
+    if (!m_scanMountDirsTimer->isActive()) {
+        qDebug() << Q_FUNC_INFO << "starting mount dirs scanner timer";
+        m_scanMountDirsTimer->start();
+    } else {
+        qDebug() << Q_FUNC_INFO << "mount dirs timer scanner already running, not sarting timer";
+    }
+}
+
+void
+PlacesModel::rescanUserMountDirectories() {
+    QStringList dirs = m_newUserMountsWatcher->directories();
+    foreach (QString dir, dirs) {
+        rescanUserMountDirectory(dir);
+    }
+}
+
+void
+PlacesModel::rescanUserMountDirectory(const QString &dirStr) {
+    qDebug() << Q_FUNC_INFO << "rescanning" << dirStr;
+
+    QDir userDir(dirStr, QString(), QDir::SortFlags(QDir::Name | QDir::IgnoreCase), QDir::AllDirs | QDir::NoDotAndDotDot);
+
+    QSet<QString> userMounts;
+
+    foreach (QString entry, userDir.entryList()) {
+        qDebug() << Q_FUNC_INFO << "entry: " << entry;
+        QFileInfo fi(userDir, entry);
+
+        qDebug() << Q_FUNC_INFO << "absoluteFilePath: " << fi.absoluteFilePath();
+
+        userMounts << fi.absoluteFilePath();
+    }
+
+
+    QSet<QString> addedMounts = QSet<QString>(userMounts).subtract(m_userMounts);
+    QSet<QString> removedMounts = QSet<QString>(m_userMounts).subtract(userMounts);
+
+    foreach (QString addedMount, addedMounts) {
+        qDebug() << Q_FUNC_INFO << "user mount added: " << addedMount;
+        addLocationWithoutStoring(addedMount);
+        emit userMountAdded(addedMount);
+    }
+
+    foreach (QString removedMount, removedMounts) {
+        qDebug() << Q_FUNC_INFO << "user mount removed: " << removedMount;
+        int index = m_locations.indexOf(removedMount);
+        if (index > -1) {
+            removeItemWithoutStoring(index);
+        }
+        emit userMountRemoved(removedMount);
+    }
+
+    m_userMounts = userMounts;
 }
 
 QString PlacesModel::standardLocation(QStandardPaths::StandardLocation location) const
@@ -132,6 +211,14 @@ QHash<int, QByteArray> PlacesModel::roleNames() const
 
 void PlacesModel::removeItem(int indexToRemove)
 {
+    removeItemWithoutStoring(indexToRemove);
+
+    // Remove the location permanently
+    m_settings->setValue("storedLocations", m_locations);
+}
+
+void PlacesModel::removeItemWithoutStoring(int indexToRemove)
+{
 
     // Tell Qt that we're going to be changing the model
     // There's no tree-parent, first new item will be at
@@ -145,12 +232,17 @@ void PlacesModel::removeItem(int indexToRemove)
     // it can update the UI and everything else to reflect
     // the new state
     endRemoveRows();
-
-    // Remove the location permanently
-    m_settings->setValue("storedLocations", m_locations);
 }
 
 void PlacesModel::addLocation(const QString &location)
+{
+    if (addLocationWithoutStoring(location)) {
+        // Store the location permanently
+        m_settings->setValue("storedLocations", m_locations);
+    }
+}
+
+bool PlacesModel::addLocationWithoutStoring(const QString &location)
 {
     // Do not allow for duplicates
     if (!m_locations.contains(location)) {
@@ -167,8 +259,7 @@ void PlacesModel::addLocation(const QString &location)
         // it can update the UI and everything else to reflect
         // the new state
         endInsertRows();
-
-        // Store the location permanently
-        m_settings->setValue("storedLocations", m_locations);
+        return true;
     }
+    return false;
 }

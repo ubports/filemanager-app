@@ -23,6 +23,9 @@
 #include <QAbstractListModel>
 #include <QStandardPaths>
 #include <QSettings>
+#include <QFileSystemWatcher>
+#include <QTimer>
+#include <QSet>
 
 class PlacesModel : public QAbstractListModel
 {
@@ -48,14 +51,35 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
 
+signals:
+    void userMountAdded(const QString &path);
+    void userMountRemoved(const QString &paht);
+
 public slots:
     void addLocation(const QString &location);
     void removeItem(int indexToRemove);
+    inline bool isUserMountDirectory(const QString location) {
+        return m_userMounts.contains(location);
+    }
+
+private slots:
+    void userMountsChanged();
+    void rescanUserMountDirectories();
 
 private:
+    void initNewUserMountsWatcher();
+    void rescanUserMountDirectory(const QString &dirStr);
+    // Returns true if location was not known before, and false if it was known
+    bool addLocationWithoutStoring(const QString &location);
+    // Returns true if location was not known before, and false if it was known
+    void removeItemWithoutStoring(int itemToRemove);
+
     QString standardLocation(QStandardPaths::StandardLocation location) const;
+    QTimer *m_scanMountDirsTimer;
     QStringList m_locations;
     QSettings *m_settings;
+    QFileSystemWatcher *m_newUserMountsWatcher;
+    QSet<QString> m_userMounts;
 };
 
 #endif // PLACESMODEL_H
