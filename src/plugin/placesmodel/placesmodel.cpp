@@ -28,8 +28,6 @@
 PlacesModel::PlacesModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    m_userMountPath = "/media/" + qgetenv("USER") + "/";
-
     QStringList defaultLocations;
     // Set the storage location to a path that works well
     // with app isolation

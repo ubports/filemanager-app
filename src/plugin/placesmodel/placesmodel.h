@@ -76,7 +76,6 @@ private:
     // Returns true if location was not known before, and false if it was known
     void removeItemWithoutStoring(int itemToRemove);
 
-    QString m_userMountPath;
     QMtabParser m_mtabParser;
     QString standardLocation(QStandardPaths::StandardLocation location) const;
     QStringList m_locations;
