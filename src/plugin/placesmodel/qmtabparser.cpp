@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author : Arto Jalkanen <ajalkane@gmail.com>
+ *          Carlos J Mazieri <carlos.mazieri@gmail.com>
  */
 
 #include <qmtabparser.h>
