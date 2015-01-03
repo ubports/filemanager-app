@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author : David Planella <david.planella@ubuntu.com>
+ *          Arto Jalkanen <arto.jalkanen@gmail.com>
  */
 
 #ifndef PLACESMODEL_H
@@ -26,6 +27,8 @@
 #include <QFileSystemWatcher>
 #include <QTimer>
 #include <QSet>
+
+#include "qmtabparser.h"
 
 class PlacesModel : public QAbstractListModel
 {
@@ -63,19 +66,19 @@ public slots:
     }
 
 private slots:
-    void userMountsChanged();
-    void rescanUserMountDirectories();
+    void mtabChanged(const QString &path);
+    void rescanMtab();
 
 private:
     void initNewUserMountsWatcher();
-    void rescanUserMountDirectory(const QString &dirStr);
     // Returns true if location was not known before, and false if it was known
     bool addLocationWithoutStoring(const QString &location);
     // Returns true if location was not known before, and false if it was known
     void removeItemWithoutStoring(int itemToRemove);
 
+    QString m_userMountPath;
+    QMtabParser m_mtabParser;
     QString standardLocation(QStandardPaths::StandardLocation location) const;
-    QTimer *m_scanMountDirsTimer;
     QStringList m_locations;
     QSettings *m_settings;
     QFileSystemWatcher *m_newUserMountsWatcher;

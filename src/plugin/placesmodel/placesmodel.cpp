@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author : David Planella <david.planella@ubuntu.com>
+ *          Arto Jalkanen <ajalkane@gmail.com>
  */
 
 #include "placesmodel.h"
@@ -27,6 +28,8 @@
 PlacesModel::PlacesModel(QAbstractListModel *parent) :
     QAbstractListModel(parent)
 {
+    m_userMountPath = "/media/" + qgetenv("USER") + "/";
+
     QStringList defaultLocations;
     // Set the storage location to a path that works well
     // with app isolation
@@ -55,7 +58,7 @@ PlacesModel::PlacesModel(QAbstractListModel *parent) :
     }
 
     initNewUserMountsWatcher();
-    rescanUserMountDirectories();
+    rescanMtab();
 }
 
 PlacesModel::~PlacesModel() {
@@ -64,63 +67,45 @@ PlacesModel::~PlacesModel() {
 
 void
 PlacesModel::initNewUserMountsWatcher() {
-    m_scanMountDirsTimer = new QTimer(this);
-    m_scanMountDirsTimer->setSingleShot(true);
-    m_scanMountDirsTimer->setInterval(500); // 0.5 secs
-
     m_newUserMountsWatcher = new QFileSystemWatcher(this);
 
-    QString user = qgetenv("USER");
-    QString watchPath = "/media/" + user;
-    qDebug() << Q_FUNC_INFO << "Start watching path for new mounts" << watchPath;
+    qDebug() << Q_FUNC_INFO << "Start watching mtab file for new mounts" << m_mtabParser.path();
 
-    m_newUserMountsWatcher->addPath(watchPath);
+    m_newUserMountsWatcher->addPath(m_mtabParser.path());
 
-    connect(m_newUserMountsWatcher, &QFileSystemWatcher::directoryChanged, this, &PlacesModel::userMountsChanged);
-    connect(m_scanMountDirsTimer, &QTimer::timeout, this, &PlacesModel::rescanUserMountDirectories);
-//    connect(m_newUserMountsWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(userMountsChanged()));
-//    connect(m_scanMountDirsTimer, SIGNAL(timeout()), this, SLOT(rescanUserMountDirectories()));
+    connect(m_newUserMountsWatcher, &QFileSystemWatcher::fileChanged, this, &PlacesModel::mtabChanged);
 }
 
 void
-PlacesModel::userMountsChanged() {
-    qDebug() << Q_FUNC_INFO;
-    if (!m_scanMountDirsTimer->isActive()) {
-        qDebug() << Q_FUNC_INFO << "starting mount dirs scanner timer";
-        m_scanMountDirsTimer->start();
-    } else {
-        qDebug() << Q_FUNC_INFO << "mount dirs timer scanner already running, not sarting timer";
-    }
+PlacesModel::mtabChanged(const QString &path) {
+    qDebug() << Q_FUNC_INFO << "file changed in " << path;
+    rescanMtab();
+    // Since old mtab file is replaced with new contents, must readd filesystem watcher
+    m_newUserMountsWatcher->removePath(path);
+    m_newUserMountsWatcher->addPath(path);
 }
 
 void
-PlacesModel::rescanUserMountDirectories() {
-    QStringList dirs = m_newUserMountsWatcher->directories();
-    foreach (QString dir, dirs) {
-        rescanUserMountDirectory(dir);
-    }
-}
+PlacesModel::rescanMtab() {
+    const QString& path = m_mtabParser.path();
+    qDebug() << Q_FUNC_INFO << "rescanning mtab" << path;
 
-void
-PlacesModel::rescanUserMountDirectory(const QString &dirStr) {
-    qDebug() << Q_FUNC_INFO << "rescanning" << dirStr;
-
-    QDir userDir(dirStr, QString(), QDir::SortFlags(QDir::Name | QDir::IgnoreCase), QDir::AllDirs | QDir::NoDotAndDotDot);
+    QList<QMtabEntry> entries = m_mtabParser.parseEntries();
 
     QSet<QString> userMounts;
 
-    foreach (QString entry, userDir.entryList()) {
-        qDebug() << Q_FUNC_INFO << "entry: " << entry;
-        QFileInfo fi(userDir, entry);
-
-        qDebug() << Q_FUNC_INFO << "absoluteFilePath: " << fi.absoluteFilePath();
-
-        userMounts << fi.absoluteFilePath();
+    foreach (QMtabEntry e, entries) {
+        qDebug() << Q_FUNC_INFO << "Considering" << e.dir;
+        if (e.dir.startsWith(m_userMountPath)) {
+            qDebug() << Q_FUNC_INFO << "Adding as userMount directory" << e.dir;
+            userMounts << e.dir;
+        }
     }
-
 
     QSet<QString> addedMounts = QSet<QString>(userMounts).subtract(m_userMounts);
     QSet<QString> removedMounts = QSet<QString>(m_userMounts).subtract(userMounts);
+
+    m_userMounts = userMounts;
 
     foreach (QString addedMount, addedMounts) {
         qDebug() << Q_FUNC_INFO << "user mount added: " << addedMount;
@@ -136,8 +121,6 @@ PlacesModel::rescanUserMountDirectory(const QString &dirStr) {
         }
         emit userMountRemoved(removedMount);
     }
-
-    m_userMounts = userMounts;
 }
 
 QString PlacesModel::standardLocation(QStandardPaths::StandardLocation location) const
