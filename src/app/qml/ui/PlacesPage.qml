@@ -20,7 +20,6 @@ import Ubuntu.Components 1.1
 import Ubuntu.Components.Popups 1.0
 import Ubuntu.Components.ListItems 1.0
 import org.nemomobile.folderlistmodel 1.0
-import com.ubuntu.PlacesModel 0.1
 
 Page {
     id: root
@@ -88,8 +87,7 @@ Page {
             Repeater {
                 id: placesList
                 objectName: "placesList"
-
-                model: PlacesModel {}
+                model: userplaces
 
                 delegate: Standard {
                     objectName: "place" + folderDisplayName(path).replace(/ /g,'')

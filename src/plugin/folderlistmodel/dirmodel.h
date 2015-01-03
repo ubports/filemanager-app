@@ -35,6 +35,7 @@
 
 #include <QStringList>
 #include <QDir>
+#include <QSet>
 
 #include "iorequest.h"
 #include "filecompare.h"
@@ -179,8 +180,8 @@ public:
     Q_PROPERTY(bool showHiddenFiles READ getShowHiddenFiles WRITE setShowHiddenFiles NOTIFY showHiddenFilesChanged)
     bool getShowHiddenFiles() const;
 
-    Q_PROPERTY(bool onlyMTPPaths READ getOnlyMTPPaths WRITE setOnlyMTPPaths NOTIFY onlyMTPPathsChanged)
-    bool getOnlyMTPPaths() const;
+    Q_PROPERTY(bool onlyAllowedPaths READ getOnlyAllowedPaths WRITE setOnlyAllowedPaths NOTIFY onlyAllowedPathsChanged)
+    bool getOnlyAllowedPaths() const;
 
     Q_ENUMS(SortBy)
     enum SortBy
@@ -389,9 +390,9 @@ public slots:
     void setShowDirectories(bool showDirectories);
     void setShowHiddenFiles(bool show);
     /*!
-     * \brief if set to true then only MTP paths are shown or be modified
+     * \brief if set to true then only Allowed paths are shown or be modified
      */
-    void setOnlyMTPPaths(bool onlyMTPPaths);
+    void setOnlyAllowedPaths(bool onlyAllowedPaths);
     void setSortBy(SortBy field);
     void setSortOrder(SortOrder order);
     void setEnabledExternalFSWatcher(bool enable);
@@ -401,6 +402,17 @@ public slots:
     void toggleShowHiddenFiles();
     void toggleSortOrder();
     void toggleSortBy();
+
+    /*!
+     * \brief Adds a directory to the set of directories that are accessible when "onlyAllowedPaths" property is set.
+     */
+    inline void addAllowedDirectory(const QString &allowedDirAbsolutePath) {
+        m_allowedDirs << allowedDirAbsolutePath;
+    }
+
+    inline void removeAllowedDirectory(const QString &allowedDirAbsolutePath) {
+        m_allowedDirs.remove(allowedDirAbsolutePath);
+    }
 
 signals:
     /*!
@@ -423,7 +435,7 @@ signals:
     void     progress(int curItem, int totalItems, int percent);
 
     void     showHiddenFilesChanged();
-    void     onlyMTPPathsChanged();
+    void     onlyAllowedPathsChanged();
     void     sortByChanged();
     void     sortOrderChanged();
     void     clipboardChanged();
@@ -464,7 +476,7 @@ private slots:
 
 private:
     bool                mShowHiddenFiles;
-    bool                mOnlyMTPPaths;
+    bool                mOnlyAllowedPaths;
     SortBy              mSortBy;
     SortOrder           mSortOrder;
     CompareFunction     mCompareFunction;
@@ -481,6 +493,8 @@ private:
 #ifndef DO_NOT_USE_TAG_LIB
     QVariant getAudioMetaData(const QFileInfo& fi, int role) const;
 #endif
+    QSet<QString> m_allowedDirs;
+
 //[0]
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)    
@@ -492,7 +506,7 @@ private:
 
     bool allowAccess(const DirItemInfo &fi) const;
     bool allowAccess(const QString &path) const;
-    bool isMTPPath(const QString &absolutePath) const;
+    bool isAllowedPath(const QString &absolutePath) const;
 };
 
 

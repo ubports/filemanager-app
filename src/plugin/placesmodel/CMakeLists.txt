@@ -9,6 +9,8 @@ set(placesmodel_SRCS
     placesmodel.h
     placesmodel_plugin.cpp
     placesmodel_plugin.h
+    qmtabparser.h
+    qmtabparser.cpp
 )
 
 add_library(PlacesModel MODULE

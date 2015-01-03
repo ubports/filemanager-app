@@ -21,7 +21,6 @@ import Ubuntu.Components 1.1
 import Ubuntu.Components.Popups 1.0
 import Ubuntu.Components.ListItems 1.0
 import org.nemomobile.folderlistmodel 1.0
-import com.ubuntu.PlacesModel 0.1
 import com.ubuntu.Archives 0.1
 import "../components"
 import "../upstream"
@@ -117,7 +116,7 @@ PageWithBottomEdge {
             id: unlockButton
             iconName: "lock"
             text: i18n.tr("Unlock full access")
-            visible: pageModel.onlyMTPPaths
+            visible: pageModel.onlyAllowedPaths
             onTriggered: {
                 console.log("Full access clicked")
                 var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
@@ -126,7 +125,7 @@ PageWithBottomEdge {
                 authDialog.passwordEntered.connect(function(password) {
                     if (pamAuthentication.validatePasswordToken(password)) {
                         console.log("Authenticated for full access")
-                        pageModel.onlyMTPPaths = false
+                        pageModel.onlyAllowedPaths = false
                     } else {
                         PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
                                         {
@@ -191,13 +190,11 @@ PageWithBottomEdge {
         }
     }
 
-    PlacesModel { id: userplaces }
-
     FolderListModel {
         id: pageModel
         path: folderListPage.folder
         enableExternalFSWatcher: true
-        onlyMTPPaths: !noAuthentication && pamAuthentication.requireAuthentication()
+        onlyAllowedPaths: !noAuthentication && pamAuthentication.requireAuthentication()
 
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
@@ -205,6 +202,15 @@ PageWithBottomEdge {
         property string fileSize: i18n.tr("%1 file", "%1 files", folderListView.count).arg(folderListView.count)
         property bool isReadable: true
         property bool isExecutable: true
+
+        Component.onCompleted: {
+            // Add default allowed paths
+            addAllowedDirectory(userplaces.locationDocuments)
+            addAllowedDirectory(userplaces.locationDownloads)
+            addAllowedDirectory(userplaces.locationMusic)
+            addAllowedDirectory(userplaces.locationPictures)
+            addAllowedDirectory(userplaces.locationVideos)
+        }
     }
 
     FolderListModel {
@@ -312,7 +318,7 @@ PageWithBottomEdge {
         width: parent.width - sidebar.width
 
         spacing: units.gu(2)
-        visible: fileSelectorMode || pageModel.onlyMTPPaths
+        visible: fileSelectorMode || pageModel.onlyAllowedPaths
 
         Button {
             text: i18n.tr("Select")
@@ -788,6 +794,9 @@ PageWithBottomEdge {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-videos.svg"
         } else if (file === "/") {
             iconPath = "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
+        } else if (userplaces.isUserMountDirectory(file)) {
+            // In context of Ubuntu Touch this means SDCard currently.
+            iconPath = "/usr/share/icons/Humanity/devices/48/drive-removable-media.svg"
         }
 
         return Qt.resolvedUrl(iconPath)
