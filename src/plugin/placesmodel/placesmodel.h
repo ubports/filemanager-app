@@ -42,7 +42,7 @@ class PlacesModel : public QAbstractListModel
     Q_PROPERTY(QString locationVideos READ locationVideos CONSTANT)
 
 public:
-    explicit PlacesModel(QAbstractListModel *parent = 0);
+    explicit PlacesModel(QObject *parent = 0);
     ~PlacesModel();
     QString locationHome() const;
     QString locationDocuments() const;

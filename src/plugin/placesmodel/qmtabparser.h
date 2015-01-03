@@ -42,6 +42,16 @@ public:
     QList<QMtabEntry> parseEntries();
 
     inline const QString& path() { return m_path; }
+
+private:
+    /*!
+     * \brief fsHasUserContent() consider Disk and Network file systems as valid
+     * \param fs
+     * \return TRUE if the filesystem is considered as having normal user files, FALSE when it is supposed to be system FS
+     *
+     * \sa \link http://en.wikipedia.org/wiki/List_of_file_systems
+     */
+    bool  fsHasUserContent(const struct QMtabEntry& fs);
 };
 
 #endif // QMTABPARSER_H

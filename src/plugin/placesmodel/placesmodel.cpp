@@ -25,7 +25,7 @@
 #include <QStandardPaths>
 #include <QDebug>
 
-PlacesModel::PlacesModel(QAbstractListModel *parent) :
+PlacesModel::PlacesModel(QObject *parent) :
     QAbstractListModel(parent)
 {
     m_userMountPath = "/media/" + qgetenv("USER") + "/";
@@ -95,9 +95,11 @@ PlacesModel::rescanMtab() {
     QSet<QString> userMounts;
 
     foreach (QMtabEntry e, entries) {
-        qDebug() << Q_FUNC_INFO << "Considering" << e.dir;
-        if (e.dir.startsWith(m_userMountPath)) {
-            qDebug() << Q_FUNC_INFO << "Adding as userMount directory" << e.dir;
+        qDebug() << Q_FUNC_INFO << "Considering" << "fsName:" <<  e.fsName << "dir:" << e.dir << "type:" << e.type;
+        QFileInfo dir(e.dir);
+        if (dir.isReadable() && dir.isExecutable())
+        {
+            qDebug() << Q_FUNC_INFO << "Adding as userMount directory dir" << e.dir;
             userMounts << e.dir;
         }
     }
