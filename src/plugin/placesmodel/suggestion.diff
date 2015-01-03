@@ -1,0 +1,123 @@
+=== modified file 'src/plugin/placesmodel/placesmodel.cpp'
+--- src/plugin/placesmodel/placesmodel.cpp	2015-01-03 08:34:52 +0000
++++ src/plugin/placesmodel/placesmodel.cpp	2015-01-03 13:53:26 +0000
+@@ -25,7 +25,7 @@
+ #include <QStandardPaths>
+ #include <QDebug>
+ 
+-PlacesModel::PlacesModel(QAbstractListModel *parent) :
++PlacesModel::PlacesModel(QObject *parent) :
+     QAbstractListModel(parent)
+ {
+     m_userMountPath = "/media/" + qgetenv("USER") + "/";
+@@ -95,9 +95,11 @@
+     QSet<QString> userMounts;
+ 
+     foreach (QMtabEntry e, entries) {
+-        qDebug() << Q_FUNC_INFO << "Considering" << e.dir;
+-        if (e.dir.startsWith(m_userMountPath)) {
+-            qDebug() << Q_FUNC_INFO << "Adding as userMount directory" << e.dir;
++        qDebug() << Q_FUNC_INFO << "Considering" << "fsName:" <<  e.fsName << "dir:" << e.dir << "type:" << e.type;
++        QFileInfo dir(e.dir);
++        if (dir.isReadable() && dir.isExecutable())
++        {
++            qDebug() << Q_FUNC_INFO << "Adding as userMount directory dir" << e.dir;
+             userMounts << e.dir;
+         }
+     }
+
+=== modified file 'src/plugin/placesmodel/placesmodel.h'
+--- src/plugin/placesmodel/placesmodel.h	2015-01-03 08:34:52 +0000
++++ src/plugin/placesmodel/placesmodel.h	2015-01-03 11:02:36 +0000
+@@ -42,7 +42,7 @@
+     Q_PROPERTY(QString locationVideos READ locationVideos CONSTANT)
+ 
+ public:
+-    explicit PlacesModel(QAbstractListModel *parent = 0);
++    explicit PlacesModel(QObject *parent = 0);
+     ~PlacesModel();
+     QString locationHome() const;
+     QString locationDocuments() const;
+
+=== modified file 'src/plugin/placesmodel/qmtabparser.cpp'
+--- src/plugin/placesmodel/qmtabparser.cpp	2015-01-03 08:34:52 +0000
++++ src/plugin/placesmodel/qmtabparser.cpp	2015-01-03 15:15:55 +0000
+@@ -20,6 +20,9 @@
+ 
+ #include <mntent.h>
+ 
++#include <QFileInfo>
++#include <QStringList>
++
+ class MtabFileGuard {
+     FILE *mtabFile;
+ 
+@@ -60,9 +63,44 @@
+         entry.opts = ent->mnt_opts;
+         entry.freq = ent->mnt_freq;
+         entry.passno = ent->mnt_passno;
+-
+-        entries << entry;
++        if (fsHasUserContent(entry)) {
++            entries << entry;
++        }
+     }
+ 
+     return entries;
+ }
++
++
++bool QMtabParser::fsHasUserContent(const QMtabEntry &fs)
++{
++   //check for disk file systems like /dev/sda?
++   bool ret = QFileInfo(fs.fsName).exists();
++   if (!ret)
++   {
++      /*!
++       * \link http://en.wikipedia.org/wiki/List_of_file_systems#Distributed_file_systems
++       */
++        static QStringList netFs =  QStringList()
++                   << "v9fs"
++                   << "afs"
++                   << "nfs"
++                   << "smb"
++                   << "afp"
++                   << "dce"
++                   << "dfs"
++                   << "fal"
++                   << "sfs"
++                   << "ncp"
++                   << "dfs"
++                   << "cfs"
++                   << "coda"
++                   << "MooseFS"
++                   << "ssh"
++                   << "sftp"
++                   << "sshfs"
++                   ;
++       ret =  netFs.contains(fs.type, Qt::CaseSensitive);
++   }
++   return ret;
++}
+
+=== modified file 'src/plugin/placesmodel/qmtabparser.h'
+--- src/plugin/placesmodel/qmtabparser.h	2015-01-03 08:34:52 +0000
++++ src/plugin/placesmodel/qmtabparser.h	2015-01-03 15:13:57 +0000
+@@ -42,6 +42,16 @@
+     QList<QMtabEntry> parseEntries();
+ 
+     inline const QString& path() { return m_path; }
++
++private:
++    /*!
++     * \brief fsHasUserContent() consider Disk and Network file systems as valid
++     * \param fs
++     * \return TRUE if the filesystem is considered as having normal user files, FALSE when it is supposed to be system FS
++     *
++     * \sa \link http://en.wikipedia.org/wiki/List_of_file_systems
++     */
++    bool  fsHasUserContent(const struct QMtabEntry& fs);
+ };
+ 
+ #endif // QMTABPARSER_H
+

@@ -20,6 +20,9 @@
 
 #include <mntent.h>
 
+#include <QFileInfo>
+#include <QStringList>
+
 class MtabFileGuard {
     FILE *mtabFile;
 
@@ -60,9 +63,44 @@ QMtabParser::parseEntries() {
         entry.opts = ent->mnt_opts;
         entry.freq = ent->mnt_freq;
         entry.passno = ent->mnt_passno;
-
-        entries << entry;
+        if (fsHasUserContent(entry)) {
+            entries << entry;
+        }
     }
 
     return entries;
+}
+
+
+bool QMtabParser::fsHasUserContent(const QMtabEntry &fs)
+{
+   //check for disk file systems like /dev/sda?
+   bool ret = QFileInfo(fs.fsName).exists();
+   if (!ret)
+   {
+      /*!
+       * \link http://en.wikipedia.org/wiki/List_of_file_systems#Distributed_file_systems
+       */
+        static QStringList netFs =  QStringList()
+                   << "v9fs"
+                   << "afs"
+                   << "nfs"
+                   << "smb"
+                   << "afp"
+                   << "dce"
+                   << "dfs"
+                   << "fal"
+                   << "sfs"
+                   << "ncp"
+                   << "dfs"
+                   << "cfs"
+                   << "coda"
+                   << "MooseFS"
+                   << "ssh"
+                   << "sftp"
+                   << "sshfs"
+                   ;
+       ret =  netFs.contains(fs.type, Qt::CaseSensitive);
+   }
+   return ret;
 }
