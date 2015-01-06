@@ -32,8 +32,10 @@ Page {
     Flickable {
         objectName: "placesFlickable"
         anchors.fill: parent
+        contentHeight: content.height
 
         Column {
+            id: content
             anchors {
                 left: parent.left
                 right: parent.right
