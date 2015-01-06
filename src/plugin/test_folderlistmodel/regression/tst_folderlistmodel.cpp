@@ -108,6 +108,7 @@ private Q_SLOTS: // test cases
     void  modelCutManyItemsPasteIntoAnotherModel();
     void  fsActionMoveItemsForcingCopyAndThenRemove();
     void  modelCancelRemoveAction();
+    void  modelCancelRemoveSelection();
     void  modelTestFileSize();
     void  modelRemoveDirWithHiddenFilesAndLinks();
     void  modelCancelCopyAction();
@@ -347,7 +348,8 @@ bool TestDirModel::compareDirectories(const QString &d1, const QString &d2)
 
 void TestDirModel::cancel(int index, int, int percent)
 {   
-    if (index > 1 ||  percent > m_minimumProgressToCancelAction)
+    Q_UNUSED(index);
+    if (percent > m_minimumProgressToCancelAction)
     {
         DirModel * model = static_cast<DirModel*> (sender());
         model->cancelAction();
@@ -1027,6 +1029,67 @@ void TestDirModel::modelCancelRemoveAction()
      QCOMPARE((int)d.count(), 0);
      QCOMPARE(m_receivedErrorSignal, false);
      QCOMPARE(m_dirModel_02->rowCount(), 0);
+}
+
+
+void TestDirModel::modelCancelRemoveSelection()
+{
+     QString tmpDir("modelCancelRemoveSelection");
+     m_deepDir_01 = new DeepDir(tmpDir, 0);
+     QCOMPARE( QFileInfo(m_deepDir_01->path()).exists(),  true);
+     TempFiles tempFiles;
+     tempFiles.addSubDirLevel(tmpDir);
+     const int createdFiles = 250;
+     tempFiles.create(createdFiles);
+     m_dirModel_01->setPath(m_deepDir_01->path());    
+     QTest::qWait(TIME_TO_REFRESH_DIR);
+
+     QCOMPARE(m_dirModel_01->rowCount(), createdFiles);
+     connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
+             this,          SLOT(progress(int,int,int)));
+
+     connect(m_dirModel_01, SIGNAL(error(QString,QString)),
+             this,          SLOT(slotError(QString,QString)));
+
+     //cancel only after removing some files
+     m_minimumProgressToCancelAction = 20;
+     connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
+             this,          SLOT(cancel(int,int,int)));
+
+
+    DirSelection  *selection = m_dirModel_01->selectionObject();
+    QVERIFY(selection != 0);
+
+    //remove all, but cancel will be triggered
+    selection->selectAll();
+    m_dirModel_01->removeSelection();
+    QTest::qWait(TIME_TO_PROCESS*2);
+
+    QVERIFY( m_dirModel_01->rowCount() > 0 );
+    QVERIFY( m_dirModel_01->rowCount() <  createdFiles);
+    QVERIFY(m_filesRemoved.count() > 0);
+
+    int notRemoved = createdFiles - m_filesRemoved.count();
+    QVERIFY(notRemoved > 0);
+
+    QDir c(m_deepDir_01->path(), QString(), QDir::NoSort, QDir::AllEntries | QDir::NoDotAndDotDot);
+    QCOMPARE(c.exists(), true);
+    QCOMPARE((int)c.count(), notRemoved);
+
+    disconnect(m_dirModel_01, SIGNAL(progress(int,int,int)),
+             this,          SLOT(cancel(int,int,int)));
+
+    //now remove everything
+    selection->clear();
+    selection->selectAll();
+    QCOMPARE(selection->counter(),  m_dirModel_01->rowCount());
+    m_dirModel_01->removeSelection();
+    QTest::qWait(TIME_TO_PROCESS*2);
+
+    QCOMPARE(m_dirModel_01->rowCount() , 0);
+    QDir d(m_deepDir_01->path(), QString(), QDir::NoSort, QDir::AllEntries | QDir::NoDotAndDotDot);
+    QCOMPARE(d.exists(), true);
+    QCOMPARE((int)d.count(), 0);
 }
 
 void TestDirModel::modelTestFileSize()

@@ -29,10 +29,12 @@ class DirModel;
 class QProgressBar;
 class DirSelection;
 class PlacesModel;
+class ActionProgress;
 
 namespace Ui {
-class SimpleList;
+  class SimpleList;
 }
+
 
 class SimpleList : public QMainWindow
 {
@@ -53,7 +55,7 @@ private:
 private:
     Ui::SimpleList *ui;
     DirModel       *m_model;   
-    QProgressBar  * m_pbar;
+    ActionProgress * m_pbar;
     DirSelection  * m_selection;
     bool            m_holdingCtrlKey;
     bool            m_holdingShiftKey;
@@ -75,6 +77,8 @@ private slots:
     void   onSelectionChanged(int);
     void   onPlacesClicked(QModelIndex);
     void   onOpenTerminal();
+    void   onCancelAction();
+    void   onStatusChanged();
 };
 
 #endif // SIMPLELIST_H
