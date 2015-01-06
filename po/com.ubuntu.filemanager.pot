@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-08 22:05+0100\n"
+"POT-Creation-Date: 2014-12-15 21:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,16 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ../src/app/qml/components/FolderIconView.qml:57
-#: ../src/app/qml/components/FolderListView.qml:35
-#, qt-format, qt-plural-format
-msgid "%1 (%n file)"
-msgid_plural "%1 (%n files)"
-msgstr[0] ""
-msgstr[1] ""
+#: ../src/app/qml/components/FolderIconView.qml:58
+#: ../src/app/qml/components/FolderListView.qml:36
+#, qt-format
+msgid "%1 (1 file)"
+msgstr ""
+
+#: ../src/app/qml/components/FolderIconView.qml:59
+#: ../src/app/qml/components/FolderListView.qml:37
+#, qt-format
+msgid "%1 (%2 files)"
+msgstr ""
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
-#: ../src/app/qml/ui/FolderListPage.qml:758
+#: ../src/app/qml/ui/FolderListPage.qml:769
 msgid "Device"
 msgstr ""
 
@@ -40,7 +44,7 @@ msgstr ""
 msgid "Open with"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:107
+#: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:103
 #: ../src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
 msgstr ""
@@ -49,12 +53,12 @@ msgstr ""
 msgid "Change app settings"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:358
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:354
 #: ../src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr ""
 
-#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:374
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:370
 #: ../src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr ""
@@ -83,7 +87,7 @@ msgstr ""
 #: ../src/app/qml/ui/ConfirmDialogWithInput.qml:57
 #: ../src/app/qml/ui/FileActionDialog.qml:45
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../src/app/qml/ui/FolderListPage.qml:336
+#: ../src/app/qml/ui/FolderListPage.qml:332
 #: ../src/app/qml/ui/GoToDialog.qml:67
 msgid "Cancel"
 msgstr ""
@@ -145,182 +149,182 @@ msgstr ""
 msgid "File operation"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:57
-#, c-format, qt-plural-format
-msgid "Paste %n File"
-msgid_plural "Paste %n Files"
+#: ../src/app/qml/ui/FolderListPage.qml:53
+#, qt-format
+msgid "Paste %1 File"
+msgid_plural "Paste %1 Files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:61
+#: ../src/app/qml/ui/FolderListPage.qml:57
 msgid "Paste files"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:69
+#: ../src/app/qml/ui/FolderListPage.qml:65
 msgid "Clear clipboard"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:79
-#: ../src/app/qml/ui/FolderListPage.qml:97
-#: ../src/app/qml/ui/FolderListPage.qml:594
+#: ../src/app/qml/ui/FolderListPage.qml:75
+#: ../src/app/qml/ui/FolderListPage.qml:93
+#: ../src/app/qml/ui/FolderListPage.qml:605
 msgid "Properties"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:88
+#: ../src/app/qml/ui/FolderListPage.qml:84
 msgid "New Folder"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:115
+#: ../src/app/qml/ui/FolderListPage.qml:111
 msgid "Go To"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:122
+#: ../src/app/qml/ui/FolderListPage.qml:118
 msgid "Unlock full access"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:136
+#: ../src/app/qml/ui/FolderListPage.qml:132
 msgid "Authentication failed"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:208
-#, c-format, qt-plural-format
-msgid "%n file"
-msgid_plural "%n files"
+#: ../src/app/qml/ui/FolderListPage.qml:204
+#, qt-format
+msgid "%1 file"
+msgid_plural "%1 files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:233
+#: ../src/app/qml/ui/FolderListPage.qml:229
 msgid "Open in a new tab"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:241
+#: ../src/app/qml/ui/FolderListPage.qml:237
 msgid "Close this tab"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:254
+#: ../src/app/qml/ui/FolderListPage.qml:250
 msgid "Create folder"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:255
+#: ../src/app/qml/ui/FolderListPage.qml:251
 msgid "Enter name for new folder"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:271
+#: ../src/app/qml/ui/FolderListPage.qml:267
 msgid "Create file"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:272
+#: ../src/app/qml/ui/FolderListPage.qml:268
 msgid "Enter name for new file"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:321
+#: ../src/app/qml/ui/FolderListPage.qml:317
 msgid "Select"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:389
+#: ../src/app/qml/ui/FolderListPage.qml:385
 msgid "No files"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:409
-#: ../src/app/qml/ui/FolderListPage.qml:556
+#: ../src/app/qml/ui/FolderListPage.qml:405
+#: ../src/app/qml/ui/FolderListPage.qml:566
 msgid "Delete"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:410
+#: ../src/app/qml/ui/FolderListPage.qml:406
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:415
+#: ../src/app/qml/ui/FolderListPage.qml:411
 msgid "Deleting files"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:433
-#: ../src/app/qml/ui/FolderListPage.qml:569
+#: ../src/app/qml/ui/FolderListPage.qml:429
+#: ../src/app/qml/ui/FolderListPage.qml:579
 msgid "Rename"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:434
+#: ../src/app/qml/ui/FolderListPage.qml:430
 msgid "Enter a new name"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:443
+#: ../src/app/qml/ui/FolderListPage.qml:439
 msgid "Could not rename"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:444
+#: ../src/app/qml/ui/FolderListPage.qml:440
 msgid "Insufficient permissions or name already exists?"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:461
+#: ../src/app/qml/ui/FolderListPage.qml:458
 msgid "Extract Archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:462
+#: ../src/app/qml/ui/FolderListPage.qml:459
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:533
+#: ../src/app/qml/ui/FolderListPage.qml:543
 msgid "Cut"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:544
+#: ../src/app/qml/ui/FolderListPage.qml:554
 msgid "Copy"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:584
+#: ../src/app/qml/ui/FolderListPage.qml:594
 msgid "Extract archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:614
+#: ../src/app/qml/ui/FolderListPage.qml:625
 msgid "File operation error"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:645
+#: ../src/app/qml/ui/FolderListPage.qml:656
 #, qt-format
 msgid "Extracting archive '%1'"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:657
+#: ../src/app/qml/ui/FolderListPage.qml:668
 msgid "OK"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:671
+#: ../src/app/qml/ui/FolderListPage.qml:682
 msgid "Extracting failed"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:672
+#: ../src/app/qml/ui/FolderListPage.qml:683
 #, qt-format
 msgid "Extracting the archive '%1' failed."
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:729
+#: ../src/app/qml/ui/FolderListPage.qml:740
 msgid "~/Desktop"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:739
+#: ../src/app/qml/ui/FolderListPage.qml:750
 msgid "~/Public"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:741
+#: ../src/app/qml/ui/FolderListPage.qml:752
 msgid "~/Programs"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:743
+#: ../src/app/qml/ui/FolderListPage.qml:754
 msgid "~/Templates"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:756
+#: ../src/app/qml/ui/FolderListPage.qml:767
 msgid "Home"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:826
+#: ../src/app/qml/ui/FolderListPage.qml:837
 msgid "Folder not accessible"
 msgstr ""
 
 #. TRANSLATORS: this refers to a folder name
-#: ../src/app/qml/ui/FolderListPage.qml:828
+#: ../src/app/qml/ui/FolderListPage.qml:839
 #, qt-format
 msgid "Can not access %1"
 msgstr ""

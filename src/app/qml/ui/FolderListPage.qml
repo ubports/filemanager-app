@@ -14,13 +14,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Authored by: Arto Jalkanen <ajalkane@gmail.com>
+ *              Niklas Wenzel <nikwen.developer@gmail.com>
  */
 import QtQuick 2.3
 import Ubuntu.Components 1.1
 import Ubuntu.Components.Popups 1.0
 import Ubuntu.Components.ListItems 1.0
 import org.nemomobile.folderlistmodel 1.0
-import com.ubuntu.PlacesModel 0.1
 import com.ubuntu.Archives 0.1
 import "../components"
 import "../upstream"
@@ -120,7 +120,7 @@ PageWithBottomEdge {
             id: unlockButton
             iconName: "lock"
             text: i18n.tr("Unlock full access")
-            visible: pageModel.onlyMTPPaths
+            visible: pageModel.onlyAllowedPaths
             onTriggered: {
                 console.log("Full access clicked")
                 var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
@@ -129,7 +129,7 @@ PageWithBottomEdge {
                 authDialog.passwordEntered.connect(function(password) {
                     if (pamAuthentication.validatePasswordToken(password)) {
                         console.log("Authenticated for full access")
-                        pageModel.onlyMTPPaths = false
+                        pageModel.onlyAllowedPaths = false
                     } else {
                         PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
                                         {
@@ -194,13 +194,11 @@ PageWithBottomEdge {
         }
     }
 
-    PlacesModel { id: userplaces }
-
     FolderListModel {
         id: pageModel
         path: folderListPage.folder
         enableExternalFSWatcher: true
-        onlyMTPPaths: !noAuthentication && pamAuthentication.requireAuthentication()
+        onlyAllowedPaths: !noAuthentication && pamAuthentication.requireAuthentication()
 
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
@@ -208,6 +206,15 @@ PageWithBottomEdge {
         property string fileSize: i18n.tr("%n file", "%n files", folderListView.count)
         property bool isReadable: true
         property bool isExecutable: true
+
+        Component.onCompleted: {
+            // Add default allowed paths
+            addAllowedDirectory(userplaces.locationDocuments)
+            addAllowedDirectory(userplaces.locationDownloads)
+            addAllowedDirectory(userplaces.locationMusic)
+            addAllowedDirectory(userplaces.locationPictures)
+            addAllowedDirectory(userplaces.locationVideos)
+        }
     }
 
     FolderListModel {
@@ -315,7 +322,7 @@ PageWithBottomEdge {
         width: parent.width - sidebar.width
 
         spacing: units.gu(2)
-        visible: fileSelectorMode || pageModel.onlyMTPPaths
+        visible: fileSelectorMode || pageModel.onlyAllowedPaths
 
         Button {
             text: i18n.tr("Select")
@@ -372,6 +379,18 @@ PageWithBottomEdge {
         }
         smallMode: !sidebar.expanded
         visible: viewMethod === i18n.tr("List")
+    }
+
+    function getArchiveType(fileName) {
+        var splitName = fileName.split(".")
+        var fileExtension = splitName[splitName.length - 1]
+        if (fileExtension === "zip") {
+            return "zip"
+        } else if (fileExtension === "tar") {
+            return "tar"
+        } else {
+            return ""
+        }
     }
 
     Item {
@@ -458,32 +477,12 @@ PageWithBottomEdge {
         ConfirmDialog {
             property string filePath
             property string fileName
+            property string archiveType
             title: i18n.tr("Extract Archive")
             text: i18n.tr("Are you sure you want to extract '%1' here?").arg(fileName)
 
             onAccepted: {
-                console.log("Extract accepted for filePath, fileName", filePath, fileName)
-                PopupUtils.open(extractingDialog, mainView, { "fileName" : fileName })
-                console.log("Extracting...")
-
-                var parentDirectory = filePath.substring(0, filePath.lastIndexOf("/"))
-                var fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf("."))
-                var extractDirectory = parentDirectory + "/" + fileNameWithoutExtension
-
-                // Add numbers if the directory already exist: myfile, myfile-1, myfile-2, etc.
-                while (pageModel.existsDir(extractDirectory)) {
-                    var i = 0
-                    while ("1234567890".indexOf(extractDirectory.charAt(extractDirectory.length - i - 1)) !== -1) {
-                        i++
-                    }
-                    if (i === 0 || extractDirectory.charAt(extractDirectory.length - i - 1) !== "-") {
-                        extractDirectory += "-1"
-                    } else {
-                        extractDirectory = extractDirectory.substring(0, extractDirectory.lastIndexOf("-") + 1) + (parseInt(extractDirectory.substring(extractDirectory.length - i)) + 1)
-                    }
-                }
-
-                archives.extractZip(filePath, extractDirectory)
+                extractArchive(filePath, fileName, archiveType)
             }
         }
     }
@@ -503,12 +502,11 @@ PageWithBottomEdge {
 
             property var model
 
-            property bool isArchive: false
+            property bool isArchive: archiveType !== ""
+            property string archiveType: ""
 
             Component.onCompleted: {
-                var splitName = actionSelectionPopover.model.fileName.split(".")
-                var fileExtension = splitName[splitName.length - 1]
-                isArchive = fileExtension === "zip"
+                archiveType = getArchiveType(actionSelectionPopover.model.fileName)
             }
 
             delegate: Empty { // NOTE: This is a workaround for LP: #1395118 and should be removed as soon as the patch for upstream gets released (https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1395118)
@@ -585,8 +583,9 @@ PageWithBottomEdge {
                     onTriggered: {
                         PopupUtils.open(confirmExtractDialog, actionSelectionPopover.caller,
                                         { "filePath" : actionSelectionPopover.model.filePath,
-                                            "fileName" : actionSelectionPopover.model.fileName }
-                                        )
+                                            "fileName" : actionSelectionPopover.model.fileName,
+                                            "archiveType" : actionSelectionPopover.archiveType
+                                        })
                     }
                 }
 
@@ -653,7 +652,16 @@ PageWithBottomEdge {
             }
 
             Button {
-                id: button
+                id: cancelButton
+                text: i18n.tr("Cancel")
+                visible: true
+                onClicked: {
+                    archives.cancelArchiveExtraction()
+                }
+            }
+
+            Button {
+                id: okButton
                 text: i18n.tr("OK")
                 visible: false
                 onClicked: {
@@ -668,10 +676,54 @@ PageWithBottomEdge {
                         PopupUtils.close(dialog)
                     } else {
                         row.visible = false
+                        cancelButton.visible = false
                         title = i18n.tr("Extracting failed")
                         text = qsTr(i18n.tr("Extracting the archive '%1' failed.")).arg(fileName)
-                        button.visible = true
+                        okButton.visible = true
                     }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: openArchiveDialog
+
+        Dialog {
+            id: dialog
+            modal: true
+            title: i18n.tr("Archive file")
+            text: i18n.tr("Do you want to extract the archive here?")
+            property string filePath
+            property string fileName
+            property string archiveType
+
+            Button {
+                id: extractButton
+                text: i18n.tr("Extract archive")
+                color: UbuntuColors.green
+                onClicked: {
+                    PopupUtils.close(dialog)
+                    extractArchive(filePath, fileName, archiveType)
+                }
+            }
+
+            Button {
+                id: openExternallyButton
+                text: i18n.tr("Open with another app")
+                color: UbuntuColors.red
+                onClicked: {
+                    PopupUtils.close(dialog)
+                    openFile(filePath)
+                }
+            }
+
+            Button {
+                id: cancelButton
+                text: i18n.tr("Cancel")
+                color: UbuntuColors.lightGrey
+                onClicked: {
+                    PopupUtils.close(dialog)
                 }
             }
         }
@@ -746,6 +798,9 @@ PageWithBottomEdge {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-videos.svg"
         } else if (file === "/") {
             iconPath = "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
+        } else if (userplaces.isUserMountDirectory(file)) {
+            // In context of Ubuntu Touch this means SDCard currently.
+            iconPath = "/usr/share/icons/Humanity/devices/48/drive-removable-media.svg"
         }
 
         return Qt.resolvedUrl(iconPath)
@@ -836,7 +891,18 @@ PageWithBottomEdge {
                                         false,
                                         true);
             } else {
-                openFile(model.filePath)
+                // Check if file is an archive. If yes, ask the user whether he wants to extract it
+                var archiveType = getArchiveType(model.fileName)
+                if (archiveType === "") {
+                    openFile(model.filePath)
+                } else {
+                    PopupUtils.open(openArchiveDialog, folderListView,
+                                    { "filePath" : model.filePath,
+                                        "fileName" : model.fileName,
+                                        "archiveType" : archiveType
+                                    })
+                }
+
             }
             //            PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
             //                            {
@@ -859,9 +925,42 @@ PageWithBottomEdge {
         if (key === Qt.Key_L && modifiers & Qt.ControlModifier) {
             PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), mainView);
             return true;
+        } else if (key === Qt.Key_Backspace) {
+            goUp()
         }
 
         return false;
+    }
+
+    function extractArchive(filePath, fileName, archiveType) {
+        console.log("Extract accepted for filePath, fileName", filePath, fileName)
+        PopupUtils.open(extractingDialog, mainView, { "fileName" : fileName })
+        console.log("Extracting...")
+
+        var parentDirectory = filePath.substring(0, filePath.lastIndexOf("/"))
+        var fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf("."))
+        var extractDirectory = parentDirectory + "/" + fileNameWithoutExtension
+
+        // Add numbers if the directory already exist: myfile, myfile-1, myfile-2, etc.
+        while (pageModel.existsDir(extractDirectory)) {
+            var i = 0
+            while ("1234567890".indexOf(extractDirectory.charAt(extractDirectory.length - i - 1)) !== -1) {
+                i++
+            }
+            if (i === 0 || extractDirectory.charAt(extractDirectory.length - i - 1) !== "-") {
+                extractDirectory += "-1"
+            } else {
+                extractDirectory = extractDirectory.substring(0, extractDirectory.lastIndexOf("-") + 1) + (parseInt(extractDirectory.substring(extractDirectory.length - i)) + 1)
+            }
+        }
+
+        pageModel.mkdir(extractDirectory) // This is needed for the tar command as the given destination has to be an already existing directory
+
+        if (archiveType === "zip") {
+            archives.extractZip(filePath, extractDirectory)
+        } else if (archiveType === "tar") {
+            archives.extractTar(filePath, extractDirectory)
+        }
     }
 
     Component.onCompleted: {

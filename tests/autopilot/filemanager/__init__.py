@@ -56,7 +56,7 @@ class MainView(ubuntuuitoolkit.MainView):
         super(MainView, self).__init__(*args)
 
     @autopilot.logging.log_action(logger.info)
-    def go_to_place(self, object_name):
+    def go_to_place(self, object_name, file_to_extract):
         """Open one of the bookmarked place folders.
 
         :param object_name: The objectName property of the place to open.
@@ -66,7 +66,7 @@ class MainView(ubuntuuitoolkit.MainView):
         if self.showSidebar:
             self._go_to_place_from_side_bar(object_name)
         else:
-            self._go_to_place_from_places_page(object_name)
+            self._go_to_place_from_places_page(object_name, file_to_extract)
 
     def _go_to_place_from_side_bar(self, object_name):
         dir_path = os.getenv('HOME')
@@ -88,10 +88,10 @@ class MainView(ubuntuuitoolkit.MainView):
     def get_places_page(self):
         return self.wait_select_single(PlacesPage)
 
-    def _go_to_place_from_places_page(self, object_name):
+    def _go_to_place_from_places_page(self, object_name, file_to_extract):
         dir_path = os.getenv('HOME')
         if object_name == 'placePath':
-            self.copy_file_from_source_dir(dir_path)
+            self.copy_file_from_source_dir(dir_path, file_to_extract)
         placespage = self.open_places()
         placespage.go_to_place(object_name, dir_path)
 
@@ -109,7 +109,8 @@ class MainView(ubuntuuitoolkit.MainView):
         try:
             action_item = self.wait_select_single(
                 'ShapeItem', objectName='bottomEdgeTip')
-            action_item.enabled.wait_for(True)
+            action_item.visible.wait_for(True)
+            action_item.isAnimating.wait_for(False)
             start_x = (action_item.globalRect.x +
                        (action_item.globalRect.width * 0.5))
             start_y = (action_item.globalRect.y +
@@ -243,9 +244,9 @@ class MainView(ubuntuuitoolkit.MainView):
         """Return a go to dialog """
         return self.wait_select_single(objectName='goToDialog')
 
-    def copy_file_from_source_dir(self, dir_path):
+    def copy_file_from_source_dir(self, dir_path, file_to_extract):
         content_dir_file = os.path.join(os.path.dirname(
-            __file__), 'content', 'Test.zip')
+            __file__), 'content', file_to_extract)
         shutil.copy(content_dir_file, dir_path)
 
 

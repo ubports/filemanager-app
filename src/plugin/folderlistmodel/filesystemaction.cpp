@@ -422,6 +422,11 @@ void FileSystemAction::processActionEntry()
                 break;
         }
     }
+    else
+    {
+        //Needed to set m_busy to false. Otherwise, further actions will never be executed.
+        endActionEntry();
+    }
 }
 
 //===============================================================================================

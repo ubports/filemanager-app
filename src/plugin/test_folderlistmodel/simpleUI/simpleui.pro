@@ -15,9 +15,11 @@ TEMPLATE = app
 
 DEFINES += REGRESSION_TEST_FOLDERLISTMODEL
 
-SOURCES += main.cpp  simplelist.cpp simpleslots.cpp   placesmodel.cpp terminalfolderapp.cpp
+SOURCES += main.cpp  simplelist.cpp simpleslots.cpp   placesmodel.cpp terminalfolderapp.cpp \
+    actionprogress.cpp
 
-HEADERS  += simplelist.h   placesmodel.h terminalfolderapp.h
+HEADERS  += simplelist.h   placesmodel.h terminalfolderapp.h \
+    actionprogress.h
 
 FORMS    += simplelist.ui
 

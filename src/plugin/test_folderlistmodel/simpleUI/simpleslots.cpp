@@ -26,6 +26,7 @@
 #include "dirselection.h"
 #include "placesmodel.h"
 #include "terminalfolderapp.h"
+#include "actionprogress.h"
 
 #include <QDir>
 #include <QMetaType>
@@ -80,10 +81,21 @@ void SimpleList::onSetSort(int col, Qt::SortOrder order)
 void SimpleList::onClipboardChanged()
 {
     int clipboardCounter = m_model->getClipboardUrlsCounter();
-    statusBar()->showMessage(QString("clipboard items %1")
+    int rows             = m_model->rowCount();
+    statusBar()->showMessage(QString("Total Items = %1 Clipboard Items = %2")
+                             .arg(rows)
                              .arg(clipboardCounter)
                              );
     ui->actionPaste->setEnabled(clipboardCounter > 0);
+}
+
+
+void SimpleList::onStatusChanged()
+{
+    if (!m_model->awaitingResults())
+    {
+        onClipboardChanged();
+    }
 }
 
 
@@ -180,4 +192,11 @@ void SimpleList::onOpenTerminal()
         TerminalFolderApp terminal;
         terminal.openTerminal(curPath);
     }
+}
+
+
+void SimpleList::onCancelAction()
+{
+    m_model->cancelAction();
+    m_pbar->hide();
 }

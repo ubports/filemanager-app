@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-12-05 21:44+0100\n"
+"POT-Creation-Date: 2014-12-15 21:15+0100\n"
 "PO-Revision-Date: 2014-06-28 14:16+0000\n"
 "Last-Translator: Mehmet Hanoğlu <mail@mehmethanoglu.com.tr>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-12-06 06:34+0000\n"
-"X-Generator: Launchpad (build 17274)\n"
+"X-Launchpad-Export-Date: 2015-01-04 06:32+0000\n"
+"X-Generator: Launchpad (build 17286)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:58
 #: ../src/app/qml/components/FolderListView.qml:36
@@ -31,7 +31,7 @@ msgid "%1 (%2 files)"
 msgstr "%1 (%2 dosya)"
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
-#: ../src/app/qml/ui/FolderListPage.qml:754
+#: ../src/app/qml/ui/FolderListPage.qml:769
 msgid "Device"
 msgstr ""
 
@@ -166,7 +166,7 @@ msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:75
 #: ../src/app/qml/ui/FolderListPage.qml:93
-#: ../src/app/qml/ui/FolderListPage.qml:590
+#: ../src/app/qml/ui/FolderListPage.qml:605
 msgid "Properties"
 msgstr "Özellikler"
 
@@ -226,7 +226,7 @@ msgid "No files"
 msgstr "Dosya yok"
 
 #: ../src/app/qml/ui/FolderListPage.qml:405
-#: ../src/app/qml/ui/FolderListPage.qml:552
+#: ../src/app/qml/ui/FolderListPage.qml:566
 msgid "Delete"
 msgstr "Sil"
 
@@ -240,7 +240,7 @@ msgid "Deleting files"
 msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:429
-#: ../src/app/qml/ui/FolderListPage.qml:565
+#: ../src/app/qml/ui/FolderListPage.qml:579
 msgid "Rename"
 msgstr "Yeniden Adlandır"
 
@@ -256,75 +256,75 @@ msgstr "Yeniden adlandırılamıyor"
 msgid "Insufficient permissions or name already exists?"
 msgstr "Yetersiz izin mi yoksa  ad zaten kullanımda mı?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:457
+#: ../src/app/qml/ui/FolderListPage.qml:458
 msgid "Extract Archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:458
+#: ../src/app/qml/ui/FolderListPage.qml:459
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:529
+#: ../src/app/qml/ui/FolderListPage.qml:543
 msgid "Cut"
 msgstr "Kes"
 
-#: ../src/app/qml/ui/FolderListPage.qml:540
+#: ../src/app/qml/ui/FolderListPage.qml:554
 msgid "Copy"
 msgstr "Kopyala"
 
-#: ../src/app/qml/ui/FolderListPage.qml:580
+#: ../src/app/qml/ui/FolderListPage.qml:594
 msgid "Extract archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:610
+#: ../src/app/qml/ui/FolderListPage.qml:625
 msgid "File operation error"
 msgstr "Dosya işlemi hatası"
 
-#: ../src/app/qml/ui/FolderListPage.qml:641
+#: ../src/app/qml/ui/FolderListPage.qml:656
 #, qt-format
 msgid "Extracting archive '%1'"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:653
+#: ../src/app/qml/ui/FolderListPage.qml:668
 msgid "OK"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:667
+#: ../src/app/qml/ui/FolderListPage.qml:682
 msgid "Extracting failed"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:668
+#: ../src/app/qml/ui/FolderListPage.qml:683
 #, qt-format
 msgid "Extracting the archive '%1' failed."
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:725
+#: ../src/app/qml/ui/FolderListPage.qml:740
 msgid "~/Desktop"
 msgstr "~/Masaüstü"
 
-#: ../src/app/qml/ui/FolderListPage.qml:735
+#: ../src/app/qml/ui/FolderListPage.qml:750
 msgid "~/Public"
 msgstr "~/Ortak"
 
-#: ../src/app/qml/ui/FolderListPage.qml:737
+#: ../src/app/qml/ui/FolderListPage.qml:752
 msgid "~/Programs"
 msgstr "~/Programlar"
 
-#: ../src/app/qml/ui/FolderListPage.qml:739
+#: ../src/app/qml/ui/FolderListPage.qml:754
 msgid "~/Templates"
 msgstr "~/Şablonlar"
 
-#: ../src/app/qml/ui/FolderListPage.qml:752
+#: ../src/app/qml/ui/FolderListPage.qml:767
 msgid "Home"
 msgstr "Başlangıç Dizini"
 
-#: ../src/app/qml/ui/FolderListPage.qml:822
+#: ../src/app/qml/ui/FolderListPage.qml:837
 msgid "Folder not accessible"
 msgstr "Klasör erişilebilir değil"
 
 #. TRANSLATORS: this refers to a folder name
-#: ../src/app/qml/ui/FolderListPage.qml:824
+#: ../src/app/qml/ui/FolderListPage.qml:839
 #, qt-format
 msgid "Can not access %1"
 msgstr "%1 dizinine erişilemiyor"

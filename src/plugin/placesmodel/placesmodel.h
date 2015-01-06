@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author : David Planella <david.planella@ubuntu.com>
+ *          Arto Jalkanen <arto.jalkanen@gmail.com>
  */
 
 #ifndef PLACESMODEL_H
@@ -23,6 +24,11 @@
 #include <QAbstractListModel>
 #include <QStandardPaths>
 #include <QSettings>
+#include <QFileSystemWatcher>
+#include <QTimer>
+#include <QSet>
+
+#include "qmtabparser.h"
 
 class PlacesModel : public QAbstractListModel
 {
@@ -36,7 +42,7 @@ class PlacesModel : public QAbstractListModel
     Q_PROPERTY(QString locationVideos READ locationVideos CONSTANT)
 
 public:
-    explicit PlacesModel(QAbstractListModel *parent = 0);
+    explicit PlacesModel(QObject *parent = 0);
     ~PlacesModel();
     QString locationHome() const;
     QString locationDocuments() const;
@@ -48,14 +54,34 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
 
+signals:
+    void userMountAdded(const QString &path);
+    void userMountRemoved(const QString &paht);
+
 public slots:
     void addLocation(const QString &location);
     void removeItem(int indexToRemove);
+    inline bool isUserMountDirectory(const QString location) {
+        return m_userMounts.contains(location);
+    }
+
+private slots:
+    void mtabChanged(const QString &path);
+    void rescanMtab();
 
 private:
+    void initNewUserMountsWatcher();
+    // Returns true if location was not known before, and false if it was known
+    bool addLocationWithoutStoring(const QString &location);
+    // Returns true if location was not known before, and false if it was known
+    void removeItemWithoutStoring(int itemToRemove);
+
+    QMtabParser m_mtabParser;
     QString standardLocation(QStandardPaths::StandardLocation location) const;
     QStringList m_locations;
     QSettings *m_settings;
+    QFileSystemWatcher *m_newUserMountsWatcher;
+    QSet<QString> m_userMounts;
 };
 
 #endif // PLACESMODEL_H

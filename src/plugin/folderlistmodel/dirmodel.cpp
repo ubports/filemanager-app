@@ -79,30 +79,7 @@
 
 namespace {
     QHash<QByteArray, int> roleMapping;
-    QList<QString> mtpDirectories;
-
-    QList<QStandardPaths::StandardLocation> mtpStandardLocations =
-                  QList<QStandardPaths::StandardLocation>()
-                         << QStandardPaths::DocumentsLocation
-                         << QStandardPaths::DownloadLocation
-                         << QStandardPaths::MusicLocation
-                         << QStandardPaths::PicturesLocation
-                         << QStandardPaths::MoviesLocation;
-
-
-    void buildMTPDirectories() {
-        mtpDirectories.clear();
-        foreach (const QStandardPaths::StandardLocation &standardLocation, mtpStandardLocations) {
-            QStringList locations = QStandardPaths::standardLocations(standardLocation);
-
-            foreach (const QString &location, locations) {
-                mtpDirectories << location;
-            }
-        }
-    }
 }
-
-
 
 /*!
  *  Sort was originally done in \ref onItemsAdded() and that code is now in \ref addItem(),
@@ -126,7 +103,7 @@ DirModel::DirModel(QObject *parent)
     , mIsRecursive(false)
     , mReadsMediaMetadata(false)
     , mShowHiddenFiles(false)
-    , mOnlyMTPPaths(false)
+    , mOnlyAllowedPaths(false)
     , mSortBy(SortByName)
     , mSortOrder(SortAscending)
     , mCompareFunction(0)  
@@ -496,7 +473,7 @@ void DirModel::onItemsFetched() {
 }
 
 
-bool DirModel::isMTPPath(const QString &absolutePath) const {
+bool DirModel::isAllowedPath(const QString &absolutePath) const {
     // A simple fail check to try protect against most obvious accidental usages.
     // This is a private function and should always get an absolute FilePath from caller,
     // but just in case check if there's relational path in there.
@@ -506,13 +483,10 @@ bool DirModel::isMTPPath(const QString &absolutePath) const {
         return false;
     }
 
-    if (mtpDirectories.isEmpty()) {
-        buildMTPDirectories();
-    }
-    foreach (const QString &mtpDirectory, mtpDirectories) {
-        if (absolutePath == mtpDirectory) return true;
-        // Returns true for any file/folder inside MTP directory
-        if (absolutePath.startsWith(mtpDirectory + "/")) return true;
+    foreach (const QString &allowedDirectory, m_allowedDirs) {
+        if (absolutePath == allowedDirectory) return true;
+        // Returns true for any file/folder inside allowed directory
+        if (absolutePath.startsWith(allowedDirectory + "/")) return true;
     }
 
     return false;
@@ -523,7 +497,7 @@ bool DirModel::allowAccess(const DirItemInfo &fi) const {
 }
 
 bool DirModel::allowAccess(const QString &absoluteFilePath) const {
-    return !mOnlyMTPPaths || isMTPPath(absoluteFilePath);
+    return !mOnlyAllowedPaths || isAllowedPath(absoluteFilePath);
 }
 
 void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
@@ -1107,19 +1081,19 @@ void DirModel::setShowHiddenFiles(bool show)
     }
 }
 
-bool DirModel::getOnlyMTPPaths() const
+bool DirModel::getOnlyAllowedPaths() const
 {
-    return mOnlyMTPPaths;
+    return mOnlyAllowedPaths;
 }
 
 
-void DirModel::setOnlyMTPPaths(bool onlyMTPPaths)
+void DirModel::setOnlyAllowedPaths(bool onlyAllowedPaths)
 {
-    if (onlyMTPPaths != mOnlyMTPPaths)
+    if (onlyAllowedPaths != mOnlyAllowedPaths)
     {
-        mOnlyMTPPaths = onlyMTPPaths;
+        mOnlyAllowedPaths = onlyAllowedPaths;
         refresh();
-        emit onlyMTPPathsChanged();
+        emit onlyAllowedPathsChanged();
     }
 }
 
