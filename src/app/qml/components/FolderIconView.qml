@@ -54,7 +54,7 @@ Item {
                 }
 
                 objectName: "iconViewHeader"
-                text: i18n.tr("%1 (%n file)", "%1 (%n files)", root.count).arg(root.folderPath)
+                text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(root.folderPath).arg(root.count)
                 height: smallMode ? units.gu(4) : 0
                 clip: true
             }
