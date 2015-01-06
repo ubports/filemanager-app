@@ -36,7 +36,6 @@ Page {
 
         Column {
             id: content
-            height: childrenRect.height
             anchors {
                 left: parent.left
                 right: parent.right
@@ -91,15 +90,6 @@ Page {
                 id: placesList
                 objectName: "placesList"
                 model: userplaces
-                height: 0
-                onItemAdded: {
-                    console.log("Places item added", index, item)
-                    height += item.height
-                }
-                onItemRemoved: {
-                    console.log("Places item removed", index, item)
-                    height -= item.height
-                }
 
                 delegate: Standard {
                     objectName: "place" + folderDisplayName(path).replace(/ /g,'')
