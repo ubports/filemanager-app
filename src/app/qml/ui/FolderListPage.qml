@@ -50,6 +50,10 @@ PageWithBottomEdge {
             id: pasteButton
             objectName: "paste"
             iconName: "edit-paste"
+            // Translation message was implemented according to:
+            // http://developer.ubuntu.com/api/qml/sdk-14.04/Ubuntu.Components.i18n/
+            // It allows correct translation for languages with more than two plural forms:
+            // http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
             text: i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
             visible: pageModel.clipboardUrlsCounter > 0
             onTriggered: {
