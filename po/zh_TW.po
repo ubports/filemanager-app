@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-12-15 21:15+0100\n"
+"POT-Creation-Date: 2015-01-07 00:30+0100\n"
 "PO-Revision-Date: 2014-11-19 14:08+0000\n"
 "Last-Translator: Walter Cheuk <wwycheuk@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh_TW@li.org>\n"
@@ -15,28 +15,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2015-01-04 06:32+0000\n"
-"X-Generator: Launchpad (build 17286)\n"
+"X-Launchpad-Export-Date: 2015-01-08 07:08+0000\n"
+"X-Generator: Launchpad (build 17298)\n"
 
-#: ../src/app/qml/components/FolderIconView.qml:58
-#: ../src/app/qml/components/FolderListView.qml:36
+#: ../src/app/qml/components/FolderIconView.qml:57
+#: ../src/app/qml/components/FolderListView.qml:35
 #, qt-format
-msgid "%1 (1 file)"
-msgstr "%1 (1 個檔案)"
-
-#: ../src/app/qml/components/FolderIconView.qml:59
-#: ../src/app/qml/components/FolderListView.qml:37
-#, qt-format
-msgid "%1 (%2 files)"
-msgstr "%1 (%2 個檔案)"
+msgid "%1 (%2 file)"
+msgid_plural "%1 (%2 files)"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
-#: ../src/app/qml/ui/FolderListPage.qml:769
+#: ../src/app/qml/ui/FolderListPage.qml:813
 msgid "Device"
 msgstr "裝置"
 
-#: ../src/app/qml/components/PlacesSidebar.qml:54
-#: ../src/app/qml/ui/PlacesPage.qml:28 ../src/app/qml/ui/PlacesPopover.qml:103
+#: ../src/app/qml/components/PlacesSidebar.qml:53
+#: ../src/app/qml/ui/PlacesPage.qml:27 ../src/app/qml/ui/PlacesPopover.qml:102
 msgid "Places"
 msgstr "地方"
 
@@ -44,7 +40,7 @@ msgstr "地方"
 msgid "Open with"
 msgstr "以此開啟："
 
-#: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:103
+#: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:107
 #: ../src/app/qml/ui/SettingsSheet.qml:31
 msgid "Settings"
 msgstr "設定"
@@ -53,12 +49,12 @@ msgstr "設定"
 msgid "Change app settings"
 msgstr "變更程式設定"
 
-#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:354
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:365
 #: ../src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr "圖示"
 
-#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:370
+#: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:381
 #: ../src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr "清單"
@@ -87,7 +83,9 @@ msgstr "確定"
 #: ../src/app/qml/ui/ConfirmDialogWithInput.qml:57
 #: ../src/app/qml/ui/FileActionDialog.qml:45
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../src/app/qml/ui/FolderListPage.qml:332
+#: ../src/app/qml/ui/FolderListPage.qml:343
+#: ../src/app/qml/ui/FolderListPage.qml:656
+#: ../src/app/qml/ui/FolderListPage.qml:723
 #: ../src/app/qml/ui/GoToDialog.qml:67
 msgid "Cancel"
 msgstr "取消"
@@ -149,180 +147,193 @@ msgstr "操作進行中"
 msgid "File operation"
 msgstr "檔案操作"
 
-#: ../src/app/qml/ui/FolderListPage.qml:53
+#: ../src/app/qml/ui/FolderListPage.qml:57
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
 msgstr[0] "貼上 %1 個檔案"
 
-#: ../src/app/qml/ui/FolderListPage.qml:57
+#: ../src/app/qml/ui/FolderListPage.qml:61
 msgid "Paste files"
 msgstr "貼上檔案"
 
-#: ../src/app/qml/ui/FolderListPage.qml:65
+#: ../src/app/qml/ui/FolderListPage.qml:69
 msgid "Clear clipboard"
 msgstr "清除剪貼簿"
 
-#: ../src/app/qml/ui/FolderListPage.qml:75
-#: ../src/app/qml/ui/FolderListPage.qml:93
-#: ../src/app/qml/ui/FolderListPage.qml:605
+#: ../src/app/qml/ui/FolderListPage.qml:79
+#: ../src/app/qml/ui/FolderListPage.qml:97
+#: ../src/app/qml/ui/FolderListPage.qml:593
 msgid "Properties"
 msgstr "屬性"
 
-#: ../src/app/qml/ui/FolderListPage.qml:84
+#: ../src/app/qml/ui/FolderListPage.qml:88
 msgid "New Folder"
 msgstr "新增資料夾"
 
-#: ../src/app/qml/ui/FolderListPage.qml:111
+#: ../src/app/qml/ui/FolderListPage.qml:115
 msgid "Go To"
 msgstr "前往"
 
-#: ../src/app/qml/ui/FolderListPage.qml:118
+#: ../src/app/qml/ui/FolderListPage.qml:122
 msgid "Unlock full access"
 msgstr "解鎖以作完整存取"
 
-#: ../src/app/qml/ui/FolderListPage.qml:132
+#: ../src/app/qml/ui/FolderListPage.qml:136
 msgid "Authentication failed"
 msgstr "身分核對失敗"
 
-#: ../src/app/qml/ui/FolderListPage.qml:204
+#: ../src/app/qml/ui/FolderListPage.qml:206
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
 msgstr[0] "%1 個檔案"
 
-#: ../src/app/qml/ui/FolderListPage.qml:229
+#: ../src/app/qml/ui/FolderListPage.qml:240
 msgid "Open in a new tab"
 msgstr "在新分頁開啟"
 
-#: ../src/app/qml/ui/FolderListPage.qml:237
+#: ../src/app/qml/ui/FolderListPage.qml:248
 msgid "Close this tab"
 msgstr "關閉此分頁"
 
-#: ../src/app/qml/ui/FolderListPage.qml:250
+#: ../src/app/qml/ui/FolderListPage.qml:261
 msgid "Create folder"
 msgstr "建立資料夾"
 
-#: ../src/app/qml/ui/FolderListPage.qml:251
+#: ../src/app/qml/ui/FolderListPage.qml:262
 msgid "Enter name for new folder"
 msgstr "為新資料夾輸入名稱"
 
-#: ../src/app/qml/ui/FolderListPage.qml:267
+#: ../src/app/qml/ui/FolderListPage.qml:278
 msgid "Create file"
 msgstr "建立檔案"
 
-#: ../src/app/qml/ui/FolderListPage.qml:268
+#: ../src/app/qml/ui/FolderListPage.qml:279
 msgid "Enter name for new file"
 msgstr "為新檔案輸入名稱"
 
-#: ../src/app/qml/ui/FolderListPage.qml:317
+#: ../src/app/qml/ui/FolderListPage.qml:328
 msgid "Select"
 msgstr "選取"
 
-#: ../src/app/qml/ui/FolderListPage.qml:385
+#: ../src/app/qml/ui/FolderListPage.qml:408
 msgid "No files"
 msgstr "無檔案"
 
-#: ../src/app/qml/ui/FolderListPage.qml:405
-#: ../src/app/qml/ui/FolderListPage.qml:566
+#: ../src/app/qml/ui/FolderListPage.qml:428
+#: ../src/app/qml/ui/FolderListPage.qml:554
 msgid "Delete"
 msgstr "刪除"
 
-#: ../src/app/qml/ui/FolderListPage.qml:406
+#: ../src/app/qml/ui/FolderListPage.qml:429
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "是否確定永久刪除「%1」？"
 
-#: ../src/app/qml/ui/FolderListPage.qml:411
+#: ../src/app/qml/ui/FolderListPage.qml:434
 msgid "Deleting files"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:429
-#: ../src/app/qml/ui/FolderListPage.qml:579
+#: ../src/app/qml/ui/FolderListPage.qml:452
+#: ../src/app/qml/ui/FolderListPage.qml:567
 msgid "Rename"
 msgstr "改名"
 
-#: ../src/app/qml/ui/FolderListPage.qml:430
+#: ../src/app/qml/ui/FolderListPage.qml:453
 msgid "Enter a new name"
 msgstr "輸入新名稱"
 
-#: ../src/app/qml/ui/FolderListPage.qml:439
+#: ../src/app/qml/ui/FolderListPage.qml:462
 msgid "Could not rename"
 msgstr "無法改名"
 
-#: ../src/app/qml/ui/FolderListPage.qml:440
+#: ../src/app/qml/ui/FolderListPage.qml:463
 msgid "Insufficient permissions or name already exists?"
 msgstr "權限是否不足？或已有同名檔案？"
 
-#: ../src/app/qml/ui/FolderListPage.qml:458
+#: ../src/app/qml/ui/FolderListPage.qml:481
 msgid "Extract Archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:459
+#: ../src/app/qml/ui/FolderListPage.qml:482
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:543
+#: ../src/app/qml/ui/FolderListPage.qml:531
 msgid "Cut"
 msgstr "剪下"
 
-#: ../src/app/qml/ui/FolderListPage.qml:554
+#: ../src/app/qml/ui/FolderListPage.qml:542
 msgid "Copy"
 msgstr "複製"
 
-#: ../src/app/qml/ui/FolderListPage.qml:594
+#: ../src/app/qml/ui/FolderListPage.qml:582
+#: ../src/app/qml/ui/FolderListPage.qml:703
 msgid "Extract archive"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:625
+#: ../src/app/qml/ui/FolderListPage.qml:613
 msgid "File operation error"
 msgstr "檔案操作錯誤"
 
-#: ../src/app/qml/ui/FolderListPage.qml:656
+#: ../src/app/qml/ui/FolderListPage.qml:644
 #, qt-format
 msgid "Extracting archive '%1'"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:668
+#: ../src/app/qml/ui/FolderListPage.qml:665
 msgid "OK"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:682
+#: ../src/app/qml/ui/FolderListPage.qml:680
 msgid "Extracting failed"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:683
+#: ../src/app/qml/ui/FolderListPage.qml:681
 #, qt-format
 msgid "Extracting the archive '%1' failed."
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:740
+#: ../src/app/qml/ui/FolderListPage.qml:695
+msgid "Archive file"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:696
+msgid "Do you want to extract the archive here?"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:713
+msgid "Open with another app"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:781
 msgid "~/Desktop"
 msgstr "~/桌面"
 
-#: ../src/app/qml/ui/FolderListPage.qml:750
+#: ../src/app/qml/ui/FolderListPage.qml:791
 msgid "~/Public"
 msgstr "~/公共"
 
-#: ../src/app/qml/ui/FolderListPage.qml:752
+#: ../src/app/qml/ui/FolderListPage.qml:793
 msgid "~/Programs"
 msgstr "~/程式"
 
-#: ../src/app/qml/ui/FolderListPage.qml:754
+#: ../src/app/qml/ui/FolderListPage.qml:795
 msgid "~/Templates"
 msgstr "~/模版"
 
-#: ../src/app/qml/ui/FolderListPage.qml:767
+#: ../src/app/qml/ui/FolderListPage.qml:811
 msgid "Home"
 msgstr "家目錄"
 
-#: ../src/app/qml/ui/FolderListPage.qml:837
+#: ../src/app/qml/ui/FolderListPage.qml:881
 msgid "Folder not accessible"
 msgstr "無法存取資料夾"
 
 #. TRANSLATORS: this refers to a folder name
-#: ../src/app/qml/ui/FolderListPage.qml:839
+#: ../src/app/qml/ui/FolderListPage.qml:883
 #, qt-format
 msgid "Can not access %1"
 msgstr "無法存取 %1"
@@ -335,13 +346,13 @@ msgstr "前往位置"
 msgid "Enter a location to go to:"
 msgstr "輸入要前往的位置："
 
-#: ../src/app/qml/ui/GoToDialog.qml:45 ../src/app/qml/ui/PlacesPage.qml:62
-#: ../src/app/qml/ui/PlacesPopover.qml:67
+#: ../src/app/qml/ui/GoToDialog.qml:45 ../src/app/qml/ui/PlacesPage.qml:63
+#: ../src/app/qml/ui/PlacesPopover.qml:66
 msgid "Location..."
 msgstr "位置..."
 
-#: ../src/app/qml/ui/GoToDialog.qml:54 ../src/app/qml/ui/PlacesPage.qml:77
-#: ../src/app/qml/ui/PlacesPopover.qml:82
+#: ../src/app/qml/ui/GoToDialog.qml:54 ../src/app/qml/ui/PlacesPage.qml:78
+#: ../src/app/qml/ui/PlacesPopover.qml:81
 msgid "Go"
 msgstr "前往"
 
@@ -389,19 +400,19 @@ msgstr "降序"
 msgid "Filter"
 msgstr "篩選"
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:441
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:418
 msgid "path or url may not exist or cannot be read"
 msgstr "此路徑或網址不存在，或無法讀取"
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:611
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:585
 msgid "Rename error"
 msgstr "改名時出錯"
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:636
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:610
 msgid "Error creating new folder"
 msgstr "新增資料夾時出錯"
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:1278
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:1252
 msgid "items"
 msgstr "項目"
 
@@ -413,84 +424,84 @@ msgstr "此檔案或目錄不存在"
 msgid " does not exist"
 msgstr " 不存在"
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:585
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:590
 msgid "Could not remove the item "
 msgstr "無法移除此項目 "
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:626
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:631
 msgid "Could not find a suitable name to backup"
 msgstr "找不到合適名稱作備份"
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:680
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:685
 msgid "Could not create the directory"
 msgstr "無法建立目錄"
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:689
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:694
 msgid "Could not create link to"
 msgstr "無法建立此項目的連結："
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:701
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:706
 msgid "Could not set permissions to dir"
 msgstr "無法設定此目錄的權限："
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:715
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:720
 msgid "Could not open file"
 msgstr "無法開啟檔案"
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:734
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:739
 msgid "There is no space on disk to copy"
 msgstr "無空間以複製："
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:744
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:749
 msgid "Could not create file"
 msgstr "無法建立檔案"
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:808
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:813
 msgid "Could not remove the directory/file "
 msgstr "無法移除此目錄／檔案： "
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:824
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:829
 msgid "Could not move the directory/file "
 msgstr "無法移動此目錄／檔案： "
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:858
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:863
 msgid "Cannot copy items"
 msgstr "無法複製項目"
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:859
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:878
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:864
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
 msgid "no write permission on folder "
 msgstr "無此資料夾的寫入權限： "
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:877
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:882
 msgid "Cannot move items"
 msgstr "無法移動項目"
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:888
 msgid "origin and destination folders are the same"
 msgstr "來源和目的地資料夾相同"
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1099
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1104
 msgid "Write error in "
 msgstr "寫入此項目時出錯： "
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1115
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1120
 msgid "Read error in "
 msgstr "讀取此項目時出錯： "
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1349
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1354
 msgid " Copy"
 msgstr " 複製"
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1405
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1410
 msgid "Set permissions error in "
 msgstr "設定此項目權限時出錯： "
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1489
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1494
 msgid "Could not create trash info file"
 msgstr "無法建立回收筒資訊檔"
 
-#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1502
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1507
 msgid "Could not remove the trash info file"
 msgstr "無法移除回收筒資訊檔"
 
