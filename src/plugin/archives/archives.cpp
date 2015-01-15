@@ -37,6 +37,24 @@ void Archives::extractTar(const QString path, const QString destination)
     extractArchive(program, arguments);
 }
 
+void Archives::extractGzipTar(const QString path, const QString destination)
+{
+    QString program = "tar";
+    QStringList arguments;
+    arguments << "xzf" << path << "-C" << destination;
+
+    extractArchive(program, arguments);
+}
+
+void Archives::extractBzipTar(const QString path, const QString destination)
+{
+    QString program = "tar";
+    QStringList arguments;
+    arguments << "xjf" << path << "-C" << destination;
+
+    extractArchive(program, arguments);
+}
+
 void Archives::extractArchive(const QString program, const QStringList arguments)
 {
     if (_process != nullptr && _process->state() == QProcess::ProcessState::Running) {
