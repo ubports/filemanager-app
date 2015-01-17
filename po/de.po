@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-01-07 00:30+0100\n"
-"PO-Revision-Date: 2015-01-15 17:15+0000\n"
-"Last-Translator: Niklas Wenzel <nikwen.developer@gmail.com>\n"
+"PO-Revision-Date: 2015-01-16 15:26+0000\n"
+"Last-Translator: Tobias Bannert <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-01-16 06:18+0000\n"
-"X-Generator: Launchpad (build 17303)\n"
+"X-Launchpad-Export-Date: 2015-01-17 07:04+0000\n"
+"X-Generator: Launchpad (build 17304)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
@@ -300,7 +300,7 @@ msgstr "Entpacken des Archivs »%1« ist fehlgeschlagen."
 
 #: ../src/app/qml/ui/FolderListPage.qml:695
 msgid "Archive file"
-msgstr ""
+msgstr "Archivdatei"
 
 #: ../src/app/qml/ui/FolderListPage.qml:696
 msgid "Do you want to extract the archive here?"
