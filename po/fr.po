@@ -8,23 +8,23 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-01-07 00:30+0100\n"
-"PO-Revision-Date: 2014-11-29 17:41+0000\n"
-"Last-Translator: Jean Marc <Unknown>\n"
+"PO-Revision-Date: 2015-01-18 21:09+0000\n"
+"Last-Translator: Anne <anneonyme017@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2015-01-08 07:07+0000\n"
-"X-Generator: Launchpad (build 17298)\n"
+"X-Launchpad-Export-Date: 2015-01-19 06:12+0000\n"
+"X-Generator: Launchpad (build 17304)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 fichier)"
+msgstr[1] "%1 (%2 fichiers)"
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
 #: ../src/app/qml/ui/FolderListPage.qml:813
@@ -300,15 +300,15 @@ msgstr "L'extraction de l'archive « %1 » a échoué."
 
 #: ../src/app/qml/ui/FolderListPage.qml:695
 msgid "Archive file"
-msgstr ""
+msgstr "Fichier archive"
 
 #: ../src/app/qml/ui/FolderListPage.qml:696
 msgid "Do you want to extract the archive here?"
-msgstr ""
+msgstr "Voulez-vous extraire l’archive ici ?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:713
 msgid "Open with another app"
-msgstr ""
+msgstr "Ouvrir avec une autre application"
 
 #: ../src/app/qml/ui/FolderListPage.qml:781
 msgid "~/Desktop"
