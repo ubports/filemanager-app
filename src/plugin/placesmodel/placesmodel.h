@@ -77,6 +77,10 @@ private:
     void removeItemWithoutStoring(int itemToRemove);
 
     QMtabParser m_mtabParser;
+    QStringList m_runtimeLocations;
+    QString m_userMountLocation;
+    bool isMtabEntryUserMount(const QMtabEntry &entry) const;
+    bool isSubDirectory(const QString &dir, const QString &path) const;
     QString standardLocation(QStandardPaths::StandardLocation location) const;
     QStringList m_locations;
     QSettings *m_settings;
