@@ -33,6 +33,9 @@ var __mapping = {
     'mp3': CH.ContentType.Music,
     'ogg': CH.ContentType.Music,
     'wav': CH.ContentType.Music,
+    'm4a': CH.ContentType.Music,
+    'opus': CH.ContentType.Music,
+    'flac': CH.ContentType.Music,
 
     'avi': CH.ContentType.Videos,
     'mpeg': CH.ContentType.Videos,
