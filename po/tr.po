@@ -8,28 +8,28 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-01-07 00:30+0100\n"
-"PO-Revision-Date: 2014-06-28 14:16+0000\n"
-"Last-Translator: Mehmet Hanoğlu <mail@mehmethanoglu.com.tr>\n"
+"PO-Revision-Date: 2015-02-04 20:49+0000\n"
+"Last-Translator: Volkan Gezer <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-01-08 07:08+0000\n"
-"X-Generator: Launchpad (build 17298)\n"
+"X-Launchpad-Export-Date: 2015-02-05 07:38+0000\n"
+"X-Generator: Launchpad (build 17331)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 dosya)"
+msgstr[1] "%1 (%2 dosya)"
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
 #: ../src/app/qml/ui/FolderListPage.qml:813
 msgid "Device"
-msgstr ""
+msgstr "Aygıt"
 
 #: ../src/app/qml/components/PlacesSidebar.qml:53
 #: ../src/app/qml/ui/PlacesPage.qml:27 ../src/app/qml/ui/PlacesPopover.qml:102
@@ -38,7 +38,7 @@ msgstr "Yerler"
 
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
-msgstr ""
+msgstr "Birlikte aç"
 
 #: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:107
 #: ../src/app/qml/ui/SettingsSheet.qml:31
@@ -61,15 +61,15 @@ msgstr "Liste"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 msgid "Authentication required"
-msgstr ""
+msgstr "Kimlik doğrulama gerekli"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr ""
+msgstr "Tüm dosyalara erişmek için parola gerekli"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "parola"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
@@ -145,14 +145,14 @@ msgstr "İşlem sürüyor"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
-msgstr ""
+msgstr "Dosya işlemi"
 
 #: ../src/app/qml/ui/FolderListPage.qml:57
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 Dosya Yapıştır"
+msgstr[1] "%1 Dosya Yapıştır"
 
 #: ../src/app/qml/ui/FolderListPage.qml:61
 msgid "Paste files"
@@ -160,7 +160,7 @@ msgstr "Dosyaları yapıştır"
 
 #: ../src/app/qml/ui/FolderListPage.qml:69
 msgid "Clear clipboard"
-msgstr ""
+msgstr "Panoyu temizle"
 
 #: ../src/app/qml/ui/FolderListPage.qml:79
 #: ../src/app/qml/ui/FolderListPage.qml:97
@@ -170,26 +170,26 @@ msgstr "Özellikler"
 
 #: ../src/app/qml/ui/FolderListPage.qml:88
 msgid "New Folder"
-msgstr ""
+msgstr "Yeni Klasör"
 
 #: ../src/app/qml/ui/FolderListPage.qml:115
 msgid "Go To"
-msgstr ""
+msgstr "Git"
 
 #: ../src/app/qml/ui/FolderListPage.qml:122
 msgid "Unlock full access"
-msgstr ""
+msgstr "Tüm erişim kilidini aç"
 
 #: ../src/app/qml/ui/FolderListPage.qml:136
 msgid "Authentication failed"
-msgstr ""
+msgstr "Kimlik denetimi başarısız"
 
 #: ../src/app/qml/ui/FolderListPage.qml:206
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 dosya"
+msgstr[1] "%1 dosya"
 
 #: ../src/app/qml/ui/FolderListPage.qml:240
 msgid "Open in a new tab"
@@ -217,7 +217,7 @@ msgstr "Yeni dosya için ad oluşturun"
 
 #: ../src/app/qml/ui/FolderListPage.qml:328
 msgid "Select"
-msgstr ""
+msgstr "Seç"
 
 #: ../src/app/qml/ui/FolderListPage.qml:408
 msgid "No files"
@@ -235,7 +235,7 @@ msgstr "'%1' dosyasını kalıcı olarak silmek istediğinizden emin misiniz?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:434
 msgid "Deleting files"
-msgstr ""
+msgstr "Dosyalar siliniyor"
 
 #: ../src/app/qml/ui/FolderListPage.qml:452
 #: ../src/app/qml/ui/FolderListPage.qml:567
@@ -256,12 +256,12 @@ msgstr "Yetersiz izin mi yoksa  ad zaten kullanımda mı?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:481
 msgid "Extract Archive"
-msgstr ""
+msgstr "Arşivi Çıkart"
 
 #: ../src/app/qml/ui/FolderListPage.qml:482
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr ""
+msgstr "'%1' arşivini buraya çıkartmak istediğinizden emin misiniz?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:531
 msgid "Cut"
@@ -274,7 +274,7 @@ msgstr "Kopyala"
 #: ../src/app/qml/ui/FolderListPage.qml:582
 #: ../src/app/qml/ui/FolderListPage.qml:703
 msgid "Extract archive"
-msgstr ""
+msgstr "Arşivi çıkart"
 
 #: ../src/app/qml/ui/FolderListPage.qml:613
 msgid "File operation error"
@@ -283,32 +283,32 @@ msgstr "Dosya işlemi hatası"
 #: ../src/app/qml/ui/FolderListPage.qml:644
 #, qt-format
 msgid "Extracting archive '%1'"
-msgstr ""
+msgstr "'%1' arşivi çıkartılıyor"
 
 #: ../src/app/qml/ui/FolderListPage.qml:665
 msgid "OK"
-msgstr ""
+msgstr "Tamam"
 
 #: ../src/app/qml/ui/FolderListPage.qml:680
 msgid "Extracting failed"
-msgstr ""
+msgstr "Çıkartma başarısız"
 
 #: ../src/app/qml/ui/FolderListPage.qml:681
 #, qt-format
 msgid "Extracting the archive '%1' failed."
-msgstr ""
+msgstr "'%1' arşivini çıkartma başarısız."
 
 #: ../src/app/qml/ui/FolderListPage.qml:695
 msgid "Archive file"
-msgstr ""
+msgstr "Arşiv dosyası"
 
 #: ../src/app/qml/ui/FolderListPage.qml:696
 msgid "Do you want to extract the archive here?"
-msgstr ""
+msgstr "Arşivi buraya çıkartmak istiyor musunuz?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:713
 msgid "Open with another app"
-msgstr ""
+msgstr "Farklı uygulamayla aç"
 
 #: ../src/app/qml/ui/FolderListPage.qml:781
 msgid "~/Desktop"
@@ -404,109 +404,109 @@ msgstr "Süz"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:418
 msgid "path or url may not exist or cannot be read"
-msgstr ""
+msgstr "yol veya url mevcut değil ya da okunamıyor"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:585
 msgid "Rename error"
-msgstr ""
+msgstr "Adlandırma hatası"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:610
 msgid "Error creating new folder"
-msgstr ""
+msgstr "Yeni klasör oluşturma hatası"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1252
 msgid "items"
-msgstr ""
+msgstr "öge"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
 msgid "File or Directory does not exist"
-msgstr ""
+msgstr "Dosya veya Dizin mevcut değil"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:264
 msgid " does not exist"
-msgstr ""
+msgstr " mevcut değil"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:590
 msgid "Could not remove the item "
-msgstr ""
+msgstr "Öge silinemedi "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:631
 msgid "Could not find a suitable name to backup"
-msgstr ""
+msgstr "Yedeklemek üzere uygun bir isim bulunamadı"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:685
 msgid "Could not create the directory"
-msgstr ""
+msgstr "Dizin oluşturulamadı"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:694
 msgid "Could not create link to"
-msgstr ""
+msgstr "Bağlantı oluşturulamadı"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:706
 msgid "Could not set permissions to dir"
-msgstr ""
+msgstr "Dizine izinler atanamadı"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:720
 msgid "Could not open file"
-msgstr ""
+msgstr "Dosyası açılamadı"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:739
 msgid "There is no space on disk to copy"
-msgstr ""
+msgstr "Diskte kopyalamak için alan yok"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:749
 msgid "Could not create file"
-msgstr ""
+msgstr "Dosya oluşturulamadı"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:813
 msgid "Could not remove the directory/file "
-msgstr ""
+msgstr "Dizin/dosya kaldırılamadı "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:829
 msgid "Could not move the directory/file "
-msgstr ""
+msgstr "Dizin/dosya taşınamadı "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:863
 msgid "Cannot copy items"
-msgstr ""
+msgstr "Ögeler kopyalanamıyor"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:864
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
 msgid "no write permission on folder "
-msgstr ""
+msgstr "klasörde yazma izni yok "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:882
 msgid "Cannot move items"
-msgstr ""
+msgstr "Ögeler taşınamıyor"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:888
 msgid "origin and destination folders are the same"
-msgstr ""
+msgstr "özgün ve hedef klasörler aynı"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1104
 msgid "Write error in "
-msgstr ""
+msgstr "Yazma hatası: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1120
 msgid "Read error in "
-msgstr ""
+msgstr "Okuma hatası: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1354
 msgid " Copy"
-msgstr ""
+msgstr " Kopyala"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1410
 msgid "Set permissions error in "
-msgstr ""
+msgstr "İzin oluşturma hatası: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1494
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "Çöp bilgi dosyası oluşturulamadı"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1507
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "Çöp bilgi dosyası kaldırılamadı"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
-msgstr ""
+msgstr "Dosya Yöneticisi"
