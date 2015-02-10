@@ -8,28 +8,28 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-01-07 00:30+0100\n"
-"PO-Revision-Date: 2014-07-25 05:47+0000\n"
+"PO-Revision-Date: 2015-02-10 05:33+0000\n"
 "Last-Translator: Gursharnjit_Singh <ubuntuser13@gmail.com>\n"
 "Language-Team: Punjabi <pa@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-01-08 07:08+0000\n"
-"X-Generator: Launchpad (build 17298)\n"
+"X-Launchpad-Export-Date: 2015-02-10 07:05+0000\n"
+"X-Generator: Launchpad (build 17331)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 ਫ਼ਾਈਲ)"
+msgstr[1] "%1 (%2 ਫ਼ਾਈਲਾਂ)"
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
 #: ../src/app/qml/ui/FolderListPage.qml:813
 msgid "Device"
-msgstr ""
+msgstr "ਜੰਤਰ"
 
 #: ../src/app/qml/components/PlacesSidebar.qml:53
 #: ../src/app/qml/ui/PlacesPage.qml:27 ../src/app/qml/ui/PlacesPopover.qml:102
@@ -38,7 +38,7 @@ msgstr "ਥਾਵਾਂ"
 
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
-msgstr ""
+msgstr "ਖੋਲ੍ਹੋ ਨਾਲ"
 
 #: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:107
 #: ../src/app/qml/ui/SettingsSheet.qml:31
@@ -61,15 +61,15 @@ msgstr "ਸੂਚੀ"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 msgid "Authentication required"
-msgstr ""
+msgstr "ਪ੍ਰਮਾਣਿਕਤਾ ਦੀ ਲੋੜ"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr ""
+msgstr "ਸਾਰੀਆਂ ਫ਼ਾਈਲਾਂ ਤੱਕ ਪਹੁੰਚ ਲਈ ਪਾਸਵਰਡ ਦੀ ਲੋੜ"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "ਪਾਸਵਰਡ"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
@@ -145,14 +145,14 @@ msgstr "ਕਾਰਵਾਈ ਜਾਰੀ ਹੈ"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
-msgstr ""
+msgstr "ਫ਼ਾਈਲ ਕਾਰਵਾਈ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:57
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ਚੇਪੋ %1 ਫ਼ਾਈਲ"
+msgstr[1] "ਚੇਪੋ %1 ਫ਼ਾਈਲਾਂ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:61
 msgid "Paste files"
@@ -160,7 +160,7 @@ msgstr "ਫ਼ਾਈਲਾਂ ਪੇਸਟ ਕਰੋ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:69
 msgid "Clear clipboard"
-msgstr ""
+msgstr "ਕਲਿੱਪਬੋਰਡ ਸ਼ਾਫ਼ ਕਰੋ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:79
 #: ../src/app/qml/ui/FolderListPage.qml:97
@@ -170,26 +170,26 @@ msgstr "ਵਿਸ਼ੇਸ਼ਤਾ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:88
 msgid "New Folder"
-msgstr ""
+msgstr "ਨਵਾਂ ਫੋਲਡਰ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:115
 msgid "Go To"
-msgstr ""
+msgstr "ਤੇ ਜਾਓ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:122
 msgid "Unlock full access"
-msgstr ""
+msgstr "ਮੁਕੰਮਲ ਪਹੁੰਚ ਖੋਲ੍ਹੋ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:136
 msgid "Authentication failed"
-msgstr ""
+msgstr "ਪ੍ਰਮਾਣਿਕਤਾ ਫ਼ੇਲ੍ਹ ਹੋਈ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:206
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 ਫਾਈਲ"
+msgstr[1] "%1 ਫਾਈਲਾਂ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:240
 msgid "Open in a new tab"
@@ -217,7 +217,7 @@ msgstr "ਨਵੀ ਫ਼ਾਈਲ ਲਈ ਨਾਂ ਭਰੋ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:328
 msgid "Select"
-msgstr ""
+msgstr "ਚੁਣੋ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:408
 msgid "No files"
@@ -235,7 +235,7 @@ msgstr "ਕੀ ਤੁਹਾਨੂੰ ਯਕੀਨ ਹੈ ਤੁਸੀ ਪੱਕ�
 
 #: ../src/app/qml/ui/FolderListPage.qml:434
 msgid "Deleting files"
-msgstr ""
+msgstr "ਫ਼ਾਈਲਾਂ ਹਟਾ ਰਿਹਾ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:452
 #: ../src/app/qml/ui/FolderListPage.qml:567
@@ -256,12 +256,12 @@ msgstr "ਨਾਕਾਫ਼ੀ ਮਨਜ਼ੂਰੀ ਜਾਂ ਨਾਂ ਪਹਿ�
 
 #: ../src/app/qml/ui/FolderListPage.qml:481
 msgid "Extract Archive"
-msgstr ""
+msgstr "ਅਕਾਈਵ ਖਿਲਾਰੋ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:482
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr ""
+msgstr "ਕੀ ਤੁਸੀਂ '%1' ਇੱਥੇ ਖਿਲਾਰਣ ਕਰਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:531
 msgid "Cut"
@@ -274,7 +274,7 @@ msgstr "ਕਾਪੀ ਕਰੋ"
 #: ../src/app/qml/ui/FolderListPage.qml:582
 #: ../src/app/qml/ui/FolderListPage.qml:703
 msgid "Extract archive"
-msgstr ""
+msgstr "ਅਕਾਈਵ ਖਿਲਾਰੋ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:613
 msgid "File operation error"
@@ -283,32 +283,32 @@ msgstr "ਫ਼ਾਈਲ ਕਾਰਵਾਈ ਖਾਮੀ"
 #: ../src/app/qml/ui/FolderListPage.qml:644
 #, qt-format
 msgid "Extracting archive '%1'"
-msgstr ""
+msgstr "'%1' ਅਕਾਈਵ ਖਿਲਾਰ ਰਿਹਾ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:665
 msgid "OK"
-msgstr ""
+msgstr "ਠੀਕ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:680
 msgid "Extracting failed"
-msgstr ""
+msgstr "ਖਿਲਾਰਣਾ ਫ਼ੇਲ੍ਹ ਹੋਇਆ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:681
 #, qt-format
 msgid "Extracting the archive '%1' failed."
-msgstr ""
+msgstr "ਅਕਾਈਵ '%1' ਖਿਲਾਰਣਾ ਫ਼ੇਲ੍ਹ ਹੋਇਆ।"
 
 #: ../src/app/qml/ui/FolderListPage.qml:695
 msgid "Archive file"
-msgstr ""
+msgstr "ਅਕਾਈਵ ਫ਼ਾਈਲ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:696
 msgid "Do you want to extract the archive here?"
-msgstr ""
+msgstr "ਕੀ ਤੁਸੀਂ ਅਕਾਈਵ ਇੱਥੇ ਖਿਲੇਰਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:713
 msgid "Open with another app"
-msgstr ""
+msgstr "ਹੋਰ ਐਪ ਨਾਲ ਖੋਲ੍ਹੋ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:781
 msgid "~/Desktop"
@@ -404,109 +404,109 @@ msgstr "ਫਿਲਟਰ"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:418
 msgid "path or url may not exist or cannot be read"
-msgstr ""
+msgstr "ਰਸਤਾ ਜਾਂ url ਮੌਜੂਦ ਨਹੀਂ ਜਾਂ ਪੜ੍ਹੇ ਨਹੀਂ ਜਾ ਸਕਦੇ"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:585
 msgid "Rename error"
-msgstr ""
+msgstr "ਮੁੜ-ਨਾਂ ਖਾਮੀ"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:610
 msgid "Error creating new folder"
-msgstr ""
+msgstr "ਨਵਾਂ ਫ਼ੋਲਡਰ ਬਣਾਉਂਦੇ ਸਮੇਂ ਖਾਮੀ"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1252
 msgid "items"
-msgstr ""
+msgstr "ਚੀਜ਼ਾਂ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
 msgid "File or Directory does not exist"
-msgstr ""
+msgstr "ਫ਼ਾਈਲ ਜਾਂ ਡਾਇਰੈਕਟਰੀ ਮੌਜੂਦ ਨਹੀਂ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:264
 msgid " does not exist"
-msgstr ""
+msgstr " ਮੌਜੂਦ ਨਹੀਂ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:590
 msgid "Could not remove the item "
-msgstr ""
+msgstr "ਚੀਜ਼ ਹਟਾ ਨਹੀਂ ਸਕਦਾ "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:631
 msgid "Could not find a suitable name to backup"
-msgstr ""
+msgstr "ਬੈੱਕਅਪ ਲਈ ਠੀਕ ਨਾਂ ਨਹੀਂ ਲੱਭ ਸਕਿਆ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:685
 msgid "Could not create the directory"
-msgstr ""
+msgstr "ਡਾਇਰੈਕਟਰੀ ਬਣਾ ਨਹੀਂ ਸਕਦਾ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:694
 msgid "Could not create link to"
-msgstr ""
+msgstr "ਲਈ ਲਿੰਕ ਬਣਾ ਨਹੀਂ ਸਕਦਾ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:706
 msgid "Could not set permissions to dir"
-msgstr ""
+msgstr "dir ਲਈ ਅਧਿਕਾਰ ਸੈੱਟ ਨਹੀਂ ਕਰ ਸਕਦਾ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:720
 msgid "Could not open file"
-msgstr ""
+msgstr "ਫ਼ਾਈਲ ਖੋਲ੍ਹ ਨਹੀਂ ਸਕਦਾ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:739
 msgid "There is no space on disk to copy"
-msgstr ""
+msgstr "ਕਾਪੀ ਕਰਨ ਲਈ ਡਿਸਕ ਤੇ ਕੋਈ ਸਪੇਸ ਨਹੀਂ ਹੈ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:749
 msgid "Could not create file"
-msgstr ""
+msgstr "ਫ਼ਾਈਲ ਨਹੀਂ ਬਣਾ ਸਕਦਾ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:813
 msgid "Could not remove the directory/file "
-msgstr ""
+msgstr "ਡਾਇਰੈਕਟਰੀ/ਫ਼ਾਈਲ ਨਹੀਂ ਹਟਾ ਸਕਦਾ "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:829
 msgid "Could not move the directory/file "
-msgstr ""
+msgstr "ਡਾਇਰੈਕਟਰੀ/ਫ਼ਾਈਲ ਮੂਵ ਨਹੀਂ ਕਰ ਸਕਦਾ "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:863
 msgid "Cannot copy items"
-msgstr ""
+msgstr "ਚੀਜ਼ਾਂ ਕਾਪੀ ਨਹੀਂ ਕਰ ਸਕਦਾ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:864
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
 msgid "no write permission on folder "
-msgstr ""
+msgstr "ਫ਼ੋਲਡਰ ਤੇ ਲਿੱਖਣ ਦਾ ਅਧਿਕਾਰ ਨਹੀਂ "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:882
 msgid "Cannot move items"
-msgstr ""
+msgstr "ਚੀਜ਼ਾਂ ਮੂਵ ਨਹੀਂ ਕਰ ਸਕਦਾ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:888
 msgid "origin and destination folders are the same"
-msgstr ""
+msgstr "ਮੂਲ ਅਤੇ ਮੰਜ਼ਿਲ ਫ਼ੋਲਡਰ ਇੱਕੋ ਹਨ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1104
 msgid "Write error in "
-msgstr ""
+msgstr "ਵਿੱਚ ਲਿੱਖਣ ਖਾਮੀ "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1120
 msgid "Read error in "
-msgstr ""
+msgstr "ਵਿੱਚ ਪੜ੍ਹਣ ਖਾਮੀ "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1354
 msgid " Copy"
-msgstr ""
+msgstr " ਕਾਪੀ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1410
 msgid "Set permissions error in "
-msgstr ""
+msgstr "ਵਿੱਚ ਅਧਿਕਾਰ ਸੈੱਟ ਕਰਨ ਵਿੱਚ ਖਾਮੀ "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1494
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "ਟਰੈਸ ਇੰਫ਼ੋ ਫ਼ਾਈਲ ਨਹੀਂ ਰਚ ਸਕਦਾ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1507
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "ਟਰੈਸ ਇੰਫ਼ੋ ਫ਼ਾਈਲ ਨਹੀਂ ਹਟਾ ਸਕਦਾ"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
-msgstr ""
+msgstr "ਫ਼ਾਈਲ ਮੈਨੇਜਰ"
