@@ -48,6 +48,8 @@ PlacesModel::PlacesModel(QObject *parent) :
     defaultLocations.append(locationMusic());
     defaultLocations.append(locationPictures());
     defaultLocations.append(locationVideos());
+    // Add root also
+    defaultLocations.append("/");
 
     if (!m_settings->contains("storedLocations")) {
         m_locations.append(defaultLocations);
