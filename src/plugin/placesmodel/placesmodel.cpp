@@ -28,6 +28,10 @@
 PlacesModel::PlacesModel(QObject *parent) :
     QAbstractListModel(parent)
 {
+    m_userMountLocation = "/media/" + qgetenv("USER");
+    // For example /run/user/1000
+    m_runtimeLocations = QStandardPaths::standardLocations(QStandardPaths::RuntimeLocation);
+
     QStringList defaultLocations;
     // Set the storage location to a path that works well
     // with app isolation
@@ -44,6 +48,8 @@ PlacesModel::PlacesModel(QObject *parent) :
     defaultLocations.append(locationMusic());
     defaultLocations.append(locationPictures());
     defaultLocations.append(locationVideos());
+    // Add root also
+    defaultLocations.append("/");
 
     if (!m_settings->contains("storedLocations")) {
         m_locations.append(defaultLocations);
@@ -94,9 +100,7 @@ PlacesModel::rescanMtab() {
 
     foreach (QMtabEntry e, entries) {
         qDebug() << Q_FUNC_INFO << "Considering" << "fsName:" <<  e.fsName << "dir:" << e.dir << "type:" << e.type;
-        QFileInfo dir(e.dir);
-        if (dir.isReadable() && dir.isExecutable())
-        {
+        if (isMtabEntryUserMount(e)) {
             qDebug() << Q_FUNC_INFO << "Adding as userMount directory dir" << e.dir;
             userMounts << e.dir;
         }
@@ -121,6 +125,35 @@ PlacesModel::rescanMtab() {
         }
         emit userMountRemoved(removedMount);
     }
+}
+
+bool PlacesModel::isMtabEntryUserMount(const QMtabEntry &e) const {
+    if (e.fsName == "none") {
+        qDebug() << Q_FUNC_INFO << "Ignoring mounts with filesystem name 'none'";
+        return false;
+    }
+    if (isSubDirectory(m_userMountLocation, e.dir)) {
+        qDebug() << Q_FUNC_INFO << "Is user mount location";
+        return true;
+    }
+    foreach (const QString &runtimeLocation, m_runtimeLocations) {
+        if (isSubDirectory(runtimeLocation, e.dir)) {
+            qDebug() << Q_FUNC_INFO << "Is user mount location";
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool PlacesModel::isSubDirectory(const QString &dir, const QString &path) const {
+    QFileInfo dirFi = QFileInfo(dir);
+    QFileInfo pathFi = QFileInfo(path);
+
+    QString absDir = dirFi.absolutePath();
+    QString absPath = pathFi.absolutePath();
+
+    return absPath.startsWith(QString(absDir + "/"));
 }
 
 QString PlacesModel::standardLocation(QStandardPaths::StandardLocation location) const
