@@ -383,11 +383,28 @@ PageWithBottomEdge {
 
     function getArchiveType(fileName) {
         var splitName = fileName.split(".")
+
+        if (splitName.length <= 1) { // To sort out files simply named "zip" or "tar"
+            return ""
+        }
+
         var fileExtension = splitName[splitName.length - 1]
         if (fileExtension === "zip") {
             return "zip"
         } else if (fileExtension === "tar") {
             return "tar"
+        } else if (fileExtension === "gz") {
+            if (splitName.length > 2 && splitName[splitName.length - 2] === "tar") {
+                return "tar.gz"
+            } else {
+                return ""
+            }
+        } else if (fileExtension === "bz2") {
+            if (splitName.length > 2 && splitName[splitName.length - 2] === "tar") {
+                return "tar.bz2"
+            } else {
+                return ""
+            }
         } else {
             return ""
         }
@@ -938,7 +955,7 @@ PageWithBottomEdge {
         console.log("Extracting...")
 
         var parentDirectory = filePath.substring(0, filePath.lastIndexOf("/"))
-        var fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf("."))
+        var fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf(archiveType) - 1)
         var extractDirectory = parentDirectory + "/" + fileNameWithoutExtension
 
         // Add numbers if the directory already exist: myfile, myfile-1, myfile-2, etc.
@@ -960,6 +977,10 @@ PageWithBottomEdge {
             archives.extractZip(filePath, extractDirectory)
         } else if (archiveType === "tar") {
             archives.extractTar(filePath, extractDirectory)
+        } else if (archiveType === "tar.gz") {
+            archives.extractGzipTar(filePath, extractDirectory)
+        } else if (archiveType === "tar.bz2") {
+            archives.extractBzipTar(filePath, extractDirectory)
         }
     }
 

@@ -50,6 +50,22 @@ class TestFolderListPage(FileManagerTestCase):
              'extracted_text_file_name': 'CodeOfConduct.txt',
              'extracted_image_dir_name': 'images',
              'extracted_image_name': 'ubuntu.jpg'
+             }),
+
+        ('tar_gz',
+            {'file_to_extract': 'Test.tar.gz',
+             'extracted_dir_name': 'Test',
+             'extracted_text_file_name': 'CodeOfConduct.txt',
+             'extracted_image_dir_name': 'images',
+             'extracted_image_name': 'ubuntu.jpg'
+             }),
+
+        ('tar_bz2',
+            {'file_to_extract': 'Test.tar.bz2',
+             'extracted_dir_name': 'Test',
+             'extracted_text_file_name': 'CodeOfConduct.txt',
+             'extracted_image_dir_name': 'images',
+             'extracted_image_name': 'ubuntu.jpg'
              })
     ]
 

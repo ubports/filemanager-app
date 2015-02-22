@@ -29,6 +29,8 @@ class Archives : public QObject
 public:
     Q_INVOKABLE void extractZip(const QString path, const QString destination);
     Q_INVOKABLE void extractTar(const QString path, const QString destination);
+    Q_INVOKABLE void extractGzipTar(const QString path, const QString destination);
+    Q_INVOKABLE void extractBzipTar(const QString path, const QString destination);
     Q_INVOKABLE void cancelArchiveExtraction();
 
 signals:
