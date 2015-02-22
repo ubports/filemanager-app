@@ -101,16 +101,26 @@ public:
     virtual QDateTime lastModified() const;
     virtual QDateTime lastRead() const;
     virtual QMimeType mimeType() const;
+    virtual bool      isHost() const;
+    virtual bool      isSharedDir() const;
+    virtual bool      isWorkGroup() const;
+    virtual bool      isShare() const;
+    virtual bool      isBrowsable() const;
+    virtual bool      needsAuthentication() const;
+    virtual QString   authenticationPath() const;
+    virtual void      setFile(const QString &dir, const QString & file);    
+    virtual bool      permission(QFile::Permissions permissions) const;
+    void              fillFromStatBuf(const struct stat& statBuffer);
 
-    virtual void      setFile(const QString &dir, const QString & file);
+public:
+    static QString    removeExtraSlashes(const QString &url, int firstSlashIndex = -1);
 
 #if 0
     virtual QString   path() const;
     virtual QString   owner()   const;
     virtual uint      ownerId() const;
     virtual QString   group()   const;
-    virtual uint      groupId() const;
-    virtual bool      permission(QFile::Permissions permissions) const;
+    virtual uint      groupId() const;   
 #endif
 
 protected:
@@ -149,7 +159,14 @@ public:
     bool      _isRoot      :1;
     bool      _isReadable  :1;
     bool      _isWritable  :1;
-    bool      _isExecutable:1;
+    bool      _isExecutable:1;  
+    bool      _isLocalSharedDir :1;  //!< the directory in the local disk is shared folder (perhaps using Samba)
+    bool      _isHost      :1;       //!< the item points to a host like fish://localhost, smb://10.10.200.1, etc.
+    bool      _isWorkGroup :1;       //!< specific to Samba
+    bool      _isNetworkShare :1;    //!< samba share (entry point)
+    bool      _needsAuthentication:1;//!< the url may require authentication do access
+
+
     QFile::Permissions  _permissions;
     qint64    _size;
     QDateTime _created;
@@ -158,6 +175,7 @@ public:
     QString   _path;
     QString   _fileName;
     QString   _normalizedPath;
+
     static QMimeDatabase mimeDatabase;
 };
 

@@ -62,6 +62,11 @@ public:
         IconSourceRole,
         FilePathRole,
         IsDirRole,
+        IsHostRole,         //!< it can also be used for other protocols than smb/cifs
+        IsSmbWorkgroupRole,
+        IsSmbShareRole,
+        IsSharedDirRole,    //!< it can also be used for other protocols than smb/cifs
+        IsSharingAllowedRole,//!< true for local directories (not in Trash) and not IsSharedDirRole
         IsFileRole,
         IsReadableRole,
         IsWritableRole,
