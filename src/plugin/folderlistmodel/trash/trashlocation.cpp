@@ -180,8 +180,7 @@ void TrashLocation::refreshInfo()
 
 
 void TrashLocation::startExternalFsWatcher()
-{
-    //TODO implement a Watcher for this
+{   
     //modify the existent watcher to work having  a list of paths
     if (m_usingExternalWatcher && m_extWatcher == 0 && isRoot())
     {     
@@ -285,4 +284,33 @@ TrashLocation::getMovePairPaths(const DirItemInfo &item) const
 
     ret.setTargetFullName( trashInfo.absFile );
     return ret;
+}
+
+
+DirItemInfo * TrashLocation::newItemInfo(const QString &urlPath)
+{
+    return new TrashItemInfo(urlPath);
+}
+
+
+/*!
+ * \brief TrashLocation::newListWorker() It is provided only because it is a pure method
+ *
+ *   As \rev fetchItems() is reemplemented this method should never be used
+ *
+ * \param urlPath
+ * \param filter
+ * \param isRecursive
+ * \return
+ */
+DirListWorker * TrashLocation::newListWorker(const QString &urlPath, QDir::Filter filter, const bool isRecursive)
+{
+    Q_UNUSED(isRecursive);
+    QString trashDir;
+    if (m_info && !m_info->isRoot())
+    {
+        TrashItemInfo *item = static_cast<TrashItemInfo*> (m_info);
+        trashDir = item->getTrashDir();
+    }
+    return new TrashListWorker(trashDir, urlPath, filter);
 }

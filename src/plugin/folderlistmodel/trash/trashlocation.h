@@ -45,6 +45,11 @@ public:
 
     virtual DirItemInfo *validateUrlPath(const QString& urlPath);
 
+    virtual DirItemInfo * newItemInfo(const QString& urlPath);
+    virtual DirListWorker * newListWorker(const QString &urlPath,
+                                          QDir::Filter filter,
+                                          const bool isRecursive);
+
     /*!
      * \brief getMovePairPaths() Get: original path and destination trash path
      *

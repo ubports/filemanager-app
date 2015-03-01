@@ -1,7 +1,8 @@
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     disk
-    trash
+    trash   
+    net
 )
 
 set(PLUGIN_DIR org/nemomobile/folderlistmodel)
@@ -40,6 +41,10 @@ set(folderlistmodel_SRCS
     locationsfactory.h
     locationurl.cpp
     locationurl.h
+    locationitemdiriterator.cpp
+    locationitemdiriterator.h
+    cleanurl.cpp
+    cleanurl.h  
     disk/disklocation.cpp
     disk/disklocation.h
     trash/qtrashdir.cpp
@@ -49,7 +54,9 @@ set(folderlistmodel_SRCS
     trash/trashiteminfo.cpp
     trash/trashiteminfo.h
     trash/trashlocation.cpp
-    trash/trashlocation.h
+    trash/trashlocation.h          
+    net/netauthenticationdata.cpp
+    net/netauthenticationdata.h   
 )
 
 add_library(nemofolderlistmodel MODULE
@@ -57,6 +64,7 @@ add_library(nemofolderlistmodel MODULE
 )
 
 qt5_use_modules(nemofolderlistmodel Gui Qml Quick Widgets)
+
 
 # Copy the plugin, the qmldir file and other assets to the build dir for running in QtCreator
 if(NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")

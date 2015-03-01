@@ -49,12 +49,9 @@ public:
 
     ExternalFSWatcher  * getExternalFSWatcher() const;
 
-    virtual void        fetchItems(QDir::Filter dirFilter, bool recursive = false) ;
     virtual void        fetchExternalChanges(const QString& urlPath,
                                              const DirItemInfoList& list,
                                              QDir::Filter dirFilter) ;
-    virtual bool        becomeParent();
-    virtual void        refreshInfo();
 
     virtual void        startExternalFsWatcher();
     virtual void        stopExternalFsWatcher();
@@ -62,7 +59,10 @@ public:
     virtual void        startWorking();
     virtual void        stopWorking();
 
-    virtual DirItemInfo *validateUrlPath(const QString& urlPath);
+    virtual DirItemInfo * newItemInfo(const QString& urlPath);
+    virtual DirListWorker * newListWorker(const QString &urlPath,
+                                          QDir::Filter filter,
+                                          const bool isRecursive);
 
 protected:
     void    addExternalFsWorkerRequest(ExternalFileSystemChangesWorker *);

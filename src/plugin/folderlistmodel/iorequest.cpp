@@ -89,9 +89,14 @@ IORequestLoader::~IORequestLoader()
 
 DirItemInfoList  IORequestLoader::getContents()
 {
-   return mLoaderType == NormalLoader ?
-                getNormalContent() :
-                getTrashContent();
+   DirItemInfoList list;
+   switch(mLoaderType)
+   {
+      case  NormalLoader:  list = getNormalContent();  break;
+      case  TrashLoader:   list = getTrashContent();   break;
+      case  NetworkLoader: list = getNetworkContent(); break;
+   }   
+   return list;
 }
 
 DirItemInfoList  IORequestLoader::getNormalContent()
@@ -112,8 +117,7 @@ DirItemInfoList IORequestLoader::add(const QString &pathName,
 {
     QDir tmpDir = QDir(pathName, QString(), QDir::NoSort, filter);
     QDirIterator it(tmpDir);
-    while (it.hasNext())
-    {
+    while (it.hasNext()) {
         it.next();
         if(it.fileInfo().isDir() && isRecursive) {
             directoryContents = add(it.fileInfo().filePath(),
@@ -148,6 +152,14 @@ DirItemInfoList  IORequestLoader::getTrashContent()
    }
    return directoryContents;
 }
+
+
+DirItemInfoList IORequestLoader::getNetworkContent()
+{
+  DirItemInfoList emptyContent;
+  return emptyContent;
+}
+
 
 
 //-----------------------------------------------------------------------------------------------

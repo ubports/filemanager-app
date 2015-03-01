@@ -218,10 +218,11 @@ QHash<int, QByteArray> DirModel::buildRoleNames() const
         roles.insert(FilePathRole, QByteArray("filePath"));
         roles.insert(IsDirRole, QByteArray("isDir"));        
         roles.insert(IsHostRole, QByteArray("isHost"));
-        roles.insert(IsSmbWorkgroupRole, QByteArray("IsSmbWorkgroup"));
-        roles.insert(IsSmbShareRole, QByteArray("IsSmbShare"));
-        roles.insert(IsSharedDirRole, QByteArray("IsSharedDir"));
-        roles.insert(IsSharingAllowedRole, QByteArray("IsSharingAllowed"));
+        roles.insert(IsSmbWorkgroupRole, QByteArray("isSmbWorkgroup"));
+        roles.insert(IsSmbShareRole, QByteArray("isSmbShare"));
+        roles.insert(IsSharedDirRole, QByteArray("isSharedDir"));
+        roles.insert(IsSharingAllowedRole, QByteArray("isSharingAllowed"));
+        roles.insert(IsBrowsableRole, QByteArray("isBrowsable"));
         roles.insert(IsFileRole, QByteArray("isFile"));
         roles.insert(IsReadableRole, QByteArray("isReadable"));
         roles.insert(IsWritableRole, QByteArray("isWritable"));
@@ -383,6 +384,8 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             return fi.isWorkGroup();
         case IsSmbShareRole:
             return fi.isShare();
+        case IsBrowsableRole:
+            return fi.isBrowsable();
         case IsSharingAllowedRole:
             return     fi.isDir() && !fi.isSymLink() && !fi.isSharedDir()
                     && mCurLocation->type() == LocationsFactory::LocalDisk
