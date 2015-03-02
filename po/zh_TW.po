@@ -8,23 +8,22 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-01-07 00:30+0100\n"
-"PO-Revision-Date: 2014-11-19 14:08+0000\n"
-"Last-Translator: Walter Cheuk <wwycheuk@gmail.com>\n"
+"PO-Revision-Date: 2015-03-01 07:48+0000\n"
+"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh_TW@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2015-01-08 07:08+0000\n"
-"X-Generator: Launchpad (build 17298)\n"
+"X-Launchpad-Export-Date: 2015-03-02 05:36+0000\n"
+"X-Generator: Launchpad (build 17361)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 檔案)"
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
 #: ../src/app/qml/ui/FolderListPage.qml:813
@@ -65,7 +64,7 @@ msgstr "要求核對身分"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr ""
+msgstr "需要密碼才能存取所有檔案"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
@@ -233,7 +232,7 @@ msgstr "是否確定永久刪除「%1」？"
 
 #: ../src/app/qml/ui/FolderListPage.qml:434
 msgid "Deleting files"
-msgstr ""
+msgstr "刪除檔案中"
 
 #: ../src/app/qml/ui/FolderListPage.qml:452
 #: ../src/app/qml/ui/FolderListPage.qml:567
@@ -254,12 +253,12 @@ msgstr "權限是否不足？或已有同名檔案？"
 
 #: ../src/app/qml/ui/FolderListPage.qml:481
 msgid "Extract Archive"
-msgstr ""
+msgstr "解開封存檔"
 
 #: ../src/app/qml/ui/FolderListPage.qml:482
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr ""
+msgstr "您確定要解開「%1」並將檔案放到這裡？"
 
 #: ../src/app/qml/ui/FolderListPage.qml:531
 msgid "Cut"
@@ -272,7 +271,7 @@ msgstr "複製"
 #: ../src/app/qml/ui/FolderListPage.qml:582
 #: ../src/app/qml/ui/FolderListPage.qml:703
 msgid "Extract archive"
-msgstr ""
+msgstr "解開封存檔"
 
 #: ../src/app/qml/ui/FolderListPage.qml:613
 msgid "File operation error"
@@ -281,32 +280,32 @@ msgstr "檔案操作錯誤"
 #: ../src/app/qml/ui/FolderListPage.qml:644
 #, qt-format
 msgid "Extracting archive '%1'"
-msgstr ""
+msgstr "正在解開「%1」封存檔"
 
 #: ../src/app/qml/ui/FolderListPage.qml:665
 msgid "OK"
-msgstr ""
+msgstr "確定"
 
 #: ../src/app/qml/ui/FolderListPage.qml:680
 msgid "Extracting failed"
-msgstr ""
+msgstr "解開失敗"
 
 #: ../src/app/qml/ui/FolderListPage.qml:681
 #, qt-format
 msgid "Extracting the archive '%1' failed."
-msgstr ""
+msgstr "「%1」封存檔解開失敗。"
 
 #: ../src/app/qml/ui/FolderListPage.qml:695
 msgid "Archive file"
-msgstr ""
+msgstr "封存檔案"
 
 #: ../src/app/qml/ui/FolderListPage.qml:696
 msgid "Do you want to extract the archive here?"
-msgstr ""
+msgstr "您是否要解開封存檔並將檔案放到這裡？"
 
 #: ../src/app/qml/ui/FolderListPage.qml:713
 msgid "Open with another app"
-msgstr ""
+msgstr "以其他 App 開啟"
 
 #: ../src/app/qml/ui/FolderListPage.qml:781
 msgid "~/Desktop"
@@ -326,7 +325,7 @@ msgstr "~/模版"
 
 #: ../src/app/qml/ui/FolderListPage.qml:811
 msgid "Home"
-msgstr "家目錄"
+msgstr "家屋"
 
 #: ../src/app/qml/ui/FolderListPage.qml:881
 msgid "Folder not accessible"
