@@ -28,7 +28,7 @@ import "../upstream"
 PageWithBottomEdge {
     id: folderListPage
     title: basename(folder)
-    bottomEdgeTitle: "Places"
+    bottomEdgeTitle: i18n.tr("Places")
     bottomEdgeEnabled: !sidebar.expanded
     bottomEdgePageSource: Qt.resolvedUrl("PlacesPage.qml")
 
