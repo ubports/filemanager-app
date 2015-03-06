@@ -232,10 +232,23 @@ void SmbUtil::deleteContext(Smb::Context context)
  */
 Smb::FileHandler
 SmbUtil::openFile(Smb::Context context, const QString &smb_path, int flags , mode_t mode)
-{
+{   
     Smb::FileHandler fd = ::smbc_getFunctionOpen(context)
                             (context, smb_path.toLocal8Bit().constData(), flags, mode);
 
+    if (fd == 0 && errno != EISDIR)
+    {
+        QString ipUrl = NetUtil::urlConvertHostnameToIP(smb_path);
+        if (!ipUrl.isEmpty())
+        {
+            fd = ::smbc_getFunctionOpen(context)
+                    (context, ipUrl.toLocal8Bit().constData(), flags, mode);
+        }
+    }
+    if (fd == 0)
+    {
+        qWarning() << Q_FUNC_INFO << "errno:" << errno << smb_path;
+    }
     return fd;
 }
 
@@ -249,12 +262,25 @@ SmbUtil::openFile(Smb::Context context, const QString &smb_path, int flags , mod
  */
 Smb::FileHandler
 SmbUtil::openDir(Smb::Context context, const QString &smb_string)
-{
+{ 
   Smb::FileHandler fd = ::smbc_getFunctionOpendir(context)
                              (context, smb_string.toLocal8Bit().constData());
 
+  if (fd == 0)
+  {
+      //try to use an IP address if possible
+       QString ipUrl = NetUtil::urlConvertHostnameToIP(smb_string);
+       if (!ipUrl.isEmpty())
+       {
+           fd = ::smbc_getFunctionOpendir(context)
+                                        (context, ipUrl.toLocal8Bit().constData());
+       }
+  }
+  if (fd == 0)
+  {
+      qWarning() << Q_FUNC_INFO << "errno:" << errno << smb_string;
+  }
   return fd;
-
 }
 
 
@@ -306,22 +332,36 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
     ::memset(st, 0 , sizeof(struct stat));
     StatReturn ret   = StatInvalid;
     int slashes = smb_path.count(QDir::separator());
-    Smb::FileHandler fd = openFile(context,smb_path);
-    if (fd)
-    {
-        ret =  static_cast<StatReturn> (::smbc_getFunctionFstat(context)(context,fd, st));
-    }
-    else //  smb:// -> slahes=2   smb/workgroup -> slahes=2 smb://host/share -> slashes=3
-    if ( (errno == EISDIR || slashes < 3) && (fd=openDir(context, smb_path)))
-    {
-       // ret = static_cast<StatReturn>(::smbc_getFunctionFstatdir(context)(context,fd, st));
-        ret =  static_cast<StatReturn> (::smbc_getFunctionStat(context)(context,smb_path.toLocal8Bit().constData(), st));
-       // if (ret == StatDone && (ret = guessDirType(context,fd)) == StatDir && slashes == 3)
+    Smb::FileHandler fd = 0;
+    //  smb:// -> slahes=2   smb/workgroup -> slahes=2 smb://host/share -> slashes=3
+    if ((fd=openDir(context, smb_path)))
+    {       
         if ((ret = guessDirType(context,fd)) == StatDir && slashes == 3)
         {
                 ret  = StatShare;
         }
+        if (slashes > 2 && (ret == StatShare || ret == StatDir))
+        {
+          /* smbc_getFunctionFstatdir does not work
+            ret = static_cast<StatReturn>(::smbc_getFunctionFstatdir(context)(context,fd, st));
+          */
+            QString ipUrl = NetUtil::urlConvertHostnameToIP(smb_path);
+            if (ipUrl.isEmpty())
+            {
+                ipUrl = smb_path;
+            }
+            (void)static_cast<StatReturn> (::smbc_getFunctionStat(context)(context,ipUrl.toLocal8Bit().constData(), st));
+        }
     }
+    else
+    if (errno != EACCES && errno != ECONNREFUSED )
+    {
+        if ((fd = openFile(context,smb_path)))
+        {
+            ret =  static_cast<StatReturn> (::smbc_getFunctionFstat(context)(context,fd, st));
+        }
+    }
+
     if (fd)
     {
         closeHandle(context, fd);
@@ -442,7 +482,8 @@ QStringList SmbUtil::listContent(QString smb_path, bool recursive, QDir::Filters
                     if (dirent->smbc_type == SMBC_SERVER)
                     {
                          QString goodHostName = findSmBServer(*dirent);
-                         path += NetUtil::normalizeHostName(goodHostName);
+                         //path += NetUtil::normalizeHostName(goodHostName);
+                         path += goodHostName;
                     }
                     else
                     {
@@ -546,7 +587,8 @@ QStringList SmbUtil::walkForShares(QString smb_path)
                     if (dirent->smbc_type == SMBC_SERVER)
                     {
                         QString goodHostName = findSmBServer(*dirent);
-                        path += NetUtil::normalizeHostName(goodHostName);
+                        //path += NetUtil::normalizeHostName(goodHostName);
+                        path += goodHostName;
                     }
                     else
                     {

@@ -30,6 +30,7 @@ private:
     NetUtil();
 public:
     static QString normalizeHostName(const QString& name);
+    static QString urlConvertHostnameToIP(const QString& url);
 };
 
 #endif // NETUTIL_H

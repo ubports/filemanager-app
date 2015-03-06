@@ -22,6 +22,7 @@
 #include "netutil.h"
 #include <QHostAddress>
 #include <QHostInfo>
+#include <QUrl>
 
 #include <QDebug>
 
@@ -57,4 +58,32 @@ QString NetUtil::normalizeHostName(const QString& name)
          host = QLatin1String("localhost");
     }
     return host;
+}
+
+/*!
+ * \brief NetUtil::urlConvertHostnameToIP()  Tries to convert an url like protocol://hostname/blavbla to protocol://ip-address/blavbla
+ * \param url
+ * \return the url using IP numbers or an empty string saying that was not possible to get its IP number
+ */
+QString NetUtil::urlConvertHostnameToIP(const QString &url)
+{
+    QString ret;
+    QUrl tmpUrl(url);
+    if (tmpUrl.isValid() && !tmpUrl.host().isEmpty() && tmpUrl.host() != QLatin1String("localhost"))
+    {
+       QString host = tmpUrl.host();
+       QHostInfo info = QHostInfo::fromName(host);
+       if (info.error() == QHostInfo::HostNotFound)
+       {
+           // take advantage of network with Bonjour/Avahi
+           // as winbind looks like harder to configure or does not work
+           info = QHostInfo::fromName(host + QLatin1String(".local"));
+       }
+       if (info.error() == QHostInfo::NoError)
+       {
+           tmpUrl.setHost(info.addresses().at(0).toString());
+           ret = tmpUrl.toString();
+       }
+    }
+    return ret;
 }
