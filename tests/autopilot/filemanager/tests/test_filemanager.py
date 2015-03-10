@@ -21,7 +21,6 @@ import logging
 import mimetypes
 
 import os
-import shutil
 
 from autopilot import process
 from autopilot.platform import model
