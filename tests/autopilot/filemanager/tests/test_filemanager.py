@@ -354,10 +354,10 @@ class TestFolderListPage(FileManagerTestCase):
                                             'destination')
         destination_dir_name = os.path.basename(destination_dir_path)
         os.mkdir(destination_dir_path)
-        self.addCleanup(shutil.rmtree, destination_dir_path)
         dir_to_cut_path = os.path.join(self.fakehome, 'to_cut')
         dir_to_cut_name = os.path.basename(dir_to_cut_path)
         os.mkdir(dir_to_cut_path)
+
         folder_list_page = self.app.main_view.get_folder_list_page()
         self._assert_number_of_files(2)
 

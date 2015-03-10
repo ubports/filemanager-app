@@ -192,6 +192,10 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
 
             logger.debug("Patched home to fake home directory %s" % temp_dir)
 
+            self.addCleanup(shutil.rmtree, temp_dir)
+
+            logger.debug("Cleaned up fake home directory %s" % temp_dir)
+
     def patch_environment(self, key, value):
         def patch_var(key, value):
             logging.info(
