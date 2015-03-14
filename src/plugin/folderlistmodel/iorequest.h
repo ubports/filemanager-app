@@ -48,7 +48,8 @@ public:
     enum RequestType
     {
         DirList,
-        DirListExternalFSChanges
+        DirListExternalFSChanges,
+        SambaList
     };
     virtual void run() = 0;
     RequestType  type() const;
