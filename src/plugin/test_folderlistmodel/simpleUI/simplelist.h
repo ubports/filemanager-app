@@ -29,12 +29,12 @@ class DirModel;
 class QProgressBar;
 class DirSelection;
 class PlacesModel;
-class ActionProgress;
+class QDialog;
 
 namespace Ui {
-  class SimpleList;
+class SimpleList;
+class AuthenticationDialog;
 }
-
 
 class SimpleList : public QMainWindow
 {
@@ -55,12 +55,14 @@ private:
 private:
     Ui::SimpleList *ui;
     DirModel       *m_model;   
-    ActionProgress * m_pbar;
+    QProgressBar  * m_pbar;
     DirSelection  * m_selection;
     bool            m_holdingCtrlKey;
     bool            m_holdingShiftKey;
     Qt::MouseButton m_button;
     PlacesModel   * m_placesModel;
+    QDialog       * m_authDialog;
+    Ui::AuthenticationDialog *m_uiAuth;
 
 private slots:   
     void   onNewDir();
@@ -77,8 +79,10 @@ private slots:
     void   onSelectionChanged(int);
     void   onPlacesClicked(QModelIndex);
     void   onOpenTerminal();
-    void   onCancelAction();
-    void   onStatusChanged();
+    void   onAwaitingResultsChanged();
+    void   onRowsInserted(QModelIndex, int,int);
+    void   onNeedsAutentication(QString, QString);
+    void   onAuthenticaionAccepted();
 };
 
 #endif // SIMPLELIST_H

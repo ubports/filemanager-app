@@ -13,15 +13,13 @@ greaterThan(QT_MAJOR_VERSION, 4) {
    
 TEMPLATE = app
 
-DEFINES += REGRESSION_TEST_FOLDERLISTMODEL
+DEFINES += REGRESSION_TEST_FOLDERLISTMODEL SIMPLE_UI
 
-SOURCES += main.cpp  simplelist.cpp simpleslots.cpp   placesmodel.cpp terminalfolderapp.cpp \
-    actionprogress.cpp
+SOURCES += main.cpp  simplelist.cpp simpleslots.cpp   placesmodel.cpp terminalfolderapp.cpp
 
-HEADERS  += simplelist.h   placesmodel.h terminalfolderapp.h \
-    actionprogress.h
+HEADERS  += simplelist.h   placesmodel.h terminalfolderapp.h
 
-FORMS    += simplelist.ui
+FORMS    += simplelist.ui authenticationdialog.ui
 
 include (../../folderlistmodel/folderlistmodel.pri)
 
