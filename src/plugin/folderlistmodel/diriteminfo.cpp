@@ -411,7 +411,7 @@ QString DirItemInfo::authenticationPath() const
 
 
 /*!
- * \brief This was copied from DirItemInfo::fillFromStatBuf \ref QFileSystemMetaData::fillFromStatBuf()
+ * \brief  DirItemInfo::fillFromStatBuf() This was copied from \ref QFileSystemMetaData::fillFromStatBuf()
  * \param statBuffer
  */
 void DirItemInfo::fillFromStatBuf(const struct stat & statBuffer)
@@ -537,8 +537,8 @@ QString DirItemInfo::removeExtraSlashes(const QString &url, int firstSlashIndex)
     QString ret;
     if (firstSlashIndex == -1)
     {
-        firstSlashIndex = url.indexOf(QLatin1Char(':'));
-        if (firstSlashIndex != -1 && url.at(firstSlashIndex+1) == QDir::separator())
+        firstSlashIndex = url.indexOf(QLatin1String(":/"));
+        if (firstSlashIndex != -1)
         {
             ++firstSlashIndex;
         }

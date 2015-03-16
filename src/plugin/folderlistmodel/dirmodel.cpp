@@ -340,7 +340,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         case FileSizeRole: {
              if (fi.isBrowsable())
              {
-                 if(fi.isLocal())
+                 if (fi.isLocal())
                  {
                      return dirItems(fi.diskFileInfo());
                  }
@@ -1802,13 +1802,13 @@ QVariant DirModel::getAudioMetaData(const QFileInfo& fi, int role) const
             case TrackGenreRole:
                 return QString::fromUtf8(tag->genre().toCString(true));
             case TrackLengthRole:
-                if(!f.isNull() && f.audioProperties()) {
+                if (!f.isNull() && f.audioProperties()) {
                     return QString::number(f.audioProperties()->length());
                 } else {
                     return QString::number(0);
                 }
             case TrackCoverRole:
-                if(!list.isEmpty()) {
+                if (!list.isEmpty()) {
                     TagLib::ID3v2::AttachedPictureFrame *Pic = static_cast<TagLib::ID3v2::AttachedPictureFrame *>(list.front());
                     QImage img;
                     img.loadFromData((const uchar *) Pic->picture().data(), Pic->picture().size());
