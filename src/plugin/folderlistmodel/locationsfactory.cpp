@@ -208,7 +208,7 @@ void LocationsFactory::onUrlNeedsAuthentication(QString, QString)
 }
 
 
-bool LocationsFactory::lastUrlNeedsAuthencation() const
+bool LocationsFactory::lastUrlNeedsAuthentication() const
 {
     return m_lastUrlNeedsAuthentication;
 }

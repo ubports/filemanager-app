@@ -448,7 +448,7 @@ void DirModel::setPath(const QString &pathName, const QString& user, const QStri
         {
             mPathList.removeLast();
         }
-        if (!mLocationFactory->lastUrlNeedsAuthencation())
+        if (!mLocationFactory->lastUrlNeedsAuthentication())
         {
             emit error(tr("path or url may not exist or cannot be read"), pathName);
             qDebug() << Q_FUNC_INFO << this << "path or url may not exist or cannot be read:" << pathName;
