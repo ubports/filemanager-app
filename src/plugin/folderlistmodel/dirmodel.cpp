@@ -881,13 +881,9 @@ void DirModel::clearClipboard()
 bool  DirModel::cdIntoIndex(int row)
 {
     bool ret = false;
-    if (IS_VALID_ROW(row)                       &&
-        mDirectoryContents.at(row).isDir()      &&
-        mDirectoryContents.at(row).isContentReadable())
+    if (IS_VALID_ROW(row))
     {
-        mCurLocation->setInfoItem(mDirectoryContents.at(row));
-        setPathFromCurrentLocation();
-        ret = true;
+        ret = cdIntoItem(mDirectoryContents.at(row));
     }
     else
     {
@@ -896,42 +892,29 @@ bool  DirModel::cdIntoIndex(int row)
     return ret;
 }
 
-
+/*!
+ * \brief DirModel::cdIntoPath()  It is used to go into an item from the current path or to a absolute path
+ * \param filename
+ * \return
+ */
 bool  DirModel::cdIntoPath(const QString &filename)
 {
-    bool ret = false;
-    DirItemInfo fi(filename);
-    if (fi.isValid())
-    {
-        if (fi.isRelative())
-        {
-            fi.setFile(mCurrentDir, filename);
-        }
-        ret =  cdInto(fi);
-    }
-    return ret;
+    return openPath(filename);
 }
 
 
-bool  DirModel::cdInto(const DirItemInfo &fi)
+bool  DirModel::cdIntoItem(const DirItemInfo &fi)
 {
     bool ret = false;
-    if (canReadDir(fi.diskFileInfo()))
-    {
-        if (fi.isRelative())
+    if (fi.isBrowsable())
+    {       
+        if (fi.isContentReadable())
         {
-            QDir childDir(mCurrentDir);
-            if ( childDir.cd(fi.fileName()) )
-            {
-                setPath(childDir.absolutePath());
-                ret = true;
-            }
-        }
-        else
-        {
+            mCurLocation->setInfoItem(fi);
+            setPathFromCurrentLocation();
             ret = true;
-            setPath(fi.absoluteFilePath());
         }
+
     }
     return ret;
 }
@@ -1282,7 +1265,7 @@ bool DirModel::openIndex(int row)
     bool ret = false;
     if (IS_VALID_ROW(row))
     {
-        if (mDirectoryContents.at(row).isDir())
+        if (mDirectoryContents.at(row).isBrowsable())
         {
             ret = cdIntoIndex(row);
         }
@@ -1298,27 +1281,35 @@ bool DirModel::openIndex(int row)
     return ret;
 }
 
+
 bool DirModel::openPath(const QString &filename)
 {
     bool ret = false;
-    //first void any relative path when is root
-    if ( !(mCurLocation && mCurLocation->isRoot() && filename.startsWith(QLatin1String(".."))) )
+    QString myFilename(filename.trimmed());
+    //first avoid any relative path when is root
+    if ( !(mCurLocation && mCurLocation->isRoot() && myFilename.startsWith(QLatin1String(".."))) )
     {
-        Location *location = mLocationFactory->setNewPath(filename);
-        if (location)
+        if (myFilename == QLatin1String("..") || myFilename == QLatin1String("../"))
         {
-            mCurLocation = location;
-            setPathFromCurrentLocation();
-            ret = true;
+            ret = cdUp();
         }
         else
         {
-           const DirItemInfo *item = mLocationFactory->lastValidFileInfo();
-           // DirItemInfo fi(setParentIfRelative(filename));
-           if (item && item->isFile())
-           {
-               ret =  openItem(*item);
-           }
+            Location *location = mLocationFactory->setNewPath(myFilename);
+            if (location)
+            {
+                mCurLocation = location;
+                setPathFromCurrentLocation();
+                ret = true;
+            }
+            else
+            {
+                const DirItemInfo *item = mLocationFactory->lastValidFileInfo();               
+                if (item && item->isFile())
+                {
+                    ret =  openItem(*item);
+                }
+            }
         }
     }
     return ret;
@@ -1332,19 +1323,16 @@ bool DirModel::openPath(const QString &filename)
 bool DirModel::openItem(const DirItemInfo &fi)
 {
     bool ret = false;
-    if (fi.isLocal())
+    if (fi.isBrowsable())
     {
-        if (canReadDir(fi.diskFileInfo()))
+        ret = cdIntoItem(fi);
+    }
+    else
+    {
+        //TODO open executables
+        if (fi.isLocal() && fi.isReadable())
         {
-            ret = cdInto(fi.diskFileInfo());
-        }
-        else
-        {
-            //TODO open executables
-            if (canReadFile(fi.diskFileInfo()))
-            {
-                ret = QDesktopServices::openUrl(QUrl::fromLocalFile(fi.absoluteFilePath()));
-            }
+            ret = QDesktopServices::openUrl(QUrl::fromLocalFile(fi.absoluteFilePath()));
         }
     }
     return ret;

@@ -459,7 +459,7 @@ private:
     int           rowOfItem(const DirItemInfo& fi);
     QDir::Filter  currentDirFilter()  const;
     QString       dirItems(const DirItemInfo& fi) const;
-    bool          cdInto(const DirItemInfo& fi);
+    bool          cdIntoItem(const DirItemInfo& fi);
     bool          openItem(const DirItemInfo& fi);  
     bool          canReadDir(const QFileInfo& d)   const;
     bool          canReadFile(const QFileInfo& f)  const;
