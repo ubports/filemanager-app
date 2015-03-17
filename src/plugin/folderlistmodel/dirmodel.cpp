@@ -216,7 +216,12 @@ QHash<int, QByteArray> DirModel::buildRoleNames() const
         roles.insert(FileSizeRole, QByteArray("fileSize"));
         roles.insert(IconSourceRole, QByteArray("iconSource"));
         roles.insert(FilePathRole, QByteArray("filePath"));
-        roles.insert(IsDirRole, QByteArray("isDir"));
+        roles.insert(IsDirRole, QByteArray("isDir"));        
+        roles.insert(IsHostRole, QByteArray("isHost"));
+        roles.insert(IsSmbWorkgroupRole, QByteArray("IsSmbWorkgroup"));
+        roles.insert(IsSmbShareRole, QByteArray("IsSmbShare"));
+        roles.insert(IsSharedDirRole, QByteArray("IsSharedDir"));
+        roles.insert(IsSharingAllowedRole, QByteArray("IsSharingAllowed"));
         roles.insert(IsFileRole, QByteArray("isFile"));
         roles.insert(IsReadableRole, QByteArray("isReadable"));
         roles.insert(IsWritableRole, QByteArray("isWritable"));
@@ -268,7 +273,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
     {             
         QIcon icon;      
         QMimeType mime = mDirectoryContents.at(index.row()).mimeType();
-        if (mime.isValid())
+        if (mime.isValid() && mDirectoryContents.at(index.row()).isLocal())
         {
             if (QIcon::hasThemeIcon(mime.iconName()) ) {
                icon = QIcon::fromTheme(mime.iconName());
@@ -333,9 +338,15 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         case ModifiedDateRole:
             return fi.lastModified();
         case FileSizeRole: {
-             if (fi.isDir() && fi.isLocal())
+             if (fi.isBrowsable())
              {
-                return dirItems(fi.diskFileInfo());
+                 if (fi.isLocal())
+                 {
+                     return dirItems(fi.diskFileInfo());
+                 }
+                 //it is possible to browse network folders and get its
+                 //number of items, but it may take longer
+                 return tr("unkown");
              }
              return fileSize(fi.size());
         }
@@ -357,7 +368,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
         case IsDirRole:
             return fi.isDir();
         case IsFileRole:
-            return !fi.isDir();
+            return !fi.isBrowsable();
         case IsReadableRole:
             return fi.isReadable();
         case IsWritableRole:
@@ -366,6 +377,18 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             return fi.isExecutable();
         case IsSelectedRole:
             return fi.isSelected();
+        case IsHostRole:
+            return fi.isHost();
+        case IsSmbWorkgroupRole:
+            return fi.isWorkGroup();
+        case IsSmbShareRole:
+            return fi.isShare();
+        case IsSharingAllowedRole:
+            return     fi.isDir() && !fi.isSymLink() && !fi.isSharedDir()
+                    && mCurLocation->type() == LocationsFactory::LocalDisk
+                    && fi.isWritable() && fi.isExecutable() && fi.isReadable();
+        case IsSharedDirRole:
+            return fi.isSharedDir();
 #ifndef DO_NOT_USE_TAG_LIB
         case TrackTitleRole:
         case TrackArtistRole:
@@ -388,7 +411,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             qWarning() << Q_FUNC_INFO << this << "Got an unknown role: " << role;
 #endif
             break;
-    }
+    }//switch (role)
 
     return QVariant();
 }
@@ -1779,13 +1802,13 @@ QVariant DirModel::getAudioMetaData(const QFileInfo& fi, int role) const
             case TrackGenreRole:
                 return QString::fromUtf8(tag->genre().toCString(true));
             case TrackLengthRole:
-                if(!f.isNull() && f.audioProperties()) {
+                if (!f.isNull() && f.audioProperties()) {
                     return QString::number(f.audioProperties()->length());
                 } else {
                     return QString::number(0);
                 }
             case TrackCoverRole:
-                if(!list.isEmpty()) {
+                if (!list.isEmpty()) {
                     TagLib::ID3v2::AttachedPictureFrame *Pic = static_cast<TagLib::ID3v2::AttachedPictureFrame *>(list.front());
                     QImage img;
                     img.loadFromData((const uchar *) Pic->picture().data(), Pic->picture().size());
