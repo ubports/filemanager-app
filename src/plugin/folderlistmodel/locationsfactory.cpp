@@ -26,21 +26,32 @@
 #include "disklocation.h"
 #include "trashlocation.h"
 #include "trashiteminfo.h"
+#include "cleanurl.h"
+#include "netauthenticationdata.h"
 
 #include <QDir>
 #include <QDebug>
 
 
-
+/*!
+ * \brief LocationsFactory::LocationsFactory()
+ * \param parent
+ *
+ * Locations emit needsAuthentication() signal, the connection
+ * with LocationsFactory is Direct,  but the connection between
+ * the Location and the \ref DirModel is Queued
+ * \sa Location::notifyItemNeedsAuthentication()
+ */
 LocationsFactory::LocationsFactory(QObject *parent)
  : QObject(parent)
  , m_curLoc(0)
  , m_lastValidFileInfo(0)
+ , m_authDataStore(NetAuthenticationDataList::getInstance(this))
+ , m_lastUrlNeedsAuthentication(false)
 {
    m_locations.append(new DiskLocation(LocalDisk));
    m_locations.append(new TrashLocation(TrashDisk));
 }
-
 
 LocationsFactory::~LocationsFactory()
 {
@@ -50,6 +61,7 @@ LocationsFactory::~LocationsFactory()
     {
         delete m_lastValidFileInfo;
     }
+    NetAuthenticationDataList::releaseInstance(this);
 }
 
 
@@ -72,20 +84,20 @@ Location * LocationsFactory::parse(const QString& uPath)
         if (uPath.startsWith(LocationUrl::TrashRootURL.midRef(0,6)))
         {
             type = TrashDisk;
-            m_tmpPath  = LocationUrl::TrashRootURL + stringAfterSlashes(uPath, index+1);
+            m_tmpPath  = LocationUrl::TrashRootURL + DirItemInfo::removeExtraSlashes(uPath, index+1);
         }
         else
 #endif //Q_OS_UNIX
-#endif //Q_OS_UNIX
+#endif
         if (uPath.startsWith(LocationUrl::DiskRootURL.midRef(0,5)))
         {
             type = LocalDisk;
-            m_tmpPath  = QDir::rootPath() + stringAfterSlashes(uPath, index+1);
+            m_tmpPath  = QDir::rootPath() + DirItemInfo::removeExtraSlashes(uPath, index+1);
         }
     }
     else
     {
-        m_tmpPath = stringAfterSlashes(uPath, -1);
+        m_tmpPath = DirItemInfo::removeExtraSlashes(uPath, -1);
         type    = LocalDisk;
         if (!m_tmpPath.startsWith(QDir::rootPath()) && m_curLoc)
         {
@@ -104,17 +116,34 @@ Location * LocationsFactory::parse(const QString& uPath)
 }
 
 
-Location * LocationsFactory::setNewPath(const QString& uPath)
+Location * LocationsFactory::setNewPath(const QString& uPath, const QString& authUser, const QString& passwd, bool savePassword)
 {
     storeValidFileInfo(0);
-    Location *location = parse(uPath);
+    CleanUrl url(uPath);
+    m_lastUrlNeedsAuthentication = false;
+    NetAuthenticationData authData(authUser, passwd);
+    if (authData.isEmpty() && url.hasAuthenticationData())
+    {
+        authData.user      = url.user();
+        authData.password  = url.password();
+    }
+    Location *location = parse(url.cleanUrl());
     if (location)
     {
-        DirItemInfo *item = location->validateUrlPath(m_tmpPath);
+        DirItemInfo *item = validateCurrentUrl(location,authData);
         if (item)
         {
+            //now if there is Authentication Data
+            //at this point item is ready and authentication if necessary worked
+            if (item && !authData.isEmpty())
+            {
+                m_authDataStore->store(item->authenticationPath(),
+                                       authData.user,
+                                       authData.password,
+                                       savePassword);
+            }
             //isContentReadable() must already carry execution permission
-            if (item->isValid() && item->isDir() && item->isContentReadable())
+            if (item->isValid() && item->isBrowsable() && item->isContentReadable())
             {
                 location->setInfoItem(item);
                 if (location != m_curLoc)
@@ -146,38 +175,6 @@ Location * LocationsFactory::setNewPath(const QString& uPath)
 }
 
 
-QString  LocationsFactory::stringAfterSlashes(const QString &url, int firstSlashIndex) const
-{
-    QString ret;
-    if (firstSlashIndex >=0)
-    {
-        while ( firstSlashIndex < url.length() && url.at(firstSlashIndex) == QDir::separator())
-        {
-            ++firstSlashIndex;
-        }
-        if (firstSlashIndex < url.length())
-        {
-            ret = url.mid(firstSlashIndex);
-        }
-    }
-    else
-    {
-        ret = url;
-        firstSlashIndex = 0;
-    }
-    //replace any double slashes by just one
-    for(int charCounter = ret.size() -1; charCounter > 0; --charCounter)
-    {
-        if (ret.at(charCounter) == QDir::separator() &&
-                ret.at(charCounter-1) == QDir::separator())
-        {
-            ret.remove(charCounter,1);
-        }
-    }
-    return ret;
-}
-
-
 void LocationsFactory::storeValidFileInfo(DirItemInfo *item)
 {
     if (m_lastValidFileInfo)
@@ -185,4 +182,50 @@ void LocationsFactory::storeValidFileInfo(DirItemInfo *item)
         delete m_lastValidFileInfo;
     }
     m_lastValidFileInfo = item;
+}
+
+
+void LocationsFactory::onUrlNeedsAuthentication(QString, QString)
+{
+    m_lastUrlNeedsAuthentication = true;
+}
+
+
+bool LocationsFactory::lastUrlNeedsAuthencation() const
+{
+    return m_lastUrlNeedsAuthentication;
+}
+
+
+DirItemInfo * LocationsFactory::validateCurrentUrl(Location *location, const NetAuthenticationData &authData)
+{
+    //when there is authentication data, set the authentication before validating an item
+    if (!authData.isEmpty())
+    {
+        location->setAuthentication(authData.user, authData.password);
+    }
+
+    DirItemInfo *item = location->validateUrlPath(m_tmpPath);
+
+    //for remote locations, authentication might have failed
+    //if so try to use a stored authentication data and authenticate it again
+    if (   item && item->needsAuthentication()
+        && location->useAuthenticationDataIfExists(*item))
+    {
+        delete item;
+        item = location->validateUrlPath(m_tmpPath);
+    }
+    //if failed it is necessary to ask the user to provide user/password
+    if ( item && item->needsAuthentication() )
+    {
+        location->notifyItemNeedsAuthentication(item);
+        delete item;
+        item = 0;
+    }
+    if (item && !item->isContentReadable())
+    {
+        delete item;
+        item = 0;
+    }
+    return item;
 }

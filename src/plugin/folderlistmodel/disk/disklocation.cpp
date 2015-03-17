@@ -46,49 +46,6 @@ DiskLocation::~ DiskLocation()
 }
 
 
-void DiskLocation::fetchItems(QDir::Filter dirFilter, bool recursive)
-{
-    DirListWorker *dlw  = new DirListWorker(m_info->absoluteFilePath(), dirFilter, recursive);
-    connect(dlw,  SIGNAL(itemsAdded(DirItemInfoList)),
-            this, SIGNAL(itemsAdded(DirItemInfoList)));
-    connect(dlw,  SIGNAL(workerFinished()),
-            this, SLOT(onItemsFetched()));
-    workerThread()->addRequest(dlw);
-}
-
-
-bool DiskLocation::becomeParent()
-{
-    bool ret = false;
-    if (m_info && !m_info->isRoot())
-    {
-        DirItemInfo *other = new DirItemInfo(m_info->absolutePath());
-        if (other->isValid())
-        {
-            delete m_info;
-            m_info = other;
-            ret = true;
-        }
-        else
-        {
-            delete other;
-        }
-    }
-    return ret;
-}
-
-
-void DiskLocation::refreshInfo()
-{
-    if (m_info)
-    {
-        DirItemInfo *item = new DirItemInfo(m_info->absoluteFilePath());
-        delete m_info;
-        m_info = item;
-    }
-}
-
-
 /*!
  * \brief DiskLocation::stopExternalFsWatcher() stops the External File System Watcher
  */
@@ -115,11 +72,12 @@ void DiskLocation::startExternalFsWatcher()
         m_extWatcher->setIntervalToNotifyChanges(EX_FS_WATCHER_TIMER_INTERVAL);
 
         connect(m_extWatcher, SIGNAL(pathModified(QString)),
-                this,         SIGNAL(extWatcherPathChanged(QString)));       
-       if (m_info)
-       {               //setCurrentPath() checks for empty paths
+                this,         SIGNAL(extWatcherPathChanged(QString)));            
+    }
+    if (m_extWatcher && m_info)
+    {
+          //setCurrentPath() checks for empty paths
            m_extWatcher->setCurrentPath(m_info->absoluteFilePath());
-       }     
     }
 }
 
@@ -187,9 +145,8 @@ ExternalFSWatcher  * DiskLocation::getExternalFSWatcher() const
 
 
 void DiskLocation::setUsingExternalWatcher(bool use)
-{
-    Location::setUsingExternalWatcher(use);
-    if (m_usingExternalWatcher)
+{   
+    if ((m_usingExternalWatcher = use))
     {
         startExternalFsWatcher();
     }
@@ -200,23 +157,14 @@ void DiskLocation::setUsingExternalWatcher(bool use)
 }
 
 
-DirItemInfo * DiskLocation::validateUrlPath(const QString& uPath)
+DirItemInfo * DiskLocation::newItemInfo(const QString &urlPath)
 {
-    QString myPath(uPath);
-    QFileInfo tmpUrl(uPath);
-    if (tmpUrl.isRelative() && m_info)
-    {
-        tmpUrl.setFile(m_info->absoluteFilePath(), uPath);
-        myPath  =  tmpUrl.absoluteFilePath();
-    }
-#if DEBUG_MESSAGES
-    qDebug() << Q_FUNC_INFO << "path:" << myPath;
-#endif
-    DirItemInfo * item = new DirItemInfo(myPath);
-    if (!item->isValid() || !item->exists() || !item->isContentReadable())
-    {
-        delete item;
-        item = 0;
-    }
-    return item;
+    return new DirItemInfo(urlPath);
 }
+
+
+DirListWorker * DiskLocation::newListWorker(const QString &urlPath, QDir::Filter filter, const bool isRecursive)
+{
+    return new DirListWorker(urlPath,filter,isRecursive);
+}
+

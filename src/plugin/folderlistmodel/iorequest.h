@@ -70,7 +70,8 @@ public:
     enum LoaderType
     {
         NormalLoader,
-        TrashLoader
+        TrashLoader,
+        NetworkLoader
     };
 
     IORequestLoader( const QString &pathName,
@@ -91,6 +92,7 @@ signals:
 private:
     DirItemInfoList getNormalContent();
     DirItemInfoList getTrashContent();
+    virtual DirItemInfoList getNetworkContent();
     DirItemInfoList add(const QString &pathName, QDir::Filter filter,
                         bool isRecursive, DirItemInfoList directoryContents);
 protected:

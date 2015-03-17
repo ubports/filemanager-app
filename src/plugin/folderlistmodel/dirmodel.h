@@ -67,6 +67,7 @@ public:
         IsSmbShareRole,
         IsSharedDirRole,    //!< it can also be used for other protocols than smb/cifs
         IsSharingAllowedRole,//!< true for local directories (not in Trash) and not IsSharedDirRole
+        IsBrowsableRole,     //!< any Dir, Host, WorkGroup or Share
         IsFileRole,
         IsReadableRole,
         IsWritableRole,

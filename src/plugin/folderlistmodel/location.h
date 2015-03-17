@@ -27,6 +27,7 @@
 #include <QObject>
 
 class IOWorkerThread;
+class DirListWorker;
 
 /*!
  * \brief The Location class represents any location (full path) where there are items to browse: directories, shares, from Disk and from Network.
@@ -45,9 +46,10 @@ class IOWorkerThread;
 class Location : public QObject
 {
    Q_OBJECT
-public:
-    explicit Location( int type, QObject *parent=0);
+public:  
     virtual ~Location();
+protected:
+    explicit Location( int type, QObject *parent=0);
 
     IOWorkerThread * workerThread() const;
 
@@ -59,18 +61,44 @@ signals:
     void     extWatcherItemChanged(const DirItemInfo&);
     void     extWatcherItemAdded(const   DirItemInfo&);
     void     extWatcherChangesFetched(int);
+    void     needsAuthentication(const QString& user, const QString& urlPath);
 
 public slots:
     virtual void setUsingExternalWatcher(bool use);
+    virtual void setAuthentication(const QString& user,
+                                   const QString& password);
+
 
 public: //pure functions
+    /*!
+     * \brief newItemInfo()  returns a Location suitable DirItemInfo object
+     *
+     * Every Locations must create its own DirItemInfo object with all the information set
+     * \param urlPath  it can also contain User and Password when in the form of an URL
+     * \return the object created
+     */
+    virtual DirItemInfo *    newItemInfo(const QString& urlPath) = 0;
+
+    /*!
+     * \brief newListWorker() creates a Location suitable DirListWorker object which will create a new \ref DirItemInfoList for browsing items
+     *
+     *  The DirListWorker object will be used in \ref fetchItems()
+     *
+     * \param urlPath  urlPath  it can also contain User and Password when in the form of an URL
+     * \param filter
+     * \param isRecursive
+     * \return the object which will fill a new \ref DirItemInfoList for browsing items
+     */
+    virtual DirListWorker *  newListWorker(const QString &urlPath, QDir::Filter filter, const bool isRecursive) = 0;
+
+public:
     /*!
      * \brief fetchItems() gets the content of the Location
      *
      * \param dirFilter   current Filter
      * \param recursive   should get the content all sub dirs or not, (hardly ever it is true)
      */
-    virtual void        fetchItems(QDir::Filter dirFilter, bool recursive=0) = 0;
+     virtual void        fetchItems(QDir::Filter dirFilter, bool recursive=false);
 
     /*!
      * \brief refreshInfo() It must refresh the DirItemInfo
@@ -78,9 +106,9 @@ public: //pure functions
      *  It can be used for example after receiving the signal about external disk file system changes
      *  due to the current path permissions might have changed.
      */
-    virtual void        refreshInfo() = 0;
+    virtual void        refreshInfo();
 
-     /*!
+    /*!
      * \brief becomeParent() The current path location becomes the parent Location
      *
      * When \ref isRoot() returns false  the current path location becomes the parent path location
@@ -91,7 +119,7 @@ public: //pure functions
      *
      * \return true if it is possible to do like a cdUp.
      */
-     virtual bool        becomeParent() = 0;
+     virtual bool        becomeParent();
 
     /*!
       * \brief validateUrlPath()  Validates the urlPath (file or Directory) and creates a new Obeject from this path
@@ -101,9 +129,10 @@ public: //pure functions
       * \param urlPath
       * \return a valid pointer to DirItemInfo object or NULL indicating something wrong with the path
       */
-     virtual DirItemInfo *       validateUrlPath(const QString& urlPath)  = 0;
+     virtual DirItemInfo *       validateUrlPath(const QString& urlPath);
 
-public:
+
+public: //virtual
     virtual void        fetchExternalChanges(const QString& urlPath,
                                              const DirItemInfoList& list,
                                              QDir::Filter dirFilter) ;
@@ -115,6 +144,12 @@ public:
     virtual QString     urlPath() const;
     virtual void        startWorking();
     virtual void        stopWorking();
+    virtual QString     currentAuthenticationUser();
+    virtual QString     currentAuthenticationPassword();
+
+public: //non virtual
+    void                notifyItemNeedsAuthentication(const DirItemInfo *item = 0);
+    bool                useAuthenticationDataIfExists(const DirItemInfo &item);
 
     inline const DirItemInfo*  info() const  { return m_info; }
     inline int                 type() const  { return m_type; }
