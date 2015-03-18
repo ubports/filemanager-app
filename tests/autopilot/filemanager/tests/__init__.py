@@ -259,6 +259,11 @@ class FileManagerTestCase(BaseTestCaseWithPatchedHome):
                 self.fakehome)
             self.useFixture(temp_dir)
             path = temp_dir.path
+
+        # putting ignore_errors=True to avoid tests failing when cutting or
+        # deleting file or directory has already canceled the file or directory
+        self.addCleanup(shutil.rmtree, path, ignore_errors=True)
+
         logger.debug('Directory Listing for HOME\n%s' %
                      os.listdir(self.fakehome))
         self._assert_number_of_files(1)
