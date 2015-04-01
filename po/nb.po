@@ -8,28 +8,28 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2014-07-18 07:50+0000\n"
-"Last-Translator: Åka Sikrom <Unknown>\n"
+"PO-Revision-Date: 2015-03-31 15:18+0000\n"
+"Last-Translator: Mathias Bynke <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-03-19 05:33+0000\n"
-"X-Generator: Launchpad (build 17403)\n"
+"X-Launchpad-Export-Date: 2015-04-01 05:29+0000\n"
+"X-Generator: Launchpad (build 17413)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 fil)"
+msgstr[1] "%1 (%2 filer)"
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
 #: ../src/app/qml/ui/FolderListPage.qml:830
 msgid "Device"
-msgstr ""
+msgstr "Enhet"
 
 #: ../src/app/qml/components/PlacesSidebar.qml:53
 #: ../src/app/qml/ui/FolderListPage.qml:31 ../src/app/qml/ui/PlacesPage.qml:27
@@ -39,7 +39,7 @@ msgstr "Steder"
 
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
-msgstr ""
+msgstr "Åpne med"
 
 #: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:107
 #: ../src/app/qml/ui/SettingsSheet.qml:31
@@ -62,15 +62,15 @@ msgstr "Liste"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 msgid "Authentication required"
-msgstr ""
+msgstr "Autentisering kreves"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr ""
+msgstr "Passord kreves for å få tilgang til alle filene"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "passord"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
@@ -146,14 +146,14 @@ msgstr "Handling pågår"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
-msgstr ""
+msgstr "Filhandling"
 
 #: ../src/app/qml/ui/FolderListPage.qml:57
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Lim inn %1 fil"
+msgstr[1] "Lim inn %1 filer"
 
 #: ../src/app/qml/ui/FolderListPage.qml:61
 msgid "Paste files"
@@ -161,7 +161,7 @@ msgstr "Lim inn filer"
 
 #: ../src/app/qml/ui/FolderListPage.qml:69
 msgid "Clear clipboard"
-msgstr ""
+msgstr "Tøm utklippstavlen"
 
 #: ../src/app/qml/ui/FolderListPage.qml:79
 #: ../src/app/qml/ui/FolderListPage.qml:97
@@ -171,26 +171,26 @@ msgstr "Egenskaper"
 
 #: ../src/app/qml/ui/FolderListPage.qml:88
 msgid "New Folder"
-msgstr ""
+msgstr "Ny mappe"
 
 #: ../src/app/qml/ui/FolderListPage.qml:115
 msgid "Go To"
-msgstr ""
+msgstr "Gå til"
 
 #: ../src/app/qml/ui/FolderListPage.qml:122
 msgid "Unlock full access"
-msgstr ""
+msgstr "Lås opp full tilgang"
 
 #: ../src/app/qml/ui/FolderListPage.qml:136
 msgid "Authentication failed"
-msgstr ""
+msgstr "Autentisering mislyktes"
 
 #: ../src/app/qml/ui/FolderListPage.qml:206
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 fil"
+msgstr[1] "%1 filer"
 
 #: ../src/app/qml/ui/FolderListPage.qml:240
 msgid "Open in a new tab"
@@ -218,7 +218,7 @@ msgstr "Gi den nye fila et navn"
 
 #: ../src/app/qml/ui/FolderListPage.qml:328
 msgid "Select"
-msgstr ""
+msgstr "Velg"
 
 #: ../src/app/qml/ui/FolderListPage.qml:425
 msgid "No files"
@@ -236,7 +236,7 @@ msgstr "Er du sikker på at du vil slette «%1» permanent?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:451
 msgid "Deleting files"
-msgstr ""
+msgstr "Sletter filer"
 
 #: ../src/app/qml/ui/FolderListPage.qml:469
 #: ../src/app/qml/ui/FolderListPage.qml:584
@@ -257,12 +257,12 @@ msgstr "Mangler du tilgang? Er det nye navnet i bruk allerede?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:498
 msgid "Extract Archive"
-msgstr ""
+msgstr "Pakk ut arkiv"
 
 #: ../src/app/qml/ui/FolderListPage.qml:499
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr ""
+msgstr "Vil du pakke ut «%1» her?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:548
 msgid "Cut"
@@ -275,7 +275,7 @@ msgstr "Kopier"
 #: ../src/app/qml/ui/FolderListPage.qml:599
 #: ../src/app/qml/ui/FolderListPage.qml:720
 msgid "Extract archive"
-msgstr ""
+msgstr "Pakk ut arkiv"
 
 #: ../src/app/qml/ui/FolderListPage.qml:630
 msgid "File operation error"
@@ -284,32 +284,32 @@ msgstr "Filoperasjonsfeil"
 #: ../src/app/qml/ui/FolderListPage.qml:661
 #, qt-format
 msgid "Extracting archive '%1'"
-msgstr ""
+msgstr "Pakker ut arkivet «%1»"
 
 #: ../src/app/qml/ui/FolderListPage.qml:682
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../src/app/qml/ui/FolderListPage.qml:697
 msgid "Extracting failed"
-msgstr ""
+msgstr "Utpakkingen mislyktes"
 
 #: ../src/app/qml/ui/FolderListPage.qml:698
 #, qt-format
 msgid "Extracting the archive '%1' failed."
-msgstr ""
+msgstr "Klarte ikke å pakke ut arkivet «%1»."
 
 #: ../src/app/qml/ui/FolderListPage.qml:712
 msgid "Archive file"
-msgstr ""
+msgstr "Arkivfil"
 
 #: ../src/app/qml/ui/FolderListPage.qml:713
 msgid "Do you want to extract the archive here?"
-msgstr ""
+msgstr "Vil du pakke ut arkivet her?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:730
 msgid "Open with another app"
-msgstr ""
+msgstr "Åpne med en annen app"
 
 #: ../src/app/qml/ui/FolderListPage.qml:798
 msgid "~/Desktop"
@@ -405,43 +405,43 @@ msgstr "Filter"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:418
 msgid "path or url may not exist or cannot be read"
-msgstr ""
+msgstr "Stien eller linken fins ikke eller kan ikke leses"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:585
 msgid "Rename error"
-msgstr ""
+msgstr "Klarte ikke å gi nytt navn"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:610
 msgid "Error creating new folder"
-msgstr ""
+msgstr "Klarte ikke å lage ny mappe"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1252
 msgid "items"
-msgstr ""
+msgstr "elementer"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
 msgid "File or Directory does not exist"
-msgstr ""
+msgstr "Filen eller mappen fins ikke"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:264
 msgid " does not exist"
-msgstr ""
+msgstr " fins ikke"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:590
 msgid "Could not remove the item "
-msgstr ""
+msgstr "Klarte ikke å fjerne elementet "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:631
 msgid "Could not find a suitable name to backup"
-msgstr ""
+msgstr "Fant ikke et passende navn for sikkerhetskopi"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:685
 msgid "Could not create the directory"
-msgstr ""
+msgstr "Klarte ikke å lage mappen"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:694
 msgid "Could not create link to"
-msgstr ""
+msgstr "Klarte ikke å lage link til"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:706
 msgid "Could not set permissions to dir"
@@ -449,56 +449,56 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:720
 msgid "Could not open file"
-msgstr ""
+msgstr "Klarte ikke å åpne fil"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:739
 msgid "There is no space on disk to copy"
-msgstr ""
+msgstr "Ikke nok plass til å kopiere"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:749
 msgid "Could not create file"
-msgstr ""
+msgstr "Klarte ikke å lage fil"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:813
 msgid "Could not remove the directory/file "
-msgstr ""
+msgstr "Klarte ikke å fjerne mappen eller filen "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:829
 msgid "Could not move the directory/file "
-msgstr ""
+msgstr "Klarte ikke å flytte mappen eller filen "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:863
 msgid "Cannot copy items"
-msgstr ""
+msgstr "Klarte ikke å kopiere elementer"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:864
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
 msgid "no write permission on folder "
-msgstr ""
+msgstr "ikke skrivetilgang i mappen "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:882
 msgid "Cannot move items"
-msgstr ""
+msgstr "Klarte ikke å flytte elementer"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:888
 msgid "origin and destination folders are the same"
-msgstr ""
+msgstr "fra- og til-mappen er den samme"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1104
 msgid "Write error in "
-msgstr ""
+msgstr "Skrivefeil i "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1120
 msgid "Read error in "
-msgstr ""
+msgstr "Lesefeil i "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1354
 msgid " Copy"
-msgstr ""
+msgstr " Kopier"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1410
 msgid "Set permissions error in "
-msgstr ""
+msgstr "Klarte ikke å fastsette rettigheter i "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1494
 msgid "Could not create trash info file"
@@ -510,4 +510,4 @@ msgstr ""
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
-msgstr ""
+msgstr "Filbehandling"
