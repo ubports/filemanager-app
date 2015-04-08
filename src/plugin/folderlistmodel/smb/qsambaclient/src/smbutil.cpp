@@ -329,8 +329,8 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
 {   
     Smb::Context context = createContext();       
     Q_ASSERT(context);
-    ::memset(st, 0 , sizeof(struct stat));
-    StatReturn ret   = StatInvalid;
+    ::memset(st,0,sizeof(struct stat));
+    StatReturn ret = StatInvalid;
     int slashes = smb_path.count(QDir::separator());
     Smb::FileHandler fd = 0;
     //  smb:// -> slahes=2   smb/workgroup -> slahes=2 smb://host/share -> slashes=3
@@ -338,7 +338,7 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
     {       
         if ((ret = guessDirType(context,fd)) == StatDir && slashes == 3)
         {
-                ret  = StatShare;
+            ret  = StatShare;
         }
         if (slashes > 2 && (ret == StatShare || ret == StatDir))
         {
@@ -354,11 +354,16 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
         }
     }
     else
-    if (errno != EACCES && errno != ECONNREFUSED )
     {
-        if ((fd = openFile(context,smb_path)))
+        // there is no indication of what the item is,  directory or file
+        // if openDir() failed it may be a file, try openFile()
+        // do not try openFile() when: EACCES means it needs authentication, ECONNREFUSED means path does not exist
+        if (errno != EACCES && errno != ECONNREFUSED )
         {
-            ret =  static_cast<StatReturn> (::smbc_getFunctionFstat(context)(context,fd, st));
+            if ((fd = openFile(context,smb_path)))
+            {
+                ret =  static_cast<StatReturn> (::smbc_getFunctionFstat(context)(context,fd, st));
+            }
         }
     }
 
@@ -372,12 +377,12 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
         switch(errno)
         {
            case EACCES:
-                ret = StatNoAccess;
+                ret = StatNoAccess; //authentication should have failed
                 break;
            case ENOENT:
            case ENODEV:
            case ECONNREFUSED:
-                ret = StatDoesNotExist;
+                ret = StatDoesNotExist; //item does not exist
                 break;
            default:
                 break;
@@ -643,8 +648,8 @@ SmbUtil::getStatvfsInfo(const QString &smb_path, struct statvfs *st)
 {
     Smb::Context context = createContext();
     Q_ASSERT(context);
-    ::memset(st, 0 , sizeof(struct statvfs));
-    StatReturn ret   = StatInvalid;
+    ::memset(st,0,sizeof(struct statvfs));
+    StatReturn ret = StatInvalid;
     Smb::FileHandler fd = openDir(context,smb_path);
     if (fd == 0)
     {
