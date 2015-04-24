@@ -8,7 +8,8 @@ SOURCES += $$PWD/dirmodel.cpp \
            $$PWD/clipboard.cpp \
            $$PWD/fmutil.cpp \
            $$PWD/dirselection.cpp \
-           $$PWD/diriteminfo.cpp \         
+           $$PWD/diriteminfo.cpp \
+           $$PWD/urliteminfo.cpp \
            $$PWD/location.cpp \
            $$PWD/locationsfactory.cpp \                    
            $$PWD/locationurl.cpp \             
@@ -25,7 +26,9 @@ HEADERS += $$PWD/dirmodel.h \
            $$PWD/clipboard.h \
            $$PWD/fmutil.h  \
            $$PWD/dirselection.h \          
-           $$PWD/diritemabstractlistmodel.h \               
+           $$PWD/diritemabstractlistmodel.h \
+           $$PWD/diriteminfo.h \
+           $$PWD/urliteminfo.h \           
            $$PWD/location.h \
            $$PWD/locationsfactory.h \                   
            $$PWD/locationurl.h \          

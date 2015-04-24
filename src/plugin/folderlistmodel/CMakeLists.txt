@@ -46,7 +46,9 @@ set(folderlistmodel_SRCS
     locationitemdiriterator.cpp
     locationitemdiriterator.h
     cleanurl.cpp
-    cleanurl.h  
+    cleanurl.h
+    urliteminfo.cpp
+    urliteminfo.h
     disk/disklocation.cpp
     disk/disklocation.h
     trash/qtrashdir.cpp
@@ -59,6 +61,10 @@ set(folderlistmodel_SRCS
     trash/trashlocation.h          
     smb/qsambaclient/src/smbutil.cpp
     smb/qsambaclient/src/smbutil.h
+    smb/qsambaclient/src/smbiteminfo.cpp
+    smb/qsambaclient/src/smbiteminfo.h
+    smb/qsambaclient/src/smbobject.cpp
+    smb/qsambaclient/src/smbobject.h
     net/netauthenticationdata.cpp
     net/netauthenticationdata.h  
     net/netutil.cpp
