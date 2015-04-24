@@ -11,6 +11,7 @@ Build-Depends: cmake,
                python3-all,
                libtag1-dev,
                libpam0g-dev,
+               libsmbclient-dev,
 Standards-Version: 3.9.5
 Section: misc
 Homepage: https://launchpad.net/ubuntu-filemanager-app
@@ -29,6 +30,7 @@ Depends: ${misc:Depends},
          qtdeclarative5-u1db1.0,
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
          qtdeclarative5-ubuntu-content0.1,
+         libsmbclient,
 Description: File Manager application
  Core File Manager application
 

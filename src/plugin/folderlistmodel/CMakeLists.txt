@@ -3,6 +3,8 @@ include_directories(
     disk
     trash   
     net
+    smb 
+    smb/qsambaclient/src
 )
 
 set(PLUGIN_DIR org/nemomobile/folderlistmodel)
@@ -55,8 +57,12 @@ set(folderlistmodel_SRCS
     trash/trashiteminfo.h
     trash/trashlocation.cpp
     trash/trashlocation.h          
+    smb/qsambaclient/src/smbutil.cpp
+    smb/qsambaclient/src/smbutil.h
     net/netauthenticationdata.cpp
-    net/netauthenticationdata.h   
+    net/netauthenticationdata.h  
+    net/netutil.cpp
+    net/netutil.h
 )
 
 add_library(nemofolderlistmodel MODULE
@@ -65,6 +71,24 @@ add_library(nemofolderlistmodel MODULE
 
 qt5_use_modules(nemofolderlistmodel Gui Qml Quick Widgets)
 
+## samba requires libsmbclient
+find_path(SAMBA_INCLUDE_DIR 
+          NAMES libsmbclient.h 
+          HINTS /usr/include/smbclient /usr/include/samba /usr/include/samba-3.0 /usr/include/samba-4.0
+          )
+find_library(SAMBA_LIBRARIES NAMES smbclient )
+message(STATUS "samba include=${SAMBA_INCLUDE_DIR}")
+message(STATUS "samba lib=${SAMBA_LIBRARIES}=${SAMBA_LIBRARIES}")
+
+if(SAMBA_INCLUDE_DIR AND SAMBA_LIBRARIES)
+   message(STATUS "Found samba: include=${SAMBA_INCLUDE_DIR}  library=${SAMBA_LIBRARIES}")
+   INCLUDE_DIRECTORIES(${SAMBA_INCLUDE_DIR})
+   TARGET_LINK_LIBRARIES(nemofolderlistmodel ${SAMBA_LIBRARIES})
+else(SAMBA_INCLUDE_DIR AND SAMBA_LIBRARIES)
+   message(FATAL_ERROR "Could not find Samba libsmbclient")
+endif(SAMBA_INCLUDE_DIR AND SAMBA_LIBRARIES)
+mark_as_advanced(SAMBA_INCLUDE_DIR SAMBA_LIBRARIES)
+## end samba confiuration
 
 # Copy the plugin, the qmldir file and other assets to the build dir for running in QtCreator
 if(NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")

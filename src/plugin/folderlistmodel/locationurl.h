@@ -29,8 +29,9 @@ class LocationUrl
 public:
     static const   QString DiskRootURL;
     static const   QString TrashRootURL;
-#if 0
     static const   QString SmbURL;
+    static const   QString CifsURL;
+#if 0
     static const   QString FishURL;
 #endif
 private:

@@ -15,21 +15,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * File: locationurl.cpp
- * Date: 11/03/2014
+ * File: netutil.h
+ * Date: 29/11/2014
  */
 
-#include "locationurl.h"
+#ifndef NETUTIL_H
+#define NETUTIL_H
 
-const QString LocationUrl::TrashRootURL("trash:///");
-const QString LocationUrl::DiskRootURL("file:///");
-const QString LocationUrl::SmbURL("smb://");
-const QString LocationUrl::CifsURL("cifs://");
-#if 0
-QString LocationURL::FishURL("fish:///");
-#endif
+#include <QString>
 
-
-LocationUrl::LocationUrl()
+class NetUtil
 {
-}
+private:
+    NetUtil();
+public:
+    static QString normalizeHostName(const QString& name);
+    static QString urlConvertHostnameToIP(const QString& url);
+};
+
+#endif // NETUTIL_H

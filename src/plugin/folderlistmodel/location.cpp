@@ -43,6 +43,8 @@
 #include "ioworkerthread.h"
 #include "netauthenticationdata.h"
 
+#include <QDebug>
+
 Q_GLOBAL_STATIC(IOWorkerThread, ioWorkerThread)
 
 
