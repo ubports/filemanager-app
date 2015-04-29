@@ -26,6 +26,7 @@
 #include "disklocation.h"
 #include "trashlocation.h"
 #include "trashiteminfo.h"
+#include "smblocation.h"
 #include "cleanurl.h"
 #include "netauthenticationdata.h"
 
@@ -51,6 +52,14 @@ LocationsFactory::LocationsFactory(QObject *parent)
 {
    m_locations.append(new DiskLocation(LocalDisk));
    m_locations.append(new TrashLocation(TrashDisk));
+   SmbLocation * smblocation = new SmbLocation(NetSambaShare);
+   m_locations.append(smblocation);
+
+   // Qt::DirectConnection is used here
+   // it allows lastUrlNeedsAuthencation() to have the right flag
+   connect(smblocation, SIGNAL(needsAuthentication(QString,QString)),
+           this,        SLOT(onUrlNeedsAuthentication(QString,QString)),
+                        Qt::DirectConnection);
 }
 
 LocationsFactory::~LocationsFactory()
@@ -93,6 +102,14 @@ Location * LocationsFactory::parse(const QString& uPath)
         {
             type = LocalDisk;
             m_tmpPath  = QDir::rootPath() + DirItemInfo::removeExtraSlashes(uPath, index+1);
+        }
+        else
+        if ( uPath.startsWith(LocationUrl::SmbURL.midRef(0,4)) ||
+             uPath.startsWith(LocationUrl::CifsURL.midRef(0,5))
+           )
+        {
+                type = NetSambaShare;
+                m_tmpPath  = LocationUrl::SmbURL + DirItemInfo::removeExtraSlashes(uPath, index+1);
         }
     }
     else
@@ -207,8 +224,8 @@ DirItemInfo * LocationsFactory::validateCurrentUrl(Location *location, const Net
 
     DirItemInfo *item = location->validateUrlPath(m_tmpPath);
 
-    //for remote locations, authentication might have failed
-    //if so try to use a stored authentication data and authenticate it again
+    //for remote loacations, authentication might have failed
+    //if so try to use a stored authentication data and autenticate again
     if (   item && item->needsAuthentication()
         && location->useAuthenticationDataIfExists(*item))
     {
