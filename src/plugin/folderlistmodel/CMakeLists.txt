@@ -58,11 +58,15 @@ set(folderlistmodel_SRCS
     trash/trashiteminfo.cpp
     trash/trashiteminfo.h
     trash/trashlocation.cpp
-    trash/trashlocation.h          
+    trash/trashlocation.h 
+    smb/smblistworker.cpp
+    smb/smblistworker.h
     smb/qsambaclient/src/smbutil.cpp
     smb/qsambaclient/src/smbutil.h
     smb/qsambaclient/src/smbiteminfo.cpp
     smb/qsambaclient/src/smbiteminfo.h
+    smb/qsambaclient/src/smblocationdiriterator.cpp
+    smb/qsambaclient/src/smblocationdiriterator.h
     smb/qsambaclient/src/smbobject.cpp
     smb/qsambaclient/src/smbobject.h
     net/netauthenticationdata.cpp
