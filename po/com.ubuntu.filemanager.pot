@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-14 14:53-0300\n"
+"POT-Creation-Date: 2015-03-12 21:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,8 @@ msgid "Device"
 msgstr ""
 
 #: ../src/app/qml/components/PlacesSidebar.qml:53
-#: ../src/app/qml/ui/PlacesPage.qml:27 ../src/app/qml/ui/PlacesPopover.qml:102
+#: ../src/app/qml/ui/FolderListPage.qml:31 ../src/app/qml/ui/PlacesPage.qml:27
+#: ../src/app/qml/ui/PlacesPopover.qml:102
 msgid "Places"
 msgstr ""
 
@@ -402,23 +403,19 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:350
-msgid "unkown"
-msgstr ""
-
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:444
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:418
 msgid "path or url may not exist or cannot be read"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:611
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:585
 msgid "Rename error"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:636
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:610
 msgid "Error creating new folder"
 msgstr ""
 
-#: ../src/plugin/folderlistmodel/dirmodel.cpp:1261
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:1252
 msgid "items"
 msgstr ""
 
