@@ -69,6 +69,10 @@ set(folderlistmodel_SRCS
     smb/qsambaclient/src/smblocationdiriterator.h
     smb/qsambaclient/src/smbobject.cpp
     smb/qsambaclient/src/smbobject.h
+    smb/smblocation.h
+    smb/smblocation.cpp
+    smb/smblocationauthentication.cpp
+    smb/smblocationauthentication.h
     net/netauthenticationdata.cpp
     net/netauthenticationdata.h  
     net/netutil.cpp
