@@ -43,10 +43,15 @@ SOURCES +=  $$PWD/trash/qtrashdir.cpp $$PWD/trash/trashiteminfo.cpp  \
 HEADERS +=  $$PWD/trash/qtrashdir.h       $$PWD/trash/trashiteminfo.h    \
             $$PWD/trash/qtrashutilinfo.h  $$PWD/trash/trashlocation.h
 
-SOURCES +=  $$PWD/net/netutil.cpp $$PWD/net/netauthenticationdata.cpp
-HEADERS +=  $$PWD/net/netutil.h   $$PWD/net/netauthenticationdata.h
+SOURCES +=  $$PWD/smb/smblocation.cpp $$PWD/smb/smblocationauthentication.cpp $$PWD/smb/smblistworker.cpp
+HEADERS +=  $$PWD/smb/smblocation.h $$PWD/smb/smblocationauthentication.h $$PWD/smb/smblistworker.h
 
-INCLUDEPATH  += $$PWD $$PWD/trash $$PWD/disk $$PWD/net
+SOURCES +=  $$PWD/net/netutil.cpp $$PWD/net/netauthenticationdata.cpp
+HEADERS +=  $$PWD/net/netutil.h $$PWD/net/netauthenticationdata.h
+
+INCLUDEPATH  += $$PWD $$PWD/trash $$PWD/disk $$PWD/smb $$PWD/net
+
+include ($$PWD/smb/qsambaclient/qsambaclient.pri)
 
 greaterThan(QT_MAJOR_VERSION, 4) {
    QT += qml

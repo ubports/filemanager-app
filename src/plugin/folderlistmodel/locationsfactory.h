@@ -61,9 +61,9 @@ public:
     enum Locations
     {
         LocalDisk,     //<! any mounted file system
-        TrashDisk      //<! special trash location in the disk
-#if 0
+        TrashDisk,     //<! special trash location in the disk
         NetSambaShare  //<! SAMBA or CIFS shares
+#if 0
         NetFishShare   //<! FISH protocol over ssh that provides file sharing
 #endif
     };

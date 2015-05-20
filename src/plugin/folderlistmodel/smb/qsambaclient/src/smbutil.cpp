@@ -42,9 +42,12 @@
 #define DBG(none)
 #endif
 
-static QByteArray   s_user("guest");
-static QByteArray   s_passwd;
-static QByteArray   s_workGroup("WORKGROUP");
+namespace
+{
+    QByteArray   s_user("guest");
+    QByteArray   s_passwd;
+    QByteArray   s_workGroup("WORKGROUP");
+}
 
 //===============================================================================================
 /*!
