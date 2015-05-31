@@ -8,23 +8,22 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2015-01-31 04:57+0000\n"
+"PO-Revision-Date: 2015-05-30 08:00+0000\n"
 "Last-Translator: Dirgita <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2015-05-02 05:27+0000\n"
-"X-Generator: Launchpad (build 17474)\n"
+"X-Launchpad-Export-Date: 2015-05-31 05:29+0000\n"
+"X-Generator: Launchpad (build 17532)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 berkas)"
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
 #: ../src/app/qml/ui/FolderListPage.qml:830
@@ -48,7 +47,7 @@ msgstr "Pengaturan"
 
 #: ../src/app/qml/filemanager.qml:82
 msgid "Change app settings"
-msgstr "Ubah pengaturan app"
+msgstr "Ubah pengaturan apl"
 
 #: ../src/app/qml/filemanager.qml:259 ../src/app/qml/ui/FolderListPage.qml:365
 #: ../src/app/qml/ui/ViewPopover.qml:70
