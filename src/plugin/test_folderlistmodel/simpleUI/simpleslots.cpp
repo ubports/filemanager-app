@@ -26,7 +26,7 @@
 #include "dirselection.h"
 #include "placesmodel.h"
 #include "terminalfolderapp.h"
-#include "actionprogress.h"
+#include "ui_authenticationdialog.h"
 
 #include <QDir>
 #include <QMetaType>
@@ -37,6 +37,7 @@
 #include <QTimer>
 #include <QLineEdit>
 #include <QMouseEvent>
+#include <QDialog>
 
 
 void SimpleList::onRowClicked(QModelIndex index)
@@ -81,21 +82,10 @@ void SimpleList::onSetSort(int col, Qt::SortOrder order)
 void SimpleList::onClipboardChanged()
 {
     int clipboardCounter = m_model->getClipboardUrlsCounter();
-    int rows             = m_model->rowCount();
-    statusBar()->showMessage(QString("Total Items = %1 Clipboard Items = %2")
-                             .arg(rows)
+    statusBar()->showMessage(QString("clipboard items %1")
                              .arg(clipboardCounter)
                              );
     ui->actionPaste->setEnabled(clipboardCounter > 0);
-}
-
-
-void SimpleList::onStatusChanged()
-{
-    if (!m_model->awaitingResults())
-    {
-        onClipboardChanged();
-    }
 }
 
 
@@ -195,8 +185,50 @@ void SimpleList::onOpenTerminal()
 }
 
 
-void SimpleList::onCancelAction()
+void SimpleList::onAwaitingResultsChanged()
 {
-    m_model->cancelAction();
-    m_pbar->hide();
+    if (m_model->awaitingResults())
+    {
+        this->setCursor(Qt::BusyCursor);
+    }
+    else
+    {
+         this->setCursor(Qt::ArrowCursor);
+    }
+}
+
+
+void SimpleList::onRowsInserted(QModelIndex, int, int)
+{
+   ui->tableViewFM->resizeColumnToContents(0);
+}
+
+
+void SimpleList::onNeedsAutentication(QString user, QString url)
+{
+    m_uiAuth->lineEditUrl->setText(url);
+    int index = m_uiAuth->comboBoxUser->findText(user);
+    if (index == -1)
+    {
+          m_uiAuth->comboBoxUser->addItem(user);
+          index = m_uiAuth->comboBoxUser->findText(user);
+    }
+    if (index != -1)
+    {
+      m_uiAuth->comboBoxUser->setCurrentIndex(index);
+    }
+    m_uiAuth->checkBox->setChecked(false);
+    if (m_authDialog->exec() == QDialog::Accepted)
+    {
+        QTimer::singleShot(0, this, SLOT(onAuthenticaionAccepted()));
+    }
+}
+
+
+void SimpleList::onAuthenticaionAccepted()
+{
+    m_model->setPath( m_uiAuth->lineEditUrl->text(),
+                      m_uiAuth->comboBoxUser->currentText(),
+                      m_uiAuth->lineEditPassword->text(),                      
+                      m_uiAuth->checkBox->isChecked() );
 }

@@ -24,7 +24,7 @@
 #include "dirmodel.h"
 #include "dirselection.h"
 #include "placesmodel.h"
-#include "actionprogress.h"
+#include "ui_authenticationdialog.h"
 
 #include <QDir>
 #include <QMetaType>
@@ -35,21 +35,28 @@
 #include <QTimer>
 #include <QLineEdit>
 #include <QMouseEvent>
+#include <QDialog>
 
 SimpleList::SimpleList(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::SimpleList),  
-    m_pbar( new ActionProgress(this) ),
+    m_pbar( new QProgressBar() ),
     m_selection(0),
     m_holdingCtrlKey(false),
     m_holdingShiftKey(false),
     m_button(Qt::NoButton),
-    m_placesModel(new PlacesModel(this))
+    m_placesModel(new PlacesModel(this)),
+    m_authDialog(new QDialog(this)),
+    m_uiAuth(new Ui::AuthenticationDialog)
 {
     //prepare UI
     ui->setupUi(this);
+    m_uiAuth->setupUi(m_authDialog);
+
     ui->tableViewFM->horizontalHeader()->setSortIndicator(0,Qt::AscendingOrder);
     resize(1200,600);
+    m_pbar->setMaximum(100);
+    m_pbar->setMinimum(0);
 
     ui->listViewPlaces->setModel(m_placesModel);
     ui->listViewPlaces->setSpacing(ui->listViewPlaces->spacing() + 7);
@@ -87,7 +94,7 @@ SimpleList::SimpleList(QWidget *parent) :
     do_connections();
 
     //start browsing home
-    m_model->goHome(); 
+    m_model->goHome();
 }
 
 
@@ -158,7 +165,13 @@ void SimpleList::do_connections()
             this,    SLOT(onError(QString,QString)));
 
     connect(m_model, SIGNAL(awaitingResultsChanged()),
-            this,    SLOT(onStatusChanged()));
+            this,    SLOT(onAwaitingResultsChanged()));
+
+    connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)),
+            this,    SLOT(onRowsInserted(QModelIndex,int,int)));
+
+    connect(m_model, SIGNAL(needsAuthentication(QString,QString)),
+            this,    SLOT(onNeedsAutentication(QString, QString)));
 
     connect(m_selection,   SIGNAL(selectionChanged(int)),
             this,          SLOT(onSelectionChanged(int)));
@@ -166,7 +179,6 @@ void SimpleList::do_connections()
     connect(ui->listViewPlaces,  SIGNAL(clicked(QModelIndex)),
             this,                SLOT(onPlacesClicked(QModelIndex)));
 
-    connect(m_pbar,  SIGNAL(cancel()), this, SLOT(onCancelAction()));
 }
 
 //===================================================================

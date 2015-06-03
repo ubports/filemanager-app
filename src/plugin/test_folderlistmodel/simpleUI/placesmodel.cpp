@@ -49,6 +49,8 @@ PlacesModel::PlacesModel(QObject *parent) :
     addPlace("Root", ":/resources/resources/red_folder.png", QStringList(QDir::rootPath()));
 
     addPlace("Trash", ":/resources/resources/recyclebin_full.png", QStringList(LocationUrl::TrashRootURL));
+
+    addPlace("samba/cifs", ":/resources/resources/workgroup.png", QStringList(LocationUrl::SmbURL));
 }
 
 

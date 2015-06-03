@@ -296,6 +296,23 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             {
                 icon =  QFileIconProvider().icon(mDirectoryContents.at(index.row()).diskFileInfo());
             }
+#if defined(SIMPLE_UI)
+            else
+            if (mDirectoryContents.at(index.row()).isHost())
+            {
+               return QIcon(":/resources/resources/server.png");
+            }
+            else
+            if (mDirectoryContents.at(index.row()).isWorkGroup())
+            {
+               return QIcon(":/resources/resources/workgroup.png");
+            }
+            else
+            if (mDirectoryContents.at(index.row()).isShare())
+            {
+               return QIcon(":/resources/resources/samba_folder.png");
+            }
+#endif
             else
             if (mDirectoryContents.at(index.row()).isDir())
             {

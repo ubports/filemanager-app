@@ -19,5 +19,8 @@
     <file>resources/red_folder.png</file>
     <file>resources/document_folder.png</file>
     <file>resources/downloads_folder.png</file>
+    <file>resources/server.png</file>
+    <file>resources/workgroup.png</file>
+    <file>resources/samba_folder.png</file>
   </qresource>
 </RCC>
