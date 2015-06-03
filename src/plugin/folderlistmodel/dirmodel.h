@@ -48,6 +48,7 @@ class DirSelection;
 class LocationsFactory;
 class Location;
 class ExternalFSWatcher;
+class NetAuthenticationDataList;
 
 class DirModel : public DirItemAbstractListModel
 {
@@ -113,7 +114,7 @@ public:
 
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
     inline QString path() const { return mCurrentDir; }
-    void setPath(const QString &pathName);
+    void setPath(const QString &pathName, const QString& user = QString(), const QString& password = QString(), bool savePassword = false);
 
     Q_INVOKABLE QDateTime   curPathAccessedDate() const;
     Q_INVOKABLE QDateTime   curPathCreatedDate()  const;
@@ -422,6 +423,19 @@ public slots:
 
 signals:
     /*!
+     * \brief needsAuthentication()
+     *  This notifies the UI that the current URL being browsed needs to set
+     *   user/password to perform an authentication
+     *
+     *  The UI must ask for "user" and "password" for the current URL and then call
+     *  \ref setAuthentication()
+     *
+     * \param user       current user being used
+     * \param urlPath    the current URL asked to be browsed
+     */
+    void     needsAuthentication(const QString& user, const QString& urlPath);
+    
+    /*!
      * \brief insertedItem()
      *
      *  It happens when a new file is inserted in an existent view,
@@ -489,6 +503,7 @@ private:
     bool                mExtFSWatcher;
     Clipboard *         mClipboard;
     DirSelection *      mSelection;
+    NetAuthenticationDataList *mAuthData;
     LocationsFactory *  mLocationFactory;
     Location         *  mCurLocation;
     QStringList         mPathList;    //!< it will be used for goBack()

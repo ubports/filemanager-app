@@ -122,13 +122,13 @@ public:
     const DirItemInfo* lastValidFileInfo() const { return m_lastValidFileInfo; }
 
     /*!
-     * \brief lastUrlNeedsAuthencation()
+     * \brief lastUrlNeedsAuthentication()
      * \return true when last URL used in setNewPath() needs authentication
      *
      * It can be used to show a dialog to the user asking for user/password
      * instead of showing a message saying that url does not exist
      */
-    bool        lastUrlNeedsAuthencation() const;
+    bool        lastUrlNeedsAuthentication() const;
 
 private:
     /*!

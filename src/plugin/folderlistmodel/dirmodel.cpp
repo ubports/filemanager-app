@@ -39,6 +39,7 @@
 #include "locationurl.h"
 #include "disklocation.h"
 #include "trashlocation.h"
+#include "netauthenticationdata.h"
 
 
 #ifndef DO_NOT_USE_TAG_LIB
@@ -109,6 +110,8 @@ DirModel::DirModel(QObject *parent)
     , mCompareFunction(0)  
     , mExtFSWatcher(false)
     , mClipboard(new Clipboard(this))
+      // create global Authentication Data before mLocationFactory
+    , mAuthData(NetAuthenticationDataList::getInstance(this))
     , mLocationFactory(new LocationsFactory(this))
     , mCurLocation(0)
     , m_fsAction(new FileSystemAction(this) )
@@ -180,6 +183,9 @@ DirModel::DirModel(QObject *parent)
        connect(l,     SIGNAL(extWatcherPathChanged(QString)),
                this,  SLOT(onThereAreExternalChanges(QString)));
 
+       connect(l,      SIGNAL(needsAuthentication(QString,QString)),
+               this,   SIGNAL(needsAuthentication(QString,QString)), Qt::QueuedConnection);
+
        connect(this,  SIGNAL(enabledExternalFSWatcherChanged(bool)),
                l,     SLOT(setUsingExternalWatcher(bool)));
     }
@@ -189,7 +195,8 @@ DirModel::DirModel(QObject *parent)
 
 DirModel::~DirModel()
 {
-
+    // release global Authentication Data
+    NetAuthenticationDataList::releaseInstance(this);
 }
 
 
@@ -420,7 +427,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
 }
 
 
-void DirModel::setPath(const QString &pathName)
+void DirModel::setPath(const QString &pathName, const QString& user, const QString &password, bool savePassword)
 {
     if (pathName.isEmpty())
         return;   
@@ -432,7 +439,7 @@ void DirModel::setPath(const QString &pathName)
         return;
     }
 
-    Location *location = mLocationFactory->setNewPath(pathName);
+    Location *location = mLocationFactory->setNewPath(pathName, user, password, savePassword);
     if (location == 0)
     {
         // perhaps a goBack() operation to a folder/location that was removed,
@@ -441,8 +448,11 @@ void DirModel::setPath(const QString &pathName)
         {
             mPathList.removeLast();
         }
-        emit error(tr("path or url may not exist or cannot be read"), pathName);
-        qDebug() << Q_FUNC_INFO << this << "path or url may not exist or cannot be read:" << pathName;
+        if (!mLocationFactory->lastUrlNeedsAuthentication())
+        {
+            emit error(tr("path or url may not exist or cannot be read"), pathName);
+            qDebug() << Q_FUNC_INFO << this << "path or url may not exist or cannot be read:" << pathName;
+        }
         return;
     }
 
@@ -910,14 +920,25 @@ bool  DirModel::cdIntoItem(const DirItemInfo &fi)
 {
     bool ret = false;
     if (fi.isBrowsable())
-    {       
-        if (fi.isContentReadable())
+    {
+        bool authentication = fi.needsAuthentication() &&
+                              !mCurLocation->useAuthenticationDataIfExists(fi);
+        if (authentication)
         {
-            mCurLocation->setInfoItem(fi);
-            setPathFromCurrentLocation();
+            mCurLocation->notifyItemNeedsAuthentication(&fi);
+            //return true to avoid any error message to appear
+            //a dialog must be presented to the user asking for user/password
             ret = true;
         }
-
+        else
+        {
+            if (fi.isContentReadable())
+            {
+                mCurLocation->setInfoItem(fi);
+                setPathFromCurrentLocation();
+                ret = true;
+            }
+        }
     }
     return ret;
 }
