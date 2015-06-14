@@ -526,23 +526,6 @@ PageWithBottomEdge {
                 archiveType = getArchiveType(actionSelectionPopover.model.fileName)
             }
 
-            delegate: Empty { // NOTE: This is a workaround for LP: #1395118 and should be removed as soon as the patch for upstream gets released (https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1395118)
-                id: listItem
-                Label {
-                    text: listItem.text
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        horizontalCenter: parent.horizontalCenter
-                    }
-                    wrapMode: Text.Wrap
-                    color: Theme.palette.normal.overlayText
-                }
-                /*! \internal */
-                onTriggered: actionSelectionPopover.hide()
-                visible: enabled && ((action === undefined) || action.visible)
-                height: visible ? implicitHeight : 0
-            }
-
             actions: ActionList {
                 Action {
                     text: i18n.tr("Cut")
