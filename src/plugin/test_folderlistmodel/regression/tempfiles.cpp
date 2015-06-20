@@ -109,9 +109,9 @@ bool TempFiles::createPrivate(const QString& name, int counter, bool putContent)
     QString myName;
     while(counter--)
     {
-        myName.sprintf("%s%c%s_%02d", m_dir.toLatin1().constData(),
+        myName.sprintf("%s%c%s_%02d", m_dir.toLocal8Bit().constData(),
                        QDir::separator().toLatin1(),
-                       name.toLatin1().constData(),
+                       name.toLocal8Bit().constData(),
                        counter);
         QFile file(myName);
         if (file.open(QFile::WriteOnly))
@@ -199,7 +199,7 @@ bool DeepDir::remove()
     if (!root.isEmpty() && QFileInfo(root).exists())
     {
         QString cmd("/bin/rm -rf " + root);
-        ret = ::system(cmd.toLatin1().constData()) == 0 ;
+        ret = ::system(cmd.toLocal8Bit().constData()) == 0 ;
     }
     return ret;
 }

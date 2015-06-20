@@ -9,6 +9,9 @@
 #include "locationsfactory.h"
 #include "disklocation.h"
 #include "qtrashutilinfo.h"
+#include "smbiteminfo.h"
+#include "testqsambasuite.h"
+#include "smbusershare.h"
 
 #if defined(Q_OS_UNIX)
 #include <stdio.h>
@@ -108,7 +111,6 @@ private Q_SLOTS: // test cases
     void  modelCutManyItemsPasteIntoAnotherModel();
     void  fsActionMoveItemsForcingCopyAndThenRemove();
     void  modelCancelRemoveAction();
-    void  modelCancelRemoveSelection();
     void  modelTestFileSize();
     void  modelRemoveDirWithHiddenFilesAndLinks();
     void  modelCancelCopyAction();
@@ -119,6 +121,12 @@ private Q_SLOTS: // test cases
     void  modelCutAndPaste3Times();
     void  modelCutAndPasteInTheSamePlace();
     void  modelCopyAndPasteToBackupFiles();
+    void  diskCdIntoPathRelative();
+    void  diskCdIntoPathAbsolute();
+    void  trashCdIntoPathRelative();
+    void  trashCdIntoPathAbsolute();
+    void  smbCdIntoPathRelative();
+    void  smbCdIntoPathAbsolute();
     void  fileIconProvider();
     void  getThemeIcons();
 #ifndef DO_NOT_USE_TAG_LIB
@@ -200,7 +208,6 @@ private:
     int            m_extFSWatcherPathModifiedCounter;
     int            m_selectedItemsCounter;
     int            m_selectionMode;
-    int            m_minimumProgressToCancelAction;
 
 };
 
@@ -347,12 +354,11 @@ bool TestDirModel::compareDirectories(const QString &d1, const QString &d2)
 }
 
 void TestDirModel::cancel(int index, int, int percent)
-{   
-    Q_UNUSED(index);
-    if (percent > m_minimumProgressToCancelAction)
+{
+    DirModel * model = static_cast<DirModel*> (sender());
+    if (index > 1 ||  percent > 1)
     {
-        DirModel * model = static_cast<DirModel*> (sender());
-        model->cancelAction();
+         model->cancelAction();
     }
 }
 
@@ -456,7 +462,6 @@ void TestDirModel::init()
    m_extFSWatcherPathModifiedCounter = 0;
    m_selectedItemsCounter   = 0;
    m_selectionMode          = -1;
-   m_minimumProgressToCancelAction = 1;
 }
 
 
@@ -479,7 +484,6 @@ void TestDirModel::cleanup()
     m_extFSWatcherPathModifiedCounter   = 0;
     m_selectedItemsCounter = 0;
     m_selectionMode          = -1;
-    m_minimumProgressToCancelAction = 1;
 }
 
 
@@ -936,23 +940,6 @@ void  TestDirModel::fsActionMoveItemsForcingCopyAndThenRemove()
      QCOMPARE(totalCopied, m_progressTotalItems);
 }
 
-
-/*!
- * \brief TestDirModel::modelCancelRemoveAction()
- *
- *  It tests cancel on a remove operation
- *
- *  Two directories with a deep tree of items are created
- *
- *  The first directory is removed and the cancel is triggered after 10 percent of the all files be removed,
- *  then the first phase of the checks are performed
- *
- *  The second phase consists in remove the same directory after the cancel operation
- *  then a new set of checks are performed
- *
- *  The third phase consists in remove the second directory previously created
- *
- */
 void TestDirModel::modelCancelRemoveAction()
 {
      const int level = 30;
@@ -965,131 +952,17 @@ void TestDirModel::modelCancelRemoveAction()
      QCOMPARE(m_dirModel_01->rowCount(), 1);
      connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
              this,          SLOT(progress(int,int,int)));
-
-     connect(m_dirModel_01, SIGNAL(error(QString,QString)),
-             this,          SLOT(slotError(QString,QString)));
-
-     //cancel only after removing some files
-     m_minimumProgressToCancelAction = 10;
      connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
              this,          SLOT(cancel(int,int,int)));
 
-
-     //create a second directory
-     m_deepDir_02 = new DeepDir("modelCancelRemoveAction2", level);
-     QCOMPARE( QFileInfo(m_deepDir_02->path()).exists(),  true);
-
-     m_dirModel_02->setPath(m_deepDir_02->path());
-     QTest::qWait(TIME_TO_REFRESH_DIR);
-     QCOMPARE(m_dirModel_02->rowCount(), 1);
-
-
-     //remove from first directory
      m_dirModel_01->removeIndex(0);
      QTest::qWait(TIME_TO_PROCESS);
      QTest::qWait(5);
 
-     // sub items do not emit removed()
-     QCOMPARE(m_filesRemoved.count(), 0);
+     QCOMPARE(m_filesRemoved.count() , 0);
      QCOMPARE(m_dirModel_01->rowCount(), 1);
      QVERIFY(m_progressCurrentItem > 0);     // some file were performed
      QVERIFY(m_progressPercentDone < 100);   //
-     QCOMPARE(m_receivedErrorSignal, false);
-     // high level item still exists
-     QDir a(m_deepDir_01->path(), QString(), QDir::NoSort,  QDir::AllEntries | QDir::NoDotAndDotDot);
-     QCOMPARE(a.exists(), true);
-     QCOMPARE((int)a.count(), 1);
-
-     //First phase OK cancel worked
-     //SECOND PHASE  now remove everything
-     disconnect(m_dirModel_01, SIGNAL(progress(int,int,int)),
-                this,          SLOT(cancel(int,int,int)));
-
-     m_dirModel_01->removeIndex(0);
-     QTest::qWait(TIME_TO_PROCESS * 2);
-     QTest::qWait(5);
-     QCOMPARE(m_progressPercentDone,  100);
-     QCOMPARE(m_filesRemoved.count(), 1);
-     QCOMPARE(m_dirModel_01->rowCount(), 0);
-     QCOMPARE(m_receivedErrorSignal, false);
-     // high level item does NOT exist anymore
-     QDir b(m_deepDir_01->path(), QString(), QDir::NoSort, QDir::AllEntries | QDir::NoDotAndDotDot);
-     QCOMPARE(b.exists(), true);
-     QCOMPARE((int)b.count(), 0);
-
-     //THIRD PHASE
-     //now remove the second directory
-     QDir c(m_deepDir_02->path(), QString(), QDir::NoSort, QDir::AllEntries | QDir::NoDotAndDotDot);
-     QCOMPARE(c.exists(), true);
-     QCOMPARE((int)c.count(), 1);
-     m_dirModel_02->removeIndex(0);
-     QTest::qWait(TIME_TO_PROCESS * 2);
-     QDir d(m_deepDir_02->path(), QString(), QDir::NoSort, QDir::AllEntries | QDir::NoDotAndDotDot);
-     QCOMPARE(d.exists(), true);
-     QCOMPARE((int)d.count(), 0);
-     QCOMPARE(m_receivedErrorSignal, false);
-     QCOMPARE(m_dirModel_02->rowCount(), 0);
-}
-
-
-void TestDirModel::modelCancelRemoveSelection()
-{
-     QString tmpDir("modelCancelRemoveSelection");
-     m_deepDir_01 = new DeepDir(tmpDir, 0);
-     QCOMPARE( QFileInfo(m_deepDir_01->path()).exists(),  true);
-     TempFiles tempFiles;
-     tempFiles.addSubDirLevel(tmpDir);
-     const int createdFiles = 250;
-     tempFiles.create(createdFiles);
-     m_dirModel_01->setPath(m_deepDir_01->path());    
-     QTest::qWait(TIME_TO_REFRESH_DIR);
-
-     QCOMPARE(m_dirModel_01->rowCount(), createdFiles);
-     connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
-             this,          SLOT(progress(int,int,int)));
-
-     connect(m_dirModel_01, SIGNAL(error(QString,QString)),
-             this,          SLOT(slotError(QString,QString)));
-
-     //cancel only after removing some files
-     m_minimumProgressToCancelAction = 20;
-     connect(m_dirModel_01, SIGNAL(progress(int,int,int)),
-             this,          SLOT(cancel(int,int,int)));
-
-
-    DirSelection  *selection = m_dirModel_01->selectionObject();
-    QVERIFY(selection != 0);
-
-    //remove all, but cancel will be triggered
-    selection->selectAll();
-    m_dirModel_01->removeSelection();
-    QTest::qWait(TIME_TO_PROCESS*2);
-
-    QVERIFY( m_dirModel_01->rowCount() > 0 );
-    QVERIFY( m_dirModel_01->rowCount() <  createdFiles);
-    QVERIFY(m_filesRemoved.count() > 0);
-
-    int notRemoved = createdFiles - m_filesRemoved.count();
-    QVERIFY(notRemoved > 0);
-
-    QDir c(m_deepDir_01->path(), QString(), QDir::NoSort, QDir::AllEntries | QDir::NoDotAndDotDot);
-    QCOMPARE(c.exists(), true);
-    QCOMPARE((int)c.count(), notRemoved);
-
-    disconnect(m_dirModel_01, SIGNAL(progress(int,int,int)),
-             this,          SLOT(cancel(int,int,int)));
-
-    //now remove everything
-    selection->clear();
-    selection->selectAll();
-    QCOMPARE(selection->counter(),  m_dirModel_01->rowCount());
-    m_dirModel_01->removeSelection();
-    QTest::qWait(TIME_TO_PROCESS*2);
-
-    QCOMPARE(m_dirModel_01->rowCount() , 0);
-    QDir d(m_deepDir_01->path(), QString(), QDir::NoSort, QDir::AllEntries | QDir::NoDotAndDotDot);
-    QCOMPARE(d.exists(), true);
-    QCOMPARE((int)d.count(), 0);
 }
 
 void TestDirModel::modelTestFileSize()
@@ -1788,8 +1661,8 @@ void TestDirModel::pathProperties()
                                 QFileDevice::ReadOwner | QFileDevice::ExeOwner | QFileDevice::WriteOwner);
 
     QCOMPARE(ok,   true);
-    qWarning("created  %s", m_dirModel_01->curPathCreatedDateLocaleShort().toLatin1().constData());
-    qWarning("modified %s", m_dirModel_01->curPathModifiedDateLocaleShort().toLatin1().constData());
+    qWarning("created  %s", m_dirModel_01->curPathCreatedDateLocaleShort().toLocal8Bit().constData());
+    qWarning("modified %s", m_dirModel_01->curPathModifiedDateLocaleShort().toLocal8Bit().constData());
 
 }
 
@@ -1949,7 +1822,7 @@ void TestDirModel::getThemeIcons()
         bool ret = !md5IconsTable.contains(md5);
         qWarning("%s icon using QIcon::fromTheme() for mime type %s",
                   ret ? "GOOD" : "BAD ",
-                   mimetype.name().toLatin1().constData());
+                   mimetype.name().toLocal8Bit().constData());
         md5IconsTable.insert(md5, mimesToTest.at(counter));
     }
 }
@@ -2539,7 +2412,7 @@ void TestDirModel::trashDiretories()
 
    //turn stick bit on
    QString cmd("chmod +t " + trashDir);
-   QCOMPARE(system(cmd.toLatin1().constData()),   0);
+   QCOMPARE(system(cmd.toLocal8Bit().constData()),   0);
    QCOMPARE(trash.isMountPointSharedWithStickBit((m_deepDir_01->path())),  true);
 
    //test validate Trash Dir()
@@ -2580,7 +2453,7 @@ void TestDirModel::trashDiretories()
    }
 
    //test XDG Home Trash
-   ::setenv("XDG_DATA_HOME", m_deepDir_02->path().toLatin1().constData(), true );
+   ::setenv("XDG_DATA_HOME", m_deepDir_02->path().toLocal8Bit().constData(), true );
    QString xdgTrashDir(trash.homeTrash());
    QCOMPARE(trash.validate(xdgTrashDir, false),  true);
    QCOMPARE(trash.homeTrash() , xdgTrashDir);
@@ -2714,7 +2587,7 @@ void TestDirModel::locationFactory()
 
     //create a Trash to have
 
-    ::setenv("XDG_DATA_HOME", m_deepDir_01->path().toLatin1().constData(), true );
+    ::setenv("XDG_DATA_HOME", m_deepDir_01->path().toLocal8Bit().constData(), true );
     QString xdgTrashDir(trash.homeTrash());
     QCOMPARE(trash.validate(xdgTrashDir, true),  true);
     QCOMPARE(trash.homeTrash() , xdgTrashDir);
@@ -2925,6 +2798,184 @@ void TestDirModel::emptyTrash()
 
 
 
+void TestDirModel::diskCdIntoPathAbsolute()
+{
+    QString dirName("diskCdIntoPathAbsolute");
+    m_deepDir_01 = new DeepDir(dirName,0);
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    bool ret = m_dirModel_01->cdIntoPath("/IT_MUST_NOT_EXIST/____IT_MUST_NOT_EXIST__");
+    QCOMPARE(ret,  false);
+    ret = m_dirModel_01->cdIntoPath(QDir::homePath());
+    QCOMPARE(ret , true);
+    QCOMPARE(m_dirModel_01->path(),  QDir::homePath());
+}
+
+void TestDirModel::diskCdIntoPathRelative()
+{
+    QString dirName("diskCdIntoPathRelative");
+    m_deepDir_01 = new DeepDir(dirName,1);
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+
+    QModelIndex firstIdx  = m_dirModel_01->index(0, 0);
+    QString subdir = m_dirModel_01->data(firstIdx).toString();
+    QString fullSubdir = m_deepDir_01->path() + QDir::separator() + subdir;
+    bool ret = m_dirModel_01->cdIntoPath(subdir);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(ret,  true);
+    QCOMPARE(m_dirModel_01->path(),  fullSubdir);
+    ret = m_dirModel_01->cdIntoPath("..");
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(ret,  true);
+    QCOMPARE(m_dirModel_01->path(),  m_deepDir_01->path());
+}
+
+
+
+void TestDirModel::trashCdIntoPathAbsolute()
+{
+    QString orig("trashCdIntoPathAbsolute");
+    m_deepDir_01  = new DeepDir(orig, 1);
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 1);
+
+    QString tempTrash("tempTrashDir");
+    m_deepDir_02  = new DeepDir(tempTrash, 0);
+    createTempHomeTrashDir(m_deepDir_02->path());
+
+    QModelIndex firstIdx  = m_dirModel_01->index(0, 0);
+
+    QString subdirInTrash   =  LocationUrl::TrashRootURL +
+                              m_dirModel_01->data(firstIdx).toString();
+
+    // move item to Trash
+    m_dirModel_01->moveIndexToTrash(0);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+
+
+    bool ret = m_dirModel_01->cdIntoPath(subdirInTrash);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(ret, true);
+    QCOMPARE(m_dirModel_01->path(),  subdirInTrash);
+}
+
+
+void TestDirModel::trashCdIntoPathRelative()
+{
+    QString orig("trashCdIntoPathRelative");
+    m_deepDir_01  = new DeepDir(orig, 1);
+    m_dirModel_01->setPath(m_deepDir_01->path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 1);
+
+    QString tempTrash("tempTrashDir");
+    m_deepDir_02  = new DeepDir(tempTrash, 0);
+    createTempHomeTrashDir(m_deepDir_02->path());
+
+    QModelIndex firstIdx  = m_dirModel_01->index(0, 0);
+    QString subdir        = m_dirModel_01->data(firstIdx).toString();
+    QString subdirInTrash  =  LocationUrl::TrashRootURL + subdir;
+
+
+    // move item to Trash
+    m_dirModel_01->moveIndexToTrash(0);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+
+    bool ret = m_dirModel_01->cdIntoPath(LocationUrl::TrashRootURL);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(ret, true);
+    QCOMPARE(m_dirModel_01->path(),  LocationUrl::TrashRootURL);
+
+    //cd relative
+    ret = m_dirModel_01->cdIntoPath(subdir);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(ret, true);
+    QCOMPARE(m_dirModel_01->path(),  subdirInTrash);
+}
+
+
+
+void TestDirModel::smbCdIntoPathAbsolute()
+{
+   SmbItemInfo  smbOK(LocationUrl::SmbURL);
+   QCOMPARE(smbOK.isValid(),  true);
+   QCOMPARE(smbOK.isRoot(),   true);
+   QCOMPARE(smbOK.needsAuthentication(), false);
+   QCOMPARE(smbOK.urlPath(), LocationUrl::SmbURL);
+
+   if (SmbUserShare::canCreateShares())
+   {
+       QString shareName("smbShareCdIntoPathAbsolute");
+
+       TestQSambaSuite smbTest(this);
+
+       ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+       if (tmpShare.tempDir)
+       {
+           tmpShare.tempDir->setAutoRemove(true);
+       }
+       QString createdDir("createdDir");
+       QString createDirFullPath = tmpShare.sharedDirPath + QDir::separator() + createdDir;
+       bool ret = QDir().mkdir(createDirFullPath);
+       QCOMPARE(ret , true);
+       QString absUrl = LocationUrl::SmbURL + "localhost" +
+               QDir::separator() + tmpShare.shareName +
+               QDir::separator() + createdDir;
+
+       ret = m_dirModel_01->cdIntoPath(absUrl);
+       QTest::qWait(TIME_TO_PROCESS);
+       QCOMPARE(ret, true);
+       QCOMPARE(m_dirModel_01->path(), absUrl );
+   }
+}
+
+void TestDirModel::smbCdIntoPathRelative()
+{
+   SmbItemInfo  smbOK(LocationUrl::SmbURL);
+   QCOMPARE(smbOK.isValid(),  true);
+   QCOMPARE(smbOK.isRoot(),   true);
+   QCOMPARE(smbOK.needsAuthentication(), false);
+   QCOMPARE(smbOK.urlPath(), LocationUrl::SmbURL);
+   if (SmbUserShare::canCreateShares())
+   {
+       QString shareName("smbsmbCdIntoPathRelative");
+
+       TestQSambaSuite smbTest(this);
+
+       ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+       if (tmpShare.tempDir)
+       {
+           tmpShare.tempDir->setAutoRemove(true);
+       }
+       QString createdDir1("createdDir1");
+       QString createdDir2("createdDir2");
+       QString createDirFullPath = tmpShare.sharedDirPath + QDir::separator() + createdDir1
+                                   + QDir::separator() + createdDir2;
+       bool ret = QDir().mkpath(createDirFullPath);
+       QCOMPARE(ret , true);
+       QString absUrl = LocationUrl::SmbURL + "localhost" +
+               QDir::separator() + tmpShare.shareName +
+               QDir::separator() + createdDir1;
+
+       ret = m_dirModel_01->cdIntoPath(absUrl);
+       QTest::qWait(TIME_TO_PROCESS);
+       QCOMPARE(ret, true);
+       QCOMPARE(m_dirModel_01->path(), absUrl );
+       QCOMPARE(m_dirModel_01->rowCount() , 1);
+
+       //cd relative
+       absUrl += QDir::separator() + createdDir2;
+       ret = m_dirModel_01->cdIntoPath(createdDir2);
+       QTest::qWait(TIME_TO_PROCESS);
+       QCOMPARE(ret, true);
+       QCOMPARE(m_dirModel_01->path(), absUrl );
+       QCOMPARE(m_dirModel_01->rowCount() , 0);
+   }
+}
+
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -2988,7 +3039,7 @@ bool TestDirModel::createTempHomeTrashDir(const QString& existentDir)
     if (existentDir.startsWith(QDir::tempPath()) && (d.exists() || d.mkpath(existentDir)))
     {
         QTrashDir trash;
-        ::setenv("XDG_DATA_HOME", existentDir.toLatin1().constData(), true );
+        ::setenv("XDG_DATA_HOME", existentDir.toLocal8Bit().constData(), true );
         QString xdgTrashDir(trash.homeTrash());
         ret = trash.validate(xdgTrashDir, true);
     }
