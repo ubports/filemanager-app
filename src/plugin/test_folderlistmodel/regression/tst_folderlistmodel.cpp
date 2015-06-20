@@ -2991,7 +2991,15 @@ int main(int argc, char *argv[])
           break;
        }
     }
-    return  QTest::qExec(&tc, args);
+    int ret =  QTest::qExec(&tc, args);
+    //if not running specific tests, run Samba test suite
+    if (args.count() == 1)
+    {
+        printf("\n********* Samba tests ********\n");
+        TestQSambaSuite smbTest;
+        ret |= QTest::qExec(&smbTest, args);
+    }
+    return ret;
 }
 
 
