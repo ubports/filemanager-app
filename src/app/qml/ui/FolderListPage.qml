@@ -888,7 +888,7 @@ PageWithBottomEdge {
     }
 
     function itemClicked(model) {
-        if (model.isDir) {
+        if (model.isBrowsable) {
             if (model.isReadable && model.isExecutable) {
                 console.log("Changing to dir", model.filePath)
                 goTo(model.filePath)
