@@ -16,6 +16,8 @@ SOURCES += tst_folderlistmodel.cpp
 
 include (../../folderlistmodel/folderlistmodel.pri)
 
+include (../../folderlistmodel/smb/qsambaclient/test/testsuite.pri)
+
 HEADERS += \
     tempfiles.h
 
