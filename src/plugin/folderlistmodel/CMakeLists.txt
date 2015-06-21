@@ -73,6 +73,10 @@ set(folderlistmodel_SRCS
     smb/smblocation.cpp
     smb/smblocationauthentication.cpp
     smb/smblocationauthentication.h
+    smb/qsambaclient/src/smbplaces.cpp
+    smb/qsambaclient/src/smbplaces.h
+    smb/qsambaclient/src/smbusershare.cpp
+    smb/qsambaclient/src/smbusershare.h
     net/netauthenticationdata.cpp
     net/netauthenticationdata.h  
     net/netutil.cpp

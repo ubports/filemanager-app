@@ -54,5 +54,6 @@ void NemoFolderListModelPlugin::registerTypes(const char *uri)
     DirModel::registerMetaTypes();
     qmlRegisterType<DirSelection>(uri, 1, 0, "FolderListSelection");
     qmlRegisterType<DirModel>(uri, 1, 0, "FolderListModel");
+    qmlRegisterType<SmbUserShare>(uri, 1, 0,"FolderListSmbUserShare");
 }
 
