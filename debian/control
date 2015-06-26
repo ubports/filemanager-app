@@ -57,7 +57,7 @@ Description: Places model QML plugin
  This package contains a plugin that enables QML apps to list and
  modify a set of places (bookmarks) in the file system.
 
-Package: qtdeclarative5-pamauthentication0.1
+Package: qtdeclarative5-fm-pamauthentication0.1
 Architecture: any
 Multi-Arch: same
 Depends: ${misc:Depends},
