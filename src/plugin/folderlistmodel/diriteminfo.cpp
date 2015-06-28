@@ -20,6 +20,7 @@
  */
 
 #include "diriteminfo.h"
+#include "locationurl.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -537,7 +538,7 @@ QString DirItemInfo::removeExtraSlashes(const QString &url, int firstSlashIndex)
     QString ret;
     if (firstSlashIndex == -1)
     {
-        firstSlashIndex = url.indexOf(QLatin1String(":/"));
+        firstSlashIndex = url.indexOf(LocationUrl::UrlIndicator);
         if (firstSlashIndex != -1)
         {
             ++firstSlashIndex;

@@ -21,6 +21,8 @@
 
 #include "locationurl.h"
 
+const QString LocationUrl::UrlIndicator("://");
+
 const QString LocationUrl::TrashRootURL("trash:///");
 const QString LocationUrl::DiskRootURL("file:///");
 const QString LocationUrl::SmbURL("smb://");

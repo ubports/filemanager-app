@@ -85,7 +85,7 @@ Location * LocationsFactory::parse(const QString& uPath)
     int index = -1;
     int type  = -1;
     Location * location = 0;   
-    if ( (index = uPath.indexOf(QChar(':'))) != -1 )
+    if ( (index = uPath.indexOf(LocationUrl::UrlIndicator)) != -1 )
     {
 #if defined(Q_OS_WIN)
 #else

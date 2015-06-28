@@ -2517,16 +2517,14 @@ void TestDirModel::locationFactory()
 
     QString validTrashURL(LocationUrl::TrashRootURL);
 
-   //Due to current File Manager UI typing method both: "file:" and "trash:" are supported
-   // location = factoryLocations.setNewPath("trash:");
-   // QVERIFY(location == 0);
-
+#if 0 // "sheme:/"  (single slash) is no longer supported
     location = factoryLocations.setNewPath("trash:/");
     QVERIFY(location);
     QVERIFY(location->type() == LocationsFactory::TrashDisk);
     QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
     QCOMPARE(location->urlPath(), validTrashURL);
     QCOMPARE(location->isRoot(), true);
+#endif
 
     location = factoryLocations.setNewPath("trash://");
     QVERIFY(location);
@@ -2549,9 +2547,11 @@ void TestDirModel::locationFactory()
     QCOMPARE(location->urlPath(), validTrashURL);
     QCOMPARE(location->isRoot(), true);
 
+#if 0  // "sheme:/"  (single slash) is no longer supported
     QString myDir("___myDir_must_NOT_EXIST___");
     location = factoryLocations.setNewPath(QString("trash:/") + myDir);
     QVERIFY(location == 0);
+#endif
 
     location = factoryLocations.setNewPath("file://////");
     QVERIFY(location);
