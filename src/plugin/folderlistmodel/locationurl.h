@@ -27,6 +27,7 @@
 class LocationUrl
 {
 public:
+    static const   QString UrlIndicator;
     static const   QString DiskRootURL;
     static const   QString TrashRootURL;
     static const   QString SmbURL;
