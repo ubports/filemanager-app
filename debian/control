@@ -24,7 +24,7 @@ Depends: ${misc:Depends},
          ${shlibs:Depends},
          qtdeclarative5-nemo-qml-plugin-folderlistmodel,
          qtdeclarative5-placesmodel0.1,
-         qtdeclarative5-pamauthentication0.1,
+         qtdeclarative5-fm-pamauthentication0.1,
          qtdeclarative5-archives0.1,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-u1db1.0,
@@ -57,7 +57,7 @@ Description: Places model QML plugin
  This package contains a plugin that enables QML apps to list and
  modify a set of places (bookmarks) in the file system.
 
-Package: qtdeclarative5-pamauthentication0.1
+Package: qtdeclarative5-fm-pamauthentication0.1
 Architecture: any
 Multi-Arch: same
 Depends: ${misc:Depends},
