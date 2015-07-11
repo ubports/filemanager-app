@@ -22,7 +22,8 @@
 #ifndef LOCATIONURL_H
 #define LOCATIONURL_H
 
-#include <QString>
+#include <QStringList>
+class QUrl;
 
 class LocationUrl
 {
@@ -35,8 +36,18 @@ public:
 #if 0
     static const   QString FishURL;
 #endif
+    /*!
+     * \brief supportedURLs() Tells which URLs are supported by file manager
+     *
+     *   It may be useful for Clipboard handling
+     *
+     * \return URLs list
+     */
+    static const QStringList&  supportedURLs();
+    static bool                isSupportedUrl(const QUrl& url);
 private:
     LocationUrl();
+    static   const QStringList   m_supportedURLs;
 };
 
 #endif // LOCATIONURL_H

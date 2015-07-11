@@ -1229,7 +1229,7 @@ void DirModel::setCompareAndReorder()
 
 int DirModel::getClipboardUrlsCounter() const
 {
-    return mClipboard->clipboardLocalUrlsCounter();
+    return mClipboard->storedUrlsCounter();
 }
 
 
