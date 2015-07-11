@@ -475,10 +475,8 @@ private:
     QDir::Filter  currentDirFilter()  const;
     QString       dirItems(const DirItemInfo& fi) const;
     bool          cdIntoItem(const DirItemInfo& fi);
-    bool          openItem(const DirItemInfo& fi);  
-    bool          canReadDir(const QFileInfo& d)   const;
-    bool          canReadFile(const QFileInfo& f)  const;
-    QFileInfo     setParentIfRelative(const QString &fileOrDir) const;
+    bool          openItem(const DirItemInfo& fi);     
+    DirItemInfo   setParentIfRelative(const QString &fileOrDir) const;
     void          setPathFromCurrentLocation();
 
 private:

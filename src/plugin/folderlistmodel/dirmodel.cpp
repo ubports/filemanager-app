@@ -1509,80 +1509,51 @@ void DirModel::setEnabledExternalFSWatcher(bool enable)
 
 bool DirModel::existsDir(const QString &folderName) const
 {
-    DirItemInfo d(setParentIfRelative(folderName));
+    DirItemInfo d = setParentIfRelative(folderName);
     return d.exists() && d.isDir();
 }
 
 bool  DirModel::canReadDir(const QString &folderName) const
 {
-    DirItemInfo d(setParentIfRelative(folderName));
-    return canReadDir(d.diskFileInfo());
+    DirItemInfo d = setParentIfRelative(folderName);
+    return d.isDir() && d.isReadable();
 }
 
-bool  DirModel::canReadDir(const QFileInfo & d) const
-{
-    return d.exists() && d.isDir() && d.isReadable() && d.isExecutable();
-}
 
 bool DirModel::existsFile(const QString &fileName) const
 {
-     DirItemInfo f(setParentIfRelative(fileName));
+     DirItemInfo f = setParentIfRelative(fileName);
      return f.exists() && f.isFile();
 }
 
 bool DirModel::canReadFile(const QString &fileName) const
 {
-    DirItemInfo  f(setParentIfRelative(fileName));
-    return canReadFile(f.diskFileInfo());
+    DirItemInfo  f = setParentIfRelative(fileName);
+    return f.isReadable() && f.isFile();
 }
-
-bool DirModel::canReadFile(const QFileInfo &f) const
-{
-    return f.exists() && f.isFile() && f.isReadable();
-}
-
 
 
 QDateTime DirModel::curPathCreatedDate() const
-{
-   QDateTime d;
-   QFileInfo f(mCurrentDir);
-   if (f.exists())
-   {
-       d = f.created();
-   }
-   return d;
+{  
+    return mCurLocation->currentInfo()->created();
 }
 
 
 QDateTime DirModel::curPathModifiedDate() const
 {
-    QDateTime d;
-    QFileInfo f(mCurrentDir);
-    if (f.exists())
-    {
-        d = f.lastModified();
-    }
-    return d;
+     return mCurLocation->currentInfo()->lastModified();
 }
 
 
 QDateTime DirModel::curPathAccessedDate() const
 {
-    QDateTime d;
-    QFileInfo f(mCurrentDir);
-    if (f.exists())
-    {
-        d = f.lastRead();
-    }
-    return d;
+    return mCurLocation->currentInfo()->lastRead();
 }
 
 
 bool  DirModel::curPathIsWritable() const
 {
-    QFileInfo f(mCurrentDir);
-    return f.exists() && f.isWritable();
+     return mCurLocation->currentInfo()->isWritable();
 }
 
 QString DirModel::curPathCreatedDateLocaleShort() const
@@ -1621,16 +1592,14 @@ QString DirModel::curPathAccessedDateLocaleShort() const
 }
 
 
-QFileInfo  DirModel::setParentIfRelative(const QString &fileOrDir) const
+DirItemInfo  DirModel::setParentIfRelative(const QString &fileOrDir) const
 {
-    QFileInfo myFi(fileOrDir);
-    if (myFi.isRelative())
+    QScopedPointer<DirItemInfo> myFi(mCurLocation->newItemInfo(fileOrDir));
+    if (!myFi->isAbsolute())
     {
-        myFi.setFile(mCurrentDir, fileOrDir);
-        QFileInfo abs(myFi.absoluteFilePath());
-        myFi = abs;
+        myFi->setFile(mCurrentDir, fileOrDir);
     }
-    return myFi;
+    return *myFi;
 }
 
 
