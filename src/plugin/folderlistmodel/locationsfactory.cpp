@@ -50,16 +50,9 @@ LocationsFactory::LocationsFactory(QObject *parent)
  , m_authDataStore(NetAuthenticationDataList::getInstance(this))
  , m_lastUrlNeedsAuthentication(false)
 {
-   m_locations.append(new DiskLocation(LocalDisk));
-   m_locations.append(new TrashLocation(TrashDisk));
-   SmbLocation * smblocation = new SmbLocation(NetSambaShare);
-   m_locations.append(smblocation);
-
-   // Qt::DirectConnection is used here
-   // it allows lastUrlNeedsAuthencation() to have the right flag
-   connect(smblocation, SIGNAL(needsAuthentication(QString,QString)),
-           this,        SLOT(onUrlNeedsAuthentication(QString,QString)),
-                        Qt::DirectConnection);
+   addLocation(new DiskLocation(Location::LocalDisk));
+   addLocation(new TrashLocation(Location::TrashDisk));
+   addLocation(new SmbLocation(Location::NetSambaShare));
 }
 
 LocationsFactory::~LocationsFactory()
@@ -92,7 +85,7 @@ Location * LocationsFactory::parse(const QString& uPath)
 #if defined(Q_OS_UNIX)
         if (uPath.startsWith(LocationUrl::TrashRootURL.midRef(0,6)))
         {
-            type = TrashDisk;
+            type = Location::TrashDisk;
             m_tmpPath  = LocationUrl::TrashRootURL + DirItemInfo::removeExtraSlashes(uPath, index+1);
         }
         else
@@ -100,7 +93,7 @@ Location * LocationsFactory::parse(const QString& uPath)
 #endif
         if (uPath.startsWith(LocationUrl::DiskRootURL.midRef(0,5)))
         {
-            type = LocalDisk;
+            type = Location::LocalDisk;
             m_tmpPath  = QDir::rootPath() + DirItemInfo::removeExtraSlashes(uPath, index+1);
         }
         else
@@ -108,14 +101,14 @@ Location * LocationsFactory::parse(const QString& uPath)
              uPath.startsWith(LocationUrl::CifsURL.midRef(0,5))
            )
         {
-                type = NetSambaShare;
+                type = Location::NetSambaShare;
                 m_tmpPath  = LocationUrl::SmbURL + DirItemInfo::removeExtraSlashes(uPath, index+1);
         }
     }
     else
     {
         m_tmpPath = DirItemInfo::removeExtraSlashes(uPath, -1);
-        type    = LocalDisk;
+        type    = Location::LocalDisk;
         if (!m_tmpPath.startsWith(QDir::rootPath()) && m_curLoc)
         {
             //it can be any, check current location
@@ -127,7 +120,7 @@ Location * LocationsFactory::parse(const QString& uPath)
         location = m_locations.at(type);       
     }
 #if DEBUG_MESSAGES
-    qDebug() << Q_FUNC_INFO << "input path:" << uPath  << "location result:" << location;
+    qDebug() << Q_FUNC_INFO << "input path:" << uPath  << "location:" << location << "type:" << type;
 #endif
     return location;
 }
@@ -246,3 +239,16 @@ DirItemInfo * LocationsFactory::validateCurrentUrl(Location *location, const Net
     }
     return item;
 }
+
+
+void LocationsFactory::addLocation(Location *location)
+{
+     m_locations.append(location);
+
+     // Qt::DirectConnection is used here
+     // it allows lastUrlNeedsAuthencation() to have the right flag
+     connect(location,   SIGNAL(needsAuthentication(QString,QString)),
+             this,       SLOT(onUrlNeedsAuthentication(QString,QString)),
+             Qt::DirectConnection);
+}
+

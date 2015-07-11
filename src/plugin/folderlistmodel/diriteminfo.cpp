@@ -457,15 +457,15 @@ void DirItemInfo::fillFromStatBuf(const struct stat & statBuffer)
     //owner permissions
     if (statBuffer.st_mode & S_IRUSR)
     {
-        readPermission  |= QFile::ReadOwner;
+        readPermission  |= QFile::ReadOwner |  QFile::ReadUser;
     }
     if (statBuffer.st_mode & S_IWUSR)
     {
-        writePermission |= QFile::WriteOwner;
+        writePermission |= QFile::WriteOwner | QFile::WriteUser;
     }
     if (statBuffer.st_mode & S_IXUSR)
     {
-        execPermission  |= QFile::ExeOwner;
+        execPermission  |= QFile::ExeOwner |  QFile::ExeUser;
     }
     //group permissions
     if (statBuffer.st_mode & S_IRGRP)

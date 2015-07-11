@@ -305,4 +305,27 @@ void Location::fetchItems(QDir::Filter dirFilter, bool recursive)
     }
 }
 
+/*
+ *   Each Location should have its implementation if it is possible
+ */
+bool Location::isThereDiskSpace(const QString &pathname, qint64 requiredSize)
+{
+    Q_UNUSED(pathname);
+    Q_UNUSED(requiredSize);
+    return true;
+}
 
+
+/*!
+ * \brief Location::currentInfo()
+ * \return  the updated information about the current path
+ */
+const DirItemInfo *Location::currentInfo()
+{
+    if (m_info == 0)
+    {
+        m_info = new DirItemInfo();
+    }
+    refreshInfo(); //update information
+    return m_info;
+}
