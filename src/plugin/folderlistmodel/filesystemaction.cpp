@@ -128,10 +128,36 @@ void FileSystemAction::Action::reset()
     //it is not necessary to delete
     auxAction      = 0;
     copyFile.clear();
+    sourceLocation = 0;
+    targetLocation = 0;
 
 }
 
+/*!
+ * \brief FileSystemAction::Action::toggleLocation()
+ *
+ *  It may be useful if there is a Undo Action to do a inverse Action
+ */
+void FileSystemAction::Action::toggleLocation()
+{
+    Location * tmp   = sourceLocation;
+    sourceLocation   = targetLocation;
+    targetLocation   = tmp;
+}
 
+/*!
+ * \brief FileSystemAction::Action::matchLocations
+ * \return true if sourceLocation is equal targetLocation
+ */
+bool FileSystemAction::Action::matchLocations() const
+{
+    return sourceLocation == targetLocation;
+}
+
+bool FileSystemAction::Action::isRemote() const
+{
+    return  sourceLocation->isRemote() || targetLocation->isRemote();
+}
 
 //===============================================================================================
 FileSystemAction::ActionEntry::ActionEntry(): newName(0)
@@ -224,15 +250,40 @@ void FileSystemAction::remove(const QStringList &paths)
 
 //===============================================================================================
 /*!
- * \brief FileSystemAction::createAction
+ * \brief FileSystemAction::createAction() Creates an Action struture
  * \param type
- * \param origBase
+ * \param pathUrl  the source URL (just the first one) to find the location
  * \return
  */
-FileSystemAction::Action* FileSystemAction::createAction(ActionType type)
+FileSystemAction::Action* FileSystemAction::createAction(ActionType type, const QString& pathUrl)
 {
     Action * action = new Action();
     action->type  = type;
+
+    //get Locations, normal case for paste/remove
+    action->sourceLocation     =  m_locationsFactory->parse(pathUrl);
+    action->targetLocation     =  m_locationsFactory->currentLocation();
+    switch (type)
+    {
+       case ActionMoveToTrash:
+            action->targetLocation = m_locationsFactory->getTrashLocation();
+            break;
+       case ActionRestoreFromTrash:  // the current location must already be TrashLocation
+            action->sourceLocation =  m_locationsFactory->getTrashLocation();
+            //TODO check the URL from trash
+            action->targetLocation =  m_locationsFactory->getDiskLocation();
+            break;
+       default:
+            break;
+    }
+    if (action->sourceLocation == 0)
+    {
+        action->sourceLocation  = m_locationsFactory->getDiskLocation();
+    }
+    if (action->targetLocation == 0)
+    {
+        action->targetLocation  = m_locationsFactory->getDiskLocation();
+    }
     return action;
 }
 
@@ -263,11 +314,18 @@ void  FileSystemAction::addEntry(Action* action, const ActionPaths& pairPaths)
 
 bool FileSystemAction::populateEntry(Action* action, ActionEntry* entry)
 {
-    DirItemInfo info(entry->itemPaths.source());
-    if (!info.exists())
+    QScopedPointer<DirItemInfo> info(action->sourceLocation->newItemInfo(entry->itemPaths.source()));
+    if (!info->exists())
     {
         emit error(QObject::tr("File or Directory does not exist"),
-                   info.absoluteFilePath() + QObject::tr(" does not exist")
+                   info->absoluteFilePath() + QObject::tr(" does not exist")
+                  );
+        return false;
+    }
+    if (info->needsAuthentication())
+    {
+        emit error(QObject::tr("Cannot access File or Directory"),
+                   info->absoluteFilePath() + QObject::tr(" it needs Authentication")
                   );
         return false;
     }
@@ -283,24 +341,36 @@ bool FileSystemAction::populateEntry(Action* action, ActionEntry* entry)
             break;
     }
     //this is the item being handled
-    entry->reversedOrder.append(info);
+    entry->reversedOrder.append(*info);
     // verify if the destination item already exists and it the destination path is in other file system
     if (entry->type == ActionCopy ||
         entry->type == ActionMove
        )
     {
-        DirItemInfo destination(entry->itemPaths.target());
-        entry->alreadyExists = destination.exists();
-        //check if it is possible to move items
-        if (entry->type == ActionMove && !moveUsingSameFileSystem(entry->itemPaths) )
+        QScopedPointer<DirItemInfo> destination(action->targetLocation->newItemInfo(entry->itemPaths.target()));
+        entry->alreadyExists = destination->exists();
+        // if destination folder exists check for write permission
+        QScopedPointer<DirItemInfo> parentDestination(action->targetLocation->newItemInfo(entry->itemPaths.targetPath()));
+        if (parentDestination->exists() && !parentDestination->isWritable())
+        {
+            emit error(tr("Cannot copy/move items"),
+                       tr("no write permission on folder ") + destination->absoluteFilePath() );
+            return false;
+
+        }
+        //check if it is possible to move items,
+        //when there is a remote Location it is necessary copy then remove
+        if ( entry->type == ActionMove &&
+             (action->isRemote() || !moveUsingSameFileSystem(entry->itemPaths))
+           )
         {
             entry->type = ActionHardMoveCopy; // first step
         }
     }
     //ActionMove will perform a rename, so no Directory expanding is necessary
-    if (entry->type != ActionMove && info.isDir() && !info.isSymLink())
+    if (entry->type != ActionMove && info->isDir() && !info->isSymLink())
     {
-        QDirIterator it(info.absoluteFilePath(),
+        QDirIterator it(info->absoluteFilePath(),
                         QDir::AllEntries | QDir::System |
                               QDir::NoDotAndDotDot | QDir::Hidden,
                         QDirIterator::Subdirectories);
@@ -501,7 +571,7 @@ void FileSystemAction::endActionEntry()
             case ActionCopy: // ActionHardMoveCopy is  lso checked here
             case ActionMove:
                 {
-                   QScopedPointer <DirItemInfo> item(m_locationsFactory->currentLocation()->newItemInfo(curEntry->itemPaths.target()));
+                   QScopedPointer <DirItemInfo> item(m_curAction->targetLocation->newItemInfo(curEntry->itemPaths.target()));
                    if (!curEntry->added && !curEntry->alreadyExists)
                    {
                        curEntry->added = true;
@@ -927,16 +997,34 @@ void  FileSystemAction::createAndProcessAction(ActionType actionType, const QStr
 #if DEBUG_MESSAGES
         qDebug() << Q_FUNC_INFO << paths;
 #endif
-    Action       *myAction       = createAction(actionType);
+    Action       *myAction       = createAction(actionType,paths.at(0));
+    //in case of move, verify if it can be performed
+    if (actionType == ActionMove && !canMoveItems(myAction, paths))
+    {
+        delete myAction;
+        return;
+    }
+    //populate the action and put the action in the queue
+    bool usingFullPath = myAction->isRemote() || DirItemInfo(paths.at(0)).isAbsolute();
     for (int counter=0; counter < paths.count(); counter++)
     {
-        DirItemInfo info(paths.at(counter));
-        if (!info.isAbsolute())
-        {
-            info.setFile(m_path, paths.at(counter));
+        ActionPaths pairPaths;
+        //avoid creating a DirItemInfo if the Url/Path is already full
+        //remove Locations may take longer to create DirItemInfo object
+        if (!usingFullPath)
+        {          
+            QScopedPointer <DirItemInfo> info (myAction->sourceLocation->newItemInfo(paths.at(counter)));
+            if (!info->isAbsolute())
+            {
+                info->setFile(m_path, paths.at(counter));
+            }
+            pairPaths.setSource(info->absoluteFilePath());
         }
-        ActionPaths pairPaths(info.absoluteFilePath());
-        pairPaths.setTargetPathOnly(m_path);
+        else
+        {   //it is already full path/url
+            pairPaths.setSource(paths.at(counter));
+        }
+        pairPaths.setTargetPathOnly(m_path);        
         addEntry(myAction, pairPaths);
     }
     queueAction(myAction);
@@ -1155,7 +1243,7 @@ bool FileSystemAction::processCopySingleFile()
             }
             if (m_curAction->copyFile.target->remove())
             {
-                QScopedPointer<DirItemInfo> item(m_locationsFactory->currentLocation()->newItemInfo(m_curAction->copyFile.targetName));
+                QScopedPointer<DirItemInfo> item(m_curAction->targetLocation->newItemInfo(m_curAction->copyFile.targetName));
                 notifyActionOnItem(*item, ItemRemoved);
             }
         }
@@ -1184,7 +1272,7 @@ bool FileSystemAction::processCopySingleFile()
             notifyProgress();
             if (m_curAction->copyFile.isEntryItem && m_curAction->copyFile.amountSavedToRefresh <= 0)
             {
-                QScopedPointer <DirItemInfo> item(m_locationsFactory->currentLocation()->newItemInfo(m_curAction->copyFile.targetName));
+                QScopedPointer <DirItemInfo> item(m_curAction->targetLocation->newItemInfo(m_curAction->copyFile.targetName));
                 m_curAction->copyFile.amountSavedToRefresh = AMOUNT_COPIED_TO_REFRESH_ITEM_INFO;
                 notifyActionOnItem(*item, ItemChanged);
             }
@@ -1325,7 +1413,7 @@ void FileSystemAction::moveDirToTempAndRemoveItLater(const QString& dir)
     {
         if (m_curAction->auxAction == 0)
         {   // this new action as Remove will remove all dirs
-            m_curAction->auxAction            = createAction(ActionRemove);
+            m_curAction->auxAction            = createAction(ActionRemove, tempDir);
             m_curAction->auxAction->isAux     = true;
             m_queuedActions.append(m_curAction->auxAction);
         }
@@ -1448,7 +1536,7 @@ void FileSystemAction::onClipboardChanged()
  */
 void FileSystemAction::moveToTrash(const ActionPathList &pairPaths)
 {
-    Action *moveAction = createAction(ActionMoveToTrash);
+    Action *moveAction = createAction(ActionMoveToTrash, pairPaths.at(0).source());
     for (int counter=0; counter < pairPaths.count(); ++counter)
     {
         addEntry(moveAction, pairPaths.at(counter));
@@ -1464,7 +1552,7 @@ void FileSystemAction::moveToTrash(const ActionPathList &pairPaths)
  */
 void FileSystemAction::restoreFromTrash(const ActionPathList &pairPaths)
 {
-    Action *moveAction = createAction(ActionRestoreFromTrash);
+    Action *moveAction = createAction(ActionRestoreFromTrash, pairPaths.at(0).source());
     for (int counter=0; counter < pairPaths.count(); ++counter)
     {
         addEntry(moveAction, pairPaths.at(counter));
@@ -1519,3 +1607,27 @@ void  FileSystemAction::notifyActionOnItem(const DirItemInfo& item, ActionNotifi
     }
 }
 
+
+bool FileSystemAction::canMoveItems(Action *action, const QStringList& items)
+{
+    QScopedPointer<DirItemInfo> item(action->targetLocation->newItemInfo(items.at(0)));
+    //check if moving items are being moved to the same placce
+    if (action->matchLocations() &&
+        action->sourceLocation->info()->absoluteFilePath() ==  item->absolutePath())
+    {
+        QString titleError     = tr("Cannot move items");
+        emit error(titleError,
+                   tr("origin and destination folders are the same"));
+        return false;
+    }
+    //source items need to be removed, check for write permission
+    if (!action->sourceLocation->info()->isWritable())
+    {
+        QString titleError     = tr("Cannot move items");
+        QString noWriteError   = tr("no write permission on folder ");
+        emit error(titleError, noWriteError + action->sourceLocation->info()->absoluteFilePath());
+        return false;
+    }
+    //target permission is checked in populateEntry()
+    return true;
+}
