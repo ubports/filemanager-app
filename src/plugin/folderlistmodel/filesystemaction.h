@@ -239,7 +239,6 @@ private:
    void     moveDirToTempAndRemoveItLater(const QString& dir);
    bool     makeBackupNameForCurrentItem(ActionEntry *entry);
    bool     endCopySingleFile();
-   bool     isThereDiskSpace(const ActionEntry *entry, qint64 requiredSize);
    void     queueAction(Action *myAction);
    void     createTrashInfoFileFromEntry(ActionEntry *entry);
    void     removeTrashInfoFileFromEntry(ActionEntry *entry);
