@@ -23,8 +23,16 @@
 #include "smbutil.h"
 #include "smbiteminfo.h"
 #include "smblistworker.h"
+#include "smblocationdiriterator.h"
 #include "iorequest.h"
 #include "ioworkerthread.h"
+#include "locationurl.h"
+
+
+
+#if defined(Q_OS_UNIX)
+#include <sys/statvfs.h>
+#endif
 
 SmbLocation::SmbLocation(int type, QObject *parent)
      : Location(type, parent)
@@ -82,3 +90,41 @@ DirListWorker * SmbLocation::newListWorker(const QString &urlPath, QDir::Filter 
     return new SmbListWorker(urlPath,filter,isRecursive, m_info ? m_info->isHost() : false, m_smb);
 }
 
+
+QString SmbLocation::urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlashe)
+{
+    QString ret;
+    if ( urlPath.startsWith(LocationUrl::SmbURL.midRef(0,4)) ||
+         urlPath.startsWith(LocationUrl::CifsURL.midRef(0,5))
+       )
+    {
+        ret  = LocationUrl::SmbURL + DirItemInfo::removeExtraSlashes(urlPath, indexOfColonAndSlashe+1);
+    }
+    return ret;
+}
+
+
+LocationItemDirIterator *
+SmbLocation::newDirIterator(const QString &path,
+                            QDir::Filters filters,
+                            QDirIterator::IteratorFlags flags)
+{
+    return new SmbLocationDirIterator(path, filters, flags, m_smb);
+}
+
+
+bool SmbLocation::isThereDiskSpace(const QString &pathname, qint64 requiredSize)
+{
+    bool ret = false;
+#if defined(Q_OS_UNIX)
+    struct statvfs st;
+    if (m_smb->getStatvfsInfo(pathname, &st) == SmbUtil::StatDone)
+    {
+        qint64 free =  st.f_bsize * st.f_bfree;
+        ret = free > requiredSize;
+    }
+#else
+   ret =  true;
+#endif
+   return ret;
+}

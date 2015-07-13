@@ -60,7 +60,7 @@ SmbLocationDirIterator::SmbLocationDirIterator(const QString &path,
        , INIT_ATTR(path, smb)
 {
     bool recursive = flags == QDirIterator::Subdirectories ? true : false;
-    m_urlItems = smbObj()->listContent(path, recursive);
+    m_urlItems = smbObj()->listContent(path, recursive, QDir::NoFilter);
 }
 
 

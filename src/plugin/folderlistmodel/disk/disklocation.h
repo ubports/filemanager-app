@@ -63,6 +63,11 @@ public:
     virtual DirListWorker * newListWorker(const QString &urlPath,
                                           QDir::Filter filter,
                                           const bool isRecursive);
+    virtual LocationItemDirIterator * newDirIterator(const QString & path,
+                                                     QDir::Filters filters,
+                                                     QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags);   
+    virtual bool        isThereDiskSpace(const QString& pathname, qint64 requiredSize);
+    virtual QString     urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlashe);
 
 protected:
     void    addExternalFsWorkerRequest(ExternalFileSystemChangesWorker *);

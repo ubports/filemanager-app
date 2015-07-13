@@ -14,7 +14,10 @@ SOURCES += $$PWD/dirmodel.cpp \
            $$PWD/locationsfactory.cpp \                    
            $$PWD/locationurl.cpp \             
            $$PWD/locationitemdiriterator.cpp \
-           $$PWD/cleanurl.cpp
+           $$PWD/cleanurl.cpp \
+           $$PWD/disk/disklocationitemdiriterator.cpp \         
+
+
 
 HEADERS += $$PWD/dirmodel.h \
            $$PWD/iorequest.h \
@@ -33,7 +36,9 @@ HEADERS += $$PWD/dirmodel.h \
            $$PWD/locationsfactory.h \                   
            $$PWD/locationurl.h \          
            $$PWD/locationitemdiriterator.h \
-           $$PWD/cleanurl.h
+           $$PWD/cleanurl.h \
+           $$PWD/disk/disklocationitemdiriterator.h \
+
 
 SOURCES +=  $$PWD/disk/disklocation.cpp
 HEADERS +=  $$PWD/disk/disklocation.h

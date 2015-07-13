@@ -51,6 +51,8 @@ set(folderlistmodel_SRCS
     urliteminfo.h
     disk/disklocation.cpp
     disk/disklocation.h
+    disk/disklocationitemdiriterator.cpp
+    disk/disklocationitemdiriterator.h
     trash/qtrashdir.cpp
     trash/qtrashdir.h   
     trash/qtrashutilinfo.cpp
