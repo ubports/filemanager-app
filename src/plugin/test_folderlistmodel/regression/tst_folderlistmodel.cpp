@@ -74,9 +74,7 @@ public:
        TestDirModel();
       ~TestDirModel();
 
-protected slots:
-    void slotFileAdded(const QString& s)     {m_filesAdded.append(s); }
-    void slotFileRemoved(const QString& s)   {m_filesRemoved.append(s); }
+protected slots:  
     void slotFileAdded(const DirItemInfo& f)   {m_filesAdded.append(f.absoluteFilePath()); }
     void slotFileRemoved(const DirItemInfo& f) {m_filesRemoved.append(f.absoluteFilePath()); }
     void slotPathChamged(QString path)       { m_currentPath = path;}
@@ -211,17 +209,13 @@ private:
 
 };
 
-TestDirModel::TestDirModel() : m_deepDir_01(0)
+TestDirModel::TestDirModel() :       fsAction(new LocationsFactory(this), this)
+                                    ,m_deepDir_01(0)
                                     ,m_deepDir_02(0)
                                     ,m_deepDir_03(0)
                                     ,m_dirModel_01(0)
                                     ,m_dirModel_02(0)
-{
-    connect(&fsAction, SIGNAL(added(QString)),
-            this,      SLOT(slotFileAdded(QString)) );
-    connect(&fsAction, SIGNAL(removed(QString)),
-            this,      SLOT(slotFileRemoved(QString)) );
-
+{   
     connect(&fsAction, SIGNAL(added(DirItemInfo)),
             this,      SLOT(slotFileAdded(DirItemInfo)));
     connect(&fsAction, SIGNAL(removed(DirItemInfo)),
@@ -401,19 +395,11 @@ void TestDirModel::initModels()
     m_dirModel_01 = new DirModel();
     m_dirModel_02 = new DirModel();
 
-    connect(m_dirModel_01->m_fsAction, SIGNAL(added(QString)),
-            this,      SLOT(slotFileAdded(QString)) );
-    connect(m_dirModel_01->m_fsAction, SIGNAL(removed(QString)),
-            this,      SLOT(slotFileRemoved(QString)) );
     connect(m_dirModel_01->m_fsAction, SIGNAL(added(DirItemInfo)),
             this,      SLOT(slotFileAdded(DirItemInfo)));
     connect(m_dirModel_01->m_fsAction, SIGNAL(removed(DirItemInfo)),
             this,      SLOT(slotFileRemoved(DirItemInfo)));
 
-    connect(m_dirModel_02->m_fsAction, SIGNAL(added(QString)),
-            this,      SLOT(slotFileAdded(QString)) );
-    connect(m_dirModel_02->m_fsAction, SIGNAL(removed(QString)),
-            this,      SLOT(slotFileRemoved(QString)) );
     connect(m_dirModel_02->m_fsAction, SIGNAL(added(DirItemInfo)),
             this,      SLOT(slotFileAdded(DirItemInfo)));
     connect(m_dirModel_02->m_fsAction, SIGNAL(removed(DirItemInfo)),

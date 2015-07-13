@@ -114,7 +114,7 @@ DirModel::DirModel(QObject *parent)
     , mAuthData(NetAuthenticationDataList::getInstance(this))
     , mLocationFactory(new LocationsFactory(this))
     , mCurLocation(0)
-    , m_fsAction(new FileSystemAction(this) )
+    , m_fsAction(new FileSystemAction(mLocationFactory,this) )
 {
     mNameFilters = QStringList() << "*";
 
@@ -126,14 +126,8 @@ DirModel::DirModel(QObject *parent)
     connect(m_fsAction, SIGNAL(added(DirItemInfo)),
             this,     SLOT(onItemAdded(DirItemInfo)));
 
-    connect(m_fsAction, SIGNAL(added(QString)),
-            this,     SLOT(onItemAdded(QString)));
-
     connect(m_fsAction, SIGNAL(removed(DirItemInfo)),
             this,     SLOT(onItemRemoved(DirItemInfo)));
-
-    connect(m_fsAction, SIGNAL(removed(QString)),
-            this,     SLOT(onItemRemoved(QString)));  
 
     connect(m_fsAction, SIGNAL(error(QString,QString)),
             this,     SIGNAL(error(QString,QString)));
@@ -960,16 +954,6 @@ bool  DirModel::cdIntoItem(const DirItemInfo &fi)
     return ret;
 }
 
-/*!
- * \brief DirModel::onItemRemoved()
- * \param pathname full pathname of removed file
- */
-void DirModel::onItemRemoved(const QString &pathname)
-{
-    DirItemInfo info(pathname);
-    onItemRemoved(info);
-}
-
 
 void DirModel::onItemRemoved(const DirItemInfo &fi)
 {  
@@ -990,17 +974,6 @@ void DirModel::onItemRemoved(const DirItemInfo &fi)
         mDirectoryContents.remove(row,1);
         endRemoveRows();
     }
-}
-
-
-/*!
- * \brief DirModel::onItemAdded()
- * \param pathname full pathname of the added file
- */
-void DirModel::onItemAdded(const QString &pathname)
-{
-    DirItemInfo info(pathname);
-    onItemAdded(info);
 }
 
 
@@ -1516,7 +1489,7 @@ bool DirModel::existsDir(const QString &folderName) const
 bool  DirModel::canReadDir(const QString &folderName) const
 {
     DirItemInfo d = setParentIfRelative(folderName);
-    return d.isDir() && d.isReadable();
+    return d.isDir() && d.isReadable() && d.isExecutable();
 }
 
 
