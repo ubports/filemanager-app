@@ -39,6 +39,7 @@
 #include "qtrashutilinfo.h"
 #include "location.h"
 #include "locationsfactory.h"
+#include "locationitemdiriterator.h"
 
 
 #if defined(Q_OS_UNIX)
@@ -370,15 +371,24 @@ bool FileSystemAction::populateEntry(Action* action, ActionEntry* entry)
     //ActionMove will perform a rename, so no Directory expanding is necessary
     if (entry->type != ActionMove && info->isDir() && !info->isSymLink())
     {
-        QDirIterator it(info->absoluteFilePath(),
+        LocationItemDirIterator *it =
+        action->sourceLocation->newDirIterator(info->absoluteFilePath(),
                         QDir::AllEntries | QDir::System |
                               QDir::NoDotAndDotDot | QDir::Hidden,
                         QDirIterator::Subdirectories);
-        while (it.hasNext() &&  !it.next().isEmpty())
+        while (it->hasNext() &&  !it->next().isEmpty())
         {
-            entry->reversedOrder.prepend(it.fileInfo());
+            entry->reversedOrder.prepend(it->fileInfo());
         }
+        delete it;
     }
+#if DEBUG_MESSAGES
+    for (int counter = 0; counter < entry->reversedOrder.count(); counter++)
+    {
+        const DirItemInfo & item = entry->reversedOrder.at(counter);
+        qDebug() << Q_FUNC_INFO << "reversedOrder" << counter << item.absoluteFilePath();
+    }
+#endif
     //set steps and total bytes considering all items in the Entry
     int counter = entry->reversedOrder.count();
     qint64 size = 0;
@@ -408,8 +418,8 @@ bool FileSystemAction::populateEntry(Action* action, ActionEntry* entry)
     action->steps      += entrySteps;
     action->totalItems += entry->reversedOrder.count();
 #if DEBUG_MESSAGES
-    qDebug() << "entrySteps" << entrySteps << "from entry counter" << entry->reversedOrder.count()
-             << "total steps" << action->steps;
+    qDebug() << Q_FUNC_INFO << "entrySteps"  << entrySteps << "from entry counter"
+             << entry->reversedOrder.count() << "total steps" << action->steps;
 #endif
 
     return true;
