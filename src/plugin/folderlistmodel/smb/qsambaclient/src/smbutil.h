@@ -87,13 +87,15 @@ public:
     Smb::FileHandler openDir(Smb::Context context, const QString& smb_string);
     Smb::FileHandler openFile(Smb::Context context,const QString& smb_path,
                               int flags = O_RDONLY, mode_t mode = 0);
+    bool             changePermissions(Smb::Context context, const QString& smb_path, mode_t mode);
     void             closeHandle(Smb::Context context, Smb::FileHandler fd);
     QStringList      lisShares();
     QStringList      listContent(QString smb_path,
                                  bool recursive = false,
                                  QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot,
                                  const QStringList& filterNames = QStringList());
-
+    StatReturn       getFstat(Smb::Context context, Smb::FileHandler fd, struct stat*  st);
+    StatReturn       getStat(Smb::Context context, const QString& smb_path, struct stat*  st);
 
 private:   
     StatReturn      guessDirType(Smb::Context context, Smb::FileHandler fd);
