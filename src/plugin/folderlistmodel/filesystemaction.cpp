@@ -41,6 +41,7 @@
 #include "locationsfactory.h"
 #include "locationitemdiriterator.h"
 #include "locationitemfile.h"
+#include "locationitemdir.h"
 
 #if defined(Q_OS_UNIX)
 #include <sys/statvfs.h>
@@ -651,8 +652,7 @@ void FileSystemAction::cancel()
  * \param entry
  */
 void FileSystemAction::removeEntry(ActionEntry *entry)
-{
-    QDir dir;
+{   
     //do one step at least
     for(; !m_cancelCurrentAction                          &&
           entry->currStep       < STEP_FILES              &&
@@ -665,7 +665,9 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
         const DirItemInfo &fi = entry->reversedOrder.at(entry->currItem);
         if (fi.isDir() && !fi.isSymLink())
         {
-            m_cancelCurrentAction = !dir.rmdir(fi.absoluteFilePath());
+            LocationItemDir * dir = m_curAction->sourceLocation->newDir();
+            m_cancelCurrentAction = !dir->rmdir(fi.absoluteFilePath());
+            delete dir;
         }
         else
         {
@@ -765,16 +767,16 @@ void  FileSystemAction::processCopyEntry()
            )
         {
             QString entryDir = targetFrom(entry->reversedOrder.last().absoluteFilePath(), entry);
-            QDir entryDirObj(entryDir);
-            if (!entryDirObj.exists() && entryDirObj.mkpath(entryDir))
+            QScopedPointer<LocationItemDir> entryDirObj(m_curAction->targetLocation->newDir(entryDir));
+            if (!entryDirObj->exists() && entryDirObj->mkpath(entryDir))
             {
                 QScopedPointer <DirItemInfo> item(m_curAction->targetLocation->newItemInfo(entryDir));
                 entry->added = true;
                 notifyActionOnItem(*item, ItemAdded);
-            }
-        }
-        QDir d(path);
-        if (!d.exists() && !d.mkpath(path))
+            }           
+        }      
+        QScopedPointer<LocationItemDir> d(m_curAction->targetLocation->newDir(path));
+        if (!d->exists() && !d->mkpath(path))
         {
             m_cancelCurrentAction = true;
             m_errorTitle = QObject::tr("Could not create the directory");
