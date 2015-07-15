@@ -27,7 +27,7 @@
 #include "iorequest.h"
 #include "ioworkerthread.h"
 #include "locationurl.h"
-
+#include "smblocationitemfile.h"
 
 
 #if defined(Q_OS_UNIX)
@@ -110,6 +110,13 @@ SmbLocation::newDirIterator(const QString &path,
                             QDirIterator::IteratorFlags flags)
 {
     return new SmbLocationDirIterator(path, filters, flags, m_smb);
+}
+
+
+LocationItemFile *
+SmbLocation::newFile(const QString &path)
+{
+    return new SmbLocationItemFile(path, this, m_smb);
 }
 
 

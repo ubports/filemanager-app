@@ -25,6 +25,7 @@
 #include "ioworkerthread.h"
 #include "externalfswatcher.h"
 #include "locationurl.h"
+#include "disklocationitemfile.h"
 
 
 #if defined(Q_OS_UNIX)
@@ -193,6 +194,13 @@ DiskLocation::newDirIterator(const QString &path,
                              QDirIterator::IteratorFlags flags)
 {
     return  new DiskLocationItemDirIterator(path, filters, flags);
+}
+
+
+LocationItemFile *
+DiskLocation::newFile(const QString &path)
+{
+    return new DiskLocationItemFile(path, this);
 }
 
 
