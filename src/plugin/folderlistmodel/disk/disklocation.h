@@ -67,6 +67,7 @@ public:
                                                      QDir::Filters filters,
                                                      QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags);
     virtual LocationItemFile   * newFile(const QString & path);
+    virtual LocationItemDir    * newDir(const QString & dir = QLatin1String(0));
     virtual bool        isThereDiskSpace(const QString& pathname, qint64 requiredSize);
     virtual QString     urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlashe);
 

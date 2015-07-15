@@ -28,6 +28,7 @@
 #include "ioworkerthread.h"
 #include "locationurl.h"
 #include "smblocationitemfile.h"
+#include "smblocationitemdir.h"
 
 
 #if defined(Q_OS_UNIX)
@@ -118,6 +119,14 @@ SmbLocation::newFile(const QString &path)
 {
     return new SmbLocationItemFile(path, this, m_smb);
 }
+
+
+LocationItemDir *
+SmbLocation::newDir(const QString &dir)
+{
+    return new SmbLocationItemDir(dir, m_smb);
+}
+
 
 
 bool SmbLocation::isThereDiskSpace(const QString &pathname, qint64 requiredSize)

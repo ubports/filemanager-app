@@ -16,6 +16,7 @@ SOURCES += $$PWD/dirmodel.cpp \
            $$PWD/locationitemdiriterator.cpp \
            $$PWD/cleanurl.cpp \           
            $$PWD/locationitemfile.cpp \
+           $$PWD/locationitemdir.cpp
 
 
 HEADERS += $$PWD/dirmodel.h \
@@ -37,15 +38,18 @@ HEADERS += $$PWD/dirmodel.h \
            $$PWD/locationitemdiriterator.h \
            $$PWD/cleanurl.h \           
            $$PWD/locationitemfile.h \
+           $$PWD/locationitemdir.h
 
 
 SOURCES += $$PWD/disk/disklocation.cpp \
            $$PWD/disk/disklocationitemdiriterator.cpp \
-           $$PWD/disk/disklocationitemfile.cpp
+           $$PWD/disk/disklocationitemfile.cpp \
+           $$PWD/disk/disklocationitemdir.cpp
 
 HEADERS += $$PWD/disk/disklocation.h \
            $$PWD/disk/disklocationitemdiriterator.h \
-           $$PWD/disk/disklocationitemfile.h
+           $$PWD/disk/disklocationitemfile.h \
+           $$PWD/disk/disklocationitemdir.h
 
 
 SOURCES += $$PWD/trash/qtrashdir.cpp      \
