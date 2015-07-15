@@ -40,7 +40,7 @@
 #include "location.h"
 #include "locationsfactory.h"
 #include "locationitemdiriterator.h"
-
+#include "locationitemfile.h"
 
 #if defined(Q_OS_UNIX)
 #include <sys/statvfs.h>
@@ -669,7 +669,9 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
         }
         else
         {
-            m_cancelCurrentAction = !QFile::remove(fi.absoluteFilePath());
+            LocationItemFile *qFile = m_curAction->sourceLocation->newFile(fi.absoluteFilePath());
+            m_cancelCurrentAction = !qFile->remove();
+            delete qFile;
         }
 #if DEBUG_REMOVE
         qDebug() << Q_FUNC_INFO << "remove ret=" << !m_cancelCurrentAction << fi.absoluteFilePath();
@@ -743,14 +745,17 @@ void  FileSystemAction::processCopyEntry()
         const DirItemInfo &fi = entry->reversedOrder.at(entry->currItem);
         QString orig    = fi.absoluteFilePath();
         QString target = targetFrom(orig, entry);
+#if DEBUG_MESSAGES
+        qDebug() << "orig:" << orig << "target:" << target;
+#endif
         QString path(target);
         // do this here to allow progress send right item number, copySingleFile will emit progress()
         m_curAction->currItem++;
         //--
         if (fi.isFile() || fi.isSymLink())
         {
-            DirItemInfo  t(target);
-            path = t.path();
+            QScopedPointer <DirItemInfo> t(m_curAction->targetLocation->newItemInfo(target));
+            path = t->path();            
         }
         //check if the main item in the entry is a directory
         //if so it needs to appear on any attached view
@@ -763,7 +768,7 @@ void  FileSystemAction::processCopyEntry()
             QDir entryDirObj(entryDir);
             if (!entryDirObj.exists() && entryDirObj.mkpath(entryDir))
             {
-                QScopedPointer <DirItemInfo> item(m_locationsFactory->currentLocation()->newItemInfo(entryDir));
+                QScopedPointer <DirItemInfo> item(m_curAction->targetLocation->newItemInfo(entryDir));
                 entry->added = true;
                 notifyActionOnItem(*item, ItemAdded);
             }
@@ -789,8 +794,10 @@ void  FileSystemAction::processCopyEntry()
         else
         if (fi.isDir())
         {
+            LocationItemFile *qFile = m_curAction->targetLocation->newFile(target);
             m_cancelCurrentAction = !
-                 QFile(target).setPermissions(fi.permissions());
+                 qFile->setPermissions(fi.permissions());
+            delete qFile;
             if (m_cancelCurrentAction)
             {
                 m_errorTitle = QObject::tr("Could not set permissions to dir");
@@ -803,7 +810,7 @@ void  FileSystemAction::processCopyEntry()
         {
             qint64 needsSize = 0;
             m_curAction->copyFile.clear();
-            m_curAction->copyFile.source = new QFile(orig);
+            m_curAction->copyFile.source = m_curAction->sourceLocation->newFile(orig);
             m_cancelCurrentAction = !m_curAction->copyFile.source->open(QFile::ReadOnly);
             if (m_cancelCurrentAction)
             {               
@@ -814,7 +821,7 @@ void  FileSystemAction::processCopyEntry()
             {
                 needsSize = m_curAction->copyFile.source->size();
                 //create destination
-                m_curAction->copyFile.target = new QFile(target);             
+                m_curAction->copyFile.target = m_curAction->targetLocation->newFile(target);
                 m_curAction->copyFile.targetName = target;
                 //first open it read-only to get its size if exists
                 if (m_curAction->copyFile.target->open(QFile::ReadOnly))
@@ -823,7 +830,7 @@ void  FileSystemAction::processCopyEntry()
                     m_curAction->copyFile.target->close();
                 }
                 //check if there is disk space to copy source to target               
-                if (needsSize > 0 && !m_locationsFactory->currentLocation()->isThereDiskSpace(entry->itemPaths.targetPath(), needsSize))
+                if (needsSize > 0 && !m_curAction->targetLocation->isThereDiskSpace(entry->itemPaths.targetPath(), needsSize))
                 {
                     m_cancelCurrentAction = true;
                     m_errorTitle = QObject::tr("There is no space to copy");
@@ -848,7 +855,7 @@ void  FileSystemAction::processCopyEntry()
                 //depending on the file size it may take longer, the view needs to be informed
                 if (m_curAction->copyFile.isEntryItem && !m_cancelCurrentAction)
                 {
-                    QScopedPointer <DirItemInfo> item(m_locationsFactory->currentLocation()->newItemInfo(target));
+                    QScopedPointer <DirItemInfo> item(m_curAction->targetLocation->newItemInfo(target));
                     if (!entry->alreadyExists)
                     {                       
                        entry->added = true;
@@ -877,9 +884,7 @@ void  FileSystemAction::processCopyEntry()
  * \param entry
  */
 void FileSystemAction::moveEntry(ActionEntry *entry)
-{
-    QFile file;
-
+{   
     for(; !m_cancelCurrentAction                          &&
           entry->currStep       < STEP_FILES              &&
           m_curAction->currItem < m_curAction->totalItems &&
@@ -889,36 +894,38 @@ void FileSystemAction::moveEntry(ActionEntry *entry)
 
     {
         const DirItemInfo &fi = entry->reversedOrder.at(entry->currItem);
-        file.setFileName(fi.absoluteFilePath());
-        DirItemInfo targetInfo(entry->itemPaths.target());
+        QScopedPointer<LocationItemFile> file(m_curAction->sourceLocation->newFile(fi.absoluteFilePath()));
+        QScopedPointer<DirItemInfo> targetInfo(m_curAction->targetLocation->newItemInfo(entry->itemPaths.target()));
         //rename will fail
-        if (targetInfo.exists())
+        if (targetInfo->exists())
         {
             //will not emit removed() neither added()
             entry->added = true;
-            if (targetInfo.isFile() || targetInfo.isSymLink())
+            if (targetInfo->isFile() || targetInfo->isSymLink())
             {
-                if (!QFile::remove(targetInfo.absoluteFilePath()))
+                QScopedPointer<LocationItemFile>
+                               targetFile(m_curAction->sourceLocation->newFile(targetInfo->absoluteFilePath()));
+                if (!targetFile->remove())
                 {
                     m_cancelCurrentAction = true;
                     m_errorTitle = QObject::tr("Could not remove the directory/file ") +
-                                      targetInfo.absoluteFilePath();
+                                      targetInfo->absoluteFilePath();
                     m_errorMsg   = ::strerror(errno);
                 }
             }
-            else
-            if (targetInfo.isDir())
+            else                      //only for local disk operations
+            if (targetInfo->isDir() && !m_curAction->isRemote())
             {
                //move target to /tmp and remove it later by creating an Remove action
                //this will emit removed()
-               moveDirToTempAndRemoveItLater(targetInfo.absoluteFilePath());
+               moveDirToTempAndRemoveItLater(targetInfo->absoluteFilePath());
             }
         }
-        if (!m_cancelCurrentAction && !file.rename(entry->itemPaths.target()))
+        if (!m_cancelCurrentAction && !file->rename(entry->itemPaths.target()))
         {
             m_cancelCurrentAction = true;
             m_errorTitle = QObject::tr("Could not move the directory/file ") +
-                                     targetInfo.absoluteFilePath();
+                                     targetInfo->absoluteFilePath();
             m_errorMsg   = ::strerror(errno);
         }
     }//for
@@ -1386,7 +1393,10 @@ void FileSystemAction::moveDirToTempAndRemoveItLater(const QString& dir)
 #if defined(DEBUG_MESSAGES) || defined(REGRESSION_TEST_FOLDERLISTMODEL)
     qDebug() << Q_FUNC_INFO << dir <<  "being moved to" << tempDir;
 #endif
-    if (QFile::rename(dir, tempDir))
+    LocationItemFile *qFile = m_curAction->targetLocation->newFile(dir);
+    bool removed = qFile->rename(tempDir);
+    delete qFile;
+    if (removed)
     {
         if (m_curAction->auxAction == 0)
         {   // this new action as Remove will remove all dirs
@@ -1424,7 +1434,7 @@ bool FileSystemAction::makeBackupNameForCurrentItem(ActionEntry *entry)
     {
         const DirItemInfo& fi =
               entry->reversedOrder.at(entry->reversedOrder.count() -1);
-        DirItemInfo backuped;
+        QScopedPointer<DirItemInfo> backuped(m_curAction->targetLocation->newItemInfo(QLatin1String(0)));
         int counter=0;
         QString name;
         do
@@ -1447,12 +1457,12 @@ bool FileSystemAction::makeBackupNameForCurrentItem(ActionEntry *entry)
                 }
             }
             name.insert(pos,copy);
-            backuped.setFile(fi.absolutePath(), name);
-        } while (backuped.exists() && counter < 100);
+            backuped->setFile(fi.absolutePath(), name);
+        } while (backuped->exists() && counter < 100);
         if (counter < 100)
         {
-            entry->newName = new QString(backuped.fileName());
-            entry->itemPaths.setTargetFullName( backuped.absoluteFilePath() );
+            entry->newName = new QString(backuped->fileName());
+            entry->itemPaths.setTargetFullName( backuped->absoluteFilePath() );
             ret = true;
         }
     }
