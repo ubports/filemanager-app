@@ -314,3 +314,16 @@ DirListWorker * TrashLocation::newListWorker(const QString &urlPath, QDir::Filte
     }
     return new TrashListWorker(trashDir, urlPath, filter);
 }
+
+
+QString TrashLocation::urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlashe)
+{
+    QString ret;
+#if defined(Q_OS_UNIX)
+    if (urlPath.startsWith(LocationUrl::TrashRootURL.midRef(0,6)))
+    {
+        ret  = LocationUrl::TrashRootURL + DirItemInfo::removeExtraSlashes(urlPath, indexOfColonAndSlashe+1);
+    }
+#endif
+    return ret;
+}
