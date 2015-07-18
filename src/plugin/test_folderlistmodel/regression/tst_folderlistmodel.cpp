@@ -12,6 +12,7 @@
 #include "smbiteminfo.h"
 #include "testqsambasuite.h"
 #include "smbusershare.h"
+#include "smblocationitemfile.h"
 
 #if defined(Q_OS_UNIX)
 #include <stdio.h>
@@ -55,6 +56,7 @@
 
 #define TIME_TO_PROCESS       2300
 #define TIME_TO_REFRESH_DIR   90
+#define TIME_TO_REFRESH_REMOTE_DIR (TIME_TO_REFRESH_DIR * 25)  // samba RPC may take longer compared with local disk access even working on localhost
 
 #if QT_VERSION  >= 0x050000
 #define  QSKIP_ALL_TESTS(statement)   QSKIP(statement)
@@ -62,6 +64,8 @@
 #define  QSKIP_ALL_TESTS(statement)   QSKIP(statement,SkipAll)
 #endif
 
+#define  CHECK_IF_CAN_CREATE_SHARES()   if (!SmbUserShare::canCreateShares()) \
+                                           {  qWarning() << Q_FUNC_INFO << "cannot be performed, it requires a Samba Server to create user shares"; return;}
 
 QByteArray md5FromIcon(const QIcon& icon);
 QString createFileInTempDir(const QString& name, const char *content, qint64 size);
@@ -122,9 +126,7 @@ private Q_SLOTS: // test cases
     void  diskCdIntoPathRelative();
     void  diskCdIntoPathAbsolute();
     void  trashCdIntoPathRelative();
-    void  trashCdIntoPathAbsolute();
-    void  smbCdIntoPathRelative();
-    void  smbCdIntoPathAbsolute();
+    void  trashCdIntoPathAbsolute();   
     void  fileIconProvider();
     void  getThemeIcons();
 #ifndef DO_NOT_USE_TAG_LIB
@@ -161,6 +163,26 @@ private Q_SLOTS: // test cases
     void restoreTrashWithMultipleSources();
     void emptyTrash();
 
+// Samba test cases
+private Q_SLOTS:
+    void  smbCdIntoPathRelative();
+    void  smbCdIntoPathAbsolute();
+    //tests for high level helper functions
+    void  smbExistsDir();
+    void  smbCanReadDir();
+    void  smbExistsFile();
+    void  smbCanReadFile();
+    //common filemanager tests for Samba
+    void  smbMkdir();
+    void  smbMakeBackupNameForCurrentItem();
+    void  smbCopyFromSmb2Smb();
+    void  smbCopyFromSmb2LocalDisk();
+    void  smbCopyFromLocalDisk2Smb();
+    void  smbRemoveDirectory();
+    void  smbCutFromSmb2Smb();
+    void  smbCutFromSmb2LocalDisk();
+    void  smbCutFromLocalDisk2Smb();
+
 private:
     bool createTempHomeTrashDir(const QString& existentDir);
     void initDeepDirs();
@@ -168,7 +190,7 @@ private:
     void initModels();
     void cleanModels();
     bool compareDirectories(const QString& d1,
-                            const QString& d2);
+                            const QString& d2, bool comparePermissions = true);
 
     bool createLink(const QString& fullSouce,
                     const QString& link,
@@ -313,7 +335,7 @@ bool TestDirModel::createLink(const QString &fullSouce, const QString &link, boo
     return ret;
 }
 
-bool TestDirModel::compareDirectories(const QString &d1, const QString &d2)
+bool TestDirModel::compareDirectories(const QString &d1, const QString &d2, bool comparePermissions )
 {
     QDirIterator d1Info(d1,
                     QDir::Files | QDir::Hidden | QDir::System,
@@ -337,7 +359,7 @@ bool TestDirModel::compareDirectories(const QString &d1, const QString &d2)
                                     << d2Info.fileName() << d2Info.size();
             return false;
         }
-        if (d1Info.fileInfo().permissions() != d2Info.permissions())
+        if (comparePermissions && d1Info.fileInfo().permissions() != d2Info.permissions())
         {
             qDebug() << "false permissions" << d1Info.fileName() << d2Info.fileName();
             return false;
@@ -1437,8 +1459,10 @@ void TestDirModel::openPathAbsouluteAndRelative()
     createTempHomeTrashDir(m_deepDir_01->path());
 
     QTrashDir tempTrash;
-    QCOMPARE(files.addSubDirLevel(tempTrash.homeTrash()),  true);
-    QCOMPARE(files.addSubDirLevel(QTrashUtilInfo::filesTrashDir(tempTrash.homeTrash())),  true);
+    QString homeTrashDir = tempTrash.homeTrash();
+    QCOMPARE(files.addSubDirLevel(homeTrashDir),  true);
+    QString filesHomeTrashDir  = QTrashUtilInfo::filesTrashDir(homeTrashDir);
+    QCOMPARE(files.addSubDirLevel(filesHomeTrashDir),  true);
 
     QString level1("Level1");
     QCOMPARE(files.addSubDirLevel(level1),  true);
@@ -1558,11 +1582,11 @@ void TestDirModel::existsDirAnCanReadDir()
     QCOMPARE(m_dirModel_01->canReadDir(orig), true);
 
     //check permissions from canReadDir()
-    bool ok = QFile::setPermissions(m_deepDir_01->path(),
-                                    QFileDevice::ReadOwner | QFileDevice::WriteOwner);
+    bool ok = QFile::setPermissions(m_deepDir_01->path(), QFileDevice::WriteOwner);
     QCOMPARE(ok,                             true);
     QCOMPARE(m_dirModel_01->existsDir(orig),  true);
     QCOMPARE(m_dirModel_01->canReadDir(orig), false);
+    QFile::setPermissions(m_deepDir_01->path(), QFileDevice::ReadOwner | QFileDevice::WriteOwner);
 
     ok = QFile::setPermissions(m_deepDir_01->path(),
                                QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner );
@@ -2961,6 +2985,621 @@ void TestDirModel::smbCdIntoPathRelative()
    }
 }
 
+/*!
+ * \brief TestDirModel::smbExistsDir() Tests for DirModel::existsDir() regarding Samba
+ */
+void TestDirModel::smbExistsDir()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbExistsDir");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+
+    //create a folder inside this share
+    QString folderName("folder");
+    SmbSharedPathAccess folder = tmpShare.createPathForItem(folderName);
+    QCOMPARE(QDir().mkpath(folder.diskPathname), true);
+    QCOMPARE(QFileInfo(folder.diskPathname).exists(), true);
+    //set file mananer to browse the temp share
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 2); //temp shares are created with a file in it
+    // check if the folder exists using relative name only
+    QCOMPARE(m_dirModel_01->existsDir(folderName), true);
+    // check it again using the full samba url
+    QCOMPARE(m_dirModel_01->existsDir(folder.smbUrl), true);
+    //negative tests
+    // check for a relative folder that does not exist
+    QString notExist("_I_Hope_it_does_not_exist");
+    QCOMPARE(m_dirModel_01->existsDir(notExist), false);
+    QString fullSmbUrl(tmpShare.url + QDir::separator() + notExist);
+    QCOMPARE(m_dirModel_01->existsDir(fullSmbUrl), false);
+}
+
+/*!
+ * \brief TestDirModel::smbCanReadDir() Tests for DirModel::canReadDir() regading Samba
+ */
+void TestDirModel::smbCanReadDir()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbCanReadDir");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+
+    //create a folder inside this share
+    QString folderName("folder");
+    SmbSharedPathAccess folder = tmpShare.createPathForItem(folderName);
+    QCOMPARE(QDir().mkpath(folder.diskPathname), true);
+    QCOMPARE(QFileInfo(folder.diskPathname).exists(), true);
+    //set file mananer to browse the temp share
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 2); //temp shares are created with a file in it
+    QFile::Permissions folderOriginalPermissions = QFileInfo(folder.diskPathname).permissions();
+    //first negative tests
+    //change the permission to No Read
+    bool ok = QFile::setPermissions(folder.diskPathname, QFile::WriteOwner | QFile::ExeOwner);
+    QCOMPARE(ok, true);
+    // check using relative name only
+    QCOMPARE(m_dirModel_01->canReadDir(folderName), false);
+    // check it again using the full samba url
+    QCOMPARE(m_dirModel_01->canReadDir(folder.smbUrl), false);
+    //negative tests
+    // check for a relative folder that does not exist
+    QString notExist("_I_Hope_it_does_not_exist");
+    QCOMPARE(m_dirModel_01->canReadDir(notExist), false);
+    QString fullSmbUrl(tmpShare.url + QDir::separator() + notExist);
+    QCOMPARE(m_dirModel_01->canReadDir(fullSmbUrl), false);
+    //now positive tests
+    //give Read permission
+    ok = QFile::setPermissions(folder.diskPathname, folderOriginalPermissions);
+    QCOMPARE(ok, true);
+    // check using relative name only
+    QCOMPARE(m_dirModel_01->canReadDir(folderName), true);
+    // check it again using the full samba url
+    QCOMPARE(m_dirModel_01->canReadDir(folder.smbUrl), true);
+}
+
+
+/*!
+ * \brief TestDirModel::smbExistsFile()  Tests for DirModel::existsFile() regading Samba
+ */
+void TestDirModel::smbExistsFile()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbExistsFile");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+    //create a file inside this share
+    QString fileName("fileTest.txt");
+    SmbSharedPathAccess file = tmpShare.createPathForItem(fileName);
+    QCOMPARE(QFileInfo(file.diskPathname).exists(), false);
+    //set file mananer to browse the temp share
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 1); //temp shares are created with a file in it
+    //negative tests, file does not exist
+    //using relative path
+    QCOMPARE(m_dirModel_01->existsFile(fileName), false);
+    //using absolute path
+    QCOMPARE(m_dirModel_01->existsFile(file.smbUrl), false);
+    //positive tests, file exists
+    m_dirModel_01->goHome();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    //now create the file
+    QFile f(file.diskPathname);
+    QCOMPARE(f.open(QFile::WriteOnly),  true);
+    f.close();
+    //set file mananer to browse the temp share
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 2); //temp shares are created with a file in it
+    //using relative path
+    QCOMPARE(m_dirModel_01->existsFile(fileName), true);
+    //using absolute path
+    QCOMPARE(m_dirModel_01->existsFile(file.smbUrl), true);
+}
+
+
+void TestDirModel::smbCanReadFile()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbCanReadFile");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+
+    //create a file inside this share
+    QString fileName("fileTest.txt");
+    SmbSharedPathAccess file = tmpShare.createPathForItem(fileName);
+    QFile f(file.diskPathname);
+    QCOMPARE(f.open(QFile::WriteOnly), true);
+    f.close();
+    QCOMPARE(QFileInfo(file.diskPathname).exists(), true);
+    //set file mananer to browse the temp share
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 2); //temp shares are created with a file in it
+    QFile::Permissions fileOriginalPermissions = QFileInfo(file.diskPathname).permissions();
+    //first negative tests
+    //change the permission to No Read
+    bool ok = QFile::setPermissions(file.diskPathname, QFile::WriteOwner | QFile::ExeOwner);
+    QCOMPARE(ok, true);
+    // check using relative name only
+    QCOMPARE(m_dirModel_01->canReadFile(fileName), false);
+    // check it again using the full samba url
+    QCOMPARE(m_dirModel_01->canReadFile(file.smbUrl), false);
+    //negative tests
+    // check for a relative folder that does not exist
+    QString notExist("_I_Hope_it_does_not_exist");
+    QCOMPARE(m_dirModel_01->canReadFile(notExist), false);
+    QString fullSmbUrl(tmpShare.url + QDir::separator() + notExist);
+    QCOMPARE(m_dirModel_01->canReadFile(fullSmbUrl), false);
+    //now positive tests
+    //give Read permission
+    ok = QFile::setPermissions(file.diskPathname, fileOriginalPermissions);
+    QCOMPARE(ok, true);
+    // check using relative name only
+    QCOMPARE(m_dirModel_01->canReadFile(fileName), true);
+    // check it again using the full samba url
+    QCOMPARE(m_dirModel_01->canReadFile(file.smbUrl), true);
+}
+
+/*!
+ * \brief TestDirModel::smbMkdir() Tests for DirModel::mkdir() regarding Samba
+ */
+void TestDirModel::smbMkdir()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbMkdir");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+    //set file mananer to browse the temp share
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 1);
+
+    QString folder1Str("folder1");
+    QString folder2Str("folder2");
+    SmbSharedPathAccess folder1 = tmpShare.createPathForItem(folder1Str);
+    SmbSharedPathAccess folder2 = tmpShare.createPathForItem(folder2Str);
+    //using disk make sure folder1 does not exist
+    QCOMPARE(QFileInfo(folder1.diskPathname).exists(),  false);
+    //create folder1 using relative path
+    QCOMPARE(m_dirModel_01->mkdir(folder1Str), true);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 2);
+    QCOMPARE(QFileInfo(folder1.diskPathname).isDir(),  true);
+    //folder2 is created using full url
+    QCOMPARE(QFileInfo(folder2.diskPathname).exists(),  false);
+    //create folder2 using full Samba URL
+    QCOMPARE(m_dirModel_01->mkdir(folder2.smbUrl), true);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 3);
+    QCOMPARE(QFileInfo(folder2.diskPathname).isDir(),  true);
+    //check for full URL in the model items
+    int counter = m_dirModel_01->rowCount() ;
+    int found  = 0; // look for folder1 and folder2 full url
+    while (counter--)
+    {
+       const DirItemInfo & item = m_dirModel_01->mDirectoryContents[counter];
+       if (item.urlPath() == folder1.smbUrl || item.urlPath() == folder2.smbUrl)
+       {
+           ++found;
+       }
+    }
+    QCOMPARE(found, 2);  //both folder1 and folder2 URLs are present
+}
+
+/*!
+ * \brief TestDirModel::smbMakeBackupNameForCurrentItem() Tests making backup of items using copy
+ *
+ *  The similar test for item in local disk is modelCopyAndPasteToBackupFiles()
+ */
+void TestDirModel::smbMakeBackupNameForCurrentItem()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbMakeBackupNameForCurrentItem");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+    //set file mananer to browse the temp share
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 1);
+    //copy existent file in the Samba share, index 0 refers to tmpShare.fileContent.smbUrl
+    m_dirModel_01->copyIndex(0);
+    //pasting in the same directory must create item to Copy(1)
+    m_dirModel_01->paste();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 2);
+    //pasting again must create item to Copy(2)
+    m_dirModel_01->paste();
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 3);
+    int counter = m_dirModel_01->rowCount() ;
+    int found  = 0;
+    QFile fileContent(tmpShare.fileContent.diskPathname);
+    QCOMPARE(fileContent.open(QFile::ReadOnly), true);
+    QByteArray fileContentBytes(fileContent.readAll());
+    fileContent.close();
+    char smbBuffer [fileContentBytes.size()];
+    qint64 size  = (qint64)fileContentBytes.size();
+    while (counter--)
+    {
+       const DirItemInfo & item = m_dirModel_01->mDirectoryContents[counter];       
+       //compare size content with the original file
+       QCOMPARE(item.size(), size);
+       SmbLocationItemFile smbFile(item.urlPath());
+       QCOMPARE(smbFile.open(QFile::ReadOnly), true);
+       QCOMPARE(smbFile.read(smbBuffer, size), size);
+       smbFile.close();
+       QByteArray smbContentBytes((const char*)&smbBuffer, fileContentBytes.size());
+       //files must have the same content
+       QCOMPARE(smbContentBytes, fileContentBytes);
+       //look for backuped  names
+       if (item.urlPath().contains("Copy(1)") || item.urlPath().contains("Copy(2)"))
+       {
+           ++found;
+       }
+    }
+    QCOMPARE(found, 2);  //both backuped files were found
+}
+
+/*!
+ * \brief TestDirModel::smbCopyFromSmb2Smb()
+ *
+ *  Creates a Samba Share in the local disk
+ *  Creates a directory tree with some files under smb://localhost/<tempShareName>/source
+ *  Copy its content to                            smb://localhost/<tempShareName>/target
+ *  Compares both directories using local disk correspondent path
+ */
+void TestDirModel::smbCopyFromSmb2Smb()
+{
+    CHECK_IF_CAN_CREATE_SHARES();  
+
+    QString shareName("smbCopyFromSmb2Smb");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+    QString sourceFolderName("source");
+    QString targetFolderName("target");
+    SmbSharedPathAccess sourceFolder = tmpShare.createPathForItem(sourceFolderName);
+    SmbSharedPathAccess targeFolder  = tmpShare.createPathForItem(targetFolderName);
+    //create a soruce directory tree in the share
+    DeepDir sdir(sourceFolder.diskPathname, 3);
+    //create the destination folder
+    DeepDir tdir(targeFolder.diskPathname, 0);  // 0 level, just create the root directory
+    Q_UNUSED(sdir);
+    Q_UNUSED(tdir);
+    /*
+     * set file mananer to browse the source directory using Samba url
+     */
+    m_dirModel_01->setPath(sourceFolder.smbUrl);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+    DirSelection  *selection = m_dirModel_01->selectionObject();
+    QVERIFY(selection != 0);
+    selection->selectAll();
+    QVERIFY(selection->counter() != 0);
+    //copy the source folder using Samba URL
+    m_dirModel_01->copySelection();
+    //change directory to the target folder
+    m_dirModel_01->setPath(targeFolder.smbUrl);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 0); // so far it is empty
+    m_dirModel_01->paste();
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0); //no longer empty
+    //now compare directories source and target, permissions are not the same due to Samba Configuration
+    QCOMPARE(compareDirectories(sourceFolder.diskPathname, targeFolder.diskPathname, false), true);
+}
+
+
+void TestDirModel::smbCopyFromSmb2LocalDisk()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbCopyFromSmb2LocalDisk");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+    QString sourceFolderName("source");
+    QString targetFolderName("target");
+    SmbSharedPathAccess sourceFolder = tmpShare.createPathForItem(sourceFolderName);
+    //create a soruce directory tree in the share
+    DeepDir sdir(sourceFolder.diskPathname, 3);
+    //create the destination folder in the /tmp
+    DeepDir targetLocalDisk(targetFolderName, 0);  // 0 level, just create the root directory
+    Q_UNUSED(sdir);
+    /*
+     * set file mananer to browse the source directory using Samba url
+     */
+    m_dirModel_01->setPath(sourceFolder.smbUrl);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+    DirSelection  *selection = m_dirModel_01->selectionObject();
+    QVERIFY(selection != 0);
+    selection->selectAll();
+    QVERIFY(selection->counter() != 0);
+    //copy the source folder using Samba URL
+    m_dirModel_01->copySelection();
+    //change directory to the target folder in the local disk
+    m_dirModel_01->setPath(targetLocalDisk.path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 0); // so far it is empty
+    m_dirModel_01->paste();
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0); //no longer empty
+    //now compare directories source and target, permissions are not the same due to Samba Configuration
+    QCOMPARE(compareDirectories(sourceFolder.diskPathname, targetLocalDisk.path(), false), true);
+}
+
+
+void TestDirModel::smbCopyFromLocalDisk2Smb()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbCopyFromLocalDisk2Smb");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+    QString sourceFolderName("source");
+    QString targetFolderName("target");
+    SmbSharedPathAccess targeFolder  = tmpShare.createPathForItem(targetFolderName);
+    //create a soruce directory tree in /tmp
+    DeepDir diskDir(sourceFolderName, 3);
+    //create the destination folder in the share
+    DeepDir tdir(targeFolder.diskPathname, 0);  // 0 level, just create the root directory
+    Q_UNUSED(tdir);
+    /*
+     * set file mananer to browse the source in the /tmp
+     */
+    m_dirModel_01->setPath(diskDir.path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+    DirSelection  *selection = m_dirModel_01->selectionObject();
+    QVERIFY(selection != 0);
+    selection->selectAll();
+    QVERIFY(selection->counter() != 0);
+    //copy the source folder using file:// URLs
+    m_dirModel_01->copySelection();
+    //change directory to the target folder
+    m_dirModel_01->setPath(targeFolder.smbUrl);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 0); // so far it is empty
+    m_dirModel_01->paste();
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0); //no longer empty
+    //now compare directories source and target, permissions are not the same due to Samba Configuration
+    QCOMPARE(compareDirectories(diskDir.path(), targeFolder.diskPathname, false), true);
+}
+
+
+void TestDirModel::smbRemoveDirectory()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbRemoveDirectory");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+    SmbSharedPathAccess sourceFolder  = tmpShare.createPathForItem("source");
+    //create a directory tree with items in the local disk shared as Samba share
+    DeepDir diskDir(sourceFolder.diskPathname, 3);
+    Q_UNUSED(diskDir);
+     /*
+     * set file mananer to browse the source in the Samba share
+     */
+    m_dirModel_01->setPath(sourceFolder.smbUrl);
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+    DirSelection  *selection = m_dirModel_01->selectionObject();
+    QVERIFY(selection != 0);
+    selection->selectAll();
+    QVERIFY(selection->counter() != 0);
+    m_dirModel_01->removeSelection();
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 0); // now it is empty
+}
+
+
+void TestDirModel::smbCutFromSmb2Smb()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbCutFromSmb2Smb");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+    QString sourceFolderName("source");
+    QString targetFolderName("target");
+    SmbSharedPathAccess sourceFolder = tmpShare.createPathForItem(sourceFolderName);
+    SmbSharedPathAccess targeFolder  = tmpShare.createPathForItem(targetFolderName);
+    //create a soruce directory tree in the share
+    DeepDir sdir(sourceFolder.diskPathname, 3);
+    //create the destination folder
+    DeepDir tdir(targeFolder.diskPathname, 0);  // 0 level, just create the root directory
+    Q_UNUSED(sdir);
+    Q_UNUSED(tdir);
+    /*
+     * set file mananer to browse the source directory using Samba url
+     */
+    m_dirModel_01->setPath(sourceFolder.smbUrl);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+    DirSelection  *selection = m_dirModel_01->selectionObject();
+    QVERIFY(selection != 0);
+    selection->selectAll();
+    QVERIFY(selection->counter() != 0);
+    //cut the source folder using Samba URL
+    m_dirModel_01->cutSelection();
+    //change directory to the target folder
+    m_dirModel_01->setPath(targeFolder.smbUrl);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 0); // so far it is empty
+    //paste
+    m_dirModel_01->paste();
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    //check target directory is not empty
+    QVERIFY(m_dirModel_01->rowCount() != 0); //no longer empty
+    //go back to the source samba url to make sure it is empty
+    m_dirModel_01->setPath(sourceFolder.smbUrl);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(), 0);
+}
+
+
+void TestDirModel::smbCutFromSmb2LocalDisk()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbCutFromSmb2LocalDisk");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+    QString sourceFolderName("source");
+    QString targetFolderName("diskTarget");
+    SmbSharedPathAccess sourceFolder = tmpShare.createPathForItem(sourceFolderName);
+    //create a soruce directory tree in the share
+    DeepDir sdir(sourceFolder.diskPathname, 3);
+    //create the destination folder
+    DeepDir diskTarget(targetFolderName, 0);  // 0 level, just create the root directory
+    Q_UNUSED(sdir);
+    /*
+     * set file mananer to browse the source directory using Samba url
+     */
+    m_dirModel_01->setPath(sourceFolder.smbUrl);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+    DirSelection  *selection = m_dirModel_01->selectionObject();
+    QVERIFY(selection != 0);
+    selection->selectAll();
+    QVERIFY(selection->counter() != 0);
+    //cut the source folder using Samba URL
+    m_dirModel_01->cutSelection();
+    //change directory to the target folder in the local disk
+    m_dirModel_01->setPath(diskTarget.path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 0); // so far it is empty
+    //paste
+    m_dirModel_01->paste();
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR); //removes from Samba, needs more time
+    //check target directory is not empty
+    QVERIFY(m_dirModel_01->rowCount() != 0); //no longer empty
+    //go back to the source samba url to make sure it is empty
+    m_dirModel_01->setPath(sourceFolder.smbUrl);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(), 0);
+}
+
+
+void TestDirModel::smbCutFromLocalDisk2Smb()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+     QString shareName("smbCutFromLocalDisk2Smb");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+    QString sourceFolderName("source");
+    QString targetFolderName("sambaTarget");
+    SmbSharedPathAccess targetFolder = tmpShare.createPathForItem(targetFolderName);
+    //create a soruce directory tree in the share
+    DeepDir sdir(sourceFolderName, 3);
+    //create the destination folder
+    DeepDir smbTarget(targetFolder.diskPathname, 0);  // 0 level, just create the root directory
+    Q_UNUSED(smbTarget);
+    /*
+     * set file mananer to browse the source directory in the local disk
+     */
+    m_dirModel_01->setPath(sdir.path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+    DirSelection  *selection = m_dirModel_01->selectionObject();
+    QVERIFY(selection != 0);
+    selection->selectAll();
+    QVERIFY(selection->counter() != 0);
+    //cut the source folder using local disk
+    m_dirModel_01->cutSelection();
+    //change directory to the target folder in Samba share
+    m_dirModel_01->setPath(targetFolder.smbUrl);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QCOMPARE(m_dirModel_01->rowCount() , 0); // so far it is empty
+    //paste
+    m_dirModel_01->paste();
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    //check target directory is not empty
+    QVERIFY(m_dirModel_01->rowCount() != 0); //no longer empty
+    //go back to the source local disk make sure it is empty
+    m_dirModel_01->setPath(sdir.path());
+    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QCOMPARE(m_dirModel_01->rowCount(), 0);
+}
+
+
 
 int main(int argc, char *argv[])
 {
@@ -2981,9 +3620,16 @@ int main(int argc, char *argv[])
     //if not running specific tests, run Samba test suite
     if (args.count() == 1)
     {
-        printf("\n********* Samba tests ********\n");
-        TestQSambaSuite smbTest;
-        ret |= QTest::qExec(&smbTest, args);
+        if (SmbUserShare::canCreateShares())
+        {
+            printf("\n********* Samba tests ********\n");
+            TestQSambaSuite smbTest;
+            ret |= QTest::qExec(&smbTest, args);
+        }
+        else
+        {
+             printf("\n\n********* Make sure Samba server is installed and up to run specific Samba tests ********\n");
+        }
     }
     return ret;
 }

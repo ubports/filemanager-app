@@ -37,8 +37,23 @@ TempFiles::TempFiles() : m_content(QByteArray(4*4096, 'z'))
 
 bool TempFiles::addSubDirLevel(const QString &dir)
 {
-    QFileInfo d( m_dir + QDir::separator() + QFileInfo(dir).fileName() );
-    if (d.exists()  || QDir().mkpath(d.absoluteFilePath()))
+    QFileInfo d;
+    QFileInfo dirInfo(dir);
+    if (dirInfo.isRelative())
+    {
+        d.setFile(m_dir, dir); //append a single directory
+    }
+    else
+    {
+        d.setFile(dir);       //use already made temp path
+    }
+    if (!d.exists() && QDir().mkpath(d.absoluteFilePath()))
+    {             
+        QFile::setPermissions(d.absoluteFilePath(),  QFile::WriteOwner | QFile::ReadOwner | QFile::ExeOwner
+                                                   | QFile::WriteGroup | QFile::ReadGroup | QFile::ExeGroup
+                                                   | QFile::WriteOther | QFile::ReadOther | QFile::ExeOther);
+    }
+    if (d.exists())
     {
         m_dir = d.absoluteFilePath();
         return true;
@@ -163,6 +178,11 @@ DeepDir::DeepDir(const QString &rootDir, int level) :
     totalFiles(0),
     totalItems(0)
 {
+    QFileInfo rootDirInfo(rootDir);
+    if (rootDirInfo.isAbsolute())
+    {
+       root = rootDir;
+    }
     if (!rootDir.isEmpty())
     {
         remove(); // clear
@@ -200,6 +220,11 @@ bool DeepDir::remove()
     {
         QString cmd("/bin/rm -rf " + root);
         ret = ::system(cmd.toLocal8Bit().constData()) == 0 ;
+        if (!ret)
+        {
+            qWarning("*** Could not remove %s, if it refers to Samba try to configure Samba using: 'force user' or 'create mask' plus 'directory mask'",
+                     qPrintable(root));
+        }
     }
     return ret;
 }
