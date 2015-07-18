@@ -27,6 +27,7 @@
 #include "smbutil.h"
 #include "smblocationdiriterator.h"
 #include <sys/stat.h>
+#include <errno.h>
 
 #include <QTest>
 #include <QFile>
@@ -75,7 +76,7 @@ ShareCreationStatus::operator=(ShareCreationStatus & o)
 
     sharedDirPath  = o.sharedDirPath;
     shareName      = o.shareName;
-    fileContent    = o.fileContent;
+    fileContent.diskPathname    = o.fileContent.diskPathname;
     status         = o.status;
     tempDir        = o.tempDir;
     url            = o.url;
@@ -87,10 +88,34 @@ ShareCreationStatus::operator=(ShareCreationStatus & o)
     return *this;
 }
 
+SmbSharedPathAccess
+ShareCreationStatus::createPathForItem(const QString &item)
+{
+  SmbSharedPathAccess pathItem;
+  pathItem.diskPathname = sharedDirPath + QLatin1Char('/') + item;
+  pathItem.smbUrl       = url + QLatin1Char('/') + item;
+  return pathItem;
+}
+
+SmbSharedPathAccess
+ShareCreationStatus::createPathForItems(const QStringList &items)
+{
+    SmbSharedPathAccess pathItem;
+    pathItem.diskPathname = sharedDirPath;
+    pathItem.smbUrl       = url;
+    for (int counter=0; counter < items.count(); ++counter)
+    {
+        pathItem.diskPathname += QLatin1Char('/') + items.at(counter);
+        pathItem.smbUrl       += QLatin1Char('/') + items.at(counter);
+    }
+    return pathItem;
+}
+
 
 TestQSambaSuite::TestQSambaSuite(QObject *parent) :
     QObject(parent)
    ,m_smbShares( new SmbPlaces() )
+   ,m_curUmask(0)
 {
 }
 
@@ -98,18 +123,23 @@ TestQSambaSuite::TestQSambaSuite(QObject *parent) :
 TestQSambaSuite::~TestQSambaSuite()
 {
     delete m_smbShares;
+    if (!m_curShareName.isEmpty())
+    {
+        SmbUserShare::removeShare(m_curShareName);
+    }
 }
 
 
 void TestQSambaSuite::initTestCase()
 {   
     QCOMPARE(SmbUserShare::canCreateShares(), true);
+    m_curUmask = umask(0);
 }
 
 
 void TestQSambaSuite::cleanupTestCase()
 {
-
+    umask(m_curUmask);
 }
 
 
@@ -131,6 +161,7 @@ void TestQSambaSuite::cleanup()
     {
         SmbUserShare::removeShare(m_curShareName);
         SmbUserShare::UserShareFile share = SmbUserShare::search(m_curShareName);
+        m_curShareName.clear();
         QCOMPARE(share.exists() , false);
     }
 }
@@ -198,10 +229,9 @@ ShareCreationStatus TestQSambaSuite::createTempShare(const QString &maskName,
     m_curShareName = QFileInfo(shareDir->path()).fileName();
 
     //put some content in it
-    QString filename = createTempFile(shareDir->path(), "somecontent.txt", "hello Samba");
+    QString fileContentName("somecontent.txt");
+    QString filename = createTempFile(shareDir->path(), fileContentName, "hello Samba");
     RETURN_SHARE_STATUS_WHEN_FALSE(filename.isEmpty(),    false);
-
-    ret.fileContent = filename;
 
     //save current samba shares list
     QStringList currentShares = m_smbShares->listPlacesSync();
@@ -216,6 +246,8 @@ ShareCreationStatus TestQSambaSuite::createTempShare(const QString &maskName,
     bool exists = existsShare(currentShares,shareDirName);
     RETURN_SHARE_STATUS_WHEN_FALSE(exists, false);
 
+    //first remove the share if it already exists, perhaps due to a failure in a previous test
+    SmbUserShare::removeShare(shareDir->path());
     //create the share
     bool created = SmbUserShare::createShareForFolder(shareDir->path(),
                                                       fullAccess ? SmbUserShare::ReadWrite : SmbUserShare::Readonly,
@@ -233,10 +265,7 @@ ShareCreationStatus TestQSambaSuite::createTempShare(const QString &maskName,
     //let the share be removed by its path instead of the name
     m_curShareName = shareDir->path();
     ret.url = LocationUrl::SmbURL + "localhost/" + ret.shareName;
-
-    //remove this
-    //=============================================================
-    m_curShareName.clear();
+    ret.fileContent = ret.createPathForItem(fileContentName);
 
     return ret;
 }
@@ -377,7 +406,7 @@ void TestQSambaSuite::positive_itemInfoShare()
         share.tempDir->setAutoRemove(true);
     }
     QCOMPARE(share.status, true);
-    QFileInfo file(share.fileContent);
+    QFileInfo file(share.fileContent.diskPathname);
     QCOMPARE(file.exists(),   true);
 
     QString urlPath("smb://localhost/" + share.shareName);
@@ -410,13 +439,13 @@ void TestQSambaSuite::positive_itemInfoCommonPermissions()
         share.tempDir->setAutoRemove(true);
     }
     QCOMPARE(share.status, true);
-    QFileInfo file(share.fileContent);
+    QFileInfo file(share.fileContent.diskPathname);
     QCOMPARE(file.exists(),   true);
 
     //set a common permission to the file
-    QFile::Permissions  myPermissions = QFile::ReadOwner | QFile::WriteOwner |
+    QFile::Permissions  myPermissions = QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::WriteUser |
                                         QFile::ReadGroup | QFile::ReadOther;
-    QCOMPARE(QFile::setPermissions(share.fileContent, myPermissions), true);
+    QCOMPARE(QFile::setPermissions(share.fileContent.diskPathname, myPermissions), true);
 
     QString urlPath("smb://localhost/" + share.shareName);
     QString url(urlPath + QDir::separator() + file.fileName());
@@ -521,7 +550,7 @@ void TestQSambaSuite::positive_dirIterator()
         share.tempDir->setAutoRemove(true);
     }
     QCOMPARE(share.status, true);
-    QFileInfo file(share.fileContent);
+    QFileInfo file(share.fileContent.diskPathname);
     QCOMPARE(file.exists(),   true);
 
     //create a second directory inside the temporary share
@@ -615,15 +644,13 @@ void TestQSambaSuite::positive_dirIterator()
     for(counter=0; fileOnly.hasNext() ; ++counter)
     {
         fileOnly.next();
-        if (fileOnly.fileName() == QFileInfo(share.fileContent).fileName())
+        if (fileOnly.fileName() == QFileInfo(share.fileContent.diskPathname).fileName())
         {
             fileContent = true;
         }
     }
     QCOMPARE(counter,  1);
     QCOMPARE(fileContent, true);
-
-
 }
 
 

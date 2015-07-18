@@ -27,6 +27,13 @@
 class SmbPlaces;
 class QTemporaryDir;
 
+//for a local share in the localhost
+struct SmbSharedPathAccess
+{
+    QString diskPathname;  //full path name for disk access
+    QString smbUrl;        //full path name for smb access
+};
+
 struct ShareCreationStatus
 {
    ShareCreationStatus(const QString& dirNameMask);
@@ -35,10 +42,12 @@ struct ShareCreationStatus
    ~ShareCreationStatus();
    ShareCreationStatus &operator=(const ShareCreationStatus & o);
    ShareCreationStatus &operator=(ShareCreationStatus & o);
-   QString sharedDirPath;
-   QString shareName;
-   QString fileContent;
-   QString url;
+   SmbSharedPathAccess createPathForItem(const QString& item);
+   SmbSharedPathAccess createPathForItems(const QStringList& items);
+   SmbSharedPathAccess fileContent; // a simple file is created in evey share
+   QString sharedDirPath;  //share path in the localhost
+   QString shareName;      //share name  
+   QString url;            //share url
    bool    status;
    QTemporaryDir * tempDir;
 private:
@@ -90,6 +99,7 @@ protected:
 private:
     SmbPlaces      *m_smbShares;
     QString        m_curShareName;
+    mode_t         m_curUmask;
 
 };
 
