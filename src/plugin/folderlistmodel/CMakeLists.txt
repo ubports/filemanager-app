@@ -45,6 +45,8 @@ set(folderlistmodel_SRCS
     locationurl.h
     locationitemdiriterator.cpp
     locationitemdiriterator.h
+    locationitemfile.cpp
+    locationitemfile.h  
     cleanurl.cpp
     cleanurl.h
     urliteminfo.cpp
