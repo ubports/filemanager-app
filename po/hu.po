@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2015-01-09 15:39+0000\n"
+"PO-Revision-Date: 2015-07-23 12:55+0000\n"
 "Last-Translator: Richard Somlói <ricsipontaz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-07-18 05:31+0000\n"
+"X-Launchpad-Export-Date: 2015-07-24 05:40+0000\n"
 "X-Generator: Launchpad (build 17628)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
@@ -305,7 +305,7 @@ msgstr "Archívum"
 
 #: ../src/app/qml/ui/FolderListPage.qml:713
 msgid "Do you want to extract the archive here?"
-msgstr "Szeretné kicsomagolni a archívumot ide?"
+msgstr "Szeretné ide kicsomagolni az archívumot?"
 
 #: ../src/app/qml/ui/FolderListPage.qml:730
 msgid "Open with another app"
