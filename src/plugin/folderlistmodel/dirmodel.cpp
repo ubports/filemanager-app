@@ -1482,26 +1482,26 @@ void DirModel::setEnabledExternalFSWatcher(bool enable)
 
 bool DirModel::existsDir(const QString &folderName) const
 {
-    DirItemInfo d = setParentIfRelative(folderName);
+    DirItemInfo d(setParentIfRelative(folderName));
     return d.exists() && d.isDir();
 }
 
 bool  DirModel::canReadDir(const QString &folderName) const
 {
-    DirItemInfo d = setParentIfRelative(folderName);
+    DirItemInfo d(setParentIfRelative(folderName));
     return d.isDir() && d.isReadable() && d.isExecutable();
 }
 
 
 bool DirModel::existsFile(const QString &fileName) const
 {
-     DirItemInfo f = setParentIfRelative(fileName);
+     DirItemInfo f(setParentIfRelative(fileName));
      return f.exists() && f.isFile();
 }
 
 bool DirModel::canReadFile(const QString &fileName) const
 {
-    DirItemInfo  f = setParentIfRelative(fileName);
+    DirItemInfo  f(setParentIfRelative(fileName));
     return f.isReadable() && f.isFile();
 }
 
