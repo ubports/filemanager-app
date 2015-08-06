@@ -35,6 +35,7 @@
  */
 
 #include "clipboard.h"
+#include "locationurl.h"
 
 #include <QClipboard>
 #include <QApplication>
@@ -189,8 +190,7 @@ ClipboardOperation DirModelMimeData::clipBoardOperation()
  */
 DirModelMimeData::ClipBoardDataOwner
 DirModelMimeData::setIntoClipboard(const QStringList &files, const QString& path, ClipboardOperation operation)
-{
-    static bool firstTime = true;
+{   
     DirModelMimeData::ClipBoardDataOwner  ret = Nobody;
     QClipboard *clipboard = QApplication::clipboard();
     if (clipboard)
@@ -200,6 +200,7 @@ DirModelMimeData::setIntoClipboard(const QStringList &files, const QString& path
                                                   : new DirModelMimeData();
         if (mime->fillClipboard(files, path, operation))
         {
+            static bool firstTime = true;
             clipboard->setMimeData(mime);
             //it looks like some mobile devices does not have X or Clipboard does work for other reason
             //in this case we simulate our own clipboard, the QClipboard::dataChanged() signal is also
@@ -254,14 +255,24 @@ bool DirModelMimeData::fillClipboard(const QStringList& files, const QString &pa
     QStringList fullPaths = makeFullPath(files, path);
     for(int counter = 0; counter < fullPaths.count(); counter++)
     {
-        QUrl item = QUrl::fromLocalFile(fullPaths.at((counter)));
-        m_urls.append(item);
-        m_gnomeData += QLatin1Char('\n') + item.toEncoded() ;
+        QUrl item(fullPaths.at((counter)));
+        if (item.scheme().isEmpty() && !item.isLocalFile())
+        {
+            item = QUrl::fromLocalFile(fullPaths.at((counter)));
+        }
+        if (LocationUrl::isSupportedUrl(item))
+        {
+            m_urls.append(item);
+            m_gnomeData += QLatin1Char('\n') + item.toEncoded() ;
+        }
     }
-    setData(GNOME_COPIED_MIME_TYPE, m_gnomeData);
-    setUrls(m_urls);
-
-    return true;
+    bool ret = m_urls.count() > 0;
+    if (ret)
+    {
+        setData(GNOME_COPIED_MIME_TYPE, m_gnomeData);
+        setUrls(m_urls);
+    }
+    return ret;
 }
 
 //===============================================================================================
@@ -292,11 +303,11 @@ const QMimeData *DirModelMimeData::clipboardMimeData()
 
 //===============================================================================================
 /*!
- * \brief DirModelMimeData::localUrls
- * \return
+ * \brief DirModelMimeData::storedUrls
+ * \return the list of Urls stored in the Clipboard
  */
 QStringList
-DirModelMimeData::localUrls(ClipboardOperation& operation)
+DirModelMimeData::storedUrls(ClipboardOperation& operation)
 {
      m_appMime = clipboardMimeData();
      QStringList paths;
@@ -315,9 +326,16 @@ DirModelMimeData::localUrls(ClipboardOperation& operation)
          }
          for (int counter=0; counter < urls.count(); counter++)
          {
-             if (urls.at(counter).toString().startsWith(QLatin1String("file://")))
+             if (LocationUrl::isSupportedUrl(urls.at(counter)))
              {
-                 paths.append(urls.at(counter).toLocalFile());
+                 if (urls.at(counter).isLocalFile())
+                 {
+                     paths.append(urls.at(counter).toLocalFile());
+                 }
+                 else
+                 {
+                     paths.append(urls.at(counter).toString());
+                 }
              }
          }
      }
@@ -340,7 +358,7 @@ bool  DirModelMimeData::testClipboardContent(const QStringList &files, const QSt
     bool ret = false;
     ClipboardOperation tmpOperation;
     QStringList expectedList = makeFullPath(files,path);
-    QStringList realList     = localUrls(tmpOperation);
+    QStringList realList     = storedUrls(tmpOperation);
     if (realList == expectedList)
     {
         ret = true;
@@ -354,7 +372,7 @@ bool  DirModelMimeData::testClipboardContent(const QStringList &files, const QSt
 
 //===============================================================================================
 /*!
- * \brief DirModelMimeData::makeFullPath() Just creates a fulpath file list when they do exist
+ * \brief DirModelMimeData::makeFullPath() Just creates a fulpath file list if files are relative
  * \param files
  * \param path
  * \return the list itself
@@ -362,18 +380,19 @@ bool  DirModelMimeData::testClipboardContent(const QStringList &files, const QSt
 QStringList DirModelMimeData::makeFullPath(const QStringList& files, const QString &path)
 {
     QStringList fullPathnameList;
-    QFileInfo fi;
-    for(int counter = 0; counter < files.count(); counter++)
+    if (files.count() > 0)
     {
-        const QString& item = files.at(counter);
-        fi.setFile(item);
-        if (!fi.isAbsolute())
+        if (path.length() > 0 && !files.at(0).startsWith(path))
         {
-            fi.setFile(path + QDir::separator() + item);
+            for(int counter = 0; counter < files.count(); counter++)
+            {
+                fullPathnameList.append(path + QDir::separator() + files.at(counter));
+            }
         }
-        if (fi.exists())
+        else
         {
-            fullPathnameList.append(fi.absoluteFilePath());
+            //they already have a full path
+            fullPathnameList = files;
         }
     }
     return fullPathnameList;
@@ -459,13 +478,13 @@ void Clipboard::cut(const QStringList &names, const QString &path)
 
 //=======================================================
 /*!
- * \brief Clipboard::clipboardLocalUrlsCounter
+ * \brief Clipboard::storedUrlsCounter
  * \return
  */
-int Clipboard::clipboardLocalUrlsCounter()
+int Clipboard::storedUrlsCounter()
 {
     ClipboardOperation operation;
-    return m_mimeData->localUrls(operation).count();
+    return m_mimeData->storedUrls(operation).count();
 }
 
 
@@ -477,7 +496,7 @@ int Clipboard::clipboardLocalUrlsCounter()
  */
 QStringList Clipboard::paste(ClipboardOperation &operation)
 {
-    QStringList items = m_mimeData->localUrls(operation);
+    QStringList items = m_mimeData->storedUrls(operation);
     if (operation == ClipboardCut)
     {
         //this must still be false when cut finishes to change the clipboard to the target

@@ -60,7 +60,7 @@ public:
    explicit Clipboard(QObject *parent = 0);
     ~Clipboard();
     QStringList  paste(ClipboardOperation& operation);
-    int          clipboardLocalUrlsCounter();
+    int          storedUrlsCounter();
     inline bool  hasClipboardModifiedByOtherApplication() const {return m_clipboardModifiedByOther;}
 
 public slots:
@@ -108,7 +108,7 @@ public:
                                              const QString &path,
                                              ClipboardOperation operation);
     const QMimeData *       clipboardMimeData();
-    QStringList             localUrls(ClipboardOperation& operation);
+    QStringList             storedUrls(ClipboardOperation& operation);
 
 private:
     static QList<QUrl>      gnomeUrls(const QMimeData *mime, ClipboardOperation& operation);

@@ -20,6 +20,7 @@
  */
 
 #include "locationurl.h"
+#include <QUrl>
 
 const QString LocationUrl::UrlIndicator("://");
 
@@ -30,8 +31,35 @@ const QString LocationUrl::CifsURL("cifs://");
 #if 0
 QString LocationURL::FishURL("fish:///");
 #endif
-
+                                                              // keep this list ordered
+const QStringList LocationUrl::m_supportedURLs = QStringList() << LocationUrl::CifsURL
+                                                               << LocationUrl::DiskRootURL
+                                                               << LocationUrl::SmbURL
+                                                               << LocationUrl::TrashRootURL
+                                                               ;
 
 LocationUrl::LocationUrl()
 {
+
+}
+
+
+const QStringList& LocationUrl::supportedURLs()
+{
+   return m_supportedURLs;
+}
+
+
+bool LocationUrl::isSupportedUrl(const QUrl &url)
+{
+    bool ret = url.isValid() && url.isLocalFile(); // local files does not need to check
+    if (!ret && !url.scheme().isEmpty())
+    {
+       int counter = m_supportedURLs.count();
+       while (!ret && counter--)
+       {
+           ret = m_supportedURLs.at(counter).startsWith(url.scheme(), Qt::CaseSensitive);
+       }
+    }
+    return ret;
 }
