@@ -20,13 +20,23 @@
  */
 
 #include "qtrashutilinfo.h"
-
+#include <unistd.h>
+#include <sys/types.h>
 #include <QDir>
 #include <QSettings>
 #include <QDateTime>
 
-QLatin1String filesDirString("files");
-QLatin1String infoDirString("info");
+namespace
+{
+   QLatin1String filesDirString("files");
+   QLatin1String infoDirString("info");
+   uint userId = ::getuid();
+   QStringList trashes = QStringList()
+           << QLatin1String("/Trash/files")
+           << QString( QString("/.Trash-") + QString::number(userId) + QLatin1String("/files"))
+           << QString( QString("/.Trash/") + QString::number(userId) + QLatin1String("/files"));
+}
+
 
 void QTrashUtilInfo::clear()
 {
@@ -55,16 +65,23 @@ QString QTrashUtilInfo::infoTrashDir(const QString &trashDir)
 
 void QTrashUtilInfo::setInfoFromTrashItem(const QString &absTrashItem)
 {
-    valid = false;
-    QFileInfo item(absTrashItem);
-    if (item.absolutePath().endsWith(filesDirString))
+    clear();
+    //try to guess which is the Trash directory
+    int trashPathIndex = -1;
+    int counter        = 0;
+    for (; trashPathIndex == -1 && counter < trashes.count(); ++counter)
     {
-        QFileInfo filesUnderRoot(item.absolutePath());
-        QTrashUtilInfo::setInfo(filesUnderRoot.absolutePath(), absTrashItem);
+        trashPathIndex = absTrashItem.indexOf(trashes.at(counter));
     }
-    else
+    if (trashPathIndex != -1)  //counter -1 points to the item found
     {
-        clear();
+        trashPathIndex += trashes.at(counter-1).length();
+        // it is something under "files/" directory
+        if (trashPathIndex < absTrashItem.length() && absTrashItem.at(trashPathIndex) == QDir::separator())
+        {
+            trashPathIndex -= 6; // 6 is the length of "files/", we want to get the Trash root dir
+            QTrashUtilInfo::setInfo(absTrashItem.left(trashPathIndex), absTrashItem);
+        }
     }
 }
 

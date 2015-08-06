@@ -248,8 +248,8 @@ QStringList QTrashDir::allTrashes() const
 QString QTrashDir::getSuitableTopTrashDir(const QString &mountPoint) const
 {
     QString trashDir(getSharedTopTrashDir(mountPoint));
-    //if previous shared mountPoint/Trash/$uid failed
-    //try  mountPoint/Trash-$uid
+    //if previous shared mountPoint/.Trash/$uid failed
+    //try  mountPoint/.Trash-$uid
     if (trashDir.isEmpty())
     {
         trashDir = getSingleTopTrashDir(mountPoint, true);

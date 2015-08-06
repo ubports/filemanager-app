@@ -20,9 +20,15 @@
  */
 
 #include "trashiteminfo.h"
+#include "qtrashutilinfo.h"
 #include "locationurl.h"
+#include <QDebug>
 
-
+/*!
+ * \brief TrashItemInfo::TrashItemInfo() This constructor does not receive the Trash path
+ *
+ * \param urlPath  the  full pathname  starting with th \a trashPath as "/home/devubuntu/.local/share/Trash/files/test.txt"
+ */
 TrashItemInfo::TrashItemInfo(const QString &urlPath)
     : DirItemInfo()  
 {  
@@ -33,6 +39,22 @@ TrashItemInfo::TrashItemInfo(const QString &urlPath)
    {
       setRoot();
    }
+   else
+   {
+       QTrashUtilInfo trashInfo;
+       trashInfo.setInfoFromTrashItem(urlPath);
+       //try to guess the Trash path
+       if (trashInfo.isValid() && !trashInfo.filesDir.isEmpty())
+       {
+           //Trash path found
+           init(trashInfo.filesDir);
+       }
+       QFileInfo maybeDiskUrl(urlPath);
+       if (maybeDiskUrl.exists())
+       {
+           d_ptr->setFileInfo(maybeDiskUrl);
+       }
+   }
 }
 
 
@@ -42,6 +64,12 @@ TrashItemInfo::TrashItemInfo(const TrashItemInfo &other)
 }
 
 
+/*!
+ * \brief TrashItemInfo::TrashItemInfo()
+ *
+ * \param trashPath the trash PATH finished with "files" like as "/home/user/.local/share/Trash/files"
+ * \param urlPath  the  full pathname  starting with th \a trashPath as "/home/user/.local/share/Trash/files/test.txt"
+ */
 TrashItemInfo::TrashItemInfo(const QString& trashPath, const QString &urlPath)
    : DirItemInfo(urlPath)  
 {
