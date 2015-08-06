@@ -2520,7 +2520,7 @@ void TestDirModel::locationFactory()
 #if 0 // "sheme:/"  (single slash) is no longer supported
     location = factoryLocations.setNewPath("trash:/");
     QVERIFY(location);
-    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QVERIFY(location->isTrashDisk());
     QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
     QCOMPARE(location->urlPath(), validTrashURL);
     QCOMPARE(location->isRoot(), true);
@@ -2528,21 +2528,21 @@ void TestDirModel::locationFactory()
 
     location = factoryLocations.setNewPath("trash://");
     QVERIFY(location);
-    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QVERIFY(location->isTrashDisk());
     QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
     QCOMPARE(location->urlPath(), validTrashURL);
     QCOMPARE(location->isRoot(), true);
 
     location = factoryLocations.setNewPath("trash:///");
     QVERIFY(location);
-    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QVERIFY(location->isTrashDisk());
     QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
     QCOMPARE(location->urlPath(), validTrashURL);
     QCOMPARE(location->isRoot(), true);
 
     location = factoryLocations.setNewPath("trash://////");
     QVERIFY(location);
-    QVERIFY(location->type() == LocationsFactory::TrashDisk);
+    QVERIFY(location->isTrashDisk());
     QCOMPARE(location->info()->absoluteFilePath(),   validTrashURL);
     QCOMPARE(location->urlPath(), validTrashURL);
     QCOMPARE(location->isRoot(), true);
@@ -2555,28 +2555,28 @@ void TestDirModel::locationFactory()
 
     location = factoryLocations.setNewPath("file://////");
     QVERIFY(location);
-    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QVERIFY(location->isLocalDisk());
     QCOMPARE(location->info()->absoluteFilePath(),   QDir::rootPath());
     QCOMPARE(location->urlPath(), QDir::rootPath());
     QCOMPARE(location->isRoot(), true);
 
     location = factoryLocations.setNewPath("/");
     QVERIFY(location);
-    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QVERIFY(location->isLocalDisk());
     QCOMPARE(location->info()->absoluteFilePath(),   QDir::rootPath());
     QCOMPARE(location->urlPath(), QDir::rootPath());
     QCOMPARE(location->isRoot(), true);
 
     location = factoryLocations.setNewPath("//");
     QVERIFY(location);
-    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QVERIFY(location->isLocalDisk());
     QCOMPARE(location->info()->absoluteFilePath(),   QDir::rootPath());
     QCOMPARE(location->urlPath(), QDir::rootPath());
     QCOMPARE(location->isRoot(), true);
 
     location = factoryLocations.setNewPath("//bin");
     QVERIFY(location);
-    QVERIFY(location->type() == LocationsFactory::LocalDisk);
+    QVERIFY(location->isLocalDisk());
     QCOMPARE(location->info()->absoluteFilePath(),   QLatin1String("/bin"));
     QCOMPARE(location->urlPath(), QLatin1String("/bin"));
     QCOMPARE(location->isRoot(), false);

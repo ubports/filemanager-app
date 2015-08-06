@@ -47,6 +47,24 @@ class Location : public QObject
 {
    Q_OBJECT
 public:  
+
+    Q_ENUMS(Locations)
+    /*!
+     * \brief The Locations enum defines which Locations are supported
+     *
+     * \note Items also work as indexes for \a m_locations, they must be 0..(n-1)
+     */
+    enum Locations
+    {
+        LocalDisk=0,   //<! any mounted file system
+        TrashDisk,     //<! special trash location in the disk
+        NetSambaShare  //<! SAMBA or CIFS shares
+#if 0
+        NetFishShare   //<! FISH protocol over ssh that provides file sharing
+#endif
+    };
+
+public:
     virtual ~Location();
 protected:
     explicit Location( int type, QObject *parent=0);
@@ -93,6 +111,21 @@ public: //pure functions
 
 public:
     /*!
+     * \brief isThereDiskSpace()  Check if the filesystem has enough space to put a file with size \a requiredSize
+     *
+     *
+     * \param pathname  is the full pathname of the new file that is going to be created
+     *
+     * \param requiredSize  the size required
+     *
+     *
+     * \note  For remote locations if not is possible to get this value this function MUST return true
+     *
+     *        The default implementation just returns true and let the copy fail if there is enough space
+     */
+    virtual bool     isThereDiskSpace(const QString& pathname, qint64 requiredSize);
+
+    /*!
      * \brief fetchItems() gets the content of the Location
      *
      * \param dirFilter   current Filter
@@ -131,6 +164,13 @@ public:
       */
      virtual DirItemInfo *       validateUrlPath(const QString& urlPath);
 
+    /*!
+      * \brief isRemote() It must return TRUE when type() is greater than Location::TrashDisk
+      * \return
+      */
+     inline  bool       isRemote()     const { return m_type > TrashDisk; }
+     inline  bool       isLocalDisk()  const { return m_type == LocalDisk;}
+     inline  bool       isTrashDisk()  const { return m_type == TrashDisk; }
 
 public: //virtual
     virtual void        fetchExternalChanges(const QString& urlPath,
@@ -153,6 +193,7 @@ public: //non virtual
 
     inline const DirItemInfo*  info() const  { return m_info; }
     inline int                 type() const  { return m_type; }
+    const DirItemInfo*         currentInfo(); //updated information about the current path
 
 protected:
      DirItemInfo *                m_info;

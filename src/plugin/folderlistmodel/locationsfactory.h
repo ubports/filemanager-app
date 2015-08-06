@@ -22,11 +22,11 @@
 #ifndef LOCATIONSFACTORY_H
 #define LOCATIONSFACTORY_H
 
+#include "location.h"
+
 #include <QObject>
 #include <QList>
 
-
-class Location;
 class DirItemInfo;
 class NetAuthenticationDataList;
 class NetAuthenticationData;
@@ -57,19 +57,9 @@ public:
     explicit LocationsFactory(QObject *parent = 0);
     ~LocationsFactory();
 
-    Q_ENUMS(Locations)
-    enum Locations
-    {
-        LocalDisk,     //<! any mounted file system
-        TrashDisk,     //<! special trash location in the disk
-        NetSambaShare  //<! SAMBA or CIFS shares
-#if 0
-        NetFishShare   //<! FISH protocol over ssh that provides file sharing
-#endif
-    };
-
-    inline const Location * getLocation(Locations index) const {return m_locations.at(index);}
-
+    inline  Location * getLocation(int index) const {return m_locations.at(index);}
+    inline  Location * getDiskLocation()  const { return getLocation(Location::LocalDisk); }
+    inline  Location * getTrashLocation() const { return getLocation(Location::TrashDisk); }
 
     /*!
      * \brief parse()  Just parses (does not set/change the current location) according to \a urlPath
@@ -100,7 +90,7 @@ public:
      * \brief location()
      * \return The current location
      */
-    Location * location() const { return m_curLoc; }
+    Location * currentLocation() const { return m_curLoc; }
 
     /*!
      * \brief availableLocations()
@@ -154,6 +144,12 @@ private:
      * \return new Item validated (authenticated when remote authentication is required), otherwise NULL
      */
     DirItemInfo *validateCurrentUrl(Location *location, const NetAuthenticationData&);
+
+    /*!
+     * \brief addLocation() just appends the location in the list \ref m_locations and connect signals
+     * \param location
+     */
+    void        addLocation(Location * location);
 
 signals:
     void        locationChanged(const Location *old, const Location *current);

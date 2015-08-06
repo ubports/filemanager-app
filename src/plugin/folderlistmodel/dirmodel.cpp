@@ -76,7 +76,7 @@
 
 #define IS_FILE_MANAGER_IDLE()            (!mAwaitingResults)
 
-#define IS_BROWSING_TRASH_ROOTDIR() (mCurLocation && mCurLocation->type() == LocationsFactory::TrashDisk && mCurLocation->isRoot())
+#define IS_BROWSING_TRASH_ROOTDIR() (mCurLocation && mCurLocation->isTrashDisk() && mCurLocation->isRoot())
 
 namespace {
     QHash<QByteArray, int> roleMapping;
@@ -412,7 +412,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             return fi.isBrowsable();
         case IsSharingAllowedRole:
             return     fi.isDir() && !fi.isSymLink() && !fi.isSharedDir()
-                    && mCurLocation->type() == LocationsFactory::LocalDisk
+                    && mCurLocation->isLocalDisk()
                     && fi.isWritable() && fi.isExecutable() && fi.isReadable();
         case IsSharedDirRole:
             return fi.isSharedDir();
@@ -591,7 +591,7 @@ void DirModel::rm(const QStringList &paths)
     }
 
     //if current location is Trash only in the root is allowed to remove Items
-    if (mCurLocation->type() == LocationsFactory::TrashDisk)
+    if (mCurLocation->isTrashDisk())
     {
         if (IS_BROWSING_TRASH_ROOTDIR())
         {
@@ -788,8 +788,8 @@ QVariant  DirModel::headerData(int section, Qt::Orientation orientation, int rol
 }
 ExternalFSWatcher * DirModel::getExternalFSWatcher() const
 {
-   const Location *l = mLocationFactory->availableLocations().at(LocationsFactory::LocalDisk);
-   const DiskLocation *disk = static_cast<const DiskLocation*> (l);
+   Location *l = mLocationFactory->getDiskLocation();
+   DiskLocation *disk = static_cast<DiskLocation*> (l);
    return disk->getExternalFSWatcher();
 }
 #endif
@@ -885,8 +885,8 @@ void DirModel::cutPaths(const QStringList &items)
 
 void DirModel::paste()
 {
-    // Restrict pasting if in restricted directory
-    if (!allowAccess(mCurrentDir)) {
+    // Restrict pasting if in restricted directory when pasting on a local file system
+    if (!mCurLocation->isRemote() && !allowAccess(mCurrentDir)) {
         qDebug() << Q_FUNC_INFO << "access not allowed, pasting not done" << mCurrentDir;
         return;
     }
@@ -1682,10 +1682,10 @@ int DirModel::getIndex(const QString &name)
 
 void DirModel:: moveIndexesToTrash(const QList<int>& items)
 { 
-    if (mCurLocation->type() == LocationsFactory::LocalDisk)
+    if (mCurLocation->isLocalDisk())
     {
         const TrashLocation *trashLocation = static_cast<const TrashLocation*>
-                   (mLocationFactory->getLocation(LocationsFactory::TrashDisk));
+                   (mLocationFactory->getTrashLocation());
         ActionPathList  itemsAndTrashPath;
         int index = 0;
         for (int counter=0; counter < items.count(); ++counter)
