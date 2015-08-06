@@ -461,10 +461,8 @@ signals:
     void     clipboardChanged();
     void     enabledExternalFSWatcherChanged(bool);
 
-private slots:
-    void onItemRemoved(const QString&);
-    void onItemRemoved(const DirItemInfo&);
-    void onItemAdded(const QString&);
+private slots:    
+    void onItemRemoved(const DirItemInfo&);  
     void onItemAdded(const DirItemInfo&);
     void onItemChanged(const DirItemInfo&);
 

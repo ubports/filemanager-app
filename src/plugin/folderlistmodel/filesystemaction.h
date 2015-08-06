@@ -51,7 +51,8 @@
 class DirModelMimeData;
 class QFile;
 class QTemporaryFile;
-
+class Location;
+class LocationsFactory;
 
 /*!
  * \brief The FileSystemAction class does file system operations copy/cut/paste/remove items
@@ -95,7 +96,7 @@ class FileSystemAction : public QObject
 {
     Q_OBJECT
 public:  
-    explicit FileSystemAction(QObject *parent = 0);
+    explicit FileSystemAction(LocationsFactory *locationsFactory, QObject *parent = 0);
     ~FileSystemAction();
 
 public:
@@ -116,9 +117,7 @@ public slots:
 
 signals:
     void     error(const QString& errorTitle, const QString &errorMessage);
-    void     removed(const QString& item);
     void     removed(const DirItemInfo&);
-    void     added(const QString& );
     void     added(const DirItemInfo& );
     void     changed(const DirItemInfo&);
     void     progress(int curItem, int totalItems, int percent);
@@ -131,6 +130,13 @@ private slots:
     bool     processCopySingleFile();
 
  private:
+   enum ActionNotification
+   {
+        ItemAdded,
+        ItemRemoved,
+        ItemChanged
+   };
+
    enum ActionType
    {
        ActionRemove,
@@ -213,6 +219,7 @@ private slots:
    QString                 m_errorTitle;
    QString                 m_errorMsg;
    bool                    m_clipboardChanged; //!< this is set to false in \ref moveIntoCurrentPath() and \ref copyIntoCurrentPath();
+   LocationsFactory *      m_locationsFactory;
 
 
 private:  
@@ -232,10 +239,10 @@ private:
    void     moveDirToTempAndRemoveItLater(const QString& dir);
    bool     makeBackupNameForCurrentItem(ActionEntry *entry);
    bool     endCopySingleFile();
-   bool     isThereDiskSpace(const ActionEntry *entry, qint64 requiredSize);
    void     queueAction(Action *myAction);
    void     createTrashInfoFileFromEntry(ActionEntry *entry);
    void     removeTrashInfoFileFromEntry(ActionEntry *entry);
+   void     notifyActionOnItem(const DirItemInfo& item, ActionNotification action);
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
    bool     m_forceUsingOtherFS;

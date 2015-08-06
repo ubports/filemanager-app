@@ -37,6 +37,9 @@
 #include "filesystemaction.h"
 #include "clipboard.h"
 #include "qtrashutilinfo.h"
+#include "location.h"
+#include "locationsfactory.h"
+
 
 #if defined(Q_OS_UNIX)
 #include <sys/statvfs.h>
@@ -51,6 +54,7 @@
 #include <QDir>
 #include <QThread>
 #include <QTemporaryFile>
+#include <QScopedPointer>
 
 /*!
  *   number of the files to work on a step, when this number is reached a signal is emitted
@@ -177,14 +181,16 @@ void FileSystemAction::CopyFile::clear()
 //===============================================================================================
 /*!
  * \brief FileSystemAction::FileSystemAction
+ * \param LocationsFactory locationsFactory
  * \param parent
  */
-FileSystemAction::FileSystemAction(QObject *parent) :
+FileSystemAction::FileSystemAction(LocationsFactory *locationsFactory, QObject *parent) :
     QObject(parent)
   , m_curAction(0)
   , m_cancelCurrentAction(false)
   , m_busy(false)  
   , m_clipboardChanged(false)
+  , m_locationsFactory(locationsFactory)
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
   , m_forceUsingOtherFS(false)
 #endif
@@ -475,7 +481,7 @@ void FileSystemAction::endActionEntry()
             {
                 removeTrashInfoFileFromEntry(curEntry);
             }
-            emit removed(mainItem);
+            notifyActionOnItem(mainItem, ItemRemoved);
         }
         else
         {
@@ -487,21 +493,24 @@ void FileSystemAction::endActionEntry()
                      //it is necessary to remove also (file).trashinfo file
                      removeTrashInfoFileFromEntry(curEntry);
                 }
-                emit removed(mainItem);
+                notifyActionOnItem(mainItem, ItemRemoved);
                 break;
             case ActionHardMoveRemove: // nothing to do
                 break;
             case ActionHardMoveCopy:
             case ActionCopy: // ActionHardMoveCopy is  lso checked here
             case ActionMove:
-                if (!curEntry->added && !curEntry->alreadyExists)
                 {
-                    emit added(curEntry->itemPaths.target());
-                    curEntry->added = true;
-                }
-                else
-                {
-                    emit changed(DirItemInfo(curEntry->itemPaths.target()));
+                   QScopedPointer <DirItemInfo> item(m_locationsFactory->currentLocation()->newItemInfo(curEntry->itemPaths.target()));
+                   if (!curEntry->added && !curEntry->alreadyExists)
+                   {
+                       curEntry->added = true;
+                       notifyActionOnItem(*item, ItemAdded);
+                   }
+                   else
+                   {
+                       notifyActionOnItem(*item, ItemChanged);
+                   }
                 }
                 if (curEntry->type == ActionHardMoveCopy)
                 {
@@ -674,8 +683,9 @@ void  FileSystemAction::processCopyEntry()
             QDir entryDirObj(entryDir);
             if (!entryDirObj.exists() && entryDirObj.mkpath(entryDir))
             {
-                emit added(entryDir);
+                QScopedPointer <DirItemInfo> item(m_locationsFactory->currentLocation()->newItemInfo(entryDir));
                 entry->added = true;
+                notifyActionOnItem(*item, ItemAdded);
             }
         }
         QDir d(path);
@@ -732,11 +742,11 @@ void  FileSystemAction::processCopyEntry()
                     needsSize -= m_curAction->copyFile.target->size();
                     m_curAction->copyFile.target->close();
                 }
-                //check if there is disk space to copy source to target
-                if (needsSize > 0 && !isThereDiskSpace(entry, needsSize ))
+                //check if there is disk space to copy source to target               
+                if (needsSize > 0 && !m_locationsFactory->currentLocation()->isThereDiskSpace(entry->itemPaths.targetPath(), needsSize))
                 {
                     m_cancelCurrentAction = true;
-                    m_errorTitle = QObject::tr("There is no space on disk to copy");
+                    m_errorTitle = QObject::tr("There is no space to copy");
                     m_errorMsg   =  m_curAction->copyFile.target->fileName();
                 }
             }
@@ -758,14 +768,15 @@ void  FileSystemAction::processCopyEntry()
                 //depending on the file size it may take longer, the view needs to be informed
                 if (m_curAction->copyFile.isEntryItem && !m_cancelCurrentAction)
                 {
+                    QScopedPointer <DirItemInfo> item(m_locationsFactory->currentLocation()->newItemInfo(target));
                     if (!entry->alreadyExists)
-                    {
-                       emit added(target);
+                    {                       
                        entry->added = true;
+                       notifyActionOnItem(*item, ItemAdded);
                     }
                     else
-                    {
-                        emit changed(DirItemInfo(target));
+                    {                       
+                        notifyActionOnItem(*item, ItemChanged);
                     }
                 }
             }
@@ -1143,8 +1154,9 @@ bool FileSystemAction::processCopySingleFile()
                    m_curAction->copyFile.target->close();
             }
             if (m_curAction->copyFile.target->remove())
-            {               
-                emit removed(m_curAction->copyFile.targetName);
+            {
+                QScopedPointer<DirItemInfo> item(m_locationsFactory->currentLocation()->newItemInfo(m_curAction->copyFile.targetName));
+                notifyActionOnItem(*item, ItemRemoved);
             }
         }
         m_curAction->copyFile.clear();
@@ -1172,8 +1184,9 @@ bool FileSystemAction::processCopySingleFile()
             notifyProgress();
             if (m_curAction->copyFile.isEntryItem && m_curAction->copyFile.amountSavedToRefresh <= 0)
             {
+                QScopedPointer <DirItemInfo> item(m_locationsFactory->currentLocation()->newItemInfo(m_curAction->copyFile.targetName));
                 m_curAction->copyFile.amountSavedToRefresh = AMOUNT_COPIED_TO_REFRESH_ITEM_INFO;
-                emit changed(DirItemInfo(m_curAction->copyFile.targetName));
+                notifyActionOnItem(*item, ItemChanged);
             }
             scheduleSlot(SLOT(processCopySingleFile()));
         }
@@ -1415,21 +1428,6 @@ bool FileSystemAction::endCopySingleFile()
     return ret;
 }
 
-//==================================================================
-bool FileSystemAction::isThereDiskSpace(const ActionEntry *entry, qint64 requiredSize)
-{
-    bool ret = true;
-#if defined(Q_OS_UNIX)
-    struct statvfs  vfs;
-    if ( ::statvfs( QFile::encodeName(entry->itemPaths.targetPath()).constData(), &vfs) == 0 )
-    {
-        qint64 free =  vfs.f_bsize * vfs.f_bfree;
-        ret = free > requiredSize;
-    }
-#endif
-   return ret;
-}
-
 
 //==================================================================
 /*!
@@ -1508,3 +1506,16 @@ void FileSystemAction::removeTrashInfoFileFromEntry(ActionEntry *entry)
          m_errorMsg   = trashUtil.absInfo;
     }
 }
+
+
+void  FileSystemAction::notifyActionOnItem(const DirItemInfo& item, ActionNotification action)
+{
+    switch(action)
+    {
+          case  ItemAdded:      emit added(item);   break;
+          case  ItemRemoved:    emit removed(item); break;
+          case  ItemChanged:    emit changed(item); break;
+          default:              break;
+    }
+}
+
