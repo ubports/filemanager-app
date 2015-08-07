@@ -49,6 +49,7 @@ public:
     virtual DirListWorker * newListWorker(const QString &urlPath,
                                           QDir::Filter filter,
                                           const bool isRecursive);
+    virtual QString     urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlashe);
 
     /*!
      * \brief getMovePairPaths() Get: original path and destination trash path
