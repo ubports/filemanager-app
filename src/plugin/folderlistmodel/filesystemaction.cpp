@@ -933,18 +933,8 @@ void FileSystemAction::copyIntoCurrentPath(const QStringList& items)
 #endif
     m_clipboardChanged = false;
     if (items.count())
-    {
-        DirItemInfo destination(m_path);
-        if (destination.isWritable())
-        {
-            createAndProcessAction(ActionCopy, items);
-        }
-        else
-        {
-            emit error(tr("Cannot copy items"),
-                       tr("no write permission on folder ") + destination.absoluteFilePath() );
-
-        }
+    {       
+        createAndProcessAction(ActionCopy, items);
     }
 }
 
@@ -957,30 +947,7 @@ void FileSystemAction::moveIntoCurrentPath(const QStringList& items)
     m_clipboardChanged = false;
     if (items.count())
     {
-        DirItemInfo destination(m_path);
-        DirItemInfo origin(DirItemInfo(items.at(0)).absolutePath());
-        ActionType actionType  = ActionMove;
-        static QString titleError     = tr("Cannot move items");
-        static QString noWriteError   = tr("no write permission on folder ");
-        //we allow Copy to backup items, but Cut must Fail
-        if (destination.absoluteFilePath() == origin.absoluteFilePath())
-        {
-            emit error(titleError,
-                       tr("origin and destination folders are the same"));
-            return;
-        }
-        // cut needs write permission on origin
-        if (!origin.isWritable())
-        {
-            emit error(titleError, noWriteError + origin.absoluteFilePath());
-            return;
-        }        
-        if (!destination.isWritable())
-        {
-            emit error(titleError, noWriteError + destination.absoluteFilePath());
-            return;
-        }
-        createAndProcessAction(actionType, items);
+        createAndProcessAction(ActionMove, items);
     }
 }
 
