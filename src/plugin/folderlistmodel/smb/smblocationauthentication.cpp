@@ -30,12 +30,10 @@
 # define DEBUG_AUTHENTICATION() /**/
 #endif
 
-namespace
-{
-   QByteArray  m_AuthUser[MAX_AUTH_INSTANCES];
-   QByteArray  m_AuthPass[MAX_AUTH_INSTANCES];
-   void *      m_instances[MAX_AUTH_INSTANCES];
-}
+
+static    QByteArray  m_AuthUser[MAX_AUTH_INSTANCES];
+static    QByteArray  m_AuthPass[MAX_AUTH_INSTANCES];
+static    void *      m_instances[MAX_AUTH_INSTANCES];
 
 SmbLocationAuthentication::SmbLocationAuthentication() : m_infoIndex(-1)
 {

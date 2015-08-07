@@ -20,9 +20,16 @@
  */
 
 #include "disklocation.h"
+#include "disklocationitemdiriterator.h"
 #include "iorequest.h"
 #include "ioworkerthread.h"
 #include "externalfswatcher.h"
+#include "locationurl.h"
+
+
+#if defined(Q_OS_UNIX)
+#include <sys/statvfs.h>
+#endif
 
 #include <QDebug>
 
@@ -168,3 +175,37 @@ DirListWorker * DiskLocation::newListWorker(const QString &urlPath, QDir::Filter
     return new DirListWorker(urlPath,filter,isRecursive);
 }
 
+
+QString DiskLocation::urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlashe)
+{
+    QString ret;
+    if (urlPath.startsWith(LocationUrl::DiskRootURL.midRef(0,5)))
+    {
+        ret  = QDir::rootPath() + DirItemInfo::removeExtraSlashes(urlPath, indexOfColonAndSlashe+1);
+    }
+    return ret;
+}
+
+
+LocationItemDirIterator *
+DiskLocation::newDirIterator(const QString &path,
+                             QDir::Filters filters,
+                             QDirIterator::IteratorFlags flags)
+{
+    return  new DiskLocationItemDirIterator(path, filters, flags);
+}
+
+
+bool DiskLocation::isThereDiskSpace(const QString &pathname, qint64 requiredSize)
+{
+    bool ret = true;
+#if defined(Q_OS_UNIX)
+    struct statvfs  vfs;
+    if ( ::statvfs( QFile::encodeName(pathname).constData(), &vfs) == 0 )
+    {
+        qint64 free =  vfs.f_bsize * vfs.f_bfree;
+        ret = free > requiredSize;
+    }
+#endif
+   return ret;
+}

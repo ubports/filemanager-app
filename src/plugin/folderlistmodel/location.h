@@ -25,9 +25,12 @@
 #include "diriteminfo.h"
 
 #include <QObject>
+#include <QDirIterator>
 
 class IOWorkerThread;
 class DirListWorker;
+class LocationItemDirIterator;
+
 
 /*!
  * \brief The Location class represents any location (full path) where there are items to browse: directories, shares, from Disk and from Network.
@@ -108,6 +111,41 @@ public: //pure functions
      * \return the object which will fill a new \ref DirItemInfoList for browsing items
      */
     virtual DirListWorker *  newListWorker(const QString &urlPath, QDir::Filter filter, const bool isRecursive) = 0;
+
+    /*!
+     * \brief newDirIterator() creates a LocationItemDirIterator object which is similar to Qt QDirIterator object
+     *
+     *         It will be used to create a recursive list of items in copy/cut/paste/remove Actions
+     *         It can used in DirListWorker as well
+     * \param path
+     * \param flags
+     * \return
+     */
+     virtual LocationItemDirIterator * newDirIterator(const QString & path,
+                                                     QDir::Filters filters,
+                                                     QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags)  = 0;
+
+
+    /*!
+      * \brief urlBelongsToLocation() Returns a good  url if the \a urlPath is valid URL that belongs to its location
+      *
+      *  If the URL or Path in \a urlPath is valid and belongs to its location
+      *
+      * \param urlPath                  The input URL that is going to be parsed
+      * \param indexOfColonAndSlashe    The index of ":/"
+      * \return                         The good URL (parsed with extra slashes removed)
+      *                                 or an empty string if \a urlPath does not belong to its location
+      *
+      *Example regarding samba where both "cifs://" and "smb://" urls are supported
+      * \code"
+      *    For a urlPath like: "cifs://localhost/share/"
+      *    The return will be: "smb://localhost/share"   -> "cifs" changed by "smb" and last slash removed
+      *
+      *    For a urlPath like: "trash:///"
+      *    The return will be: an empty string meaning that this URL is not related to Samba
+      *\endcode
+      */
+     virtual QString         urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlashe) = 0;
 
 public:
     /*!

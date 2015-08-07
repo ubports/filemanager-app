@@ -50,7 +50,9 @@ SmbItemInfo::~SmbItemInfo()
 void SmbItemInfo::setInfo(const QString& smb_path)
 {   
     SmbUtil *smb = const_cast<SmbUtil*> (m_smb);
+    //getStatInfo() is supposed to clear the struct stat unless the item does not exist
     struct stat st;
+    ::memset(&st, 0, sizeof(struct stat));
     int ret  = smb->getStatInfo(smb_path, &st);
     //lets start with true
     d_ptr->_exists  = d_ptr->_isReadable = true;

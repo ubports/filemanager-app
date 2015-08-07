@@ -80,29 +80,15 @@ Location * LocationsFactory::parse(const QString& uPath)
     Location * location = 0;   
     if ( (index = uPath.indexOf(LocationUrl::UrlIndicator)) != -1 )
     {
-#if defined(Q_OS_WIN)
-#else
-#if defined(Q_OS_UNIX)
-        if (uPath.startsWith(LocationUrl::TrashRootURL.midRef(0,6)))
+        int counter = m_locations.count();
+        while (counter--)
         {
-            type = Location::TrashDisk;
-            m_tmpPath  = LocationUrl::TrashRootURL + DirItemInfo::removeExtraSlashes(uPath, index+1);
-        }
-        else
-#endif //Q_OS_UNIX
-#endif
-        if (uPath.startsWith(LocationUrl::DiskRootURL.midRef(0,5)))
-        {
-            type = Location::LocalDisk;
-            m_tmpPath  = QDir::rootPath() + DirItemInfo::removeExtraSlashes(uPath, index+1);
-        }
-        else
-        if ( uPath.startsWith(LocationUrl::SmbURL.midRef(0,4)) ||
-             uPath.startsWith(LocationUrl::CifsURL.midRef(0,5))
-           )
-        {
-                type = Location::NetSambaShare;
-                m_tmpPath  = LocationUrl::SmbURL + DirItemInfo::removeExtraSlashes(uPath, index+1);
+            m_tmpPath = m_locations.at(counter)->urlBelongsToLocation(uPath, index);
+            if (!m_tmpPath.isEmpty())
+            {
+                type = m_locations.at(counter)->type();
+                break;
+            }
         }
     }
     else
