@@ -195,6 +195,9 @@ private slots:
        Action();
        ~Action();
        void                reset();
+       void                toggleLocation();
+       bool                matchLocations() const;
+       bool                isRemote() const;
        ActionType          type;
        QList<ActionEntry*> entries;
        int                 totalItems;
@@ -208,6 +211,9 @@ private slots:
        bool                isAux   :1;
        bool                done    :1; 
        int                 steps;
+       Location         *  sourceLocation;
+       Location         *  targetLocation;
+
    };
 
    QVector<Action*>        m_queuedActions;  //!< work always at item 0, after finishing taking item 0 out
@@ -223,7 +229,7 @@ private slots:
 
 
 private:  
-   Action * createAction(ActionType);
+   Action * createAction(ActionType, const QString& pathUrl);
    void     addEntry(Action* action, const ActionPaths& pairPaths);
    bool     populateEntry(Action* action, ActionEntry* entry);
    void     removeEntry(ActionEntry *);   
@@ -243,6 +249,7 @@ private:
    void     createTrashInfoFileFromEntry(ActionEntry *entry);
    void     removeTrashInfoFileFromEntry(ActionEntry *entry);
    void     notifyActionOnItem(const DirItemInfo& item, ActionNotification action);
+   bool     canMoveItems(Action *action, const QStringList &items);
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
    bool     m_forceUsingOtherFS;
