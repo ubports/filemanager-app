@@ -59,7 +59,8 @@ public:
    virtual QFile::Permissions permissions() const;
 private: 
    bool           private_remove(const QString& smb_path);
-   void           createContext();
+   void           createContext();             // destroys the context if exists
+   void           createContextIfNotExists();  // creates only if there is no context
 private:  
    Smb::FileHandler     m_fd;
    Smb::Context         m_context;

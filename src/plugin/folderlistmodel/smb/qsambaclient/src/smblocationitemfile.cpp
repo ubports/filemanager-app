@@ -265,10 +265,7 @@ bool SmbLocationItemFile::setPermissions(const QString &filename, QFileDevice::P
     bool ret = false;
     if (!filename.isEmpty())
     {
-        if (m_context == 0)
-        {
-            createContext();
-        }
+        createContextIfNotExists();
         ret = smbObj()->changePermissions(m_context, filename, LocationItemFile::unixPermissions(perm));
         /*
          *  fake the return in case the file exists becase chmod() on libsmbclient does not work,
@@ -297,10 +294,7 @@ bool SmbLocationItemFile::private_remove(const QString& smb_path)
     if (!smb_path.isEmpty())
     {
          close();
-         if (m_context == 0)
-         {
-             createContext();
-         }
+         createContextIfNotExists();
          if (smbc_getFunctionUnlink(m_context)(m_context, smb_path.toLocal8Bit().constData()) == 0)
          {
              ret = true;
@@ -310,6 +304,9 @@ bool SmbLocationItemFile::private_remove(const QString& smb_path)
 }
 
 
+/*!
+ * \brief SmbLocationItemFile::createContext() Always creates a new context, if a context already exists it is deleted.
+ */
 void SmbLocationItemFile::createContext()
 {
     if (m_context != 0)
@@ -319,3 +316,20 @@ void SmbLocationItemFile::createContext()
     m_context = SmbObject::smbObj()->createContext();
     Q_ASSERT(m_context);
 }
+
+
+/*!
+ * \brief SmbLocationItemFile::createContextIfNotExists() Creates a new context when the current context is null
+ *
+ *  It tries to reuse an existent context
+ */
+void SmbLocationItemFile::createContextIfNotExists()
+{
+    if (m_context == 0)
+    {
+        m_context = SmbObject::smbObj()->createContext();
+        Q_ASSERT(m_context);
+    }
+}
+
+
