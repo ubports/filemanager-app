@@ -464,9 +464,8 @@ QStringList SmbUtil::listContent(QString smb_path, bool recursive, QDir::Filters
 {
     QStringList content;
     Smb::Context context = createContext();
-    Q_ASSERT(context);
-    QString  currentPathWithDot;
-    QString  currentpathWithDotDot;
+    Q_ASSERT(context);   
+    QStringList  paths_Dot_or_DotDot;
     Smb::FileHandler fd = openDir(context,smb_path);
     if (fd)
     {
@@ -525,8 +524,7 @@ QStringList SmbUtil::listContent(QString smb_path, bool recursive, QDir::Filters
                              }
                              else // (isDot || isDotDot)
                              {
-                               if (isDot) { currentPathWithDot    =  smb_path + QDir::separator() + cur_name;}
-                               else       { currentpathWithDotDot =  smb_path + QDir::separator() + cur_name;}
+                                 paths_Dot_or_DotDot.append(smb_path + QDir::separator() + cur_name);
                              }
                         }
                     }
@@ -565,13 +563,9 @@ QStringList SmbUtil::listContent(QString smb_path, bool recursive, QDir::Filters
         SHOW_ERRNO(smb_path);
     }
     deleteContext(context);
-    if (!currentPathWithDot.isEmpty())
+    if (paths_Dot_or_DotDot.count() > 0)
     {
-        content.append(currentPathWithDot);
-    }
-    if (!currentpathWithDotDot.isEmpty())
-    {
-        content.append(currentpathWithDotDot);
+        content += paths_Dot_or_DotDot;
     }
     return content;
 }
@@ -681,7 +675,7 @@ SmbUtil::getStatvfsInfo(const QString &smb_path, struct statvfs *st)
     Smb::FileHandler fd = openDir(context,smb_path);
     if (fd == 0)
     {
-        openFile(context,smb_path);
+        fd = openFile(context,smb_path);
     }
     if (fd == 0) // item does not exist neither dir nor file
     {
@@ -694,7 +688,7 @@ SmbUtil::getStatvfsInfo(const QString &smb_path, struct statvfs *st)
              fd = openDir(context,path);
         }
     }
-    if (fd)
+    if (fd != 0)
     {
         ret = static_cast<StatReturn> (::smbc_getFunctionFstatVFS(context)(context,fd, st));
         closeHandle(context, fd);
