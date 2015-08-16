@@ -647,22 +647,20 @@ bool DirModel::rename(int row, const QString &newName)
 
 bool DirModel::mkdir(const QString &newDir)
 {
-    LocationItemDir *dir = mCurLocation->newDir(mCurrentDir);
+    QScopedPointer<LocationItemDir> dir(mCurLocation->newDir(mCurrentDir));
     bool retval = dir->mkdir(newDir);
     if (!retval) {
         const char *errorStr = strerror(errno);
         qDebug() << Q_FUNC_INFO << this << "Error creating new directory: " << errno << " (" << errorStr << ")";
         emit error(QObject::tr("Error creating new folder"), errorStr);
     } else {
-        DirItemInfo *subItem = mCurLocation->newItemInfo(newDir);
+        QScopedPointer<DirItemInfo> subItem(mCurLocation->newItemInfo(newDir));
         if (subItem->isRelative())
         {
             subItem->setFile(mCurrentDir, newDir);
         }
-        onItemAdded(*subItem);
-        delete subItem;
-    }
-    delete dir;
+        onItemAdded(*subItem);      
+    }   
     return retval;
 }
 
