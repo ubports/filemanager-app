@@ -33,7 +33,7 @@ DiskLocationItemDir::DiskLocationItemDir(const QString &dir) : LocationItemDir(d
 
 DiskLocationItemDir::~DiskLocationItemDir()
 {
-
+    delete m_qtQDir;
 }
 
 bool DiskLocationItemDir::exists() const
