@@ -42,11 +42,18 @@
 #define DBG(none)
 #endif
 
+#define SHOW_ERRNO(path)        if (errno != 0 && errno != ENOENT) \
+                                { \
+                                    qWarning() << Q_FUNC_INFO << "path:" << path << "errno:" << errno << strerror(errno); \
+                                }
+
+#define  URL_SLASHES_NUMBER_FOR_SHARES  3
+
 namespace
 {
-    QByteArray   s_user("guest");
-    QByteArray   s_passwd;
-    QByteArray   s_workGroup("WORKGROUP");
+   QByteArray   s_user("guest");
+   QByteArray   s_passwd;
+   QByteArray   s_workGroup("WORKGROUP");
 }
 
 //===============================================================================================
@@ -250,7 +257,7 @@ SmbUtil::openFile(Smb::Context context, const QString &smb_path, int flags , mod
     }
     if (fd == 0)
     {
-        qWarning() << Q_FUNC_INFO << "errno:" << errno << smb_path;
+        SHOW_ERRNO(smb_path);
     }
     return fd;
 }
@@ -281,7 +288,7 @@ SmbUtil::openDir(Smb::Context context, const QString &smb_string)
   }
   if (fd == 0)
   {
-      qWarning() << Q_FUNC_INFO << "errno:" << errno << smb_string;
+      SHOW_ERRNO(smb_string);
   }
   return fd;
 }
@@ -315,8 +322,6 @@ void SmbUtil::setAuthenticationCallback(Smb::AuthenticationFunction fn)
 /*!
  * \brief SmbUtil::getStatInfo() It gets information about files and directories, similar to POSIX stat(2)
  *
- * It looks like smbclient brings no information for directories, it works only for files, in this case the caller
- * must set valid information in the struct stat.
  *
  * The distintion between files and directories is made by \ref openDir() and \ref openFile(), as just one
  *  of them should open the \a smb_path.
@@ -331,19 +336,18 @@ SmbUtil::StatReturn
 SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
 {   
     Smb::Context context = createContext();       
-    Q_ASSERT(context);
-    ::memset(st,0,sizeof(struct stat));
+    Q_ASSERT(context);  
     StatReturn ret = StatInvalid;
     int slashes = smb_path.count(QDir::separator());
     Smb::FileHandler fd = 0;
-    //  smb:// -> slahes=2   smb/workgroup -> slahes=2 smb://host/share -> slashes=3
+    //  smb:// -> slahes=2   smb://workgroup -> slahes=2   smb://host/share -> slashes=3=URL_SLASHES_NUMBER_FOR_SHARES
     if ((fd=openDir(context, smb_path)))
     {       
-        if ((ret = guessDirType(context,fd)) == StatDir && slashes == 3)
+        if ((ret = guessDirType(context,fd)) == StatDir && slashes == URL_SLASHES_NUMBER_FOR_SHARES)
         {
             ret  = StatShare;
         }
-        if (slashes > 2 && (ret == StatShare || ret == StatDir))
+        if (slashes >= URL_SLASHES_NUMBER_FOR_SHARES  && (ret == StatShare || ret == StatDir))
         {
           /* smbc_getFunctionFstatdir does not work
             ret = static_cast<StatReturn>(::smbc_getFunctionFstatdir(context)(context,fd, st));
@@ -353,7 +357,7 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
             {
                 ipUrl = smb_path;
             }
-            (void)static_cast<StatReturn> (::smbc_getFunctionStat(context)(context,ipUrl.toLocal8Bit().constData(), st));
+            (void)getStat(context,ipUrl, st);
         }
     }
     else
@@ -365,7 +369,7 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
         {
             if ((fd = openFile(context,smb_path)))
             {
-                ret =  static_cast<StatReturn> (::smbc_getFunctionFstat(context)(context,fd, st));
+                ret =  getFstat(context,fd, st);
             }
         }
     }
@@ -376,10 +380,15 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
     }
     else
     {
-        qDebug() << Q_FUNC_INFO << "path:" << smb_path << "errno:" << errno << strerror(errno);
+        SHOW_ERRNO(smb_path);
         switch(errno)
         {
            case EACCES:
+                //force shares to have Directory attribute
+                if (slashes == URL_SLASHES_NUMBER_FOR_SHARES)
+                {
+                     st->st_mode |= S_IFDIR;
+                }
                 ret = StatNoAccess; //authentication should have failed
                 break;
            case ENOENT:
@@ -455,7 +464,8 @@ QStringList SmbUtil::listContent(QString smb_path, bool recursive, QDir::Filters
 {
     QStringList content;
     Smb::Context context = createContext();
-    Q_ASSERT(context);
+    Q_ASSERT(context);   
+    QStringList  paths_Dot_or_DotDot;
     Smb::FileHandler fd = openDir(context,smb_path);
     if (fd)
     {
@@ -503,13 +513,18 @@ QStringList SmbUtil::listContent(QString smb_path, bool recursive, QDir::Filters
                     {
                         bool isDot     = ::strcmp(".", cur_name) == 0;
                         bool isDotDot  = ::strcmp("..", cur_name) == 0;
-                        if(      !((filters & QDir::NoDot)    && isDot)
-                              && !((filters & QDir::NoDotDot) && isDotDot) )
-                        {
-                             path = smb_path + QDir::separator() + cur_name;
+                        if(      (!(filters & QDir::NoDot)    && isDot)
+                              || (!(filters & QDir::NoDotDot) && isDotDot)
+                              || (!isDot && !isDotDot))
+                        {                            
                              if (!isDot && !isDotDot)
                              {
                                  itemHasContent = true;
+                                 path = smb_path + QDir::separator() + cur_name;
+                             }
+                             else // (isDot || isDotDot)
+                             {
+                                 paths_Dot_or_DotDot.append(smb_path + QDir::separator() + cur_name);
                              }
                         }
                     }
@@ -545,9 +560,13 @@ QStringList SmbUtil::listContent(QString smb_path, bool recursive, QDir::Filters
     }//if (fd)
     else
     {
-        qDebug() << Q_FUNC_INFO << "could not open directory" << smb_path << "errno:" << errno;
+        SHOW_ERRNO(smb_path);
     }
     deleteContext(context);
+    if (paths_Dot_or_DotDot.count() > 0)
+    {
+        content += paths_Dot_or_DotDot;
+    }
     return content;
 }
 
@@ -656,9 +675,20 @@ SmbUtil::getStatvfsInfo(const QString &smb_path, struct statvfs *st)
     Smb::FileHandler fd = openDir(context,smb_path);
     if (fd == 0)
     {
-        fd = openFile(context, smb_path);
+        fd = openFile(context,smb_path);
     }
-    if (fd)
+    if (fd == 0) // item does not exist neither dir nor file
+    {
+        //usually smb_path is a file that does not exist yet
+        //so using the path
+        int lastSlash = smb_path.lastIndexOf(QDir::separator());
+        if (lastSlash != -1)
+        {
+             QString path (smb_path.mid(0,lastSlash));
+             fd = openDir(context,path);
+        }
+    }
+    if (fd != 0)
     {
         ret = static_cast<StatReturn> (::smbc_getFunctionFstatVFS(context)(context,fd, st));
         closeHandle(context, fd);
@@ -709,4 +739,33 @@ QString SmbUtil::findSmBServer(const smbc_dirent & dirent)
         }
     }
     return host.toLower();
+}
+
+
+bool SmbUtil::changePermissions(Smb::Context context, const QString& smb_path, mode_t mode)
+{
+    int ret = ::smbc_getFunctionChmod(context)(context, smb_path.toLocal8Bit().constBegin(), mode);
+    if (ret < 0)
+    {
+        SHOW_ERRNO(smb_path);
+    }
+    return ret == 0;
+}
+
+
+SmbUtil::StatReturn
+SmbUtil::getFstat(Smb::Context context, Smb::FileHandler fd, struct stat*  st)
+{
+     ::memset(st,0,sizeof(struct stat));
+     int ret = ::smbc_getFunctionFstat(context)(context,fd, st);
+     return static_cast<SmbUtil::StatReturn> (ret);
+}
+
+
+SmbUtil::StatReturn
+SmbUtil::getStat(Smb::Context context, const QString& smb_path, struct stat*  st)
+{
+    ::memset(st,0,sizeof(struct stat));
+    int ret = ::smbc_getFunctionStat(context)(context,smb_path.toLocal8Bit().constData(), st);
+    return static_cast<SmbUtil::StatReturn> (ret);
 }
