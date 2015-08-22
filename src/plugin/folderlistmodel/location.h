@@ -30,7 +30,7 @@
 class IOWorkerThread;
 class DirListWorker;
 class LocationItemDirIterator;
-
+class LocationItemFile;
 
 /*!
  * \brief The Location class represents any location (full path) where there are items to browse: directories, shares, from Disk and from Network.
@@ -124,6 +124,15 @@ public: //pure functions
      virtual LocationItemDirIterator * newDirIterator(const QString & path,
                                                      QDir::Filters filters,
                                                      QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags)  = 0;
+    /*!
+      * \brief newFile() creates a LocationItemFile object which is similar to Qt QFile object
+      *
+      *     It will be used in copy/paste/remove Actions
+      *
+      * \param path
+      * \return
+      */
+     virtual LocationItemFile   * newFile(const QString & path) = 0;
 
 
     /*!

@@ -14,9 +14,8 @@ SOURCES += $$PWD/dirmodel.cpp \
            $$PWD/locationsfactory.cpp \                    
            $$PWD/locationurl.cpp \             
            $$PWD/locationitemdiriterator.cpp \
-           $$PWD/cleanurl.cpp \
-           $$PWD/disk/disklocationitemdiriterator.cpp \         
-
+           $$PWD/cleanurl.cpp \           
+           $$PWD/locationitemfile.cpp \
 
 
 HEADERS += $$PWD/dirmodel.h \
@@ -36,27 +35,47 @@ HEADERS += $$PWD/dirmodel.h \
            $$PWD/locationsfactory.h \                   
            $$PWD/locationurl.h \          
            $$PWD/locationitemdiriterator.h \
-           $$PWD/cleanurl.h \
+           $$PWD/cleanurl.h \           
+           $$PWD/locationitemfile.h \
+
+
+SOURCES += $$PWD/disk/disklocation.cpp \
+           $$PWD/disk/disklocationitemdiriterator.cpp \
+           $$PWD/disk/disklocationitemfile.cpp
+
+HEADERS += $$PWD/disk/disklocation.h \
            $$PWD/disk/disklocationitemdiriterator.h \
+           $$PWD/disk/disklocationitemfile.h
 
 
-SOURCES +=  $$PWD/disk/disklocation.cpp
-HEADERS +=  $$PWD/disk/disklocation.h
+SOURCES += $$PWD/trash/qtrashdir.cpp      \
+           $$PWD/trash/trashiteminfo.cpp  \
+           $$PWD/trash/qtrashutilinfo.cpp \
+           $$PWD/trash/trashlocation.cpp
 
-SOURCES +=  $$PWD/trash/qtrashdir.cpp $$PWD/trash/trashiteminfo.cpp  \
-            $$PWD/trash/qtrashutilinfo.cpp $$PWD/trash/trashlocation.cpp
-HEADERS +=  $$PWD/trash/qtrashdir.h       $$PWD/trash/trashiteminfo.h    \
-            $$PWD/trash/qtrashutilinfo.h  $$PWD/trash/trashlocation.h
+HEADERS += $$PWD/trash/qtrashdir.h        \
+           $$PWD/trash/trashiteminfo.h    \
+           $$PWD/trash/qtrashutilinfo.h   \
+           $$PWD/trash/trashlocation.h
 
-SOURCES +=  $$PWD/smb/smblocation.cpp $$PWD/smb/smblocationauthentication.cpp $$PWD/smb/smblistworker.cpp
-HEADERS +=  $$PWD/smb/smblocation.h $$PWD/smb/smblocationauthentication.h $$PWD/smb/smblistworker.h
+SOURCES += $$PWD/smb/smblocation.cpp      \
+           $$PWD/smb/smblocationauthentication.cpp \
+           $$PWD/smb/smblistworker.cpp
 
-SOURCES +=  $$PWD/net/netutil.cpp $$PWD/net/netauthenticationdata.cpp
-HEADERS +=  $$PWD/net/netutil.h $$PWD/net/netauthenticationdata.h
+HEADERS += $$PWD/smb/smblocation.h        \
+           $$PWD/smb/smblocationauthentication.h \
+           $$PWD/smb/smblistworker.h
+
+include ($$PWD/smb/qsambaclient/qsambaclient.pri)
+
+SOURCES += $$PWD/net/netutil.cpp \
+           $$PWD/net/netauthenticationdata.cpp
+
+HEADERS += $$PWD/net/netutil.h  \
+           $$PWD/net/netauthenticationdata.h
 
 INCLUDEPATH  += $$PWD $$PWD/trash $$PWD/disk $$PWD/smb $$PWD/net
 
-include ($$PWD/smb/qsambaclient/qsambaclient.pri)
 
 greaterThan(QT_MAJOR_VERSION, 4) {
    QT += qml
