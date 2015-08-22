@@ -49,7 +49,7 @@
 #define AMOUNT_COPIED_TO_REFRESH_ITEM_INFO  50000000
 
 class DirModelMimeData;
-class QFile;
+class LocationItemFile;
 class QTemporaryFile;
 class Location;
 class LocationsFactory;
@@ -157,12 +157,12 @@ private slots:
        CopyFile();
        ~CopyFile();
        void clear();
-       qint64            bytesWritten;           // set 0 when reach  bytesToNotify, notify progress
-       QFile          *  source;
-       QFile          *  target;
-       QString           targetName;
-       bool              isEntryItem;  //true when the file being copied is at toplevel of the copy/cut operation
-       qint64            amountSavedToRefresh;
+       qint64             bytesWritten;           // set 0 when reach  bytesToNotify, notify progress
+       LocationItemFile * source;
+       LocationItemFile * target;
+       QString            targetName;
+       bool               isEntryItem;  //true when the file being copied is at toplevel of the copy/cut operation
+       qint64             amountSavedToRefresh;
    };
 
    /*!
