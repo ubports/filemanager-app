@@ -113,7 +113,7 @@ Popover {
                 color: Theme.palette.normal.overlayText
             }
             Label {
-                text: dateTimeFormat(pathAccessedDate())
+                text: dateTimeFormat(model.accessedDate)
                 color: Theme.palette.normal.overlayText
             }
 
@@ -122,7 +122,7 @@ Popover {
                 color: Theme.palette.normal.overlayText
             }
             Label {
-                text: dateTimeFormat(pathModifiedDate())
+                text: dateTimeFormat(model.modifiedDate)
                 color: Theme.palette.normal.overlayText
             }
 
