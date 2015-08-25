@@ -40,6 +40,7 @@
 #include "disklocation.h"
 #include "trashlocation.h"
 #include "netauthenticationdata.h"
+#include "locationitemdir.h"
 
 
 #ifndef DO_NOT_USE_TAG_LIB
@@ -64,6 +65,7 @@
 #include <QMimeType>
 #include <QStandardPaths>
 #include <QList>
+#include <QScopedPointer>
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
 # include <QColor>
@@ -642,22 +644,24 @@ bool DirModel::rename(int row, const QString &newName)
     return retval;
 }
 
-void DirModel::mkdir(const QString &newDir)
-{
-    if (!allowAccess(mCurrentDir)) {
-        qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
-        return;
-    }
 
-    QDir dir(mCurrentDir);
-    bool retval = dir.mkdir(newDir);
+bool DirModel::mkdir(const QString &newDir)
+{
+    QScopedPointer<LocationItemDir> dir(mCurLocation->newDir(mCurrentDir));
+    bool retval = dir->mkdir(newDir);
     if (!retval) {
         const char *errorStr = strerror(errno);
         qDebug() << Q_FUNC_INFO << this << "Error creating new directory: " << errno << " (" << errorStr << ")";
         emit error(QObject::tr("Error creating new folder"), errorStr);
     } else {
-        onItemAdded(dir.filePath(newDir));
-    }
+        QScopedPointer<DirItemInfo> subItem(mCurLocation->newItemInfo(newDir));
+        if (subItem->isRelative())
+        {
+            subItem->setFile(mCurrentDir, newDir);
+        }
+        onItemAdded(*subItem);      
+    }   
+    return retval;
 }
 
 bool DirModel::showDirectories() const
@@ -728,19 +732,18 @@ bool DirModel::awaitingResults() const
 
 QString DirModel::parentPath() const
 {
-    QDir dir(mCurrentDir);
-    if (dir.isRoot()) {
+    const DirItemInfo *dir = mCurLocation->info();
+    if (dir->isRoot()) {
         qDebug() << Q_FUNC_INFO << this << "already at root";
         return mCurrentDir;
     }
 
-    bool success = dir.cdUp();
-    if (!success) {
+    if (!canReadDir(dir->absolutePath())) {
         qWarning() << Q_FUNC_INFO << this << "Failed to to go to parent of " << mCurrentDir;
         return mCurrentDir;
     }
-    qDebug() << Q_FUNC_INFO << this << "returning" << dir.absolutePath();
-    return dir.absolutePath();
+    qDebug() << Q_FUNC_INFO << this << "returning" << dir->absolutePath();
+    return dir->absolutePath();
 }
 
 QString DirModel::homePath() const
@@ -1259,6 +1262,14 @@ QDir::Filter DirModel::currentDirFilter() const
     return dirFilter;
 }
 
+/*!
+ * \brief DirModel::dirItems() Gets a Dir number of Items, used only for Local Disk
+ *
+ *    For remote Locations this function is not used
+ *
+ * \param fi
+ * \return A string saying how many items a directory has
+ */
 QString DirModel::dirItems(const DirItemInfo& fi) const
 {
     int counter = 0;

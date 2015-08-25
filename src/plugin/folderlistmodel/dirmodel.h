@@ -132,7 +132,7 @@ public:
     Q_INVOKABLE bool rename(const QString& oldName, const QString& newName);
     Q_INVOKABLE bool rename(int row, const QString &newName);
 
-    Q_INVOKABLE void mkdir(const QString &newdir);
+    Q_INVOKABLE bool mkdir(const QString &newdir);
 
     Q_PROPERTY(bool filterDirectories READ filterDirectories WRITE setFilterDirectories NOTIFY filterDirectoriesChanged)
     bool filterDirectories() const;
@@ -436,14 +436,15 @@ signals:
     void     needsAuthentication(const QString& user, const QString& urlPath);
     
     /*!
-     * \brief insertedItem()
+     * \brief insertedRow()
      *
      *  It happens when a new file is inserted in an existent view,
      *  for example from  \ref mkdir() or \ref paste()
      *
      *  It can be used to make the new row visible to the user doing a scroll to
-     */
+     */    
     void  insertedRow(int row);
+
     /*!
      * \brief progress()
      *  Sends status about recursive and multi-items remove/move/copy

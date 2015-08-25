@@ -41,6 +41,7 @@
 #include "locationsfactory.h"
 #include "locationitemdiriterator.h"
 #include "locationitemfile.h"
+#include "locationitemdir.h"
 
 #if defined(Q_OS_UNIX)
 #include <sys/statvfs.h>
@@ -371,16 +372,15 @@ bool FileSystemAction::populateEntry(Action* action, ActionEntry* entry)
     //ActionMove will perform a rename, so no Directory expanding is necessary
     if (entry->type != ActionMove && info->isDir() && !info->isSymLink())
     {
-        LocationItemDirIterator *it =
-        action->sourceLocation->newDirIterator(info->absoluteFilePath(),
-                        QDir::AllEntries | QDir::System |
-                              QDir::NoDotAndDotDot | QDir::Hidden,
-                        QDirIterator::Subdirectories);
+       QScopedPointer<LocationItemDirIterator>
+         it (action->sourceLocation->newDirIterator(info->absoluteFilePath(),
+             QDir::AllEntries     | QDir::System |
+             QDir::NoDotAndDotDot | QDir::Hidden,
+             QDirIterator::Subdirectories));
         while (it->hasNext() &&  !it->next().isEmpty())
         {
             entry->reversedOrder.prepend(it->fileInfo());
-        }
-        delete it;
+        }      
     }
 #if DEBUG_MESSAGES
     for (int counter = 0; counter < entry->reversedOrder.count(); counter++)
@@ -651,8 +651,7 @@ void FileSystemAction::cancel()
  * \param entry
  */
 void FileSystemAction::removeEntry(ActionEntry *entry)
-{
-    QDir dir;
+{   
     //do one step at least
     for(; !m_cancelCurrentAction                          &&
           entry->currStep       < STEP_FILES              &&
@@ -665,13 +664,13 @@ void FileSystemAction::removeEntry(ActionEntry *entry)
         const DirItemInfo &fi = entry->reversedOrder.at(entry->currItem);
         if (fi.isDir() && !fi.isSymLink())
         {
-            m_cancelCurrentAction = !dir.rmdir(fi.absoluteFilePath());
+            QScopedPointer<LocationItemDir> dir(m_curAction->sourceLocation->newDir());
+            m_cancelCurrentAction = !dir->rmdir(fi.absoluteFilePath());           
         }
         else
         {
-            LocationItemFile *qFile = m_curAction->sourceLocation->newFile(fi.absoluteFilePath());
-            m_cancelCurrentAction = !qFile->remove();
-            delete qFile;
+            QScopedPointer<LocationItemFile> qFile(m_curAction->sourceLocation->newFile(fi.absoluteFilePath()));
+            m_cancelCurrentAction = !qFile->remove();           
         }
 #if DEBUG_REMOVE
         qDebug() << Q_FUNC_INFO << "remove ret=" << !m_cancelCurrentAction << fi.absoluteFilePath();
@@ -765,16 +764,16 @@ void  FileSystemAction::processCopyEntry()
            )
         {
             QString entryDir = targetFrom(entry->reversedOrder.last().absoluteFilePath(), entry);
-            QDir entryDirObj(entryDir);
-            if (!entryDirObj.exists() && entryDirObj.mkpath(entryDir))
+            QScopedPointer<LocationItemDir> entryDirObj(m_curAction->targetLocation->newDir(entryDir));
+            if (!entryDirObj->exists() && entryDirObj->mkpath(entryDir))
             {
                 QScopedPointer <DirItemInfo> item(m_curAction->targetLocation->newItemInfo(entryDir));
                 entry->added = true;
                 notifyActionOnItem(*item, ItemAdded);
-            }
-        }
-        QDir d(path);
-        if (!d.exists() && !d.mkpath(path))
+            }           
+        }      
+        QScopedPointer<LocationItemDir> d(m_curAction->targetLocation->newDir(path));
+        if (!d->exists() && !d->mkpath(path))
         {
             m_cancelCurrentAction = true;
             m_errorTitle = QObject::tr("Could not create the directory");
@@ -794,10 +793,8 @@ void  FileSystemAction::processCopyEntry()
         else
         if (fi.isDir())
         {
-            LocationItemFile *qFile = m_curAction->targetLocation->newFile(target);
-            m_cancelCurrentAction = !
-                 qFile->setPermissions(fi.permissions());
-            delete qFile;
+            QScopedPointer<LocationItemFile> qFile(m_curAction->targetLocation->newFile(target));
+            m_cancelCurrentAction = !qFile->setPermissions(fi.permissions());
             if (m_cancelCurrentAction)
             {
                 m_errorTitle = QObject::tr("Could not set permissions to dir");
@@ -1393,9 +1390,8 @@ void FileSystemAction::moveDirToTempAndRemoveItLater(const QString& dir)
 #if defined(DEBUG_MESSAGES) || defined(REGRESSION_TEST_FOLDERLISTMODEL)
     qDebug() << Q_FUNC_INFO << dir <<  "being moved to" << tempDir;
 #endif
-    LocationItemFile *qFile = m_curAction->targetLocation->newFile(dir);
-    bool removed = qFile->rename(tempDir);
-    delete qFile;
+    QScopedPointer<LocationItemFile> qFile(m_curAction->targetLocation->newFile(dir));
+    bool removed = qFile->rename(tempDir);   
     if (removed)
     {
         if (m_curAction->auxAction == 0)
