@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2015-07-23 12:55+0000\n"
+"PO-Revision-Date: 2015-08-24 20:22+0000\n"
 "Last-Translator: Richard Somlói <ricsipontaz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-07-24 05:40+0000\n"
-"X-Generator: Launchpad (build 17628)\n"
+"X-Launchpad-Export-Date: 2015-08-25 05:53+0000\n"
+"X-Generator: Launchpad (build 17690)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
@@ -66,7 +66,7 @@ msgstr "Hitelesítés szükséges"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr "Az összes fájlhoz való hozzáféréshez szüksége lesz a jelszóra"
+msgstr "Adja meg a jelszót az összes fájl eléréséhez"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
@@ -77,7 +77,7 @@ msgstr "jelszó"
 #: ../src/app/qml/ui/ConfirmDialogWithInput.qml:47
 #: ../src/app/qml/ui/NotifyDialog.qml:25
 msgid "Ok"
-msgstr "Ok"
+msgstr "OK"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:60
 #: ../src/app/qml/ui/ConfirmDialog.qml:41
@@ -130,11 +130,11 @@ msgstr "Méret:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr "Utolsó hozzáférés:"
+msgstr "Hozzáférés:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
-msgstr "Módosítva:"
+msgstr "Módosítás:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
@@ -179,7 +179,7 @@ msgstr "Ugrás ide:"
 
 #: ../src/app/qml/ui/FolderListPage.qml:122
 msgid "Unlock full access"
-msgstr "Teljes hozzáférés feloldása"
+msgstr "Teljes hozzáférés"
 
 #: ../src/app/qml/ui/FolderListPage.qml:136
 msgid "Authentication failed"
@@ -249,7 +249,7 @@ msgstr "Új név megadása"
 
 #: ../src/app/qml/ui/FolderListPage.qml:479
 msgid "Could not rename"
-msgstr "Nem sikerült átnevezni"
+msgstr "Nem sikerült az átnevezés"
 
 #: ../src/app/qml/ui/FolderListPage.qml:480
 msgid "Insufficient permissions or name already exists?"
@@ -279,7 +279,7 @@ msgstr "Archívum kicsomagolása"
 
 #: ../src/app/qml/ui/FolderListPage.qml:630
 msgid "File operation error"
-msgstr "Fájlművelet-hiba"
+msgstr "Fájlművelethiba"
 
 #: ../src/app/qml/ui/FolderListPage.qml:661
 #, qt-format
@@ -288,7 +288,7 @@ msgstr "„%1” archívum kicsomagolása"
 
 #: ../src/app/qml/ui/FolderListPage.qml:682
 msgid "OK"
-msgstr "Ok"
+msgstr "OK"
 
 #: ../src/app/qml/ui/FolderListPage.qml:697
 msgid "Extracting failed"
@@ -417,7 +417,7 @@ msgstr "Hiba a mappa létrehozása közben"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1252
 msgid "items"
-msgstr "elemek"
+msgstr "elem"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
 msgid "File or Directory does not exist"
