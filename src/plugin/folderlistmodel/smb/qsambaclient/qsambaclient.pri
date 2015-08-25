@@ -6,6 +6,7 @@ SOURCES +=   $$PWD/src/smbutil.cpp \
              $$PWD/src/smbobject.cpp \
              $$PWD/src/smblocationdiriterator.cpp \
              $$PWD/src/smblocationitemfile.cpp \
+             $$PWD/src/smblocationitemdir.cpp
 
 
 HEADERS +=   $$PWD/src/smbutil.h \
@@ -15,6 +16,7 @@ HEADERS +=   $$PWD/src/smbutil.h \
              $$PWD/src/smbobject.h \
              $$PWD/src/smblocationdiriterator.h \
              $$PWD/src/smblocationitemfile.h \
+             $$PWD/src/smblocationitemdir.h
 
           
 QT          *= core network             

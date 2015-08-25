@@ -31,6 +31,7 @@ class IOWorkerThread;
 class DirListWorker;
 class LocationItemDirIterator;
 class LocationItemFile;
+class LocationItemDir;
 
 /*!
  * \brief The Location class represents any location (full path) where there are items to browse: directories, shares, from Disk and from Network.
@@ -134,6 +135,15 @@ public: //pure functions
       */
      virtual LocationItemFile   * newFile(const QString & path) = 0;
 
+    /*!
+      * \brief newDir() creates a LocationItemDir object which is simila to Qt QDir object
+      *
+      * It will be used in copy/paste/remove Actions
+      *
+      * \param dir
+      * \return
+      */
+     virtual LocationItemDir    * newDir(const QString & dir = QLatin1String(0)) = 0;
 
     /*!
       * \brief urlBelongsToLocation() Returns a good  url if the \a urlPath is valid URL that belongs to its location

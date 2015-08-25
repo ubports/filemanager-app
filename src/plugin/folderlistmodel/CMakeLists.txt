@@ -43,6 +43,8 @@ set(folderlistmodel_SRCS
     locationsfactory.h
     locationurl.cpp
     locationurl.h
+    locationitemdir.cpp
+    locationitemdir.h
     locationitemdiriterator.cpp
     locationitemdiriterator.h
     locationitemfile.cpp
@@ -57,6 +59,8 @@ set(folderlistmodel_SRCS
     disk/disklocationitemdiriterator.h
     disk/disklocationitemfile.cpp
     disk/disklocationitemfile.h
+    disk/disklocationitemdir.cpp
+    disk/disklocationitemdir.h
     trash/qtrashdir.cpp
     trash/qtrashdir.h   
     trash/qtrashutilinfo.cpp
@@ -75,6 +79,8 @@ set(folderlistmodel_SRCS
     smb/qsambaclient/src/smblocationdiriterator.h
     smb/qsambaclient/src/smblocationitemfile.cpp
     smb/qsambaclient/src/smblocationitemfile.h
+    smb/qsambaclient/src/smblocationitemdir.cpp
+    smb/qsambaclient/src/smblocationitemdir.h
     smb/qsambaclient/src/smbobject.cpp
     smb/qsambaclient/src/smbobject.h
     smb/smblocation.h

@@ -26,6 +26,7 @@
 #include "externalfswatcher.h"
 #include "locationurl.h"
 #include "disklocationitemfile.h"
+#include "disklocationitemdir.h"
 
 
 #if defined(Q_OS_UNIX)
@@ -201,6 +202,13 @@ LocationItemFile *
 DiskLocation::newFile(const QString &path)
 {
     return new DiskLocationItemFile(path, this);
+}
+
+
+LocationItemDir *
+DiskLocation::newDir(const QString &dir)
+{
+    return new DiskLocationItemDir(dir);
 }
 
 
