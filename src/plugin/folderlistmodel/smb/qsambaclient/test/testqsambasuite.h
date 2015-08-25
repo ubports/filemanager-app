@@ -90,6 +90,29 @@ private Q_SLOTS: // test cases
     void negative_emptyItemInfo();
     void negative_dirIterator();
 
+private Q_SLOTS:   //unit test for SmbLocationItemFile class
+    void unit_QFile_rename();
+    void unit_QFile_remove();
+    void unit_QFile_open();
+    void unit_QFile_read();
+    void unit_QFile_write();  
+    void unit_QFile_atEnd();
+    void unit_QFile_size();
+    void unit_QFile_isOpen();
+    void unit_QFile_setPermissions();
+    void unit_QFile_permissions();
+
+private Q_SLOTS:  //unit test for SmbLocationItemDir class
+    void unit_QDir_exists();
+    void unit_QDir_mkdir();
+    void unit_QDir_mkpath();
+    void unit_QDir_rmdir();
+
+private Q_SLOTS: //unit test for SmbLocationItemDirIterator class
+    void unit_QDirIterator_path();
+
+private Q_SLOTS:
+    void positive_statvfs();
 
 protected:   
     QString createTempFile(const QString& path,
