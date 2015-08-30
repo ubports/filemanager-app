@@ -46,7 +46,7 @@ Dialog {
         id: okButton
         objectName: "okButton"
 
-        text: i18n.tr("Ok")
+        text: i18n.tr("OK")
 
         onClicked: {
             passwordEntered(passwordField.text)

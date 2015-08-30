@@ -44,7 +44,7 @@ Dialog {
 
     Button {
         objectName: "okButton"
-        text: i18n.tr("Ok")
+        text: i18n.tr("OK")
         enabled: input.acceptableInput
         onClicked: {
             accepted()

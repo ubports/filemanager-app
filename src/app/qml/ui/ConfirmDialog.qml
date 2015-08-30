@@ -28,7 +28,7 @@ Dialog {
     Button {
         id: okButton
         objectName: "okButton"
-        text: i18n.tr("Ok")
+        text: i18n.tr("OK")
         onClicked: {
             accepted()
             PopupUtils.close(root)
