@@ -542,12 +542,20 @@ bool DirModel::isAllowedPath(const QString &absolutePath) const {
 }
 
 bool DirModel::allowAccess(const DirItemInfo &fi) const {
-    return allowAccess(fi.absoluteFilePath());
+    bool allowed = !mOnlyAllowedPaths; // !mOnlyAllowedPaths means any path is allowed
+    if (!allowed)
+    {
+        // for remote locations items are visible if them do not require authentication
+        allowed = mCurLocation->isRemote() ? !fi.needsAuthentication() :
+                                             isAllowedPath(fi.absoluteFilePath());
+    }
+    return allowed;
 }
 
 bool DirModel::allowAccess(const QString &absoluteFilePath) const {
-    return !mOnlyAllowedPaths || isAllowedPath(absoluteFilePath);
-}
+    return !mOnlyAllowedPaths || mCurLocation->isRemote() || isAllowedPath(absoluteFilePath);
+}// for remote locations access is allowed
+
 
 void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 {
@@ -883,7 +891,7 @@ void DirModel::cutPaths(const QStringList &items)
 void DirModel::paste()
 {
     // Restrict pasting if in restricted directory when pasting on a local file system
-    if (!mCurLocation->isRemote() && !allowAccess(mCurrentDir)) {
+    if (!allowAccess(mCurrentDir)) {
         qDebug() << Q_FUNC_INFO << "access not allowed, pasting not done" << mCurrentDir;
         return;
     }
