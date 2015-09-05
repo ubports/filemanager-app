@@ -15,6 +15,7 @@
  *
  * Author : David Planella <david.planella@ubuntu.com>
  *          Arto Jalkanen <ajalkane@gmail.com>
+ *          Carlos Mazieri <carlos.mazieri@gmail.com>
  */
 
 #include "placesmodel.h"
@@ -27,12 +28,13 @@
 
 PlacesModel::PlacesModel(QObject *parent) :
     QAbstractListModel(parent)
+  , m_userSavedLocationsName("userSavedLocations")
+  , m_userRemovedLocationsName("userRemovedLocations")
 {
     m_userMountLocation = "/media/" + qgetenv("USER");
     // For example /run/user/1000
     m_runtimeLocations = QStandardPaths::standardLocations(QStandardPaths::RuntimeLocation);
 
-    QStringList defaultLocations;
     // Set the storage location to a path that works well
     // with app isolation
     QString settingsLocation =
@@ -40,29 +42,42 @@ PlacesModel::PlacesModel(QObject *parent) :
             + "/" + QCoreApplication::applicationName() + "/" + "places.conf";
     m_settings = new QSettings(settingsLocation, QSettings::IniFormat, this);
 
+    m_userSavedLocations   = m_settings->value(m_userSavedLocationsName).toStringList();
+    m_userRemovedLocations = m_settings->value(m_userRemovedLocationsName).toStringList();
+
+    //remove old key "storedLocations" or others no longer used
+    QStringList settingsKeys  = m_settings->allKeys();
+    foreach (const QString& key, settingsKeys) {
+       if (key != m_userSavedLocationsName && key != m_userRemovedLocationsName) {
+           m_settings->remove(key);
+       }
+    }
+
     // Prepopulate the model with the user locations
     // for the first time it's used
-    defaultLocations.append(locationHome());
-    defaultLocations.append(locationDocuments());
-    defaultLocations.append(locationDownloads());
-    defaultLocations.append(locationMusic());
-    defaultLocations.append(locationPictures());
-    defaultLocations.append(locationVideos());
-    // Add root also
-    defaultLocations.append("/");
+    addDefaultLocation(locationHome());
+    addDefaultLocation(locationDocuments());
+    addDefaultLocation(locationDownloads());
+    addDefaultLocation(locationMusic());
+    addDefaultLocation(locationPictures());
+    addDefaultLocation(locationVideos());    
 
-    if (!m_settings->contains("storedLocations")) {
-        m_locations.append(defaultLocations);
-    } else {
-        m_locations = m_settings->value("storedLocations").toStringList();
+    //Network locations
+    addDefaultLocation(locationSamba());
+
+    //mounted locations
+    addDefaultLocation("/");
+    initNewUserMountsWatcher();
+    rescanMtab();
+
+    if (m_userSavedLocations.count() > 0) {
+        m_locations += m_userSavedLocations;
     }
+    m_settings->sync();
 
     foreach (const QString &location, m_locations) {
         qDebug() << "Location: " << location;
     }
-
-    initNewUserMountsWatcher();
-    rescanMtab();
 }
 
 PlacesModel::~PlacesModel() {
@@ -106,25 +121,20 @@ PlacesModel::rescanMtab() {
         }
     }
 
-    QSet<QString> addedMounts = QSet<QString>(userMounts).subtract(m_userMounts);
-    QSet<QString> removedMounts = QSet<QString>(m_userMounts).subtract(userMounts);
-
     m_userMounts = userMounts;
 
-    foreach (QString addedMount, addedMounts) {
-        qDebug() << Q_FUNC_INFO << "user mount added: " << addedMount;
-        addLocationWithoutStoring(addedMount);
-        emit userMountAdded(addedMount);
+    foreach (QString userMount, userMounts) {
+        if (!m_userRemovedLocations.contains(userMount)) {
+            qDebug() << Q_FUNC_INFO << "user mount added: " << userMount;
+            addLocationWithoutStoring(userMount);
+            emit userMountAdded(userMount);
+        } else {
+            removeItem(userMount);
+            qDebug() << Q_FUNC_INFO << "user mount removed: " << userMount;
+            emit userMountRemoved(userMount);
+        }
     }
 
-    foreach (QString removedMount, removedMounts) {
-        qDebug() << Q_FUNC_INFO << "user mount removed: " << removedMount;
-        int index = m_locations.indexOf(removedMount);
-        if (index > -1) {
-            removeItemWithoutStoring(index);
-        }
-        emit userMountRemoved(removedMount);
-    }
 }
 
 bool PlacesModel::isMtabEntryUserMount(const QMtabEntry &e) const {
@@ -203,6 +213,11 @@ QString PlacesModel::locationVideos() const
     return standardLocation(QStandardPaths::MoviesLocation);
 }
 
+QString PlacesModel::locationSamba() const
+{
+    return QLatin1Literal("smb://");
+}
+
 int PlacesModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
@@ -227,10 +242,30 @@ QHash<int, QByteArray> PlacesModel::roleNames() const
 
 void PlacesModel::removeItem(int indexToRemove)
 {
-    removeItemWithoutStoring(indexToRemove);
-
-    // Remove the location permanently
-    m_settings->setValue("storedLocations", m_locations);
+    if (indexToRemove >= 0 && indexToRemove < m_locations.count())
+    {
+        bool sync_settings = false;
+        const QString & location = m_locations.at(indexToRemove);
+        //check if the index belongs to a  user saved location
+        int index_user_location = m_userSavedLocations.indexOf(location);
+        if (index_user_location > -1)
+        {
+            // Remove the User saved location permanently
+            m_userSavedLocations.removeAt(index_user_location);
+            m_settings->setValue(m_userSavedLocationsName, m_userSavedLocations);
+            sync_settings = true;
+        }
+        //save it as removed location, even a default location can be removed
+        if (!m_userRemovedLocations.contains(location)) {
+            m_userRemovedLocations.append(location);
+            m_settings->setValue(m_userRemovedLocationsName, m_userRemovedLocations);
+            sync_settings = true;
+        }
+        removeItemWithoutStoring(indexToRemove);
+        if (sync_settings) {
+             m_settings->sync();
+        }
+    }
 }
 
 void PlacesModel::removeItemWithoutStoring(int indexToRemove)
@@ -250,11 +285,28 @@ void PlacesModel::removeItemWithoutStoring(int indexToRemove)
     endRemoveRows();
 }
 
+
 void PlacesModel::addLocation(const QString &location)
-{
+{   
     if (addLocationWithoutStoring(location)) {
-        // Store the location permanently
-        m_settings->setValue("storedLocations", m_locations);
+        bool sync_seettings = false;
+        // Store the location permanently if it is not default location
+        if (!isDefaultLocation(location) && !m_userSavedLocations.contains(location))
+        {
+            m_userSavedLocations.append(location);
+            m_settings->setValue(m_userSavedLocationsName, m_userSavedLocations);
+            sync_seettings = true;
+        }
+        //verify it the user had deleted it before and now insert it again
+        int indexRemoved = m_userRemovedLocations.indexOf(location);
+        if(indexRemoved > -1) {
+            m_userRemovedLocations.removeAt(indexRemoved);
+            m_settings->setValue(m_userRemovedLocationsName, m_userRemovedLocations);
+            sync_seettings = true;
+        }
+        if (sync_seettings) {
+            m_settings->sync();
+        }
     }
 }
 
@@ -278,4 +330,18 @@ bool PlacesModel::addLocationWithoutStoring(const QString &location)
         return true;
     }
     return false;
+}
+
+void PlacesModel::addDefaultLocation(const QString &location)
+{
+    // a Default location can be removed by the user, if so ignore that
+    // and do not allow for duplicates
+    if (!m_userRemovedLocations.contains(location) && addLocationWithoutStoring(location)) {
+         m_defaultLocations.append(location);
+    }
+}
+
+void PlacesModel::removeItem(const QString &location)
+{
+    removeItem(m_locations.indexOf(location));
 }
