@@ -22,7 +22,7 @@ import Ubuntu.Components.Popups 1.0
 Dialog {
     id: root
     Button {
-        text: i18n.tr("Ok")
+        text: i18n.tr("OK")
         onClicked: {
             PopupUtils.close(root)
         }
