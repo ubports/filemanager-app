@@ -45,10 +45,15 @@ var __mapping = {
     'wmv': CH.ContentType.Videos,
 
     'txt': CH.ContentType.Documents,
+    'odt': CH.ContentType.Documents,
     'doc': CH.ContentType.Documents,
     'docx': CH.ContentType.Documents,
+    'ods': CH.ContentType.Documents,
     'xls': CH.ContentType.Documents,
     'xlsx': CH.ContentType.Documents,
+    'odp': CH.ContentType.Documents,
+    'ppt': CH.ContentType.Documents,
+    'pptx': CH.ContentType.Documents,
     'pdf': CH.ContentType.Documents,
 }
 
