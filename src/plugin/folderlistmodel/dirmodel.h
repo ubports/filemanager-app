@@ -309,6 +309,11 @@ public:
     Q_INVOKABLE  void  restoreIndexFromTrash(int index);
                  void  restoreIndexesFromTrash(const QList<int>&);
 
+    Q_INVOKABLE  void  setPathWithAuthentication(const QString& path,
+                                                 const QString& user,
+                                                 const QString& password,
+                                                 bool  savePassword);
+
 public slots:
   /*!
      * \brief copySelection() copy selected items to the clipboard

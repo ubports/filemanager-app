@@ -440,6 +440,19 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
 }
 
 
+/*!
+ * \brief DirModel::setPathWithAuthentication() It is just a QML entry point as setPath is a QML property and cannot be called as a function
+ * \param path
+ * \param user
+ * \param password
+ * \param savePassword
+ */
+void DirModel::setPathWithAuthentication(const QString &path, const QString &user, const QString &password, bool savePassword)
+{
+    setPath(path,user,password,savePassword);
+}
+
+
 void DirModel::setPath(const QString &pathName, const QString& user, const QString &password, bool savePassword)
 {
     if (pathName.isEmpty())
