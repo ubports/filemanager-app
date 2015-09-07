@@ -194,6 +194,10 @@ PageWithBottomEdge {
         }
     }
 
+    NetAuthenticationHandler {
+        id: authenticationHandler
+    }
+
     FolderListModel {
         id: pageModel
         path: folderListPage.folder
@@ -214,6 +218,10 @@ PageWithBottomEdge {
             addAllowedDirectory(userplaces.locationMusic)
             addAllowedDirectory(userplaces.locationPictures)
             addAllowedDirectory(userplaces.locationVideos)
+        }
+        onNeedsAuthentication: {
+            console.log("FolderListModel needsAuthentication() signal arrived")
+            authenticationHandler.showDialog(urlPath,user)
         }
     }
 
@@ -897,11 +905,13 @@ PageWithBottomEdge {
         }
     }
 
-    function itemClicked(model) {
+    function itemClicked(model) {      
         if (model.isBrowsable) {
             if (model.isReadable && model.isExecutable) {
                 console.log("Changing to dir", model.filePath)
-                goTo(model.filePath)
+                //prefer pageModel.cdIntoIndex() because it is not necessary to parse the path
+                //goTo(model.filePath)
+                pageModel.cdIntoIndex(model.index)
             } else {
                 PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
                                 {
