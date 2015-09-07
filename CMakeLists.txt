@@ -52,7 +52,7 @@ if(CLICK_MODE)
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
 
-    execute process(
+    execute_process(
         COMMAND mkdir ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs
         COMMAND ./get-click-deps filemanager-libs.json ${CLICK_ARCH} ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs
     )
