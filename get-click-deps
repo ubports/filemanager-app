@@ -32,8 +32,9 @@
 #   manifest_path         path of json file containing the list of packages to
 #                         be downloaded.
 #   {amd64,i386,armhf}    CPU architecture ("amd64", "i386" or "armhf")
-#   target_path           path to the target (click package or a build folder)
+#   target_path           path to the target (a click package or a folder)
 #                         where this tool will include the downloaded binaries.
+#                         If the folder does not exist, it will be created.
 #
 # optional arguments:
 #   -h, --help            show this help message and exit
@@ -41,7 +42,7 @@
 #   -d, --delete-temp     delete temp files at the end of the process
 #   -e, --extract-only    only create temp directory and extract the content of
 #                         downloaded packages
-# -c SCRIPT_PATH, --custom-script SCRIPT_PATH
+#   -c SCRIPT_PATH, --custom-script SCRIPT_PATH
 #                         run a custom script after the extraction of Debian
 #                         packages and before copying their content to the
 #                         target destination. The tool will execute the script
@@ -105,15 +106,6 @@
 # SDK for compiling the sources of your project. This way the binaries
 # downloaded by this tool will be automatically included in the .click package
 # the next time you ask Ubuntu SDK to create a new package.
-# Note that this feature is widely untested and still under development.
-#
-# KNOWN ISSUES:
-# - Not all the Debian packages contains the required files in a path that we
-#   can automatically copy into the Click package.
-#   For this reason it is suggested to run this tool with the '-e' flag at
-#   first, then to manually fix the paths in the temp folder.
-#   Then, you can run this tool without flags, so that it will use the temp
-#   folder it created with the previous running.
 #
 
 # TODO: Complete error handling
@@ -127,15 +119,34 @@ import argparse
 import json
 import gzip
 import subprocess
+import urllib2
 
 
 def get_timestamp():
     return time.time()
 
 
+def check_internet_connection():
+    try:
+        urllib2.urlopen('http://www.google.com', timeout=20)
+        return True
+    except urllib2.URLError as err:
+        pass
+    return False
+
+
+def get_arch_triplet(arch):
+    return subprocess.check_output([
+        'dpkg-architecture',
+        '-A',
+        arch,
+        '-qDEB_TARGET_MULTIARCH'])
+
+
 def download_file(url, dest, verbose=True):
     if verbose:
         print "\nDownloading:\n%s" % url
+    # TODO: Switch to subprocess
     os.system('cd %s && { curl -# -O %s ; cd - ; }' % (dest, url))
 
 
@@ -143,7 +154,7 @@ def download_file_and_rename(url, dest, new_filename, verbose=True):
     if verbose:
         print "\nDownloading:\n%s" % url
     new_path = os.path.join(dest, new_filename)
-    os.system('curl %s -# -o %s' % (url, new_path))
+    subprocess.call(['curl', url, '-#', '-o', new_path])
 
     return new_path
 
@@ -164,38 +175,44 @@ def get_URLs_for_arch(manifest_path, arch, destpath):
     content = json.load(f)
     f.close()
 
-    # First of all, download repository index for each repository in the JSON
-    # package manifest.
-    repo_index = 0
-    for repo in content[arch]:
-        repo_index_url = '%s/dists/%s/%s/binary-%s/Packages.gz' % (
-            repo['url'],
-            repo['dist'],
-            repo['component'],
-            arch)
+    # Download repository index for each repository in the JSON package
+    # manifest.
+    try:
+        repo_index = 0
+        for repo in content[arch]:
+            repo_index_url = '%s/dists/%s/%s/binary-%s/Packages.gz' % (
+                repo['url'],
+                repo['dist'],
+                repo['component'],
+                arch)
 
-        print "\nDownloading repository index at:\n%s" % repo_index_url
+            print "\nDownloading repository index at:\n%s" % repo_index_url
 
-        repo_index_zip = download_file_and_rename(
-            repo_index_url,
-            destpath,
-            'repo-index-%s-%s.gz' % (arch, repo_index),
-            False)
+            repo_index_zip = download_file_and_rename(
+                repo_index_url,
+                destpath,
+                'repo-index-%s-%s.gz' % (arch, repo_index),
+                False)
 
-        with gzip.open(repo_index_zip, 'r') as f:
-            repo_index_content = f.read()
-            f.close()
+            with gzip.open(repo_index_zip, 'r') as f:
+                repo_index_content = f.read()
+                f.close()
 
-        # Get the download URL of each package of the repository.
-        packages = repo['packages']
-        for package in packages:
-            urls.append(get_package_download_url(
-                package,
-                repo_index_content,
-                repo['url']))
+            # Get the download URL of each package of the repository.
+            packages = repo['packages']
+            for package in packages:
+                urls.append(get_package_download_url(
+                    package,
+                    repo_index_content,
+                    repo['url']))
 
-        repo_index += 1
-
+            repo_index += 1
+    except KeyError:
+        # Arch not found in the manifest. Exit with no error, since there's no
+        # need to run the script for this arch.
+        print "\n\nRequested arch has been not specified in the manifest. \
+            Exiting..."
+        sys.exit(0)
     print "\nObtained packages informations"
     return urls
 
@@ -205,7 +222,7 @@ def check_if_temp_folder_already_exists(path):
 
 
 def copy_directory_content(sourcepath, destpath):
-    os.system('cp -r %s/. %s' % (sourcepath, destpath))
+    subprocess.call(['cp', '-r', '%s/.' % sourcepath, destpath])
 
 
 def delete_folder(path, recursive=False):
@@ -213,11 +230,11 @@ def delete_folder(path, recursive=False):
         flag = '-rf'
     else:
         flag = '-f'
-    os.system('rm %s %s' % (flag, path))
+    subprocess.call(['rm', flag, path])
 
 
 def extract_deb_package(deb_path, destpath):
-    os.system('dpkg-deb -x %s %s' % (deb_path, destpath))
+    subprocess.call(['dpkg-deb', '-x', deb_path, destpath])
 
 
 def extract_click_package(click_path, destpath):
@@ -252,7 +269,7 @@ def copy_file(sourcepath, destpath, overwrite=False):
     if not overwrite:
         flag = '-n'
 
-    os.system('cp %s %s %s' % (flag, sourcepath, destpath))
+    subprocess.call(['cp', flag, sourcepath, destpath])
 
 
 # Argument parser
@@ -309,8 +326,9 @@ parser.add_argument(
 parser.add_argument(
     'target_path',
     type=str,
-    help='path to the target (click package or a build folder) where this \
-        tool will include the downloaded binaries.')
+    help='path to the target (a click package or a folder) where this \
+        tool will include the downloaded binaries. If the folder does not \
+        exist, it will be created.')
 
 args = parser.parse_args()
 
@@ -330,22 +348,17 @@ is_click_target = os.path.isfile(args.target_path)
 
 # Check command line arguments
 if not os.path.isfile(manifest_path):
-    print "\n\nERROR: Package manifest is not a valid file. Exit..."
-    sys.exit()
+    sys.exit("\n\nERROR: Package manifest is not a valid file. Exit...")
 
-# Check if the target exists
-if not os.path.exists(target_path):
-    print "\n\nERROR: The specified target does not exist."
-    sys.exit()
-
-if os.path.isfile(target_path) and not target_path.endswith('.click'):
-    print "\n\nERROR: The specified target file is a valid .click package."
-    sys.exit()
+if not os.path.isfile(target_path) and target_path.endswith('.click'):
+    sys.exit("\n\nERROR: The specified target .click does not exists.")
+elif not os.path.isdir(target_path):
+    print "\n\nCreating dest folder\n%s" % target_path
+    os.mkdir(target_path)
 
 # Check if the script exist, if specified any.
 if args.script_path and not os.path.exists(args.script_path):
-    print "\n\nERROR: The specified script does not exists."
-    sys.exit()
+    sys.exit("\n\nERROR: The specified script does not exists.")
 
 # If -f argument has been specified, remove all the existing data before
 # running this script.
@@ -355,7 +368,12 @@ if args.force_download:
         delete_folder(temp_folder, True)
 
 # Check if we already have run this script for the same target.
-if not check_if_temp_folder_already_exists(temp_folder):
+if not check_if_temp_folder_already_exists(temp_arch_folder):
+    # Check internet connection
+    if not check_internet_connection():
+        sys.exit("\n\nERROR: An internet connection is required in order to \
+            download packages from repositories.")
+
     # Create temp folder in /tmp
     print "\nCreating temp folder in %s" % temp_folder
     os.mkdir(temp_folder)
@@ -382,21 +400,25 @@ if not check_if_temp_folder_already_exists(temp_folder):
         extract_deb_package(
             os.path.join(temp_folder, deb_pkg),
             temp_arch_folder)
+
+    # If a script has been specified, run it.
+    if args.script_path:
+        print "\nRunning the script at: %s\n" % args.script_path
+
+        # Ensure that we can run the script, otherwise we don't have the
+        # permission
+        subprocess.call(['chmod', '+x', args.script_path])
+        subprocess.call([
+            args.script_path,
+            temp_arch_folder,
+            get_arch_triplet(args.arch)])
 else:
     print "\nPackages are already downloaded. Use them..."
-
-# If a script has been specified, run it.
-if args.script_path:
-    print "\nRunning the script at: %s\n" % args.script_path
-
-    # Ensure that we can run the script, otherwise we don't have the permission
-    os.system('chmod +x %s' % args.script_path)
-    os.system('%s %s' % (args.script_path, temp_arch_folder))
 
 # If -e or --extract-only flags have been specified, we have completed our work
 if args.extract_only:
     print "\n\nCompleted successfully."
-    sys.exit()
+    sys.exit(0)
 
 # Copy temp_arch folder content to its destination
 if is_click_target:
@@ -417,7 +439,6 @@ if is_click_target:
     delete_folder(temp_click_folder, True)
 
 else:
-    # TODO: This is still experimental and untested! May not work.
     print "\nCopying extracted binaries to their destination"
     copy_directory_content(temp_arch_folder, args.target_path)
 
