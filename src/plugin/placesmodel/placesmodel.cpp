@@ -30,6 +30,7 @@ PlacesModel::PlacesModel(QObject *parent) :
     QAbstractListModel(parent)
   , m_userSavedLocationsName("userSavedLocations")
   , m_userRemovedLocationsName("userRemovedLocations")
+  , m_going_to_rescanMtab(false)
 {
     m_userMountLocation = "/media/" + qgetenv("USER");
     // For example /run/user/1000
@@ -70,8 +71,9 @@ PlacesModel::PlacesModel(QObject *parent) :
     initNewUserMountsWatcher();
     rescanMtab();
 
-    if (m_userSavedLocations.count() > 0) {
-        m_locations += m_userSavedLocations;
+    //other user saved locations
+    foreach (const QString& userLocation, m_userSavedLocations) {
+       addLocationWithoutStoring(userLocation);
     }
     m_settings->sync();
 
@@ -88,17 +90,29 @@ void
 PlacesModel::initNewUserMountsWatcher() {
     m_newUserMountsWatcher = new QFileSystemWatcher(this);
 
-    qDebug() << Q_FUNC_INFO << "Start watching mtab file for new mounts" << m_mtabParser.path();
+    connect(m_newUserMountsWatcher, SIGNAL(fileChanged(QString)), this, SLOT(mtabChanged(QString)));
+    connect(m_newUserMountsWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(mtabChanged(QString)));
 
     m_newUserMountsWatcher->addPath(m_mtabParser.path());
+    /*
+     it looks like QFileSystemWatcher does not work for /etc/mtab sometimes, lets use /media/<user> as well
+     See:
+        https://forum.qt.io/topic/8566/qfilesystemwatcher-not-working-with-etc-mtab
+        https://bugs.launchpad.net/ubuntu-filemanager-app/+bug/1444367
+    */
+    m_newUserMountsWatcher->addPath(m_userMountLocation);
 
-    connect(m_newUserMountsWatcher, &QFileSystemWatcher::fileChanged, this, &PlacesModel::mtabChanged);
+    qDebug() << Q_FUNC_INFO << "Start watching mtab file for new mounts, using:"
+             << m_newUserMountsWatcher->files() << "and" << m_newUserMountsWatcher->directories();
 }
 
 void
 PlacesModel::mtabChanged(const QString &path) {
     qDebug() << Q_FUNC_INFO << "file changed in " << path;
-    rescanMtab();
+    if (!m_going_to_rescanMtab) {
+        m_going_to_rescanMtab = true;
+        QTimer::singleShot(100, this, SLOT(rescanMtab()));
+    }
     // Since old mtab file is replaced with new contents, must readd filesystem watcher
     m_newUserMountsWatcher->removePath(path);
     m_newUserMountsWatcher->addPath(path);
@@ -106,6 +120,7 @@ PlacesModel::mtabChanged(const QString &path) {
 
 void
 PlacesModel::rescanMtab() {
+    m_going_to_rescanMtab = false;
     const QString& path = m_mtabParser.path();
     qDebug() << Q_FUNC_INFO << "rescanning mtab" << path;
 
@@ -121,20 +136,25 @@ PlacesModel::rescanMtab() {
         }
     }
 
+    QSet<QString> addedMounts = QSet<QString>(userMounts).subtract(m_userMounts);
+    QSet<QString> removedMounts = QSet<QString>(m_userMounts).subtract(userMounts);
+
     m_userMounts = userMounts;
 
-    foreach (QString userMount, userMounts) {
-        if (!m_userRemovedLocations.contains(userMount)) {
-            qDebug() << Q_FUNC_INFO << "user mount added: " << userMount;
-            addLocationWithoutStoring(userMount);
-            emit userMountAdded(userMount);
-        } else {
-            removeItem(userMount);
-            qDebug() << Q_FUNC_INFO << "user mount removed: " << userMount;
-            emit userMountRemoved(userMount);
-        }
+    foreach (QString addedMount, addedMounts) {
+        qDebug() << Q_FUNC_INFO << "user mount added: " << addedMount;
+        addLocationWithoutStoring(addedMount);
+        emit userMountAdded(addedMount);
     }
 
+    foreach (QString removedMount, removedMounts) {
+        qDebug() << Q_FUNC_INFO << "user mount removed: " << removedMount;
+        int index = m_locations.indexOf(removedMount);
+        if (index > -1) {
+            removeItemWithoutStoring(index);
+        }
+        emit userMountRemoved(removedMount);
+    }
 }
 
 bool PlacesModel::isMtabEntryUserMount(const QMtabEntry &e) const {
@@ -288,32 +308,32 @@ void PlacesModel::removeItemWithoutStoring(int indexToRemove)
 
 void PlacesModel::addLocation(const QString &location)
 {   
-    if (addLocationWithoutStoring(location)) {
-        bool sync_seettings = false;
+    bool sync_seettings = false;
+    //verify it the user had deleted it before and now is inserting it again
+    int indexRemoved = m_userRemovedLocations.indexOf(location);
+    if(indexRemoved > -1) {
+        m_userRemovedLocations.removeAt(indexRemoved);
+        m_settings->setValue(m_userRemovedLocationsName, m_userRemovedLocations);
+        sync_seettings = true;
+    }
+    if (addLocationWithoutStoring(location)) {     
         // Store the location permanently if it is not default location
         if (!isDefaultLocation(location) && !m_userSavedLocations.contains(location))
         {
             m_userSavedLocations.append(location);
             m_settings->setValue(m_userSavedLocationsName, m_userSavedLocations);
             sync_seettings = true;
-        }
-        //verify it the user had deleted it before and now insert it again
-        int indexRemoved = m_userRemovedLocations.indexOf(location);
-        if(indexRemoved > -1) {
-            m_userRemovedLocations.removeAt(indexRemoved);
-            m_settings->setValue(m_userRemovedLocationsName, m_userRemovedLocations);
-            sync_seettings = true;
-        }
-        if (sync_seettings) {
-            m_settings->sync();
-        }
+        }                
+    }
+    if (sync_seettings) {
+        m_settings->sync();
     }
 }
 
 bool PlacesModel::addLocationWithoutStoring(const QString &location)
 {
-    // Do not allow for duplicates
-    if (!m_locations.contains(location)) {
+    // Do not allow for duplicates and look for removed locations from settings
+    if (!m_locations.contains(location) && !m_userRemovedLocations.contains(location)) {
         // Tell Qt that we're going to be changing the model
         // There's no tree-parent, first new item will be at
         // m_locations.count(), and the last one too
@@ -334,9 +354,8 @@ bool PlacesModel::addLocationWithoutStoring(const QString &location)
 
 void PlacesModel::addDefaultLocation(const QString &location)
 {
-    // a Default location can be removed by the user, if so ignore that
-    // and do not allow for duplicates
-    if (!m_userRemovedLocations.contains(location) && addLocationWithoutStoring(location)) {
+    // a Default location can be removed by the user
+    if (addLocationWithoutStoring(location)) {
          m_defaultLocations.append(location);
     }
 }

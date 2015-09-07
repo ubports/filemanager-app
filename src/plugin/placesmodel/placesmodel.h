@@ -93,8 +93,8 @@ private:
     bool isMtabEntryUserMount(const QMtabEntry &entry) const;
     bool isSubDirectory(const QString &dir, const QString &path) const;
     QString standardLocation(QStandardPaths::StandardLocation location) const;
-    QStringList    m_locations;
-    QStringList    m_defaultLocations;   //<! m_defaultLocations = m_defaultLocations + m_userSavedLocations - m_userRemovedLocations
+    QStringList    m_locations;  //<! m_locations = m_defaultLocations + m_userSavedLocations - m_userRemovedLocations
+    QStringList    m_defaultLocations;
     QStringList    m_userSavedLocations;
     QStringList    m_userRemovedLocations;
     QLatin1String  m_userSavedLocationsName;
@@ -102,6 +102,7 @@ private:
     QSettings *m_settings;
     QFileSystemWatcher *m_newUserMountsWatcher;
     QSet<QString> m_userMounts;
+    bool          m_going_to_rescanMtab;
 #if defined(REGRESSION_TEST_PLACES_MODEL)
     friend class PlacesmodelTest;
 #endif

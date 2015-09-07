@@ -10,6 +10,7 @@ QT       -= gui
 
 TARGET = tst_placesmodeltest
 CONFIG   += console
+CONFIG   += testcase
 CONFIG   -= app_bundle
 
 TEMPLATE = app
