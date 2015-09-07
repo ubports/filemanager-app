@@ -14,5 +14,37 @@
                 "libntdb1"
             ]
         }
+    ],
+    "amd64": [
+        {
+            "url": "http://archive.ubuntu.com/ubuntu",
+            "dist": "vivid",
+            "component": "main",
+            "packages": [
+                "libsmbclient",
+                "samba-libs",
+                "libtalloc2",
+                "libtevent0",
+                "libwbclient0",
+                "libldb1",
+                "libntdb1"
+            ]
+        }
+    ],
+    "i386": [
+        {
+            "url": "http://archive.ubuntu.com/ubuntu",
+            "dist": "vivid",
+            "component": "main",
+            "packages": [
+                "libsmbclient",
+                "samba-libs",
+                "libtalloc2",
+                "libtevent0",
+                "libwbclient0",
+                "libldb1",
+                "libntdb1"
+            ]
+        }
     ]
 }
