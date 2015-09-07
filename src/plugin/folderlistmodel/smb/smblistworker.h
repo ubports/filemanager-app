@@ -29,12 +29,12 @@ class SmbListWorker : public DirListWorker, public SmbObject
 {
     Q_OBJECT
 public:
-    explicit SmbListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive, bool parentIsHost, Const_SmbUtil_Ptr smb);
+    explicit SmbListWorker(const QString &pathName, QDir::Filter filter, const bool isRecursive, DirItemInfo * parentItem, Const_SmbUtil_Ptr smb);
 
 private:
     DirItemInfoList getNetworkContent();
 private:
-    bool               m_parentIsHost;
+    DirItemInfo    * m_parent;
 };
 
 #endif // SMBLISTWORKER_H
