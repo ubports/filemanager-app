@@ -1,0 +1,18 @@
+{
+    "armhf": [
+        {
+            "url": "http://ports.ubuntu.com/ubuntu-ports",
+            "dist": "vivid",
+            "component": "main",
+            "packages": [
+                "libsmbclient",
+                "samba-libs",
+                "libtalloc2",
+                "libtevent0",
+                "libwbclient0",
+                "libldb1",
+                "libntdb1"
+            ]
+        }
+    ]
+}

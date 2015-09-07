@@ -33,6 +33,7 @@ if(CLICK_MODE)
         OUTPUT_VARIABLE ARCH_TRIPLET
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
+
     set(CMAKE_INSTALL_PREFIX /)
     set(CMAKE_INSTALL_BINDIR /)
     set(DATA_DIR /)
@@ -50,6 +51,13 @@ if(CLICK_MODE)
         OUTPUT_VARIABLE CLICK_ARCH
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
+
+    execute process(
+        COMMAND mkdir ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs
+        COMMAND ./get-click-deps filemanager-libs.json ${CLICK_ARCH} ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs
+    )
+
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs/* DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/${ARCH_TRIPLET})
 
     configure_file(manifest.json.in ${CMAKE_CURRENT_BINARY_DIR}/manifest.json)
 
