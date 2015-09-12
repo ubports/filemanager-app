@@ -523,7 +523,7 @@ private:
 #endif
 
     bool allowAccess(const DirItemInfo &fi) const;
-    bool allowAccess(const QString &path) const;
+    bool allowCurrentPathAccess() const;
     bool isAllowedPath(const QString &absolutePath) const;
 };
 
