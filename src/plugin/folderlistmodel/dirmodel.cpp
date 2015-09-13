@@ -963,11 +963,22 @@ bool  DirModel::cdIntoPath(const QString &filename)
 bool  DirModel::cdIntoItem(const DirItemInfo &fi)
 {
     bool ret = false;
+    const DirItemInfo *item = &fi;
     if (fi.isBrowsable())
-    {
-        bool authentication = fi.needsAuthentication() &&
-                              !mCurLocation->useAuthenticationDataIfExists(fi);
-        if (authentication)
+    {              
+        bool needs_authentication = fi.needsAuthentication();
+        if (needs_authentication)
+        {
+           if (mCurLocation->useAuthenticationDataIfExists(fi))
+           {
+               //there is a password stored to try
+               item = mCurLocation->newItemInfo(fi.urlPath());
+               needs_authentication = item->needsAuthentication();
+           }
+        }
+        //item needs authentication and there is no user/password to try
+        // or there is a user/password already used but failed
+        if (needs_authentication)
         {
             mCurLocation->notifyItemNeedsAuthentication(&fi);
             //return true to avoid any error message to appear
@@ -975,12 +986,16 @@ bool  DirModel::cdIntoItem(const DirItemInfo &fi)
             ret = true;
         }
         else
-        {
-            if (fi.isContentReadable())
+        {                      
+            if (item->isContentReadable())
             {
-                mCurLocation->setInfoItem(fi);
+                mCurLocation->setInfoItem(*item);
                 setPathFromCurrentLocation();
                 ret = true;
+            }
+            else
+            {
+                //some other error
             }
         }
     }

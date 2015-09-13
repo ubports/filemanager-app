@@ -176,6 +176,7 @@ public:
     QString   _path;
     QString   _fileName;
     QString   _normalizedPath;
+    QString   _authenticationPath;
 
     static QMimeDatabase mimeDatabase;
 };

@@ -92,14 +92,11 @@ void SmbItemInfo::setInfo(const QString& smb_path)
         break;
     }
     //all the information should be in place now
-    fillFromStatBuf(st);    
+    fillFromStatBuf(st);
+    //set the field here to use on any DirItemInfo object
+    d_ptr->_authenticationPath = sharePath();
 }
 
-
-QString SmbItemInfo::authenticationPath() const
-{
-    return sharePath();
-}
 
 /*!
  * \brief SmbItemInfo::sharePath() returns the share part of the item
