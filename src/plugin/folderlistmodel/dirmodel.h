@@ -64,6 +64,9 @@ public:
         FilePathRole,
         IsDirRole,
         IsHostRole,         //!< it can also be used for other protocols than smb/cifs
+        IsRemoteRole,
+        IsLocalRole,
+        NeedsAuthenticationRole,
         IsSmbWorkgroupRole,
         IsSmbShareRole,
         IsSharedDirRole,    //!< it can also be used for other protocols than smb/cifs

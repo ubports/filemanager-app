@@ -907,7 +907,10 @@ PageWithBottomEdge {
 
     function itemClicked(model) {      
         if (model.isBrowsable) {
-            if (model.isReadable && model.isExecutable) {
+            console.log("browsable path="+model.filePath+" isRemote="+model.isRemote+" needsAuthentication="+model.needsAuthentication)
+            if ((model.isReadable && model.isExecutable) ||
+                (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
+                ) {
                 console.log("Changing to dir", model.filePath)
                 //prefer pageModel.cdIntoIndex() because it is not necessary to parse the path
                 //goTo(model.filePath)
