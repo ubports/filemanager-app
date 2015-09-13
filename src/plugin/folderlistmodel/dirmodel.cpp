@@ -542,12 +542,30 @@ bool DirModel::isAllowedPath(const QString &absolutePath) const {
 }
 
 bool DirModel::allowAccess(const DirItemInfo &fi) const {
-    return allowAccess(fi.absoluteFilePath());
+    bool allowed = !mOnlyAllowedPaths; // !mOnlyAllowedPaths means any path is allowed
+    if (!allowed)
+    {        
+        allowed = fi.isRemote() ? !fi.needsAuthentication() :           //remote locations
+                                   isAllowedPath(fi.absoluteFilePath());//local disk locations
+    }
+    return allowed;
 }
 
-bool DirModel::allowAccess(const QString &absoluteFilePath) const {
-    return !mOnlyAllowedPaths || isAllowedPath(absoluteFilePath);
+/*!
+ * \brief DirModel::allowCurrentPathAccess() Checks the access in the current path \a mCurrentDir
+ *
+ *  As \a mCurrentDir comes from mCurLocation->info()->urlPath() allowAccess(const DirItemInfo &fi) can be used here
+ *
+ *  \sa setPathFromCurrentLocation()
+ *
+ * \return
+ */
+bool DirModel::allowCurrentPathAccess() const {
+    const DirItemInfo *currentDirInfo = mCurLocation->info();
+    Q_ASSERT(currentDirInfo);
+    return allowAccess(*currentDirInfo);
 }
+
 
 void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 {
@@ -581,7 +599,7 @@ void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 
 void DirModel::rm(const QStringList &paths)
 {
-    if (!allowAccess(mCurrentDir)) {
+    if (!allowCurrentPathAccess()) {
         qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
         return;
     }
@@ -617,9 +635,14 @@ bool DirModel::rename(int row, const QString &newName)
         return false;
     }
 
-    const DirItemInfo &fi = mDirectoryContents.at(row);
-    if (!allowAccess(mCurrentDir)) {
+    if (!allowCurrentPathAccess()) {
         qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
+        return false;
+    }
+
+    const DirItemInfo &fi = mDirectoryContents.at(row);
+    if (!allowAccess(fi)) {
+        qDebug() << Q_FUNC_INFO << "Access denied in" << fi.absoluteFilePath();
         return false;
     }
 
@@ -871,7 +894,7 @@ void DirModel::cutIndex(int row)
 
 void DirModel::cutPaths(const QStringList &items)
 {
-    if (!allowAccess(mCurrentDir)) {
+    if (!allowCurrentPathAccess()) {
         qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
         return;
     }
@@ -883,7 +906,7 @@ void DirModel::cutPaths(const QStringList &items)
 void DirModel::paste()
 {
     // Restrict pasting if in restricted directory when pasting on a local file system
-    if (!mCurLocation->isRemote() && !allowAccess(mCurrentDir)) {
+    if (!allowCurrentPathAccess()) {
         qDebug() << Q_FUNC_INFO << "access not allowed, pasting not done" << mCurrentDir;
         return;
     }
