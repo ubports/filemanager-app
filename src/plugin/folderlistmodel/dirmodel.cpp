@@ -964,6 +964,7 @@ bool  DirModel::cdIntoItem(const DirItemInfo &fi)
 {
     bool ret = false;
     const DirItemInfo *item = &fi;
+    DirItemInfo *created_itemInfo = 0;
     if (fi.isBrowsable())
     {              
         bool needs_authentication = fi.needsAuthentication();
@@ -972,7 +973,8 @@ bool  DirModel::cdIntoItem(const DirItemInfo &fi)
            if (mCurLocation->useAuthenticationDataIfExists(fi))
            {
                //there is a password stored to try
-               item = mCurLocation->newItemInfo(fi.urlPath());
+               created_itemInfo     = mCurLocation->newItemInfo(fi.urlPath());
+               item                 = created_itemInfo;
                needs_authentication = item->needsAuthentication();
            }
         }
@@ -998,6 +1000,10 @@ bool  DirModel::cdIntoItem(const DirItemInfo &fi)
                 //some other error
             }
         }
+    }
+    if (created_itemInfo != 0)
+    {
+        delete created_itemInfo;
     }
     return ret;
 }
