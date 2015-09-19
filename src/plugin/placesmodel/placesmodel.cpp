@@ -26,10 +26,14 @@
 #include <QStandardPaths>
 #include <QDebug>
 
+namespace
+{
+  const QString userSavedLocationsName("userSavedLocations");
+  const QString userRemovedLocationsName("userRemovedLocations");
+}
+
 PlacesModel::PlacesModel(QObject *parent) :
-    QAbstractListModel(parent)
-  , m_userSavedLocationsName("userSavedLocations")
-  , m_userRemovedLocationsName("userRemovedLocations")
+    QAbstractListModel(parent) 
   , m_going_to_rescanMtab(false)
 {
     m_userMountLocation = "/media/" + qgetenv("USER");
@@ -43,15 +47,13 @@ PlacesModel::PlacesModel(QObject *parent) :
             + "/" + QCoreApplication::applicationName() + "/" + "places.conf";
     m_settings = new QSettings(settingsLocation, QSettings::IniFormat, this);
 
-    m_userSavedLocations   = m_settings->value(m_userSavedLocationsName).toStringList();
-    m_userRemovedLocations = m_settings->value(m_userRemovedLocationsName).toStringList();
+    m_userSavedLocations   = m_settings->value(userSavedLocationsName).toStringList();
+    m_userRemovedLocations = m_settings->value(userRemovedLocationsName).toStringList();
 
-    //remove old key "storedLocations" or others no longer used
-    QStringList settingsKeys  = m_settings->allKeys();
-    foreach (const QString& key, settingsKeys) {
-       if (key != m_userSavedLocationsName && key != m_userRemovedLocationsName) {
-           m_settings->remove(key);
-       }
+    //remove old key "storedLocations" which is no longer used
+    QLatin1String oldStoredLocations("storedLocations");
+    if (m_settings->contains(oldStoredLocations)) {
+        m_settings->remove(oldStoredLocations);
     }
 
     // Prepopulate the model with the user locations
@@ -73,7 +75,7 @@ PlacesModel::PlacesModel(QObject *parent) :
 
     //other user saved locations
     foreach (const QString& userLocation, m_userSavedLocations) {
-       addLocationWithoutStoring(userLocation);
+       addLocationNotRemovedWithoutStoring(userLocation);
     }
     m_settings->sync();
 
@@ -143,7 +145,7 @@ PlacesModel::rescanMtab() {
 
     foreach (QString addedMount, addedMounts) {
         qDebug() << Q_FUNC_INFO << "user mount added: " << addedMount;
-        addLocationWithoutStoring(addedMount);
+        addLocationNotRemovedWithoutStoring(addedMount);
         emit userMountAdded(addedMount);
     }
 
@@ -272,13 +274,13 @@ void PlacesModel::removeItem(int indexToRemove)
         {
             // Remove the User saved location permanently
             m_userSavedLocations.removeAt(index_user_location);
-            m_settings->setValue(m_userSavedLocationsName, m_userSavedLocations);
+            m_settings->setValue(userSavedLocationsName, m_userSavedLocations);
             sync_settings = true;
         }
         //save it as removed location, even a default location can be removed
         if (!m_userRemovedLocations.contains(location)) {
             m_userRemovedLocations.append(location);
-            m_settings->setValue(m_userRemovedLocationsName, m_userRemovedLocations);
+            m_settings->setValue(userRemovedLocationsName, m_userRemovedLocations);
             sync_settings = true;
         }
         removeItemWithoutStoring(indexToRemove);
@@ -305,32 +307,55 @@ void PlacesModel::removeItemWithoutStoring(int indexToRemove)
     endRemoveRows();
 }
 
-
+/*!
+ * \brief PlacesModel::addLocation()
+ *
+ * Adds the location permanently in the settings file.
+ *
+ * If the location has already been deleted by the user it is first removed from the removed settings \a m_userRemovedLocations.
+ *
+ * The location is saved in settings file in \a m_userSavedLocations
+ *
+ * \param location
+ */
 void PlacesModel::addLocation(const QString &location)
 {   
-    bool sync_seettings = false;
+    bool sync_settings = false;
     //verify it the user had deleted it before and now is inserting it again
     int indexRemoved = m_userRemovedLocations.indexOf(location);
-    if(indexRemoved > -1) {
+    if (indexRemoved > -1) {
         m_userRemovedLocations.removeAt(indexRemoved);
-        m_settings->setValue(m_userRemovedLocationsName, m_userRemovedLocations);
-        sync_seettings = true;
+        m_settings->setValue(userRemovedLocationsName, m_userRemovedLocations);
+        sync_settings = true;
     }
-    if (addLocationWithoutStoring(location)) {     
+    if (addLocationNotRemovedWithoutStoring(location)) {
         // Store the location permanently if it is not default location
         if (!isDefaultLocation(location) && !m_userSavedLocations.contains(location))
         {
             m_userSavedLocations.append(location);
-            m_settings->setValue(m_userSavedLocationsName, m_userSavedLocations);
-            sync_seettings = true;
+            m_settings->setValue(userSavedLocationsName, m_userSavedLocations);
+            sync_settings = true;
         }                
     }
-    if (sync_seettings) {
+    if (sync_settings) {
         m_settings->sync();
     }
 }
 
-bool PlacesModel::addLocationWithoutStoring(const QString &location)
+/*!
+ * \brief PlacesModel::addLocationNotRemovedWithoutStoring()
+ *
+ *  Add that location only if it was not removed before by the user.
+ *
+ *  When the user removes a location from Places using \ref removeItem(int index) it is stored in settings file.
+ *  The user must use \ref addLocation(const QString &location) to add back an already removed location.
+ *
+ * \param location
+ *
+ * \return true when the location was added (not existent in \a m_locations nor in \a m_userRemovedLocations),
+ *         otherwise false
+ */
+bool PlacesModel::addLocationNotRemovedWithoutStoring(const QString &location)
 {
     // Do not allow for duplicates and look for removed locations from settings
     if (!m_locations.contains(location) && !m_userRemovedLocations.contains(location)) {
@@ -341,7 +366,6 @@ bool PlacesModel::addLocationWithoutStoring(const QString &location)
 
         // Append the actual location
         m_locations.append(location);
-
 
         // Tell Qt we're done with modifying the model so that
         // it can update the UI and everything else to reflect
@@ -355,7 +379,7 @@ bool PlacesModel::addLocationWithoutStoring(const QString &location)
 void PlacesModel::addDefaultLocation(const QString &location)
 {
     // a Default location can be removed by the user
-    if (addLocationWithoutStoring(location)) {
+    if (addLocationNotRemovedWithoutStoring(location)) {
          m_defaultLocations.append(location);
     }
 }

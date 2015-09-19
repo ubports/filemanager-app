@@ -78,9 +78,8 @@ private slots:
     void rescanMtab();
 
 private:
-    void initNewUserMountsWatcher();
-    // Returns true if location was not known before, and false if it was known
-    bool addLocationWithoutStoring(const QString &location);
+    void initNewUserMountsWatcher();    
+    bool addLocationNotRemovedWithoutStoring(const QString &location);
     // Returns true if location was not known before, and false if it was known
     void removeItemWithoutStoring(int itemToRemove);
     //just add into m_locations, does not emit any signal
@@ -96,9 +95,7 @@ private:
     QStringList    m_locations;  //<! m_locations = m_defaultLocations + m_userSavedLocations - m_userRemovedLocations
     QStringList    m_defaultLocations;
     QStringList    m_userSavedLocations;
-    QStringList    m_userRemovedLocations;
-    QLatin1String  m_userSavedLocationsName;
-    QLatin1String  m_userRemovedLocationsName;
+    QStringList    m_userRemovedLocations;   
     QSettings *m_settings;
     QFileSystemWatcher *m_newUserMountsWatcher;
     QSet<QString> m_userMounts;
