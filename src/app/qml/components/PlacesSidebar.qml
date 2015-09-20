@@ -80,7 +80,7 @@ Sidebar {
                     }
                 }
 
-                iconSource: model.icon || fileIcon(model.path, true)
+                iconSource: model.icon || fileIcon(model.path) //using only path, model is null
 
                 onClicked: {
                     goTo(model.path)

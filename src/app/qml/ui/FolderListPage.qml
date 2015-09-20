@@ -771,12 +771,18 @@ PageWithBottomEdge {
     // to get "system wide" icons in Ubuntu Touch, or if we have to use
     // icons packaged into the application. Both folder and individual
     // files will need an icon.
-    // TODO: Remove isDir parameter and use new model functions
-    function fileIcon(file, isDir) {
-        var iconPath = isDir ? "/usr/share/icons/Humanity/places/48/folder.svg"
-                             : "/usr/share/icons/Humanity/mimes/48/empty.svg"
 
-        if (file === userplaces.locationHome) {
+    function fileIcon(file, model) {
+        var iconPath = model ? "/usr/share/icons/Humanity/mimes/48/empty.svg" :
+                               "/usr/share/icons/Humanity/places/48/folder.svg"
+
+        if (model && model.isSmbWorkgroup) {
+            iconPath = "/usr/share/icons/Humanity/places/48/network_local.svg"
+        } else if (model && model.isHost) {
+            iconPath = "/usr/share/icons/Humanity/places/48/server.svg"
+        } else if (model && model.isBrowsable) {
+            iconPath = "/usr/share/icons/Humanity/places/48/folder.svg"
+        } else if (file === userplaces.locationHome) {
             iconPath = "../icons/folder-home.svg"
         } else if (file === i18n.tr("~/Desktop")) {
             iconPath = "/usr/share/icons/Humanity/places/48/user-desktop.svg"
@@ -798,7 +804,9 @@ PageWithBottomEdge {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-videos.svg"
         } else if (file === "/") {
             iconPath = "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
-        } else if (userplaces.isUserMountDirectory(file)) {
+        } else if (file === userplaces.locationSamba) {
+          iconPath = "/usr/share/icons/Humanity/places/48/network_local.svg"
+        }  else if (userplaces.isUserMountDirectory(file)) {
             // In context of Ubuntu Touch this means SDCard currently.
             iconPath = "/usr/share/icons/Humanity/devices/48/drive-removable-media.svg"
         }
@@ -811,6 +819,8 @@ PageWithBottomEdge {
             return i18n.tr("Home")
         } else if (folder === "/") {
             return i18n.tr("Device")
+        } else if (folder === userplaces.locationSamba) {
+            return i18n.tr("Network")
         } else {
             return basename(folder)
         }

@@ -52,7 +52,7 @@ Item {
     property string text: fileName
     property string subText: Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate) + (!model.isDir ? ", " + fileSize : "")
 
-    property var icon: fileIcon(filePath, model.isDir)
+    property var icon:   fileIcon(filePath, model)
 
     Item {
         anchors {
