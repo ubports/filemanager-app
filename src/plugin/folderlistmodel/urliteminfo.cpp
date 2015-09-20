@@ -105,11 +105,7 @@ void UrlItemInfo::verifyHost(const QString urlPath)
         if (url.path().isEmpty())
         {
             //!< initial set is "host", Samba shares also have Workspace which will be handled in \ref SmbItemInfo
-            d_ptr->_isHost = true;
-            //set as it exists so far
-            d_ptr->_exists = true;
-            d_ptr->_isReadable   = true;
-            d_ptr->_isExecutable = true;
+           setAsHost();
         }
     }
 }

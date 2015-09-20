@@ -25,11 +25,11 @@
 SmbListWorker::SmbListWorker(const QString &pathName,
                              QDir::Filter filter,
                              const bool isRecursive,
-                             bool parentIsHost,
+                             DirItemInfo * parentItem,
                              Const_SmbUtil_Ptr smb)
    : DirListWorker(pathName, filter, isRecursive)  
    , SmbObject(pathName, smb)
-   , m_parentIsHost(parentIsHost)
+   , m_parent(parentItem)
 {
     mLoaderType =  NetworkLoader;
 }
@@ -51,9 +51,14 @@ DirItemInfoList SmbListWorker::getNetworkContent()
     {
         QString next = dir.next();
         SmbItemInfo item (next, m_smb);
-        if (m_parentIsHost)
+        if (m_parent)
         {
-            item.setAsShare();
+            if (m_parent->isHost()) {
+                item.setAsShare();
+            }
+            else if (m_parent->isWorkGroup()) {
+                 item.setAsHost();
+            }
         }
         smbContent.append(item);
     }
