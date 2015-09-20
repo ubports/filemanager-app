@@ -41,8 +41,7 @@ public:
 
 public:
     QString          sharePath() const;
-    void             setAsShare();
-    virtual QString  authenticationPath() const;
+    void             setAsShare();  
     virtual void     setFile(const QString &dir, const QString & file);
 
 protected:    

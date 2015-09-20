@@ -407,7 +407,7 @@ bool DirItemInfo::needsAuthentication() const
 
 QString DirItemInfo::authenticationPath() const
 {
-    return QLatin1String(0);
+    return  d_ptr->_authenticationPath;
 }
 
 
