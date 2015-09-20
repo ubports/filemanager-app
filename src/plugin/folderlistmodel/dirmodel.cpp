@@ -221,6 +221,9 @@ QHash<int, QByteArray> DirModel::buildRoleNames() const
         roles.insert(FilePathRole, QByteArray("filePath"));
         roles.insert(IsDirRole, QByteArray("isDir"));        
         roles.insert(IsHostRole, QByteArray("isHost"));
+        roles.insert(IsRemoteRole,QByteArray("isRemote"));
+        roles.insert(IsLocalRole,QByteArray("isLocal"));
+        roles.insert(NeedsAuthenticationRole,QByteArray("needsAuthentication"));
         roles.insert(IsSmbWorkgroupRole, QByteArray("isSmbWorkgroup"));
         roles.insert(IsSmbShareRole, QByteArray("isSmbShare"));
         roles.insert(IsSharedDirRole, QByteArray("isSharedDir"));
@@ -400,6 +403,12 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             return fi.isSelected();
         case IsHostRole:
             return fi.isHost();
+        case IsRemoteRole:
+            return fi.isRemote();
+        case IsLocalRole:
+            return fi.isLocal();
+        case NeedsAuthenticationRole:
+            return fi.needsAuthentication();
         case IsSmbWorkgroupRole:
             return fi.isWorkGroup();
         case IsSmbShareRole:
@@ -437,6 +446,19 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
     }//switch (role)
 
     return QVariant();
+}
+
+
+/*!
+ * \brief DirModel::setPathWithAuthentication() It is just a QML entry point as setPath is a QML property and cannot be called as a function
+ * \param path
+ * \param user
+ * \param password
+ * \param savePassword
+ */
+void DirModel::setPathWithAuthentication(const QString &path, const QString &user, const QString &password, bool savePassword)
+{
+    setPath(path,user,password,savePassword);
 }
 
 

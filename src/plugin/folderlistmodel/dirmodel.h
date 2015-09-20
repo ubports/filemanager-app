@@ -64,6 +64,9 @@ public:
         FilePathRole,
         IsDirRole,
         IsHostRole,         //!< it can also be used for other protocols than smb/cifs
+        IsRemoteRole,
+        IsLocalRole,
+        NeedsAuthenticationRole,
         IsSmbWorkgroupRole,
         IsSmbShareRole,
         IsSharedDirRole,    //!< it can also be used for other protocols than smb/cifs
@@ -308,6 +311,11 @@ public:
                  void  moveIndexesToTrash(const QList<int>&);
     Q_INVOKABLE  void  restoreIndexFromTrash(int index);
                  void  restoreIndexesFromTrash(const QList<int>&);
+
+    Q_INVOKABLE  void  setPathWithAuthentication(const QString& path,
+                                                 const QString& user,
+                                                 const QString& password,
+                                                 bool  savePassword);
 
 public slots:
   /*!
