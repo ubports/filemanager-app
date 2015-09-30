@@ -24,4 +24,6 @@ QT          *= core network
 CONFIG    *= link_pkgconfig
 PKGCONFIG *= smbclient
 
+DEFINES *= _LARGEFILE_SOURCE _FILE_OFFSET_BITS=64
+
 INCLUDEPATH += $$PWD/src
