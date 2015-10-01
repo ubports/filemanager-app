@@ -774,6 +774,16 @@ PageWithBottomEdge {
         return pageModel.curPathIsWritable()
     }
 
+    function itemDateAndSize(model) {
+        var strDate = Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate);       
+        //local file systems always have date and size for both files and directories
+        //remote file systems may have not size for directories, it comes as "Unknown"
+        if (strDate) {
+            strDate += ", " + model.fileSize //show the size even it is "Unknown"
+        }
+        return strDate;
+    }
+
     // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
     // Nemo mobile has icon provider. Have to figure out what's the proper way
     // to get "system wide" icons in Ubuntu Touch, or if we have to use
