@@ -340,45 +340,28 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
     StatReturn ret = StatInvalid;
     int slashes = smb_path.count(QDir::separator());
     Smb::FileHandler fd = 0;
-    //  smb:// -> slahes=2   smb://workgroup -> slahes=2   smb://host/share -> slashes=3=URL_SLASHES_NUMBER_FOR_SHARES
-    if ((fd=openDir(context, smb_path)))
-    {       
-        if ((ret = guessDirType(context,fd)) == StatDir && slashes == URL_SLASHES_NUMBER_FOR_SHARES)
+    ::memset(st, 0, sizeof(struct stat));
+    if ((fd=openDir(context, smb_path)) )
         {
-            ret  = StatShare;
-        }
-        if (slashes >= URL_SLASHES_NUMBER_FOR_SHARES  && (ret == StatShare || ret == StatDir))
+        ret = guessDirType(context,fd);
+        closeHandle(context, fd);
+        if (ret == StatDir)
         {
-          /* smbc_getFunctionFstatdir does not work
-            ret = static_cast<StatReturn>(::smbc_getFunctionFstatdir(context)(context,fd, st));
-          */
-            QString ipUrl = NetUtil::urlConvertHostnameToIP(smb_path);
-            if (ipUrl.isEmpty())
+            //  smb:// -> slahes=2   smb://workgroup -> slahes=2   smb://host/share -> slashes=3=URL_SLASHES_NUMBER_FOR_SHARES
+            if (slashes == URL_SLASHES_NUMBER_FOR_SHARES)
             {
-                ipUrl = smb_path;
+                ret = StatShare;
             }
-            (void)getStat(context,ipUrl, st);
+            (void)getStat(context,smb_path,st);
         }
     }
-    else
-    {
-        // there is no indication of what the item is,  directory or file
-        // if openDir() failed it may be a file, try openFile()
-        // do not try openFile() when: EACCES means it needs authentication, ECONNREFUSED means path does not exist
-        if (errno != EACCES && errno != ECONNREFUSED )
-        {
-            if ((fd = openFile(context,smb_path)))
+    else if (errno != EACCES && errno != ECONNREFUSED) // perhaps is a file
             {
-                ret =  getFstat(context,fd, st);
-            }
-        }
+        errno = 0;
+        ret = getStat(context, smb_path,st);
     }
 
-    if (fd)
-    {
-        closeHandle(context, fd);
-    }
-    else
+    if (errno != 0)
     {
         SHOW_ERRNO(smb_path);
         switch(errno)
