@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2015-03-31 15:18+0000\n"
+"PO-Revision-Date: 2015-10-03 02:22+0000\n"
 "Last-Translator: Mathias Bynke <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-09-28 06:14+0000\n"
-"X-Generator: Launchpad (build 17754)\n"
+"X-Launchpad-Export-Date: 2015-10-03 05:36+0000\n"
+"X-Generator: Launchpad (build 17783)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
@@ -445,7 +445,7 @@ msgstr "Klarte ikke å lage link til"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:706
 msgid "Could not set permissions to dir"
-msgstr ""
+msgstr "Klarte ikke å fastsette rettigheter til mappen"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:720
 msgid "Could not open file"
