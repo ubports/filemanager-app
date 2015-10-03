@@ -50,9 +50,8 @@ SmbItemInfo::~SmbItemInfo()
 void SmbItemInfo::setInfo(const QString& smb_path)
 {   
     SmbUtil *smb = const_cast<SmbUtil*> (m_smb);
-    //getStatInfo() is supposed to clear the struct stat unless the item does not exist
+    //getStatInfo() is supposed to clear the struct stat
     struct stat st;
-    ::memset(&st, 0, sizeof(struct stat));
     int ret  = smb->getStatInfo(smb_path, &st);
     //lets start with true
     d_ptr->_exists  = d_ptr->_isReadable = true;
@@ -64,16 +63,7 @@ void SmbItemInfo::setInfo(const QString& smb_path)
          d_ptr->_isHost = false;
          d_ptr->_exists  = d_ptr->_isReadable = false;
          break;
-    case SmbUtil::StatDir:              
-        //if directories does not have permissions lets set default
-        //some smb stat functions does not work, this code will not hurt
-        if ((st.st_mode & S_IFMT) == 0)
-        {
-            st.st_mode |= S_IRUSR | S_IWUSR | S_IXUSR |
-                          S_IRGRP | S_IWGRP | S_IXGRP |
-                          S_IROTH | S_IXOTH;
-        }
-        st.st_mode |= S_IFDIR;
+    case SmbUtil::StatDir:                     
         break;
     case SmbUtil::StatHost:
         d_ptr->_isHost = true;
