@@ -38,11 +38,17 @@
 
 #if defined(SHOW_MESSAGES)
 #  define DBG(more_items) qDebug() << Q_FUNC_INFO  more_items
+#  define DBG_STAT(ret) qDebug() << Q_FUNC_INFO \
+                                 << "return:" << ret \
+                                 << "mode:"   << st->st_mode \
+                                 << "mtime:"  << st->st_mtime \
+                                 << "size:"   << st->st_size
 #else
 #define DBG(none)
+#define DBG_STAT(ret)
 #endif
 
-#define SHOW_ERRNO(path)        if (errno != 0 && errno != ENOENT) \
+#define SHOW_ERRNO(path)        if (errno != 0) \
                                 { \
                                     qWarning() << Q_FUNC_INFO << "path:" << path << "errno:" << errno << strerror(errno); \
                                 }
@@ -358,7 +364,7 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
     else if (errno != EACCES && errno != ECONNREFUSED) // perhaps is a file
     {
         errno = 0;
-        ret = getStat(context, smb_path,st);
+        ret = static_cast<SmbUtil::StatReturn> (getStat(context, smb_path,st));
     }
 
     if (errno != 0)
@@ -740,19 +746,22 @@ bool SmbUtil::changePermissions(Smb::Context context, const QString& smb_path, m
 }
 
 
-SmbUtil::StatReturn
+int
 SmbUtil::getFstat(Smb::Context context, Smb::FileHandler fd, struct stat*  st)
 {
      ::memset(st,0,sizeof(struct stat));
      int ret = ::smbc_getFunctionFstat(context)(context,fd, st);
-     return static_cast<SmbUtil::StatReturn> (ret);
+     DBG_STAT(ret);
+     return ret;
 }
 
 
-SmbUtil::StatReturn
+int
 SmbUtil::getStat(Smb::Context context, const QString& smb_path, struct stat*  st)
 {
     ::memset(st,0,sizeof(struct stat));
+    DBG(<< smb_path);
     int ret = ::smbc_getFunctionStat(context)(context,smb_path.toLocal8Bit().constData(), st);
-    return static_cast<SmbUtil::StatReturn> (ret);
+    DBG_STAT(ret);
+    return ret;
 }
