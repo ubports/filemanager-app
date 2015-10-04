@@ -205,7 +205,8 @@ DirItemInfo * LocationsFactory::validateCurrentUrl(Location *location, const Net
         else
         {
             //reset the password even it was set before, it is necessary to browse other items
-            location->setAuthentication(::qgetenv("USER"), QLatin1String(0));
+            location->setAuthentication(NetAuthenticationData::currentUser(),
+                                        NetAuthenticationData::noPassword());
         }
     }
 
