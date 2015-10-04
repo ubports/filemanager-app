@@ -342,7 +342,7 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
     Smb::FileHandler fd = 0;
     ::memset(st, 0, sizeof(struct stat));
     if ((fd=openDir(context, smb_path)) )
-        {
+    {
         ret = guessDirType(context,fd);
         closeHandle(context, fd);
         if (ret == StatDir)
@@ -356,7 +356,7 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
         }
     }
     else if (errno != EACCES && errno != ECONNREFUSED) // perhaps is a file
-            {
+    {
         errno = 0;
         ret = getStat(context, smb_path,st);
     }
@@ -636,6 +636,10 @@ bool SmbUtil::checkValidShareName(const char *shareName)
     {
       return false;
     }
+    if (::strcmp(shareName, "ADMIN$") == 0)
+    {
+      return false;
+    }
 
     return true;
 }
@@ -727,7 +731,7 @@ QString SmbUtil::findSmBServer(const smbc_dirent & dirent)
 
 bool SmbUtil::changePermissions(Smb::Context context, const QString& smb_path, mode_t mode)
 {
-    int ret = ::smbc_getFunctionChmod(context)(context, smb_path.toLocal8Bit().constBegin(), mode);
+    int ret = ::smbc_getFunctionChmod(context)(context, smb_path.toLocal8Bit().constData(), mode);
     if (ret < 0)
     {
         SHOW_ERRNO(smb_path);
