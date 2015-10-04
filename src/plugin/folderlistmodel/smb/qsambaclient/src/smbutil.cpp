@@ -716,20 +716,24 @@ bool SmbUtil::namesMatchFilter(const QString & str, const QStringList &filterNam
  */
 QString SmbUtil::findSmBServer(const smbc_dirent & dirent)
 {
-    QString host("localhost");
+    QString host;
     if (dirent.name[0] != 0)
     {
         QString name(dirent.name);
         host = name;
-        QString comment(dirent.comment);
-        if (!comment.isEmpty())
+    }
+    QString comment(dirent.comment);
+    if (!comment.isEmpty())
+    {
+        QString fullName = comment.split(QLatin1Char(' '), QString::SkipEmptyParts).first();
+        if (!fullName.isEmpty())
         {
-            QString fullName = comment.split(QLatin1Char(' '), QString::SkipEmptyParts).first();
-            if (!fullName.isEmpty() &&  fullName.startsWith(name), Qt::CaseSensitive)
-            {
-                host = fullName;
-            }
+            host = fullName;
         }
+    }
+    if (host.isEmpty())
+    {
+        host = QLatin1String("localhost");
     }
     return host.toLower();
 }
