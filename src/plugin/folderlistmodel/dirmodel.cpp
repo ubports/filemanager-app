@@ -370,7 +370,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
                  }
                  //it is possible to browse network folders and get its
                  //number of items, but it may take longer
-                 return tr("unkown");
+                 return tr("Unknown");
              }
              return fileSize(fi.size());
         }
