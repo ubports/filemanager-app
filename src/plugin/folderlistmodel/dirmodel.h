@@ -64,6 +64,9 @@ public:
         FilePathRole,
         IsDirRole,
         IsHostRole,         //!< it can also be used for other protocols than smb/cifs
+        IsRemoteRole,
+        IsLocalRole,
+        NeedsAuthenticationRole,
         IsSmbWorkgroupRole,
         IsSmbShareRole,
         IsSharedDirRole,    //!< it can also be used for other protocols than smb/cifs
@@ -309,6 +312,11 @@ public:
     Q_INVOKABLE  void  restoreIndexFromTrash(int index);
                  void  restoreIndexesFromTrash(const QList<int>&);
 
+    Q_INVOKABLE  void  setPathWithAuthentication(const QString& path,
+                                                 const QString& user,
+                                                 const QString& password,
+                                                 bool  savePassword);
+
 public slots:
   /*!
      * \brief copySelection() copy selected items to the clipboard
@@ -523,7 +531,7 @@ private:
 #endif
 
     bool allowAccess(const DirItemInfo &fi) const;
-    bool allowAccess(const QString &path) const;
+    bool allowCurrentPathAccess() const;
     bool isAllowedPath(const QString &absolutePath) const;
 };
 

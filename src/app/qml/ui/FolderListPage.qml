@@ -194,6 +194,10 @@ PageWithBottomEdge {
         }
     }
 
+    NetAuthenticationHandler {
+        id: authenticationHandler
+    }
+
     FolderListModel {
         id: pageModel
         path: folderListPage.folder
@@ -214,6 +218,10 @@ PageWithBottomEdge {
             addAllowedDirectory(userplaces.locationMusic)
             addAllowedDirectory(userplaces.locationPictures)
             addAllowedDirectory(userplaces.locationVideos)
+        }
+        onNeedsAuthentication: {
+            console.log("FolderListModel needsAuthentication() signal arrived")
+            authenticationHandler.showDialog(urlPath,user)
         }
     }
 
@@ -766,17 +774,33 @@ PageWithBottomEdge {
         return pageModel.curPathIsWritable()
     }
 
+    function itemDateAndSize(model) {
+        var strDate = Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate);       
+        //local file systems always have date and size for both files and directories
+        //remote file systems may have not size for directories, it comes as "Unknown"
+        if (strDate) {
+            strDate += ", " + model.fileSize //show the size even it is "Unknown"
+        }
+        return strDate;
+    }
+
     // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
     // Nemo mobile has icon provider. Have to figure out what's the proper way
     // to get "system wide" icons in Ubuntu Touch, or if we have to use
     // icons packaged into the application. Both folder and individual
     // files will need an icon.
-    // TODO: Remove isDir parameter and use new model functions
-    function fileIcon(file, isDir) {
-        var iconPath = isDir ? "/usr/share/icons/Humanity/places/48/folder.svg"
-                             : "/usr/share/icons/Humanity/mimes/48/empty.svg"
 
-        if (file === userplaces.locationHome) {
+    function fileIcon(file, model) {
+        var iconPath = model ? "/usr/share/icons/Humanity/mimes/48/empty.svg" :
+                               "/usr/share/icons/Humanity/places/48/folder.svg"
+
+        if (model && model.isSmbWorkgroup) {
+            iconPath = "/usr/share/icons/Humanity/places/48/network_local.svg"
+        } else if (model && model.isHost) {
+            iconPath = "/usr/share/icons/Humanity/places/48/server.svg"
+        } else if (model && model.isBrowsable) {
+            iconPath = "/usr/share/icons/Humanity/places/48/folder.svg"
+        } else if (file === userplaces.locationHome) {
             iconPath = "../icons/folder-home.svg"
         } else if (file === i18n.tr("~/Desktop")) {
             iconPath = "/usr/share/icons/Humanity/places/48/user-desktop.svg"
@@ -798,7 +822,9 @@ PageWithBottomEdge {
             iconPath = "/usr/share/icons/Humanity/places/48/folder-videos.svg"
         } else if (file === "/") {
             iconPath = "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
-        } else if (userplaces.isUserMountDirectory(file)) {
+        } else if (file === userplaces.locationSamba) {
+          iconPath = "/usr/share/icons/Humanity/places/48/network_local.svg"
+        }  else if (userplaces.isUserMountDirectory(file)) {
             // In context of Ubuntu Touch this means SDCard currently.
             iconPath = "/usr/share/icons/Humanity/devices/48/drive-removable-media.svg"
         }
@@ -811,6 +837,8 @@ PageWithBottomEdge {
             return i18n.tr("Home")
         } else if (folder === "/") {
             return i18n.tr("Device")
+        } else if (folder === userplaces.locationSamba) {
+            return i18n.tr("Network")
         } else {
             return basename(folder)
         }
@@ -870,11 +898,16 @@ PageWithBottomEdge {
         }
     }
 
-    function itemClicked(model) {
+    function itemClicked(model) {      
         if (model.isBrowsable) {
-            if (model.isReadable && model.isExecutable) {
+            console.log("browsable path="+model.filePath+" isRemote="+model.isRemote+" needsAuthentication="+model.needsAuthentication)
+            if ((model.isReadable && model.isExecutable) ||
+                (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
+                ) {
                 console.log("Changing to dir", model.filePath)
-                goTo(model.filePath)
+                //prefer pageModel.cdIntoIndex() because it is not necessary to parse the path
+                //goTo(model.filePath)
+                pageModel.cdIntoIndex(model.index)
             } else {
                 PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
                                 {

@@ -49,10 +49,10 @@ Item {
     property string fileName: model.fileName
     property string filePath: fileView.folder + '/' + fileName
 
-    property string text: fileName
-    property string subText: Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate) + (!model.isDir ? ", " + fileSize : "")
+    property string text: fileName   
+    property string subText: itemDateAndSize(model)
 
-    property var icon: fileIcon(filePath, model.isDir)
+    property var icon:   fileIcon(filePath, model)
 
     Item {
         anchors {

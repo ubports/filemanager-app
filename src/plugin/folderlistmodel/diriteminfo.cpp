@@ -407,7 +407,7 @@ bool DirItemInfo::needsAuthentication() const
 
 QString DirItemInfo::authenticationPath() const
 {
-    return QLatin1String(0);
+    return  d_ptr->_authenticationPath;
 }
 
 
@@ -578,4 +578,13 @@ QString DirItemInfo::removeExtraSlashes(const QString &url, int firstSlashIndex)
         }
     }
     return ret;
+}
+
+
+void DirItemInfo::setAsHost()
+{
+    d_ptr->_isHost = true;
+    d_ptr->_exists = true;
+    d_ptr->_isReadable   = true;
+    d_ptr->_isExecutable = true;
 }

@@ -221,6 +221,9 @@ QHash<int, QByteArray> DirModel::buildRoleNames() const
         roles.insert(FilePathRole, QByteArray("filePath"));
         roles.insert(IsDirRole, QByteArray("isDir"));        
         roles.insert(IsHostRole, QByteArray("isHost"));
+        roles.insert(IsRemoteRole,QByteArray("isRemote"));
+        roles.insert(IsLocalRole,QByteArray("isLocal"));
+        roles.insert(NeedsAuthenticationRole,QByteArray("needsAuthentication"));
         roles.insert(IsSmbWorkgroupRole, QByteArray("isSmbWorkgroup"));
         roles.insert(IsSmbShareRole, QByteArray("isSmbShare"));
         roles.insert(IsSharedDirRole, QByteArray("isSharedDir"));
@@ -367,7 +370,7 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
                  }
                  //it is possible to browse network folders and get its
                  //number of items, but it may take longer
-                 return tr("unkown");
+                 return tr("Unknown");
              }
              return fileSize(fi.size());
         }
@@ -400,6 +403,12 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             return fi.isSelected();
         case IsHostRole:
             return fi.isHost();
+        case IsRemoteRole:
+            return fi.isRemote();
+        case IsLocalRole:
+            return fi.isLocal();
+        case NeedsAuthenticationRole:
+            return fi.needsAuthentication();
         case IsSmbWorkgroupRole:
             return fi.isWorkGroup();
         case IsSmbShareRole:
@@ -437,6 +446,19 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
     }//switch (role)
 
     return QVariant();
+}
+
+
+/*!
+ * \brief DirModel::setPathWithAuthentication() It is just a QML entry point as setPath is a QML property and cannot be called as a function
+ * \param path
+ * \param user
+ * \param password
+ * \param savePassword
+ */
+void DirModel::setPathWithAuthentication(const QString &path, const QString &user, const QString &password, bool savePassword)
+{
+    setPath(path,user,password,savePassword);
 }
 
 
@@ -542,12 +564,30 @@ bool DirModel::isAllowedPath(const QString &absolutePath) const {
 }
 
 bool DirModel::allowAccess(const DirItemInfo &fi) const {
-    return allowAccess(fi.absoluteFilePath());
+    bool allowed = !mOnlyAllowedPaths; // !mOnlyAllowedPaths means any path is allowed
+    if (!allowed)
+    {        
+        allowed = fi.isRemote() ? !fi.needsAuthentication() :           //remote locations
+                                   isAllowedPath(fi.absoluteFilePath());//local disk locations
+    }
+    return allowed;
 }
 
-bool DirModel::allowAccess(const QString &absoluteFilePath) const {
-    return !mOnlyAllowedPaths || isAllowedPath(absoluteFilePath);
+/*!
+ * \brief DirModel::allowCurrentPathAccess() Checks the access in the current path \a mCurrentDir
+ *
+ *  As \a mCurrentDir comes from mCurLocation->info()->urlPath() allowAccess(const DirItemInfo &fi) can be used here
+ *
+ *  \sa setPathFromCurrentLocation()
+ *
+ * \return
+ */
+bool DirModel::allowCurrentPathAccess() const {
+    const DirItemInfo *currentDirInfo = mCurLocation->info();
+    Q_ASSERT(currentDirInfo);
+    return allowAccess(*currentDirInfo);
 }
+
 
 void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 {
@@ -581,7 +621,7 @@ void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 
 void DirModel::rm(const QStringList &paths)
 {
-    if (!allowAccess(mCurrentDir)) {
+    if (!allowCurrentPathAccess()) {
         qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
         return;
     }
@@ -617,9 +657,14 @@ bool DirModel::rename(int row, const QString &newName)
         return false;
     }
 
-    const DirItemInfo &fi = mDirectoryContents.at(row);
-    if (!allowAccess(mCurrentDir)) {
+    if (!allowCurrentPathAccess()) {
         qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
+        return false;
+    }
+
+    const DirItemInfo &fi = mDirectoryContents.at(row);
+    if (!allowAccess(fi)) {
+        qDebug() << Q_FUNC_INFO << "Access denied in" << fi.absoluteFilePath();
         return false;
     }
 
@@ -871,7 +916,7 @@ void DirModel::cutIndex(int row)
 
 void DirModel::cutPaths(const QStringList &items)
 {
-    if (!allowAccess(mCurrentDir)) {
+    if (!allowCurrentPathAccess()) {
         qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
         return;
     }
@@ -883,7 +928,7 @@ void DirModel::cutPaths(const QStringList &items)
 void DirModel::paste()
 {
     // Restrict pasting if in restricted directory when pasting on a local file system
-    if (!mCurLocation->isRemote() && !allowAccess(mCurrentDir)) {
+    if (!allowCurrentPathAccess()) {
         qDebug() << Q_FUNC_INFO << "access not allowed, pasting not done" << mCurrentDir;
         return;
     }
@@ -933,11 +978,24 @@ bool  DirModel::cdIntoPath(const QString &filename)
 bool  DirModel::cdIntoItem(const DirItemInfo &fi)
 {
     bool ret = false;
+    const DirItemInfo *item = &fi;
+    DirItemInfo *created_itemInfo = 0;
     if (fi.isBrowsable())
-    {
-        bool authentication = fi.needsAuthentication() &&
-                              !mCurLocation->useAuthenticationDataIfExists(fi);
-        if (authentication)
+    {              
+        bool needs_authentication = fi.needsAuthentication();
+        if (needs_authentication)
+        {
+           if (mCurLocation->useAuthenticationDataIfExists(fi))
+           {
+               //there is a password stored to try
+               created_itemInfo     = mCurLocation->newItemInfo(fi.urlPath());
+               item                 = created_itemInfo;
+               needs_authentication = item->needsAuthentication();
+           }
+        }
+        //item needs authentication and there is no user/password to try
+        // or there is a user/password already used but failed
+        if (needs_authentication)
         {
             mCurLocation->notifyItemNeedsAuthentication(&fi);
             //return true to avoid any error message to appear
@@ -945,14 +1003,22 @@ bool  DirModel::cdIntoItem(const DirItemInfo &fi)
             ret = true;
         }
         else
-        {
-            if (fi.isContentReadable())
+        {                      
+            if (item->isContentReadable())
             {
-                mCurLocation->setInfoItem(fi);
+                mCurLocation->setInfoItem(*item);
                 setPathFromCurrentLocation();
                 ret = true;
             }
+            else
+            {
+                //some other error
+            }
         }
+    }
+    if (created_itemInfo != 0)
+    {
+        delete created_itemInfo;
     }
     return ret;
 }

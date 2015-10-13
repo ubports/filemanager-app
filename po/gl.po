@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2015-06-13 23:19+0000\n"
-"Last-Translator: Marcos Lans <Unknown>\n"
+"PO-Revision-Date: 2015-09-18 16:11+0000\n"
+"Last-Translator: Xosé <Unknown>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-07-18 05:31+0000\n"
-"X-Generator: Launchpad (build 17628)\n"
+"X-Launchpad-Export-Date: 2015-10-13 06:11+0000\n"
+"X-Generator: Launchpad (build 17812)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
@@ -122,7 +122,7 @@ msgstr "Ruta:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
-msgstr "Contidos:"
+msgstr "Contido:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
@@ -179,7 +179,7 @@ msgstr "Ir a"
 
 #: ../src/app/qml/ui/FolderListPage.qml:122
 msgid "Unlock full access"
-msgstr "Desbloq. acceso"
+msgstr "Desbloquear acceso completo"
 
 #: ../src/app/qml/ui/FolderListPage.qml:136
 msgid "Authentication failed"
@@ -284,7 +284,7 @@ msgstr "Erro na operación sobre o ficheiro"
 #: ../src/app/qml/ui/FolderListPage.qml:661
 #, qt-format
 msgid "Extracting archive '%1'"
-msgstr "Extraendo o ficheiro «%1»"
+msgstr "Extraendo o arquivo «%1»"
 
 #: ../src/app/qml/ui/FolderListPage.qml:682
 msgid "OK"
@@ -343,16 +343,16 @@ msgstr "Non é posíbel acceder a %1"
 
 #: ../src/app/qml/ui/GoToDialog.qml:26
 msgid "Go To Location"
-msgstr "Ir á localización"
+msgstr "Ir ao lugar"
 
 #: ../src/app/qml/ui/GoToDialog.qml:28
 msgid "Enter a location to go to:"
-msgstr "Introducir a localización onde ir:"
+msgstr "Introduza un lugar ao que ir:"
 
 #: ../src/app/qml/ui/GoToDialog.qml:45 ../src/app/qml/ui/PlacesPage.qml:63
 #: ../src/app/qml/ui/PlacesPopover.qml:66
 msgid "Location..."
-msgstr "Localización..."
+msgstr "Lugar..."
 
 #: ../src/app/qml/ui/GoToDialog.qml:54 ../src/app/qml/ui/PlacesPage.qml:78
 #: ../src/app/qml/ui/PlacesPopover.qml:81
@@ -365,7 +365,7 @@ msgstr "Pechar"
 
 #: ../src/app/qml/ui/SettingsSheet.qml:43
 msgid "Show Advanced Features"
-msgstr "Mostrar características avanzadas"
+msgstr "Mostrar as características avanzadas"
 
 #: ../src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
@@ -405,11 +405,11 @@ msgstr "Filtrar"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:418
 msgid "path or url may not exist or cannot be read"
-msgstr "quizais a ruta ou a url non existan ou non é posíbel lelas"
+msgstr "quizais a ruta ou o url non existan ou non é posíbel lelas"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:585
 msgid "Rename error"
-msgstr "Erro no renomeado"
+msgstr "Erro ao renomear"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:610
 msgid "Error creating new folder"

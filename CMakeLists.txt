@@ -21,6 +21,10 @@ set(EXEC "${APP_NAME}")
 set(CONTENT_HUB_EXPORTER hub-exporter.json)
 set(UBUNTU_MANIFEST_PATH "manifest.json.in" CACHE INTERNAL "Relative path to the manifest file")
 
+# global FILE definitions for stat system call, it works for any sub module
+add_definitions(-D_LARGEFILE_SOURCE)
+add_definitions(-D_FILE_OFFSET_BITS=64)
+
 if(CLICK_MODE)
     if(NOT DEFINED BZR_SOURCE)
         set(BZR_SOURCE "lp:${LP_PROJECT}")

@@ -111,6 +111,7 @@ public:
     virtual void      setFile(const QString &dir, const QString & file);    
     virtual bool      permission(QFile::Permissions permissions) const;
     void              fillFromStatBuf(const struct stat& statBuffer);
+    void              setAsHost();
 
 public:
     static QString    removeExtraSlashes(const QString &url, int firstSlashIndex = -1);
@@ -175,6 +176,7 @@ public:
     QString   _path;
     QString   _fileName;
     QString   _normalizedPath;
+    QString   _authenticationPath;
 
     static QMimeDatabase mimeDatabase;
 };
