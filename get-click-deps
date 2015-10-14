@@ -1,6 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # Copyright (C) 2015 Stefano Verzegnassi <verzegnassi.stefano@gmail.com>
+# Copyright (C) 2015 Didier Roche <didrocks@ubuntu.com> 
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License version 3, as published
@@ -119,8 +120,7 @@ import argparse
 import json
 import gzip
 import subprocess
-import urllib2
-
+import urllib.request, urllib.error, urllib.parse
 
 def get_timestamp():
     return time.time()
@@ -128,9 +128,9 @@ def get_timestamp():
 
 def check_internet_connection():
     try:
-        urllib2.urlopen('http://www.google.com', timeout=20)
+        urllib.request.urlopen('http://www.google.com', timeout=20)
         return True
-    except urllib2.URLError as err:
+    except urllib2.error.URLError as err:
         pass
     return False
 
@@ -145,14 +145,14 @@ def get_arch_triplet(arch):
 
 def download_file(url, dest, verbose=True):
     if verbose:
-        print "\nDownloading:\n%s" % url
+        print ("\nDownloading:\n{}".format(url))
     # TODO: Switch to subprocess
     os.system('cd %s && { curl -# -O %s ; cd - ; }' % (dest, url))
 
 
 def download_file_and_rename(url, dest, new_filename, verbose=True):
     if verbose:
-        print "\nDownloading:\n%s" % url
+        print ("\nDownloading:\n{}".format(url))
     new_path = os.path.join(dest, new_filename)
     subprocess.call(['curl', url, '-#', '-o', new_path])
 
@@ -186,7 +186,7 @@ def get_URLs_for_arch(manifest_path, arch, destpath):
                 repo['component'],
                 arch)
 
-            print "\nDownloading repository index at:\n%s" % repo_index_url
+            print ("\nDownloading repository index at:\n".format(repo_index_url))
 
             repo_index_zip = download_file_and_rename(
                 repo_index_url,
@@ -210,10 +210,10 @@ def get_URLs_for_arch(manifest_path, arch, destpath):
     except KeyError:
         # Arch not found in the manifest. Exit with no error, since there's no
         # need to run the script for this arch.
-        print "\n\nRequested arch has been not specified in the manifest. \
-            Exiting..."
+        print ("\n\nRequested arch has been not specified in the manifest. \
+            Exiting...")
         sys.exit(0)
-    print "\nObtained packages informations"
+    print ("\nObtained packages informations")
     return urls
 
 
@@ -353,7 +353,7 @@ if not os.path.isfile(manifest_path):
 if not os.path.isfile(target_path) and target_path.endswith('.click'):
     sys.exit("\n\nERROR: The specified target .click does not exists.")
 elif not os.path.isdir(target_path):
-    print "\n\nCreating dest folder\n%s" % target_path
+    print ("\n\nCreating dest folder\n{}".format(target_path))
     os.mkdir(target_path)
 
 # Check if the script exist, if specified any.
@@ -364,7 +364,7 @@ if args.script_path and not os.path.exists(args.script_path):
 # running this script.
 if args.force_download:
     if os.path.isdir(temp_folder):
-        print "\nRemoving temp data of the previous run, as requested"
+        print ("\nRemoving temp data of the previous run, as requested")
         delete_folder(temp_folder, True)
 
 # Check if we already have run this script for the same target.
@@ -375,7 +375,7 @@ if not check_if_temp_folder_already_exists(temp_arch_folder):
             download packages from repositories.")
 
     # Create temp folder in /tmp
-    print "\nCreating temp folder in %s" % temp_folder
+    print ("\nCreating temp folder in {}".format(temp_folder))
     os.mkdir(temp_folder)
     os.mkdir(temp_arch_folder)
 
@@ -390,7 +390,7 @@ if not check_if_temp_folder_already_exists(temp_arch_folder):
         download_file(url, temp_folder)
 
     # Extract DEBs packages
-    print "\nExtracting .deb packages to %s" % temp_arch_folder
+    print ("\nExtracting .deb packages to {}".format(temp_arch_folder))
     deb_pkgs_list = []
     for file in os.listdir(temp_folder):
         if file.endswith('.deb'):
@@ -403,7 +403,7 @@ if not check_if_temp_folder_already_exists(temp_arch_folder):
 
     # If a script has been specified, run it.
     if args.script_path:
-        print "\nRunning the script at: %s\n" % args.script_path
+        print ("\nRunning the script at: {}\n".format(args.script_path))
 
         # Ensure that we can run the script, otherwise we don't have the
         # permission
@@ -413,39 +413,39 @@ if not check_if_temp_folder_already_exists(temp_arch_folder):
             temp_arch_folder,
             get_arch_triplet(args.arch)])
 else:
-    print "\nPackages are already downloaded. Use them..."
+    print ("\nPackages are already downloaded. Use them...")
 
 # If -e or --extract-only flags have been specified, we have completed our work
 if args.extract_only:
-    print "\n\nCompleted successfully."
+    print ("\n\nCompleted successfully.")
     sys.exit(0)
 
 # Copy temp_arch folder content to its destination
 if is_click_target:
-    print "\nExtracting target .click package"
+    print ("\nExtracting target .click package")
     temp_click_folder = extract_click_package(
         args.target_path,
         os.path.join('/tmp/', str(get_timestamp())))
 
-    print "\nAdding extracted binaries to the package"
+    print ("\nAdding extracted binaries to the package")
     copy_directory_content(temp_arch_folder, temp_click_folder)
 
     new_click_package_path = build_click_package(temp_click_folder)
-    print "\nCreated new .click package at:\n%s" % new_click_package_path
+    print ("\nCreated new .click package at:\n{}".format(new_click_package_path))
 
-    print "\nReplacing older .click package"
+    print ("\nReplacing older .click package")
     copy_file(new_click_package_path, args.target_path, True)
 
     delete_folder(temp_click_folder, True)
 
 else:
-    print "\nCopying extracted binaries to their destination"
+    print ("\nCopying extracted binaries to their destination")
     copy_directory_content(temp_arch_folder, args.target_path)
 
 # Delete temp files
 if args.delete_temp:
-    print "\nRemoving temp files and directory, as requested"
+    print ("\)nRemoving temp files and directory, as requested")
     delete_folder(temp_folder, True)
 
 # Exit
-print "\n\nCompleted successfully."
+print ("\n\nCompleted successfully.")
