@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2014-06-24 21:39+0000\n"
-"Last-Translator: Gheyret T.Kenji <Unknown>\n"
+"PO-Revision-Date: 2015-10-18 05:33+0000\n"
+"Last-Translator: Eltikin <eltikinuyghur@hotmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2015-10-13 06:11+0000\n"
+"X-Launchpad-Export-Date: 2015-10-18 05:33+0000\n"
 "X-Generator: Launchpad (build 17812)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
@@ -29,7 +29,7 @@ msgstr[1] ""
 #: ../src/app/qml/components/PathHistoryRow.qml:84
 #: ../src/app/qml/ui/FolderListPage.qml:830
 msgid "Device"
-msgstr ""
+msgstr "ئۈسكۈنە"
 
 #: ../src/app/qml/components/PlacesSidebar.qml:53
 #: ../src/app/qml/ui/FolderListPage.qml:31 ../src/app/qml/ui/PlacesPage.qml:27
@@ -39,7 +39,7 @@ msgstr "ئورۇنلار"
 
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
-msgstr ""
+msgstr "ئاچىدىغان پروگرامما"
 
 #: ../src/app/qml/filemanager.qml:81 ../src/app/qml/ui/FolderListPage.qml:107
 #: ../src/app/qml/ui/SettingsSheet.qml:31
@@ -62,7 +62,7 @@ msgstr "تىزىم"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 msgid "Authentication required"
-msgstr ""
+msgstr "كىملىك دەلىللەش زۆرۈر"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
@@ -70,7 +70,7 @@ msgstr ""
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "ئىم"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
@@ -171,11 +171,11 @@ msgstr "خاسلىق"
 
 #: ../src/app/qml/ui/FolderListPage.qml:88
 msgid "New Folder"
-msgstr ""
+msgstr "يېڭى مۇندەرىجە"
 
 #: ../src/app/qml/ui/FolderListPage.qml:115
 msgid "Go To"
-msgstr ""
+msgstr "يۆتكەل"
 
 #: ../src/app/qml/ui/FolderListPage.qml:122
 msgid "Unlock full access"
@@ -183,14 +183,13 @@ msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:136
 msgid "Authentication failed"
-msgstr ""
+msgstr "كىملىك دەلىللەش مەغلۇپ بولدى"
 
 #: ../src/app/qml/ui/FolderListPage.qml:206
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 ھۆججەت"
 
 #: ../src/app/qml/ui/FolderListPage.qml:240
 msgid "Open in a new tab"
@@ -218,7 +217,7 @@ msgstr "يېڭى ھۆججەتنىڭ ئاتىنى كىرگۈزۈڭ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:328
 msgid "Select"
-msgstr ""
+msgstr "تاللاش"
 
 #: ../src/app/qml/ui/FolderListPage.qml:425
 msgid "No files"
@@ -236,7 +235,7 @@ msgstr "‹%1› نى راستلا مەڭگۈلۈككە ئۆچۈرەمسىز؟"
 
 #: ../src/app/qml/ui/FolderListPage.qml:451
 msgid "Deleting files"
-msgstr ""
+msgstr "ھۆججەت ئۆچۈرۈۋاتىدۇ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:469
 #: ../src/app/qml/ui/FolderListPage.qml:584
@@ -275,7 +274,7 @@ msgstr "كۆچۈر"
 #: ../src/app/qml/ui/FolderListPage.qml:599
 #: ../src/app/qml/ui/FolderListPage.qml:720
 msgid "Extract archive"
-msgstr ""
+msgstr "ئارخىپ يەش"
 
 #: ../src/app/qml/ui/FolderListPage.qml:630
 msgid "File operation error"
