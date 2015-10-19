@@ -65,6 +65,23 @@ if(CLICK_MODE)
     add_custom_target(com_ubuntu_calendar_CLICKFiles ALL SOURCES ${CLICK_FILES})
 
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json filemanager.apparmor ${CONTENT_HUB_EXPORTER} DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+	MESSAGE("Grabbing upstream libs to ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs")
+    execute_process(
+        COMMAND mkdir ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/get-click-deps -d ${CMAKE_CURRENT_SOURCE_DIR}/filemanager-libs.json ${CLICK_ARCH} ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs
+    )
+	MESSAGE("Installing upstream libs from ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs/usr/lib/${ARCH_TRIPLET}/ to ${DATA_DIR}lib/${ARCH_TRIPLET}")
+	file(GLOB_RECURSE UPSTREAM_LIBS "${CMAKE_CURRENT_BINARY_DIR}/upstream-libs/usr/lib/${ARCH_TRIPLET}/*")
+	foreach(ITEM ${UPSTREAM_LIBS})
+	   IF( IS_DIRECTORY "${ITEM}" )
+	      LIST( APPEND DIRS_TO_DEPLOY "${ITEM}" )
+	   ELSE()
+	      LIST( APPEND FILES_TO_DEPLOY "${ITEM}" )
+	   ENDIF()
+	endforeach()
+	MESSAGE("Following files to install:- ${FILES_TO_DEPLOY}")
+	INSTALL( FILES ${FILES_TO_DEPLOY} DESTINATION ${DATA_DIR}lib/${ARCH_TRIPLET} )
 else(CLICK_MODE)
     execute_process(
         COMMAND qmake -query QT_INSTALL_QML
