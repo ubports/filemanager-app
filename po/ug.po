@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2015-10-18 05:33+0000\n"
+"PO-Revision-Date: 2015-10-18 05:46+0000\n"
 "Last-Translator: Eltikin <eltikinuyghur@hotmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2015-10-18 05:33+0000\n"
+"X-Launchpad-Export-Date: 2015-10-19 05:35+0000\n"
 "X-Generator: Launchpad (build 17812)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
@@ -287,7 +287,7 @@ msgstr ""
 
 #: ../src/app/qml/ui/FolderListPage.qml:682
 msgid "OK"
-msgstr ""
+msgstr "جەزملە"
 
 #: ../src/app/qml/ui/FolderListPage.qml:697
 msgid "Extracting failed"
@@ -416,7 +416,7 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1252
 msgid "items"
-msgstr ""
+msgstr "تۈرلەر"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
 msgid "File or Directory does not exist"
@@ -509,4 +509,4 @@ msgstr ""
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
-msgstr ""
+msgstr "ھۆججەت باشقۇرغۇ"
