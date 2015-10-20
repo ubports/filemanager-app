@@ -25,6 +25,13 @@ set(UBUNTU_MANIFEST_PATH "manifest.json.in" CACHE INTERNAL "Relative path to the
 add_definitions(-D_LARGEFILE_SOURCE)
 add_definitions(-D_FILE_OFFSET_BITS=64)
 
+# Sets BZR_REVNO
+execute_process(
+    COMMAND bzr revno ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE BZR_REVNO
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
 if(CLICK_MODE)
     if(NOT DEFINED BZR_SOURCE)
         set(BZR_SOURCE "lp:${LP_PROJECT}")
