@@ -173,7 +173,7 @@ void Location::setAuthentication(const QString &user,
  */
 QString Location::currentAuthenticationUser()
 {
-    return QString(::qgetenv("USER"));
+    return NetAuthenticationData::currentUser();
 }
 
 /*!

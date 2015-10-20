@@ -194,31 +194,44 @@ bool LocationsFactory::lastUrlNeedsAuthentication() const
 
 
 DirItemInfo * LocationsFactory::validateCurrentUrl(Location *location, const NetAuthenticationData &authData)
-{
+{   
     //when there is authentication data, set the authentication before validating an item
-    if (!authData.isEmpty())
+    if (location->isRemote())
     {
-        location->setAuthentication(authData.user, authData.password);
+        if (!authData.isEmpty())
+        {
+            location->setAuthentication(authData.user, authData.password);
+        }
+        else
+        {
+            //reset the password even it was set before, it is necessary to browse other items
+            location->setAuthentication(NetAuthenticationData::currentUser(),
+                                        NetAuthenticationData::noPassword());
+        }
     }
 
     DirItemInfo *item = location->validateUrlPath(m_tmpPath);
 
     //for remote loacations, authentication might have failed
-    //if so try to use a stored authentication data and autenticate again
-    if (   item && item->needsAuthentication()
-        && location->useAuthenticationDataIfExists(*item))
+    //if so try to use a stored authentication data and authenticate it again
+    if (location->isRemote() && item != 0)
     {
-        delete item;
-        item = location->validateUrlPath(m_tmpPath);
+        if (    item->needsAuthentication()
+             && location->useAuthenticationDataIfExists(*item))
+        {
+            delete item;
+            item = location->validateUrlPath(m_tmpPath);
+        }
+        //if failed it is necessary to ask the user to provide user/password
+        if ( item != 0 && item->needsAuthentication() )
+        {
+            location->notifyItemNeedsAuthentication(item);
+            delete item;
+            item = 0;
+        }
     }
-    //if failed it is necessary to ask the user to provide user/password
-    if ( item && item->needsAuthentication() )
-    {
-        location->notifyItemNeedsAuthentication(item);
-        delete item;
-        item = 0;
-    }
-    if (item && !item->isContentReadable())
+    //now just see if the item is readable
+    if (item != 0 && !item->isContentReadable())
     {
         delete item;
         item = 0;

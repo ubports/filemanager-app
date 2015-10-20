@@ -42,6 +42,8 @@ public:
     inline bool isEmpty() const { return user.isEmpty(); }
     QString user;
     QString password; 
+    static const QString& currentUser();
+    static const QString& noPassword();
 };
 
 

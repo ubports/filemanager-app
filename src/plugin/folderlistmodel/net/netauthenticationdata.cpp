@@ -33,6 +33,18 @@ NetAuthenticationDataList *  NetAuthenticationDataList::m_instance = 0;
 void *                       NetAuthenticationDataList::m_parent   = 0;
 
 
+const QString& NetAuthenticationData::currentUser()
+{
+    static QString curUser(::qgetenv("USER"));
+    return curUser;
+}
+
+const QString& NetAuthenticationData::noPassword()
+{
+    static QString emptyPassword;
+    return emptyPassword;
+}
+
 NetAuthenticationDataList::NetAuthenticationDataList(): m_savedAuths(0)
 {   
     //settings file does not need to open  all the time

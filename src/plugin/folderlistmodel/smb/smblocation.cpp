@@ -29,6 +29,8 @@
 #include "locationurl.h"
 #include "smblocationitemfile.h"
 #include "smblocationitemdir.h"
+#include "netauthenticationdata.h"
+
 
 
 #if defined(Q_OS_UNIX)
@@ -40,7 +42,8 @@ SmbLocation::SmbLocation(int type, QObject *parent)
      , SmbLocationAuthentication()
 {
      m_smb = new SmbUtil(suitableAuthenticationFunction());
-     setAuthentication(::qgetenv("USER"), QString());
+     setAuthentication(NetAuthenticationData::currentUser(),
+                       NetAuthenticationData::noPassword());
 }
 
 
