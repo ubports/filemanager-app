@@ -140,7 +140,7 @@ Popover {
                     margins: units.gu(1)
                 }
 
-                inputMethodHints: Qt.ImhNoAutoUppercase
+                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
 
                 text: pageModel.nameFilters
 
