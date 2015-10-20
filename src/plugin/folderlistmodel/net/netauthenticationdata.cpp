@@ -78,6 +78,13 @@ const NetAuthenticationData * NetAuthenticationDataList::get(const QString& url)
     if (!url.isEmpty())
     {
         ret = m_urlEntries.value(url);
+        if (ret == 0)
+        {
+            //try to match cases where a more complete URL like smb://host/share/directory was entered and smb://host had been saved before
+            QUrl hostUrl(url);
+            hostUrl.setPath(QLatin1String(0));
+            ret =  m_urlEntries.value(hostUrl.toString());
+        }
     }
     return ret;
 }
