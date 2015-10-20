@@ -36,7 +36,7 @@ Dialog {
         id: locationField
         objectName: "inputField"
 
-        inputMethodHints: Qt.ImhNoAutoUppercase
+        inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
 
         property bool valid: pathExists(text)
 
