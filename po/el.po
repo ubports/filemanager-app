@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2015-03-08 18:50+0000\n"
+"PO-Revision-Date: 2015-10-21 22:11+0000\n"
 "Last-Translator: Aggelos Arnaoutis <angelosarn@hotmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-10-13 06:11+0000\n"
+"X-Launchpad-Export-Date: 2015-10-22 05:48+0000\n"
 "X-Generator: Launchpad (build 17812)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
@@ -66,11 +66,11 @@ msgstr "Απαιτείται πιστοποίηση"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr ""
+msgstr "Απαιτείται κωδικός για πρόσβαση σε όλα τα αρχεία"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "κωδικός πρόσβασης"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
@@ -89,7 +89,7 @@ msgstr "Εντάξει"
 #: ../src/app/qml/ui/FolderListPage.qml:740
 #: ../src/app/qml/ui/GoToDialog.qml:67
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #: ../src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
@@ -130,7 +130,7 @@ msgstr "Μέγεθος:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
-msgstr ""
+msgstr "Προσπελάστηκε:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
@@ -301,7 +301,7 @@ msgstr "Αποτυχία αποσυμπίεσης αρχείου '%1'."
 
 #: ../src/app/qml/ui/FolderListPage.qml:712
 msgid "Archive file"
-msgstr ""
+msgstr "Όνομα αρχείου"
 
 #: ../src/app/qml/ui/FolderListPage.qml:713
 msgid "Do you want to extract the archive here?"
@@ -329,7 +329,7 @@ msgstr "~/Templates"
 
 #: ../src/app/qml/ui/FolderListPage.qml:828
 msgid "Home"
-msgstr ""
+msgstr "Προσωπικός φάκελος"
 
 #: ../src/app/qml/ui/FolderListPage.qml:898
 msgid "Folder not accessible"
@@ -502,11 +502,11 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1494
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "Αδυναμία δημιουργίας αρχείου πληροφοριών απορριμάτων"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1507
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "Αδυναμία αφαίρεσης αρχείου πληροφοριών απορριμάτων"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
