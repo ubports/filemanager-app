@@ -94,8 +94,8 @@ public:
                                  bool recursive = false,
                                  QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot,
                                  const QStringList& filterNames = QStringList());
-    StatReturn       getFstat(Smb::Context context, Smb::FileHandler fd, struct stat*  st);
-    StatReturn       getStat(Smb::Context context, const QString& smb_path, struct stat*  st);
+    int              getFstat(Smb::Context context, Smb::FileHandler fd, struct stat*  st);
+    int              getStat(Smb::Context context, const QString& smb_path, struct stat*  st);
 
 private:   
     StatReturn      guessDirType(Smb::Context context, Smb::FileHandler fd);

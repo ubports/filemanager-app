@@ -232,13 +232,16 @@ qint64 SmbLocationItemFile::size() const
     SmbUtil::StatReturn  ret  = SmbUtil::StatInvalid;
     if (isOpen())
     {       
-        ret = smbObj()->getFstat(m_context,m_fd, &st);
+        ret = static_cast<SmbUtil::StatReturn> (smbObj()->getFstat(m_context,m_fd,&st));
     }
     else
     {
-        SmbLocationItemFile *mySelf = const_cast<SmbLocationItemFile*> (this);
-        mySelf->createContext();
-        ret = smbObj()->getStat(m_context,cleanUrl(), &st);
+        if (m_context != 0) {
+            ret = static_cast<SmbUtil::StatReturn> (smbObj()->getStat(m_context,cleanUrl(),&st));
+        }
+        else {
+            ret = smbObj()->getStatInfo(cleanUrl(),&st);
+        }
     }
     if(ret == SmbUtil::StatDone)
     {
