@@ -8,23 +8,22 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2015-10-18 05:46+0000\n"
+"PO-Revision-Date: 2015-10-28 13:55+0000\n"
 "Last-Translator: Eltikin <eltikinuyghur@hotmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2015-10-19 05:35+0000\n"
-"X-Generator: Launchpad (build 17812)\n"
+"X-Launchpad-Export-Date: 2015-10-29 05:33+0000\n"
+"X-Generator: Launchpad (build 17837)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 ھۆججەت)"
 
 #: ../src/app/qml/components/PathHistoryRow.qml:84
 #: ../src/app/qml/ui/FolderListPage.qml:830
@@ -66,7 +65,7 @@ msgstr "كىملىك دەلىللەش زۆرۈر"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr ""
+msgstr "ھۆججەتلەرنى كۈرۈش ئۈچۈن ئىم كىرگۈزۈشىڭز كېرەك"
 
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
@@ -146,14 +145,13 @@ msgstr "مەشغۇلات ئىشلىنىۋاتىدۇ"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
-msgstr ""
+msgstr "ھۆججەت مەشغۇلات"
 
 #: ../src/app/qml/ui/FolderListPage.qml:57
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "چاپلا %1 ھۆججەت"
 
 #: ../src/app/qml/ui/FolderListPage.qml:61
 msgid "Paste files"
@@ -161,7 +159,7 @@ msgstr "ھۆججەتلەرنى چاپلايدۇ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:69
 msgid "Clear clipboard"
-msgstr ""
+msgstr "چاپلاش تاختىسىنى بىكارلا"
 
 #: ../src/app/qml/ui/FolderListPage.qml:79
 #: ../src/app/qml/ui/FolderListPage.qml:97
@@ -179,7 +177,7 @@ msgstr "يۆتكەل"
 
 #: ../src/app/qml/ui/FolderListPage.qml:122
 msgid "Unlock full access"
-msgstr ""
+msgstr "زىيارىتڭز ئۈچۈن قۇلۇپسىزلاندى"
 
 #: ../src/app/qml/ui/FolderListPage.qml:136
 msgid "Authentication failed"
@@ -420,11 +418,11 @@ msgstr "تۈرلەر"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:263
 msgid "File or Directory does not exist"
-msgstr ""
+msgstr "ھۆججەت ياكى مۇندەرىجە ساقلانمىغان"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:264
 msgid " does not exist"
-msgstr ""
+msgstr " ساقلانمىغان"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:590
 msgid "Could not remove the item "
@@ -436,11 +434,11 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:685
 msgid "Could not create the directory"
-msgstr ""
+msgstr "مۇندەرىجە قۇرالمايدۇ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:694
 msgid "Could not create link to"
-msgstr ""
+msgstr "ئۇلىنالمايدۇ"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:706
 msgid "Could not set permissions to dir"
@@ -448,7 +446,7 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:720
 msgid "Could not open file"
-msgstr ""
+msgstr "ھۆججەت ئېچىلىمدى"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:739
 msgid "There is no space on disk to copy"
@@ -477,7 +475,7 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:882
 msgid "Cannot move items"
-msgstr ""
+msgstr "نىشاننى يۆتكەشكە ئامالسىز"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:888
 msgid "origin and destination folders are the same"
@@ -493,7 +491,7 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1354
 msgid " Copy"
-msgstr ""
+msgstr " كۈچۈر"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1410
 msgid "Set permissions error in "
