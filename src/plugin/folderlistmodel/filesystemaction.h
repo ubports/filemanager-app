@@ -112,8 +112,9 @@ public slots:
     void     moveToTrash(const ActionPathList& pairPaths );
     void     restoreFromTrash(const ActionPathList& pairPaths);
     void     removeFromTrash(const QStringList& paths);
-    void     onClipboardChanged();
-
+    void     onClipboardChanged();   
+    bool     downloadAndSaveAs(const DirItemInfo& remoteFile, const QString& fileName);
+    bool     downloadAsTemporaryFile(const DirItemInfo& remoteFile);
 
 signals:
     void     error(const QString& errorTitle, const QString &errorMessage);
@@ -122,6 +123,7 @@ signals:
     void     changed(const DirItemInfo&);
     void     progress(int curItem, int totalItems, int percent);
     void     recopy(const QStringList &names, const QString& path);
+    void     downloadTemporaryComplete(const QString&);
 
 private slots:
     void     processAction();
@@ -146,7 +148,9 @@ private slots:
        ActionHardMoveRemove,
        ActionMoveToTrash,
        ActionRestoreFromTrash,
-       ActionRemoveFromTrash
+       ActionRemoveFromTrash,
+       ActionDownload,
+       ActionDownLoadAsTemporary
    };
 
    void     createAndProcessAction(ActionType actionType, const QStringList& paths);
@@ -250,6 +254,7 @@ private:
    void     removeTrashInfoFileFromEntry(ActionEntry *entry);
    void     notifyActionOnItem(const DirItemInfo& item, ActionNotification action);
    bool     canMoveItems(Action *action, const QStringList &items);
+   bool     createAndProcessDownloadAction(ActionType a, const DirItemInfo& remoteFile, const QString& fileName);
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
    bool     m_forceUsingOtherFS;

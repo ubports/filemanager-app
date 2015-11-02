@@ -267,6 +267,11 @@ FileSystemAction::Action* FileSystemAction::createAction(ActionType type, const 
     action->targetLocation     =  m_locationsFactory->currentLocation();
     switch (type)
     {
+       case ActionDownload:
+       case ActionDownLoadAsTemporary:
+            action->sourceLocation =  action->targetLocation;
+            action->targetLocation =  m_locationsFactory->getDiskLocation();
+            break;
        case ActionMoveToTrash:
             action->targetLocation = m_locationsFactory->getTrashLocation();
             break;
@@ -334,6 +339,9 @@ bool FileSystemAction::populateEntry(Action* action, ActionEntry* entry)
     //action->type is top level for all items, entry->type drives item behaviour
     switch(action->type)
     {
+       case ActionDownload:
+       case ActionDownLoadAsTemporary:  entry->type = ActionCopy;
+            break;
        case ActionMoveToTrash:
        case ActionRestoreFromTrash:   entry->type = ActionMove;  //needs create .trashinfo file
             break;
@@ -432,9 +440,13 @@ bool FileSystemAction::populateEntry(Action* action, ActionEntry* entry)
 void FileSystemAction::processAction()
 {
     if (m_curAction)
-    {        
-            delete m_curAction;
-            m_curAction = 0;
+    {
+        if (m_curAction->done && m_curAction->type == ActionDownLoadAsTemporary)
+        {
+            emit downloadTemporaryComplete(m_curAction->copyFile.targetName);
+        }
+        delete m_curAction;
+        m_curAction = 0;
     }
     if (m_queuedActions.count())
     {
@@ -1457,6 +1469,10 @@ bool FileSystemAction::makeBackupNameForCurrentItem(ActionEntry *entry)
         } while (backuped->exists() && counter < 100);
         if (counter < 100)
         {
+            if (entry->newName)
+            {
+                delete entry->newName; // it no longer will be used
+            }
             entry->newName = new QString(backuped->fileName());
             entry->itemPaths.setTargetFullName( backuped->absoluteFilePath() );
             ret = true;
@@ -1613,4 +1629,54 @@ bool FileSystemAction::canMoveItems(Action *action, const QStringList& items)
     }
     //target permission is checked in populateEntry()
     return true;
+}
+
+
+bool FileSystemAction::downloadAsTemporaryFile(const DirItemInfo &remoteFile)
+{
+    QFileInfo f(remoteFile.absoluteFilePath());
+    QString templateName(QDir::tempPath() + QDir::separator() + QLatin1String("XXXXXX.") + f.completeSuffix());
+    QTemporaryFile  temp(templateName);
+    temp.setAutoRemove(false);
+    temp.open();
+    temp.close();
+
+    return createAndProcessDownloadAction(ActionDownLoadAsTemporary, remoteFile, temp.fileName());
+}
+
+
+bool FileSystemAction::downloadAndSaveAs(const DirItemInfo &remoteFile, const QString &fileName)
+{
+    return createAndProcessDownloadAction(ActionDownload, remoteFile, fileName);
+}
+
+
+bool FileSystemAction::createAndProcessDownloadAction(ActionType a, const DirItemInfo &remoteFile, const QString &fileName)
+{
+    bool ret = remoteFile.isRemote() && remoteFile.isFile() && remoteFile.exists();
+    if (ret) //it can be empty
+    {
+        //check if there is enough space to download the file
+        if (!m_locationsFactory->getDiskLocation()->isThereDiskSpace(fileName, remoteFile.size()))
+        {
+            ret = false;
+            m_errorTitle = QObject::tr("There is no space to download");
+            m_errorMsg   =  fileName;
+        }
+    }
+    //peform the copy
+    if (ret)
+    {
+        Action * actionCopy  = createAction(a, remoteFile.absoluteFilePath());
+        ActionPaths pairPaths;
+        QFileInfo info(fileName);
+        pairPaths.setSource(remoteFile.absoluteFilePath());
+        pairPaths.setTargetPathOnly(info.absolutePath());
+        addEntry(actionCopy, pairPaths);
+        ActionEntry *entry = actionCopy->entries.at(0);
+        //it is necessary to se the name, otherwise it copies with same name
+        entry->newName     = new QString(info.fileName());
+        queueAction(actionCopy);
+    }
+    return ret;
 }
