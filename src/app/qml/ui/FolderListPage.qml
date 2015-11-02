@@ -223,6 +223,12 @@ PageWithBottomEdge {
             console.log("FolderListModel needsAuthentication() signal arrived")
             authenticationHandler.showDialog(urlPath,user)
         }
+        onDownloadTemporaryComplete: {
+            var paths = filename.split("/")
+            var nameOnly = paths[paths.length -1]
+            console.log("onDownloadTemporaryComplete received filename="+filename + "name="+nameOnly)
+            openFromDisk(filename, nameOnly)
+        }
     }
 
     FolderListModel {
@@ -722,7 +728,7 @@ PageWithBottomEdge {
                 color: UbuntuColors.red
                 onClicked: {
                     PopupUtils.close(dialog)
-                    openFile(filePath)
+                    openLocalFile(filePath)
                 }
             }
 
@@ -898,6 +904,34 @@ PageWithBottomEdge {
         }
     }
 
+    function openFromDisk(fullpathname, name) {
+        console.log("openFromDisk():"+ fullpathname)
+        // Check if file is an archive. If yes, ask the user whether he wants to extract it
+        var archiveType = getArchiveType(name)
+        if (archiveType === "") {
+            openLocalFile(fullpathname)
+        } else {
+            PopupUtils.open(openArchiveDialog, folderListView,
+                            {   "filePath" : fullpathname,
+                                "fileName" : name,
+                                "archiveType" : archiveType
+                            })
+        }
+
+    }
+
+    //High Level openFile() function
+    //remote files are saved as temporary files and then opened
+    function openFile(model) {
+        if (model.isRemote) {
+            //download and open later when the signal downloadTemporaryComplete() arrives
+            pageModel.downloadAsTemporaryFile(model.index)
+        }
+        else {
+            openFromDisk(model.filePath, model.fileName)
+        }
+    }
+
     function itemClicked(model) {      
         if (model.isBrowsable) {
             console.log("browsable path="+model.filePath+" isRemote="+model.isRemote+" needsAuthentication="+model.needsAuthentication)
@@ -920,29 +954,10 @@ PageWithBottomEdge {
         } else {
             console.log("Non dir clicked")
             if (fileSelectorMode) {
-                selectionManager.select(model.index,
-                                        false,
-                                        true);
+                selectionManager.select(model.index,false,true)
             } else {
-                // Check if file is an archive. If yes, ask the user whether he wants to extract it
-                var archiveType = getArchiveType(model.fileName)
-                if (archiveType === "") {
-                    openFile(model.filePath)
-                } else {
-                    PopupUtils.open(openArchiveDialog, folderListView,
-                                    { "filePath" : model.filePath,
-                                        "fileName" : model.fileName,
-                                        "archiveType" : archiveType
-                                    })
-                }
-
+               openFile(model)
             }
-            //            PopupUtils.open(Qt.resolvedUrl("FileActionDialog.qml"), root,
-            //                            {
-            //                                fileName: model.fileName,
-            //                                filePath: model.filePath,
-            //                                folderListModel: root.folderListModel
-            //                            })
         }
     }
 

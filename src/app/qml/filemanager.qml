@@ -128,7 +128,7 @@ MainView {
         }
     }
 
-    function openFile(filePath) {
+    function openLocalFile(filePath) {
         pageStack.push(Qt.resolvedUrl("content-hub/FileOpener.qml"), { fileUrl: "file://" + filePath} )
     }
 
