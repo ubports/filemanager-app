@@ -67,6 +67,17 @@
 #define  CHECK_IF_CAN_CREATE_SHARES()   if (!SmbUserShare::canCreateShares()) \
                                            {  qWarning() << Q_FUNC_INFO << "cannot be performed, it requires a Samba Server to create user shares"; return;}
 
+
+class FakeDirItemInfoBigSize:  public DirItemInfo
+{
+public:
+     FakeDirItemInfoBigSize(const DirItemInfo& original): DirItemInfo(original)
+     {
+        d_ptr->_size = 0x7fffffffffffffff; // higher qint64, 64 bits with huge size
+     }
+};
+
+
 QByteArray md5FromIcon(const QIcon& icon);
 QString createFileInTempDir(const QString& name, const char *content, qint64 size);
 
@@ -90,6 +101,7 @@ protected slots:
     void slotExtFsWatcherPathModified(const QString&)     { ++m_extFSWatcherPathModifiedCounter; }
     void slotSelectionChanged(int counter)  { m_selectedItemsCounter = counter; }
     void slotSelectionModeChanged(int m)    { m_selectionMode = m;}
+    void onDownloadTemporaryComplete(const QString& name) {m_temporaryDownloadName = name;}
 
 private Q_SLOTS:
     void initTestCase();       //before all tests
@@ -183,6 +195,14 @@ private Q_SLOTS:
     void  smbCutFromSmb2LocalDisk();
     void  smbCutFromLocalDisk2Smb();
 
+private Q_SLOTS: // remote donwnload tests using samba
+    void  smbDownloadEmptyFile();
+    void  smbDownloadBigFileWithNoSpace();
+    void  smbDownloadFile();
+    void  smbDownloadAsTemporary();
+    void  smbDownloadIntoStandardDownloadLocation();
+
+
 private:
     bool createTempHomeTrashDir(const QString& existentDir);
     void initDeepDirs();
@@ -228,6 +248,7 @@ private:
     int            m_extFSWatcherPathModifiedCounter;
     int            m_selectedItemsCounter;
     int            m_selectionMode;
+    QString        m_temporaryDownloadName;
 
 };
 
@@ -3442,7 +3463,7 @@ void TestDirModel::smbRemoveDirectory()
      * set file mananer to browse the source in the Samba share
      */
     m_dirModel_01->setPath(sourceFolder.smbUrl);
-    QTest::qWait(TIME_TO_REFRESH_DIR);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
     QVERIFY(m_dirModel_01->rowCount() != 0);
     DirSelection  *selection = m_dirModel_01->selectionObject();
     QVERIFY(selection != 0);
@@ -3600,6 +3621,184 @@ void TestDirModel::smbCutFromLocalDisk2Smb()
 }
 
 
+void TestDirModel::smbDownloadEmptyFile()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbDownloadEmptyFile");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+
+     // temp shares are created with a unique file there with some content
+    // this test just rewrite this file with no content
+    QFile empty (tmpShare.fileContent.diskPathname) ;
+    QCOMPARE(empty.open(QFile::WriteOnly | QFile::Truncate), true);
+    empty.close();
+    //make sure the file is empty
+    QFileInfo sourceInfo(tmpShare.fileContent.diskPathname);
+    QCOMPARE(sourceInfo.size(),  (qint64)0);
+
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+
+    const DirItemInfo & item = m_dirModel_01->mDirectoryContents.at(0);
+    QCOMPARE(item.isFile(),  true);
+    QVERIFY(item.size() == 0);
+
+    QString tmpFile(QDir::tempPath() + QDir::separator() + "_empty_file.ttt");
+
+    QCOMPARE(m_dirModel_01->downloadAndSaveAs(0, tmpFile), true);
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QFileInfo targetInfo(tmpFile);
+    QCOMPARE(targetInfo.exists(),  true);
+    QCOMPARE(targetInfo.size(), (qint64)0);
+}
+
+
+void TestDirModel::smbDownloadBigFileWithNoSpace()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbDownloadBigFileWithNoSpace");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+
+    const DirItemInfo & item = m_dirModel_01->mDirectoryContents.at(0);
+    QCOMPARE(item.isFile(),  true);
+    QVERIFY(item.size() > 0);
+
+    FakeDirItemInfoBigSize bigSize(item);
+
+    QString tmpFile(QDir::tempPath() + QDir::separator() + "_it_does_not_have_space.ttt");
+    QCOMPARE(m_dirModel_01->m_fsAction->downloadAndSaveAs(bigSize, tmpFile) , false);
+}
+
+
+void TestDirModel::smbDownloadFile()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbDownloadFile");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+
+    // temp shares are created with a unique file there with some content
+    QFileInfo sourceInfo(tmpShare.fileContent.diskPathname);
+
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+
+    const DirItemInfo & item = m_dirModel_01->mDirectoryContents.at(0);
+    QCOMPARE(item.isFile(),  true);
+    QVERIFY(item.size() > 0);
+
+    QString tmpFile(QDir::tempPath() + QDir::separator() + "_it_can_exist_always_overwritten.ttt");
+
+    QCOMPARE(m_dirModel_01->downloadAndSaveAs(0, tmpFile), true);
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QFileInfo targetInfo(tmpFile);
+    QCOMPARE(targetInfo.exists(),  true);
+
+    QCOMPARE(sourceInfo.size(), targetInfo.size());
+}
+
+
+void TestDirModel::smbDownloadAsTemporary()
+{
+    CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbDownloadAsTemporary");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+
+    // temp shares are created with a unique file there with some content
+    QFileInfo sourceInfo(tmpShare.fileContent.diskPathname);
+
+    m_temporaryDownloadName.clear();
+    connect(m_dirModel_01,  SIGNAL(downloadTemporaryComplete(QString)),
+            this,           SLOT(onDownloadTemporaryComplete(QString)));
+
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+
+    QCOMPARE(m_dirModel_01->downloadAsTemporaryFile(0), true);
+    QTest::qWait(TIME_TO_PROCESS);
+    //signal received
+    QCOMPARE(m_temporaryDownloadName.isEmpty(), false);
+
+    QFileInfo targetInfo(m_temporaryDownloadName);
+    QCOMPARE(targetInfo.exists(), true);
+    QCOMPARE(sourceInfo.size(),  targetInfo.size());
+    qDebug() << "downloaded temp file as:" << targetInfo.absoluteFilePath();
+}
+
+
+void TestDirModel::smbDownloadIntoStandardDownloadLocation()
+{
+     CHECK_IF_CAN_CREATE_SHARES();
+
+    QString shareName("smbDownloadIntoStandardDownloadLocation");
+    TestQSambaSuite smbTest(this);
+    ShareCreationStatus tmpShare(smbTest.createTempShare(shareName));
+    if (tmpShare.tempDir)
+    {
+        tmpShare.tempDir->setAutoRemove(true);
+    }
+    QCOMPARE(tmpShare.status, true);
+
+    // temp shares are created with a unique file there with some content
+    QFileInfo sourceInfo(tmpShare.fileContent.diskPathname);
+
+    QString dowloadFullPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) +
+                            QDir::separator() + sourceInfo.fileName() );
+
+    QFile  f(dowloadFullPath);
+    f.remove();
+
+    //make sure target does not exist
+    QCOMPARE(QFileInfo(dowloadFullPath).exists(), false);
+
+    m_dirModel_01->setPath(tmpShare.url);
+    QTest::qWait(TIME_TO_REFRESH_REMOTE_DIR);
+    QVERIFY(m_dirModel_01->rowCount() != 0);
+
+    QCOMPARE(m_dirModel_01->download(0), true);
+    QTest::qWait(TIME_TO_PROCESS);
+
+    QFileInfo targetInfo(dowloadFullPath);
+    QCOMPARE(targetInfo.exists(), true);
+    QCOMPARE(sourceInfo.size(),  targetInfo.size());
+    qDebug() << "downloaded:" << targetInfo.absoluteFilePath();
+}
 
 int main(int argc, char *argv[])
 {
