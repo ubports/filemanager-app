@@ -229,21 +229,13 @@ qint64 SmbLocationItemFile::size() const
 {
     qint64 size = 0;
     struct stat  st;
-    SmbUtil::StatReturn  ret  = SmbUtil::StatInvalid;
-    if (isOpen())
-    {       
-        ret = static_cast<SmbUtil::StatReturn> (smbObj()->getFstat(m_context,m_fd,&st));
-    }
-    else
+    bool ok = isOpen() ? smbObj()->getFstat(m_context,m_fd,&st) == 0 : false;
+    if (!isOpen())
     {
-        if (m_context != 0) {
-            ret = static_cast<SmbUtil::StatReturn> (smbObj()->getStat(m_context,cleanUrl(),&st));
-        }
-        else {
-            ret = smbObj()->getStatInfo(cleanUrl(),&st);
-        }
+        ok = m_context != 0 ? smbObj()->getStat(m_context,cleanUrl(),&st) == 0 :
+                              smbObj()->getStatInfo(cleanUrl(),&st) == SmbUtil::StatDone;
     }
-    if(ret == SmbUtil::StatDone)
+    if(ok)
     {
         size = static_cast<qint64> (st.st_size);
     }
