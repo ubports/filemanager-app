@@ -317,6 +317,31 @@ public:
                                                  const QString& password,
                                                  bool  savePassword);
 
+    //download functions
+    //
+    /*! \brief download(int index) download file pointed by \a index into standard Download location
+     *
+     * \return true if the download could be started, othewise false
+     */
+    Q_INVOKABLE  bool download(int index);
+
+    /*! \brief downloadAndSaveAs(int index, const QString& filename) download file pointed by \a index and save it as \a filename
+     *
+     * \return true if the download could be started, othewise false
+     *
+     */
+    Q_INVOKABLE  bool downloadAndSaveAs(int index, const QString& filename);
+
+    /*! \brief downloadAsTemporaryFile(int index)  save download as temporary, useful to open remote files
+     *
+     *  At the end if download is OK the signal downloadTemporaryComplete(const QString& fullpathname) is emitted
+     *
+     * \return true if the download could be started, othewise false
+     *
+     */
+    Q_INVOKABLE  bool downloadAsTemporaryFile(int index);
+
+
 public slots:
   /*!
      * \brief copySelection() copy selected items to the clipboard
@@ -469,6 +494,12 @@ signals:
     void     sortOrderChanged();
     void     clipboardChanged();
     void     enabledExternalFSWatcherChanged(bool);
+
+    /*!
+     * \brief downloadTemporaryComplete() says that download has been completed and
+     *    the \a filename is ready to be used, filename is a full pathname
+     */
+    void     downloadTemporaryComplete(const QString& filename);
 
 private slots:    
     void onItemRemoved(const DirItemInfo&);  
