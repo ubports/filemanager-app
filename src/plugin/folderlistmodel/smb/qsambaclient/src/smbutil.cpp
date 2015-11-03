@@ -361,7 +361,7 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
             (void)getStat(context,smb_path,st);
         }
     }
-    else if (errno != EACCES && errno != ECONNREFUSED) // perhaps is a file
+    else if (errno != EACCES && errno != ECONNREFUSED && slashes >= URL_SLASHES_NUMBER_FOR_SHARES) // perhaps is a file
     {
         errno = 0;
         ret = static_cast<SmbUtil::StatReturn> (getStat(context, smb_path,st));
