@@ -35,7 +35,7 @@ Dialog {
         text: i18n.tr("Open")
         onClicked: {
             console.log("Opening file", filePath)
-            openFile(model.filePath)
+            openLocalFile(model.filePath)
             onClicked: PopupUtils.close(root)
         }
     }
