@@ -216,8 +216,15 @@ bool DiskLocation::isThereDiskSpace(const QString &pathname, qint64 requiredSize
 {
     bool ret = true;
 #if defined(Q_OS_UNIX)
+    QFileInfo info(pathname);
+    bool   pathExists = info.exists();
+    while (!pathExists && info.absoluteFilePath() != QDir::rootPath())
+    {
+        info.setFile(info.absolutePath());
+        pathExists = info.exists();
+    }
     struct statvfs  vfs;
-    if ( ::statvfs( QFile::encodeName(pathname).constData(), &vfs) == 0 )
+    if ( ::statvfs( QFile::encodeName(info.absoluteFilePath()).constData(), &vfs) == 0 )
     {
         qint64 free =  vfs.f_bsize * vfs.f_bfree;
         ret = free > requiredSize;
