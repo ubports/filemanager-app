@@ -149,6 +149,9 @@ DirModel::DirModel(QObject *parent)
     connect(m_fsAction, SIGNAL(recopy(QStringList,QString)),
             mClipboard, SLOT(copy(QStringList,QString)));
 
+    connect(m_fsAction, SIGNAL(downloadTemporaryComplete(QString)),
+            this,       SIGNAL(downloadTemporaryComplete(QString)));
+
     setCompareAndReorder();
 
     if (QIcon::themeName().isEmpty() && !FMUtil::hasTriedThemeName())
@@ -1822,6 +1825,43 @@ void DirModel::moveSelectionToTrash()
 void DirModel::restoreSelectionFromTrash()
 {
     restoreIndexesFromTrash(selectionObject()->selectedIndexes());
+}
+
+
+
+bool DirModel::download(int index)
+{
+    bool ret = false;
+    if (IS_VALID_ROW(index))
+    {
+        QString outputFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) +
+                            QDir::separator() + mDirectoryContents.at(index).fileName());
+        ret = downloadAndSaveAs(index, outputFile);
+    }
+    return ret;
+}
+
+
+bool DirModel::downloadAndSaveAs(int index, const QString &filename)
+{
+    bool ret = false;
+    if (IS_VALID_ROW(index))
+    {
+        ret = m_fsAction->downloadAndSaveAs(mDirectoryContents.at(index),
+                                            filename);
+    }
+    return ret;
+}
+
+
+bool DirModel::downloadAsTemporaryFile(int index)
+{
+    bool ret = false;
+    if (IS_VALID_ROW(index))
+    {
+        ret = m_fsAction->downloadAsTemporaryFile(mDirectoryContents.at(index));
+    }
+    return ret;
 }
 
 
