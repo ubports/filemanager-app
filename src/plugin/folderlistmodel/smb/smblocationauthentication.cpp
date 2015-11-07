@@ -25,7 +25,7 @@
 #define  GOOD_INDEX()  (m_infoIndex >= 0 && m_infoIndex < MAX_AUTH_INSTANCES)
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) && defined(SIMPLE_UI)
-# define DEBUG_AUTHENTICATION()  qDebug() << Q_FUNC_INFO << user << passwd
+# define DEBUG_AUTHENTICATION()  qDebug() << Q_FUNC_INFO << "user:" << user << "passwd:" << passwd << "server:" << server << "share:" << share
 #else
 # define DEBUG_AUTHENTICATION() /**/
 #endif
