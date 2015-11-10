@@ -363,8 +363,11 @@ SmbUtil::getStatInfo(const QString &smb_path, struct stat* st)
     }
     else if (errno != EACCES && errno != ECONNREFUSED && slashes >= URL_SLASHES_NUMBER_FOR_SHARES) // perhaps is a file
     {
-        errno = 0;
-        ret = static_cast<SmbUtil::StatReturn> (getStat(context, smb_path,st));
+        errno = 0;        
+        if (getStat(context,smb_path,st) == 0)
+        {
+            ret = StatDone;
+        }
     }
 
     if (errno != 0)
@@ -722,13 +725,16 @@ QString SmbUtil::findSmBServer(const smbc_dirent & dirent)
         QString name(dirent.name);
         host = name;
     }
-    QString comment(dirent.comment);
-    if (!comment.isEmpty())
+    if (host.isEmpty())
     {
-        QString fullName = comment.split(QLatin1Char(' '), QString::SkipEmptyParts).first();
-        if (!fullName.isEmpty())
+        QString comment(dirent.comment);
+        if (!comment.isEmpty())
         {
-            host = fullName;
+            QString fullName = comment.split(QLatin1Char(' '), QString::SkipEmptyParts).first();
+            if (!fullName.isEmpty())
+            {
+                host = fullName;
+            }
         }
     }
     if (host.isEmpty())
