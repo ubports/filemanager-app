@@ -128,7 +128,7 @@ def get_timestamp():
 
 def check_internet_connection():
     try:
-        urllib.request.urlopen('http://www.google.com', timeout=20)
+        urllib.request.urlopen('http://www.launchpad.net', timeout=20)
         return True
     except urllib2.error.URLError as err:
         pass
