@@ -55,6 +55,9 @@ var __mapping = {
     'ppt': CH.ContentType.Documents,
     'pptx': CH.ContentType.Documents,
     'pdf': CH.ContentType.Documents,
+
+    'vcf': CH.ContentType.Contacts,
+    'vcard': CH.ContentType.Contacts,
 }
 
 function resolveContentType(fileUrl) {
@@ -78,4 +81,3 @@ function __fileExtension(fileUrl) {
     var lastDotIndex = fileUrl.lastIndexOf('.')
     return lastDotIndex > -1 ? fileUrl.substring(lastDotIndex + 1) : ''
 }
-
