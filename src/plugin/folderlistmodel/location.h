@@ -111,7 +111,7 @@ public: //pure functions
      * \param isRecursive
      * \return the object which will fill a new \ref DirItemInfoList for browsing items
      */
-    virtual DirListWorker *  newListWorker(const QString &urlPath, QDir::Filter filter, const bool isRecursive) = 0;
+    virtual DirListWorker *  newListWorker(const QString &urlPath, QDir::Filters filter, const bool isRecursive) = 0;
 
     /*!
      * \brief newDirIterator() creates a LocationItemDirIterator object which is similar to Qt QDirIterator object
@@ -188,7 +188,7 @@ public:
      * \param dirFilter   current Filter
      * \param recursive   should get the content all sub dirs or not, (hardly ever it is true)
      */
-     virtual void        fetchItems(QDir::Filter dirFilter, bool recursive=false);
+     virtual void        fetchItems(QDir::Filters dirFilter, bool recursive=false);
 
     /*!
      * \brief refreshInfo() It must refresh the DirItemInfo
@@ -232,7 +232,7 @@ public:
 public: //virtual
     virtual void        fetchExternalChanges(const QString& urlPath,
                                              const DirItemInfoList& list,
-                                             QDir::Filter dirFilter) ;
+                                             QDir::Filters dirFilter) ;
     virtual void        setInfoItem(const DirItemInfo &itemInfo);
     virtual void        setInfoItem(DirItemInfo *itemInfo);
     virtual bool        isRoot() const;

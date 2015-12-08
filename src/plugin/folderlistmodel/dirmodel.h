@@ -510,7 +510,7 @@ private:
     int           addItem(const DirItemInfo& fi);
     void          setCompareAndReorder();
     int           rowOfItem(const DirItemInfo& fi);
-    QDir::Filter  currentDirFilter()  const;
+    QDir::Filters currentDirFilter()  const;
     QString       dirItems(const DirItemInfo& fi) const;
     bool          cdIntoItem(const DirItemInfo& fi);
     bool          openItem(const DirItemInfo& fi);     

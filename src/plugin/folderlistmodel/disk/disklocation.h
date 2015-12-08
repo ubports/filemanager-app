@@ -51,7 +51,7 @@ public:
 
     virtual void        fetchExternalChanges(const QString& urlPath,
                                              const DirItemInfoList& list,
-                                             QDir::Filter dirFilter) ;
+                                             QDir::Filters dirFilter) ;
 
     virtual void        startExternalFsWatcher();
     virtual void        stopExternalFsWatcher();
@@ -61,7 +61,7 @@ public:
 
     virtual DirItemInfo * newItemInfo(const QString& urlPath);
     virtual DirListWorker * newListWorker(const QString &urlPath,
-                                          QDir::Filter filter,
+                                          QDir::Filters filter,
                                           const bool isRecursive);
     virtual LocationItemDirIterator * newDirIterator(const QString & path,
                                                      QDir::Filters filters,

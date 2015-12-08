@@ -89,7 +89,7 @@ DirItemInfo * SmbLocation::newItemInfo(const QString &urlPath)
 }
 
 
-DirListWorker * SmbLocation::newListWorker(const QString &urlPath, QDir::Filter filter, const bool isRecursive)
+DirListWorker * SmbLocation::newListWorker(const QString &urlPath, QDir::Filters filter, const bool isRecursive)
 {
     return new SmbListWorker(urlPath,filter,isRecursive, m_info, m_smb);
 }

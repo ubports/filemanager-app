@@ -23,7 +23,7 @@
 #include "smblocationdiriterator.h"
 
 SmbListWorker::SmbListWorker(const QString &pathName,
-                             QDir::Filter filter,
+                             QDir::Filters filter,
                              const bool isRecursive,
                              DirItemInfo * parentItem,
                              Const_SmbUtil_Ptr smb)
