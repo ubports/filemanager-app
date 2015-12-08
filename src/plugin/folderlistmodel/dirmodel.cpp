@@ -1311,9 +1311,9 @@ int DirModel::rowOfItem(const DirItemInfo& fi)
 }
 
 
-QDir::Filter DirModel::currentDirFilter() const
+QDir::Filters DirModel::currentDirFilter() const
 {
-    int filter = QDir::AllEntries | QDir::NoDotAndDotDot ;
+    QDir::Filters filter(QDir::AllEntries | QDir::NoDotAndDotDot) ;
     if (!mShowDirectories)
     {
         filter &= ~QDir::AllDirs;
@@ -1327,8 +1327,7 @@ QDir::Filter DirModel::currentDirFilter() const
     {
         filter |= QDir::NoSymLinks;
     }
-    QDir::Filter dirFilter = static_cast<QDir::Filter>(filter);
-    return dirFilter;
+    return filter;
 }
 
 /*!

@@ -194,7 +194,7 @@ void TrashLocation::startExternalFsWatcher()
 }
 
 
-void TrashLocation::fetchItems(QDir::Filter dirFilter, bool recursive)
+void TrashLocation::fetchItems(QDir::Filters dirFilter, bool recursive)
 {
     Q_UNUSED(recursive)
     if (!m_info->isRoot()) //any item under the logical trash folder
@@ -238,7 +238,7 @@ void TrashLocation::addTrashFetchRequest(TrashListWorker *workerObject)
 
 void TrashLocation::fetchExternalChanges(const QString& urlPath,
                                          const DirItemInfoList& list,
-                                         QDir::Filter dirFilter)
+                                         QDir::Filters dirFilter)
 {
     Q_UNUSED(urlPath);
     if (m_extWatcher)
@@ -303,7 +303,7 @@ DirItemInfo * TrashLocation::newItemInfo(const QString &urlPath)
  * \param isRecursive
  * \return
  */
-DirListWorker * TrashLocation::newListWorker(const QString &urlPath, QDir::Filter filter, const bool isRecursive)
+DirListWorker * TrashLocation::newListWorker(const QString &urlPath, QDir::Filters filter, const bool isRecursive)
 {
     Q_UNUSED(isRecursive);
     QString trashDir;

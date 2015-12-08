@@ -125,7 +125,7 @@ IOWorkerThread * Location::workerThread() const
 //providing an empty method
 void Location::fetchExternalChanges(const QString &path,
                                     const DirItemInfoList &list,
-                                    QDir::Filter dirFilter)
+                                    QDir::Filters dirFilter)
 {
     Q_UNUSED(path);
     Q_UNUSED(list);
@@ -287,7 +287,7 @@ DirItemInfo * Location::validateUrlPath(const QString & uPath)
 }
 
 
-void Location::fetchItems(QDir::Filter dirFilter, bool recursive)
+void Location::fetchItems(QDir::Filters dirFilter, bool recursive)
 {
     //it should never happen here
     if (m_info->needsAuthentication())

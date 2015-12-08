@@ -118,7 +118,7 @@ void DiskLocation::stopWorking()
 
 void DiskLocation::fetchExternalChanges(const QString &path,
                                         const DirItemInfoList &list,
-                                        QDir::Filter dirFilter)
+                                        QDir::Filters dirFilter)
 {
      ExternalFileSystemChangesWorker *extFsWorker =
           new ExternalFileSystemChangesWorker(list,
@@ -172,7 +172,7 @@ DirItemInfo * DiskLocation::newItemInfo(const QString &urlPath)
 }
 
 
-DirListWorker * DiskLocation::newListWorker(const QString &urlPath, QDir::Filter filter, const bool isRecursive)
+DirListWorker * DiskLocation::newListWorker(const QString &urlPath, QDir::Filters filter, const bool isRecursive)
 {
     return new DirListWorker(urlPath,filter,isRecursive);
 }

@@ -35,10 +35,10 @@ public:
     virtual ~TrashLocation();
     virtual bool        becomeParent();
     virtual void        refreshInfo();
-    virtual void        fetchItems(QDir::Filter dirFilter, bool recursive=0);
+    virtual void        fetchItems(QDir::Filters dirFilter, bool recursive=0);
     virtual void        fetchExternalChanges(const QString& urlPath,
                                              const DirItemInfoList& list,
-                                             QDir::Filter dirFilter) ;
+                                             QDir::Filters dirFilter) ;
 
     virtual void        startWorking();
     virtual void        startExternalFsWatcher();
@@ -47,7 +47,7 @@ public:
 
     virtual DirItemInfo * newItemInfo(const QString& urlPath);
     virtual DirListWorker * newListWorker(const QString &urlPath,
-                                          QDir::Filter filter,
+                                          QDir::Filters filter,
                                           const bool isRecursive);
     virtual QString     urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlashe);
 
