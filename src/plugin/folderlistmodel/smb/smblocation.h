@@ -45,8 +45,8 @@ public:
                                                       LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
     virtual LocationItemFile   * newFile(const QString & path);   
     virtual LocationItemDir    * newDir(const QString & dir = QLatin1String(0));
-     virtual bool       isThereDiskSpace(const QString& pathname, qint64 requiredSize);
-    virtual QString     urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlashe);
+    virtual bool        isThereDiskSpace(const QString& pathname, qint64 requiredSize);
+    virtual QString     urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlash);
     virtual QString     currentAuthenticationUser();
     virtual QString     currentAuthenticationPassword();
 

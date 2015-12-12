@@ -178,12 +178,12 @@ DirListWorker * DiskLocation::newListWorker(const QString &urlPath, QDir::Filter
 }
 
 
-QString DiskLocation::urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlashe)
+QString DiskLocation::urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlash)
 {
     QString ret;
     if (urlPath.startsWith(LocationUrl::DiskRootURL.midRef(0,5)))
     {
-        ret  = QDir::rootPath() + DirItemInfo::removeExtraSlashes(urlPath, indexOfColonAndSlashe+1);
+        ret  = QDir::rootPath() + DirItemInfo::removeExtraSlashes(urlPath, indexOfColonAndSlash+1);
     }
     return ret;
 }
