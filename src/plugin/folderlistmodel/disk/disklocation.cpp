@@ -195,6 +195,7 @@ DiskLocation::newDirIterator(const QString &path,
                              QDirIterator::IteratorFlags flags,
                              LocationItemDirIterator::LoadMode loadmode)
 {
+    Q_UNUSED(loadmode);
     return  new DiskLocationItemDirIterator(path, filters, flags);
 }
 
