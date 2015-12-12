@@ -108,10 +108,12 @@ public:
     virtual bool      isBrowsable() const;
     virtual bool      needsAuthentication() const;
     virtual QString   authenticationPath() const;
-    virtual void      setFile(const QString &dir, const QString & file);    
+    virtual void      setFile(const QString &dir, const QString & file);
+    virtual void      setFile(const QString &fullname);
     virtual bool      permission(QFile::Permissions permissions) const;
     void              fillFromStatBuf(const struct stat& statBuffer);
     void              setAsHost();
+    void              setAsShare();
 
 public:
     static QString    removeExtraSlashes(const QString &url, int firstSlashIndex = -1);
