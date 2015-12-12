@@ -22,12 +22,12 @@
 #ifndef SMBLOCATION_H
 #define SMBLOCATION_H
 
-#include "location.h"
+#include "networklocation.h"
 #include "smblocationauthentication.h"
 #include "smbobject.h"
 
 
-class SmbLocation : public Location, public SmbLocationAuthentication
+class SmbLocation : public NetworkLocation, public SmbLocationAuthentication
 {
     Q_OBJECT
 public:
@@ -36,10 +36,7 @@ public:
 
 public:   
     virtual DirItemInfo * newItemInfo(const QString& urlPath);
-    virtual DirListWorker * newListWorker(const QString &urlPath,
-                                          QDir::Filters filter,
-                                          const bool isRecursive);
-     virtual LocationItemDirIterator * newDirIterator(const QString & path,
+    virtual LocationItemDirIterator * newDirIterator(const QString & path,
                                                       QDir::Filters filters,
                                                       QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
                                                       LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);

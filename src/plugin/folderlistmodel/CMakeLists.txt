@@ -35,6 +35,8 @@ set(folderlistmodel_SRCS
     iorequestworker.h
     ioworkerthread.cpp
     ioworkerthread.h
+    networklistworker.cpp
+    networklistworker.h
     plugin.cpp
     plugin.h
     location.cpp
@@ -43,6 +45,8 @@ set(folderlistmodel_SRCS
     locationsfactory.h
     locationurl.cpp
     locationurl.h
+    networklocation.cpp
+    networklocation.h
     locationitemdir.cpp
     locationitemdir.h
     locationitemdiriterator.cpp

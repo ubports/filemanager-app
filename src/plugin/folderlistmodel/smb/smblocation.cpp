@@ -22,7 +22,6 @@
 #include "smblocation.h"
 #include "smbutil.h"
 #include "smbiteminfo.h"
-#include "smblistworker.h"
 #include "smblocationdiriterator.h"
 #include "iorequest.h"
 #include "ioworkerthread.h"
@@ -38,7 +37,7 @@
 #endif
 
 SmbLocation::SmbLocation(int type, QObject *parent)
-     : Location(type, parent)
+     : NetworkLocation(type, parent)
      , SmbLocationAuthentication()
 {
      m_smb = new SmbUtil(suitableAuthenticationFunction());
@@ -86,12 +85,6 @@ QString SmbLocation::currentAuthenticationPassword()
 DirItemInfo * SmbLocation::newItemInfo(const QString &urlPath)
 {
     return new SmbItemInfo(urlPath, m_smb);
-}
-
-
-DirListWorker * SmbLocation::newListWorker(const QString &urlPath, QDir::Filters filter, const bool isRecursive)
-{
-    return new SmbListWorker(urlPath,filter,isRecursive, m_info, m_smb);
 }
 
 
