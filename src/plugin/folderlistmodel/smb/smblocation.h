@@ -41,7 +41,8 @@ public:
                                           const bool isRecursive);
      virtual LocationItemDirIterator * newDirIterator(const QString & path,
                                                       QDir::Filters filters,
-                                                      QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags);
+                                                      QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
+                                                      LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
     virtual LocationItemFile   * newFile(const QString & path);   
     virtual LocationItemDir    * newDir(const QString & dir = QLatin1String(0));
      virtual bool       isThereDiskSpace(const QString& pathname, qint64 requiredSize);

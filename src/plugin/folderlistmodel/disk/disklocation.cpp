@@ -192,7 +192,8 @@ QString DiskLocation::urlBelongsToLocation(const QString &urlPath, int indexOfCo
 LocationItemDirIterator *
 DiskLocation::newDirIterator(const QString &path,
                              QDir::Filters filters,
-                             QDirIterator::IteratorFlags flags)
+                             QDirIterator::IteratorFlags flags,
+                             LocationItemDirIterator::LoadMode loadmode)
 {
     return  new DiskLocationItemDirIterator(path, filters, flags);
 }

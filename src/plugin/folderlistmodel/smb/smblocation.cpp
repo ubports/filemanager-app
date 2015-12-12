@@ -111,9 +111,10 @@ QString SmbLocation::urlBelongsToLocation(const QString &urlPath, int indexOfCol
 LocationItemDirIterator *
 SmbLocation::newDirIterator(const QString &path,
                             QDir::Filters filters,
-                            QDirIterator::IteratorFlags flags)
+                            QDirIterator::IteratorFlags flags,
+                            LocationItemDirIterator::LoadMode loadmode)
 {
-    return new SmbLocationDirIterator(path, filters, flags, m_smb);
+    return new SmbLocationDirIterator(path, filters, flags, m_smb, loadmode);
 }
 
 
