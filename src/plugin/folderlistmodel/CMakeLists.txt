@@ -73,8 +73,6 @@ set(folderlistmodel_SRCS
     trash/trashiteminfo.h
     trash/trashlocation.cpp
     trash/trashlocation.h 
-    smb/smblistworker.cpp
-    smb/smblistworker.h
     smb/qsambaclient/src/smbutil.cpp
     smb/qsambaclient/src/smbutil.h
     smb/qsambaclient/src/smbiteminfo.cpp
