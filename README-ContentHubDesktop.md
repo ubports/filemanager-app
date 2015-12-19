@@ -1,16 +1,13 @@
-# Ubuntu File Manager
+Testing Content-Hub support
+===========================
 
-File manager app for Ubuntu on the desktop and on mobile devices.
-
-## Testing Content-Hub support
-
-### For the desktop
+## For the desktop
 
 Install the following dependencies to run click applications:
 
     sudo apt-get install upstart-app-launch-tools
 
-#### Build FileManager and install FileManager as click package
+### Build FileManager and install FileManager as click package
 
 Build FileManager as a click package and install it. At the time of this writing
 this doesn't seem to be working with the SDK (due to cmake), but it can be done 
@@ -24,7 +21,7 @@ After that you can build x86 version of the package and install it:
     QT_SELECT=qt5 cmake . -DCLICK_MODE=1 && make -j2 && make install DESTDIR=install && click build install
     sudo click install --user=$USER ./com.ubuntu.filemanager_0.3.latest_i386.click 
 
-#### Build and install hub-importer as click package
+### Build and install hub-importer as click package
 
 Get the sources for building:
 
@@ -36,7 +33,7 @@ Install the created package (example):
 
     sudo click install --user=$USER com.ubuntu.developer.ken-vandine.hub-importer_0.2_all.click
 
-#### Running test
+### Running test
 
 Run hub-importer (example):
 
@@ -50,16 +47,17 @@ supported at the moment (even though FileManager allows selecting any type). You
 directory if you so choose. Once you're satisfied with the seelction, click "Select". You should see the pictures 
 then in Hub Importer.
 
-#### Troubleshooting
+Troubleshooting
+===============
 
- - If you don't see File Manager as one of the choises in Hub Importer, then quit Hub Importer and run this script:
+* If you don't see File Manager as one of the choises in Hub Importer, then quit Hub Importer and run this script:
     /usr/lib/i386-linux-gnu/content-hub/content-hub-peer-hook
    Try running Hub Importer again after that and File Manager should show.
    If the above script does not exist, you can try locating something similar with:
     locate hook
- - If you have trouble running Hub Importer or the above still doesn't work, check the installed click packages with:
+* If you have trouble running Hub Importer or the above still doesn't work, check the installed click packages with:
    click list
    It should show entry for both File Manager and Hub Importer. If it does not, installing the click package has not succeeded
- - If all else fails, check the logs for both Hub Importer and File Manager for further clues at:
+* If all else fails, check the logs for both Hub Importer and File Manager for further clues at:
     $HOME/.cache/upstart/
 
