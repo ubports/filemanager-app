@@ -1,8 +1,5 @@
-# Ubuntu File Manager
-
-File manager app for Ubuntu on the desktop and on mobile devices.
-
-## Building the app
+Building the app
+================
 
 ### For the desktop
 
@@ -50,7 +47,9 @@ Creator's left sidebar (just above the green "Run" button).
 Ensure you've selected the kit you want for your build and press the build
 button on Qt Creator's left sidebar (or alternatively Ctrl+B).
 
-## Running the app
+
+Running the app
+===============
 
 ### On the desktop
 
@@ -84,7 +83,9 @@ a build, the app will automatically be built first before running.
 If you're starting the app on a device, the build will be copied over and the
 code will run unconfined.
 
-## Building a click package
+
+Building a click package
+========================
 
 There are two alternative ways of building a click package.
 
@@ -110,7 +111,9 @@ Notes:
    click-buddy --dir . --arch armhf --framework ubuntu-sdk-14.04
 3. Once finished, click-buddy will tell you the location of your source package
 
-## Installing a click package
+
+Installing a click package
+==========================
 
 First of all, ensure you've got a working Ubuntu device attached over USB to
 your host computer
@@ -136,7 +139,9 @@ click package on the device.
 2. Search for Reminders in the Apps scope and tap on its icon to start it
 3. You'll find the runtime logs at ~/.cache/upstart/application-click/
 
-## Uninstalling a click package
+
+Uninstalling a click package
+============================
 
 Run the following commands, replacing the version of the click package you want
 to uninstall:
@@ -144,26 +149,3 @@ to uninstall:
     adb shell
     sudo -iu phablet
     sudo click unregister com.ubuntu.filemanager 0.3
-
-## Run the autopilot tests
-
-Prerequisites:
-    sudo apt-get install ubuntu-ui-toolkit-autopilot
-
-Once the app has been built, you can go to the build directory and run:
-
-    cd tests/autopilot
-    autopilot3 run filemanager
-
-You can run filemanager in phone or tablet mode passing one of these two switches:
-
--p for phone mode
--t for tablet mode
-
-so:
-
-autopilot3 launch ../../src/app/filemanager -p
-
-will launch filemanager with autopilot in phone mode.
-
-

@@ -1,3 +1,9 @@
+ubuntu-filemanager-app (0.4ubuntu1) UNRELEASED; urgency=medium
+
+  * Improved READMEs
+
+ -- Girish Rawat <emailgirishrawat@gmail.com>  Sat, 19 Dec 2015 13:03:56 +0530
+
 ubuntu-filemanager-app (0.4) wily; urgency=medium
 
   * Renamed PAM module to not conflict with the Terminal one.
