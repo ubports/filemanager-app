@@ -39,7 +39,7 @@ public:
    enum LoadMode
    {
      LoadOnConstructor,  //!< loads the entire directory or url in the constructor as Qt QDirIterator does
-     LoadLater           //!< do NOT load the entire directory or url, \ref load() method should be responsabile to do that.
+     LoadLater           //!< do NOT load the entire directory or url, \ref load() method should be responsible to do that.
    };
 
    virtual ~LocationItemDirIterator();
@@ -67,7 +67,7 @@ public:
    virtual QString          path()     const;
 
    /*!
-    * \brief load()  reponsable to load the entire directory or url when \ref LoadLater is passed to the constructor
+    * \brief load()  responsible to load the entire directory or url when \ref LoadLater is passed to the constructor
     */
    virtual void         load() ;
 
