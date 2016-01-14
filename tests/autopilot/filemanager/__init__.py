@@ -108,7 +108,7 @@ class MainView(ubuntuuitoolkit.MainView):
         """Bring the places page to the screen"""
         try:
             action_item = self.wait_select_single(
-                'ShapeItem', objectName='bottomEdgeTip')
+                'UCUbuntuShape', objectName='bottomEdgeTip')
             action_item.visible.wait_for(True)
             action_item.isAnimating.wait_for(False)
             start_x = (action_item.globalRect.x +
