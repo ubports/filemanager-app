@@ -40,9 +40,9 @@ public:
     ~SmbItemInfo();
 
 public:
-    QString          sharePath() const;
-    void             setAsShare();  
+    QString          sharePath() const;   
     virtual void     setFile(const QString &dir, const QString & file);
+    virtual void     setFile(const QString &smb_path);
 
 protected:    
      void            setInfo(const QString &smb_path);

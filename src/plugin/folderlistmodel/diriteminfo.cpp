@@ -71,9 +71,9 @@ DirItemInfoPrivate::DirItemInfoPrivate(const DirItemInfoPrivate &other):
   ,_isExecutable(other._isExecutable)
   ,_isLocalSharedDir(other._isLocalSharedDir)
   ,_isHost(other._isHost)
-  ,_isWorkGroup(false)
-  ,_isNetworkShare(false)
-  ,_needsAuthentication(false)
+  ,_isWorkGroup(other._isWorkGroup)
+  ,_isNetworkShare(other._isNetworkShare)
+  ,_needsAuthentication(other._needsAuthentication)
   ,_permissions(other._permissions)
   ,_size(other._size)
   ,_created(other._created)
@@ -82,6 +82,7 @@ DirItemInfoPrivate::DirItemInfoPrivate(const DirItemInfoPrivate &other):
   ,_path(other._path)
   ,_fileName(other._fileName) 
   ,_normalizedPath(other._normalizedPath)
+  ,_authenticationPath(other._authenticationPath)
 {
 
 }
@@ -107,6 +108,7 @@ DirItemInfoPrivate::DirItemInfoPrivate(const QFileInfo &fi):
   ,_isNetworkShare(false)
   ,_needsAuthentication(false)
   ,_permissions(0)
+  ,_size(0)
 {
     setFileInfo(fi);
 }
@@ -323,6 +325,13 @@ void DirItemInfo::setFile(const QString &dir, const QString &file)
 {
    QFileInfo f;
    f.setFile(dir,file);
+   d_ptr->setFileInfo(f);
+}
+
+void DirItemInfo::setFile(const QString &fullname)
+{
+   QFileInfo f;
+   f.setFile(fullname);
    d_ptr->setFileInfo(f);
 }
 
@@ -587,4 +596,9 @@ void DirItemInfo::setAsHost()
     d_ptr->_exists = true;
     d_ptr->_isReadable   = true;
     d_ptr->_isExecutable = true;
+}
+
+void DirItemInfo::setAsShare()
+{
+    d_ptr->_isNetworkShare = true;
 }

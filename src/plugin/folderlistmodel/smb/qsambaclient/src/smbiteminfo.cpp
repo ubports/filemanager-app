@@ -136,21 +136,22 @@ void SmbItemInfo::setFile(const QString &dir, const QString &file)
         url.setPath(f.canonicalFilePath());
         smb_path = url.toString();
     }
-    smb_path += QDir::separator() + file;
+    if (!file.isEmpty())
+    {
+        smb_path += QDir::separator() + file;
+    }
     SmbItemInfo *other  = new SmbItemInfo( LocationUrl::SmbURL + DirItemInfo::removeExtraSlashes(smb_path),
                                            m_smb);
     if (other->isValid())
     {
         *this = *other;
     }
-    else
-    {
-        delete other;
-    }
+
+    delete other; //always delete
 }
 
-
-void SmbItemInfo::setAsShare()
+void SmbItemInfo::setFile(const QString &smb_path)
 {
-    d_ptr->_isNetworkShare = true;
+    return setFile(smb_path, QLatin1String(0));
 }
+

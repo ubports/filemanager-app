@@ -31,23 +31,25 @@ UrlItemInfo::UrlItemInfo():    DirItemInfo()
 UrlItemInfo::UrlItemInfo(const QString& urlPath, const QString& urlRoot):
      DirItemInfo()
 {
-    if (urlPath == urlRoot)
+    if (!urlPath.isEmpty())
     {
-        setRoot(urlPath);
-    }
-    else
-    {
-        if (!urlPath.startsWith(urlRoot))
+        if (urlPath == urlRoot)
         {
-            d_ptr->_isValid    = false;
-            d_ptr->_isAbsolute = false;
+            setRoot(urlPath);
         }
         else
         {
-             init(urlPath);
+            if (!urlPath.startsWith(urlRoot))
+            {
+                d_ptr->_isValid    = false;
+                d_ptr->_isAbsolute = false;
+            }
+            else
+            {
+                init(urlPath);
+            }
         }
     }
-
 }
 
 
