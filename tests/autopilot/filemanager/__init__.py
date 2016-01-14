@@ -108,7 +108,7 @@ class MainView(ubuntuuitoolkit.MainView):
         """Bring the places page to the screen"""
         try:
             action_item = self.wait_select_single(
-                'ShapeItem', objectName='bottomEdgeTip')
+                'UCUbuntuShape', objectName='bottomEdgeTip')
             action_item.visible.wait_for(True)
             action_item.isAnimating.wait_for(False)
             start_x = (action_item.globalRect.x +
@@ -396,7 +396,7 @@ class FolderListView(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
 
     def _split_header_text(self):
         header_text = self.select_single(
-            'Header', objectName='listViewSmallHeader').text
+            'ListItemHeader', objectName='listViewSmallHeader').text
         match = re.match(self.SPLIT_HEADER_REGEX, header_text)
         if match:
             path = match.group(1)
@@ -432,7 +432,7 @@ class FolderIconView(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
 
     def _split_header_text(self):
         header_text = self.select_single(
-            'Header', objectName='iconViewHeader').text
+            'ListItemHeader', objectName='iconViewHeader').text
         match = re.match(self.SPLIT_HEADER_REGEX, header_text)
         if match:
             path = match.group(1)
