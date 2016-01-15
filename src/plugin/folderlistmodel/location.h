@@ -153,7 +153,7 @@ public: //pure functions
       *  If the URL or Path in \a urlPath is valid and belongs to its location
       *
       * \param urlPath                  The input URL that is going to be parsed
-      * \param indexOfColonAndSlashe    The index of ":/"
+      * \param indexOfColonAndSlash     The index of ":/"
       * \return                         The good URL (parsed with extra slashes removed)
       *                                 or an empty string if \a urlPath does not belong to its location
       *
@@ -166,7 +166,7 @@ public: //pure functions
       *    The return will be: an empty string meaning that this URL is not related to Samba
       *\endcode
       */
-     virtual QString         urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlashe) = 0;
+     virtual QString         urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlash) = 0;
 
 public:
     /*!

@@ -95,14 +95,14 @@ DirListWorker * SmbLocation::newListWorker(const QString &urlPath, QDir::Filters
 }
 
 
-QString SmbLocation::urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlashe)
+QString SmbLocation::urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlash)
 {
     QString ret;
     if ( urlPath.startsWith(LocationUrl::SmbURL.midRef(0,4)) ||
          urlPath.startsWith(LocationUrl::CifsURL.midRef(0,5))
        )
     {
-        ret  = LocationUrl::SmbURL + DirItemInfo::removeExtraSlashes(urlPath, indexOfColonAndSlashe+1);
+        ret  = LocationUrl::SmbURL + DirItemInfo::removeExtraSlashes(urlPath, indexOfColonAndSlash+1);
     }
     return ret;
 }
