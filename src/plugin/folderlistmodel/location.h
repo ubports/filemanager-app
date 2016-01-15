@@ -23,6 +23,7 @@
 #define LOCATION_H
 
 #include "diriteminfo.h"
+#include "locationitemdiriterator.h"
 
 #include <QObject>
 #include <QDirIterator>
@@ -124,7 +125,8 @@ public: //pure functions
      */
      virtual LocationItemDirIterator * newDirIterator(const QString & path,
                                                      QDir::Filters filters,
-                                                     QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags)  = 0;
+                                                     QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
+                                                     LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor)  = 0;
     /*!
       * \brief newFile() creates a LocationItemFile object which is similar to Qt QFile object
       *

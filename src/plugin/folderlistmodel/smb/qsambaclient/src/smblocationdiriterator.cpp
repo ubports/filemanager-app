@@ -32,35 +32,44 @@ SmbLocationDirIterator::SmbLocationDirIterator(const QString &path,
                                                const QStringList &nameFilters,
                                                QDir::Filters filters,
                                                QDirIterator::IteratorFlags flags,
-                                               Const_SmbUtil_Ptr smb)
-        : LocationItemDirIterator(path, nameFilters, filters, flags)
+                                               Const_SmbUtil_Ptr smb,
+                                               LocationItemDirIterator::LoadMode loadmode)
+        : LocationItemDirIterator(path, nameFilters, filters, flags, loadmode)
         , INIT_ATTR(path, smb)
 {
-    bool recursive = flags == QDirIterator::Subdirectories ? true : false;
-    m_urlItems = smbObj()->listContent(path, recursive, filters, nameFilters);
+   if (loadmode == LocationItemDirIterator::LoadOnConstructor)
+   {
+       load();
+   }
 }
 
 
 SmbLocationDirIterator::SmbLocationDirIterator(const QString &path,
                                                QDir::Filters filters,
                                                QDirIterator::IteratorFlags flags,
-                                               Const_SmbUtil_Ptr smb)
-     : LocationItemDirIterator(path,filters,flags)
+                                               Const_SmbUtil_Ptr smb,
+                                               LocationItemDirIterator::LoadMode loadmode)
+     : LocationItemDirIterator(path,filters,flags, loadmode)
      , INIT_ATTR(path, smb)
 {
-    bool recursive = flags == QDirIterator::Subdirectories ? true : false;
-    m_urlItems = smbObj()->listContent(path, recursive, filters);
+    if (loadmode == LocationItemDirIterator::LoadOnConstructor)
+    {
+        load();
+    }
 }
 
 
 SmbLocationDirIterator::SmbLocationDirIterator(const QString &path,
                                                QDirIterator::IteratorFlags flags,
-                                               Const_SmbUtil_Ptr smb)
-       : LocationItemDirIterator(path,flags)
+                                               Const_SmbUtil_Ptr smb,
+                                               LocationItemDirIterator::LoadMode loadmode)
+       : LocationItemDirIterator(path,flags, loadmode)
        , INIT_ATTR(path, smb)
 {
-    bool recursive = flags == QDirIterator::Subdirectories ? true : false;
-    m_urlItems = smbObj()->listContent(path, recursive, QDir::NoFilter);
+    if (loadmode == LocationItemDirIterator::LoadOnConstructor)
+    {
+        load();
+    }
 }
 
 
@@ -113,18 +122,6 @@ QString SmbLocationDirIterator::fileName() const
 }
 
 
-QString SmbLocationDirIterator::path() const
-{
-    QString ret;
-    QStringList separated =  UrlItemInfo::separatePathFilename(cleanUrl());
-    if (separated.count() > 0)
-    {
-        ret = separated.at(0);
-    }
-    return ret;
-}
-
-
 QString SmbLocationDirIterator::filePath() const
 {
     QString fullpathname;
@@ -133,4 +130,11 @@ QString SmbLocationDirIterator::filePath() const
         fullpathname = m_urlItems.at(m_curItem);
     }
     return fullpathname;
+}
+
+
+void SmbLocationDirIterator::load()
+{
+    bool recursive = m_flags == QDirIterator::Subdirectories ? true : false;
+    m_urlItems = smbObj()->listContent(path(), recursive, m_filters, m_nameFilters);
 }

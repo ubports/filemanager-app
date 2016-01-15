@@ -21,19 +21,40 @@
 
 #include "locationitemdiriterator.h"
 
-LocationItemDirIterator::LocationItemDirIterator(const QString &, const QStringList &, QDir::Filters, QDirIterator::IteratorFlags )
+LocationItemDirIterator::LocationItemDirIterator(const QString &path,
+                                                 const QStringList &nameFilters,
+                                                 QDir::Filters filters,
+                                                 QDirIterator::IteratorFlags flags,
+                                                 LocationItemDirIterator::LoadMode loadmode)
+                                                 : m_path(path)
+                                                 , m_nameFilters(nameFilters)
+                                                 , m_filters(filters)
+                                                 , m_flags(flags)
+
 {
+    Q_UNUSED(loadmode);
 }
 
 
-LocationItemDirIterator::LocationItemDirIterator(const QString &, QDir::Filters , QDirIterator::IteratorFlags)
+LocationItemDirIterator::LocationItemDirIterator(const QString &path,
+                                                 QDir::Filters filters,
+                                                 QDirIterator::IteratorFlags flags,
+                                                 LocationItemDirIterator::LoadMode loadmode)
+                                                 : m_path(path)
+                                                 , m_filters(filters)
+                                                 , m_flags(flags)
 {
-
+     Q_UNUSED(loadmode);
 }
 
-LocationItemDirIterator::LocationItemDirIterator(const QString &, QDirIterator::IteratorFlags )
+LocationItemDirIterator::LocationItemDirIterator(const QString &path,
+                         QDirIterator::IteratorFlags flags,
+                         LocationItemDirIterator::LoadMode loadmode)
+                         : m_path(path)
+                         , m_filters(QDir::NoFilter)
+                         , m_flags(flags)
 {
-
+     Q_UNUSED(loadmode);
 }
 
 LocationItemDirIterator::~LocationItemDirIterator()
@@ -42,3 +63,22 @@ LocationItemDirIterator::~LocationItemDirIterator()
 }
 
 
+QDirIterator::IteratorFlags LocationItemDirIterator::flags() const
+{
+    return m_flags;
+}
+
+QDir::Filters LocationItemDirIterator::filters() const
+{
+    return m_filters;
+}
+
+QString LocationItemDirIterator::path() const
+{
+    return m_path;
+}
+
+void LocationItemDirIterator::load()
+{
+    //default implementation does nothing
+}

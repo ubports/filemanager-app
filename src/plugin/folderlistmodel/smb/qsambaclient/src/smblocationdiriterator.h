@@ -32,14 +32,26 @@ public:
 public:
    virtual DirItemInfo	fileInfo() const;
    virtual QString	    fileName() const;
-   virtual QString	    filePath() const;
-   virtual bool	        hasNext()  const;
-   virtual QString	    next()          ;
-   virtual QString	    path()     const;
+   virtual QString          filePath() const;
+   virtual bool         hasNext()  const;
+   virtual QString          next()          ;
+   virtual void         load();
 public:
-   SmbLocationDirIterator(const QString & path, QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags, Const_SmbUtil_Ptr  smb  = 0);
-   SmbLocationDirIterator(const QString & path, QDir::Filters filters, QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags, Const_SmbUtil_Ptr  smb  = 0);
-   SmbLocationDirIterator(const QString & path, const QStringList & nameFilters, QDir::Filters filters = QDir::NoFilter, QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags, Const_SmbUtil_Ptr  smb  = 0);
+   SmbLocationDirIterator(const QString & path,
+                          QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
+                          Const_SmbUtil_Ptr  smb  = 0,
+                          LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
+
+   SmbLocationDirIterator(const QString & path, QDir::Filters filters,
+                          QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
+                          Const_SmbUtil_Ptr  smb  = 0,
+                          LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
+
+   SmbLocationDirIterator(const QString & path, const QStringList & nameFilters,
+                          QDir::Filters filters = QDir::NoFilter,
+                          QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
+                          Const_SmbUtil_Ptr  smb  = 0,
+                          LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
 private:
    QStringList  m_urlItems;
    int          m_curItem;
