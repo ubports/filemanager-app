@@ -67,11 +67,11 @@ HEADERS += $$PWD/trash/qtrashdir.h        \
 
 SOURCES += $$PWD/smb/smblocation.cpp      \
            $$PWD/smb/smblocationauthentication.cpp \
-           $$PWD/smb/smblistworker.cpp
+
 
 HEADERS += $$PWD/smb/smblocation.h        \
            $$PWD/smb/smblocationauthentication.h \
-           $$PWD/smb/smblistworker.h
+
 
 include ($$PWD/smb/qsambaclient/qsambaclient.pri)
 
