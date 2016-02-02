@@ -25,9 +25,9 @@ Column {
     Rectangle {
         height: units.gu(7)
         width: parent.width
-        color: "#464646"
+        color: "#F5F5F5"
     }
-    
+
     Rectangle {
         color: Qt.rgba(0.2,0.2,0.2,0.97)
         height: units.gu(2)

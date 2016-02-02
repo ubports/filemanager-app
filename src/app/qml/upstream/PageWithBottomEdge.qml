@@ -176,7 +176,7 @@ Page {
         z: 1
         width: tipLabel.paintedWidth + units.gu(6)
         height: bottomEdge.tipHeight + units.gu(1)
-        color: "#464646"
+        color: "#F5F5F5"
         Label {
             id: tipLabel
 
@@ -292,7 +292,7 @@ Page {
         readonly property int pageStartY: fakeHeader.height
 
         z: 1
-        color: "#606060" // "#797979" // Qt.rgba(0.2,0.2,0.2,0.97)
+        color: "#F5F5F5" // "#606060" // "#797979" // Qt.rgba(0.2,0.2,0.2,0.97)
         // color: Theme.palette.normal.background
         clip: true
         anchors {
