@@ -15,10 +15,10 @@
  *
  * Authored by: Arto Jalkanen <ajalkane@gmail.com>
  */
-import QtQuick 2.3
-import Ubuntu.Components 1.1
+import QtQuick 2.4
+import Ubuntu.Components 1.3
 import org.nemomobile.folderlistmodel 1.0
-import Ubuntu.Components.Popups 1.0
+import Ubuntu.Components.Popups 1.3
 import Ubuntu.Unity.Action 1.1 as UnityActions
 import U1db 1.0 as U1db
 import Ubuntu.Content 0.1
@@ -32,7 +32,6 @@ MainView {
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
     applicationName: "com.ubuntu.filemanager"
-    useDeprecatedToolbar: false
 
     width: phone ? units.gu(40) : units.gu(100)
     height: units.gu(75)
