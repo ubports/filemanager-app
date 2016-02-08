@@ -25,7 +25,7 @@ Flickable {
 
     /* Convenience properties ; used a large amount of times to warrant a variable */
     property int iconWidth: units.gu(2.5)
-    property string textSize: "x-large"
+    property string textSize: "large"
     property string separatorText: " /"
     /* contentWidth equals this to allow it to hide Device and Home */
     contentWidth: {
