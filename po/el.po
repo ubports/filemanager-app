@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2015-10-21 22:11+0000\n"
+"PO-Revision-Date: 2016-02-09 13:49+0000\n"
 "Last-Translator: Aggelos Arnaoutis <angelosarn@hotmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2016-02-09 05:41+0000\n"
-"X-Generator: Launchpad (build 17908)\n"
+"X-Launchpad-Export-Date: 2016-02-10 05:39+0000\n"
+"X-Generator: Launchpad (build 17923)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:35
@@ -142,11 +142,11 @@ msgstr "Δικαιώματα:"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr ""
+msgstr "Λειτουργία σε εξέλιξη"
 
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
-msgstr ""
+msgstr "Λειτουργία αρχείου"
 
 #: ../src/app/qml/ui/FolderListPage.qml:57
 #, qt-format
@@ -279,7 +279,7 @@ msgstr "Αποσυμπίεση αρχείου"
 
 #: ../src/app/qml/ui/FolderListPage.qml:630
 msgid "File operation error"
-msgstr ""
+msgstr "Σφάλμα λειτουργίας αρχείου"
 
 #: ../src/app/qml/ui/FolderListPage.qml:661
 #, qt-format
@@ -406,6 +406,7 @@ msgstr "Φίλτρο"
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:418
 msgid "path or url may not exist or cannot be read"
 msgstr ""
+"η διαδρομή ή η διεύθυνση μπορεί να μην υπάρχει ή ν α μην μπορεί να διαβαστεί"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:585
 msgid "Rename error"
