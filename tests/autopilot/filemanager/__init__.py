@@ -606,7 +606,7 @@ class FileDetailsPopover(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
     """FileDetailsPopover Autopilot emulator."""
 
     def get_path(self):
-        return self.select_single('Label', objectName='pathLabel').text
+        return self.select_single('UCLabel', objectName='pathLabel').text
 
 
 class PathBar(ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase):
