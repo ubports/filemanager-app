@@ -32,6 +32,8 @@ import ubuntuuitoolkit
 
 import filemanager
 from filemanager import fixture_setup as fm_fixtures
+import gi
+gi.require_version('Click', '0.4')
 from gi.repository import Click
 
 logger = logging.getLogger(__name__)

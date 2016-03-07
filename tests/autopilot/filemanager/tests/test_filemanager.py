@@ -313,9 +313,9 @@ class TestFolderListPage(FileManagerTestCase):
     def test_copy_directory(self):
         # Set up a directory to copy and a directory to copy it into.
         destination_dir_path = self.make_directory_in_home()
-        destination_dir_name = os.path.basename(dir_path)
+        destination_dir_name = os.path.basename(destination_dir_path)
         dir_to_copy_path = self.make_directory_in_home()
-        dir_to_copy_name = os.path.basename(dir_path)
+        dir_to_copy_name = os.path.basename(dir_to_copy_path)
 
         folder_list_page = self.app.main_view.get_folder_list_page()
         self._assert_number_of_files(2)
@@ -347,9 +347,9 @@ class TestFolderListPage(FileManagerTestCase):
     def test_cut_directory(self):
         # Set up a directory to cut and a directory to move it into.
         destination_dir_path = self.make_directory_in_home()
-        destination_dir_name = os.path.basename(dir_path)
-        dir_to_copy_path = self.make_directory_in_home()
-        dir_to_copy_name = os.path.basename(dir_path)
+        destination_dir_name = os.path.basename(destination_dir_path)
+        dir_to_cut_path = self.make_directory_in_home()
+        dir_to_cut_name = os.path.basename(dir_to_cut_path)
 
         folder_list_page = self.app.main_view.get_folder_list_page()
         self._assert_number_of_files(2)
