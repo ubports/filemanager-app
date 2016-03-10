@@ -91,9 +91,10 @@ if(CLICK_MODE)
       MESSAGE("Cache miss, downloading from network.")
       execute_process(
         COMMAND mkdir ${UPSTREAM_LIBS_DIR}
+        COMMAND mkdir ${UPSTREAM_CACHE}
         COMMAND ${GET_CLICK_DEPS_TOOL} -d ${DEPS_MANIFEST} ${CLICK_ARCH} ${UPSTREAM_LIBS_DIR}
       )
-      # Cache for next usage.
+      # Cache for next usage
       file(COPY ${UPSTREAM_LIBS_DIR} DESTINATION ${UPSTREAM_CACHE} )
     endif()
     MESSAGE("Installing upstream libs from ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs/usr/lib/${ARCH_TRIPLET}/ to ${DATA_DIR}lib/${ARCH_TRIPLET}")
