@@ -15,7 +15,7 @@
  *
  * Authored by: Arto Jalkanen <ajalkane@gmail.com>
  */
-.import Ubuntu.Content 0.1 as CH
+.import Ubuntu.Content 1.3 as CH
 
 /**
  * For now a simple static mapping of file extensions to ContentHub types.
