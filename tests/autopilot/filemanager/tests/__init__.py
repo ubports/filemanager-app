@@ -157,23 +157,6 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
         directory = registry.get_path(package_name)
         return version, directory
 
-    def _copy_xauthority_file(self, directory):
-        """ Copy .Xauthority file to directory, if it exists in /home
-        """
-        # If running under xvfb, as jenkins does,
-        # xsession will fail to start without xauthority file
-        # Thus if the Xauthority file is in the home directory
-        # make sure we copy it to our temp home directory
-
-        xauth = os.path.expanduser(os.path.join(os.environ.get('HOME'),
-                                   '.Xauthority'))
-        if os.path.isfile(xauth):
-            logger.debug("Copying .Xauthority to %s" % directory)
-            shutil.copyfile(
-                os.path.expanduser(os.path.join(os.environ.get('HOME'),
-                                   '.Xauthority')),
-                os.path.join(directory, '.Xauthority'))
-
     def patch_home(self):
         """ mock /home for testing purposes to preserve user data
         """
@@ -188,7 +171,6 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
             temp_dir = temp_dir_fixture.path
 
             # before we set fixture, copy xauthority if needed
-            self._copy_xauthority_file(temp_dir)
             self.useFixture(fixtures.EnvironmentVariable('HOME',
                                                          newvalue=temp_dir))
 
