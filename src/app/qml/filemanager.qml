@@ -21,7 +21,7 @@ import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 1.3
 import Ubuntu.Unity.Action 1.1 as UnityActions
 import U1db 1.0 as U1db
-import Ubuntu.Content 0.1
+import Ubuntu.Content 1.3
 import com.ubuntu.PlacesModel 0.1
 import com.ubuntu.PamAuthentication 0.1
 
