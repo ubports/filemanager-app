@@ -63,7 +63,8 @@ Sidebar {
             delegate: Standard {
                 objectName: "place" + folderDisplayName(path).replace(/ /g,'')
                 text: folderDisplayName(path)
-
+                __foregroundColor: "black"
+                
                 Image {
                     anchors {
                         verticalCenter: parent.verticalCenter
