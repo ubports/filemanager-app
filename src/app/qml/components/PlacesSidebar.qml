@@ -25,7 +25,7 @@ Sidebar {
     id: root
 
     //color: Qt.rgba(0.5,0.5,0.5,0.3)
-    color: "#F5F5F5"
+    color: UbuntuColors.Porcelain
     width: expanded ? (collapsed ? units.gu(8) : units.gu(22)) : 0
 
     property bool collapsed: collapsedSidebar

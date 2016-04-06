@@ -38,7 +38,7 @@ Popover {
             Label {
                 text: i18n.tr("Show Hidden Files")
                 fontSize: "medium"
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
                 anchors.verticalCenter: parent.verticalCenter
@@ -58,7 +58,7 @@ Popover {
             Label {
                 text: i18n.tr("View As")
                 fontSize: "medium"
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
                 anchors.top: parent.top
@@ -80,7 +80,7 @@ Popover {
             Label {
                 text: i18n.tr("Sort By")
                 fontSize: "medium"
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
                 anchors.top: parent.top
@@ -102,7 +102,7 @@ Popover {
             Label {
                 text: i18n.tr("Sort Order")
                 fontSize: "medium"
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
                 anchors.top: parent.top
@@ -126,7 +126,7 @@ Popover {
             Label {
                 text: i18n.tr("Filter")
                 fontSize: "medium"
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
                 anchors.verticalCenter: parent.verticalCenter

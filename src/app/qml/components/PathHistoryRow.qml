@@ -84,7 +84,7 @@ Flickable {
                 text: i18n.tr("Device")
                 fontSize: flickable.textSize
                 anchors.verticalCenter: parent.verticalCenter
-                color: UbuntuColors.darkGrey
+                color: UbuntuColors.inkstone
                 clip: true
                 /* Maximum Width = Flickable Width */
                 width: if (contentWidth > flickable.width) { flickable.width }
@@ -139,7 +139,7 @@ Flickable {
                     text: pathText(folder,index)
                     fontSize: flickable.textSize
                     anchors.verticalCenter: parent.verticalCenter
-                    color: repeater.model === index + 1 ? UbuntuColors.darkGrey : UbuntuColors.darkGrey
+                    color: repeater.model === index + 1 ? UbuntuColors.inkstone : UbuntuColors.inkstone
                     clip: true
 
                     /* Maximum Width = Flickable Width */
@@ -153,7 +153,7 @@ Flickable {
                     width: flickable.iconWidth
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: label.left
-                    color: UbuntuColors.darkGrey
+                    color: UbuntuColors.inkstone
                     // clip: true
                 }
 
@@ -196,7 +196,7 @@ Flickable {
                                              : pathText(repeater.memoryPath,index)
                     fontSize: flickable.textSize
                     anchors.verticalCenter: parent.verticalCenter
-                    color: UbuntuColors.darkGrey
+                    color: UbuntuColors.inkstone
                     clip: true
 
                     /* Maximum Width = Flickable Width */
@@ -210,7 +210,7 @@ Flickable {
                     width: flickable.iconWidth
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: memoryLabel.left
-                    color: UbuntuColors.darkGrey
+                    color: UbuntuColors.inkstone
                     // clip: true
                 }
 

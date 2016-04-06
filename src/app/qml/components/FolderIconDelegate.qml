@@ -49,7 +49,7 @@ Item {
     property string fileName: model.fileName
     property string filePath: fileView.folder + '/' + fileName
 
-    property string text: fileName   
+    property string text: fileName
     property string subText: itemDateAndSize(model)
 
     property var icon:   fileIcon(filePath, model)
@@ -99,7 +99,7 @@ Item {
         }
         color: "white"
         radius: height/2
-        border.color: UbuntuColors.warmGrey
+        border.color: UbuntuColors.slate
         antialiasing: true
         opacity: expand ? 1 : 0
 
@@ -126,10 +126,7 @@ Item {
         elide: Text.ElideMiddle
 
         text: delegate.text
-        color: expand ? UbuntuColors.coolGrey : Theme.palette.selected.backgroundText
-        Behavior on color {
-            ColorAnimation { duration: 200 }
-        }
+        color: UbuntuColors.graphite
     }
 
     MouseArea {

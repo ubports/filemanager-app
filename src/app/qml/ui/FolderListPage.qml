@@ -656,7 +656,7 @@ PageWithBottomEdge {
 
                 Label {
                     text: qsTr(i18n.tr("Extracting archive '%1'")).arg(fileName)
-                    color: UbuntuColors.darkGrey
+                    color: UbuntuColors.slate
                     anchors.verticalCenter: parent.verticalCenter
                     width: row.width - loadingSpinner.width - row.spacing
                     maximumLineCount: 2
@@ -735,7 +735,7 @@ PageWithBottomEdge {
             Button {
                 id: cancelButton
                 text: i18n.tr("Cancel")
-                color: UbuntuColors.lightGrey
+                color: UbuntuColors.graphite
                 onClicked: {
                     PopupUtils.close(dialog)
                 }
@@ -781,7 +781,7 @@ PageWithBottomEdge {
     }
 
     function itemDateAndSize(model) {
-        var strDate = Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate);       
+        var strDate = Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate);
         //local file systems always have date and size for both files and directories
         //remote file systems may have not size for directories, it comes as "Unknown"
         if (strDate) {
@@ -932,7 +932,7 @@ PageWithBottomEdge {
         }
     }
 
-    function itemClicked(model) {      
+    function itemClicked(model) {
         if (model.isBrowsable) {
             console.log("browsable path="+model.filePath+" isRemote="+model.isRemote+" needsAuthentication="+model.needsAuthentication)
             if ((model.isReadable && model.isExecutable) ||
