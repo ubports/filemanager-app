@@ -25,7 +25,7 @@ Sidebar {
     id: root
 
     //color: Qt.rgba(0.5,0.5,0.5,0.3)
-    color: UbuntuColors.Porcelain
+    color: UbuntuColors.porcelain
     width: expanded ? (collapsed ? units.gu(8) : units.gu(22)) : 0
 
     property bool collapsed: collapsedSidebar
@@ -64,7 +64,7 @@ Sidebar {
                 objectName: "place" + folderDisplayName(path).replace(/ /g,'')
                 text: folderDisplayName(path)
                 __foregroundColor: "black"
-                
+
                 Image {
                     anchors {
                         verticalCenter: parent.verticalCenter
