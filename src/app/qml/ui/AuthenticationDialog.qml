@@ -47,6 +47,7 @@ Dialog {
         objectName: "okButton"
 
         text: i18n.tr("OK")
+        color: UbuntuColors.green
 
         onClicked: {
             passwordEntered(passwordField.text)
@@ -58,18 +59,7 @@ Dialog {
         id: cancelButton
         objectName: "cancelButton"
         text: i18n.tr("Cancel")
-
-        gradient: Gradient {
-            GradientStop {
-                position: 0
-                color: "gray"
-            }
-
-            GradientStop {
-                position: 1
-                color: "lightgray"
-            }
-        }
+        color: UbuntuColors.red
 
         onClicked: {
             PopupUtils.close(root)
