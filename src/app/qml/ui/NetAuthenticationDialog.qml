@@ -27,7 +27,7 @@ Dialog {
 
     property alias  currentPath:     authCurrentPath.text
     property alias  currentUserName: authUserName.text
-    property alias  currentPassword: authPassword.text   
+    property alias  currentPassword: authPassword.text
 
     signal ok()
     signal savePasswordChanged(bool check)
@@ -77,7 +77,7 @@ Dialog {
     Standard {
         Label {
             text: i18n.tr("Save password")
-            color: Theme.palette.normal.overlayText
+            color: UbuntuColors.ash
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
         }

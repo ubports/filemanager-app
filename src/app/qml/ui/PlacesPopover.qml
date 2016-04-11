@@ -100,7 +100,7 @@ Popover {
                     anchors.leftMargin: units.gu(8)
                     anchors.verticalCenter: parent.verticalCenter
                     text: i18n.tr("Places")
-                    color: Theme.palette.normal.overlayText
+                    color: UbuntuColors.ash
                 }
 
                 onClicked: {
@@ -129,7 +129,7 @@ Popover {
                     anchors.leftMargin: units.gu(8)
                     anchors.verticalCenter: parent.verticalCenter
                     text: folderDisplayName(path)
-                    color: selected ? UbuntuColors.orange : Theme.palette.normal.overlayText
+                    color: selected ? UbuntuColors.orange : UbuntuColors.ash
                 }
 
                 iconSource: model.icon || fileIcon(model.path, true)

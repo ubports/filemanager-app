@@ -78,7 +78,7 @@ Popover {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: folderDisplayName(root.path)
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
                 font.bold: true
             }
         }
@@ -89,50 +89,50 @@ Popover {
 
             Label {
                 text: i18n.tr("Path:")
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
             }
 
             Label {
                 objectName: "pathLabel"
                 text: root.path
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
             }
 
             Label {
                 text: model.isDir ? i18n.tr("Contents:")
                                   : i18n.tr("Size:")
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
             }
             Label {
                 text: model.fileSize
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
             }
 
             Label {
                 text: i18n.tr("Accessed:")
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
             }
             Label {
                 text: dateTimeFormat(model.accessedDate)
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
             }
 
             Label {
                 text: i18n.tr("Modified:")
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
             }
             Label {
                 text: dateTimeFormat(model.modifiedDate)
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
             }
 
             Label {
                 text: i18n.tr("Permissions:")
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
             }
             Label {
                 text: permissionsToString(model)
-                color: Theme.palette.normal.overlayText
+                color: UbuntuColors.ash
                 // This is a a work-around for bug #1354508.
                 // This basically forces all permissions to be on different lines, which looks
                 // good enough. But a similar issue as described in the bug can happen
