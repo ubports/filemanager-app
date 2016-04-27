@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-03-12 21:23+0100\n"
-"PO-Revision-Date: 2016-01-28 08:47+0000\n"
+"PO-Revision-Date: 2016-04-26 07:32+0000\n"
 "Last-Translator: GunChleoc <Unknown>\n"
 "Language-Team: Fòram na Gàidhlig http://www.foramnagaidhlig.net\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : "
 "(n > 2 && n < 20) ? 2 : 3;\n"
-"X-Launchpad-Export-Date: 2016-04-19 04:56+0000\n"
+"X-Launchpad-Export-Date: 2016-04-27 05:59+0000\n"
 "X-Generator: Launchpad (build 17995)\n"
 "Language: gd\n"
 
@@ -437,11 +437,11 @@ msgstr "Chan eil am faidhle no pasgan ann"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:264
 msgid " does not exist"
-msgstr ""
+msgstr " - chan eil seo ann"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:590
 msgid "Could not remove the item "
-msgstr ""
+msgstr "Cha b' urrainn dhuinn an nì seo a thoirt air falbh: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:631
 msgid "Could not find a suitable name to backup"
@@ -455,11 +455,11 @@ msgstr "Cha b’ urrainn dhuinn am pasgan a chruthachadh"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:694
 msgid "Could not create link to"
-msgstr ""
+msgstr "Cha b' urrainn dhuinn ceangal a chruthachadh gu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:706
 msgid "Could not set permissions to dir"
-msgstr ""
+msgstr "Cha b' urrainn dhuinn ceadan a' phasgain a shuidheachadh"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:720
 msgid "Could not open file"
@@ -475,11 +475,11 @@ msgstr "Cha b’ urrainn dhuinn am faidhle a chruthachadh"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:813
 msgid "Could not remove the directory/file "
-msgstr ""
+msgstr "Cha b' urrainn dhuinn am pasgan/faidhle seo a thoirt air falbh: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:829
 msgid "Could not move the directory/file "
-msgstr ""
+msgstr "Cha b' urrainn dhuinn am pasgan/faidhle seo a ghluasad: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:863
 msgid "Cannot copy items"
@@ -488,7 +488,7 @@ msgstr "Chan urrainn dhuinn lethbhreac a dhèanamh dhe na nithean"
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:864
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:883
 msgid "no write permission on folder "
-msgstr ""
+msgstr "chan eil cead sgrìobhaidh air a' phasgan seo ann: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:882
 msgid "Cannot move items"
@@ -500,11 +500,11 @@ msgstr "Tha am pasgan tùsail is an ceann-uidhe co-ionnann"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1104
 msgid "Write error in "
-msgstr ""
+msgstr "Mearachd sgrìobhaidh ann an: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1120
 msgid "Read error in "
-msgstr ""
+msgstr "Mearachd leughaidh ann an: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1354
 msgid " Copy"
@@ -516,11 +516,11 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1494
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "Cha deach leinn faidhle fiosrachadh an sgudail a chruthachadh"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1507
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "Cha deach leinn faidhle fiosrachadh an sgudail a thort air falbh"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
