@@ -27,123 +27,128 @@ import "../upstream"
 
 PageWithBottomEdge {
     id: folderListPage
-    title: basename(folder)
     bottomEdgeTitle: i18n.tr("Places")
     bottomEdgeEnabled: !sidebar.expanded
     bottomEdgePageSource: Qt.resolvedUrl("PlacesPage.qml")
 
-    head.contents: PathHistoryRow {}
+    header: PageHeader {
+        title: basename(folder)
+        contents: PathHistoryRow {}
+        flickable: !sidebar.expanded ?
+                           (folderListView.visible ? folderListView.flickable : folderIconView.flickable) : null
+        leadingActionBar.actions: [
+            /* Go to last folder visited */
+            Action {
+                id: back
+                objectName: "back"
+                iconName: "back"
 
-    /* Go to last folder visited */
-    head.backAction: Action {
-        id: back
-        objectName: "back"
-        iconName: "back"
+                onTriggered: {
+                    goBack()
+                }
+            }
+        ]
+        trailingActionBar {
+            numberOfSlots: 3
+            actions: [
+                Action {
+                    id: pasteButton
+                    objectName: "paste"
+                    iconName: "edit-paste"
+                    // Translation message was implemented according to:
+                    // http://developer.ubuntu.com/api/qml/sdk-14.04/Ubuntu.Components.i18n/
+                    // It allows correct translation for languages with more than two plural forms:
+                    // http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
+                    text: i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
+                    visible: pageModel.clipboardUrlsCounter > 0
+                    onTriggered: {
+                        console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
+                        fileOperationDialog.startOperation(i18n.tr("Paste files"))
+                        pageModel.paste()
+                    }
+                },
+                Action {
+                    id: clearClipboardButton
+                    objectName: "clearClipboard"
+                    iconName: "edit-clear"
+                    text: i18n.tr("Clear clipboard")
+                    visible: pageModel.clipboardUrlsCounter > 0
+                    onTriggered: {
+                        console.log("Clearing clipboard")
+                        pageModel.clearClipboard()
+                    }
+                },
+                Action {
+                    id: optionsButton
+                    iconName: "view-list-symbolic"
+                    text: i18n.tr("Properties")
+                    onTriggered: {
+                        PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent)
+                    }
+                },
+                Action {
+                    id: createNewFolder
+                    objectName: "createFolder"
+                    iconName: "add"
+                    text: i18n.tr("New Folder")
+                    onTriggered: {
+                        print(text)
+                        PopupUtils.open(createFolderDialog, folderListPage)
+                    }
+                },
+                Action {
+                    id: viewProperties
+                    iconName: "info"
+                    text: i18n.tr("Properties")
+                    onTriggered: {
+                        print(text)
+                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), folderListPage,{ "model": pageModel})
+                    }
+                },
+                Action {
+                    id: settingsButton
+                    iconName: "settings"
+                    objectName: "settings"
+                    text: i18n.tr("Settings")
+                    visible: sidebar.expanded
+                    onTriggered: pageStack.push(settingsPage);
+                },
+                Action {
+                    id: gotoButton
+                    iconName: "find"
+                    objectName:"Find"
+                    text: i18n.tr("Go To")
+                    visible: sidebar.expanded
+                    onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
+                },
+                Action {
+                    id: unlockButton
+                    iconName: "lock"
+                    text: i18n.tr("Unlock full access")
+                    visible: pageModel.onlyAllowedPaths
+                    onTriggered: {
+                        console.log("Full access clicked")
+                        var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
+                                                         folderListPage)
 
-        onTriggered: {
-            goBack()
+                        authDialog.passwordEntered.connect(function(password) {
+                            if (pamAuthentication.validatePasswordToken(password)) {
+                                console.log("Authenticated for full access")
+                                pageModel.onlyAllowedPaths = false
+                            } else {
+                                PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
+                                                {
+                                                    title: i18n.tr("Authentication failed")
+                                                })
+
+                                console.log("Could not authenticate")
+                            }
+                        })
+                    }
+                }
+            ]
         }
     }
-
-    head.actions: [
-        Action {
-            id: pasteButton
-            objectName: "paste"
-            iconName: "edit-paste"
-            // Translation message was implemented according to:
-            // http://developer.ubuntu.com/api/qml/sdk-14.04/Ubuntu.Components.i18n/
-            // It allows correct translation for languages with more than two plural forms:
-            // http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
-            text: i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
-            visible: pageModel.clipboardUrlsCounter > 0
-            onTriggered: {
-                console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
-                fileOperationDialog.startOperation(i18n.tr("Paste files"))
-                pageModel.paste()
-            }
-        },
-        Action {
-            id: clearClipboardButton
-            objectName: "clearClipboard"
-            iconName: "edit-clear"
-            text: i18n.tr("Clear clipboard")
-            visible: pageModel.clipboardUrlsCounter > 0
-            onTriggered: {
-                console.log("Clearing clipboard")
-                pageModel.clearClipboard()
-            }
-        },
-        Action {
-            id: optionsButton
-            iconName: "view-list-symbolic"
-            text: i18n.tr("Properties")
-            onTriggered: {
-                PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent)
-            }
-        },
-        Action {
-            id: createNewFolder
-            objectName: "createFolder"
-            iconName: "add"
-            text: i18n.tr("New Folder")
-            onTriggered: {
-                print(text)
-                PopupUtils.open(createFolderDialog, folderListPage)
-            }
-        },
-        Action {
-            id: viewProperties
-            iconName: "info"
-            text: i18n.tr("Properties")
-            onTriggered: {
-                print(text)
-                PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), folderListPage,{ "model": pageModel})
-            }
-        },
-        Action {
-            id: settingsButton
-            iconName: "settings"
-            objectName: "settings"
-            text: i18n.tr("Settings")
-            visible: sidebar.expanded
-            onTriggered: pageStack.push(settingsPage);
-        },
-        Action {
-            id: gotoButton
-            iconName: "find"
-            objectName:"Find"
-            text: i18n.tr("Go To")
-            visible: sidebar.expanded
-            onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
-        },
-        Action {
-            id: unlockButton
-            iconName: "lock"
-            text: i18n.tr("Unlock full access")
-            visible: pageModel.onlyAllowedPaths
-            onTriggered: {
-                console.log("Full access clicked")
-                var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
-                                                 folderListPage)
-
-                authDialog.passwordEntered.connect(function(password) {
-                    if (pamAuthentication.validatePasswordToken(password)) {
-                        console.log("Authenticated for full access")
-                        pageModel.onlyAllowedPaths = false
-                    } else {
-                        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
-                                        {
-                                            title: i18n.tr("Authentication failed")
-                                        })
-
-                        console.log("Could not authenticate")
-                    }
-                })
-            }
-        }
-    ]
-    flickable: !sidebar.expanded ?
-                   (folderListView.visible ? folderListView.flickable : folderIconView.flickable) : null
 
     property variant fileView: folderListPage
     property bool showHiddenFiles: false
@@ -157,6 +162,8 @@ PageWithBottomEdge {
     property bool fileSelectorMode: false
 
     property FolderListSelection selectionManager: pageModel.selectionObject()
+
+    readonly property bool __anchorToHeader: sidebar.expanded
 
     onShowHiddenFilesChanged: {
         pageModel.showHiddenFiles = folderListPage.showHiddenFiles
@@ -306,12 +313,12 @@ PageWithBottomEdge {
     PlacesSidebar {
         id: sidebar
         objectName: "placesSidebar"
-
-        //        anchors {
-        //            top: parent.top
-        //            bottom: parent.bottom
-        //            bottomMargin: units.gu(-2)
-        //        }
+        anchors {
+            left: mode === "left" ? parent.left : undefined
+            right: mode === "right" ? parent.right : undefined
+            top: folderListPage.header.bottom
+            bottom: parent.bottom
+        }
 
         expanded: showSidebar
     }
@@ -370,7 +377,7 @@ PageWithBottomEdge {
 
         folderListModel: pageModel
         anchors {
-            top: parent.top
+            top: __anchorToHeader ? folderListPage.header.bottom : parent.top
             bottom: bottomBar.top
             left: sidebar.right
             right: parent.right
@@ -386,7 +393,7 @@ PageWithBottomEdge {
 
         folderListModel: pageModel
         anchors {
-            top: parent.top
+            top: __anchorToHeader ? folderListPage.header.bottom : parent.top
             bottom: bottomBar.top
             left: sidebar.right
             right: parent.right
@@ -829,7 +836,7 @@ PageWithBottomEdge {
         } else if (file === "/") {
             iconPath = "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
         } else if (file === userplaces.locationSamba) {
-          iconPath = "/usr/share/icons/Humanity/places/48/network_local.svg"
+            iconPath = "/usr/share/icons/Humanity/places/48/network_local.svg"
         }  else if (userplaces.isUserMountDirectory(file)) {
             // In context of Ubuntu Touch this means SDCard currently.
             iconPath = "/usr/share/icons/Humanity/devices/48/drive-removable-media.svg"
@@ -936,8 +943,8 @@ PageWithBottomEdge {
         if (model.isBrowsable) {
             console.log("browsable path="+model.filePath+" isRemote="+model.isRemote+" needsAuthentication="+model.needsAuthentication)
             if ((model.isReadable && model.isExecutable) ||
-                (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
-                ) {
+                    (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
+                    ) {
                 console.log("Changing to dir", model.filePath)
                 //prefer pageModel.cdIntoIndex() because it is not necessary to parse the path
                 //goTo(model.filePath)
@@ -956,7 +963,7 @@ PageWithBottomEdge {
             if (fileSelectorMode) {
                 selectionManager.select(model.index,false,true)
             } else {
-               openFile(model)
+                openFile(model)
             }
         }
     }

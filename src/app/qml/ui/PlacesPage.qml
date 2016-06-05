@@ -23,11 +23,13 @@ import org.nemomobile.folderlistmodel 1.0
 
 Page {
     id: root
-
-    title: i18n.tr("Places")
-    objectName: 'PlacesPage'
     // ADDED THIS PROPERTY FOR BUG #1341671  WORKAROUND
     property string testProperty: "justForAutopilotTests"
+    objectName: 'PlacesPage'
+
+    header: PageHeader {
+        title: i18n.tr("Places")
+    }
 
     Flickable {
         objectName: "placesFlickable"
@@ -116,5 +118,4 @@ Page {
             }
         }
     }
-
 }
