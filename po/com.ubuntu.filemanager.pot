@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-05 08:03+0100\n"
+"POT-Creation-Date: 2016-06-09 12:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgid "Open with"
 msgstr ""
 
 #: ../src/app/qml/filemanager.qml:80 ../src/app/qml/ui/FolderListPage.qml:112
-#: ../src/app/qml/ui/SettingsSheet.qml:31
+#: ../src/app/qml/ui/SettingsSheet.qml:33
 msgid "Settings"
 msgstr ""
 
@@ -377,11 +377,7 @@ msgstr ""
 msgid "Ok"
 msgstr ""
 
-#: ../src/app/qml/ui/SettingsSheet.qml:34
-msgid "Close"
-msgstr ""
-
-#: ../src/app/qml/ui/SettingsSheet.qml:43
+#: ../src/app/qml/ui/SettingsSheet.qml:45
 msgid "Show Advanced Features"
 msgstr ""
 

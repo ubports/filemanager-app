@@ -28,16 +28,18 @@ import Ubuntu.Components.Popups 1.3
  */
 Page {
     id: sheet
-    title: i18n.tr("Settings")
 
-    Component.onCompleted: {
-        sheet.__leftButton.text = i18n.tr("Close")
-        sheet.__foreground.style = Theme.createStyleComponent(Qt.resolvedUrl("../components/SuruSheetStyle.qml"), sheet)
+    header: PageHeader {
+        title: i18n.tr("Settings")
     }
 
     Column {
-        anchors.fill: parent
-        anchors.margins: units.gu(-1)
+        anchors {
+            left: parent.left
+            top: sheet.header.bottom
+            right: parent.right
+            bottom: parent.bottom
+        }
 
         Standard {
             text: i18n.tr("Show Advanced Features")
