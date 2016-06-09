@@ -17,34 +17,35 @@
  */
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3
+import Ubuntu.Components.ListItems 1.3 as OldListItems
 import Ubuntu.Components.Popups 1.3
 import org.nemomobile.folderlistmodel 1.0
 
-ListView {
-    id: root
-
+Item {
     property FolderListModel folderListModel
     property string folderPath: folderListModel.path
-    model: folderListModel
     property bool smallMode: !wideAspect
+    property Flickable flickable: root
+    ListView {
+        id: root
+        anchors.fill: parent
+        model: folderListModel
+        // This must be visible so Autopilot can see it
+        header: OldListItems.Header {
+            objectName: "listViewSmallHeader"
+            text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(folderPath).arg(root.count)
+            height: smallMode ? units.gu(4) : 0
+            clip: true
+        }
 
-    // This must be visible so Autopilot can see it
-    header: Header {
-        objectName: "listViewSmallHeader"
-        text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(root.folderPath).arg(root.count)
-        height: smallMode ? units.gu(4) : 0
-        clip: true
+        delegate: FolderListDelegate {
+            id: delegate
+
+            onClicked: itemClicked(model)
+
+            onPressAndHold: itemLongPress(delegate, model)
+        }
     }
-
-    delegate: FolderListDelegate {
-        id: delegate
-
-        onClicked: itemClicked(model)
-
-        onPressAndHold: itemLongPress(delegate, model)
-    }
-
     Scrollbar {
         flickableItem: root
         align: Qt.AlignTrailing

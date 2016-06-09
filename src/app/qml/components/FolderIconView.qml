@@ -32,12 +32,7 @@ Item {
     Flickable {
         id: flickable
         clip: true
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
+        anchors.fill: parent
 
         contentWidth: width
         contentHeight: column.height
@@ -45,7 +40,12 @@ Item {
         Column {
             id: column
 
-            width: flickable.contentWidth
+            anchors {
+                left: parent.left
+                top: parent.top
+                right: parent.right
+            }
+
             // This must be visible so Autopilot can see it
             ListItem.Header {
                 anchors {

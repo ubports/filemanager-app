@@ -143,7 +143,7 @@ PageWithBottomEdge {
         }
     ]
     flickable: !sidebar.expanded ?
-                   (folderListView.visible ? folderListView : folderIconView.flickable) : null
+                   (folderListView.visible ? folderListView.flickable : folderIconView.flickable) : null
 
     property variant fileView: folderListPage
     property bool showHiddenFiles: false
