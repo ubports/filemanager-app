@@ -20,13 +20,22 @@ import Ubuntu.Components 1.3
 import Ubuntu.Components.ListItems 1.3
 
 /* Full path of your current folder and recent history, that you can jump to by clicking its members */
+
+
 Flickable {
     id: flickable
-
+    anchors {
+        fill: parent
+        topMargin: units.gu(1)
+        rightMargin: units.gu(1)
+        bottomMargin: units.gu(1)
+    }
     /* Convenience properties ; used a large amount of times to warrant a variable */
     property int iconWidth: units.gu(2.5)
     property string textSize: "large"
     property string separatorText: " /"
+
+
     /* contentWidth equals this to allow it to hide Device and Home */
     contentWidth: {
         repeater.model > 0 ?
@@ -35,11 +44,8 @@ Flickable {
                       : width + row.width - repeater.itemAt(repeater.model-1).width
         : width + memoryRow.width - memoryRepeater.itemAt(memoryRepeater.model-1).width
     }
-    height: units.gu(7)
     anchors {
-        left: parent.left // back.right
-        right: parent.right
-        rightMargin: units.gu(1)
+        fill: parent
     }
     clip: true
     boundsBehavior: Flickable.StopAtBounds
@@ -52,6 +58,11 @@ Flickable {
     /* Flickable Contents */
     Row {
         id: row
+        anchors {
+            left: parent.left
+            top: parent.top
+            bottom: parent.bottom
+        }
         spacing: 0 // Safety; having any spacing will throw off the contentX calculations.
 
         function repositionScrollable() {
@@ -61,23 +72,17 @@ Flickable {
                 flickable.contentX = row.width - repeater.itemAt(repeater.model - 1).width
             }
         }
-
-        Timer {
-            id: repositionTimer
-            onTriggered: repositionScrollabe()
-        }
-
         /* Adjust contentX according to the current folder */
         onWidthChanged: {
             repositionScrollable()
         }
 
         /* Root Folder displayed as "Device" */
-        Rectangle {
+        AbstractButton {
             id: device
-            width: deviceLabel.contentWidth + flickable.iconWidth
-            height: units.gu(7)
-            color: "transparent"
+            width: deviceLabel.width + flickable.iconWidth
+            height: parent.height
+            onClicked: goTo("/")
 
             Label {
                 id: deviceLabel
@@ -88,13 +93,6 @@ Flickable {
                 clip: true
                 /* Maximum Width = Flickable Width */
                 width: if (contentWidth > flickable.width) { flickable.width }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    goTo("/")
-                }
             }
         }
 
@@ -128,11 +126,21 @@ Flickable {
                 // console.log("Memory Path  = " + memoryPath)
             }
 
-            delegate: Rectangle {
+            delegate: AbstractButton {
                 visible: folder !== "/" // This is to avoid issues with naming the root folder, "Device"
                 width: label.width + pathSeparator.width
-                height: units.gu(7)
-                color: "transparent"
+                height: row.height
+                onClicked: {
+                    // When clicking on an already selected item, go up one level. Otherwise go to
+                    // the clicked item. This behaviour is to make it easy to go up in the folder
+                    // hierarchy now that the "back" button goes back in history and not up the directory
+                    // hierarchy
+                    if (repeater.model === index + 1) {
+                        goUp()
+                    } else {
+                        goTo(pathRaw(folder, index))
+                    }
+                }
 
                 Label {
                     id: label
@@ -156,21 +164,6 @@ Flickable {
                     color: UbuntuColors.inkstone
                     // clip: true
                 }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        // When clicking on an already selected item, go up one level. Otherwise go to
-                        // the clicked item. This behaviour is to make it easy to go up in the folder
-                        // hierarchy now that the "back" button goes back in history and not up the directory
-                        // hierarchy
-                        if (repeater.model === index + 1) {
-                            goUp()
-                        } else {
-                            goTo(pathRaw(folder, index))
-                        }
-                    }
-                }
             }
         }
     }
@@ -178,17 +171,20 @@ Flickable {
     /* Memory of Previously visited folders */
     Row {
         id: memoryRow
-        anchors.left: row.right // Not placed in the other row, to help avoid making contentX calculations more complicated.
-
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            left: row.right // Not placed in the other row, to help avoid making contentX calculations more complicated.
+        }
         /* Previously visited folders */
         Repeater {
             id: memoryRepeater
             model: repeater.memoryModel - repeater.model
 
-            delegate: Rectangle {
+            delegate: AbstractButton {
                 width: memoryLabel.width + memoryPathSeparator.width
-                height: units.gu(7)
-                color: "transparent"
+                height: memoryRow.height
+                onClicked: goTo(pathRaw(repeater.memoryPath, repeater.memoryModel-memoryRepeater.model+index))
 
                 Label {
                     id: memoryLabel
@@ -213,14 +209,8 @@ Flickable {
                     color: UbuntuColors.inkstone
                     // clip: true
                 }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        goTo(pathRaw(repeater.memoryPath, repeater.memoryModel-memoryRepeater.model+index))
-                    }
-                }
             }
         }
     }
 }
+
