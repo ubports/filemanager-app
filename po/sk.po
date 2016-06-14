@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-06-09 12:17+0100\n"
-"PO-Revision-Date: 2015-03-04 21:20+0000\n"
-"Last-Translator: Peter Mráz <Unknown>\n"
+"PO-Revision-Date: 2016-06-13 08:15+0000\n"
+"Last-Translator: P_E_T_O <Unknown>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Launchpad-Export-Date: 2016-06-10 06:26+0000\n"
+"X-Launchpad-Export-Date: 2016-06-14 06:19+0000\n"
 "X-Generator: Launchpad (build 18097)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
@@ -336,7 +336,7 @@ msgstr "Domov"
 
 #: ../src/app/qml/ui/FolderListPage.qml:854
 msgid "Network"
-msgstr ""
+msgstr "Sieť"
 
 #: ../src/app/qml/ui/FolderListPage.qml:955
 msgid "Folder not accessible"
@@ -368,15 +368,15 @@ msgstr "Prejsť"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "Používateľ"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr ""
+msgstr "Heslo"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "Uložiť heslo"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
@@ -424,7 +424,7 @@ msgstr "Filter"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr ""
+msgstr "Neznáme"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
@@ -452,15 +452,15 @@ msgstr " neexistuje"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr ""
+msgstr "Nemôže získať prístup k súboru alebo adresáru"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr ""
+msgstr " potrebuje overenie"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
-msgstr ""
+msgstr "Nemôže kopírovať/presúvať položky"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
@@ -493,7 +493,7 @@ msgstr "Nepodarilo sa otvoriť súbor"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr ""
+msgstr "Žiadny priestor pre kopírovanie"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
@@ -542,25 +542,16 @@ msgstr "zdrojový a cieľový adresár sú zhodné"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr ""
+msgstr "Žiadny priestor pre sťahovanie"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
-msgstr ""
+msgstr "net tool nenájdený, skontrolujte inštaláciu samba"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
-msgstr ""
+msgstr "nemôže písať do "
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr "Správca súborov"
-
-#~ msgid "There is no space on disk to copy"
-#~ msgstr "Na disku nie je miesto na kopírovanie"
-
-#~ msgid "Close"
-#~ msgstr "Zavrieť"
-
-#~ msgid "Cannot copy items"
-#~ msgstr "Položky nie je možné kopírovať"
