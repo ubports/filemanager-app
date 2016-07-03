@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-06-09 12:17+0100\n"
-"PO-Revision-Date: 2016-04-09 11:00+0000\n"
+"PO-Revision-Date: 2016-07-02 13:51+0000\n"
 "Last-Translator: Aggelos Arnaoutis <angelosarn@hotmail.com>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2016-06-10 06:25+0000\n"
-"X-Generator: Launchpad (build 18097)\n"
+"X-Launchpad-Export-Date: 2016-07-03 05:35+0000\n"
+"X-Generator: Launchpad (build 18115)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:36
@@ -331,7 +331,7 @@ msgstr "Προσωπικός φάκελος"
 
 #: ../src/app/qml/ui/FolderListPage.qml:854
 msgid "Network"
-msgstr ""
+msgstr "Δίκτυο"
 
 #: ../src/app/qml/ui/FolderListPage.qml:955
 msgid "Folder not accessible"
@@ -363,15 +363,15 @@ msgstr "Μετάβαση"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "Χρήστης"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr ""
+msgstr "Κωδικός πρόσβασης"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "Αποθήκευση κωδικού πρόσβασης"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
@@ -419,7 +419,7 @@ msgstr "Φίλτρο"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr ""
+msgstr "'Αγνωστο"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
@@ -448,15 +448,15 @@ msgstr " δεν υπάρχει"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr ""
+msgstr "Αδυναμία πρόσβασης αρχείου ή καταλόγου"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr ""
+msgstr " απαιτεί πιστοποίηση"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
-msgstr ""
+msgstr "Αδυναμία αντιγραφής/μετακίνησης αντικειμένων"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
@@ -489,7 +489,7 @@ msgstr "Αδυναμία ανοίγματος αρχείου"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr ""
+msgstr "Δεν υπάρχει χώρις για αντιγραφή"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
@@ -538,7 +538,7 @@ msgstr "οι φάκελοι προέλευσης και προορισμού ε�
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr ""
+msgstr "Δεν υπάρχει χώρις για λήψη"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
@@ -546,17 +546,8 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
-msgstr ""
+msgstr "αδυναμία εγγραφής σε "
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr "Διαχειριστής αρχείων"
-
-#~ msgid "Close"
-#~ msgstr "Κλείσιμο"
-
-#~ msgid "There is no space on disk to copy"
-#~ msgstr "Έλλειψη ελεύθερου χώρου στον δίσκο για αντιγραφή"
-
-#~ msgid "Cannot copy items"
-#~ msgstr "Αδυναμία αντιγραφής αντικέιμενα"

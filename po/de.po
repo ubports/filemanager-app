@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-06-09 12:17+0100\n"
-"PO-Revision-Date: 2015-03-19 12:28+0000\n"
-"Last-Translator: Matthias Seidel <matthias.seidel@hamburg.de>\n"
+"PO-Revision-Date: 2016-07-02 18:13+0000\n"
+"Last-Translator: schuko24 <gerdsaenger@t-online.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2016-06-10 06:25+0000\n"
-"X-Generator: Launchpad (build 18097)\n"
+"X-Launchpad-Export-Date: 2016-07-03 05:35+0000\n"
+"X-Generator: Launchpad (build 18115)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:36
@@ -196,7 +196,7 @@ msgstr[1] "%1 Dateien"
 
 #: ../src/app/qml/ui/FolderListPage.qml:261
 msgid "Open in a new tab"
-msgstr "In einem neuen Reiter öffnen"
+msgstr "In neuem Reiter öffnen"
 
 #: ../src/app/qml/ui/FolderListPage.qml:269
 msgid "Close this tab"
@@ -331,7 +331,7 @@ msgstr "Persönlicher Ordner"
 
 #: ../src/app/qml/ui/FolderListPage.qml:854
 msgid "Network"
-msgstr ""
+msgstr "Netzwerk"
 
 #: ../src/app/qml/ui/FolderListPage.qml:955
 msgid "Folder not accessible"
@@ -363,15 +363,15 @@ msgstr "Los"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "Nutzer"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr ""
+msgstr "Passwort"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "Passwort speichern"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
@@ -419,7 +419,7 @@ msgstr "Filter"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
@@ -441,7 +441,7 @@ msgstr "Einträge"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:327
 msgid "File or Directory does not exist"
-msgstr "Datei oder Verzeichnis bestehen nicht"
+msgstr "Datei oder Verzeichnis besteht nicht"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:328
 msgid " does not exist"
@@ -449,15 +449,15 @@ msgstr " nicht vorhanden"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr ""
+msgstr "Kann nicht auf Datei oder Verzeichnis zugreifen"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr ""
+msgstr " benötigt Authentifizierung"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
-msgstr ""
+msgstr "Kann Elemente nicht kopieren/verschieben"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
@@ -490,7 +490,7 @@ msgstr "Datei konnte nicht geöffnet werden"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr ""
+msgstr "Kein Platz für Kopie vorhanden"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
@@ -506,7 +506,7 @@ msgstr "Datei oder Verzeichnis konnte nicht verschoben werden: "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1196
 msgid "Write error in "
-msgstr "Schreibfehler in "
+msgstr "Speicherfehler in "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1212
 msgid "Read error in "
@@ -535,29 +535,20 @@ msgstr "Einträge können nicht verschoben werden"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1619
 msgid "origin and destination folders are the same"
-msgstr "Ursprung und Ziel sind identisch"
+msgstr "Ursprungs- und Zielordner sind identisch"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr ""
+msgstr "Kein Platz zum Herunterladen vorhanden"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
-msgstr ""
+msgstr "Netzwerkhilfsprogramm nicht gefunden, Samba-Installation prüfen"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
-msgstr ""
+msgstr "kann nicht gespeichert werden in "
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr "Dateiverwaltung"
-
-#~ msgid "Close"
-#~ msgstr "Schließen"
-
-#~ msgid "There is no space on disk to copy"
-#~ msgstr "Nicht genügend Speicherplatz zum Kopieren"
-
-#~ msgid "Cannot copy items"
-#~ msgstr "Einträge können nicht kopiert werden"
