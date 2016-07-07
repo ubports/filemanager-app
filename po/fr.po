@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-06-09 12:17+0100\n"
-"PO-Revision-Date: 2016-06-28 20:31+0000\n"
-"Last-Translator: Ubuntu-QC-1 <Unknown>\n"
+"PO-Revision-Date: 2016-07-06 14:47+0000\n"
+"Last-Translator: Anne <anneonyme017@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2016-06-29 05:39+0000\n"
+"X-Launchpad-Export-Date: 2016-07-07 05:35+0000\n"
 "X-Generator: Launchpad (build 18115)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
@@ -451,7 +451,7 @@ msgstr "Impossible d'accéder au fichier ou au répertoire"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr ""
+msgstr " une authentification est requise"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
@@ -541,7 +541,7 @@ msgstr "Il n'y a plus assez d'espace pour télécharger"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
-msgstr ""
+msgstr "outil réseau non trouvé, vérifiez l'installation de samba"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
