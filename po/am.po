@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-06-09 12:17+0100\n"
-"PO-Revision-Date: 2015-03-08 22:15+0000\n"
+"PO-Revision-Date: 2016-07-10 18:47+0000\n"
 "Last-Translator: samson <Unknown>\n"
 "Language-Team: Amharic <am@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2016-06-10 06:25+0000\n"
-"X-Generator: Launchpad (build 18097)\n"
+"X-Launchpad-Export-Date: 2016-07-11 05:33+0000\n"
+"X-Generator: Launchpad (build 18115)\n"
 
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:36
@@ -331,7 +331,7 @@ msgstr "ቤት"
 
 #: ../src/app/qml/ui/FolderListPage.qml:854
 msgid "Network"
-msgstr ""
+msgstr "ኔትዎርክ"
 
 #: ../src/app/qml/ui/FolderListPage.qml:955
 msgid "Folder not accessible"
@@ -363,15 +363,15 @@ msgstr "መሄጃ"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "ተጠቃሚ"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr ""
+msgstr "የ መግቢያ ቃል"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "የ መግቢያ ቃል ማስቀመጫ"
 
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
@@ -419,7 +419,7 @@ msgstr "ማጣሪያ"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr ""
+msgstr "ያልታወቀ"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
@@ -447,15 +447,15 @@ msgstr " አልነበረም"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr ""
+msgstr "ፋይል ወይንም ዳይሬክቶሪ ጋር መድረስ አልተቻለም"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr ""
+msgstr " ማረጋገጫ ያስፈልጋል"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
-msgstr ""
+msgstr "እቃዎች ኮፒ/ማንቀሳቀስ አልተቻለም"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
@@ -488,7 +488,7 @@ msgstr "ፋይሉን መክፈት አልተቻለም"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr ""
+msgstr "ኮፒ ለማድረግ በቂ ቦታ የለም"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
@@ -537,25 +537,16 @@ msgstr "የ ፎልደሮች መነሻ እና መድረሻ ተመሳሳይ ነው
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr ""
+msgstr "ለማውረድ በቂ ቦታ የለም"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
-msgstr ""
+msgstr "የ ኔት መሳሪያዎች አልተገኙም: ለ መግጠም ይመርምሩ samba"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
-msgstr ""
+msgstr "መጻፍ አይቻልም "
 
 #: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr "የ ፋይል አስተዳዳሪ"
-
-#~ msgid "Close"
-#~ msgstr "መዝጊያ"
-
-#~ msgid "There is no space on disk to copy"
-#~ msgstr "ኮፒ ለማድረግ በ ዲስኩ ላይ በቂ ነፃ ቦታ የለም"
-
-#~ msgid "Cannot copy items"
-#~ msgstr "አካሎቹን ኮፒ ማድረግ አልተቻለም"
