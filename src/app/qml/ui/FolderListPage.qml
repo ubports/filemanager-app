@@ -160,6 +160,8 @@ PageWithBottomEdge {
 
     // Set to true if called as file selector for ContentHub
     property bool fileSelectorMode: false
+    property bool folderSelectorMode: false
+    readonly property bool selectionMode: fileSelectorMode || folderSelectorMode
 
     property FolderListSelection selectionManager: pageModel.selectionObject()
 
@@ -343,26 +345,30 @@ PageWithBottomEdge {
         width: parent.width - sidebar.width
 
         spacing: units.gu(2)
-        visible: fileSelectorMode || pageModel.onlyAllowedPaths
+        visible: selectionMode || pageModel.onlyAllowedPaths
 
         Button {
             text: i18n.tr("Select")
-            enabled: selectionManager.counter > 0
-            visible: fileSelectorMode
+            enabled: (selectionManager.counter > 0) || folderSelectorMode
+            visible: selectionMode
             onClicked: {
-                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                // For now support only selection in filesystem
-                var selectedAbsUrls = selectedAbsPaths.map(function(item) {
-                    return "file://" + item;
-                });
+                var selectedAbsUrls = []
+                if (folderSelectorMode) {
+                    selectedAbsUrls = [ folder ]
+                } else {
+                    var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                    // For now support only selection in filesystem
+                    selectedAbsUrls = selectedAbsPaths.map(function(item) {
+                        return "file://" + item;
+                    });
+                }
                 console.log("FileSelector OK clicked, selected items: " + selectedAbsUrls)
-
                 acceptFileSelector(selectedAbsUrls)
             }
         }
         Button {
             text: i18n.tr("Cancel")
-            visible: fileSelectorMode
+            visible: selectionMode
             onClicked: {
                 console.log("FileSelector cancelled")
                 cancelFileSelector()
@@ -948,6 +954,7 @@ PageWithBottomEdge {
                 console.log("Changing to dir", model.filePath)
                 //prefer pageModel.cdIntoIndex() because it is not necessary to parse the path
                 //goTo(model.filePath)
+                folder = model.filePath
                 pageModel.cdIntoIndex(model.index)
             } else {
                 PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
@@ -962,7 +969,7 @@ PageWithBottomEdge {
             console.log("Non dir clicked")
             if (fileSelectorMode) {
                 selectionManager.select(model.index,false,true)
-            } else {
+            } else if (!folderSelectorMode){
                 openFile(model)
             }
         }
@@ -1020,6 +1027,19 @@ PageWithBottomEdge {
         } else if (archiveType === "tar.bz2") {
             archives.extractBzipTar(filePath, extractDirectory)
         }
+    }
+
+    function newFileUniqueName(filePath, fileName) {
+        var fileBaseName = fileName.substring(0, fileName.lastIndexOf("."))
+        var fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1)
+        var fullName = filePath + "/" + fileName
+        var index = 1
+
+        while (pageModel.existsFile(fullName)) {
+            fullName = filePath + "/" + fileBaseName + "-" + index + "." + fileExtension;
+        }
+
+        return fullName.substring(fullName.lastIndexOf("/") + 1);
     }
 
     Component.onCompleted: {

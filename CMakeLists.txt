@@ -18,7 +18,7 @@ set(LP_PROJECT ubuntu-filemanager-app)
 set(ICON_FILE filemanager64.png)
 set(AUTOPILOT_DIR ${APP_NAME})
 set(EXEC "${APP_NAME}")
-set(CONTENT_HUB_EXPORTER hub-exporter.json)
+set(CONTENT_HUB_JSON content-hub.json)
 set(UBUNTU_MANIFEST_PATH "manifest.json.in" CACHE INTERNAL "Relative path to the manifest file")
 
 # global FILE definitions for stat system call, it works for any sub module
@@ -71,7 +71,7 @@ if(CLICK_MODE)
 
     add_custom_target(com_ubuntu_calendar_CLICKFiles ALL SOURCES ${CLICK_FILES})
 
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json filemanager.apparmor ${CONTENT_HUB_EXPORTER} DESTINATION ${CMAKE_INSTALL_PREFIX})
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json filemanager.apparmor ${CONTENT_HUB_JSON} DESTINATION ${CMAKE_INSTALL_PREFIX})
 
         set(UPSTREAM_LIBS_DIR ${CMAKE_BINARY_DIR}/upstream-libs)
 

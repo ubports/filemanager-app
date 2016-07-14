@@ -1,4 +1,10 @@
 {
+    "destination": [
+        "contacts"
+    ],
+    "share": [
+        "contacts"
+    ],
     "source": [
         "pictures",
         "documents",

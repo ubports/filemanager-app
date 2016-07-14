@@ -58,6 +58,7 @@ MainView {
         id: fileSelector
         property var activeTransfer: null
         property var fileSelectorComponent: null
+        property bool importMode: false
     }
 
     Component {
@@ -101,8 +102,9 @@ MainView {
         tabs.selectedTabIndex = 0
     }
 
-    function openFileSelector() {
-        pageStack.push(fileSelectorComponent, { fileSelectorMode: true} )
+    function openFileSelector(selectFolderMode) {
+        fileSelector.fileSelectorComponent = pageStack.push(fileSelectorComponent, { fileSelectorMode: !selectFolderMode,
+                                                                                     folderSelectorMode: selectFolderMode })
     }
 
     function cancelFileSelector() {
@@ -114,16 +116,12 @@ MainView {
 
     function acceptFileSelector(fileUrls) {
         console.log("accept file selector " + fileUrls)
-        var results = fileUrls.map(function(fileUrl) {
-            return fileSelectorResultComponent.createObject(mainView, {"url": fileUrl})
-        })
-
-        if (fileSelector.activeTransfer !== null) {
-            fileSelector.activeTransfer.items = results
-            fileSelector.activeTransfer.state = ContentTransfer.Charged
-            console.log("set activeTransfer")
-        } else {
-            console.log("activeTransfer null, not setting, testing code")
+        if (fileSelector.importMode) {
+            importFiles(fileSelector.activeTransfer, fileUrls[0])
+        }
+        else
+        {
+            exportFiles(fileSelector.activeTransfer, fileUrls)
         }
     }
 
@@ -131,12 +129,47 @@ MainView {
         pageStack.push(Qt.resolvedUrl("content-hub/FileOpener.qml"), { fileUrl: "file://" + filePath} )
     }
 
+    function startImport(activeTransfer) {
+        if (activeTransfer.state === ContentTransfer.Charged) {
+            fileSelector.activeTransfer = activeTransfer
+            fileSelector.importMode = true
+            openFileSelector(true)
+        }
+    }
+
+    function importFiles(activeTransfer, destDir) {
+        for(var i=0; i < activeTransfer.items.length; i++) {
+            var item = activeTransfer.items[i]
+            var uniqueName = fileSelector.fileSelectorComponent.newFileUniqueName(destDir,
+                                                                                  fileSelector.fileSelectorComponent.basename(String(item.url)))
+            console.log("Move file to:" + destDir + " with name: " + uniqueName)
+            activeTransfer.items[i].move(destDir, uniqueName)
+        }
+        finishImport(destDir)
+    }
+
+    function exportFiles(activeTransfer, filesUrls) {
+        var results = filesUrls.map(function(fileUrl) {
+            return fileSelectorResultComponent.createObject(mainView, {"url": fileUrl})
+        })
+
+        if (activeTransfer !== null) {
+            activeTransfer.items = results
+            activeTransfer.state = ContentTransfer.Charged
+            console.log("set activeTransfer")
+        } else {
+            console.log("activeTransfer null, not setting, testing code")
+        }
+    }
+
     Connections {
         target: ContentHub
         onExportRequested: {
             fileSelector.activeTransfer = transfer
-            openFileSelector()
+            openFileSelector(false)
         }
+        onImportRequested: startImport(transfer)
+        onShareRequested: startImport(transfer)
     }
 
     Component {
@@ -272,6 +305,16 @@ MainView {
                         {
                             title: title,
                             text: message
+                        })
+    }
+
+    function finishImport(folder) {
+        pageStack.pop()
+        fileSelector.fileSelectorComponent = null
+        PopupUtils.open(Qt.resolvedUrl("./ui/NotifyDialog.qml"), mainView,
+                        {
+                            title: i18n.tr("Files imported"),
+                            text: i18n.tr("Files imported into: " + folder)
                         })
     }
 
