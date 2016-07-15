@@ -314,7 +314,7 @@ MainView {
         PopupUtils.open(Qt.resolvedUrl("./ui/NotifyDialog.qml"), mainView,
                         {
                             title: i18n.tr("File imported", "Files imported", count),
-                            text: i18n.tr("Files imported into: %1", "Files imported into: %1", count).arg(folder)
+                            text: i18n.tr("File imported into: %1", "Files imported into: %1", count).arg(folder)
                         })
     }
 
