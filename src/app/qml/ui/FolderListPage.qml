@@ -293,7 +293,7 @@ PageWithBottomEdge {
             onAccepted: {
                 console.log("Create folder accepted", inputText)
                 if (inputText !== '') {
-                    pageModel.mkdir(inputText)
+                    pageModel.mkdir(inputText.trim())
                 } else {
                     console.log("Empty directory name, ignored")
                 }
@@ -505,8 +505,8 @@ PageWithBottomEdge {
             onAccepted: {
                 console.log("Rename accepted", inputText)
                 if (inputText !== '') {
-                    console.log("Rename commensed, modelRow/inputText", modelRow, inputText)
-                    if (pageModel.rename(modelRow, inputText) === false) {
+                    console.log("Rename commensed, modelRow/inputText", modelRow, inputText.trim())
+                    if (pageModel.rename(modelRow, inputText.trim()) === false) {
                         PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
                                         {
                                             title: i18n.tr("Could not rename"),
