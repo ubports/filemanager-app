@@ -145,7 +145,7 @@ MainView {
             console.log("Move file to:" + destDir + " with name: " + uniqueName)
             activeTransfer.items[i].move(destDir, uniqueName)
         }
-        finishImport(destDir)
+        finishImport(destDir, activeTransfer.items.length)
     }
 
     function exportFiles(activeTransfer, filesUrls) {
@@ -308,13 +308,13 @@ MainView {
                         })
     }
 
-    function finishImport(folder) {
+    function finishImport(folder, count) {
         pageStack.pop()
         fileSelector.fileSelectorComponent = null
         PopupUtils.open(Qt.resolvedUrl("./ui/NotifyDialog.qml"), mainView,
                         {
-                            title: i18n.tr("Files imported"),
-                            text: i18n.tr("Files imported into: " + folder)
+                            title: i18n.tr("File imported", "Files imported", count),
+                            text: i18n.tr("Files imported into: %1", "Files imported into: %1", count).arg(folder)
                         })
     }
 
