@@ -1037,6 +1037,7 @@ PageWithBottomEdge {
 
         while (pageModel.existsFile(fullName)) {
             fullName = filePath + "/" + fileBaseName + "-" + index + "." + fileExtension;
+            index++
         }
 
         return fullName.substring(fullName.lastIndexOf("/") + 1);
