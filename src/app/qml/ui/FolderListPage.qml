@@ -92,7 +92,7 @@ PageWithBottomEdge {
                     objectName: "createFolder"
                     iconName: "add"
                     text: i18n.tr("New Folder")
-                    enabled: folderListPage.__pathIsWritable
+                    visible: folderListPage.__pathIsWritable
                     onTriggered: {
                         print(text)
                         PopupUtils.open(createFolderDialog, folderListPage)
