@@ -27,6 +27,7 @@ import "../upstream"
 
 PageWithBottomEdge {
     id: folderListPage
+
     bottomEdgeTitle: i18n.tr("Places")
     bottomEdgeEnabled: !sidebar.expanded
     bottomEdgePageSource: Qt.resolvedUrl("PlacesPage.qml")
@@ -91,6 +92,7 @@ PageWithBottomEdge {
                     objectName: "createFolder"
                     iconName: "add"
                     text: i18n.tr("New Folder")
+                    enabled: folderListPage.__pathIsWritable
                     onTriggered: {
                         print(text)
                         PopupUtils.open(createFolderDialog, folderListPage)
@@ -157,6 +159,7 @@ PageWithBottomEdge {
     property bool sortAscending: true
     property string folder
     property bool loading: pageModel.awaitingResults
+    property bool __pathIsWritable: false
 
     // Set to true if called as file selector for ContentHub
     property bool fileSelectorMode: false
@@ -243,6 +246,11 @@ PageWithBottomEdge {
             var nameOnly = paths[paths.length -1]
             console.log("onDownloadTemporaryComplete received filename="+filename + "name="+nameOnly)
             openFromDisk(filename, nameOnly)
+        }
+        onPathChanged: {
+            if (pageModel.path) {
+                folderListPage.__pathIsWritable = pageModel.curPathIsWritable() && pageModel.isAllowedPath(path)
+            }
         }
     }
 
