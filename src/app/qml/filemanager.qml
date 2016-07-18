@@ -105,8 +105,9 @@ MainView {
     }
 
     function openFileSelector(selectFolderMode) {
-        fileSelector.fileSelectorComponent = pageStack.push(fileSelectorComponent, { fileSelectorMode: !selectFolderMode,
-                                                                                     folderSelectorMode: selectFolderMode })
+        fileSelector.fileSelectorComponent = pageStack.push(Qt.resolvedUrl("./ui/FolderListPage.qml"), { fileSelectorMode: !selectFolderMode,
+                                                                                                         folderSelectorMode: selectFolderMode,
+                                                                                                         folder: userplaces.locationHome})
     }
 
     function cancelFileSelector() {
@@ -174,15 +175,6 @@ MainView {
         }
         onImportRequested: startImport(transfer)
         onShareRequested: startImport(transfer)
-    }
-
-    Component {
-        id: fileSelectorComponent
-
-        FolderListPage {
-            // TODO: remember last selection
-            folder: userplaces.locationHome
-        }
     }
 
     PageStack {
