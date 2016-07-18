@@ -42,6 +42,8 @@ MainView {
     property bool loaded: false
 
     property bool allowSidebarExpanded: width > units.gu(50)
+    property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()
+
 
     onAllowSidebarExpandedChanged: {
         if (!allowSidebarExpanded)
@@ -312,6 +314,7 @@ MainView {
 
     function finishImport(folder, urls) {
         var count = urls.length
+
         pageStack.pop()
         fileSelector.fileSelectorComponent = null
         pageStack.currentPage.currentPage.folder = folder

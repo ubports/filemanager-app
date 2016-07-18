@@ -136,7 +136,7 @@ PageWithBottomEdge {
                         authDialog.passwordEntered.connect(function(password) {
                             if (pamAuthentication.validatePasswordToken(password)) {
                                 console.log("Authenticated for full access")
-                                pageModel.onlyAllowedPaths = false
+                                mainView.fullAccessGranted = true
                             } else {
                                 PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
                                                 {
@@ -160,6 +160,7 @@ PageWithBottomEdge {
     property string folder
     property bool loading: pageModel.awaitingResults
     property bool __pathIsWritable: false
+
 
     // Set to true if called as file selector for ContentHub
     property bool fileSelectorMode: false
@@ -214,7 +215,7 @@ PageWithBottomEdge {
         id: pageModel
         path: folderListPage.folder
         enableExternalFSWatcher: true
-        onlyAllowedPaths: !noAuthentication && pamAuthentication.requireAuthentication()
+        onlyAllowedPaths: !mainView.fullAccessGranted
 
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
@@ -222,6 +223,14 @@ PageWithBottomEdge {
         property string fileSize: i18n.tr("%1 file", "%1 files", folderListView.count).arg(folderListView.count)
         property bool isReadable: true
         property bool isExecutable: true
+
+        function checkIfIsWritable() {
+            if (pageModel.path) {
+                folderListPage.__pathIsWritable = pageModel.curPathIsWritable() &&
+                        (!pageModel.onlyAllowedPaths || pageModel.isAllowedPath(path))
+            }
+        }
+
 
         Component.onCompleted: {
             // Add default allowed paths
@@ -241,11 +250,8 @@ PageWithBottomEdge {
             console.log("onDownloadTemporaryComplete received filename="+filename + "name="+nameOnly)
             openFromDisk(filename, nameOnly)
         }
-        onPathChanged: {
-            if (pageModel.path) {
-                folderListPage.__pathIsWritable = pageModel.curPathIsWritable() && pageModel.isAllowedPath(path)
-            }
-        }
+        onOnlyAllowedPathsChanged: checkIfIsWritable()
+        onPathChanged: checkIfIsWritable()
     }
 
     FolderListModel {
@@ -357,7 +363,7 @@ PageWithBottomEdge {
 
         Button {
             text: i18n.tr("Select")
-            enabled: (selectionManager.counter > 0) || folderSelectorMode
+            enabled: (selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)
             visible: selectionMode
             onClicked: {
                 var selectedAbsUrls = []
