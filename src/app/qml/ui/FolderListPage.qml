@@ -206,12 +206,6 @@ PageWithBottomEdge {
         }
     }
 
-    onActiveChanged: {
-        if (active) {
-            refresh()
-        }
-    }
-
     NetAuthenticationHandler {
         id: authenticationHandler
     }

@@ -311,6 +311,8 @@ MainView {
     function finishImport(folder, count) {
         pageStack.pop()
         fileSelector.fileSelectorComponent = null
+        pageStack.currentPage.currentPage.folder = folder
+        pageStack.currentPage.currentPage.refresh()
         PopupUtils.open(Qt.resolvedUrl("./ui/NotifyDialog.qml"), mainView,
                         {
                             title: i18n.tr("File imported", "Files imported", count),
