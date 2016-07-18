@@ -38,7 +38,7 @@ Dialog {
         objectName: "inputField"
         focus: true
         // Avoid need to press enter to make "Ok" button enabled.
-        inputMethodHints: Qt.ImhNoPredictiveText
+        inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
         validator: RegExpValidator {
             regExp: /.+/
         }
