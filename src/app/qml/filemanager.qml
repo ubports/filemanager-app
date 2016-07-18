@@ -138,14 +138,16 @@ MainView {
     }
 
     function importFiles(activeTransfer, destDir) {
+        var fileNames = []
         for(var i=0; i < activeTransfer.items.length; i++) {
             var item = activeTransfer.items[i]
             var uniqueName = fileSelector.fileSelectorComponent.newFileUniqueName(destDir,
                                                                                   fileSelector.fileSelectorComponent.basename(String(item.url)))
             console.log("Move file to:" + destDir + " with name: " + uniqueName)
             activeTransfer.items[i].move(destDir, uniqueName)
+            fileNames.push(uniqueName)
         }
-        finishImport(destDir, activeTransfer.items.length)
+        finishImport(destDir, fileNames)
     }
 
     function exportFiles(activeTransfer, filesUrls) {
@@ -308,15 +310,16 @@ MainView {
                         })
     }
 
-    function finishImport(folder, count) {
+    function finishImport(folder, urls) {
+        var count = urls.length
         pageStack.pop()
         fileSelector.fileSelectorComponent = null
         pageStack.currentPage.currentPage.folder = folder
         pageStack.currentPage.currentPage.refresh()
         PopupUtils.open(Qt.resolvedUrl("./ui/NotifyDialog.qml"), mainView,
                         {
-                            title: i18n.tr("File imported", "Files imported", count),
-                            text: i18n.tr("File imported into: %1", "Files imported into: %1", count).arg(folder)
+                            title: (count === 1 ? i18n.tr("File %1").arg(urls[0]) : i18n.tr("%1 Files").arg(count)),
+                            text: i18n.tr("Saved to: %1").arg(folder)
                         })
     }
 
