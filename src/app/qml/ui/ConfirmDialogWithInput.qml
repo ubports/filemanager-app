@@ -37,6 +37,7 @@ Dialog {
         id: input
         objectName: "inputField"
         focus: true
+        inputMethodHints: Qt.ImhNoPredictiveText
         validator: RegExpValidator {
             regExp: /.+/
         }
