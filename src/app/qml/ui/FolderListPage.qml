@@ -301,7 +301,10 @@ PageWithBottomEdge {
             onAccepted: {
                 console.log("Create folder accepted", inputText)
                 if (inputText !== '') {
-                    pageModel.mkdir(inputText.trim())
+                    var folderName = inputText.trim()
+                    if (pageModel.mkdir(folderName)) {
+                        folder = pageModel.path + "/" + folderName
+                    }
                 } else {
                     console.log("Empty directory name, ignored")
                 }
