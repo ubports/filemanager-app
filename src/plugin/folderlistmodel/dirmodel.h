@@ -453,6 +453,7 @@ public slots:
     inline void removeAllowedDirectory(const QString &allowedDirAbsolutePath) {
         m_allowedDirs.remove(allowedDirAbsolutePath);
     }
+    bool isAllowedPath(const QString &absolutePath) const;
 
 signals:
     /*!
@@ -563,7 +564,6 @@ private:
 
     bool allowAccess(const DirItemInfo &fi) const;
     bool allowCurrentPathAccess() const;
-    bool isAllowedPath(const QString &absolutePath) const;
 };
 
 
