@@ -147,7 +147,8 @@ Flickable {
                     text: pathText(folder,index)
                     fontSize: flickable.textSize
                     anchors.verticalCenter: parent.verticalCenter
-                    color: repeater.model === index + 1 ? UbuntuColors.inkstone : UbuntuColors.inkstone
+                    color: UbuntuColors.inkstone
+                    opacity: repeater.model === index + 1 ? 1.0 : 0.3
                     clip: true
 
                     /* Maximum Width = Flickable Width */
@@ -162,6 +163,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: label.left
                     color: UbuntuColors.inkstone
+                    opacity: label.opacity
                     // clip: true
                 }
             }
@@ -193,6 +195,7 @@ Flickable {
                     fontSize: flickable.textSize
                     anchors.verticalCenter: parent.verticalCenter
                     color: UbuntuColors.inkstone
+                    opacity: 0.3
                     clip: true
 
                     /* Maximum Width = Flickable Width */
@@ -207,6 +210,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: memoryLabel.left
                     color: UbuntuColors.inkstone
+                    opacity: 0.3
                     // clip: true
                 }
             }
