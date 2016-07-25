@@ -27,6 +27,7 @@ import "../upstream"
 
 PageWithBottomEdge {
     id: folderListPage
+
     bottomEdgeTitle: i18n.tr("Places")
     bottomEdgeEnabled: !sidebar.expanded
     bottomEdgePageSource: Qt.resolvedUrl("PlacesPage.qml")
@@ -91,6 +92,7 @@ PageWithBottomEdge {
                     objectName: "createFolder"
                     iconName: "add"
                     text: i18n.tr("New Folder")
+                    visible: folderListPage.__pathIsWritable
                     onTriggered: {
                         print(text)
                         PopupUtils.open(createFolderDialog, folderListPage)
@@ -134,7 +136,7 @@ PageWithBottomEdge {
                         authDialog.passwordEntered.connect(function(password) {
                             if (pamAuthentication.validatePasswordToken(password)) {
                                 console.log("Authenticated for full access")
-                                pageModel.onlyAllowedPaths = false
+                                mainView.fullAccessGranted = true
                             } else {
                                 PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
                                                 {
@@ -157,9 +159,13 @@ PageWithBottomEdge {
     property bool sortAscending: true
     property string folder
     property bool loading: pageModel.awaitingResults
+    property bool __pathIsWritable: false
+
 
     // Set to true if called as file selector for ContentHub
     property bool fileSelectorMode: false
+    property bool folderSelectorMode: false
+    readonly property bool selectionMode: fileSelectorMode || folderSelectorMode
 
     property FolderListSelection selectionManager: pageModel.selectionObject()
 
@@ -209,7 +215,7 @@ PageWithBottomEdge {
         id: pageModel
         path: folderListPage.folder
         enableExternalFSWatcher: true
-        onlyAllowedPaths: !noAuthentication && pamAuthentication.requireAuthentication()
+        onlyAllowedPaths: !mainView.fullAccessGranted
 
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
@@ -217,6 +223,14 @@ PageWithBottomEdge {
         property string fileSize: i18n.tr("%1 file", "%1 files", folderListView.count).arg(folderListView.count)
         property bool isReadable: true
         property bool isExecutable: true
+
+        function checkIfIsWritable() {
+            if (pageModel.path) {
+                folderListPage.__pathIsWritable = pageModel.curPathIsWritable() &&
+                        (!pageModel.onlyAllowedPaths || pageModel.isAllowedPath(path))
+            }
+        }
+
 
         Component.onCompleted: {
             // Add default allowed paths
@@ -236,6 +250,8 @@ PageWithBottomEdge {
             console.log("onDownloadTemporaryComplete received filename="+filename + "name="+nameOnly)
             openFromDisk(filename, nameOnly)
         }
+        onOnlyAllowedPathsChanged: checkIfIsWritable()
+        onPathChanged: checkIfIsWritable()
     }
 
     FolderListModel {
@@ -285,7 +301,10 @@ PageWithBottomEdge {
             onAccepted: {
                 console.log("Create folder accepted", inputText)
                 if (inputText !== '') {
-                    pageModel.mkdir(inputText)
+                    var folderName = inputText.trim()
+                    if (pageModel.mkdir(folderName)) {
+                        folder = pageModel.path + "/" + folderName
+                    }
                 } else {
                     console.log("Empty directory name, ignored")
                 }
@@ -343,26 +362,30 @@ PageWithBottomEdge {
         width: parent.width - sidebar.width
 
         spacing: units.gu(2)
-        visible: fileSelectorMode || pageModel.onlyAllowedPaths
+        visible: selectionMode || pageModel.onlyAllowedPaths
 
         Button {
             text: i18n.tr("Select")
-            enabled: selectionManager.counter > 0
-            visible: fileSelectorMode
+            enabled: (selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)
+            visible: selectionMode
             onClicked: {
-                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                // For now support only selection in filesystem
-                var selectedAbsUrls = selectedAbsPaths.map(function(item) {
-                    return "file://" + item;
-                });
+                var selectedAbsUrls = []
+                if (folderSelectorMode) {
+                    selectedAbsUrls = [ folder ]
+                } else {
+                    var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                    // For now support only selection in filesystem
+                    selectedAbsUrls = selectedAbsPaths.map(function(item) {
+                        return "file://" + item;
+                    });
+                }
                 console.log("FileSelector OK clicked, selected items: " + selectedAbsUrls)
-
                 acceptFileSelector(selectedAbsUrls)
             }
         }
         Button {
             text: i18n.tr("Cancel")
-            visible: fileSelectorMode
+            visible: selectionMode
             onClicked: {
                 console.log("FileSelector cancelled")
                 cancelFileSelector()
@@ -493,8 +516,8 @@ PageWithBottomEdge {
             onAccepted: {
                 console.log("Rename accepted", inputText)
                 if (inputText !== '') {
-                    console.log("Rename commensed, modelRow/inputText", modelRow, inputText)
-                    if (pageModel.rename(modelRow, inputText) === false) {
+                    console.log("Rename commensed, modelRow/inputText", modelRow, inputText.trim())
+                    if (pageModel.rename(modelRow, inputText.trim()) === false) {
                         PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
                                         {
                                             title: i18n.tr("Could not rename"),
@@ -956,6 +979,7 @@ PageWithBottomEdge {
                 console.log("Changing to dir", model.filePath)
                 //prefer pageModel.cdIntoIndex() because it is not necessary to parse the path
                 //goTo(model.filePath)
+                folder = model.filePath
                 pageModel.cdIntoIndex(model.index)
             } else {
                 PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
@@ -970,7 +994,7 @@ PageWithBottomEdge {
             console.log("Non dir clicked")
             if (fileSelectorMode) {
                 selectionManager.select(model.index,false,true)
-            } else {
+            } else if (!folderSelectorMode){
                 openFile(model)
             }
         }
@@ -1028,6 +1052,20 @@ PageWithBottomEdge {
         } else if (archiveType === "tar.bz2") {
             archives.extractBzipTar(filePath, extractDirectory)
         }
+    }
+
+    function newFileUniqueName(filePath, fileName) {
+        var fileBaseName = fileName.substring(0, fileName.lastIndexOf("."))
+        var fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1)
+        var fullName = filePath + "/" + fileName
+        var index = 1
+
+        while (pageModel.existsFile(fullName)) {
+            fullName = filePath + "/" + fileBaseName + "-" + index + "." + fileExtension;
+            index++
+        }
+
+        return fullName.substring(fullName.lastIndexOf("/") + 1);
     }
 
     Component.onCompleted: {

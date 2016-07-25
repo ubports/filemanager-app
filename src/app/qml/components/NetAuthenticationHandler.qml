@@ -7,9 +7,14 @@ Item  {
    objectName: "netAuthenticatinHandler"
 
    property bool savePassword: true
+   property var dialogObject: null
+
    function showDialog(urlPath,user) {
-       console.log("needsAuthenticationHandler::showDialog()")
-       netAuthenticationDialog.showDialog(urlPath,user)
+       if (dialogObject)
+           return
+
+       dialogObject = PopupUtils.open(netAuthenticationDialogComponent)
+       dialogObject.showDialog(urlPath,user)
    }
 
    Timer {
@@ -26,15 +31,22 @@ Item  {
        }
    }
 
-   NetAuthenticationDialog {
-       id: netAuthenticationDialog
-       onSavePasswordChanged: {
-           savePassword = check
-           console.log("NetAuthenticationHandler savePassword="+savePassword)
-       }
-       onOk: {
-           if (!authTimer.running) {
-               authTimer.start()
+   Component {
+        id: netAuthenticationDialogComponent
+
+        NetAuthenticationDialog {
+           id: netAuthenticationDialog
+           onSavePasswordChanged: {
+               savePassword = check
+               console.log("NetAuthenticationHandler savePassword="+savePassword)
+           }
+           onOk: {
+               if (!authTimer.running) {
+                   authTimer.start()
+               }
+           }
+           Component.onDestruction: {
+               netAuthenticatinHandler.dialogObject = null
            }
        }
    }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-06-09 12:17+0100\n"
+"POT-Creation-Date: 2016-07-18 19:55-0300\n"
 "PO-Revision-Date: 2015-02-10 05:33+0000\n"
 "Last-Translator: Gursharnjit_Singh <ubuntuser13@gmail.com>\n"
 "Language-Team: Punjabi <pa@li.org>\n"
@@ -15,405 +15,930 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2016-06-10 06:26+0000\n"
-"X-Generator: Launchpad (build 18097)\n"
+"X-Launchpad-Export-Date: 2016-07-20 06:03+0000\n"
+"X-Generator: Launchpad (build 18147)\n"
 
+#: ../armhf-build/po/com.ubuntu.filemanager.desktop.in.in.h:1
+#: ../qbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
+#: ../sbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
+#: ../ssbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
+#: com.ubuntu.filemanager.desktop.in.in.h:1
+msgid "File Manager"
+msgstr "ਫ਼ਾਈਲ ਮੈਨੇਜਰ"
+
+#: ../sbuild/package/qml/components/FolderIconView.qml:57
+#: ../sbuild/package/qml/components/FolderListView.qml:36
+#: ../sbuild/src/app/qml/components/FolderIconView.qml:57
+#: ../sbuild/src/app/qml/components/FolderListView.qml:36
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:36
+#: ../ssbuild/package/qml/components/FolderIconView.qml:57
+#: ../ssbuild/package/qml/components/FolderListView.qml:36
+#: ../ssbuild/src/app/qml/components/FolderIconView.qml:57
+#: ../ssbuild/src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
 msgstr[0] "%1 (%2 ਫ਼ਾਈਲ)"
 msgstr[1] "%1 (%2 ਫ਼ਾਈਲਾਂ)"
 
+#: ../sbuild/package/qml/components/PathHistoryRow.qml:89
+#: ../sbuild/package/qml/ui/FolderListPage.qml:872
+#: ../sbuild/src/app/qml/components/PathHistoryRow.qml:89
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:875
 #: ../src/app/qml/components/PathHistoryRow.qml:89
-#: ../src/app/qml/ui/FolderListPage.qml:852
+#: ../src/app/qml/ui/FolderListPage.qml:875
+#: ../ssbuild/package/qml/components/PathHistoryRow.qml:89
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:858
+#: ../ssbuild/src/app/qml/components/PathHistoryRow.qml:89
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:858
 msgid "Device"
 msgstr "ਜੰਤਰ"
 
+#: ../sbuild/package/qml/components/PlacesSidebar.qml:54
+#: ../sbuild/package/qml/ui/FolderListPage.qml:31
+#: ../sbuild/package/qml/ui/PlacesPage.qml:31
+#: ../sbuild/package/qml/ui/PlacesPopover.qml:102
+#: ../sbuild/src/app/qml/components/PlacesSidebar.qml:54
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:31
+#: ../sbuild/src/app/qml/ui/PlacesPage.qml:31
+#: ../sbuild/src/app/qml/ui/PlacesPopover.qml:102
 #: ../src/app/qml/components/PlacesSidebar.qml:54
-#: ../src/app/qml/ui/FolderListPage.qml:30 ../src/app/qml/ui/PlacesPage.qml:31
+#: ../src/app/qml/ui/FolderListPage.qml:31 ../src/app/qml/ui/PlacesPage.qml:31
 #: ../src/app/qml/ui/PlacesPopover.qml:102
+#: ../ssbuild/package/qml/components/PlacesSidebar.qml:54
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:30
+#: ../ssbuild/package/qml/ui/PlacesPage.qml:31
+#: ../ssbuild/package/qml/ui/PlacesPopover.qml:102
+#: ../ssbuild/src/app/qml/components/PlacesSidebar.qml:54
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:30
+#: ../ssbuild/src/app/qml/ui/PlacesPage.qml:31
+#: ../ssbuild/src/app/qml/ui/PlacesPopover.qml:102
 msgid "Places"
 msgstr "ਥਾਵਾਂ"
 
+#: ../sbuild/package/qml/content-hub/FileOpener.qml:27
+#: ../sbuild/src/app/qml/content-hub/FileOpener.qml:27
 #: ../src/app/qml/content-hub/FileOpener.qml:27
+#: ../ssbuild/package/qml/content-hub/FileOpener.qml:27
+#: ../ssbuild/src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
 msgstr "ਖੋਲ੍ਹੋ ਨਾਲ"
 
-#: ../src/app/qml/filemanager.qml:80 ../src/app/qml/ui/FolderListPage.qml:112
+#: ../sbuild/package/qml/filemanager.qml:83
+#: ../sbuild/package/qml/ui/FolderListPage.qml:114
+#: ../sbuild/package/qml/ui/SettingsSheet.qml:33
+#: ../sbuild/src/app/qml/filemanager.qml:83
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:114
+#: ../sbuild/src/app/qml/ui/SettingsSheet.qml:33
+#: ../src/app/qml/filemanager.qml:83 ../src/app/qml/ui/FolderListPage.qml:114
 #: ../src/app/qml/ui/SettingsSheet.qml:33
+#: ../ssbuild/package/qml/filemanager.qml:81
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:112
+#: ../ssbuild/package/qml/ui/SettingsSheet.qml:33
+#: ../ssbuild/src/app/qml/filemanager.qml:81
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:112
+#: ../ssbuild/src/app/qml/ui/SettingsSheet.qml:33
 msgid "Settings"
 msgstr "ਸੈਟਿੰਗ"
 
-#: ../src/app/qml/filemanager.qml:81
+#: ../sbuild/package/qml/filemanager.qml:84
+#: ../sbuild/src/app/qml/filemanager.qml:84 ../src/app/qml/filemanager.qml:84
+#: ../ssbuild/package/qml/filemanager.qml:82
+#: ../ssbuild/src/app/qml/filemanager.qml:82
 msgid "Change app settings"
 msgstr "ਐਪ ਸੈਟਿੰਗ ਬਦਲੋ"
 
-#: ../src/app/qml/filemanager.qml:258 ../src/app/qml/ui/FolderListPage.qml:386
+#: ../sbuild/package/qml/filemanager.qml:295
+#: ../sbuild/package/qml/ui/FolderListPage.qml:406
+#: ../sbuild/package/qml/ui/ViewPopover.qml:70
+#: ../sbuild/src/app/qml/filemanager.qml:287
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:409
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:70
+#: ../src/app/qml/filemanager.qml:287 ../src/app/qml/ui/FolderListPage.qml:409
 #: ../src/app/qml/ui/ViewPopover.qml:70
+#: ../ssbuild/package/qml/filemanager.qml:291
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:392
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:70
+#: ../ssbuild/src/app/qml/filemanager.qml:291
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:392
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr "ਆਈਕਾਨ"
 
-#: ../src/app/qml/filemanager.qml:258 ../src/app/qml/ui/FolderListPage.qml:402
+#: ../sbuild/package/qml/filemanager.qml:295
+#: ../sbuild/package/qml/ui/FolderListPage.qml:422
+#: ../sbuild/package/qml/ui/ViewPopover.qml:71
+#: ../sbuild/src/app/qml/filemanager.qml:287
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:425
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:71
+#: ../src/app/qml/filemanager.qml:287 ../src/app/qml/ui/FolderListPage.qml:425
 #: ../src/app/qml/ui/ViewPopover.qml:71
+#: ../ssbuild/package/qml/filemanager.qml:291
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:408
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:71
+#: ../ssbuild/src/app/qml/filemanager.qml:291
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:408
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr "ਸੂਚੀ"
 
+#: ../sbuild/package/qml/filemanager.qml:324
+#: ../sbuild/src/app/qml/filemanager.qml:316
+#: ../src/app/qml/filemanager.qml:316
+#, qt-format
+msgid "File %1"
+msgstr ""
+
+#: ../sbuild/package/qml/filemanager.qml:324
+#: ../sbuild/src/app/qml/filemanager.qml:316
+#: ../src/app/qml/filemanager.qml:316
+#, qt-format
+msgid "%1 Files"
+msgstr ""
+
+#: ../sbuild/package/qml/filemanager.qml:325
+#: ../sbuild/src/app/qml/filemanager.qml:317
+#: ../src/app/qml/filemanager.qml:317
+#, qt-format
+msgid "Saved to: %1"
+msgstr ""
+
+#: ../sbuild/package/qml/ui/AuthenticationDialog.qml:25
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:26
+#: ../sbuild/src/app/qml/ui/AuthenticationDialog.qml:25
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:26
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:26
+#: ../ssbuild/package/qml/ui/AuthenticationDialog.qml:25
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:26
+#: ../ssbuild/src/app/qml/ui/AuthenticationDialog.qml:25
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:26
 msgid "Authentication required"
 msgstr "ਪ੍ਰਮਾਣਿਕਤਾ ਦੀ ਲੋੜ"
 
+#: ../sbuild/package/qml/ui/AuthenticationDialog.qml:27
+#: ../sbuild/src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
+#: ../ssbuild/package/qml/ui/AuthenticationDialog.qml:27
+#: ../ssbuild/src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
 msgstr "ਸਾਰੀਆਂ ਫ਼ਾਈਲਾਂ ਤੱਕ ਪਹੁੰਚ ਲਈ ਪਾਸਵਰਡ ਦੀ ਲੋੜ"
 
+#: ../sbuild/package/qml/ui/AuthenticationDialog.qml:39
+#: ../sbuild/src/app/qml/ui/AuthenticationDialog.qml:39
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
+#: ../ssbuild/package/qml/ui/AuthenticationDialog.qml:39
+#: ../ssbuild/src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
 msgstr "ਪਾਸਵਰਡ"
 
+#: ../sbuild/package/qml/ui/AuthenticationDialog.qml:49
+#: ../sbuild/package/qml/ui/ConfirmDialog.qml:31
+#: ../sbuild/package/qml/ui/ConfirmDialogWithInput.qml:49
+#: ../sbuild/package/qml/ui/FolderListPage.qml:706
+#: ../sbuild/package/qml/ui/NotifyDialog.qml:25
+#: ../sbuild/src/app/qml/ui/AuthenticationDialog.qml:49
+#: ../sbuild/src/app/qml/ui/ConfirmDialog.qml:31
+#: ../sbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:49
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:709
+#: ../sbuild/src/app/qml/ui/NotifyDialog.qml:25
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
-#: ../src/app/qml/ui/ConfirmDialogWithInput.qml:47
-#: ../src/app/qml/ui/FolderListPage.qml:686
+#: ../src/app/qml/ui/ConfirmDialogWithInput.qml:49
+#: ../src/app/qml/ui/FolderListPage.qml:709
 #: ../src/app/qml/ui/NotifyDialog.qml:25
+#: ../ssbuild/package/qml/ui/AuthenticationDialog.qml:49
+#: ../ssbuild/package/qml/ui/ConfirmDialog.qml:31
+#: ../ssbuild/package/qml/ui/ConfirmDialogWithInput.qml:47
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:692
+#: ../ssbuild/package/qml/ui/NotifyDialog.qml:25
+#: ../ssbuild/src/app/qml/ui/AuthenticationDialog.qml:49
+#: ../ssbuild/src/app/qml/ui/ConfirmDialog.qml:31
+#: ../ssbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:47
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:692
+#: ../ssbuild/src/app/qml/ui/NotifyDialog.qml:25
 msgid "OK"
 msgstr "ਠੀਕ"
 
+#: ../sbuild/package/qml/ui/AuthenticationDialog.qml:61
+#: ../sbuild/package/qml/ui/ConfirmDialog.qml:41
+#: ../sbuild/package/qml/ui/ConfirmDialogWithInput.qml:59
+#: ../sbuild/package/qml/ui/FileActionDialog.qml:45
+#: ../sbuild/package/qml/ui/FileOperationProgressDialog.qml:44
+#: ../sbuild/package/qml/ui/FolderListPage.qml:384
+#: ../sbuild/package/qml/ui/FolderListPage.qml:697
+#: ../sbuild/package/qml/ui/FolderListPage.qml:764
+#: ../sbuild/package/qml/ui/GoToDialog.qml:67
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:108
+#: ../sbuild/src/app/qml/ui/AuthenticationDialog.qml:61
+#: ../sbuild/src/app/qml/ui/ConfirmDialog.qml:41
+#: ../sbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:59
+#: ../sbuild/src/app/qml/ui/FileActionDialog.qml:45
+#: ../sbuild/src/app/qml/ui/FileOperationProgressDialog.qml:44
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:387
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:700
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:767
+#: ../sbuild/src/app/qml/ui/GoToDialog.qml:67
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:108
 #: ../src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../src/app/qml/ui/ConfirmDialog.qml:41
-#: ../src/app/qml/ui/ConfirmDialogWithInput.qml:57
+#: ../src/app/qml/ui/ConfirmDialogWithInput.qml:59
 #: ../src/app/qml/ui/FileActionDialog.qml:45
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../src/app/qml/ui/FolderListPage.qml:364
-#: ../src/app/qml/ui/FolderListPage.qml:677
-#: ../src/app/qml/ui/FolderListPage.qml:744 ../src/app/qml/ui/GoToDialog.qml:67
+#: ../src/app/qml/ui/FolderListPage.qml:387
+#: ../src/app/qml/ui/FolderListPage.qml:700
+#: ../src/app/qml/ui/FolderListPage.qml:767
+#: ../src/app/qml/ui/GoToDialog.qml:67
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:108
+#: ../ssbuild/package/qml/ui/AuthenticationDialog.qml:61
+#: ../ssbuild/package/qml/ui/ConfirmDialog.qml:41
+#: ../ssbuild/package/qml/ui/ConfirmDialogWithInput.qml:57
+#: ../ssbuild/package/qml/ui/FileActionDialog.qml:45
+#: ../ssbuild/package/qml/ui/FileOperationProgressDialog.qml:44
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:370
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:683
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:750
+#: ../ssbuild/package/qml/ui/GoToDialog.qml:67
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:108
+#: ../ssbuild/src/app/qml/ui/AuthenticationDialog.qml:61
+#: ../ssbuild/src/app/qml/ui/ConfirmDialog.qml:41
+#: ../ssbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:57
+#: ../ssbuild/src/app/qml/ui/FileActionDialog.qml:45
+#: ../ssbuild/src/app/qml/ui/FileOperationProgressDialog.qml:44
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:370
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:683
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:750
+#: ../ssbuild/src/app/qml/ui/GoToDialog.qml:67
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:108
 msgid "Cancel"
 msgstr "ਰੱਦ"
 
+#: ../sbuild/package/qml/ui/FileActionDialog.qml:30
+#: ../sbuild/src/app/qml/ui/FileActionDialog.qml:30
 #: ../src/app/qml/ui/FileActionDialog.qml:30
+#: ../ssbuild/package/qml/ui/FileActionDialog.qml:30
+#: ../ssbuild/src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
 msgstr "ਕਾਰਵਾਈ ਚੁਣੋ"
 
+#: ../sbuild/package/qml/ui/FileActionDialog.qml:31
+#: ../sbuild/src/app/qml/ui/FileActionDialog.qml:31
 #: ../src/app/qml/ui/FileActionDialog.qml:31
+#: ../ssbuild/package/qml/ui/FileActionDialog.qml:31
+#: ../ssbuild/src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
 msgstr "ਫ਼ਾਈਲ ਲਈ: %1"
 
+#: ../sbuild/package/qml/ui/FileActionDialog.qml:35
+#: ../sbuild/src/app/qml/ui/FileActionDialog.qml:35
 #: ../src/app/qml/ui/FileActionDialog.qml:35
+#: ../ssbuild/package/qml/ui/FileActionDialog.qml:35
+#: ../ssbuild/src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
 msgstr "ਖੋਲ੍ਹੋ"
 
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:37
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../src/app/qml/ui/FileDetailsPopover.qml:37
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:37
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
 msgstr "ਪੜ੍ਹਨਯੋਗ"
 
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:40
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:40
 #: ../src/app/qml/ui/FileDetailsPopover.qml:40
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:40
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
 msgstr "ਲਿਖਣਯੋਗ"
 
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:43
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:43
 #: ../src/app/qml/ui/FileDetailsPopover.qml:43
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:43
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
 msgstr "ਚੱਲਣਯੋਗ"
 
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:91
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:91
 #: ../src/app/qml/ui/FileDetailsPopover.qml:91
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:91
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
 msgstr "ਰਾਹ:"
 
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:102
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:102
 #: ../src/app/qml/ui/FileDetailsPopover.qml:102
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:102
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
 msgstr "ਸਮੱਗਰੀ:"
 
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:103
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:103
 #: ../src/app/qml/ui/FileDetailsPopover.qml:103
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:103
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
 msgstr "ਅਕਾਰ:"
 
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:112
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:112
 #: ../src/app/qml/ui/FileDetailsPopover.qml:112
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:112
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
 msgstr "ਪਹੁੰਚ ਕੀਤੀ:"
 
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:121
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:121
 #: ../src/app/qml/ui/FileDetailsPopover.qml:121
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:121
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
 msgstr "ਸੋਧਿਆ:"
 
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:130
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:130
 #: ../src/app/qml/ui/FileDetailsPopover.qml:130
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:130
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
 msgstr "ਅਾਗਿਆ:"
 
+#: ../sbuild/package/qml/ui/FileOperationProgressDialog.qml:27
+#: ../sbuild/src/app/qml/ui/FileOperationProgressDialog.qml:27
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:27
+#: ../ssbuild/package/qml/ui/FileOperationProgressDialog.qml:27
+#: ../ssbuild/src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
 msgstr "ਕਾਰਵਾਈ ਜਾਰੀ ਹੈ"
 
+#: ../sbuild/package/qml/ui/FileOperationProgressDialog.qml:29
+#: ../sbuild/src/app/qml/ui/FileOperationProgressDialog.qml:29
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
+#: ../ssbuild/package/qml/ui/FileOperationProgressDialog.qml:29
+#: ../ssbuild/src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
 msgstr "ਫ਼ਾਈਲ ਕਾਰਵਾਈ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:62
+#: ../sbuild/package/qml/ui/FolderListPage.qml:63
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:63
+#: ../src/app/qml/ui/FolderListPage.qml:63
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:62
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:62
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
 msgstr[0] "ਚੇਪੋ %1 ਫ਼ਾਈਲ"
 msgstr[1] "ਚੇਪੋ %1 ਫ਼ਾਈਲਾਂ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:66
+#: ../sbuild/package/qml/ui/FolderListPage.qml:67
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:67
+#: ../src/app/qml/ui/FolderListPage.qml:67
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:66
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:66
 msgid "Paste files"
 msgstr "ਫ਼ਾਈਲਾਂ ਪੇਸਟ ਕਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:74
+#: ../sbuild/package/qml/ui/FolderListPage.qml:75
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:75
+#: ../src/app/qml/ui/FolderListPage.qml:75
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:74
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:74
 msgid "Clear clipboard"
 msgstr "ਕਲਿੱਪਬੋਰਡ ਸ਼ਾਫ਼ ਕਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:84
-#: ../src/app/qml/ui/FolderListPage.qml:102
-#: ../src/app/qml/ui/FolderListPage.qml:614
+#: ../sbuild/package/qml/ui/FolderListPage.qml:85
+#: ../sbuild/package/qml/ui/FolderListPage.qml:104
+#: ../sbuild/package/qml/ui/FolderListPage.qml:634
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:85
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:104
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:637
+#: ../src/app/qml/ui/FolderListPage.qml:85
+#: ../src/app/qml/ui/FolderListPage.qml:104
+#: ../src/app/qml/ui/FolderListPage.qml:637
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:84
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:102
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:620
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:84
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:102
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:620
 msgid "Properties"
 msgstr "ਵਿਸ਼ੇਸ਼ਤਾ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:93
+#: ../sbuild/package/qml/ui/FolderListPage.qml:94
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:94
+#: ../src/app/qml/ui/FolderListPage.qml:94
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:93
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:93
 msgid "New Folder"
 msgstr "ਨਵਾਂ ਫੋਲਡਰ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:120
+#: ../sbuild/package/qml/ui/FolderListPage.qml:122
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:122
+#: ../src/app/qml/ui/FolderListPage.qml:122
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:120
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:120
 msgid "Go To"
 msgstr "ਤੇ ਜਾਓ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:127
+#: ../sbuild/package/qml/ui/FolderListPage.qml:129
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:129
+#: ../src/app/qml/ui/FolderListPage.qml:129
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:127
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:127
 msgid "Unlock full access"
 msgstr "ਮੁਕੰਮਲ ਪਹੁੰਚ ਖੋਲ੍ਹੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:141
+#: ../sbuild/package/qml/ui/FolderListPage.qml:143
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:143
+#: ../src/app/qml/ui/FolderListPage.qml:143
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:141
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:141
 msgid "Authentication failed"
 msgstr "ਪ੍ਰਮਾਣਿਕਤਾ ਫ਼ੇਲ੍ਹ ਹੋਈ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:217
+#: ../sbuild/package/qml/ui/FolderListPage.qml:223
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:223
+#: ../src/app/qml/ui/FolderListPage.qml:223
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:219
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:219
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
 msgstr[0] "%1 ਫਾਈਲ"
 msgstr[1] "%1 ਫਾਈਲਾਂ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:261
+#: ../sbuild/package/qml/ui/FolderListPage.qml:277
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:277
+#: ../src/app/qml/ui/FolderListPage.qml:277
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:263
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:263
 msgid "Open in a new tab"
 msgstr "ਨਵੀ ਟੈਬ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:269
+#: ../sbuild/package/qml/ui/FolderListPage.qml:285
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:285
+#: ../src/app/qml/ui/FolderListPage.qml:285
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:271
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:271
 msgid "Close this tab"
 msgstr "ਇਹ ਟੈਬ ਬੰਦ ਕਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:282
+#: ../sbuild/package/qml/ui/FolderListPage.qml:298
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:298
+#: ../src/app/qml/ui/FolderListPage.qml:298
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:284
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:284
 msgid "Create folder"
 msgstr "ਫੋਲਡਰ ਬਣਾਓ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:283
+#: ../sbuild/package/qml/ui/FolderListPage.qml:299
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:299
+#: ../src/app/qml/ui/FolderListPage.qml:299
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:285
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:285
 msgid "Enter name for new folder"
 msgstr "ਨਵੇ ਫ਼ੋਲਡਰ ਲਈ ਨਾਂ ਭਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:299
+#: ../sbuild/package/qml/ui/FolderListPage.qml:315
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:318
+#: ../src/app/qml/ui/FolderListPage.qml:318
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:301
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:301
 msgid "Create file"
 msgstr "ਫ਼ਾਈਲ ਬਣਾਓ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:300
+#: ../sbuild/package/qml/ui/FolderListPage.qml:316
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:319
+#: ../src/app/qml/ui/FolderListPage.qml:319
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:302
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:302
 msgid "Enter name for new file"
 msgstr "ਨਵੀ ਫ਼ਾਈਲ ਲਈ ਨਾਂ ਭਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:349
+#: ../sbuild/package/qml/ui/FolderListPage.qml:365
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:368
+#: ../src/app/qml/ui/FolderListPage.qml:368
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:351
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:351
 msgid "Select"
 msgstr "ਚੁਣੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:446
+#: ../sbuild/package/qml/ui/FolderListPage.qml:466
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:469
+#: ../src/app/qml/ui/FolderListPage.qml:469
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:452
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:452
 msgid "No files"
 msgstr "ਕੋਈ ਫਾਈਲ ਨਹੀਂ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:466
-#: ../src/app/qml/ui/FolderListPage.qml:575
+#: ../sbuild/package/qml/ui/FolderListPage.qml:486
+#: ../sbuild/package/qml/ui/FolderListPage.qml:595
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:489
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:598
+#: ../src/app/qml/ui/FolderListPage.qml:489
+#: ../src/app/qml/ui/FolderListPage.qml:598
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:472
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:581
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:472
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:581
 msgid "Delete"
 msgstr "ਹਟਾਓ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:467
+#: ../sbuild/package/qml/ui/FolderListPage.qml:487
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:490
+#: ../src/app/qml/ui/FolderListPage.qml:490
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:473
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:473
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "ਕੀ ਤੁਹਾਨੂੰ ਯਕੀਨ ਹੈ ਤੁਸੀ ਪੱਕੇ ਤੌਰ ਤੇ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ '%1'?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:472
+#: ../sbuild/package/qml/ui/FolderListPage.qml:492
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:495
+#: ../src/app/qml/ui/FolderListPage.qml:495
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:478
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:478
 msgid "Deleting files"
 msgstr "ਫ਼ਾਈਲਾਂ ਹਟਾ ਰਿਹਾ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:490
-#: ../src/app/qml/ui/FolderListPage.qml:588
+#: ../sbuild/package/qml/ui/FolderListPage.qml:510
+#: ../sbuild/package/qml/ui/FolderListPage.qml:608
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:513
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:611
+#: ../src/app/qml/ui/FolderListPage.qml:513
+#: ../src/app/qml/ui/FolderListPage.qml:611
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:496
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:594
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:496
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:594
 msgid "Rename"
 msgstr "ਨਾਂ ਬਦਲੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:491
+#: ../sbuild/package/qml/ui/FolderListPage.qml:511
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:514
+#: ../src/app/qml/ui/FolderListPage.qml:514
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:497
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:497
 msgid "Enter a new name"
 msgstr "ਇੱਕ ਨਵਾਂ ਨਾਂ ਭਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:500
+#: ../sbuild/package/qml/ui/FolderListPage.qml:520
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:523
+#: ../src/app/qml/ui/FolderListPage.qml:523
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:506
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:506
 msgid "Could not rename"
 msgstr "ਨਾਂ ਨਹੀ ਬਦਲ ਸਕਦਾ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:501
+#: ../sbuild/package/qml/ui/FolderListPage.qml:521
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:524
+#: ../src/app/qml/ui/FolderListPage.qml:524
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:507
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:507
 msgid "Insufficient permissions or name already exists?"
 msgstr "ਨਾਕਾਫ਼ੀ ਮਨਜ਼ੂਰੀ ਜਾਂ ਨਾਂ ਪਹਿਲਾਂ ਤੋਂ ਮੌਜੂਦ?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:519
+#: ../sbuild/package/qml/ui/FolderListPage.qml:539
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:542
+#: ../src/app/qml/ui/FolderListPage.qml:542
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:525
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:525
 msgid "Extract Archive"
 msgstr "ਅਕਾਈਵ ਖਿਲਾਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:520
+#: ../sbuild/package/qml/ui/FolderListPage.qml:540
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:543
+#: ../src/app/qml/ui/FolderListPage.qml:543
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:526
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:526
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
 msgstr "ਕੀ ਤੁਸੀਂ '%1' ਇੱਥੇ ਖਿਲਾਰਣ ਕਰਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:552
+#: ../sbuild/package/qml/ui/FolderListPage.qml:572
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:575
+#: ../src/app/qml/ui/FolderListPage.qml:575
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:558
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:558
 msgid "Cut"
 msgstr "ਕੱਟ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:563
+#: ../sbuild/package/qml/ui/FolderListPage.qml:583
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:586
+#: ../src/app/qml/ui/FolderListPage.qml:586
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:569
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:569
 msgid "Copy"
 msgstr "ਕਾਪੀ ਕਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:603
-#: ../src/app/qml/ui/FolderListPage.qml:724
+#: ../sbuild/package/qml/ui/FolderListPage.qml:623
+#: ../sbuild/package/qml/ui/FolderListPage.qml:744
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:626
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:747
+#: ../src/app/qml/ui/FolderListPage.qml:626
+#: ../src/app/qml/ui/FolderListPage.qml:747
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:609
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:730
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:609
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:730
 msgid "Extract archive"
 msgstr "ਅਕਾਈਵ ਖਿਲਾਰੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:634
+#: ../sbuild/package/qml/ui/FolderListPage.qml:654
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:657
+#: ../src/app/qml/ui/FolderListPage.qml:657
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:640
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:640
 msgid "File operation error"
 msgstr "ਫ਼ਾਈਲ ਕਾਰਵਾਈ ਖਾਮੀ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:665
+#: ../sbuild/package/qml/ui/FolderListPage.qml:685
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:688
+#: ../src/app/qml/ui/FolderListPage.qml:688
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:671
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:671
 #, qt-format
 msgid "Extracting archive '%1'"
 msgstr "'%1' ਅਕਾਈਵ ਖਿਲਾਰ ਰਿਹਾ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:701
+#: ../sbuild/package/qml/ui/FolderListPage.qml:721
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:724
+#: ../src/app/qml/ui/FolderListPage.qml:724
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:707
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:707
 msgid "Extracting failed"
 msgstr "ਖਿਲਾਰਣਾ ਫ਼ੇਲ੍ਹ ਹੋਇਆ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:702
+#: ../sbuild/package/qml/ui/FolderListPage.qml:722
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:725
+#: ../src/app/qml/ui/FolderListPage.qml:725
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:708
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:708
 #, qt-format
 msgid "Extracting the archive '%1' failed."
 msgstr "ਅਕਾਈਵ '%1' ਖਿਲਾਰਣਾ ਫ਼ੇਲ੍ਹ ਹੋਇਆ।"
 
-#: ../src/app/qml/ui/FolderListPage.qml:716
+#: ../sbuild/package/qml/ui/FolderListPage.qml:736
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:739
+#: ../src/app/qml/ui/FolderListPage.qml:739
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:722
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:722
 msgid "Archive file"
 msgstr "ਅਕਾਈਵ ਫ਼ਾਈਲ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:717
+#: ../sbuild/package/qml/ui/FolderListPage.qml:737
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:740
+#: ../src/app/qml/ui/FolderListPage.qml:740
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:723
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:723
 msgid "Do you want to extract the archive here?"
 msgstr "ਕੀ ਤੁਸੀਂ ਅਕਾਈਵ ਇੱਥੇ ਖਿਲੇਰਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: ../src/app/qml/ui/FolderListPage.qml:734
+#: ../sbuild/package/qml/ui/FolderListPage.qml:754
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:757
+#: ../src/app/qml/ui/FolderListPage.qml:757
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:740
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:740
 msgid "Open with another app"
 msgstr "ਹੋਰ ਐਪ ਨਾਲ ਖੋਲ੍ਹੋ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:818
+#: ../sbuild/package/qml/ui/FolderListPage.qml:838
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:841
+#: ../src/app/qml/ui/FolderListPage.qml:841
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:824
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:824
 msgid "~/Desktop"
 msgstr "~/ਡੈਸਕਟੋਪ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:828
+#: ../sbuild/package/qml/ui/FolderListPage.qml:848
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:851
+#: ../src/app/qml/ui/FolderListPage.qml:851
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:834
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:834
 msgid "~/Public"
 msgstr "~/ਆਮ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:830
+#: ../sbuild/package/qml/ui/FolderListPage.qml:850
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:853
+#: ../src/app/qml/ui/FolderListPage.qml:853
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:836
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:836
 msgid "~/Programs"
 msgstr "~/ਪ੍ਰੋਗਰਾਮ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:832
+#: ../sbuild/package/qml/ui/FolderListPage.qml:852
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:855
+#: ../src/app/qml/ui/FolderListPage.qml:855
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:838
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:838
 msgid "~/Templates"
 msgstr "~/ਤਿਅਾਰ ਖਾਕੇ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:850
+#: ../sbuild/package/qml/ui/FolderListPage.qml:870
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:873
+#: ../src/app/qml/ui/FolderListPage.qml:873
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:856
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:856
 msgid "Home"
 msgstr "ਘਰ"
 
-#: ../src/app/qml/ui/FolderListPage.qml:854
+#: ../sbuild/package/qml/ui/FolderListPage.qml:874
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:877
+#: ../src/app/qml/ui/FolderListPage.qml:877
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:860
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:860
 msgid "Network"
 msgstr ""
 
-#: ../src/app/qml/ui/FolderListPage.qml:955
+#: ../sbuild/package/qml/ui/FolderListPage.qml:976
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:979
+#: ../src/app/qml/ui/FolderListPage.qml:979
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:962
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:962
 msgid "Folder not accessible"
 msgstr "ਫ਼ੋਲਡਰ ਪਹੁੰਚ ਕਰਨ ਯੋਗ ਨਹੀ"
 
 #. TRANSLATORS: this refers to a folder name
-#: ../src/app/qml/ui/FolderListPage.qml:957
+#: ../sbuild/package/qml/ui/FolderListPage.qml:978
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:981
+#: ../src/app/qml/ui/FolderListPage.qml:981
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:964
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:964
 #, qt-format
 msgid "Can not access %1"
 msgstr "ਪਹੁੰਚ ਨਹੀ ਸਕਦਾ %1"
 
+#: ../sbuild/package/qml/ui/GoToDialog.qml:26
+#: ../sbuild/src/app/qml/ui/GoToDialog.qml:26
 #: ../src/app/qml/ui/GoToDialog.qml:26
+#: ../ssbuild/package/qml/ui/GoToDialog.qml:26
+#: ../ssbuild/src/app/qml/ui/GoToDialog.qml:26
 msgid "Go To Location"
 msgstr "ਥਾਂ ਤੇ ਜਾਓ"
 
+#: ../sbuild/package/qml/ui/GoToDialog.qml:28
+#: ../sbuild/src/app/qml/ui/GoToDialog.qml:28
 #: ../src/app/qml/ui/GoToDialog.qml:28
+#: ../ssbuild/package/qml/ui/GoToDialog.qml:28
+#: ../ssbuild/src/app/qml/ui/GoToDialog.qml:28
 msgid "Enter a location to go to:"
 msgstr "ਜਾਣ ਲਈ ਇੱਕ ਥਾਂ ਲਿੱਖੋ:"
 
+#: ../sbuild/package/qml/ui/GoToDialog.qml:45
+#: ../sbuild/package/qml/ui/PlacesPage.qml:65
+#: ../sbuild/package/qml/ui/PlacesPopover.qml:66
+#: ../sbuild/src/app/qml/ui/GoToDialog.qml:45
+#: ../sbuild/src/app/qml/ui/PlacesPage.qml:65
+#: ../sbuild/src/app/qml/ui/PlacesPopover.qml:66
 #: ../src/app/qml/ui/GoToDialog.qml:45 ../src/app/qml/ui/PlacesPage.qml:65
 #: ../src/app/qml/ui/PlacesPopover.qml:66
+#: ../ssbuild/package/qml/ui/GoToDialog.qml:45
+#: ../ssbuild/package/qml/ui/PlacesPage.qml:65
+#: ../ssbuild/package/qml/ui/PlacesPopover.qml:66
+#: ../ssbuild/src/app/qml/ui/GoToDialog.qml:45
+#: ../ssbuild/src/app/qml/ui/PlacesPage.qml:65
+#: ../ssbuild/src/app/qml/ui/PlacesPopover.qml:66
 msgid "Location..."
 msgstr "ਸਥਿਤੀ..."
 
+#: ../sbuild/package/qml/ui/GoToDialog.qml:54
+#: ../sbuild/package/qml/ui/PlacesPage.qml:80
+#: ../sbuild/package/qml/ui/PlacesPopover.qml:81
+#: ../sbuild/src/app/qml/ui/GoToDialog.qml:54
+#: ../sbuild/src/app/qml/ui/PlacesPage.qml:80
+#: ../sbuild/src/app/qml/ui/PlacesPopover.qml:81
 #: ../src/app/qml/ui/GoToDialog.qml:54 ../src/app/qml/ui/PlacesPage.qml:80
 #: ../src/app/qml/ui/PlacesPopover.qml:81
+#: ../ssbuild/package/qml/ui/GoToDialog.qml:54
+#: ../ssbuild/package/qml/ui/PlacesPage.qml:80
+#: ../ssbuild/package/qml/ui/PlacesPopover.qml:81
+#: ../ssbuild/src/app/qml/ui/GoToDialog.qml:54
+#: ../ssbuild/src/app/qml/ui/PlacesPage.qml:80
+#: ../ssbuild/src/app/qml/ui/PlacesPopover.qml:81
 msgid "Go"
 msgstr "ਜਾਓ"
 
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:55
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:55
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:55
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:55
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
 msgstr ""
 
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:66
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:66
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:66
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
 msgstr ""
 
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:79
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:79
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:79
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
 msgstr ""
 
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:98
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:98
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
 msgstr "ਠੀਕ"
 
+#: ../sbuild/package/qml/ui/SettingsSheet.qml:45
+#: ../sbuild/src/app/qml/ui/SettingsSheet.qml:45
 #: ../src/app/qml/ui/SettingsSheet.qml:45
+#: ../ssbuild/package/qml/ui/SettingsSheet.qml:45
+#: ../ssbuild/src/app/qml/ui/SettingsSheet.qml:45
 msgid "Show Advanced Features"
 msgstr "ਉਂਨਤ ਵਿਸ਼ੇਸਤਾਵਾਂ ਵਿਖਾਓ"
 
+#: ../sbuild/package/qml/ui/ViewPopover.qml:39
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:39
 #: ../src/app/qml/ui/ViewPopover.qml:39
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:39
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
 msgstr "ਲੁਕਵੀਆਂ ਫਾਈਲਾਂ ਵਿਖਾਓ"
 
+#: ../sbuild/package/qml/ui/ViewPopover.qml:59
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:59
 #: ../src/app/qml/ui/ViewPopover.qml:59
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:59
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
 msgstr "ਦੇ ਤੌਰ ਤੇ ਵੇਖੋ"
 
+#: ../sbuild/package/qml/ui/ViewPopover.qml:81
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:81
 #: ../src/app/qml/ui/ViewPopover.qml:81
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:81
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
 msgstr "ਦੁਆਰਾ ਕ੍ਰਮਬੱਧ"
 
+#: ../sbuild/package/qml/ui/ViewPopover.qml:92
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:92
 #: ../src/app/qml/ui/ViewPopover.qml:92
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:92
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
 msgstr "ਨਾਂ"
 
+#: ../sbuild/package/qml/ui/ViewPopover.qml:93
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:93
 #: ../src/app/qml/ui/ViewPopover.qml:93
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:93
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
 msgstr "ਤਾਰੀਖ"
 
+#: ../sbuild/package/qml/ui/ViewPopover.qml:103
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:103
 #: ../src/app/qml/ui/ViewPopover.qml:103
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:103
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
 msgstr "ਤਰਤੀਬ ਕ੍ਰਮਬੱਧ"
 
+#: ../sbuild/package/qml/ui/ViewPopover.qml:114
+#: ../sbuild/package/qml/ui/ViewPopover.qml:119
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:114
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:119
 #: ../src/app/qml/ui/ViewPopover.qml:114 ../src/app/qml/ui/ViewPopover.qml:119
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:114
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:119
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:114
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
 msgstr "ਵੱਧਦਾ ਕ੍ਰਮ"
 
+#: ../sbuild/package/qml/ui/ViewPopover.qml:115
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:115
 #: ../src/app/qml/ui/ViewPopover.qml:115
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:115
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
 msgstr "ਘੱਟਦਾ ਕ੍ਰਮ"
 
+#: ../sbuild/package/qml/ui/ViewPopover.qml:127
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:127
 #: ../src/app/qml/ui/ViewPopover.qml:127
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:127
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
 msgstr "ਫਿਲਟਰ"
 
@@ -547,15 +1072,12 @@ msgstr ""
 msgid "cannot write in "
 msgstr ""
 
-#: com.ubuntu.filemanager.desktop.in.in.h:1
-msgid "File Manager"
-msgstr "ਫ਼ਾਈਲ ਮੈਨੇਜਰ"
+#: ../ssbuild/package/qml/filemanager.qml:316
+#: ../ssbuild/src/app/qml/filemanager.qml:316
+msgid "Files imported"
+msgstr ""
 
-#~ msgid "Close"
-#~ msgstr "ਬੰਦ ਕਰੋ"
-
-#~ msgid "There is no space on disk to copy"
-#~ msgstr "ਕਾਪੀ ਕਰਨ ਲਈ ਡਿਸਕ ਤੇ ਕੋਈ ਸਪੇਸ ਨਹੀਂ ਹੈ"
-
-#~ msgid "Cannot copy items"
-#~ msgstr "ਚੀਜ਼ਾਂ ਕਾਪੀ ਨਹੀਂ ਕਰ ਸਕਦਾ"
+#: ../ssbuild/package/qml/filemanager.qml:317
+#: ../ssbuild/src/app/qml/filemanager.qml:317
+msgid "Files imported into: "
+msgstr ""
