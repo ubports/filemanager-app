@@ -29,6 +29,7 @@ Page {
     property var activeTransfer
 
     property string fileUrl
+    property bool share: false
 
     Component.onCompleted: {
         var contentType = Resolver.resolveContentType(fileUrl)
@@ -53,7 +54,7 @@ Page {
         showTitle: false
 
         // Type of handler: Source, Destination, or Share
-        handler: ContentHandler.Destination
+        handler: root.share ? ContentHandler.Share : ContentHandler.Destination
         contentType: ContentType.Pictures
 
         onPeerSelected: {

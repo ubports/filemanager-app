@@ -128,8 +128,8 @@ MainView {
         }
     }
 
-    function openLocalFile(filePath) {
-        pageStack.push(Qt.resolvedUrl("content-hub/FileOpener.qml"), { fileUrl: "file://" + filePath} )
+    function openLocalFile(filePath, share) {
+        pageStack.push(Qt.resolvedUrl("content-hub/FileOpener.qml"), { fileUrl: "file://" + filePath, share: share} )
     }
 
     function startImport(activeTransfer) {
@@ -166,6 +166,7 @@ MainView {
             console.log("activeTransfer null, not setting, testing code")
         }
     }
+
 
     Connections {
         target: ContentHub

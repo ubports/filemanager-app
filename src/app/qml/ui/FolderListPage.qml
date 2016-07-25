@@ -621,6 +621,14 @@ PageWithBottomEdge {
                 }
 
                 Action {
+                    id: shareAction
+                    text: i18n.tr("Share")
+                    onTriggered: {
+                        openFile(actionSelectionPopover.model, true)
+                    }
+                }
+
+                Action {
                     id: extractAction
                     visible: actionSelectionPopover.isArchive
                     text: i18n.tr("Extract archive")
@@ -934,12 +942,12 @@ PageWithBottomEdge {
         }
     }
 
-    function openFromDisk(fullpathname, name) {
+    function openFromDisk(fullpathname, name, share) {
         console.log("openFromDisk():"+ fullpathname)
         // Check if file is an archive. If yes, ask the user whether he wants to extract it
         var archiveType = getArchiveType(name)
         if (archiveType === "") {
-            openLocalFile(fullpathname)
+            openLocalFile(fullpathname, share)
         } else {
             PopupUtils.open(openArchiveDialog, folderListView,
                             {   "filePath" : fullpathname,
@@ -952,13 +960,13 @@ PageWithBottomEdge {
 
     //High Level openFile() function
     //remote files are saved as temporary files and then opened
-    function openFile(model) {
+    function openFile(model, share) {
         if (model.isRemote) {
             //download and open later when the signal downloadTemporaryComplete() arrives
             pageModel.downloadAsTemporaryFile(model.index)
         }
         else {
-            openFromDisk(model.filePath, model.fileName)
+            openFromDisk(model.filePath, model.fileName, share)
         }
     }
 
