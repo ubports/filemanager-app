@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-07-18 19:55-0300\n"
-"PO-Revision-Date: 2016-06-14 20:26+0000\n"
+"PO-Revision-Date: 2016-07-31 21:38+0000\n"
 "Last-Translator: Bojan Bogdanović <Unknown>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2016-07-20 06:03+0000\n"
-"X-Generator: Launchpad (build 18147)\n"
+"X-Launchpad-Export-Date: 2016-08-01 05:34+0000\n"
+"X-Generator: Launchpad (build 18169)\n"
 
 #: ../armhf-build/po/com.ubuntu.filemanager.desktop.in.in.h:1
 #: ../qbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
@@ -150,21 +150,21 @@ msgstr "Списак"
 #: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "File %1"
-msgstr ""
+msgstr "Документ %1"
 
 #: ../sbuild/package/qml/filemanager.qml:324
 #: ../sbuild/src/app/qml/filemanager.qml:316
 #: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "%1 Files"
-msgstr ""
+msgstr "%1 Документа"
 
 #: ../sbuild/package/qml/filemanager.qml:325
 #: ../sbuild/src/app/qml/filemanager.qml:317
 #: ../src/app/qml/filemanager.qml:317
 #, qt-format
 msgid "Saved to: %1"
-msgstr ""
+msgstr "Сачувано у: %1"
 
 #: ../sbuild/package/qml/ui/AuthenticationDialog.qml:25
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:26
@@ -1079,9 +1079,9 @@ msgstr "не могу уписати у "
 #: ../ssbuild/package/qml/filemanager.qml:316
 #: ../ssbuild/src/app/qml/filemanager.qml:316
 msgid "Files imported"
-msgstr ""
+msgstr "Документа увежена"
 
 #: ../ssbuild/package/qml/filemanager.qml:317
 #: ../ssbuild/src/app/qml/filemanager.qml:317
 msgid "Files imported into: "
-msgstr ""
+msgstr "Документа увежена у: "
