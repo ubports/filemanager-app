@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-07-18 19:55-0300\n"
-"PO-Revision-Date: 2016-02-17 08:54+0000\n"
+"PO-Revision-Date: 2016-08-04 11:22+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2016-07-20 06:02+0000\n"
-"X-Generator: Launchpad (build 18147)\n"
+"X-Launchpad-Export-Date: 2016-08-05 05:41+0000\n"
+"X-Generator: Launchpad (build 18169)\n"
 
 #: ../armhf-build/po/com.ubuntu.filemanager.desktop.in.in.h:1
 #: ../qbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
@@ -148,21 +148,21 @@ msgstr "Luettelo"
 #: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "File %1"
-msgstr ""
+msgstr "Tiedosto %1"
 
 #: ../sbuild/package/qml/filemanager.qml:324
 #: ../sbuild/src/app/qml/filemanager.qml:316
 #: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "%1 Files"
-msgstr ""
+msgstr "%1 tiedostoa"
 
 #: ../sbuild/package/qml/filemanager.qml:325
 #: ../sbuild/src/app/qml/filemanager.qml:317
 #: ../src/app/qml/filemanager.qml:317
 #, qt-format
 msgid "Saved to: %1"
-msgstr ""
+msgstr "Tallennettiin kohteeseen: %1"
 
 #: ../sbuild/package/qml/ui/AuthenticationDialog.qml:25
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:26
@@ -756,7 +756,7 @@ msgstr "Koti"
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:860
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:860
 msgid "Network"
-msgstr ""
+msgstr "Verkko"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:976
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:979
@@ -832,7 +832,7 @@ msgstr "Siirry"
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:55
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "Käyttäjä"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:66
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
@@ -840,7 +840,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:66
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr ""
+msgstr "Salasana"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:79
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
@@ -848,7 +848,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:79
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "Tallenna salasana"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:98
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
@@ -944,7 +944,7 @@ msgstr "Suodata"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr ""
+msgstr "Tuntematon"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
@@ -972,7 +972,7 @@ msgstr " ei ole olemassa"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr ""
+msgstr "Tiedoston tai kansion käyttäminen ei onnistu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
@@ -1013,7 +1013,7 @@ msgstr "Tiedostoa ei voitu avata"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr ""
+msgstr "Ei riittävästi vapaata tilaa kopiointia varten"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
@@ -1062,7 +1062,7 @@ msgstr "alkuperäinen kansio ja kohdekansio ovat samoja"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr ""
+msgstr "Ei riittävästi vapaata tilaa latausta varten"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
@@ -1075,9 +1075,9 @@ msgstr ""
 #: ../ssbuild/package/qml/filemanager.qml:316
 #: ../ssbuild/src/app/qml/filemanager.qml:316
 msgid "Files imported"
-msgstr ""
+msgstr "Tiedostot tuotu"
 
 #: ../ssbuild/package/qml/filemanager.qml:317
 #: ../ssbuild/src/app/qml/filemanager.qml:317
 msgid "Files imported into: "
-msgstr ""
+msgstr "Tiedostot tuotu sijaintiin: "
