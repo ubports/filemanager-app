@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-07-18 19:55-0300\n"
-"PO-Revision-Date: 2016-05-20 09:18+0000\n"
+"PO-Revision-Date: 2016-08-30 13:44+0000\n"
 "Last-Translator: GunChleoc <Unknown>\n"
 "Language-Team: Fòram na Gàidhlig http://www.foramnagaidhlig.net\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : "
 "(n > 2 && n < 20) ? 2 : 3;\n"
-"X-Launchpad-Export-Date: 2016-07-20 06:03+0000\n"
-"X-Generator: Launchpad (build 18147)\n"
+"X-Launchpad-Export-Date: 2016-08-31 06:17+0000\n"
+"X-Generator: Launchpad (build 18179)\n"
 "Language: gd\n"
 
 #: ../armhf-build/po/com.ubuntu.filemanager.desktop.in.in.h:1
@@ -768,7 +768,7 @@ msgstr "Dachaigh"
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:860
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:860
 msgid "Network"
-msgstr ""
+msgstr "Lìonra"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:976
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:979
@@ -844,7 +844,7 @@ msgstr "Siuthad"
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:55
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "Cleachdaiche"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:66
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
@@ -852,7 +852,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:66
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr ""
+msgstr "Facal-faire"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:79
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
@@ -860,7 +860,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:79
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "Sàbhail am facal-faire"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:98
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
@@ -956,7 +956,7 @@ msgstr "Criathrag"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr ""
+msgstr "Chan eil fhios"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"

@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-07-18 19:55-0300\n"
-"PO-Revision-Date: 2016-06-08 19:41+0000\n"
+"PO-Revision-Date: 2016-08-30 18:57+0000\n"
 "Last-Translator: Ubuntu-QC-1 <Unknown>\n"
 "Language-Team: French (Canada) <fr_CA@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2016-07-20 06:03+0000\n"
-"X-Generator: Launchpad (build 18147)\n"
+"X-Launchpad-Export-Date: 2016-08-31 06:17+0000\n"
+"X-Generator: Launchpad (build 18179)\n"
 
 #: ../armhf-build/po/com.ubuntu.filemanager.desktop.in.in.h:1
 #: ../qbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
@@ -148,21 +148,21 @@ msgstr "Liste"
 #: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "File %1"
-msgstr ""
+msgstr "Fichier %1"
 
 #: ../sbuild/package/qml/filemanager.qml:324
 #: ../sbuild/src/app/qml/filemanager.qml:316
 #: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "%1 Files"
-msgstr ""
+msgstr "%1 fichiers"
 
 #: ../sbuild/package/qml/filemanager.qml:325
 #: ../sbuild/src/app/qml/filemanager.qml:317
 #: ../src/app/qml/filemanager.qml:317
 #, qt-format
 msgid "Saved to: %1"
-msgstr ""
+msgstr "Enregistré dans : %1"
 
 #: ../sbuild/package/qml/ui/AuthenticationDialog.qml:25
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:26
@@ -756,7 +756,7 @@ msgstr "Dossier personnel"
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:860
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:860
 msgid "Network"
-msgstr ""
+msgstr "Réseau"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:976
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:979
@@ -832,7 +832,7 @@ msgstr "Aller"
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:55
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:66
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
@@ -840,7 +840,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:66
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:79
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
@@ -848,7 +848,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:79
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "Enregistrer le mot de passe"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:98
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
@@ -944,7 +944,7 @@ msgstr "Filtrer"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr ""
+msgstr "Inconnu"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
@@ -972,15 +972,15 @@ msgstr " n'existe pas"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr ""
+msgstr "Impossible d'accéder au fichier ou au répertoire"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr ""
+msgstr " demande une authentification"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
-msgstr ""
+msgstr "Impossible de copier ou de déplacer les éléments"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
@@ -1013,7 +1013,7 @@ msgstr "Impossible d'ouvrir le fichier"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr ""
+msgstr "Il n'y a plus d'espace pour copier"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
@@ -1062,22 +1062,22 @@ msgstr "les dossiers d'origine et de destination sont les mêmes"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr ""
+msgstr "Il n'y a plus d'espace pour télécharger"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
-msgstr ""
+msgstr "L'outil net est introuvable, vérifier l'installation de samba"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
-msgstr ""
+msgstr "impossible d'écrire dans "
 
 #: ../ssbuild/package/qml/filemanager.qml:316
 #: ../ssbuild/src/app/qml/filemanager.qml:316
 msgid "Files imported"
-msgstr ""
+msgstr "Les fichiers ont été importés"
 
 #: ../ssbuild/package/qml/filemanager.qml:317
 #: ../ssbuild/src/app/qml/filemanager.qml:317
 msgid "Files imported into: "
-msgstr ""
+msgstr "Les fichiers ont été importés : "
