@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-07-18 19:55-0300\n"
-"PO-Revision-Date: 2016-08-31 08:15+0000\n"
+"PO-Revision-Date: 2016-09-15 14:46+0000\n"
 "Last-Translator: GunChleoc <Unknown>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : "
 "(n > 2 && n < 20) ? 2 : 3;\n"
-"X-Launchpad-Export-Date: 2016-09-01 06:30+0000\n"
-"X-Generator: Launchpad (build 18179)\n"
+"X-Launchpad-Export-Date: 2016-09-16 07:48+0000\n"
+"X-Generator: Launchpad (build 18186)\n"
 "Language: gd\n"
 
 #: ../armhf-build/po/com.ubuntu.filemanager.desktop.in.in.h:1
@@ -159,7 +159,7 @@ msgstr "Faidhle %1"
 #: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "%1 Files"
-msgstr ""
+msgstr "%1 Faidhle"
 
 #: ../sbuild/package/qml/filemanager.qml:325
 #: ../sbuild/src/app/qml/filemanager.qml:317
