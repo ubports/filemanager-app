@@ -72,6 +72,10 @@ Popover {
 
                 // TODO: how to get proper icon?
                 source: fileIcon(root.path, model.isDir)
+                sourceSize {
+                    width: 48
+                    height: 48
+                }
             }
 
             Label {
