@@ -574,7 +574,7 @@ PageWithBottomEdge {
                 Action {
                     text: i18n.tr("Cut")
                     // TODO: temporary
-                    iconSource: "/usr/share/icons/Humanity/actions/48/edit-cut.svg"
+                    iconSource: "image://theme/edit-cut"
                     onTriggered: {
                         console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
                         pageModel.cutIndex(actionSelectionPopover.model.index)
@@ -585,7 +585,7 @@ PageWithBottomEdge {
                 Action {
                     text: i18n.tr("Copy")
                     // TODO: temporary.
-                    iconSource: "/usr/share/icons/Humanity/actions/48/edit-copy.svg"
+                    iconSource: "image://theme/edit-copy"
 
                     onTriggered: {
                         console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
@@ -597,7 +597,7 @@ PageWithBottomEdge {
                 Action {
                     text: i18n.tr("Delete")
                     // TODO: temporary
-                    iconSource: "/usr/share/icons/Humanity/actions/48/edit-delete.svg"
+                    iconSource: "image://theme/edit-delete"
                     onTriggered: {
                         print(text)
                         PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller,
@@ -610,7 +610,7 @@ PageWithBottomEdge {
                 Action {
                     text: i18n.tr("Rename")
                     // TODO: temporary
-                    iconSource: "/usr/share/icons/Humanity/actions/48/rotate.svg"
+                    iconSource: "image://theme/rotate"
                     onTriggered: {
                         print(text)
                         PopupUtils.open(confirmRenameDialog, actionSelectionPopover.caller,
@@ -835,45 +835,45 @@ PageWithBottomEdge {
     // files will need an icon.
 
     function fileIcon(file, model) {
-        var iconPath = model ? "/usr/share/icons/Humanity/mimes/48/empty.svg" :
-                               "/usr/share/icons/Humanity/places/48/folder.svg"
+        var iconPath = model ? "empty" :
+                               "folder"
 
         if (model && model.isSmbWorkgroup) {
-            iconPath = "/usr/share/icons/Humanity/places/48/network_local.svg"
+            iconPath = "network_local"
         } else if (model && model.isHost) {
-            iconPath = "/usr/share/icons/Humanity/places/48/server.svg"
+            iconPath = "server"
         } else if (model && model.isBrowsable) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder.svg"
+            iconPath = "folder"
         } else if (file === userplaces.locationHome) {
-            iconPath = "../icons/folder-home.svg"
+            iconPath = "folder-home"
         } else if (file === i18n.tr("~/Desktop")) {
-            iconPath = "/usr/share/icons/Humanity/places/48/user-desktop.svg"
+            iconPath = "user-desktop"
         } else if (file === userplaces.locationDocuments) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-documents.svg"
+            iconPath = "folder-documents"
         } else if (file === userplaces.locationDownloads) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-downloads.svg"
+            iconPath = "folder-downloads"
         } else if (file === userplaces.locationMusic) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-music.svg"
+            iconPath = "folder-music"
         } else if (file === userplaces.locationPictures) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-pictures.svg"
+            iconPath = "folder-pictures"
         } else if (file === i18n.tr("~/Public")) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-publicshare.svg"
+            iconPath = "folder-publicshare"
         } else if (file === i18n.tr("~/Programs")) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-system.svg"
+            iconPath = "folder-system"
         } else if (file === i18n.tr("~/Templates")) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-templates.svg"
+            iconPath = "folder-templates"
         } else if (file === userplaces.locationVideos) {
-            iconPath = "/usr/share/icons/Humanity/places/48/folder-videos.svg"
+            iconPath = "folder-videos"
         } else if (file === "/") {
-            iconPath = "/usr/share/icons/Humanity/devices/48/drive-harddisk.svg"
+            iconPath = "drive-harddisk"
         } else if (file === userplaces.locationSamba) {
-            iconPath = "/usr/share/icons/Humanity/places/48/network_local.svg"
+            iconPath = "network_local"
         }  else if (userplaces.isUserMountDirectory(file)) {
             // In context of Ubuntu Touch this means SDCard currently.
-            iconPath = "/usr/share/icons/Humanity/devices/48/drive-removable-media.svg"
+            iconPath = "drive-removable-media"
         }
 
-        return Qt.resolvedUrl(iconPath)
+        return "image://theme/%1".arg(iconPath)
     }
 
     function folderDisplayName(folder) {
