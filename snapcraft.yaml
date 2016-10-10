@@ -1,0 +1,59 @@
+name: ubuntu-filemanager-app
+version: 0.4
+summary: File Manager application
+description: Core File Manager application
+confinement: devmode  # use "strict" to enforce system access only via declared interfaces
+grade: devel
+
+apps:
+    ubuntu-filemanager-app:
+        command: desktop-launch $SNAP/bin/ubuntu-filemanager-app --desktop_file_hint=unity8 "$@"
+        plugs: [unity7, opengl, home]
+
+parts:
+    ubuntu-filemanager-app:
+        plugin: cmake
+        configflags: [-DCMAKE_INSTALL_PREFIX=/usr, -DCLICK_MODE=off]
+        source: .
+        build-packages:
+            - cmake
+            - gcc
+            - g++
+            - intltool
+            - qtbase5-dev
+            - qtdeclarative5-dev
+            - qt5-default
+            - pkg-kde-tools
+            - python3-all
+            - libtag1-dev
+            - libpam0g-dev
+            - libsmbclient-dev
+
+        stage-packages:
+            - qtdeclarative5-nemo-qml-plugin-folderlistmodel
+            - qtdeclarative5-placesmodel0.1
+            - qtdeclarative5-fm-pamauthentication0.1
+            - qtdeclarative5-archives0.1
+            - qtdeclarative5-qtquick2-plugin
+            - qtdeclarative5-u1db1.0
+            - qml-module-ubuntu-components
+            - qtdeclarative5-ubuntu-content1
+            - libsmbclient           
+            - qtubuntu-desktop
+            - suru-icon-theme
+            - mir-graphics-drivers-desktop
+            - humanity-icon-theme
+
+        snap:
+            - -usr/lib/python3
+            - -usr/share/doc
+            - -usr/include
+
+        after: [desktop-qt5]
+
+    environment:
+        source: .
+        plugin: dump
+        organize:
+            ubuntu-filemanager-app.wrapper: bin/ubuntu-filemanager-app
+
