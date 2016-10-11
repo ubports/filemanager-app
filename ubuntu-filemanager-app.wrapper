@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#Overwrite snappy home dir and use the real home dir
+export HOME="/home/$USER"
+
+exec "$SNAP/usr/bin/filemanager" "$@"
