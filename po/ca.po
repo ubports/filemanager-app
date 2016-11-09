@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-07-18 19:55-0300\n"
-"PO-Revision-Date: 2014-11-04 07:45+0000\n"
-"Last-Translator: David Planella <david.planella@gmail.com>\n"
+"PO-Revision-Date: 2016-11-08 07:07+0000\n"
+"Last-Translator: Aniol Garcia i Serrano <aniolgarcia@gmail.com>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2016-10-14 06:45+0000\n"
-"X-Generator: Launchpad (build 18232)\n"
+"X-Launchpad-Export-Date: 2016-11-09 05:45+0000\n"
+"X-Generator: Launchpad (build 18246)\n"
 
 #: ../armhf-build/po/com.ubuntu.filemanager.desktop.in.in.h:1
 #: ../qbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
@@ -39,8 +39,8 @@ msgstr "Gestor de fitxers"
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 (%2 arxiu)"
+msgstr[1] "%1 (%2 arxius)"
 
 #: ../sbuild/package/qml/components/PathHistoryRow.qml:89
 #: ../sbuild/package/qml/ui/FolderListPage.qml:872
@@ -155,14 +155,14 @@ msgstr ""
 #: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "%1 Files"
-msgstr ""
+msgstr "%1 fitxers"
 
 #: ../sbuild/package/qml/filemanager.qml:325
 #: ../sbuild/src/app/qml/filemanager.qml:317
 #: ../src/app/qml/filemanager.qml:317
 #, qt-format
 msgid "Saved to: %1"
-msgstr ""
+msgstr "S'ha desat a: %1"
 
 #: ../sbuild/package/qml/ui/AuthenticationDialog.qml:25
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:26
@@ -183,7 +183,7 @@ msgstr "Cal autenticació"
 #: ../ssbuild/package/qml/ui/AuthenticationDialog.qml:27
 #: ../ssbuild/src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr ""
+msgstr "Es necessita contrasenya per accedir a tots els fitxers"
 
 #: ../sbuild/package/qml/ui/AuthenticationDialog.qml:39
 #: ../sbuild/src/app/qml/ui/AuthenticationDialog.qml:39
@@ -219,7 +219,7 @@ msgstr "contrasenya"
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:692
 #: ../ssbuild/src/app/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr ""
+msgstr "D'acord"
 
 #: ../sbuild/package/qml/ui/AuthenticationDialog.qml:61
 #: ../sbuild/package/qml/ui/ConfirmDialog.qml:41
@@ -567,7 +567,7 @@ msgstr "Segur que voleu suprimir «%1» de manera permanent?"
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:478
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:478
 msgid "Deleting files"
-msgstr ""
+msgstr "S'estan suprimint els fitxers"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:510
 #: ../sbuild/package/qml/ui/FolderListPage.qml:608
@@ -612,7 +612,7 @@ msgstr "No teniu els permisos necessaris o bé el nom ja existeix"
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:525
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:525
 msgid "Extract Archive"
-msgstr ""
+msgstr "Extreu l'arxiu"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:540
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:543
@@ -650,7 +650,7 @@ msgstr "Copia"
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:609
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:730
 msgid "Extract archive"
-msgstr ""
+msgstr "Extreu l'arxiu"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:654
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:657
@@ -692,7 +692,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:722
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:722
 msgid "Archive file"
-msgstr ""
+msgstr "Fitxer d'arxiu"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:737
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:740
@@ -716,7 +716,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:824
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:824
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Escriptori"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:848
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:851
@@ -724,7 +724,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:834
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:834
 msgid "~/Public"
-msgstr ""
+msgstr "~/Públic"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:850
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:853
@@ -732,7 +732,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:836
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:836
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Programes"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:852
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:855
@@ -740,7 +740,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:838
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:838
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Plantilles"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:870
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:873
@@ -756,7 +756,7 @@ msgstr "Carpeta personal"
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:860
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:860
 msgid "Network"
-msgstr ""
+msgstr "Xarxa"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:976
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:979
@@ -832,7 +832,7 @@ msgstr "Vés-hi"
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:55
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "Usuari"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:66
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
@@ -840,7 +840,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:66
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr ""
+msgstr "Contrasenya"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:79
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
@@ -848,7 +848,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:79
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "Desa la contrasenya"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:98
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
@@ -944,7 +944,7 @@ msgstr "Filtre"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr ""
+msgstr "Desconeguda"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
@@ -960,15 +960,15 @@ msgstr "S'ha produït un error en crear la carpeta nova"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1351
 msgid "items"
-msgstr ""
+msgstr "elements"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:327
 msgid "File or Directory does not exist"
-msgstr ""
+msgstr "El fitxer o el directori no existeix"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:328
 msgid " does not exist"
-msgstr ""
+msgstr " no existeix"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
@@ -989,7 +989,7 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:692
 msgid "Could not remove the item "
-msgstr ""
+msgstr "No s'ha pogit eliminar l'element "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:733
 msgid "Could not find a suitable name to backup"
@@ -997,11 +997,11 @@ msgstr "No s'ha trobat un nom adequat per la còpia de seguretat"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:791
 msgid "Could not create the directory"
-msgstr ""
+msgstr "No s'ha pogut crear el directori"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:800
 msgid "Could not create link to"
-msgstr ""
+msgstr "No s'ha pogut crear l'enllaç a"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:812
 msgid "Could not set permissions to dir"
@@ -1021,23 +1021,23 @@ msgstr "No s'ha pogut crear el fitxer"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:920
 msgid "Could not remove the directory/file "
-msgstr ""
+msgstr "No s'ha pogut suprimir el directori/fitxer "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:936
 msgid "Could not move the directory/file "
-msgstr ""
+msgstr "No s'ha pogut moure el directori/fitxer "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1196
 msgid "Write error in "
-msgstr ""
+msgstr "Error d'escriptura a "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1212
 msgid "Read error in "
-msgstr ""
+msgstr "Error de lectura a "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1450
 msgid " Copy"
-msgstr ""
+msgstr " Copia"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1510
 msgid "Set permissions error in "
@@ -1054,7 +1054,7 @@ msgstr ""
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1617
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1625
 msgid "Cannot move items"
-msgstr ""
+msgstr "No es poden moure els elements"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1619
 msgid "origin and destination folders are the same"
