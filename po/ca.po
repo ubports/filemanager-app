@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-07-18 19:55-0300\n"
-"PO-Revision-Date: 2016-11-08 07:07+0000\n"
-"Last-Translator: Aniol Garcia i Serrano <aniolgarcia@gmail.com>\n"
+"PO-Revision-Date: 2016-11-10 17:10+0000\n"
+"Last-Translator: Walter Garcia-Fontes <walter.garcia@upf.edu>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2016-11-09 05:45+0000\n"
-"X-Generator: Launchpad (build 18246)\n"
+"X-Launchpad-Export-Date: 2016-11-11 06:28+0000\n"
+"X-Generator: Launchpad (build 18255)\n"
 
 #: ../armhf-build/po/com.ubuntu.filemanager.desktop.in.in.h:1
 #: ../qbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
@@ -148,7 +148,7 @@ msgstr "Llista"
 #: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "File %1"
-msgstr ""
+msgstr "Fitxer %1"
 
 #: ../sbuild/package/qml/filemanager.qml:324
 #: ../sbuild/src/app/qml/filemanager.qml:316
@@ -621,7 +621,7 @@ msgstr "Extreu l'arxiu"
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:526
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr ""
+msgstr "Segur que voleu extreure «%1» aquí?"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:572
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:575
@@ -667,7 +667,7 @@ msgstr "S'ha produït un error en una operació de fitxer"
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:671
 #, qt-format
 msgid "Extracting archive '%1'"
-msgstr ""
+msgstr "S'està extraient l'arxiu «%1»"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:721
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:724
@@ -675,7 +675,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:707
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:707
 msgid "Extracting failed"
-msgstr ""
+msgstr "Ha fallat l'extracció"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:722
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:725
@@ -684,7 +684,7 @@ msgstr ""
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:708
 #, qt-format
 msgid "Extracting the archive '%1' failed."
-msgstr ""
+msgstr "Ha fallat l'extracció del fitxer «%1»."
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:736
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:739
@@ -700,7 +700,7 @@ msgstr "Fitxer d'arxiu"
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:723
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:723
 msgid "Do you want to extract the archive here?"
-msgstr ""
+msgstr "Voleu extraure l'arxiu aquí?"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:754
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:757
@@ -708,7 +708,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:740
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:740
 msgid "Open with another app"
-msgstr ""
+msgstr "Obre amb una altra aplicació"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:838
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:841
@@ -948,7 +948,7 @@ msgstr "Desconeguda"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
-msgstr ""
+msgstr "el camí o la url no existeix o no es pot llegir"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:682
 msgid "Rename error"
@@ -972,20 +972,20 @@ msgstr " no existeix"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr ""
+msgstr "No es pot accedir el fitxer o el directori"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr ""
+msgstr " cal autenticació"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
-msgstr ""
+msgstr "No es poden copiar/moure els elements"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
 msgid "no write permission on folder "
-msgstr ""
+msgstr "no hi ha permís d'escriptura a la carpeta "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:692
 msgid "Could not remove the item "
@@ -1005,7 +1005,7 @@ msgstr "No s'ha pogut crear l'enllaç a"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:812
 msgid "Could not set permissions to dir"
-msgstr ""
+msgstr "No s'han pogut establir els permissos al directori"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:826
 msgid "Could not open file"
@@ -1013,7 +1013,7 @@ msgstr "No s'ha pogut obrir el fitxer"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr ""
+msgstr "No hi ha espai per copiar"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
@@ -1041,15 +1041,15 @@ msgstr " Copia"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1510
 msgid "Set permissions error in "
-msgstr ""
+msgstr "Estableix l'error de permisos a "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1579
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "No s'ha pogut crear el fitxer d'informació de paperera"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1592
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "No s'ha pogut eliminar el fitxer d'informació de paperera"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1617
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1625
@@ -1058,15 +1058,15 @@ msgstr "No es poden moure els elements"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1619
 msgid "origin and destination folders are the same"
-msgstr ""
+msgstr "les carpets d'origen i destinació són les mateixes"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr ""
+msgstr "No hi ha espai per descarregar"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
-msgstr ""
+msgstr "no s'ha trobat l'eina de xarxa, verifiqueu la instal·lació del samba"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
