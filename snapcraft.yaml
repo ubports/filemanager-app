@@ -15,6 +15,7 @@ plugs:
         interface: content
         content: ubuntu-app-platform1
         target: ubuntu-app-platform
+        default-provider: ubuntu-app-platform
 
 parts:
     ubuntu-filemanager-app:
