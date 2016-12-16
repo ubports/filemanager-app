@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-07-18 19:55-0300\n"
-"PO-Revision-Date: 2015-07-09 12:36+0000\n"
+"PO-Revision-Date: 2016-12-16 01:59+0000\n"
 "Last-Translator: enolp <enolp@softastur.org>\n"
 "Language-Team: Asturian <ast@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2016-11-28 05:43+0000\n"
-"X-Generator: Launchpad (build 18282)\n"
+"X-Launchpad-Export-Date: 2016-12-16 05:42+0000\n"
+"X-Generator: Launchpad (build 18293)\n"
 
 #: ../armhf-build/po/com.ubuntu.filemanager.desktop.in.in.h:1
 #: ../qbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
@@ -148,14 +148,14 @@ msgstr "Llista"
 #: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "File %1"
-msgstr ""
+msgstr "Ficheru %1"
 
 #: ../sbuild/package/qml/filemanager.qml:324
 #: ../sbuild/src/app/qml/filemanager.qml:316
 #: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "%1 Files"
-msgstr ""
+msgstr "%1 ficheros"
 
 #: ../sbuild/package/qml/filemanager.qml:325
 #: ../sbuild/src/app/qml/filemanager.qml:317
@@ -756,7 +756,7 @@ msgstr "Aniciu"
 #: ../ssbuild/package/qml/ui/FolderListPage.qml:860
 #: ../ssbuild/src/app/qml/ui/FolderListPage.qml:860
 msgid "Network"
-msgstr ""
+msgstr "Rede"
 
 #: ../sbuild/package/qml/ui/FolderListPage.qml:976
 #: ../sbuild/src/app/qml/ui/FolderListPage.qml:979
@@ -832,7 +832,7 @@ msgstr "Dir"
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:55
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "Usuariu"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:66
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
@@ -840,7 +840,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:66
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:79
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
@@ -848,7 +848,7 @@ msgstr ""
 #: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:79
 #: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "Guardar contraseña"
 
 #: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:98
 #: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
@@ -944,7 +944,7 @@ msgstr "Peñera"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr ""
+msgstr "Desconocíu"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
@@ -972,15 +972,15 @@ msgstr " nun esiste"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr ""
+msgstr "Nun pue accedese al ficheru o direutoriu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr ""
+msgstr " precisa l'autenticación"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
-msgstr ""
+msgstr "Nun pue copiar/mover elementos"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
@@ -1013,7 +1013,7 @@ msgstr "Nun pudo abrise'l ficheru"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr ""
+msgstr "Nun hai espaciu pa copiar"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
@@ -1062,7 +1062,7 @@ msgstr "les carpetes d'orixe y destín son les mesmes"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr ""
+msgstr "Nun hai espaciu pa  baxar"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
@@ -1070,14 +1070,14 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
-msgstr ""
+msgstr "nun pue escribise en "
 
 #: ../ssbuild/package/qml/filemanager.qml:316
 #: ../ssbuild/src/app/qml/filemanager.qml:316
 msgid "Files imported"
-msgstr ""
+msgstr "Ficheros importaos"
 
 #: ../ssbuild/package/qml/filemanager.qml:317
 #: ../ssbuild/src/app/qml/filemanager.qml:317
 msgid "Files imported into: "
-msgstr ""
+msgstr "Ficheros importaos a: "
