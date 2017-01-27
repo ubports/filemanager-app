@@ -36,6 +36,6 @@ DirListWorker * NetworkLocation::newListWorker(const QString &urlPath, QDir::Fil
 
     LocationItemDirIterator *dirIterator  = newDirIterator(urlPath,filter,flags,LocationItemDirIterator::LoadLater);
     DirItemInfo             *baseitemInfo = newItemInfo(QLatin1String(0));
-
+    // the NetworkListWorker object takes ownership of baseitemInfo and also creates its own copy of m_info
     return new NetworkListWorker(dirIterator, baseitemInfo, m_info);
 }
