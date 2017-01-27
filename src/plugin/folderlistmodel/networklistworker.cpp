@@ -24,15 +24,22 @@
 #include "locationurl.h"
 
 NetworkListWorker::NetworkListWorker(LocationItemDirIterator * dirIterator,
-                                     DirItemInfo * mainItemInfo, const DirItemInfo *parent) :
+                                     DirItemInfo             * mainItemInfo,
+                                     const DirItemInfo       * parentItemInfo) :
     DirListWorker(dirIterator->path(),
                   dirIterator->filters(),
                   dirIterator->flags() == QDirIterator::Subdirectories ? true : false),
     m_dirIterator(dirIterator),
-    m_mainItemInfo(mainItemInfo),
-    m_parent(parent)
+    m_mainItemInfo(mainItemInfo),  // m_mainItemInfo takes ownership of mainItemInfo
+    m_parentItemInfo(0)
 {
      mLoaderType =  NetworkLoader;
+     // create its own instance by doing a copy from parentItemInfo
+     if (parentItemInfo != 0)
+     {
+         m_parentItemInfo = new DirItemInfo();
+         *m_parentItemInfo = *parentItemInfo;
+     }
 }
 
 
@@ -40,6 +47,10 @@ NetworkListWorker::~NetworkListWorker()
 {
     delete m_dirIterator;
     delete m_mainItemInfo;
+    if (m_parentItemInfo != 0)
+    {
+        delete m_parentItemInfo;
+    }
 }
 
 
@@ -47,7 +58,7 @@ DirItemInfoList NetworkListWorker::getNetworkContent()
 {
      DirItemInfoList netContent;
      m_dirIterator->load();
-     bool is_parent_of_smb_url = m_parent != 0 && m_parent->urlPath().startsWith(LocationUrl::SmbURL);
+     bool is_parent_of_smb_url = m_parentItemInfo != 0 && m_parentItemInfo->urlPath().startsWith(LocationUrl::SmbURL);
      while (m_dirIterator->hasNext())
      {
          m_mainItemInfo->setFile(m_dirIterator->next());
@@ -68,7 +79,7 @@ DirItemInfoList NetworkListWorker::getNetworkContent()
  */
 void NetworkListWorker::setSmbItemAttributes()
 {    
-    if (m_parent->isHost())      { m_mainItemInfo->setAsShare(); }
+    if (m_parentItemInfo->isHost())      { m_mainItemInfo->setAsShare(); }
     else
-    if (m_parent->isWorkGroup()) { m_mainItemInfo->setAsHost(); }
+    if (m_parentItemInfo->isWorkGroup()) { m_mainItemInfo->setAsHost(); }
 }
