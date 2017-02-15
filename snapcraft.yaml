@@ -7,8 +7,8 @@ grade: devel
 
 apps:
     ubuntu-filemanager-app:
-        command: desktop-launch $SNAP/bin/ubuntu-filemanager-app --desktop_file_hint=unity8 "$@"
-        plugs: [unity7, opengl, home, platform]
+        command: desktop-launch $SNAP/bin/ubuntu-filemanager-app "$@"
+        plugs: [unity7, opengl, home, platform, mir]
 
 plugs:
     platform:
