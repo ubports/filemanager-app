@@ -3,6 +3,8 @@ Priority: extra
 Maintainer: Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>
 Build-Depends: cmake,
                debhelper (>= 9),
+               dh-apparmor,
+               dh-translations,
                intltool,
                qtbase5-dev,
                qtdeclarative5-dev,
