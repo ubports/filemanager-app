@@ -1,4 +1,4 @@
-project(com.ubuntu.filemanager C CXX)
+project(ubuntu-filemanager-app C CXX)
 cmake_minimum_required(VERSION 2.8.9)
 find_program(INTLTOOL_MERGE intltool-merge)
 find_program(INTLTOOL_EXTRACT intltool-extract)
@@ -117,7 +117,7 @@ else(CLICK_MODE)
     set(DATA_DIR ${CMAKE_INSTALL_DATADIR}/${APP_NAME})
     set(ICON ${CMAKE_INSTALL_PREFIX}/${DATA_DIR}/${ICON_FILE})
     set(DESKTOP_DIR ${CMAKE_INSTALL_DATADIR}/applications)
-    install(FILES ${CONTENT_HUB_JSON} DESTINATION ${CMAKE_INSTALL_DATADIR}/content-hub/peers/ RENAME com.ubuntu.filemanager)
+    install(FILES ${CONTENT_HUB_JSON} DESTINATION ${CMAKE_INSTALL_DATADIR}/content-hub/peers/ RENAME ubuntu-filemanager-app)
 endif(CLICK_MODE)
 
 file(GLOB_RECURSE I18N_SRC_FILES

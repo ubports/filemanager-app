@@ -6,7 +6,7 @@
     "hooks": {
         "filemanager": {
             "apparmor": "filemanager.apparmor",
-            "desktop": "com.ubuntu.filemanager.desktop",
+            "desktop": "ubuntu-filemanager-app.desktop",
             "content-hub": "content-hub.json"
         }
     },

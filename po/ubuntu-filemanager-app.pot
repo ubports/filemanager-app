@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ../armhf-build/po/com.ubuntu.filemanager.desktop.in.in.h:1
-#: ../qbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
-#: ../sbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
+#: ../armhf-build/po/ubuntu-filemanager-app.desktop.in.in.h:1
+#: ../qbuild/po/ubuntu-filemanager-app.desktop.in.in.h:1
+#: ../sbuild/po/ubuntu-filemanager-app.desktop.in.in.h:1
 #: ../ssbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
-#: com.ubuntu.filemanager.desktop.in.in.h:1
+#: ubuntu-filemanager-app.desktop.in.in.h:1
 msgid "File Manager"
 msgstr ""
 
