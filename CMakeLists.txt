@@ -117,7 +117,7 @@ else(CLICK_MODE)
     set(DATA_DIR ${CMAKE_INSTALL_DATADIR}/${APP_NAME})
     set(ICON ${CMAKE_INSTALL_PREFIX}/${DATA_DIR}/${ICON_FILE})
     set(DESKTOP_DIR ${CMAKE_INSTALL_DATADIR}/applications)
-    install(FILES ${CONTENT_HUB_JSON} DESTINATION ${CMAKE_INSTALL_FULL__DATADIR}/content-hub/peers/ RENAME ubuntu-filemanager-app)
+    install(FILES ${CONTENT_HUB_JSON} DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/content-hub/peers/ RENAME ubuntu-filemanager-app)
 endif(CLICK_MODE)
 
 file(GLOB_RECURSE I18N_SRC_FILES
