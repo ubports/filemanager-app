@@ -124,7 +124,14 @@ MainView {
         }
         else
         {
-            exportFiles(fileSelector.activeTransfer, fileUrls)
+            if (exportFiles(fileSelector.activeTransfer, fileUrls)) {
+                pageStack.pop()
+                fileSelector.activeTransfer = null
+                fileSelector.fileSelectorComponent = null
+                pageStack.currentPage.currentPage.refresh()
+                fileSelector.importMode = false
+            }
+
         }
     }
 
@@ -161,9 +168,11 @@ MainView {
         if (activeTransfer !== null) {
             activeTransfer.items = results
             activeTransfer.state = ContentTransfer.Charged
-            console.log("set activeTransfer")
+            console.debug("Import done")
+            return true
         } else {
             console.log("activeTransfer null, not setting, testing code")
+            return false
         }
     }
 
@@ -317,6 +326,7 @@ MainView {
                             title: (count === 1 ? i18n.tr("File %1").arg(urls[0]) : i18n.tr("%1 Files").arg(count)),
                             text: i18n.tr("Saved to: %1").arg(folder)
                         })
+        fileSelector.importMode = false
     }
 
     Keys.onPressed: {
