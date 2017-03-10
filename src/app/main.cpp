@@ -29,6 +29,25 @@
 
 #include <QDebug>
 
+#include <signal.h>
+#include <unistd.h>
+
+void catchUnixSignals(const std::vector<int>& quitSignals,
+                      const std::vector<int>& ignoreSignals = std::vector<int>())
+{
+    auto handler = [](int sig) ->void {
+        Q_UNUSED(sig)
+        QGuiApplication::quit();
+    };
+
+    for ( int sig : ignoreSignals )
+        signal(sig, SIG_IGN);
+
+    for ( int sig : quitSignals )
+        signal(sig, handler);
+}
+
+
 int main(int argc, char *argv[])
 {
     QGuiApplication a(argc, argv);
@@ -138,5 +157,6 @@ int main(int argc, char *argv[])
     view.setSource(QUrl::fromLocalFile(qmlfile));
     view.show();
 
+    catchUnixSignals({SIGQUIT, SIGINT, SIGTERM});
     return a.exec();
 }
