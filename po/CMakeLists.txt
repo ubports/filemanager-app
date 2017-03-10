@@ -1,7 +1,7 @@
 include(FindGettext)
 find_program(GETTEXT_XGETTEXT_EXECUTABLE xgettext)
 
-set(DOMAIN com.ubuntu.filemanager)
+set(DOMAIN ubuntu-filemanager-app)
 set(POT_FILE ${DOMAIN}.pot)
 file(GLOB PO_FILES *.po)
 
