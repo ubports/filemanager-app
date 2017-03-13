@@ -104,10 +104,11 @@ MainView {
         tabs.selectedTabIndex = 0
     }
 
-    function openFileSelector(selectFolderMode) {
+    function openFileSelector(selectFolderMode, saveMode) {
         fileSelector.fileSelectorComponent = pageStack.push(Qt.resolvedUrl("./ui/FolderListPage.qml"), { fileSelectorMode: !selectFolderMode,
                                                                                                          folderSelectorMode: selectFolderMode,
-                                                                                                         folder: userplaces.locationHome})
+                                                                                                         folder: userplaces.locationHome,
+                                                                                                         saveMode: saveMode})
     }
 
     function cancelFileSelector() {
@@ -140,10 +141,11 @@ MainView {
     }
 
     function startImport(activeTransfer) {
+        console.debug("Import requested")
         if (activeTransfer.state === ContentTransfer.Charged) {
             fileSelector.activeTransfer = activeTransfer
             fileSelector.importMode = true
-            openFileSelector(true)
+            openFileSelector(true, true)
         }
     }
 
@@ -181,7 +183,7 @@ MainView {
         target: ContentHub
         onExportRequested: {
             fileSelector.activeTransfer = transfer
-            openFileSelector(false)
+            openFileSelector(false, false)
         }
         onImportRequested: startImport(transfer)
         onShareRequested: startImport(transfer)
