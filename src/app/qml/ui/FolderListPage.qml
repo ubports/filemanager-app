@@ -165,6 +165,7 @@ PageWithBottomEdge {
     // Set to true if called as file selector for ContentHub
     property bool fileSelectorMode: false
     property bool folderSelectorMode: false
+    property bool saveMode: false
     readonly property bool selectionMode: fileSelectorMode || folderSelectorMode
 
     property FolderListSelection selectionManager: pageModel.selectionObject()
@@ -350,24 +351,32 @@ PageWithBottomEdge {
             left: sidebar.right
             right: parent.right
         }
-        height: bottomBarButtons.visible ? bottomBarButtons.height : 0
+        height: bottomBarButtons.visible ? bottomBarButtons.height + units.gu(1) : 0
         visible: bottomBarButtons.visible
+
+        Divider {
+            anchors.top: parent.top
+            height: visible ? units.gu(0.5) : 0
+            visible: bottomBarButtons.visible
+        }
     }
 
     Flow {
         id: bottomBarButtons
-        anchors.bottom: bottomBar.bottom
-        anchors.leftMargin: (parent.width - sidebar.width - childrenRect.width) / 2
-        anchors.left: sidebar.right
+        anchors {
+            bottom: bottomBar.bottom
+            leftMargin: (parent.width - sidebar.width - childrenRect.width) / 2
+            left: sidebar.right
+        }
         width: parent.width - sidebar.width
-
         spacing: units.gu(2)
         visible: selectionMode || pageModel.onlyAllowedPaths
 
         Button {
-            text: i18n.tr("Select")
+            text: folderListPage.saveMode ? i18n.tr("Save") : i18n.tr("Select")
             enabled: (selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)
             visible: selectionMode
+            color: UbuntuColors.orange
             onClicked: {
                 var selectedAbsUrls = []
                 if (folderSelectorMode) {
