@@ -24,8 +24,8 @@ Section: misc
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         qml-module-pamauthentication0.1 | qtdeclarative5-fm-pamauthentication0.1,
-         qtdeclarative5-nemo-qml-plugin-folderlistmodel,
+         qml-module-pamauthentication0.1,
+         qml-module-qt-labs-folderlistmodel,
          qtdeclarative5-placesmodel0.1,
          qtdeclarative5-archives0.1,
          qtdeclarative5-qtquick2-plugin,
@@ -36,19 +36,6 @@ Depends: ${misc:Depends},
 Description: File Manager application
  Core File Manager application
 
-Package: qtdeclarative5-nemo-qml-plugin-folderlistmodel
-Architecture: any
-Multi-Arch: same
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         ${misc:Pre-Depends},
-Description: Nemo QML plugin - folder list model
- Qt is a cross-platform C++ application framework. Qt's primary feature
- is its rich set of widgets that provide standard GUI functionality.
- .
- This package contains the Folder List model plugin of the Nemo QML
- plugins collection.
-
 Package: qtdeclarative5-placesmodel0.1
 Architecture: any
 Multi-Arch: same
@@ -58,16 +45,6 @@ Depends: ${misc:Depends},
 Description: Places model QML plugin
  This package contains a plugin that enables QML apps to list and
  modify a set of places (bookmarks) in the file system.
-
-Package: qtdeclarative5-fm-pamauthentication0.1
-Architecture: any
-Multi-Arch: same
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         ${misc:Pre-Depends},
-Description: PAM authentication QML plugin
- This package contains a plugin that enables QML apps to do
- password authentication via the PAM API.
 
 Package: qtdeclarative5-archives0.1
 Architecture: any
