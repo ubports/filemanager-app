@@ -22,6 +22,7 @@ parts:
         plugin: cmake
         configflags: [-DCMAKE_INSTALL_PREFIX=/usr, -DCLICK_MODE=off]
         source: .
+        build-attributes: [no-system-libraries]
         build-packages:
             - cmake
             - gcc
@@ -37,7 +38,8 @@ parts:
             - libsmbclient-dev
 
         stage-packages:
-            - libsmbclient           
+            - libsmbclient
+            - qml-module-pamauthentication0.1
 
         snap:
             - -usr/lib/python3
