@@ -36,26 +36,6 @@ Depends: ${misc:Depends},
 Description: File Manager application
  Core File Manager application
 
-Package: qtdeclarative5-placesmodel0.1
-Architecture: any
-Multi-Arch: same
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         ${misc:Pre-Depends},
-Description: Places model QML plugin
- This package contains a plugin that enables QML apps to list and
- modify a set of places (bookmarks) in the file system.
-
-Package: qtdeclarative5-archives0.1
-Architecture: any
-Multi-Arch: same
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         ${misc:Pre-Depends},
-Description: Archives QML plugin
- This package contains a plugin that enables QML apps to extract
- archive files.
-
 Package: ubuntu-filemanager-app-autopilot
 Architecture: all
 Depends: ${misc:Depends},

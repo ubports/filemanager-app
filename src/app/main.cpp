@@ -32,6 +32,8 @@
 #include <signal.h>
 #include <unistd.h>
 
+#include "config.h"
+
 void catchUnixSignals(const std::vector<int>& quitSignals,
                       const std::vector<int>& ignoreSignals = std::vector<int>())
 {
@@ -129,6 +131,7 @@ int main(int argc, char *argv[])
         view.engine()->rootContext()->setContextProperty("tablet", QVariant(true));
     }
 
+    importPathList << FM_PRIVATE_IMPORT_DIR;
     view.engine()->setImportPathList(importPathList);
 
     // load the qml file

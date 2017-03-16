@@ -11,7 +11,7 @@ include(GNUInstallDirs)
 
 option(INSTALL_TESTS "Install the tests on make install" on)
 
-set(APP_NAME filemanager)
+set(APP_NAME ubuntu-filemanager-app)
 set(DESKTOP_FILE "${PROJECT_NAME}.desktop")
 set(LP_PROJECT ubuntu-filemanager-app)
 set(ICON_FILE filemanager64.png)
@@ -30,13 +30,9 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-execute_process(
-COMMAND qmake -query QT_INSTALL_QML
-OUTPUT_VARIABLE QT_IMPORTS_DIR
-OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-set(DATA_DIR ${CMAKE_INSTALL_DATADIR}/${APP_NAME})
-set(ICON ${CMAKE_INSTALL_PREFIX}/${DATA_DIR}/${ICON_FILE})
+set(DATA_DIR ${CMAKE_INSTALL_FULL_DATADIR}/${APP_NAME})
+set(ICON ${DATA_DIR}/${ICON_FILE})
+set(QT_IMPORTS_DIR ${DATA_DIR}/private/qml/)
 set(DESKTOP_DIR ${CMAKE_INSTALL_DATADIR}/applications)
 install(FILES ${CONTENT_HUB_JSON} DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/content-hub/peers/ RENAME ubuntu-filemanager-app)
 
@@ -60,6 +56,10 @@ add_custom_target(${DESKTOP_FILE} ALL
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE}
     DESTINATION ${DESKTOP_DIR})
+
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/config.h"
+    IMMEDIATE @ONLY)
 
 # Tests
 enable_testing()
