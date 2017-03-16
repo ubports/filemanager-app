@@ -22,12 +22,10 @@ Vcs-Bzr: https://code.launchpad.net/~ubuntu-filemanager-dev/ubuntu-filemanager-a
 Package: ubuntu-filemanager-app
 Section: misc
 Architecture: any
+Replaces: qtdeclarative5-placesmodel0.1,
+          qtdeclarative5-archives0.1,
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         qml-module-pamauthentication0.1,
-         qml-module-qt-labs-folderlistmodel,
-         qtdeclarative5-placesmodel0.1,
-         qtdeclarative5-archives0.1,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-u1db1.0,
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
