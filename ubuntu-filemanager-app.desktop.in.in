@@ -5,6 +5,7 @@ Terminal=false
 Exec=@EXEC@
 Icon=@ICON@
 _Name=File Manager
+_Keywords=folder;manager;explore;disk;filesystem;
 X-Ubuntu-Touch=true
 X-Ubuntu-Default-Department-ID=accessories
 X-Ubuntu-Splash-Show-Header=true
