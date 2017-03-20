@@ -15,7 +15,7 @@ set(APP_NAME ubuntu-filemanager-app)
 set(DESKTOP_FILE "${PROJECT_NAME}.desktop")
 set(LP_PROJECT ubuntu-filemanager-app)
 set(ICON_FILE filemanager64.png)
-set(AUTOPILOT_DIR ${APP_NAME})
+set(AUTOPILOT_DIR "ubuntu_filemanager_app")
 set(EXEC "${APP_NAME}")
 set(CONTENT_HUB_JSON content-hub.json)
 

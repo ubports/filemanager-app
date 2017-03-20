@@ -15,7 +15,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
-from filemanager.tests import FileManagerTestCase
+from ubuntu_filemanager_app.tests import FileManagerTestCase
 
 
 class ContextMenuTestCase(FileManagerTestCase):

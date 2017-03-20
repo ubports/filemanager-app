@@ -23,18 +23,16 @@ import tempfile
 
 import fixtures
 from autopilot import logging as autopilot_logging
-from filemanager import CMakePluginParser
+from ubuntu_filemanager_app import CMakePluginParser
 
 from autopilot.matchers import Eventually
 from autopilot.testcase import AutopilotTestCase
 from testtools.matchers import Equals
 import ubuntuuitoolkit
 
-import filemanager
-from filemanager import fixture_setup as fm_fixtures
+import ubuntu_filemanager_app as filemanager
+from ubuntu_filemanager_app import fixture_setup as fm_fixtures
 import gi
-gi.require_version('Click', '0.4')
-from gi.repository import Click
 
 logger = logging.getLogger(__name__)
 
@@ -50,16 +48,13 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
         if os.path.exists(self.local_location_binary):
             launcher = self.launch_test_local
             test_type = 'local'
-        elif os.path.exists(self.installed_location_binary):
+        else:
             launcher = self.launch_test_installed
             test_type = 'deb'
-        else:
-            launcher = self.launch_test_click
-            test_type = 'click'
         return launcher, test_type
 
     def setUp(self):
-        self.binary = 'filemanager'
+        self.binary = 'ubuntu-filemanager-app'
         self.source_dir = os.path.dirname(
             os.path.dirname(os.path.abspath('.')))
         self.build_dir = self._get_build_dir()
@@ -72,7 +67,7 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
                                                   'src', 'app', self.binary)
         self.installed_location_binary = os.path.join('/usr/bin/', self.binary)
         self.installed_location_qml = \
-            '/usr/share/filemanager/qml/filemanager.qml'
+            '/usr/share/ubuntu-filemanager-app/qml/filemanager.qml'
         super(BaseTestCaseWithPatchedHome, self).setUp()
         self.launcher, self.test_type = self.get_launcher_and_type()
         self.real_home_dir = os.getenv('HOME')
@@ -97,65 +92,6 @@ class BaseTestCaseWithPatchedHome(AutopilotTestCase):
             '-q', self.installed_location_qml,
             app_type='qt',
             emulator_base=ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase)
-
-    @autopilot_logging.log_action(logger.info)
-    def launch_test_click(self):
-        # We need to pass the "--forceAuth false" argument to the filemanager
-        # binary, but ubuntu-app-launch doesn't pass arguments to the exec line
-        # on the desktop file. So we make a test desktop file that has the
-        # "--forceAuth false"  on the exec line.
-        desktop_file_path = self.write_sandbox_desktop_file()
-        desktop_file_name = os.path.basename(desktop_file_path)
-        application_name, _ = os.path.splitext(desktop_file_name)
-        return self.launch_upstart_application(
-            application_name,
-            emulator_base=ubuntuuitoolkit.UbuntuUIToolkitCustomProxyObjectBase)
-
-    def write_sandbox_desktop_file(self):
-        desktop_file_dir = self.get_local_desktop_file_directory()
-        desktop_file = self.get_named_temporary_file(
-            suffix='.desktop', dir=desktop_file_dir)
-        desktop_file.write('[Desktop Entry]\n')
-        version, installed_path = self.get_installed_version_and_directory()
-        filemanager_sandbox_exec = (
-            'aa-exec-click -p com.ubuntu.filemanager_filemanager_{}'
-            ' -- filemanager --forceAuth false'.format(version))
-        desktop_file_dict = {
-            'Type': 'Application',
-            'Name': 'filemanager',
-            'Exec': filemanager_sandbox_exec,
-            'Icon': 'Not important',
-            'Path': installed_path
-        }
-        for key, value in desktop_file_dict.items():
-            desktop_file.write('{key}={value}\n'.format(key=key, value=value))
-        desktop_file.close()
-        logger.debug(filemanager_sandbox_exec)
-        for key, value in desktop_file_dict.items():
-            logger.debug("%s: %s" % (key, value))
-        return desktop_file.name
-
-    def get_local_desktop_file_directory(self):
-        return os.path.join(
-            self.real_home_dir, '.local', 'share', 'applications')
-
-    def get_named_temporary_file(
-            self, dir=None, mode='w+t', delete=False, suffix=''):
-        # Discard files with underscores which look like an APP_ID to Unity
-        # See https://bugs.launchpad.net/ubuntu-ui-toolkit/+bug/1329141
-        chars = tempfile._RandomNameSequence.characters.strip("_")
-        tempfile._RandomNameSequence.characters = chars
-        return tempfile.NamedTemporaryFile(
-            dir=dir, mode=mode, delete=delete, suffix=suffix)
-
-    def get_installed_version_and_directory(self):
-        db = Click.DB()
-        db.read()
-        package_name = 'com.ubuntu.filemanager'
-        registry = Click.User.for_user(db, name=os.environ.get('USER'))
-        version = registry.get_version(package_name)
-        directory = registry.get_path(package_name)
-        return version, directory
 
     def patch_home(self):
         """ mock /home for testing purposes to preserve user data

@@ -17,7 +17,7 @@
 from autopilot.matchers import Eventually
 from testtools.matchers import Equals
 
-from filemanager.tests import FileManagerTestCase
+from ubuntu_filemanager_app.tests import FileManagerTestCase
 
 
 class PlacesTestCase(FileManagerTestCase):
