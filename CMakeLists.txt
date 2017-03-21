@@ -32,7 +32,7 @@ execute_process(
 
 set(DATA_DIR ${CMAKE_INSTALL_FULL_DATADIR}/${APP_NAME})
 set(ICON ${DATA_DIR}/${ICON_FILE})
-set(QT_IMPORTS_DIR ${DATA_DIR}/private/qml/)
+set(QT_IMPORTS_DIR ${CMAKE_INSTALL_FULL_LIBDIR}/${APP_NAME}/qml/)
 set(DESKTOP_DIR ${CMAKE_INSTALL_DATADIR}/applications)
 install(FILES ${CONTENT_HUB_JSON} DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/content-hub/peers/ RENAME ubuntu-filemanager-app)
 

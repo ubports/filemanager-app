@@ -14,13 +14,12 @@ Build-Depends: cmake,
                libtag1-dev,
                libpam0g-dev,
                libsmbclient-dev,
-Standards-Version: 3.9.5
+Standards-Version: 3.9.7
 Section: misc
 Homepage: https://launchpad.net/ubuntu-filemanager-app
 Vcs-Bzr: https://code.launchpad.net/~ubuntu-filemanager-dev/ubuntu-filemanager-app/trunk
 
 Package: ubuntu-filemanager-app
-Section: misc
 Architecture: any
 Replaces: qtdeclarative5-placesmodel0.1,
           qtdeclarative5-archives0.1,
