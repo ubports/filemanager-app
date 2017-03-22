@@ -1,3 +1,7 @@
-usr/bin/*
-usr/share/*
+usr/bin/ubuntu-filemanager-app
+usr/share/ubuntu-filemanager-app/*
+usr/lib/*/ubuntu-filemanager-app/*
+usr/share/applications/ubuntu-filemanager-app.desktop
+usr/share/content-hub/peers/ubuntu-filemanager-app
+usr/share/locale/*/LC_MESSAGES/ubuntu-filemanager-app.mo
 debian/apparmor/ubuntu-filemanager-app etc/apparmor.d

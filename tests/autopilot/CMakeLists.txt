@@ -7,4 +7,4 @@ install(DIRECTORY ${AUTOPILOT_DIR}
     )
 endif(INSTALL_TESTS)
 
-add_subdirectory(filemanager)
+add_subdirectory(ubuntu_filemanager_app)
