@@ -2,14 +2,6 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: ubuntu-filemanager-app
 Source: https://launchpad.net/ubuntu-filemanager-app
 
-Files: archives/* placesmodel/*
-Copyright: 2014 Canonical Ltd.
-License: GPL-3
-
-Files: folderlistmodel/*
-Copyright: 2012 Robin Burchell <robin+nemo@viroteck.net>
-License: LGPL-3 | BSD-3-Clause
-
 Files: *
 Copyright: 2013 Canonical Ltd.
            2013 Arto Jalkanen <ajalkane@gmail.com>
@@ -19,6 +11,42 @@ Copyright: 2013 Canonical Ltd.
            2013 Paolo Rotolo <paolorotolo@ubuntu.com>
            2013 Sam Hewitt <snwh@ubuntu.com>
            2013 Victor Thompson <victor.thompson@gmail.com>
+License: GPL-3
+
+Files: src/plugin/archives/*
+Copyright: 2014 Canonical Ltd.
+License: GPL-3
+
+Files: src/plugin/folderlistmodel/*
+Copyright: 2012 Robin Burchell <robin+nemo@viroteck.net>
+License: LGPL-3
+
+Files: src/plugin/folderlistmodel/clipboard.*
+Copyright: 2012 Robin Burchell <robin+nemo@viroteck.net>
+License: BSD-3-Clause
+
+Files: src/plugin/folderlistmodel/dirmodel.*
+Copyright: 2012 Robin Burchell <robin+nemo@viroteck.net>
+License: BSD-3-Clause
+
+Files: src/plugin/folderlistmodel/file*
+Copyright: 2012 Robin Burchell <robin+nemo@viroteck.net>
+License: BSD-3-Clause
+
+Files: src/plugin/folderlistmodel/imageprovider.*
+Copyright: 2012 Robin Burchell <robin+nemo@viroteck.net>
+License: BSD-3-Clause
+
+Files: src/plugin/folderlistmodel/io*
+Copyright: 2012 Robin Burchell <robin+nemo@viroteck.net>
+License: BSD-3-Clause
+
+Files: src/plugin/folderlistmodel/plugin.*
+Copyright: 2012 Robin Burchell <robin+nemo@viroteck.net>
+License: BSD-3-Clause
+
+Files: src/plugin/placesmodel/*
+Copyright: 2014 Canonical Ltd.
 License: GPL-3
 
 Files: debian/*
@@ -72,7 +100,7 @@ License: BSD-3-Clause
    Neither the name of Nemo Mobile nor the names of its contributors
      may be used to endorse or promote products derived from this
      software without specific prior written permission.
-
+ .
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
