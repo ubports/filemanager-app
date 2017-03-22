@@ -10,10 +10,6 @@ Files: folderlistmodel/*
 Copyright: 2012 Robin Burchell <robin+nemo@viroteck.net>
 License: LGPL-3 | BSD-3-Clause
 
-Files: placesmodel/*
-Copyright: 2014 Canonical Ltd.
-License: GPL-3
-
 Files: *
 Copyright: 2013 Canonical Ltd.
            2013 Arto Jalkanen <ajalkane@gmail.com>
