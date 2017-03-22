@@ -1,0 +1,3 @@
+ubuntu-filemanager-app source: build-depends-on-metapackage build-depends: qt5-default
+ubuntu-filemanager-app: binary-without-manpage usr/bin/ubuntu-filemanager-app
+
