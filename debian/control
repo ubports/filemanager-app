@@ -31,7 +31,9 @@ Depends: ${misc:Depends},
          qtdeclarative5-ubuntu-content1,
          libsmbclient,
 Description: File Manager application
- Core File Manager application
+ Core File Manager application. Its allow you to browser and modify the files
+ on your system, and help you to import and export files to other apps using
+ content-hub.
 
 Package: ubuntu-filemanager-app-autopilot
 Architecture: all
