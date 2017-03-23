@@ -49,6 +49,10 @@ Files: src/plugin/placesmodel/*
 Copyright: 2014 Canonical Ltd.
 License: GPL-3
 
+Files: tests/autopilot/ubuntu_filemanager_app/*
+Copyright: 2013, 2014 Canonical Ltd.
+License: LGPL-3
+
 Files: debian/*
 Copyright: 2013 Canonical Ltd.
 License: GPL-3
