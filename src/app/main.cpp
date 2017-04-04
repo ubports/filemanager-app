@@ -29,6 +29,27 @@
 
 #include <QDebug>
 
+#include <signal.h>
+#include <unistd.h>
+
+#include "config.h"
+
+void catchUnixSignals(const std::vector<int>& quitSignals,
+                      const std::vector<int>& ignoreSignals = std::vector<int>())
+{
+    auto handler = [](int sig) ->void {
+        Q_UNUSED(sig)
+        QGuiApplication::quit();
+    };
+
+    for ( int sig : ignoreSignals )
+        signal(sig, SIG_IGN);
+
+    for ( int sig : quitSignals )
+        signal(sig, handler);
+}
+
+
 int main(int argc, char *argv[])
 {
     QGuiApplication a(argc, argv);
@@ -55,15 +76,8 @@ int main(int argc, char *argv[])
     }
 
     QString qmlfile;
-    // Desktop doesn't have yet Unity8 and so no unity greeter either. Consequently it doesn't
-    // also have any "PIN code" or "Password" extra authentication. Don't require any extra
-    // authentication there by default
-    if (qgetenv("QT_QPA_PLATFORM") != "ubuntumirclient") {
-        qDebug() << Q_FUNC_INFO << "Running on non-MIR desktop, not requiring authentication by default";
-        view.engine()->rootContext()->setContextProperty("noAuthentication", QVariant(true));
-    } else {
-        view.engine()->rootContext()->setContextProperty("noAuthentication", QVariant(false));
-    }
+    // by default no authentication is necessary, if you want to enable authentication use the app arg "--forceAuth true"
+    view.engine()->rootContext()->setContextProperty("noAuthentication", QVariant(true));
     for (int i = 0; i < args.count(); i++) {
         if (args.at(i) == "-I" && args.count() > i + 1) {
             QString addedPath = args.at(i+1);
@@ -117,6 +131,7 @@ int main(int argc, char *argv[])
         view.engine()->rootContext()->setContextProperty("tablet", QVariant(true));
     }
 
+    importPathList << FM_PRIVATE_IMPORT_DIR;
     view.engine()->setImportPathList(importPathList);
 
     // load the qml file
@@ -138,5 +153,6 @@ int main(int argc, char *argv[])
     view.setSource(QUrl::fromLocalFile(qmlfile));
     view.show();
 
+    catchUnixSignals({SIGQUIT, SIGINT, SIGTERM});
     return a.exec();
 }

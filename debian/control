@@ -3,6 +3,8 @@ Priority: extra
 Maintainer: Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>
 Build-Depends: cmake,
                debhelper (>= 9),
+               dh-apparmor,
+               dh-translations,
                intltool,
                qtbase5-dev,
                qtdeclarative5-dev,
@@ -12,70 +14,26 @@ Build-Depends: cmake,
                libtag1-dev,
                libpam0g-dev,
                libsmbclient-dev,
-Standards-Version: 3.9.5
+Standards-Version: 3.9.7
 Section: misc
 Homepage: https://launchpad.net/ubuntu-filemanager-app
 Vcs-Bzr: https://code.launchpad.net/~ubuntu-filemanager-dev/ubuntu-filemanager-app/trunk
 
 Package: ubuntu-filemanager-app
-Section: misc
 Architecture: any
+Replaces: qtdeclarative5-placesmodel0.1,
+          qtdeclarative5-archives0.1,
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         qtdeclarative5-nemo-qml-plugin-folderlistmodel,
-         qtdeclarative5-placesmodel0.1,
-         qtdeclarative5-fm-pamauthentication0.1,
-         qtdeclarative5-archives0.1,
          qtdeclarative5-qtquick2-plugin,
          qtdeclarative5-u1db1.0,
          qtdeclarative5-ubuntu-ui-toolkit-plugin | qt-components-ubuntu,
-         qtdeclarative5-ubuntu-content0.1,
+         qtdeclarative5-ubuntu-content1,
          libsmbclient,
 Description: File Manager application
- Core File Manager application
-
-Package: qtdeclarative5-nemo-qml-plugin-folderlistmodel
-Architecture: any
-Multi-Arch: same
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         ${misc:Pre-Depends},
-Description: Nemo QML plugin - folder list model
- Qt is a cross-platform C++ application framework. Qt's primary feature
- is its rich set of widgets that provide standard GUI functionality.
- .
- This package contains the Folder List model plugin of the Nemo QML
- plugins collection.
-
-Package: qtdeclarative5-placesmodel0.1
-Architecture: any
-Multi-Arch: same
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         ${misc:Pre-Depends},
-Description: Places model QML plugin
- This package contains a plugin that enables QML apps to list and
- modify a set of places (bookmarks) in the file system.
-
-Package: qtdeclarative5-fm-pamauthentication0.1
-Architecture: any
-Multi-Arch: same
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         ${misc:Pre-Depends},
-Description: PAM authentication QML plugin
- This package contains a plugin that enables QML apps to do
- password authentication via the PAM API.
-
-Package: qtdeclarative5-archives0.1
-Architecture: any
-Multi-Arch: same
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         ${misc:Pre-Depends},
-Description: Archives QML plugin
- This package contains a plugin that enables QML apps to extract
- archive files.
+ Core File Manager application. Its allow you to browser and modify the files
+ on your system, and help you to import and export files to other apps using
+ content-hub.
 
 Package: ubuntu-filemanager-app-autopilot
 Architecture: all

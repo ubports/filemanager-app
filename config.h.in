@@ -1,0 +1,6 @@
+#ifndef __CONFIG_H__
+#define __CONFIG_H__
+
+#define FM_PRIVATE_IMPORT_DIR	"@QT_IMPORTS_DIR@"
+
+#endif
