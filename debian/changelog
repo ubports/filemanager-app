@@ -1,4 +1,4 @@
-ubuntu-filemanager-app (0.4-0ubuntu1) UNRELEASED; urgency=medium
+ubuntu-filemanager-app (0.4+17.04.20170404-0ubuntu1) zesty; urgency=medium
 
   [ Girish Rawat ]
   * Improved READMEs
@@ -7,7 +7,7 @@ ubuntu-filemanager-app (0.4-0ubuntu1) UNRELEASED; urgency=medium
   * Rename binary file to ubuntu-filemanager-app
   * Join plugin packages into the main package 
 
- -- Renato Araujo Oliveira Filho <renato.filho@canonical.com>  Wed, 08 Mar 2017 16:28:53 -0300
+ -- Renato Araujo Oliveira Filho <renato.filho@canonical.com>  Tue, 04 Apr 2017 17:07:01 +0000
 
 ubuntu-filemanager-app (0.4) wily; urgency=medium
 

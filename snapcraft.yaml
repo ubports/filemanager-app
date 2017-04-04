@@ -1,5 +1,5 @@
 name: ubuntu-filemanager-app
-version: 0.4
+version: 0.4+17.04.20170404-0ubuntu1
 summary: File Manager application
 description: Core File Manager application
 confinement: devmode  # use "strict" to enforce system access only via declared interfaces
