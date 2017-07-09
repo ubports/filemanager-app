@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-07-01 15:31+0000\n"
+"PO-Revision-Date: 2017-07-09 19:57+0000\n"
 "Last-Translator: Eran <etherpulse@gmail.com>\n"
 "Language-Team: Hebrew <https://ubpweblate.tnvcomp.com/projects/ubports"
 "/filemanager-app/he/>\n"
@@ -946,7 +946,7 @@ msgstr "שמירה"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Select"
-msgstr ""
+msgstr "בחירה"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:478
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:478
