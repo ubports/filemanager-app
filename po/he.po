@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-07-13 12:57+0000\n"
+"PO-Revision-Date: 2017-07-17 08:58+0000\n"
 "Last-Translator: Eran <etherpulse@gmail.com>\n"
 "Language-Team: Hebrew <https://ubpweblate.tnvcomp.com/projects/ubports"
 "/filemanager-app/he/>\n"
@@ -1107,7 +1107,7 @@ msgstr "העתקה"
 #: ../src/app/qml/ui/FolderListPage.qml:634
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:634
 msgid "Share"
-msgstr ""
+msgstr "שיתוף"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:643
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:764
