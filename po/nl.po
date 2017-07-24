@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-07-01 17:42+0000\n"
-"Last-Translator: Sander <sander.k1007@kpnmail.nl>\n"
+"PO-Revision-Date: 2017-07-24 14:45+0000\n"
+"Last-Translator: Arjan Vlek <arjan1995@gmail.com>\n"
 "Language-Team: Dutch <https://ubpweblate.tnvcomp.com/projects/ubports"
 "/filemanager-app/nl/>\n"
 "Language: nl\n"
@@ -155,7 +155,7 @@ msgstr "Bestand"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:265
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:265
 msgid "Edit"
-msgstr ""
+msgstr "Bewerken"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
@@ -1412,7 +1412,7 @@ msgstr ""
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
-msgstr ""
+msgstr "Oke"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/SettingsSheet.qml:45
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
