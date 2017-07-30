@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-07-02 14:51+0000\n"
+"PO-Revision-Date: 2017-07-30 06:59+0000\n"
 "Last-Translator: Milan Korecký <milan.korecky@gmail.com>\n"
 "Language-Team: Czech <https://ubpweblate.tnvcomp.com/projects/ubports"
 "/filemanager-app/cs/>\n"
@@ -155,7 +155,7 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:265
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:265
 msgid "Edit"
-msgstr ""
+msgstr "Upravit"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
@@ -582,7 +582,7 @@ msgstr "OK"
 #: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:67
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:108
 msgid "Cancel"
-msgstr "Storno"
+msgstr "Zrušit"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:30
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:30
@@ -937,7 +937,7 @@ msgstr "Vložte jméno pro nový soubor"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Save"
-msgstr ""
+msgstr "Uložit"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:376
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:376
@@ -978,7 +978,7 @@ msgstr "Žádné soubory"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:498
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:607
 msgid "Delete"
-msgstr "Odstranit"
+msgstr "Smazat"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:499
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:499
@@ -1260,8 +1260,9 @@ msgstr "~/Vzhledy"
 #: ../qbuild/src/app/qml/ui/FolderListPage.qml:890
 #: ../src/app/qml/ui/FolderListPage.qml:890
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:890
+#, fuzzy
 msgid "Home"
-msgstr "Domů"
+msgstr "Začátek"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:894
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:894
