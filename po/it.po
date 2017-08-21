@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-07-04 19:54+0000\n"
+"PO-Revision-Date: 2017-08-21 15:55+0000\n"
 "Last-Translator: Gabriele <gabrielemartelli@tiscali.it>\n"
 "Language-Team: Italian <https://ubpweblate.tnvcomp.com/projects/ubports"
 "/filemanager-app/it/>\n"
@@ -1412,7 +1412,7 @@ msgstr "Salvare la password"
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
-msgstr "OK"
+msgstr "Ok"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/SettingsSheet.qml:45
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
