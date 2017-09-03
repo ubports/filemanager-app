@@ -1,1 +1,1 @@
-get-click-deps filemanager-libs.json armhf upstream-libs
+./get-click-deps filemanager-libs.json armhf upstream-libs
