@@ -1,16 +1,13 @@
 file(GLOB_RECURSE QML_SRCS *.qml *.js)
 
-
-include_directories(${CMAKE_BINARY_DIR})
-
 set(filemanager_SRCS
     main.cpp
     ${QML_SRCS}
 )
 
-add_executable(ubuntu-filemanager-app ${filemanager_SRCS})
+add_executable(filemanager ${filemanager_SRCS})
 
-qt5_use_modules(ubuntu-filemanager-app Gui Qml Quick)
+qt5_use_modules(filemanager Gui Qml Quick)
 
 if(NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
 add_custom_target(filemanager-qmlfiles ALL
@@ -20,4 +17,8 @@ add_custom_target(filemanager-qmlfiles ALL
 endif(NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
 
 install(DIRECTORY qml DESTINATION ${DATA_DIR})
-install(TARGETS ubuntu-filemanager-app RUNTIME DESTINATION bin)
+if(CLICK_MODE)
+  install(TARGETS filemanager DESTINATION ${BIN_DIR})
+else()
+  install(TARGETS filemanager RUNTIME DESTINATION bin)
+endif()

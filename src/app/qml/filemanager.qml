@@ -31,7 +31,7 @@ MainView {
     id: mainView
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
-    applicationName: "ubuntu-filemanager-app"
+    applicationName: "com.ubuntu.filemanager"
 
     width: phone ? units.gu(40) : units.gu(100)
     height: units.gu(75)
@@ -89,7 +89,7 @@ MainView {
 
     property var pageStack: pageStack
 
-    property var folderTabs: [userplaces.locationHome]
+    property var folderTabs: ["/home"]
 
     function openTab(folder) {
         var list = folderTabs
@@ -104,11 +104,10 @@ MainView {
         tabs.selectedTabIndex = 0
     }
 
-    function openFileSelector(selectFolderMode, saveMode) {
+    function openFileSelector(selectFolderMode) {
         fileSelector.fileSelectorComponent = pageStack.push(Qt.resolvedUrl("./ui/FolderListPage.qml"), { fileSelectorMode: !selectFolderMode,
                                                                                                          folderSelectorMode: selectFolderMode,
-                                                                                                         folder: userplaces.locationHome,
-                                                                                                         saveMode: saveMode})
+                                                                                                         folder: "/home"})
     }
 
     function cancelFileSelector() {
@@ -125,14 +124,7 @@ MainView {
         }
         else
         {
-            if (exportFiles(fileSelector.activeTransfer, fileUrls)) {
-                pageStack.pop()
-                fileSelector.activeTransfer = null
-                fileSelector.fileSelectorComponent = null
-                pageStack.currentPage.currentPage.refresh()
-                fileSelector.importMode = false
-            }
-
+            exportFiles(fileSelector.activeTransfer, fileUrls)
         }
     }
 
@@ -141,11 +133,10 @@ MainView {
     }
 
     function startImport(activeTransfer) {
-        console.debug("Import requested")
         if (activeTransfer.state === ContentTransfer.Charged) {
             fileSelector.activeTransfer = activeTransfer
             fileSelector.importMode = true
-            openFileSelector(true, true)
+            openFileSelector(true)
         }
     }
 
@@ -170,11 +161,9 @@ MainView {
         if (activeTransfer !== null) {
             activeTransfer.items = results
             activeTransfer.state = ContentTransfer.Charged
-            console.debug("Import done")
-            return true
+            console.log("set activeTransfer")
         } else {
             console.log("activeTransfer null, not setting, testing code")
-            return false
         }
     }
 
@@ -183,7 +172,7 @@ MainView {
         target: ContentHub
         onExportRequested: {
             fileSelector.activeTransfer = transfer
-            openFileSelector(false, false)
+            openFileSelector(false)
         }
         onImportRequested: startImport(transfer)
         onShareRequested: startImport(transfer)
@@ -200,7 +189,7 @@ MainView {
                 page: FolderListPage {
                     objectName: "folderPage"
 
-                    folder: userplaces.locationHome //modelData
+                    folder: "/home" //modelData
                 }
             }
             Tab {
@@ -232,6 +221,7 @@ MainView {
         }
 
         Component.onCompleted: {
+            reloadSettings()
             pageStack.push(tabs)
             pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"))
             pageStack.pop()
@@ -263,6 +253,8 @@ MainView {
     property bool showAdvancedFeatures: false
 
     property var viewMethod
+
+    property bool showAll
 
     property bool collapsedSidebar: false
 
@@ -297,6 +289,7 @@ MainView {
     function reloadSettings() {
         //showAdvancedFeatures = getSetting("showAdvancedFeatures", false)
         viewMethod = getSetting("viewMethod", wideAspect ? i18n.tr("Icons") : i18n.tr("List"))
+        showAll = getSetting("showHiddenFiles", false)
         collapsedSidebar = getSetting("collapsedSidebar", false)
     }
 
@@ -328,7 +321,6 @@ MainView {
                             title: (count === 1 ? i18n.tr("File %1").arg(urls[0]) : i18n.tr("%1 Files").arg(count)),
                             text: i18n.tr("Saved to: %1").arg(folder)
                         })
-        fileSelector.importMode = false
     }
 
     Keys.onPressed: {

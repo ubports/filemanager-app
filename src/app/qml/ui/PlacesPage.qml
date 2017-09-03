@@ -34,6 +34,7 @@ Page {
     Flickable {
         objectName: "placesFlickable"
         anchors.fill: parent
+        anchors.topMargin: root.header.height
         contentHeight: content.height
 
         Column {

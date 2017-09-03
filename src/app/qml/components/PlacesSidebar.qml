@@ -60,10 +60,21 @@ Sidebar {
 
             model: userplaces
 
-            delegate: Standard {
+            delegate: ListItem {
                 objectName: "place" + folderDisplayName(path).replace(/ /g,'')
-                text: folderDisplayName(path)
-                __foregroundColor: "black"
+                divider.visible: !collapsed
+                height: layout.height
+
+                onClicked: {
+                    goTo(model.path)
+                }
+
+                Rectangle {
+                    id: selectedHighlight
+                    anchors.fill: parent
+                    color: UbuntuColors.silk
+                    visible: folder === path
+                }
 
                 Image {
                     anchors {
@@ -75,25 +86,25 @@ Sidebar {
                     width: height
 
                     source: Qt.resolvedUrl("../icons/arrow.png")
-                    opacity: selected && collapsed ? 1 : 0
+                    opacity: selectedHighlight.visible && collapsed ? 1 : 0
 
                     Behavior on opacity {
                         UbuntuNumberAnimation {}
                     }
                 }
 
-                iconSource: model.icon || fileIcon(model.path) //using only path, model is null
+                ListItemLayout {
+                    id: layout
+                    height: units.gu(5)
+                    title.text: folderDisplayName(path)
 
-                onClicked: {
-                    goTo(model.path)
+                    Icon {
+                        height: units.gu(4)
+                        width: height
+                        source: model.icon || fileIcon(model.path)
+                        SlotsLayout.position: SlotsLayout.Leading
+                    }
                 }
-
-                height: units.gu(5)
-                showDivider: !collapsed
-
-                // This refers to a parent FolderListPage.folder
-                selected: folder === path
-                iconFrame: false
             }
         }
     }

@@ -1,2 +1,0 @@
-ubuntu-filemanager-app source: debian-watch-file-is-missing
-ubuntu-filemanager-app source: build-depends-on-metapackage build-depends: qt5-default

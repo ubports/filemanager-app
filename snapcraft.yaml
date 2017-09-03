@@ -1,5 +1,5 @@
 name: ubuntu-filemanager-app
-version: 0.4+17.04.20170404-0ubuntu1
+version: 0.4
 summary: File Manager application
 description: Core File Manager application
 confinement: devmode  # use "strict" to enforce system access only via declared interfaces
@@ -22,7 +22,6 @@ parts:
         plugin: cmake
         configflags: [-DCMAKE_INSTALL_PREFIX=/usr, -DCLICK_MODE=off]
         source: .
-        build-attributes: [no-system-libraries]
         build-packages:
             - cmake
             - gcc
@@ -38,8 +37,7 @@ parts:
             - libsmbclient-dev
 
         stage-packages:
-            - libsmbclient
-            - qml-module-pamauthentication0.1
+            - libsmbclient           
 
         snap:
             - -usr/lib/python3

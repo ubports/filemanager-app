@@ -32,6 +32,8 @@ PageWithBottomEdge {
     bottomEdgeEnabled: !sidebar.expanded
     bottomEdgePageSource: Qt.resolvedUrl("PlacesPage.qml")
 
+    property bool helpClipboard: false
+
     header: PageHeader {
         title: basename(folder)
         contents: PathHistoryRow {}
@@ -61,7 +63,7 @@ PageWithBottomEdge {
                     // It allows correct translation for languages with more than two plural forms:
                     // http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
                     text: i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
-                    visible: pageModel.clipboardUrlsCounter > 0
+                    visible: helpClipboard // pageModel.clipboardUrlsCounter > 0
                     onTriggered: {
                         console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
                         fileOperationDialog.startOperation(i18n.tr("Paste files"))
@@ -73,10 +75,11 @@ PageWithBottomEdge {
                     objectName: "clearClipboard"
                     iconName: "edit-clear"
                     text: i18n.tr("Clear clipboard")
-                    visible: pageModel.clipboardUrlsCounter > 0
+                    visible: helpClipboard // pageModel.clipboardUrlsCounter > 0
                     onTriggered: {
                         console.log("Clearing clipboard")
                         pageModel.clearClipboard()
+                        helpClipboard = false
                     }
                 },
                 Action {
@@ -92,7 +95,7 @@ PageWithBottomEdge {
                     objectName: "createFolder"
                     iconName: "add"
                     text: i18n.tr("New Folder")
-                    visible: folderListPage.__pathIsWritable && !folderListPage.selectionMode
+                    visible: folderListPage.__pathIsWritable
                     onTriggered: {
                         print(text)
                         PopupUtils.open(createFolderDialog, folderListPage)
@@ -153,7 +156,7 @@ PageWithBottomEdge {
     }
 
     property variant fileView: folderListPage
-    property bool showHiddenFiles: false
+    property bool showHiddenFiles: showAll
     property bool showingListView: folderListView.visible
     property string sortingMethod: "Name"
     property bool sortAscending: true
@@ -165,7 +168,6 @@ PageWithBottomEdge {
     // Set to true if called as file selector for ContentHub
     property bool fileSelectorMode: false
     property bool folderSelectorMode: false
-    property bool saveMode: false
     readonly property bool selectionMode: fileSelectorMode || folderSelectorMode
 
     property FolderListSelection selectionManager: pageModel.selectionObject()
@@ -351,32 +353,24 @@ PageWithBottomEdge {
             left: sidebar.right
             right: parent.right
         }
-        height: bottomBarButtons.visible ? bottomBarButtons.height + units.gu(1) : 0
+        height: bottomBarButtons.visible ? bottomBarButtons.height : 0
         visible: bottomBarButtons.visible
-
-        Divider {
-            anchors.top: parent.top
-            height: visible ? units.gu(0.5) : 0
-            visible: bottomBarButtons.visible
-        }
     }
 
     Flow {
         id: bottomBarButtons
-        anchors {
-            bottom: bottomBar.bottom
-            leftMargin: (parent.width - sidebar.width - childrenRect.width) / 2
-            left: sidebar.right
-        }
+        anchors.bottom: bottomBar.bottom
+        anchors.leftMargin: (parent.width - sidebar.width - childrenRect.width) / 2
+        anchors.left: sidebar.right
         width: parent.width - sidebar.width
+
         spacing: units.gu(2)
         visible: selectionMode || pageModel.onlyAllowedPaths
 
         Button {
-            text: folderListPage.saveMode ? i18n.tr("Save") : i18n.tr("Select")
+            text: i18n.tr("Select")
             enabled: (selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)
             visible: selectionMode
-            color: UbuntuColors.orange
             onClicked: {
                 var selectedAbsUrls = []
                 if (folderSelectorMode) {
@@ -588,6 +582,7 @@ PageWithBottomEdge {
                         console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
                         pageModel.cutIndex(actionSelectionPopover.model.index)
                         console.log("CliboardUrlsCounter after copy", pageModel.clipboardUrlsCounter)
+                        helpClipboard = true
                     }
                 }
 
@@ -600,6 +595,7 @@ PageWithBottomEdge {
                         console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
                         pageModel.copyIndex(actionSelectionPopover.model.index)
                         console.log("CliboardUrlsCounter after copy", pageModel.clipboardUrlsCounter)
+                        helpClipboard = true
                     }
                 }
 

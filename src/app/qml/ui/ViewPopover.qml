@@ -50,6 +50,7 @@ Popover {
                 checked: fileView.showHiddenFiles
                 onCheckedChanged: {
                     fileView.showHiddenFiles = checked
+                    saveSetting("showHiddenFiles", checked)
                 }
             }
         }

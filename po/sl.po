@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2017-03-16 16:43-0300\n"
+"POT-Creation-Date: 2016-07-18 19:55-0300\n"
 "PO-Revision-Date: 2014-10-28 14:30+0000\n"
 "Last-Translator: Damir Jerovšek <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -16,736 +16,383 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
-"X-Generator: Launchpad (build 18343)\n"
+"X-Launchpad-Export-Date: 2017-03-15 06:44+0000\n"
+"X-Generator: Launchpad (build 18331)\n"
 
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:138
-msgid "About Application"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:139
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:139
-msgid ""
-"The <b>Application</b> example demonstrates how to write modern GUI "
-"applications using Qt, with a menu bar, toolbars, and a status bar."
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
-msgid "&New"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:159
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:159
-msgid "Create a new file"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:163
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:163
-msgid "&Open..."
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:165
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:165
-msgid "Open an existing file"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:169
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:169
-msgid "&Save"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:171
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:171
-msgid "Save the document to disk"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:174
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:174
-msgid "Save &As..."
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:176
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:176
-msgid "Save the document under a new name"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:180
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:180
-msgid "E&xit"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:183
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:183
-msgid "Exit the application"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:187
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:187
-msgid "Cu&t"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:190
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:190
-msgid "Cut the current selection's contents to the clipboard"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:194
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:194
-msgid "&Copy"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:196
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:196
-msgid "Copy the current selection's contents to the clipboard"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:200
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:200
-msgid "&Paste"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:202
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:202
-msgid "Paste the clipboard's contents into the current selection"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:206
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:206
-msgid "&About"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:207
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:207
-msgid "Show the application's About box"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:211
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:211
-msgid "About &Qt"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:212
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:212
-msgid "Show the Qt library's About box"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:231
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:231
-msgid "&File"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:242
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:242
-msgid "&Edit"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:249
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:249
-msgid "&Help"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:258
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:258
-msgid "File"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:265
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:265
-msgid "Edit"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
-msgid "Ready"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:308
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:327
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:354
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:308
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:327
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:354
-msgid "Application"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:309
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:309
-msgid ""
-"The document has been modified.\n"
-"Do you want to save your changes?"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:328
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:328
-#, qt-format
-msgid ""
-"Cannot read file %1:\n"
-"%2."
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:344
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:344
-msgid "File loaded"
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:355
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:355
-#, qt-format
-msgid ""
-"Cannot write file %1:\n"
-"%2."
-msgstr ""
-
-#: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:371
-#: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:371
-msgid "File saved"
-msgstr ""
-
-#: ../parts/ubuntu-filemanager-app/build/po/ubuntu-filemanager-app.desktop.in.in.h:1
-#: ../parts/ubuntu-filemanager-app/src/qbuild/po/ubuntu-filemanager-app.desktop.in.in.h:1
-#: ../qbuild/po/ubuntu-filemanager-app.desktop.in.in.h:1
-#: ubuntu-filemanager-app.desktop.in.in.h:1
+#: ../armhf-build/po/com.ubuntu.filemanager.desktop.in.in.h:1
+#: ../qbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
+#: ../sbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
+#: ../ssbuild/po/com.ubuntu.filemanager.desktop.in.in.h:1
+#: com.ubuntu.filemanager.desktop.in.in.h:1
 msgid "File Manager"
 msgstr "Upravljalnik datotek"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/components/FolderIconView.qml:57
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/components/FolderListView.qml:36
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/components/FolderIconView.qml:57
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/components/FolderListView.qml:36
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/components/FolderIconView.qml:57
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/components/FolderListView.qml:36
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/components/FolderIconView.qml:57
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/components/FolderListView.qml:36
-#: ../prime/usr/share/filemanager/qml/components/FolderIconView.qml:57
-#: ../prime/usr/share/filemanager/qml/components/FolderListView.qml:36
-#: ../qbuild/src/app/qml/components/FolderIconView.qml:57
-#: ../qbuild/src/app/qml/components/FolderListView.qml:36
+#: ../sbuild/package/qml/components/FolderIconView.qml:57
+#: ../sbuild/package/qml/components/FolderListView.qml:36
+#: ../sbuild/src/app/qml/components/FolderIconView.qml:57
+#: ../sbuild/src/app/qml/components/FolderListView.qml:36
 #: ../src/app/qml/components/FolderIconView.qml:57
 #: ../src/app/qml/components/FolderListView.qml:36
-#: ../stage/usr/share/filemanager/qml/components/FolderIconView.qml:57
-#: ../stage/usr/share/filemanager/qml/components/FolderListView.qml:36
+#: ../ssbuild/package/qml/components/FolderIconView.qml:57
+#: ../ssbuild/package/qml/components/FolderListView.qml:36
+#: ../ssbuild/src/app/qml/components/FolderIconView.qml:57
+#: ../ssbuild/src/app/qml/components/FolderListView.qml:36
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/components/PathHistoryRow.qml:89
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:892
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/components/PathHistoryRow.qml:89
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:892
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/components/PathHistoryRow.qml:89
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:895
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/components/PathHistoryRow.qml:89
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:892
-#: ../prime/usr/share/filemanager/qml/components/PathHistoryRow.qml:89
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:892
-#: ../qbuild/src/app/qml/components/PathHistoryRow.qml:89
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:892
+#: ../sbuild/package/qml/components/PathHistoryRow.qml:89
+#: ../sbuild/package/qml/ui/FolderListPage.qml:872
+#: ../sbuild/src/app/qml/components/PathHistoryRow.qml:89
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:875
 #: ../src/app/qml/components/PathHistoryRow.qml:89
-#: ../src/app/qml/ui/FolderListPage.qml:892
-#: ../stage/usr/share/filemanager/qml/components/PathHistoryRow.qml:89
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:892
+#: ../src/app/qml/ui/FolderListPage.qml:875
+#: ../ssbuild/package/qml/components/PathHistoryRow.qml:89
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:858
+#: ../ssbuild/src/app/qml/components/PathHistoryRow.qml:89
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:858
 msgid "Device"
 msgstr "Naprava"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/components/PlacesSidebar.qml:54
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:31
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPage.qml:31
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPopover.qml:102
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/components/PlacesSidebar.qml:54
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:31
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/PlacesPage.qml:31
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/PlacesPopover.qml:102
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/components/PlacesSidebar.qml:54
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:31
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/PlacesPage.qml:31
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/PlacesPopover.qml:102
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/components/PlacesSidebar.qml:54
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:31
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/PlacesPage.qml:31
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/PlacesPopover.qml:102
-#: ../prime/usr/share/filemanager/qml/components/PlacesSidebar.qml:54
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:31
-#: ../prime/usr/share/filemanager/qml/ui/PlacesPage.qml:31
-#: ../prime/usr/share/filemanager/qml/ui/PlacesPopover.qml:102
-#: ../qbuild/src/app/qml/components/PlacesSidebar.qml:54
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:31
-#: ../qbuild/src/app/qml/ui/PlacesPage.qml:31
-#: ../qbuild/src/app/qml/ui/PlacesPopover.qml:102
+#: ../sbuild/package/qml/components/PlacesSidebar.qml:54
+#: ../sbuild/package/qml/ui/FolderListPage.qml:31
+#: ../sbuild/package/qml/ui/PlacesPage.qml:31
+#: ../sbuild/package/qml/ui/PlacesPopover.qml:102
+#: ../sbuild/src/app/qml/components/PlacesSidebar.qml:54
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:31
+#: ../sbuild/src/app/qml/ui/PlacesPage.qml:31
+#: ../sbuild/src/app/qml/ui/PlacesPopover.qml:102
 #: ../src/app/qml/components/PlacesSidebar.qml:54
 #: ../src/app/qml/ui/FolderListPage.qml:31 ../src/app/qml/ui/PlacesPage.qml:31
 #: ../src/app/qml/ui/PlacesPopover.qml:102
-#: ../stage/usr/share/filemanager/qml/components/PlacesSidebar.qml:54
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:31
-#: ../stage/usr/share/filemanager/qml/ui/PlacesPage.qml:31
-#: ../stage/usr/share/filemanager/qml/ui/PlacesPopover.qml:102
+#: ../ssbuild/package/qml/components/PlacesSidebar.qml:54
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:30
+#: ../ssbuild/package/qml/ui/PlacesPage.qml:31
+#: ../ssbuild/package/qml/ui/PlacesPopover.qml:102
+#: ../ssbuild/src/app/qml/components/PlacesSidebar.qml:54
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:30
+#: ../ssbuild/src/app/qml/ui/PlacesPage.qml:31
+#: ../ssbuild/src/app/qml/ui/PlacesPopover.qml:102
 msgid "Places"
 msgstr "Mesta"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/content-hub/FileOpener.qml:27
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/content-hub/FileOpener.qml:27
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/content-hub/FileOpener.qml:27
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/content-hub/FileOpener.qml:27
-#: ../prime/usr/share/filemanager/qml/content-hub/FileOpener.qml:27
-#: ../qbuild/src/app/qml/content-hub/FileOpener.qml:27
+#: ../sbuild/package/qml/content-hub/FileOpener.qml:27
+#: ../sbuild/src/app/qml/content-hub/FileOpener.qml:27
 #: ../src/app/qml/content-hub/FileOpener.qml:27
-#: ../stage/usr/share/filemanager/qml/content-hub/FileOpener.qml:27
+#: ../ssbuild/package/qml/content-hub/FileOpener.qml:27
+#: ../ssbuild/src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
 msgstr "Odpri z"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:83
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:114
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/SettingsSheet.qml:33
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:83
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:114
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/SettingsSheet.qml:33
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/filemanager.qml:83
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:114
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/SettingsSheet.qml:33
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/filemanager.qml:83
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:114
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/SettingsSheet.qml:33
-#: ../prime/usr/share/filemanager/qml/filemanager.qml:83
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:114
-#: ../prime/usr/share/filemanager/qml/ui/SettingsSheet.qml:33
-#: ../qbuild/src/app/qml/filemanager.qml:83
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:114
-#: ../qbuild/src/app/qml/ui/SettingsSheet.qml:33
+#: ../sbuild/package/qml/filemanager.qml:83
+#: ../sbuild/package/qml/ui/FolderListPage.qml:114
+#: ../sbuild/package/qml/ui/SettingsSheet.qml:33
+#: ../sbuild/src/app/qml/filemanager.qml:83
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:114
+#: ../sbuild/src/app/qml/ui/SettingsSheet.qml:33
 #: ../src/app/qml/filemanager.qml:83 ../src/app/qml/ui/FolderListPage.qml:114
 #: ../src/app/qml/ui/SettingsSheet.qml:33
-#: ../stage/usr/share/filemanager/qml/filemanager.qml:83
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:114
-#: ../stage/usr/share/filemanager/qml/ui/SettingsSheet.qml:33
+#: ../ssbuild/package/qml/filemanager.qml:81
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:112
+#: ../ssbuild/package/qml/ui/SettingsSheet.qml:33
+#: ../ssbuild/src/app/qml/filemanager.qml:81
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:112
+#: ../ssbuild/src/app/qml/ui/SettingsSheet.qml:33
 msgid "Settings"
 msgstr "Nastavitve"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:84
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:84
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/filemanager.qml:84
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/filemanager.qml:84
-#: ../prime/usr/share/filemanager/qml/filemanager.qml:84
-#: ../qbuild/src/app/qml/filemanager.qml:84 ../src/app/qml/filemanager.qml:84
-#: ../stage/usr/share/filemanager/qml/filemanager.qml:84
+#: ../sbuild/package/qml/filemanager.qml:84
+#: ../sbuild/src/app/qml/filemanager.qml:84 ../src/app/qml/filemanager.qml:84
+#: ../ssbuild/package/qml/filemanager.qml:82
+#: ../ssbuild/src/app/qml/filemanager.qml:82
 msgid "Change app settings"
 msgstr "Spremeni nastavitve programa"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:299
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:418
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:70
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:299
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:418
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:70
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/filemanager.qml:299
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:430
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:70
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/filemanager.qml:299
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:418
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:70
-#: ../prime/usr/share/filemanager/qml/filemanager.qml:299
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:418
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:70
-#: ../qbuild/src/app/qml/filemanager.qml:299
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:418
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:70
-#: ../src/app/qml/filemanager.qml:299 ../src/app/qml/ui/FolderListPage.qml:418
+#: ../sbuild/package/qml/filemanager.qml:295
+#: ../sbuild/package/qml/ui/FolderListPage.qml:406
+#: ../sbuild/package/qml/ui/ViewPopover.qml:70
+#: ../sbuild/src/app/qml/filemanager.qml:287
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:409
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:70
+#: ../src/app/qml/filemanager.qml:287 ../src/app/qml/ui/FolderListPage.qml:409
 #: ../src/app/qml/ui/ViewPopover.qml:70
-#: ../stage/usr/share/filemanager/qml/filemanager.qml:299
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:418
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:70
+#: ../ssbuild/package/qml/filemanager.qml:291
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:392
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:70
+#: ../ssbuild/src/app/qml/filemanager.qml:291
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:392
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:70
 msgid "Icons"
 msgstr "Ikone"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:299
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:434
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:71
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:299
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:434
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:71
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/filemanager.qml:299
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:446
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:71
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/filemanager.qml:299
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:434
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:71
-#: ../prime/usr/share/filemanager/qml/filemanager.qml:299
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:434
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:71
-#: ../qbuild/src/app/qml/filemanager.qml:299
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:434
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:71
-#: ../src/app/qml/filemanager.qml:299 ../src/app/qml/ui/FolderListPage.qml:434
+#: ../sbuild/package/qml/filemanager.qml:295
+#: ../sbuild/package/qml/ui/FolderListPage.qml:422
+#: ../sbuild/package/qml/ui/ViewPopover.qml:71
+#: ../sbuild/src/app/qml/filemanager.qml:287
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:425
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:71
+#: ../src/app/qml/filemanager.qml:287 ../src/app/qml/ui/FolderListPage.qml:425
 #: ../src/app/qml/ui/ViewPopover.qml:71
-#: ../stage/usr/share/filemanager/qml/filemanager.qml:299
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:434
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:71
+#: ../ssbuild/package/qml/filemanager.qml:291
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:408
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:71
+#: ../ssbuild/src/app/qml/filemanager.qml:291
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:408
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:71
 msgid "List"
 msgstr "Seznam"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:328
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:328
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/filemanager.qml:328
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/filemanager.qml:328
-#: ../prime/usr/share/filemanager/qml/filemanager.qml:328
-#: ../qbuild/src/app/qml/filemanager.qml:328 ../src/app/qml/filemanager.qml:328
-#: ../stage/usr/share/filemanager/qml/filemanager.qml:328
+#: ../sbuild/package/qml/filemanager.qml:324
+#: ../sbuild/src/app/qml/filemanager.qml:316
+#: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "File %1"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:328
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:328
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/filemanager.qml:328
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/filemanager.qml:328
-#: ../prime/usr/share/filemanager/qml/filemanager.qml:328
-#: ../qbuild/src/app/qml/filemanager.qml:328 ../src/app/qml/filemanager.qml:328
-#: ../stage/usr/share/filemanager/qml/filemanager.qml:328
+#: ../sbuild/package/qml/filemanager.qml:324
+#: ../sbuild/src/app/qml/filemanager.qml:316
+#: ../src/app/qml/filemanager.qml:316
 #, qt-format
 msgid "%1 Files"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:329
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:329
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/filemanager.qml:329
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/filemanager.qml:329
-#: ../prime/usr/share/filemanager/qml/filemanager.qml:329
-#: ../qbuild/src/app/qml/filemanager.qml:329 ../src/app/qml/filemanager.qml:329
-#: ../stage/usr/share/filemanager/qml/filemanager.qml:329
+#: ../sbuild/package/qml/filemanager.qml:325
+#: ../sbuild/src/app/qml/filemanager.qml:317
+#: ../src/app/qml/filemanager.qml:317
 #, qt-format
 msgid "Saved to: %1"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:25
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:26
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:25
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:26
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/AuthenticationDialog.qml:25
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:26
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/AuthenticationDialog.qml:25
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/NetAuthenticationDialog.qml:26
-#: ../prime/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:25
-#: ../prime/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:26
-#: ../qbuild/src/app/qml/ui/AuthenticationDialog.qml:25
-#: ../qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:26
+#: ../sbuild/package/qml/ui/AuthenticationDialog.qml:25
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:26
+#: ../sbuild/src/app/qml/ui/AuthenticationDialog.qml:25
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:26
 #: ../src/app/qml/ui/AuthenticationDialog.qml:25
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:26
-#: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:25
-#: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:26
+#: ../ssbuild/package/qml/ui/AuthenticationDialog.qml:25
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:26
+#: ../ssbuild/src/app/qml/ui/AuthenticationDialog.qml:25
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:26
 msgid "Authentication required"
 msgstr "Zahtevana je overitev"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:27
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/AuthenticationDialog.qml:27
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/AuthenticationDialog.qml:27
-#: ../prime/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
-#: ../qbuild/src/app/qml/ui/AuthenticationDialog.qml:27
+#: ../sbuild/package/qml/ui/AuthenticationDialog.qml:27
+#: ../sbuild/src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
-#: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
+#: ../ssbuild/package/qml/ui/AuthenticationDialog.qml:27
+#: ../ssbuild/src/app/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:39
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/AuthenticationDialog.qml:39
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/AuthenticationDialog.qml:39
-#: ../prime/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
-#: ../qbuild/src/app/qml/ui/AuthenticationDialog.qml:39
+#: ../sbuild/package/qml/ui/AuthenticationDialog.qml:39
+#: ../sbuild/src/app/qml/ui/AuthenticationDialog.qml:39
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
-#: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
+#: ../ssbuild/package/qml/ui/AuthenticationDialog.qml:39
+#: ../ssbuild/src/app/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
 msgstr "geslo"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:49
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:31
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialogWithInput.qml:49
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:726
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NotifyDialog.qml:25
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:49
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ConfirmDialog.qml:31
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ConfirmDialogWithInput.qml:49
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:726
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/AuthenticationDialog.qml:49
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ConfirmDialog.qml:31
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:49
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:729
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/NotifyDialog.qml:25
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/AuthenticationDialog.qml:49
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ConfirmDialog.qml:31
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ConfirmDialogWithInput.qml:49
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:726
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/NotifyDialog.qml:25
-#: ../prime/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:49
-#: ../prime/usr/share/filemanager/qml/ui/ConfirmDialog.qml:31
-#: ../prime/usr/share/filemanager/qml/ui/ConfirmDialogWithInput.qml:49
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:726
-#: ../prime/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
-#: ../qbuild/src/app/qml/ui/AuthenticationDialog.qml:49
-#: ../qbuild/src/app/qml/ui/ConfirmDialog.qml:31
-#: ../qbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:49
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:726
-#: ../qbuild/src/app/qml/ui/NotifyDialog.qml:25
+#: ../sbuild/package/qml/ui/AuthenticationDialog.qml:49
+#: ../sbuild/package/qml/ui/ConfirmDialog.qml:31
+#: ../sbuild/package/qml/ui/ConfirmDialogWithInput.qml:49
+#: ../sbuild/package/qml/ui/FolderListPage.qml:706
+#: ../sbuild/package/qml/ui/NotifyDialog.qml:25
+#: ../sbuild/src/app/qml/ui/AuthenticationDialog.qml:49
+#: ../sbuild/src/app/qml/ui/ConfirmDialog.qml:31
+#: ../sbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:49
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:709
+#: ../sbuild/src/app/qml/ui/NotifyDialog.qml:25
 #: ../src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../src/app/qml/ui/ConfirmDialog.qml:31
 #: ../src/app/qml/ui/ConfirmDialogWithInput.qml:49
-#: ../src/app/qml/ui/FolderListPage.qml:726
+#: ../src/app/qml/ui/FolderListPage.qml:709
 #: ../src/app/qml/ui/NotifyDialog.qml:25
-#: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:49
-#: ../stage/usr/share/filemanager/qml/ui/ConfirmDialog.qml:31
-#: ../stage/usr/share/filemanager/qml/ui/ConfirmDialogWithInput.qml:49
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
-#: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
+#: ../ssbuild/package/qml/ui/AuthenticationDialog.qml:49
+#: ../ssbuild/package/qml/ui/ConfirmDialog.qml:31
+#: ../ssbuild/package/qml/ui/ConfirmDialogWithInput.qml:47
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:692
+#: ../ssbuild/package/qml/ui/NotifyDialog.qml:25
+#: ../ssbuild/src/app/qml/ui/AuthenticationDialog.qml:49
+#: ../ssbuild/src/app/qml/ui/ConfirmDialog.qml:31
+#: ../ssbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:47
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:692
+#: ../ssbuild/src/app/qml/ui/NotifyDialog.qml:25
 msgid "OK"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialogWithInput.qml:59
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:45
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:396
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:717
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:784
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:67
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:108
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:61
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ConfirmDialog.qml:41
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ConfirmDialogWithInput.qml:59
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:45
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:44
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:396
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:717
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:784
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/GoToDialog.qml:67
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:108
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/AuthenticationDialog.qml:61
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ConfirmDialog.qml:41
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:59
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileActionDialog.qml:45
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:408
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:720
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:787
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/GoToDialog.qml:67
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:108
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/AuthenticationDialog.qml:61
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ConfirmDialog.qml:41
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ConfirmDialogWithInput.qml:59
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileActionDialog.qml:45
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:396
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:717
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:784
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/GoToDialog.qml:67
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/NetAuthenticationDialog.qml:108
-#: ../prime/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:61
-#: ../prime/usr/share/filemanager/qml/ui/ConfirmDialog.qml:41
-#: ../prime/usr/share/filemanager/qml/ui/ConfirmDialogWithInput.qml:59
-#: ../prime/usr/share/filemanager/qml/ui/FileActionDialog.qml:45
-#: ../prime/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:44
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:396
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:717
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:784
-#: ../prime/usr/share/filemanager/qml/ui/GoToDialog.qml:67
-#: ../prime/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:108
-#: ../qbuild/src/app/qml/ui/AuthenticationDialog.qml:61
-#: ../qbuild/src/app/qml/ui/ConfirmDialog.qml:41
-#: ../qbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:59
-#: ../qbuild/src/app/qml/ui/FileActionDialog.qml:45
-#: ../qbuild/src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:396
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:717
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:784
-#: ../qbuild/src/app/qml/ui/GoToDialog.qml:67
-#: ../qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:108
+#: ../sbuild/package/qml/ui/AuthenticationDialog.qml:61
+#: ../sbuild/package/qml/ui/ConfirmDialog.qml:41
+#: ../sbuild/package/qml/ui/ConfirmDialogWithInput.qml:59
+#: ../sbuild/package/qml/ui/FileActionDialog.qml:45
+#: ../sbuild/package/qml/ui/FileOperationProgressDialog.qml:44
+#: ../sbuild/package/qml/ui/FolderListPage.qml:384
+#: ../sbuild/package/qml/ui/FolderListPage.qml:697
+#: ../sbuild/package/qml/ui/FolderListPage.qml:764
+#: ../sbuild/package/qml/ui/GoToDialog.qml:67
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:108
+#: ../sbuild/src/app/qml/ui/AuthenticationDialog.qml:61
+#: ../sbuild/src/app/qml/ui/ConfirmDialog.qml:41
+#: ../sbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:59
+#: ../sbuild/src/app/qml/ui/FileActionDialog.qml:45
+#: ../sbuild/src/app/qml/ui/FileOperationProgressDialog.qml:44
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:387
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:700
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:767
+#: ../sbuild/src/app/qml/ui/GoToDialog.qml:67
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:108
 #: ../src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../src/app/qml/ui/ConfirmDialog.qml:41
 #: ../src/app/qml/ui/ConfirmDialogWithInput.qml:59
 #: ../src/app/qml/ui/FileActionDialog.qml:45
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:44
-#: ../src/app/qml/ui/FolderListPage.qml:396
-#: ../src/app/qml/ui/FolderListPage.qml:717
-#: ../src/app/qml/ui/FolderListPage.qml:784 ../src/app/qml/ui/GoToDialog.qml:67
+#: ../src/app/qml/ui/FolderListPage.qml:387
+#: ../src/app/qml/ui/FolderListPage.qml:700
+#: ../src/app/qml/ui/FolderListPage.qml:767
+#: ../src/app/qml/ui/GoToDialog.qml:67
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:108
-#: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:61
-#: ../stage/usr/share/filemanager/qml/ui/ConfirmDialog.qml:41
-#: ../stage/usr/share/filemanager/qml/ui/ConfirmDialogWithInput.qml:59
-#: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:45
-#: ../stage/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:44
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:396
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:717
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:784
-#: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:67
-#: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:108
+#: ../ssbuild/package/qml/ui/AuthenticationDialog.qml:61
+#: ../ssbuild/package/qml/ui/ConfirmDialog.qml:41
+#: ../ssbuild/package/qml/ui/ConfirmDialogWithInput.qml:57
+#: ../ssbuild/package/qml/ui/FileActionDialog.qml:45
+#: ../ssbuild/package/qml/ui/FileOperationProgressDialog.qml:44
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:370
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:683
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:750
+#: ../ssbuild/package/qml/ui/GoToDialog.qml:67
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:108
+#: ../ssbuild/src/app/qml/ui/AuthenticationDialog.qml:61
+#: ../ssbuild/src/app/qml/ui/ConfirmDialog.qml:41
+#: ../ssbuild/src/app/qml/ui/ConfirmDialogWithInput.qml:57
+#: ../ssbuild/src/app/qml/ui/FileActionDialog.qml:45
+#: ../ssbuild/src/app/qml/ui/FileOperationProgressDialog.qml:44
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:370
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:683
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:750
+#: ../ssbuild/src/app/qml/ui/GoToDialog.qml:67
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:108
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:30
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:30
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileActionDialog.qml:30
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileActionDialog.qml:30
-#: ../prime/usr/share/filemanager/qml/ui/FileActionDialog.qml:30
-#: ../qbuild/src/app/qml/ui/FileActionDialog.qml:30
+#: ../sbuild/package/qml/ui/FileActionDialog.qml:30
+#: ../sbuild/src/app/qml/ui/FileActionDialog.qml:30
 #: ../src/app/qml/ui/FileActionDialog.qml:30
-#: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:30
+#: ../ssbuild/package/qml/ui/FileActionDialog.qml:30
+#: ../ssbuild/src/app/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
 msgstr "Izberite dejanje"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:31
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:31
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileActionDialog.qml:31
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileActionDialog.qml:31
-#: ../prime/usr/share/filemanager/qml/ui/FileActionDialog.qml:31
-#: ../qbuild/src/app/qml/ui/FileActionDialog.qml:31
+#: ../sbuild/package/qml/ui/FileActionDialog.qml:31
+#: ../sbuild/src/app/qml/ui/FileActionDialog.qml:31
 #: ../src/app/qml/ui/FileActionDialog.qml:31
-#: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:31
+#: ../ssbuild/package/qml/ui/FileActionDialog.qml:31
+#: ../ssbuild/src/app/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
 msgstr "Za datoteko: %1"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:35
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileActionDialog.qml:35
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileActionDialog.qml:35
-#: ../prime/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
-#: ../qbuild/src/app/qml/ui/FileActionDialog.qml:35
+#: ../sbuild/package/qml/ui/FileActionDialog.qml:35
+#: ../sbuild/src/app/qml/ui/FileActionDialog.qml:35
 #: ../src/app/qml/ui/FileActionDialog.qml:35
-#: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
+#: ../ssbuild/package/qml/ui/FileActionDialog.qml:35
+#: ../ssbuild/src/app/qml/ui/FileActionDialog.qml:35
 msgid "Open"
 msgstr "Odprto"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:37
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileDetailsPopover.qml:37
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileDetailsPopover.qml:37
-#: ../prime/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
-#: ../qbuild/src/app/qml/ui/FileDetailsPopover.qml:37
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:37
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../src/app/qml/ui/FileDetailsPopover.qml:37
-#: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:37
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
 msgstr "Berljivo"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:40
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:40
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileDetailsPopover.qml:40
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileDetailsPopover.qml:40
-#: ../prime/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:40
-#: ../qbuild/src/app/qml/ui/FileDetailsPopover.qml:40
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:40
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:40
 #: ../src/app/qml/ui/FileDetailsPopover.qml:40
-#: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:40
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:40
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
 msgstr "Zapisljivo"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:43
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:43
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileDetailsPopover.qml:43
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileDetailsPopover.qml:43
-#: ../prime/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:43
-#: ../qbuild/src/app/qml/ui/FileDetailsPopover.qml:43
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:43
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:43
 #: ../src/app/qml/ui/FileDetailsPopover.qml:43
-#: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:43
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:43
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
 msgstr "Izvedljivo"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:95
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:95
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileDetailsPopover.qml:95
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileDetailsPopover.qml:95
-#: ../prime/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:95
-#: ../qbuild/src/app/qml/ui/FileDetailsPopover.qml:95
-#: ../src/app/qml/ui/FileDetailsPopover.qml:95
-#: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:95
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:91
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:91
+#: ../src/app/qml/ui/FileDetailsPopover.qml:91
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:91
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:91
 msgid "Path:"
 msgstr "Pot:"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:106
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:106
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileDetailsPopover.qml:106
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileDetailsPopover.qml:106
-#: ../prime/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:106
-#: ../qbuild/src/app/qml/ui/FileDetailsPopover.qml:106
-#: ../src/app/qml/ui/FileDetailsPopover.qml:106
-#: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:106
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:102
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:102
+#: ../src/app/qml/ui/FileDetailsPopover.qml:102
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:102
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:102
 msgid "Contents:"
 msgstr "Vsebina:"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:107
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:107
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileDetailsPopover.qml:107
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileDetailsPopover.qml:107
-#: ../prime/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:107
-#: ../qbuild/src/app/qml/ui/FileDetailsPopover.qml:107
-#: ../src/app/qml/ui/FileDetailsPopover.qml:107
-#: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:107
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:103
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:103
+#: ../src/app/qml/ui/FileDetailsPopover.qml:103
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:103
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:103
 msgid "Size:"
 msgstr "Velikost:"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:116
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:116
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileDetailsPopover.qml:116
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileDetailsPopover.qml:116
-#: ../prime/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:116
-#: ../qbuild/src/app/qml/ui/FileDetailsPopover.qml:116
-#: ../src/app/qml/ui/FileDetailsPopover.qml:116
-#: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:116
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:112
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:112
+#: ../src/app/qml/ui/FileDetailsPopover.qml:112
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:112
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:112
 msgid "Accessed:"
 msgstr "Zadnji dostop:"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:125
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:125
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileDetailsPopover.qml:125
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileDetailsPopover.qml:125
-#: ../prime/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:125
-#: ../qbuild/src/app/qml/ui/FileDetailsPopover.qml:125
-#: ../src/app/qml/ui/FileDetailsPopover.qml:125
-#: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:125
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:121
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:121
+#: ../src/app/qml/ui/FileDetailsPopover.qml:121
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:121
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:121
 msgid "Modified:"
 msgstr "Spremenjeno:"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:134
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:134
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileDetailsPopover.qml:134
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileDetailsPopover.qml:134
-#: ../prime/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:134
-#: ../qbuild/src/app/qml/ui/FileDetailsPopover.qml:134
-#: ../src/app/qml/ui/FileDetailsPopover.qml:134
-#: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:134
+#: ../sbuild/package/qml/ui/FileDetailsPopover.qml:130
+#: ../sbuild/src/app/qml/ui/FileDetailsPopover.qml:130
+#: ../src/app/qml/ui/FileDetailsPopover.qml:130
+#: ../ssbuild/package/qml/ui/FileDetailsPopover.qml:130
+#: ../ssbuild/src/app/qml/ui/FileDetailsPopover.qml:130
 msgid "Permissions:"
 msgstr "Dovoljenja:"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileOperationProgressDialog.qml:27
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:27
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileOperationProgressDialog.qml:27
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileOperationProgressDialog.qml:27
-#: ../prime/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:27
-#: ../qbuild/src/app/qml/ui/FileOperationProgressDialog.qml:27
+#: ../sbuild/package/qml/ui/FileOperationProgressDialog.qml:27
+#: ../sbuild/src/app/qml/ui/FileOperationProgressDialog.qml:27
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:27
-#: ../stage/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:27
+#: ../ssbuild/package/qml/ui/FileOperationProgressDialog.qml:27
+#: ../ssbuild/src/app/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
 msgstr "Dejanje se opravilo"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileOperationProgressDialog.qml:29
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:29
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FileOperationProgressDialog.qml:29
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FileOperationProgressDialog.qml:29
-#: ../prime/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:29
-#: ../qbuild/src/app/qml/ui/FileOperationProgressDialog.qml:29
+#: ../sbuild/package/qml/ui/FileOperationProgressDialog.qml:29
+#: ../sbuild/src/app/qml/ui/FileOperationProgressDialog.qml:29
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
-#: ../stage/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:29
+#: ../ssbuild/package/qml/ui/FileOperationProgressDialog.qml:29
+#: ../ssbuild/src/app/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
 msgstr "Datotečno opravilo"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:63
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:63
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:63
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:63
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:63
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:63
+#: ../sbuild/package/qml/ui/FolderListPage.qml:63
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:63
 #: ../src/app/qml/ui/FolderListPage.qml:63
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:63
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:62
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:62
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
@@ -754,107 +401,77 @@ msgstr[1] "Prilepi %1 datoteko"
 msgstr[2] "Prilepi %1 datoteki"
 msgstr[3] "Prilepi %1 datoteke"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:67
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:67
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:67
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:67
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:67
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:67
+#: ../sbuild/package/qml/ui/FolderListPage.qml:67
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:67
 #: ../src/app/qml/ui/FolderListPage.qml:67
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:67
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:66
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:66
 msgid "Paste files"
 msgstr "Prilepi datoteke"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:75
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:75
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:75
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:75
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:75
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:75
+#: ../sbuild/package/qml/ui/FolderListPage.qml:75
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:75
 #: ../src/app/qml/ui/FolderListPage.qml:75
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:75
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:74
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:74
 msgid "Clear clipboard"
 msgstr "Počisti odložišče"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:85
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:104
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:654
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:85
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:104
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:654
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:85
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:104
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:666
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:85
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:104
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:654
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:85
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:104
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:654
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:85
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:104
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:654
+#: ../sbuild/package/qml/ui/FolderListPage.qml:85
+#: ../sbuild/package/qml/ui/FolderListPage.qml:104
+#: ../sbuild/package/qml/ui/FolderListPage.qml:634
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:85
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:104
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:637
 #: ../src/app/qml/ui/FolderListPage.qml:85
 #: ../src/app/qml/ui/FolderListPage.qml:104
-#: ../src/app/qml/ui/FolderListPage.qml:654
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:85
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:104
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:654
+#: ../src/app/qml/ui/FolderListPage.qml:637
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:84
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:102
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:620
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:84
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:102
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:620
 msgid "Properties"
 msgstr "Lastnosti"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:94
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:94
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:94
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:94
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:94
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:94
+#: ../sbuild/package/qml/ui/FolderListPage.qml:94
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:94
 #: ../src/app/qml/ui/FolderListPage.qml:94
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:94
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:93
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:93
 msgid "New Folder"
 msgstr "Nova mapa"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:122
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:122
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:122
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:122
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:122
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:122
+#: ../sbuild/package/qml/ui/FolderListPage.qml:122
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:122
 #: ../src/app/qml/ui/FolderListPage.qml:122
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:122
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:120
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:120
 msgid "Go To"
 msgstr "Pojdi na"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:129
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:129
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:129
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:129
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:129
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:129
+#: ../sbuild/package/qml/ui/FolderListPage.qml:129
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:129
 #: ../src/app/qml/ui/FolderListPage.qml:129
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:129
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:127
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:127
 msgid "Unlock full access"
 msgstr "Odkleni popolni dostop"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:143
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:143
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:143
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:143
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:143
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:143
+#: ../sbuild/package/qml/ui/FolderListPage.qml:143
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:143
 #: ../src/app/qml/ui/FolderListPage.qml:143
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:143
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:141
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:141
 msgid "Authentication failed"
 msgstr "Overitev je spodletela"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:224
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:224
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:226
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:224
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:224
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:224
-#: ../src/app/qml/ui/FolderListPage.qml:224
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:224
+#: ../sbuild/package/qml/ui/FolderListPage.qml:223
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:223
+#: ../src/app/qml/ui/FolderListPage.qml:223
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:219
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:219
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
@@ -863,674 +480,470 @@ msgstr[1] "%1 datoteka"
 msgstr[2] "%1 datoteki"
 msgstr[3] "%1 datoteke"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:278
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:278
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:290
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:278
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:278
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:278
-#: ../src/app/qml/ui/FolderListPage.qml:278
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:278
+#: ../sbuild/package/qml/ui/FolderListPage.qml:277
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:277
+#: ../src/app/qml/ui/FolderListPage.qml:277
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:263
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:263
 msgid "Open in a new tab"
 msgstr "Odpri v novem zavihku"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:286
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:286
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:298
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:286
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:286
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:286
-#: ../src/app/qml/ui/FolderListPage.qml:286
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:286
+#: ../sbuild/package/qml/ui/FolderListPage.qml:285
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:285
+#: ../src/app/qml/ui/FolderListPage.qml:285
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:271
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:271
 msgid "Close this tab"
 msgstr "Zapri ta zavihek"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:299
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:299
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:311
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:299
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:299
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:299
-#: ../src/app/qml/ui/FolderListPage.qml:299
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:299
+#: ../sbuild/package/qml/ui/FolderListPage.qml:298
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:298
+#: ../src/app/qml/ui/FolderListPage.qml:298
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:284
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:284
 msgid "Create folder"
 msgstr "Ustvari mapo"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:300
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:300
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:312
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:300
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:300
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:300
-#: ../src/app/qml/ui/FolderListPage.qml:300
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:300
+#: ../sbuild/package/qml/ui/FolderListPage.qml:299
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:299
+#: ../src/app/qml/ui/FolderListPage.qml:299
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:285
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:285
 msgid "Enter name for new folder"
 msgstr "Vnesite ime za novo mapo"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:319
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:319
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:331
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:319
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:319
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:319
-#: ../src/app/qml/ui/FolderListPage.qml:319
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:319
+#: ../sbuild/package/qml/ui/FolderListPage.qml:315
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:318
+#: ../src/app/qml/ui/FolderListPage.qml:318
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:301
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:301
 msgid "Create file"
 msgstr "Ustvari datoteko"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:320
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:320
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:332
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:320
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:320
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:320
-#: ../src/app/qml/ui/FolderListPage.qml:320
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:320
+#: ../sbuild/package/qml/ui/FolderListPage.qml:316
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:319
+#: ../src/app/qml/ui/FolderListPage.qml:319
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:302
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:302
 msgid "Enter name for new file"
 msgstr "Vnesite ime za novo datoteko"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:376
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:376
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:388
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:376
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:376
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:376
-#: ../src/app/qml/ui/FolderListPage.qml:376
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
-msgid "Save"
-msgstr ""
-
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:376
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:376
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:388
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:376
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:376
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:376
-#: ../src/app/qml/ui/FolderListPage.qml:376
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
+#: ../sbuild/package/qml/ui/FolderListPage.qml:365
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:368
+#: ../src/app/qml/ui/FolderListPage.qml:368
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:351
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:351
 msgid "Select"
 msgstr "Izbor"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:478
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:478
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:490
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:478
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:478
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:478
-#: ../src/app/qml/ui/FolderListPage.qml:478
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:478
+#: ../sbuild/package/qml/ui/FolderListPage.qml:466
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:469
+#: ../src/app/qml/ui/FolderListPage.qml:469
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:452
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:452
 msgid "No files"
 msgstr "Ni datotek"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:498
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:607
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:498
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:607
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:510
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:619
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:498
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:607
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:498
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:607
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:498
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:607
-#: ../src/app/qml/ui/FolderListPage.qml:498
-#: ../src/app/qml/ui/FolderListPage.qml:607
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:498
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:607
+#: ../sbuild/package/qml/ui/FolderListPage.qml:486
+#: ../sbuild/package/qml/ui/FolderListPage.qml:595
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:489
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:598
+#: ../src/app/qml/ui/FolderListPage.qml:489
+#: ../src/app/qml/ui/FolderListPage.qml:598
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:472
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:581
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:472
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:581
 msgid "Delete"
 msgstr "Izbriši"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:499
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:499
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:511
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:499
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:499
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:499
-#: ../src/app/qml/ui/FolderListPage.qml:499
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:499
+#: ../sbuild/package/qml/ui/FolderListPage.qml:487
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:490
+#: ../src/app/qml/ui/FolderListPage.qml:490
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:473
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:473
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "Ali ste prepričani, da želite trajno izbrisati '%1'?"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:504
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:504
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:516
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:504
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:504
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:504
-#: ../src/app/qml/ui/FolderListPage.qml:504
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:504
+#: ../sbuild/package/qml/ui/FolderListPage.qml:492
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:495
+#: ../src/app/qml/ui/FolderListPage.qml:495
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:478
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:478
 msgid "Deleting files"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:522
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:620
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:522
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:620
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:534
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:632
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:522
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:620
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:522
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:620
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:522
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:620
-#: ../src/app/qml/ui/FolderListPage.qml:522
-#: ../src/app/qml/ui/FolderListPage.qml:620
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:522
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:620
+#: ../sbuild/package/qml/ui/FolderListPage.qml:510
+#: ../sbuild/package/qml/ui/FolderListPage.qml:608
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:513
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:611
+#: ../src/app/qml/ui/FolderListPage.qml:513
+#: ../src/app/qml/ui/FolderListPage.qml:611
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:496
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:594
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:496
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:594
 msgid "Rename"
 msgstr "Preimenuj"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:523
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:523
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:535
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:523
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:523
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:523
-#: ../src/app/qml/ui/FolderListPage.qml:523
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:523
+#: ../sbuild/package/qml/ui/FolderListPage.qml:511
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:514
+#: ../src/app/qml/ui/FolderListPage.qml:514
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:497
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:497
 msgid "Enter a new name"
 msgstr "Vnesite novo ime"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:532
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:532
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:544
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:532
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:532
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:532
-#: ../src/app/qml/ui/FolderListPage.qml:532
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:532
+#: ../sbuild/package/qml/ui/FolderListPage.qml:520
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:523
+#: ../src/app/qml/ui/FolderListPage.qml:523
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:506
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:506
 msgid "Could not rename"
 msgstr "Ni mogoče preimenovati"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:533
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:533
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:545
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:533
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:533
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:533
-#: ../src/app/qml/ui/FolderListPage.qml:533
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:533
+#: ../sbuild/package/qml/ui/FolderListPage.qml:521
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:524
+#: ../src/app/qml/ui/FolderListPage.qml:524
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:507
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:507
 msgid "Insufficient permissions or name already exists?"
 msgstr "Nezadostna dovoljenja ali pa ime že obstaja?"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:551
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:551
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:563
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:551
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:551
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:551
-#: ../src/app/qml/ui/FolderListPage.qml:551
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:551
+#: ../sbuild/package/qml/ui/FolderListPage.qml:539
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:542
+#: ../src/app/qml/ui/FolderListPage.qml:542
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:525
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:525
 msgid "Extract Archive"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:552
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:552
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:564
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:552
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:552
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:552
-#: ../src/app/qml/ui/FolderListPage.qml:552
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:552
+#: ../sbuild/package/qml/ui/FolderListPage.qml:540
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:543
+#: ../src/app/qml/ui/FolderListPage.qml:543
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:526
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:526
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:584
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:584
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:596
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:584
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:584
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:584
-#: ../src/app/qml/ui/FolderListPage.qml:584
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:584
+#: ../sbuild/package/qml/ui/FolderListPage.qml:572
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:575
+#: ../src/app/qml/ui/FolderListPage.qml:575
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:558
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:558
 msgid "Cut"
 msgstr "Izreži"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:595
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:595
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:607
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:595
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:595
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:595
-#: ../src/app/qml/ui/FolderListPage.qml:595
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:595
+#: ../sbuild/package/qml/ui/FolderListPage.qml:583
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:586
+#: ../src/app/qml/ui/FolderListPage.qml:586
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:569
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:569
 msgid "Copy"
 msgstr "Kopiraj"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:634
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:634
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:646
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:634
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:634
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:634
-#: ../src/app/qml/ui/FolderListPage.qml:634
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:634
-msgid "Share"
-msgstr ""
-
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:643
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:764
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:643
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:764
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:655
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:767
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:643
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:764
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:643
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:764
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:643
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:764
-#: ../src/app/qml/ui/FolderListPage.qml:643
-#: ../src/app/qml/ui/FolderListPage.qml:764
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:643
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:764
+#: ../sbuild/package/qml/ui/FolderListPage.qml:623
+#: ../sbuild/package/qml/ui/FolderListPage.qml:744
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:626
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:747
+#: ../src/app/qml/ui/FolderListPage.qml:626
+#: ../src/app/qml/ui/FolderListPage.qml:747
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:609
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:730
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:609
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:730
 msgid "Extract archive"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:674
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:674
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:674
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:674
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:674
-#: ../src/app/qml/ui/FolderListPage.qml:674
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:674
+#: ../sbuild/package/qml/ui/FolderListPage.qml:654
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:657
+#: ../src/app/qml/ui/FolderListPage.qml:657
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:640
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:640
 msgid "File operation error"
 msgstr "Napaka med opravilom z datoteko"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:705
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:705
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:708
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:705
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:705
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:705
-#: ../src/app/qml/ui/FolderListPage.qml:705
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:705
+#: ../sbuild/package/qml/ui/FolderListPage.qml:685
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:688
+#: ../src/app/qml/ui/FolderListPage.qml:688
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:671
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:671
 #, qt-format
 msgid "Extracting archive '%1'"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:741
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:741
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:744
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:741
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:741
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:741
-#: ../src/app/qml/ui/FolderListPage.qml:741
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:741
+#: ../sbuild/package/qml/ui/FolderListPage.qml:721
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:724
+#: ../src/app/qml/ui/FolderListPage.qml:724
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:707
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:707
 msgid "Extracting failed"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:742
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:742
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:745
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:742
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:742
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:742
-#: ../src/app/qml/ui/FolderListPage.qml:742
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:742
+#: ../sbuild/package/qml/ui/FolderListPage.qml:722
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:725
+#: ../src/app/qml/ui/FolderListPage.qml:725
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:708
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:708
 #, qt-format
 msgid "Extracting the archive '%1' failed."
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:756
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:756
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:759
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:756
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:756
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:756
-#: ../src/app/qml/ui/FolderListPage.qml:756
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:756
+#: ../sbuild/package/qml/ui/FolderListPage.qml:736
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:739
+#: ../src/app/qml/ui/FolderListPage.qml:739
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:722
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:722
 msgid "Archive file"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:757
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:757
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:760
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:757
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:757
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:757
-#: ../src/app/qml/ui/FolderListPage.qml:757
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:757
+#: ../sbuild/package/qml/ui/FolderListPage.qml:737
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:740
+#: ../src/app/qml/ui/FolderListPage.qml:740
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:723
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:723
 msgid "Do you want to extract the archive here?"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:774
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:774
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:777
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:774
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:774
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:774
-#: ../src/app/qml/ui/FolderListPage.qml:774
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:774
+#: ../sbuild/package/qml/ui/FolderListPage.qml:754
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:757
+#: ../src/app/qml/ui/FolderListPage.qml:757
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:740
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:740
 msgid "Open with another app"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:858
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:858
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:861
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:858
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:858
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:858
-#: ../src/app/qml/ui/FolderListPage.qml:858
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:858
+#: ../sbuild/package/qml/ui/FolderListPage.qml:838
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:841
+#: ../src/app/qml/ui/FolderListPage.qml:841
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:824
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:824
 msgid "~/Desktop"
 msgstr "~/Namizje"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:868
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:868
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:871
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:868
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:868
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:868
-#: ../src/app/qml/ui/FolderListPage.qml:868
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:868
+#: ../sbuild/package/qml/ui/FolderListPage.qml:848
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:851
+#: ../src/app/qml/ui/FolderListPage.qml:851
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:834
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:834
 msgid "~/Public"
 msgstr "~/Javno"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:870
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:870
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:873
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:870
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:870
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:870
-#: ../src/app/qml/ui/FolderListPage.qml:870
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:870
+#: ../sbuild/package/qml/ui/FolderListPage.qml:850
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:853
+#: ../src/app/qml/ui/FolderListPage.qml:853
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:836
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:836
 msgid "~/Programs"
 msgstr "~/Programi"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:872
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:872
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:875
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:872
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:872
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:872
-#: ../src/app/qml/ui/FolderListPage.qml:872
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:872
+#: ../sbuild/package/qml/ui/FolderListPage.qml:852
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:855
+#: ../src/app/qml/ui/FolderListPage.qml:855
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:838
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:838
 msgid "~/Templates"
 msgstr "~/Predloge"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:890
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:890
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:893
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:890
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:890
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:890
-#: ../src/app/qml/ui/FolderListPage.qml:890
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:890
+#: ../sbuild/package/qml/ui/FolderListPage.qml:870
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:873
+#: ../src/app/qml/ui/FolderListPage.qml:873
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:856
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:856
 msgid "Home"
 msgstr "Osebna mapa"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:894
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:894
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:897
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:894
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:894
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:894
-#: ../src/app/qml/ui/FolderListPage.qml:894
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:894
+#: ../sbuild/package/qml/ui/FolderListPage.qml:874
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:877
+#: ../src/app/qml/ui/FolderListPage.qml:877
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:860
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:860
 msgid "Network"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:996
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:996
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:999
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:996
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:996
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:996
-#: ../src/app/qml/ui/FolderListPage.qml:996
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:996
+#: ../sbuild/package/qml/ui/FolderListPage.qml:976
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:979
+#: ../src/app/qml/ui/FolderListPage.qml:979
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:962
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:962
 msgid "Folder not accessible"
 msgstr "Mapa ni dostopna"
 
 #. TRANSLATORS: this refers to a folder name
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:998
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:998
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/FolderListPage.qml:1001
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/FolderListPage.qml:998
-#: ../prime/usr/share/filemanager/qml/ui/FolderListPage.qml:998
-#: ../qbuild/src/app/qml/ui/FolderListPage.qml:998
-#: ../src/app/qml/ui/FolderListPage.qml:998
-#: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:998
+#: ../sbuild/package/qml/ui/FolderListPage.qml:978
+#: ../sbuild/src/app/qml/ui/FolderListPage.qml:981
+#: ../src/app/qml/ui/FolderListPage.qml:981
+#: ../ssbuild/package/qml/ui/FolderListPage.qml:964
+#: ../ssbuild/src/app/qml/ui/FolderListPage.qml:964
 #, qt-format
 msgid "Can not access %1"
 msgstr "Do %1 ni mogoče dostopati"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:26
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/GoToDialog.qml:26
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/GoToDialog.qml:26
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/GoToDialog.qml:26
-#: ../prime/usr/share/filemanager/qml/ui/GoToDialog.qml:26
-#: ../qbuild/src/app/qml/ui/GoToDialog.qml:26
+#: ../sbuild/package/qml/ui/GoToDialog.qml:26
+#: ../sbuild/src/app/qml/ui/GoToDialog.qml:26
 #: ../src/app/qml/ui/GoToDialog.qml:26
-#: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:26
+#: ../ssbuild/package/qml/ui/GoToDialog.qml:26
+#: ../ssbuild/src/app/qml/ui/GoToDialog.qml:26
 msgid "Go To Location"
 msgstr "Pojdi do mesta"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:28
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/GoToDialog.qml:28
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/GoToDialog.qml:28
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/GoToDialog.qml:28
-#: ../prime/usr/share/filemanager/qml/ui/GoToDialog.qml:28
-#: ../qbuild/src/app/qml/ui/GoToDialog.qml:28
+#: ../sbuild/package/qml/ui/GoToDialog.qml:28
+#: ../sbuild/src/app/qml/ui/GoToDialog.qml:28
 #: ../src/app/qml/ui/GoToDialog.qml:28
-#: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:28
+#: ../ssbuild/package/qml/ui/GoToDialog.qml:28
+#: ../ssbuild/src/app/qml/ui/GoToDialog.qml:28
 msgid "Enter a location to go to:"
 msgstr "Vnesite mesto, kamor želite iti:"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:45
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPage.qml:65
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPopover.qml:66
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/GoToDialog.qml:45
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/PlacesPage.qml:65
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/PlacesPopover.qml:66
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/GoToDialog.qml:45
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/PlacesPage.qml:65
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/PlacesPopover.qml:66
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/GoToDialog.qml:45
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/PlacesPage.qml:65
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/PlacesPopover.qml:66
-#: ../prime/usr/share/filemanager/qml/ui/GoToDialog.qml:45
-#: ../prime/usr/share/filemanager/qml/ui/PlacesPage.qml:65
-#: ../prime/usr/share/filemanager/qml/ui/PlacesPopover.qml:66
-#: ../qbuild/src/app/qml/ui/GoToDialog.qml:45
-#: ../qbuild/src/app/qml/ui/PlacesPage.qml:65
-#: ../qbuild/src/app/qml/ui/PlacesPopover.qml:66
+#: ../sbuild/package/qml/ui/GoToDialog.qml:45
+#: ../sbuild/package/qml/ui/PlacesPage.qml:65
+#: ../sbuild/package/qml/ui/PlacesPopover.qml:66
+#: ../sbuild/src/app/qml/ui/GoToDialog.qml:45
+#: ../sbuild/src/app/qml/ui/PlacesPage.qml:65
+#: ../sbuild/src/app/qml/ui/PlacesPopover.qml:66
 #: ../src/app/qml/ui/GoToDialog.qml:45 ../src/app/qml/ui/PlacesPage.qml:65
 #: ../src/app/qml/ui/PlacesPopover.qml:66
-#: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:45
-#: ../stage/usr/share/filemanager/qml/ui/PlacesPage.qml:65
-#: ../stage/usr/share/filemanager/qml/ui/PlacesPopover.qml:66
+#: ../ssbuild/package/qml/ui/GoToDialog.qml:45
+#: ../ssbuild/package/qml/ui/PlacesPage.qml:65
+#: ../ssbuild/package/qml/ui/PlacesPopover.qml:66
+#: ../ssbuild/src/app/qml/ui/GoToDialog.qml:45
+#: ../ssbuild/src/app/qml/ui/PlacesPage.qml:65
+#: ../ssbuild/src/app/qml/ui/PlacesPopover.qml:66
 msgid "Location..."
 msgstr "Mesto ..."
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:54
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPage.qml:80
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPopover.qml:81
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/GoToDialog.qml:54
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/PlacesPage.qml:80
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/PlacesPopover.qml:81
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/GoToDialog.qml:54
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/PlacesPage.qml:80
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/PlacesPopover.qml:81
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/GoToDialog.qml:54
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/PlacesPage.qml:80
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/PlacesPopover.qml:81
-#: ../prime/usr/share/filemanager/qml/ui/GoToDialog.qml:54
-#: ../prime/usr/share/filemanager/qml/ui/PlacesPage.qml:80
-#: ../prime/usr/share/filemanager/qml/ui/PlacesPopover.qml:81
-#: ../qbuild/src/app/qml/ui/GoToDialog.qml:54
-#: ../qbuild/src/app/qml/ui/PlacesPage.qml:80
-#: ../qbuild/src/app/qml/ui/PlacesPopover.qml:81
+#: ../sbuild/package/qml/ui/GoToDialog.qml:54
+#: ../sbuild/package/qml/ui/PlacesPage.qml:80
+#: ../sbuild/package/qml/ui/PlacesPopover.qml:81
+#: ../sbuild/src/app/qml/ui/GoToDialog.qml:54
+#: ../sbuild/src/app/qml/ui/PlacesPage.qml:80
+#: ../sbuild/src/app/qml/ui/PlacesPopover.qml:81
 #: ../src/app/qml/ui/GoToDialog.qml:54 ../src/app/qml/ui/PlacesPage.qml:80
 #: ../src/app/qml/ui/PlacesPopover.qml:81
-#: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:54
-#: ../stage/usr/share/filemanager/qml/ui/PlacesPage.qml:80
-#: ../stage/usr/share/filemanager/qml/ui/PlacesPopover.qml:81
+#: ../ssbuild/package/qml/ui/GoToDialog.qml:54
+#: ../ssbuild/package/qml/ui/PlacesPage.qml:80
+#: ../ssbuild/package/qml/ui/PlacesPopover.qml:81
+#: ../ssbuild/src/app/qml/ui/GoToDialog.qml:54
+#: ../ssbuild/src/app/qml/ui/PlacesPage.qml:80
+#: ../ssbuild/src/app/qml/ui/PlacesPopover.qml:81
 msgid "Go"
 msgstr "Pojdi"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:55
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:55
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:55
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/NetAuthenticationDialog.qml:55
-#: ../prime/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:55
-#: ../qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:55
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:55
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:55
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:55
-#: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:55
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:55
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:66
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:66
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/NetAuthenticationDialog.qml:66
-#: ../prime/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:66
-#: ../qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:66
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:66
-#: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:66
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:66
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:79
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:79
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/NetAuthenticationDialog.qml:79
-#: ../prime/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:79
-#: ../qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:79
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:79
-#: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:79
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:79
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
 msgstr ""
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:98
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/NetAuthenticationDialog.qml:98
-#: ../prime/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
-#: ../qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
+#: ../sbuild/package/qml/ui/NetAuthenticationDialog.qml:98
+#: ../sbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
-#: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
+#: ../ssbuild/package/qml/ui/NetAuthenticationDialog.qml:98
+#: ../ssbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
 msgstr "V redu"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/SettingsSheet.qml:45
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/SettingsSheet.qml:45
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/SettingsSheet.qml:45
-#: ../prime/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
-#: ../qbuild/src/app/qml/ui/SettingsSheet.qml:45
+#: ../sbuild/package/qml/ui/SettingsSheet.qml:45
+#: ../sbuild/src/app/qml/ui/SettingsSheet.qml:45
 #: ../src/app/qml/ui/SettingsSheet.qml:45
-#: ../stage/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
+#: ../ssbuild/package/qml/ui/SettingsSheet.qml:45
+#: ../ssbuild/src/app/qml/ui/SettingsSheet.qml:45
 msgid "Show Advanced Features"
 msgstr "Pokaži napredne zmožnosti"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:39
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:39
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:39
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:39
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:39
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:39
+#: ../sbuild/package/qml/ui/ViewPopover.qml:39
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:39
 #: ../src/app/qml/ui/ViewPopover.qml:39
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:39
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:39
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
 msgstr "Pokaži skrite datoteke"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:59
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:59
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:59
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:59
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:59
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:59
+#: ../sbuild/package/qml/ui/ViewPopover.qml:59
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:59
 #: ../src/app/qml/ui/ViewPopover.qml:59
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:59
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:59
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:59
 msgid "View As"
 msgstr "Poglej kot"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:81
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:81
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:81
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:81
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:81
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:81
+#: ../sbuild/package/qml/ui/ViewPopover.qml:81
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:81
 #: ../src/app/qml/ui/ViewPopover.qml:81
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:81
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:81
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
 msgstr "Razvrsti po"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:92
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:92
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:92
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:92
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:92
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:92
+#: ../sbuild/package/qml/ui/ViewPopover.qml:92
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:92
 #: ../src/app/qml/ui/ViewPopover.qml:92
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:92
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:92
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:92
 msgid "Name"
 msgstr "Ime"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:93
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:93
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:93
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:93
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:93
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:93
+#: ../sbuild/package/qml/ui/ViewPopover.qml:93
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:93
 #: ../src/app/qml/ui/ViewPopover.qml:93
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:93
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:93
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:93
 msgid "Date"
 msgstr "Datum"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:103
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:103
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:103
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:103
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:103
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:103
+#: ../sbuild/package/qml/ui/ViewPopover.qml:103
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:103
 #: ../src/app/qml/ui/ViewPopover.qml:103
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:103
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:103
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
 msgstr "Zaporedje razvrščanja"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:114
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:119
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:114
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:119
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:114
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:119
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:114
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:119
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:114
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:119
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:114
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:119
+#: ../sbuild/package/qml/ui/ViewPopover.qml:114
+#: ../sbuild/package/qml/ui/ViewPopover.qml:119
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:114
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:119
 #: ../src/app/qml/ui/ViewPopover.qml:114 ../src/app/qml/ui/ViewPopover.qml:119
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:114
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:119
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:114
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:119
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:114
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
 msgstr "Naraščajoče"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:115
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:115
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:115
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:115
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:115
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:115
+#: ../sbuild/package/qml/ui/ViewPopover.qml:115
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:115
 #: ../src/app/qml/ui/ViewPopover.qml:115
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:115
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:115
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:115
 msgid "Descending"
 msgstr "Padajoče"
 
-#: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:127
-#: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:127
-#: ../parts/ubuntu-filemanager-app/src/qbuild/src/app/qml/ui/ViewPopover.qml:127
-#: ../parts/ubuntu-filemanager-app/src/src/app/qml/ui/ViewPopover.qml:127
-#: ../prime/usr/share/filemanager/qml/ui/ViewPopover.qml:127
-#: ../qbuild/src/app/qml/ui/ViewPopover.qml:127
+#: ../sbuild/package/qml/ui/ViewPopover.qml:127
+#: ../sbuild/src/app/qml/ui/ViewPopover.qml:127
 #: ../src/app/qml/ui/ViewPopover.qml:127
-#: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:127
+#: ../ssbuild/package/qml/ui/ViewPopover.qml:127
+#: ../ssbuild/src/app/qml/ui/ViewPopover.qml:127
 msgid "Filter"
 msgstr "Filter"
 
@@ -1662,4 +1075,14 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
+msgstr ""
+
+#: ../ssbuild/package/qml/filemanager.qml:316
+#: ../ssbuild/src/app/qml/filemanager.qml:316
+msgid "Files imported"
+msgstr ""
+
+#: ../ssbuild/package/qml/filemanager.qml:317
+#: ../ssbuild/src/app/qml/filemanager.qml:317
+msgid "Files imported into: "
 msgstr ""

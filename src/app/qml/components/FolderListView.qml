@@ -40,10 +40,69 @@ Item {
 
         delegate: FolderListDelegate {
             id: delegate
+            leadingActions: ListItemActions {
+                actions: [
+                    Action {
+                        iconName: "edit-delete"
+                        onTriggered: {
+                            PopupUtils.open(confirmSingleDeleteDialog, folderListPage,
+                                            { "filePath" : model.filePath,
+                                                "fileName" : model.fileName }
+                                            )
+                        }
+                    }
+                ]
+            }
+            trailingActions: ListItemActions {
+                actions: [
+                    Action {
+                        iconName: "application-x-archive-symbolic"
+                        visible: getArchiveType(model.fileName) !== ""
+                        onTriggered: {
+                            openFile(model, true)
+                        }
+                    },
+                    Action {
+                        iconName: "info"
+                        onTriggered: {
+                            PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"),
+                                            folderListPage,
+                                            { "model": model
+                                            }
+                                            )
+                        }
+                    },
+                    Action {
+                        iconName: "edit-cut"
+                        onTriggered: {
+                            pageModel.cutIndex(model.index)
+                            helpClipboard = true
+                        }
+                    },
+                    Action {
+                        iconName: "edit-copy"
+                        onTriggered: {
+                            pageModel.copyIndex(model.index)
+                            helpClipboard = true
+                        }
+                    },
+                    Action {
+                        iconName: "share"
+                        visible: !model.isDir
+                        onTriggered: {
+                            openFile(model, true)
+                        }
+                    }
+
+                ]
+            }
 
             onClicked: itemClicked(model)
 
-            onPressAndHold: itemLongPress(delegate, model)
+            onPressAndHold: PopupUtils.open(confirmRenameDialog, folderListPage,
+                                            { "modelRow"  : model.index,
+                                                "inputText" : model.fileName
+                                            })
         }
     }
     Scrollbar {
