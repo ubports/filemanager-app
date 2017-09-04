@@ -44,6 +44,8 @@ MainView {
     property bool allowSidebarExpanded: width > units.gu(50)
     property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()
 
+    property bool isContentHub: true
+
 
     onAllowSidebarExpandedChanged: {
         if (!allowSidebarExpanded)
@@ -69,7 +71,7 @@ MainView {
     }
 
     PlacesModel {
-       id: userplaces
+        id: userplaces
     }
 
     PamAuthentication {
@@ -106,8 +108,8 @@ MainView {
 
     function openFileSelector(selectFolderMode) {
         fileSelector.fileSelectorComponent = pageStack.push(Qt.resolvedUrl("./ui/FolderListPage.qml"), { fileSelectorMode: !selectFolderMode,
-                                                                                                         folderSelectorMode: selectFolderMode,
-                                                                                                         folder: "/home"})
+                                                                folderSelectorMode: selectFolderMode,
+                                                                folder: "/home"})
     }
 
     function cancelFileSelector() {
@@ -207,17 +209,17 @@ MainView {
 
 
             // TODO: Temporarily disabled tabs support since this is broken in the SDK (lp:1295242)
-//            Repeater {
-//                model: folderTabs
-//                delegate: Tab {
-//                    title: page.title
-//                    page: FolderListPage {
-//                        objectName: "folderPage"
+            //            Repeater {
+            //                model: folderTabs
+            //                delegate: Tab {
+            //                    title: page.title
+            //                    page: FolderListPage {
+            //                        objectName: "folderPage"
 
-//                        folder: modelData
-//                    }
-//                }
-//            }
+            //                        folder: modelData
+            //                    }
+            //                }
+            //            }
         }
 
         Component.onCompleted: {

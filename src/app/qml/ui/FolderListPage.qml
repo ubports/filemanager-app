@@ -38,7 +38,7 @@ PageWithBottomEdge {
         title: basename(folder)
         contents: PathHistoryRow {}
         flickable: !sidebar.expanded ?
-                           (folderListView.visible ? folderListView.flickable : folderIconView.flickable) : null
+                       (folderListView.visible ? folderListView.flickable : folderIconView.flickable) : null
         leadingActionBar.actions: [
             /* Go to last folder visited */
             Action {
@@ -166,8 +166,8 @@ PageWithBottomEdge {
 
 
     // Set to true if called as file selector for ContentHub
-    property bool fileSelectorMode: false
-    property bool folderSelectorMode: false
+    property bool fileSelectorMode: fileSelectorModeG
+    property bool folderSelectorMode: folderSelectorModeG
     readonly property bool selectionMode: fileSelectorMode || folderSelectorMode
 
     property FolderListSelection selectionManager: pageModel.selectionObject()
@@ -363,14 +363,20 @@ PageWithBottomEdge {
         anchors.leftMargin: (parent.width - sidebar.width - childrenRect.width) / 2
         anchors.left: sidebar.right
         width: parent.width - sidebar.width
+        height: units.gu(7)
 
         spacing: units.gu(2)
         visible: selectionMode || pageModel.onlyAllowedPaths
 
         Button {
             text: i18n.tr("Select")
+            width: units.gu(5)
+            height: units.gu(5)
+            anchors.topMargin: units.gu(1)
+            color: "#F5F5F5"
+            iconName: "tick"
             enabled: (selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)
-            visible: selectionMode
+            visible: selectionMode && isContentHub
             onClicked: {
                 var selectedAbsUrls = []
                 if (folderSelectorMode) {
@@ -387,11 +393,80 @@ PageWithBottomEdge {
             }
         }
         Button {
+            text: i18n.tr("Delete")
+            width: units.gu(5)
+            height: units.gu(5)
+            anchors.topMargin: units.gu(1)
+            color: "#F5F5F5"
+            iconName: "edit-delete"
+            enabled: (selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)
+            visible: selectionMode && !isContentHub
+            onClicked: {
+                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                PopupUtils.open(confirmMultipleDeleteDialog, folderListPage,
+                                { "paths" : selectedAbsPaths }
+                                )
+                selectionManager.clear()
+                fileSelectorMode = false
+                fileSelector.fileSelectorComponent = null
+            }
+        }
+        Button {
+            text: i18n.tr("Cut")
+            width: units.gu(5)
+            height: units.gu(5)
+            anchors.topMargin: units.gu(1)
+            color: "#F5F5F5"
+            iconName: "edit-cut"
+            enabled: (selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)
+            visible: selectionMode && !isContentHub && pathIsWritable()
+            onClicked: {
+                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                pageModel.cutPaths(selectedAbsPaths)
+                helpClipboard = true
+                selectionManager.clear()
+                fileSelectorMode = false
+                fileSelector.fileSelectorComponent = null
+            }
+        }
+        Button {
+            text: i18n.tr("Copy")
+            width: units.gu(5)
+            height: units.gu(5)
+            anchors.topMargin: units.gu(1)
+            color: "#F5F5F5"
+            iconName: "edit-copy"
+            enabled: (selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)
+            visible: selectionMode && !isContentHub
+            onClicked: {
+                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                pageModel.copyPaths(selectedAbsPaths)
+                helpClipboard = true
+                selectionManager.clear()
+                fileSelectorMode = false
+                fileSelector.fileSelectorComponent = null
+            }
+        }
+        Button {
             text: i18n.tr("Cancel")
+            width: units.gu(5)
+            height: units.gu(5)
+            anchors.topMargin: units.gu(1)
+            color: "#F5F5F5"
+            iconName: "edit-clear"
             visible: selectionMode
             onClicked: {
                 console.log("FileSelector cancelled")
-                cancelFileSelector()
+                if (isContentHub)
+                {
+                    cancelFileSelector()
+                }
+                else
+                {
+                    selectionManager.clear()
+                    fileSelectorMode = false
+                    fileSelector.fileSelectorComponent = null
+                }
             }
         }
     }
@@ -498,6 +573,21 @@ PageWithBottomEdge {
                 fileOperationDialog.startOperation(i18n.tr("Deleting files"))
                 console.log("Doing delete")
                 pageModel.rm(filePath)
+            }
+        }
+    }
+
+    Component {
+        id: confirmMultipleDeleteDialog
+        ConfirmDialog {
+            property var paths
+            title: i18n.tr("Delete")
+            text: i18n.tr("Are you sure you want to permanently delete '%1'?").arg(i18n.tr("these files"))
+
+            onAccepted: {
+                fileOperationDialog.startOperation(i18n.tr("Deleting files"))
+                console.log("Doing delete")
+                pageModel.removePaths(paths)
             }
         }
     }

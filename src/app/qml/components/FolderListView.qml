@@ -44,11 +44,22 @@ Item {
                 actions: [
                     Action {
                         iconName: "edit-delete"
+                        visible: (model.filePath.indexOf("/home/phablet/.") === -1) && pathIsWritable()
                         onTriggered: {
                             PopupUtils.open(confirmSingleDeleteDialog, folderListPage,
                                             { "filePath" : model.filePath,
                                                 "fileName" : model.fileName }
                                             )
+                        }
+                    },
+                    Action {
+                        iconName: "edit"
+                        visible: (model.filePath.indexOf("/home/phablet/.") === -1) && pathIsWritable()
+                        onTriggered: {
+                            PopupUtils.open(confirmRenameDialog, folderListPage,
+                                            { "modelRow"  : model.index,
+                                                "inputText" : model.fileName
+                                            })
                         }
                     }
                 ]
@@ -99,10 +110,11 @@ Item {
 
             onClicked: itemClicked(model)
 
-            onPressAndHold: PopupUtils.open(confirmRenameDialog, folderListPage,
-                                            { "modelRow"  : model.index,
-                                                "inputText" : model.fileName
-                                            })
+            onPressAndHold: {
+                isContentHub = false
+                fileSelectorMode = true
+                fileSelector.fileSelectorComponent = pageStack
+            }
         }
     }
     Scrollbar {
