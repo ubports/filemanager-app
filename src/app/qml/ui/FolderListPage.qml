@@ -400,7 +400,7 @@ PageWithBottomEdge {
             color: "#F5F5F5"
             iconName: "edit-delete"
             enabled: (selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)
-            visible: selectionMode && !isContentHub
+            visible: selectionMode && !isContentHub && pathIsWritable()
             onClicked: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
                 PopupUtils.open(confirmMultipleDeleteDialog, folderListPage,

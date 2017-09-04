@@ -85,6 +85,7 @@ Item {
                     },
                     Action {
                         iconName: "edit-cut"
+                        visible: (model.filePath.indexOf("/home/phablet/.") === -1) && pathIsWritable()
                         onTriggered: {
                             pageModel.cutIndex(model.index)
                             helpClipboard = true
