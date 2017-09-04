@@ -33,10 +33,6 @@ execute_process(
 )
 
 if(CLICK_MODE)
-    if(NOT DEFINED BZR_SOURCE)
-        set(BZR_SOURCE "lp:${LP_PROJECT}")
-        message("-- Setting BZR_SOURCE to ${BZR_SOURCE}")
-    endif(NOT DEFINED BZR_SOURCE)
     # Find out the architecture for package building
     # to determine the plugin's installation path
     execute_process(
@@ -51,9 +47,17 @@ if(CLICK_MODE)
     set(QT_IMPORTS_DIR "/lib/${ARCH_TRIPLET}")
     set(BIN_DIR /lib/${ARCH_TRIPLET}/bin)
     set(DESKTOP_DIR ${DATA_DIR})
-    if(NOT BZR_REVNO)
-        set(BZR_REVNO "latest")
-    endif(NOT BZR_REVNO)
+    if(NOT GIT_REVNO)
+        execute_process(
+          COMMAND git rev-list --first-parent --all --count
+          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+          OUTPUT_VARIABLE GIT_REVNO
+          OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+    endif(NOT GIT_REVNO)
+    if(NOT GIT_REVNO)
+        set(GIT_REVNO "latest")
+    endif(NOT GIT_REVNO)
 
     #query the target architecture
     execute_process(

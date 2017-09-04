@@ -1,7 +1,6 @@
 {
     "description": "File Manager application",
     "framework": "ubuntu-sdk-15.04.4",
-    "_comment": "Do not change this. Architecture is automatically replaced by cmake",
     "architecture": "@CLICK_ARCH@",
     "hooks": {
         "filemanager": {
@@ -14,18 +13,5 @@
     "maintainer": "Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>",
     "name": "com.ubuntu.filemanager",
     "title": "File Manager",
-    "version": "0.4.@BZR_REVNO@",
-    "x-source": {
-        "vcs-bzr": "lp:ubuntu-filemanager-app",
-        "vcs-bzr-revno": "@BZR_REVNO@"
-    },
-    "x-test": {
-        "autopilot": {
-            "autopilot_module": "@AUTOPILOT_DIR@",
-            "depends": [
-                "python3-lxml",
-                "python3-fixtures"
-            ]
-        }
-    }
+    "version": "0.4.@GIT_REVNO@"
 }
