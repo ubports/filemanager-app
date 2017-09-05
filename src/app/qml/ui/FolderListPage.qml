@@ -368,6 +368,15 @@ PageWithBottomEdge {
         spacing: units.gu(2)
         visible: selectionMode || pageModel.onlyAllowedPaths
 
+        function checkIfOnlyAllowed (paths) {
+            var result = 0
+            for (var i = 0; i < selectionManager.counter; i++)
+            {
+                result += !(paths[i].indexOf("/home/phablet/.") === -1)
+            }
+            return result === 0
+        }
+
         Button {
             text: i18n.tr("Select")
             width: units.gu(5)
@@ -393,32 +402,13 @@ PageWithBottomEdge {
             }
         }
         Button {
-            text: i18n.tr("Delete")
-            width: units.gu(5)
-            height: units.gu(5)
-            anchors.topMargin: units.gu(1)
-            color: "#F5F5F5"
-            iconName: "edit-delete"
-            enabled: (selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)
-            visible: selectionMode && !isContentHub && pathIsWritable()
-            onClicked: {
-                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                PopupUtils.open(confirmMultipleDeleteDialog, folderListPage,
-                                { "paths" : selectedAbsPaths }
-                                )
-                selectionManager.clear()
-                fileSelectorMode = false
-                fileSelector.fileSelectorComponent = null
-            }
-        }
-        Button {
             text: i18n.tr("Cut")
             width: units.gu(5)
             height: units.gu(5)
             anchors.topMargin: units.gu(1)
             color: "#F5F5F5"
             iconName: "edit-cut"
-            enabled: (selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)
+            enabled: ((selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)) && parent.checkIfOnlyAllowed(selectionManager.selectedAbsFilePaths())
             visible: selectionMode && !isContentHub && pathIsWritable()
             onClicked: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
@@ -442,6 +432,25 @@ PageWithBottomEdge {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
                 pageModel.copyPaths(selectedAbsPaths)
                 helpClipboard = true
+                selectionManager.clear()
+                fileSelectorMode = false
+                fileSelector.fileSelectorComponent = null
+            }
+        }
+        Button {
+            text: i18n.tr("Delete")
+            width: units.gu(5)
+            height: units.gu(5)
+            anchors.topMargin: units.gu(1)
+            color: "#F5F5F5"
+            iconName: "edit-delete"
+            enabled: ((selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)) && parent.checkIfOnlyAllowed(selectionManager.selectedAbsFilePaths())
+            visible: selectionMode && !isContentHub && pathIsWritable()
+            onClicked: {
+                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                PopupUtils.open(confirmMultipleDeleteDialog, folderListPage,
+                                { "paths" : selectedAbsPaths }
+                                )
                 selectionManager.clear()
                 fileSelectorMode = false
                 fileSelector.fileSelectorComponent = null
