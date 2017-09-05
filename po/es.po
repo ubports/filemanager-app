@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-05 17:04+0000\n"
+"PO-Revision-Date: 2017-09-05 17:05+0000\n"
 "Last-Translator: advocatux <advocatux@airpost.net>\n"
 "Language-Team: Spanish <https://ubpweblate.tnvcomp.com/projects/ubports"
 "/filemanager-app/es/>\n"
@@ -48,7 +48,7 @@ msgstr "Crear un nuevo archivo"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:163
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:163
 msgid "&Open..."
-msgstr "&Abrir"
+msgstr "&Abrir..."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:165
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:165
@@ -1060,7 +1060,7 @@ msgstr "No se pudo renombrar"
 #: ../src/app/qml/ui/FolderListPage.qml:533
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:533
 msgid "Insufficient permissions or name already exists?"
-msgstr "Los permisos son insuficientes o el nombre ya existe."
+msgstr "¿Permisos insuficientes o el nombre ya existe?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:551
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:551
