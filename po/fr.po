@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-06 20:30+0000\n"
-"Last-Translator: Anne Onyme <anneonyme017@openmailbox.org>\n"
+"PO-Revision-Date: 2017-09-06 20:33+0000\n"
+"Last-Translator: Reda <adered7@gmail.com>\n"
 "Language-Team: French <https://ubpweblate.tnvcomp.com/projects/ubports"
 "/filemanager-app/fr/>\n"
 "Language: fr\n"
@@ -647,7 +647,7 @@ msgstr "Lecture"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:40
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr "Écriture"
+msgstr "Modifiable"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:43
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:43
@@ -1454,7 +1454,7 @@ msgstr "Afficher les fichiers cachés"
 #: ../src/app/qml/ui/ViewPopover.qml:59
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr "Afficher par"
+msgstr "Afficher comme"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:81
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:81
