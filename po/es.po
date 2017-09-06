@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-06 06:44+0000\n"
-"Last-Translator: Francisco Molinero <paco@byasl.com>\n"
-"Language-Team: Spanish <https://ubpweblate.tnvcomp.com/projects/ubports"
+"PO-Revision-Date: 2017-09-21 21:26+0000\n"
+"Last-Translator: advocatux <advocatux@airpost.net>\n"
+"Language-Team: Spanish <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -997,7 +997,7 @@ msgstr "Eliminar"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:499
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "¿Quiere eliminar «%1» permanentemente?"
+msgstr "¿Quiere eliminar '%1' permanentemente?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:504
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:504
