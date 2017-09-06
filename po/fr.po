@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-07-19 19:38+0000\n"
-"Last-Translator: Anne017 <anneonyme017@openmailbox.org>\n"
+"PO-Revision-Date: 2017-09-06 14:55+0000\n"
+"Last-Translator: Reda <adered7@gmail.com>\n"
 "Language-Team: French <https://ubpweblate.tnvcomp.com/projects/ubports"
 "/filemanager-app/fr/>\n"
 "Language: fr\n"
@@ -22,8 +22,9 @@ msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:138
+#, fuzzy
 msgid "About Application"
-msgstr ""
+msgstr "A propos de l'application"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:139
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:139
@@ -35,87 +36,98 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
 msgid "&New"
-msgstr ""
+msgstr "&Nouveau"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:159
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:159
 msgid "Create a new file"
-msgstr ""
+msgstr "Créer un nouveau fichier"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:163
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:163
 msgid "&Open..."
-msgstr ""
+msgstr "&Ouvrir..."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:165
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:165
 msgid "Open an existing file"
-msgstr ""
+msgstr "Ouvrir un fichier existant"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:169
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:169
+#, fuzzy
 msgid "&Save"
-msgstr ""
+msgstr "&Enregistrer"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:171
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:171
+#, fuzzy
 msgid "Save the document to disk"
-msgstr ""
+msgstr "Enregistrer le document sur le disque"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:174
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:174
+#, fuzzy
 msgid "Save &As..."
-msgstr ""
+msgstr "Enregistrer &Sous"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:176
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:176
+#, fuzzy
 msgid "Save the document under a new name"
-msgstr ""
+msgstr "Enregistrer le document sous un nouveau nom"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:180
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:180
+#, fuzzy
 msgid "E&xit"
-msgstr ""
+msgstr "&Quitter"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:183
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:183
+#, fuzzy
 msgid "Exit the application"
-msgstr ""
+msgstr "Quitter l'application"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:187
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:187
+#, fuzzy
 msgid "Cu&t"
-msgstr ""
+msgstr "Cou&per"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:190
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:190
+#, fuzzy
 msgid "Cut the current selection's contents to the clipboard"
-msgstr ""
+msgstr "Couper le contenu de la sélection actuelle vers le presse-papiers"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:194
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:194
 msgid "&Copy"
-msgstr ""
+msgstr "&Copier"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:196
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:196
+#, fuzzy
 msgid "Copy the current selection's contents to the clipboard"
-msgstr ""
+msgstr "Copier le contenu de la sélection actuelle vers le presse-papiers"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:200
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:200
 msgid "&Paste"
-msgstr ""
+msgstr "&Coller"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:202
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:202
+#, fuzzy
 msgid "Paste the clipboard's contents into the current selection"
-msgstr ""
+msgstr "Coller le contenu du presse-papiers dans la sélection actuelle"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:206
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:206
+#, fuzzy
 msgid "&About"
-msgstr ""
+msgstr "&A propos de"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:207
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:207
@@ -124,8 +136,9 @@ msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:211
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:211
+#, fuzzy
 msgid "About &Qt"
-msgstr ""
+msgstr "A propos de &Qt"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:212
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:212
@@ -135,17 +148,18 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:231
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:231
 msgid "&File"
-msgstr ""
+msgstr "&Fichier"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:242
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:242
+#, fuzzy
 msgid "&Edit"
-msgstr ""
+msgstr "&Éditer"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:249
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:249
 msgid "&Help"
-msgstr ""
+msgstr "&Aide"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:258
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:258
@@ -160,7 +174,7 @@ msgstr "Modifier"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
 msgid "Ready"
-msgstr ""
+msgstr "Prêt"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:308
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:327
@@ -168,8 +182,9 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:308
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:327
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:354
+#, fuzzy
 msgid "Application"
-msgstr ""
+msgstr "Application"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:309
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:309
@@ -188,8 +203,9 @@ msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:344
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:344
+#, fuzzy
 msgid "File loaded"
-msgstr ""
+msgstr "Fichier chargé"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:355
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:355
@@ -201,8 +217,9 @@ msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:371
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:371
+#, fuzzy
 msgid "File saved"
-msgstr ""
+msgstr "Fichier enregistré"
 
 #: ../parts/ubuntu-filemanager-app/build/po/ubuntu-filemanager-app.desktop.in.in.h:1
 #: ../parts/ubuntu-filemanager-app/src/qbuild/po/ubuntu-filemanager-app.desktop.in.in.h:1
@@ -1654,8 +1671,9 @@ msgid "There is no space to download"
 msgstr "Il n'y a plus assez d'espace pour télécharger"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
+#, fuzzy
 msgid "net tool not found, check samba installation"
-msgstr "L'outil net est introuvable, vérifiez l'installation de samba"
+msgstr "L'outil réseau est introuvable, vérifiez l'installation de samba"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
