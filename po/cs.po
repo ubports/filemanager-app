@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-06 00:48+0000\n"
+"PO-Revision-Date: 2017-09-07 21:36+0000\n"
 "Last-Translator: Milan Korecký <milan.korecky@gmail.com>\n"
-"Language-Team: Czech <https://ubpweblate.tnvcomp.com/projects/ubports"
+"Language-Team: Czech <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -31,8 +31,8 @@ msgid ""
 "The <b>Application</b> example demonstrates how to write modern GUI "
 "applications using Qt, with a menu bar, toolbars, and a status bar."
 msgstr ""
-"Příklad <b>Aplikace</ b> ukazuje, jak napsat moderní GUI aplikace pomocí Qt "
-"s lištami menu, panely nástrojů a stavovým řádkem."
+"Příklad <b>Application</b> ukazuje, jak napsat moderní GUI aplikace pomocí "
+"Qt s lištami menu, panely nástrojů a stavovým řádkem."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
@@ -122,7 +122,7 @@ msgstr "&O aplikaci"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:207
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:207
 msgid "Show the application's About box"
-msgstr "Zobrazit dialogové okno O aplikaci"
+msgstr "Zobrazit dialogové okno o aplikaci"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:211
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:211
@@ -142,7 +142,7 @@ msgstr "&Soubor"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:242
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:242
 msgid "&Edit"
-msgstr "&Editovat"
+msgstr "&Upravit"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:249
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:249
@@ -162,7 +162,7 @@ msgstr "Upravit"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
 msgid "Ready"
-msgstr "Hotový"
+msgstr "Hotovo"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:308
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:327
@@ -466,7 +466,7 @@ msgstr "Pro otevření všech souborů je požadováno heslo"
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr "Heslo"
+msgstr "heslo"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:31
@@ -821,7 +821,7 @@ msgstr "Vlastnosti"
 #: ../src/app/qml/ui/FolderListPage.qml:94
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:94
 msgid "New Folder"
-msgstr "Nový adresář"
+msgstr "Nová složka"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:122
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:122
@@ -868,8 +868,8 @@ msgstr "Ověření selhalo"
 msgid "%1 file"
 msgid_plural "%1 files"
 msgstr[0] "%1 soubor"
-msgstr[1] "%1 soubory"
-msgstr[2] "%1 souborů"
+msgstr[1] "%1 souborů"
+msgstr[2] "%1 soubory"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:278
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:278
@@ -880,7 +880,7 @@ msgstr[2] "%1 souborů"
 #: ../src/app/qml/ui/FolderListPage.qml:278
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:278
 msgid "Open in a new tab"
-msgstr "Otevřít v novém panelu"
+msgstr "Otevřít v nové záložce"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:286
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:286
@@ -999,7 +999,7 @@ msgstr "Smazat"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:499
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "Jste si jistý, že chcete trvale odstranit '%1'?"
+msgstr "Opravdu chcete trvale odstranit '%1'?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:504
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:504
@@ -1147,7 +1147,7 @@ msgstr "Rozbalit soubor"
 #: ../src/app/qml/ui/FolderListPage.qml:674
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:674
 msgid "File operation error"
-msgstr "Chyba práce se soubory"
+msgstr "Chyba při práci se soubory"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:705
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:705
@@ -1259,7 +1259,7 @@ msgstr "~/Programy"
 #: ../src/app/qml/ui/FolderListPage.qml:872
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:872
 msgid "~/Templates"
-msgstr "~/Vzhledy"
+msgstr "~/Šablony"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:890
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:890
@@ -1327,7 +1327,7 @@ msgstr "Jít do místa"
 #: ../src/app/qml/ui/GoToDialog.qml:28
 #: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:28
 msgid "Enter a location to go to:"
-msgstr "Zadejte místo, do kterého chcete jít:"
+msgstr "Zadejte cílové místo pro otevření:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:45
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPage.qml:65
@@ -1572,7 +1572,7 @@ msgstr " neexistuje"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr "Nelze získat přístup k souboru nebo adresáři"
+msgstr "Nelze získat přístup k souboru nebo složce"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
@@ -1585,15 +1585,15 @@ msgstr "Nelze kopírovat/přesouvat položky"
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
 msgid "no write permission on folder "
-msgstr "Chybí práva zápisu složky "
+msgstr "Chybí práva zápisu do složky "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:692
 msgid "Could not remove the item "
-msgstr "Nelze odstranit předmět "
+msgstr "Položku nelze odstranit "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:733
 msgid "Could not find a suitable name to backup"
-msgstr "Nelze najít vhodné jméno pro zálohu"
+msgstr "Nelze nalézt vhodné jméno pro zálohu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:791
 msgid "Could not create the directory"
@@ -1641,7 +1641,7 @@ msgstr " Kopírování"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1510
 msgid "Set permissions error in "
-msgstr "Chyba přidání oprávnění v "
+msgstr "Chyba při nastavovaní oprávnění v "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1579
 msgid "Could not create trash info file"
@@ -1654,11 +1654,11 @@ msgstr "Nelze odstranit informace o souboru"
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1617
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1625
 msgid "Cannot move items"
-msgstr "Nelze přenést soubory"
+msgstr "Nelze přesunout soubory"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1619
 msgid "origin and destination folders are the same"
-msgstr "Výchozí a cílová složka je totožná"
+msgstr "výchozí a cílová složka je shodná"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
