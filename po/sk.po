@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-07 18:55+0000\n"
+"PO-Revision-Date: 2017-09-07 19:03+0000\n"
 "Last-Translator: t-h-e-p-e-t-e-r <peter.valachovic@gmail.com>\n"
 "Language-Team: Slovak <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/sk/>\n"
@@ -466,7 +466,7 @@ msgstr "Na prístup ku všetkým súborom sa vyžaduje heslo"
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr "heslo"
+msgstr "Heslo"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:31
@@ -509,7 +509,7 @@ msgstr "heslo"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr "Ok"
+msgstr "OK"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
@@ -759,9 +759,9 @@ msgstr "Operácia so súborom"
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] "Vložiť %1 súborov"
-msgstr[1] "Vložiť %1 súbor"
-msgstr[2] "Vložiť %1 súbory"
+msgstr[0] "Vložiť %1 súbor"
+msgstr[1] "Vložiť %1 súbory"
+msgstr[2] "Vložiť %1 súborov"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:67
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:67
@@ -867,9 +867,9 @@ msgstr "Zlyhalo overenie totožnosti"
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] "%1 súborov"
-msgstr[1] "%1 súbor"
-msgstr[2] "%1 súbory"
+msgstr[0] "%1 súbor"
+msgstr[1] "%1 súbory"
+msgstr[2] "%1 súborov"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:278
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:278
@@ -1491,7 +1491,7 @@ msgstr "Názvu"
 #: ../src/app/qml/ui/ViewPopover.qml:93
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr "Dátumu"
+msgstr "Dátum"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:103
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:103
