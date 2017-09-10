@@ -1,29 +1,28 @@
-# Italian translation for ubuntu-filemanager-app
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
-# This file is distributed under the same license as the ubuntu-filemanager-app package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Canonical Ltd.
+# This file is distributed under the same license as the  package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ubuntu-filemanager-app\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-07 21:27+0000\n"
-"Last-Translator: Mike <miguel2000@livecom.it>\n"
-"Language-Team: Italian <https://translate.ubports.com/projects/ubports"
-"/filemanager-app/it/>\n"
-"Language: it\n"
+"PO-Revision-Date: 2017-08-29 09:22+0000\n"
+"Last-Translator: Adrià <adriamartinmor@gmail.com>\n"
+"Language-Team: Sardinian <https://ubpweblate.tnvcomp.com/projects/ubports"
+"/filemanager-app/sc/>\n"
+"Language: sc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.15\n"
-"X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:138
 msgid "About Application"
-msgstr "Riguardo l'applicazione"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:139
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:139
@@ -31,149 +30,136 @@ msgid ""
 "The <b>Application</b> example demonstrates how to write modern GUI "
 "applications using Qt, with a menu bar, toolbars, and a status bar."
 msgstr ""
-"L'<b>Applicazione</b> di esempio dimostra come scrivere un'applicazione con "
-"una moderna interfaccia grafica usando Qt, con una barra del menu, toolbar e "
-"una barra di stato."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
 msgid "&New"
-msgstr "&Nuovo"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:159
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:159
 msgid "Create a new file"
-msgstr "Crea un nuovo file"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:163
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:163
 msgid "&Open..."
-msgstr "&Apri..."
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:165
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:165
 msgid "Open an existing file"
-msgstr "Apri un file esistente"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:169
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:169
 msgid "&Save"
-msgstr "&Salva"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:171
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:171
 msgid "Save the document to disk"
-msgstr "Salva il documento sul disco"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:174
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:174
-#, fuzzy
 msgid "Save &As..."
-msgstr "Salva Come..."
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:176
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:176
 msgid "Save the document under a new name"
-msgstr "Salva il documento con un nuovo nome"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:180
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:180
-#, fuzzy
 msgid "E&xit"
-msgstr "Esci"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:183
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:183
 msgid "Exit the application"
-msgstr "Chiudi l'applicazione"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:187
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:187
-#, fuzzy
 msgid "Cu&t"
-msgstr "Taglia"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:190
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:190
 msgid "Cut the current selection's contents to the clipboard"
-msgstr "Taglia il contenuto della la selezione corrente negli appunti"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:194
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:194
 msgid "&Copy"
-msgstr "&Copia"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:196
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:196
 msgid "Copy the current selection's contents to the clipboard"
-msgstr "Copia il contenuto della selezione corrente"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:200
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:200
-#, fuzzy
 msgid "&Paste"
-msgstr "Incolla"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:202
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:202
 msgid "Paste the clipboard's contents into the current selection"
-msgstr "Incolla il contenuto degli appunti nella selezione corrente"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:206
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:206
-#, fuzzy
 msgid "&About"
-msgstr "Riguardo"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:207
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:207
-#, fuzzy
 msgid "Show the application's About box"
-msgstr "Mostra il riquadro di Info dell'aplicazione"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:211
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:211
 msgid "About &Qt"
-msgstr "Riguardo &Qt"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:212
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:212
-#, fuzzy
 msgid "Show the Qt library's About box"
-msgstr "Mostra il riquadro di Info dilla libreria Qt"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:231
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:231
-#, fuzzy
 msgid "&File"
-msgstr "&File"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:242
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:242
-#, fuzzy
 msgid "&Edit"
-msgstr "Modifica"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:249
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:249
-#, fuzzy
 msgid "&Help"
-msgstr "Aiuto"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:258
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:258
 msgid "File"
-msgstr "File"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:265
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:265
 msgid "Edit"
-msgstr "Modifica"
+msgstr "Modìfica"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
 msgid "Ready"
-msgstr "Pronto"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:308
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:327
@@ -182,7 +168,7 @@ msgstr "Pronto"
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:327
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:354
 msgid "Application"
-msgstr "Applicazione"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:309
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:309
@@ -190,8 +176,6 @@ msgid ""
 "The document has been modified.\n"
 "Do you want to save your changes?"
 msgstr ""
-"Il documento è stato modificato.\n"
-"Vuoi salvare i cambiamenti?"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:328
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:328
@@ -200,35 +184,31 @@ msgid ""
 "Cannot read file %1:\n"
 "%2."
 msgstr ""
-"Non riesco a leggere il file %1:\n"
-"%2."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:344
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:344
 msgid "File loaded"
-msgstr "File caricato"
+msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:355
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:355
-#, fuzzy, qt-format
+#, qt-format
 msgid ""
 "Cannot write file %1:\n"
 "%2."
 msgstr ""
-"Non riesco a scrivere il file %1:\n"
-"%2."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:371
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:371
 msgid "File saved"
-msgstr "File salvato"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/po/ubuntu-filemanager-app.desktop.in.in.h:1
 #: ../parts/ubuntu-filemanager-app/src/qbuild/po/ubuntu-filemanager-app.desktop.in.in.h:1
 #: ../qbuild/po/ubuntu-filemanager-app.desktop.in.in.h:1
 #: ubuntu-filemanager-app.desktop.in.in.h:1
 msgid "File Manager"
-msgstr "Gestore file"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/components/FolderIconView.qml:57
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/components/FolderListView.qml:36
@@ -249,8 +229,8 @@ msgstr "Gestore file"
 #, qt-format
 msgid "%1 (%2 file)"
 msgid_plural "%1 (%2 files)"
-msgstr[0] "%1 (%2 file)"
-msgstr[1] "%1 (%2 file)"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/components/PathHistoryRow.qml:89
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:892
@@ -269,7 +249,7 @@ msgstr[1] "%1 (%2 file)"
 #: ../stage/usr/share/filemanager/qml/components/PathHistoryRow.qml:89
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:892
 msgid "Device"
-msgstr "Dispositivo"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/components/PlacesSidebar.qml:54
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:31
@@ -303,7 +283,7 @@ msgstr "Dispositivo"
 #: ../stage/usr/share/filemanager/qml/ui/PlacesPage.qml:31
 #: ../stage/usr/share/filemanager/qml/ui/PlacesPopover.qml:102
 msgid "Places"
-msgstr "Risorse"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/content-hub/FileOpener.qml:27
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/content-hub/FileOpener.qml:27
@@ -314,7 +294,7 @@ msgstr "Risorse"
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 #: ../stage/usr/share/filemanager/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
-msgstr "Apri con"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:83
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:114
@@ -340,7 +320,7 @@ msgstr "Apri con"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:114
 #: ../stage/usr/share/filemanager/qml/ui/SettingsSheet.qml:33
 msgid "Settings"
-msgstr "Impostazioni"
+msgstr "Cunfiguratzione"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:84
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:84
@@ -350,7 +330,7 @@ msgstr "Impostazioni"
 #: ../qbuild/src/app/qml/filemanager.qml:84 ../src/app/qml/filemanager.qml:84
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:84
 msgid "Change app settings"
-msgstr "Modifica impostazioni applicazione"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:299
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:418
@@ -376,7 +356,7 @@ msgstr "Modifica impostazioni applicazione"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:418
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:70
 msgid "Icons"
-msgstr "Icone"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:299
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:434
@@ -402,7 +382,7 @@ msgstr "Icone"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:434
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:71
 msgid "List"
-msgstr "Elenco"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:328
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:328
@@ -413,7 +393,7 @@ msgstr "Elenco"
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:328
 #, qt-format
 msgid "File %1"
-msgstr "File %1"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:328
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:328
@@ -424,7 +404,7 @@ msgstr "File %1"
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:328
 #, qt-format
 msgid "%1 Files"
-msgstr "%1 file"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:329
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:329
@@ -435,7 +415,7 @@ msgstr "%1 file"
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:329
 #, qt-format
 msgid "Saved to: %1"
-msgstr "Salvato in: %1"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:25
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:26
@@ -454,7 +434,7 @@ msgstr "Salvato in: %1"
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:25
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:26
 msgid "Authentication required"
-msgstr "Richiesta autenticazione"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
@@ -465,7 +445,7 @@ msgstr "Richiesta autenticazione"
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr "È richiesta la password per accedere a tutti i file"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:39
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
@@ -476,7 +456,7 @@ msgstr "È richiesta la password per accedere a tutti i file"
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr "password"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:31
@@ -519,7 +499,7 @@ msgstr "password"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr "OK"
+msgstr "AB"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
@@ -612,7 +592,7 @@ msgstr "Annulla"
 #: ../src/app/qml/ui/FileActionDialog.qml:30
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr "Scegli azione"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:31
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:31
@@ -624,7 +604,7 @@ msgstr "Scegli azione"
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr "Per il file: %1"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:35
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
@@ -635,7 +615,7 @@ msgstr "Per il file: %1"
 #: ../src/app/qml/ui/FileActionDialog.qml:35
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr "Apri"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
@@ -646,7 +626,7 @@ msgstr "Apri"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr "Leggibile"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:40
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:40
@@ -657,7 +637,7 @@ msgstr "Leggibile"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:40
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr "Scrivibile"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:43
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:43
@@ -668,7 +648,7 @@ msgstr "Scrivibile"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:43
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr "Eseguibile"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:95
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:95
@@ -679,7 +659,7 @@ msgstr "Eseguibile"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:95
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:95
 msgid "Path:"
-msgstr "Percorso:"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:106
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:106
@@ -690,7 +670,7 @@ msgstr "Percorso:"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:106
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:106
 msgid "Contents:"
-msgstr "Contenuti:"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:107
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:107
@@ -701,7 +681,7 @@ msgstr "Contenuti:"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:107
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:107
 msgid "Size:"
-msgstr "Dimensione:"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:116
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:116
@@ -712,7 +692,7 @@ msgstr "Dimensione:"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:116
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:116
 msgid "Accessed:"
-msgstr "Ultimo accesso:"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:125
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:125
@@ -723,7 +703,7 @@ msgstr "Ultimo accesso:"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:125
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:125
 msgid "Modified:"
-msgstr "Ultima modifica:"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:134
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:134
@@ -734,7 +714,7 @@ msgstr "Ultima modifica:"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:134
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:134
 msgid "Permissions:"
-msgstr "Permessi:"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileOperationProgressDialog.qml:27
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:27
@@ -745,7 +725,7 @@ msgstr "Permessi:"
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:27
 #: ../stage/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:27
 msgid "Operation in progress"
-msgstr "Operazione in corso"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileOperationProgressDialog.qml:29
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:29
@@ -756,7 +736,7 @@ msgstr "Operazione in corso"
 #: ../src/app/qml/ui/FileOperationProgressDialog.qml:29
 #: ../stage/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:29
 msgid "File operation"
-msgstr "Operazione sul file"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:63
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:63
@@ -769,8 +749,8 @@ msgstr "Operazione sul file"
 #, qt-format
 msgid "Paste %1 File"
 msgid_plural "Paste %1 Files"
-msgstr[0] "Incolla %1 file"
-msgstr[1] "Incolla %1 file"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:67
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:67
@@ -781,7 +761,7 @@ msgstr[1] "Incolla %1 file"
 #: ../src/app/qml/ui/FolderListPage.qml:67
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:67
 msgid "Paste files"
-msgstr "Incolla file"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:75
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:75
@@ -792,7 +772,7 @@ msgstr "Incolla file"
 #: ../src/app/qml/ui/FolderListPage.qml:75
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:75
 msgid "Clear clipboard"
-msgstr "Pulisci appunti"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:85
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:104
@@ -819,7 +799,7 @@ msgstr "Pulisci appunti"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:104
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:654
 msgid "Properties"
-msgstr "Proprietà"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:94
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:94
@@ -830,7 +810,7 @@ msgstr "Proprietà"
 #: ../src/app/qml/ui/FolderListPage.qml:94
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:94
 msgid "New Folder"
-msgstr "Nuova cartella"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:122
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:122
@@ -841,7 +821,7 @@ msgstr "Nuova cartella"
 #: ../src/app/qml/ui/FolderListPage.qml:122
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:122
 msgid "Go To"
-msgstr "Vai a"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:129
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:129
@@ -852,7 +832,7 @@ msgstr "Vai a"
 #: ../src/app/qml/ui/FolderListPage.qml:129
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:129
 msgid "Unlock full access"
-msgstr "Sblocca accesso completo"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:143
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:143
@@ -863,7 +843,7 @@ msgstr "Sblocca accesso completo"
 #: ../src/app/qml/ui/FolderListPage.qml:143
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:143
 msgid "Authentication failed"
-msgstr "Autenticazione non riuscita"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:224
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:224
@@ -876,8 +856,8 @@ msgstr "Autenticazione non riuscita"
 #, qt-format
 msgid "%1 file"
 msgid_plural "%1 files"
-msgstr[0] "%1 file"
-msgstr[1] "%1 file"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:278
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:278
@@ -888,7 +868,7 @@ msgstr[1] "%1 file"
 #: ../src/app/qml/ui/FolderListPage.qml:278
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:278
 msgid "Open in a new tab"
-msgstr "Apri in una nuova scheda"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:286
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:286
@@ -899,7 +879,7 @@ msgstr "Apri in una nuova scheda"
 #: ../src/app/qml/ui/FolderListPage.qml:286
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:286
 msgid "Close this tab"
-msgstr "Chiudi questa scheda"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:299
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:299
@@ -910,7 +890,7 @@ msgstr "Chiudi questa scheda"
 #: ../src/app/qml/ui/FolderListPage.qml:299
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:299
 msgid "Create folder"
-msgstr "Crea cartella"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:300
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:300
@@ -921,7 +901,7 @@ msgstr "Crea cartella"
 #: ../src/app/qml/ui/FolderListPage.qml:300
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:300
 msgid "Enter name for new folder"
-msgstr "Inserire il nome della nuova cartella"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:319
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:319
@@ -932,7 +912,7 @@ msgstr "Inserire il nome della nuova cartella"
 #: ../src/app/qml/ui/FolderListPage.qml:319
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:319
 msgid "Create file"
-msgstr "Crea file"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:320
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:320
@@ -943,7 +923,7 @@ msgstr "Crea file"
 #: ../src/app/qml/ui/FolderListPage.qml:320
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:320
 msgid "Enter name for new file"
-msgstr "Inserire il nome del nuovo file"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:376
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:376
@@ -954,7 +934,7 @@ msgstr "Inserire il nome del nuovo file"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Save"
-msgstr "Salva"
+msgstr "Sarva"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:376
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:376
@@ -965,7 +945,7 @@ msgstr "Salva"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Select"
-msgstr "Seleziona"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:478
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:478
@@ -976,7 +956,7 @@ msgstr "Seleziona"
 #: ../src/app/qml/ui/FolderListPage.qml:478
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:478
 msgid "No files"
-msgstr "Nessun file"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:498
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:607
@@ -995,7 +975,7 @@ msgstr "Nessun file"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:498
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:607
 msgid "Delete"
-msgstr "Elimina"
+msgstr "Cantzella"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:499
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:499
@@ -1007,7 +987,7 @@ msgstr "Elimina"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:499
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "Eliminare veramente in modo permanente \"%1\"?"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:504
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:504
@@ -1018,7 +998,7 @@ msgstr "Eliminare veramente in modo permanente \"%1\"?"
 #: ../src/app/qml/ui/FolderListPage.qml:504
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:504
 msgid "Deleting files"
-msgstr "Eliminazione file"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:522
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:620
@@ -1037,7 +1017,7 @@ msgstr "Eliminazione file"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:522
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:620
 msgid "Rename"
-msgstr "Rinomina"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:523
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:523
@@ -1048,7 +1028,7 @@ msgstr "Rinomina"
 #: ../src/app/qml/ui/FolderListPage.qml:523
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:523
 msgid "Enter a new name"
-msgstr "Inserire un nuovo nome"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:532
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:532
@@ -1059,7 +1039,7 @@ msgstr "Inserire un nuovo nome"
 #: ../src/app/qml/ui/FolderListPage.qml:532
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:532
 msgid "Could not rename"
-msgstr "Impossibile rinominare"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:533
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:533
@@ -1070,7 +1050,7 @@ msgstr "Impossibile rinominare"
 #: ../src/app/qml/ui/FolderListPage.qml:533
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:533
 msgid "Insufficient permissions or name already exists?"
-msgstr "Permessi insufficienti o nome già esistente"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:551
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:551
@@ -1081,7 +1061,7 @@ msgstr "Permessi insufficienti o nome già esistente"
 #: ../src/app/qml/ui/FolderListPage.qml:551
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:551
 msgid "Extract Archive"
-msgstr "Estrai archivio"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:552
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:552
@@ -1093,7 +1073,7 @@ msgstr "Estrai archivio"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:552
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr "Estrarre veramente \"%1\" qui?"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:584
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:584
@@ -1104,7 +1084,7 @@ msgstr "Estrarre veramente \"%1\" qui?"
 #: ../src/app/qml/ui/FolderListPage.qml:584
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:584
 msgid "Cut"
-msgstr "Taglia"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:595
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:595
@@ -1115,7 +1095,7 @@ msgstr "Taglia"
 #: ../src/app/qml/ui/FolderListPage.qml:595
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:595
 msgid "Copy"
-msgstr "Copia"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:634
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:634
@@ -1126,7 +1106,7 @@ msgstr "Copia"
 #: ../src/app/qml/ui/FolderListPage.qml:634
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:634
 msgid "Share"
-msgstr "Condividi"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:643
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:764
@@ -1145,7 +1125,7 @@ msgstr "Condividi"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:643
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:764
 msgid "Extract archive"
-msgstr "Estrai archivio"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:674
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:674
@@ -1155,7 +1135,7 @@ msgstr "Estrai archivio"
 #: ../src/app/qml/ui/FolderListPage.qml:674
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:674
 msgid "File operation error"
-msgstr "Errore di operazione su file"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:705
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:705
@@ -1167,7 +1147,7 @@ msgstr "Errore di operazione su file"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:705
 #, qt-format
 msgid "Extracting archive '%1'"
-msgstr "Estrazione archivio \"%1\""
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:741
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:741
@@ -1178,7 +1158,7 @@ msgstr "Estrazione archivio \"%1\""
 #: ../src/app/qml/ui/FolderListPage.qml:741
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:741
 msgid "Extracting failed"
-msgstr "Estrazione non riuscita"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:742
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:742
@@ -1190,7 +1170,7 @@ msgstr "Estrazione non riuscita"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:742
 #, qt-format
 msgid "Extracting the archive '%1' failed."
-msgstr "Estrazione dell'archivio \"%1\" non riuscita."
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:756
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:756
@@ -1201,7 +1181,7 @@ msgstr "Estrazione dell'archivio \"%1\" non riuscita."
 #: ../src/app/qml/ui/FolderListPage.qml:756
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:756
 msgid "Archive file"
-msgstr "File archivio"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:757
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:757
@@ -1212,7 +1192,7 @@ msgstr "File archivio"
 #: ../src/app/qml/ui/FolderListPage.qml:757
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:757
 msgid "Do you want to extract the archive here?"
-msgstr "Estrarre qui l'archivio?"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:774
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:774
@@ -1223,7 +1203,7 @@ msgstr "Estrarre qui l'archivio?"
 #: ../src/app/qml/ui/FolderListPage.qml:774
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:774
 msgid "Open with another app"
-msgstr "Apri con un'altra app"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:858
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:858
@@ -1234,7 +1214,7 @@ msgstr "Apri con un'altra app"
 #: ../src/app/qml/ui/FolderListPage.qml:858
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:858
 msgid "~/Desktop"
-msgstr "~/Scrivania"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:868
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:868
@@ -1245,7 +1225,7 @@ msgstr "~/Scrivania"
 #: ../src/app/qml/ui/FolderListPage.qml:868
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:868
 msgid "~/Public"
-msgstr "~/Pubblici"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:870
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:870
@@ -1256,7 +1236,7 @@ msgstr "~/Pubblici"
 #: ../src/app/qml/ui/FolderListPage.qml:870
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:870
 msgid "~/Programs"
-msgstr "~/Programmi"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:872
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:872
@@ -1267,7 +1247,7 @@ msgstr "~/Programmi"
 #: ../src/app/qml/ui/FolderListPage.qml:872
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:872
 msgid "~/Templates"
-msgstr "~/Modelli"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:890
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:890
@@ -1278,7 +1258,7 @@ msgstr "~/Modelli"
 #: ../src/app/qml/ui/FolderListPage.qml:890
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:890
 msgid "Home"
-msgstr "Home"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:894
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:894
@@ -1289,7 +1269,7 @@ msgstr "Home"
 #: ../src/app/qml/ui/FolderListPage.qml:894
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:894
 msgid "Network"
-msgstr "Rete"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:996
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:996
@@ -1300,7 +1280,7 @@ msgstr "Rete"
 #: ../src/app/qml/ui/FolderListPage.qml:996
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:996
 msgid "Folder not accessible"
-msgstr "Cartella non accessibile"
+msgstr ""
 
 #. TRANSLATORS: this refers to a folder name
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:998
@@ -1313,7 +1293,7 @@ msgstr "Cartella non accessibile"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:998
 #, qt-format
 msgid "Can not access %1"
-msgstr "Impossibile accedere a %1"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:26
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/GoToDialog.qml:26
@@ -1324,7 +1304,7 @@ msgstr "Impossibile accedere a %1"
 #: ../src/app/qml/ui/GoToDialog.qml:26
 #: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:26
 msgid "Go To Location"
-msgstr "Va alla posizione"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:28
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/GoToDialog.qml:28
@@ -1335,7 +1315,7 @@ msgstr "Va alla posizione"
 #: ../src/app/qml/ui/GoToDialog.qml:28
 #: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:28
 msgid "Enter a location to go to:"
-msgstr "Inserire la posizione da aprire:"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:45
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPage.qml:65
@@ -1361,7 +1341,7 @@ msgstr "Inserire la posizione da aprire:"
 #: ../stage/usr/share/filemanager/qml/ui/PlacesPage.qml:65
 #: ../stage/usr/share/filemanager/qml/ui/PlacesPopover.qml:66
 msgid "Location..."
-msgstr "Posizione..."
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:54
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPage.qml:80
@@ -1387,7 +1367,7 @@ msgstr "Posizione..."
 #: ../stage/usr/share/filemanager/qml/ui/PlacesPage.qml:80
 #: ../stage/usr/share/filemanager/qml/ui/PlacesPopover.qml:81
 msgid "Go"
-msgstr "Vai"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:55
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:55
@@ -1398,7 +1378,7 @@ msgstr "Vai"
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:55
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr "Utente"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:66
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:66
@@ -1409,7 +1389,7 @@ msgstr "Utente"
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:66
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr "Password"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:79
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:79
@@ -1420,7 +1400,7 @@ msgstr "Password"
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:79
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr "Salvare la password"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
@@ -1431,7 +1411,7 @@ msgstr "Salvare la password"
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
-msgstr "Ok"
+msgstr "AB"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/SettingsSheet.qml:45
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
@@ -1442,7 +1422,7 @@ msgstr "Ok"
 #: ../src/app/qml/ui/SettingsSheet.qml:45
 #: ../stage/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
 msgid "Show Advanced Features"
-msgstr "Mostra funzioni avanzante"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:39
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:39
@@ -1453,7 +1433,7 @@ msgstr "Mostra funzioni avanzante"
 #: ../src/app/qml/ui/ViewPopover.qml:39
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr "Mostra file nascosti"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:59
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:59
@@ -1464,7 +1444,7 @@ msgstr "Mostra file nascosti"
 #: ../src/app/qml/ui/ViewPopover.qml:59
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr "Visualizza come"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:81
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:81
@@ -1475,7 +1455,7 @@ msgstr "Visualizza come"
 #: ../src/app/qml/ui/ViewPopover.qml:81
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr "Ordina per"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:92
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:92
@@ -1486,7 +1466,7 @@ msgstr "Ordina per"
 #: ../src/app/qml/ui/ViewPopover.qml:92
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr "Nome"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:93
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:93
@@ -1508,7 +1488,7 @@ msgstr "Data"
 #: ../src/app/qml/ui/ViewPopover.qml:103
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr "Ordinamento"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:114
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:119
@@ -1526,7 +1506,7 @@ msgstr "Ordinamento"
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:114
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr "Crescente"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:115
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:115
@@ -1537,7 +1517,7 @@ msgstr "Crescente"
 #: ../src/app/qml/ui/ViewPopover.qml:115
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr "Decrescente"
+msgstr ""
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:127
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:127
@@ -1548,134 +1528,134 @@ msgstr "Decrescente"
 #: ../src/app/qml/ui/ViewPopover.qml:127
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:127
 msgid "Filter"
-msgstr "Filtra"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr "Sconosciuto"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
-msgstr "Il percorso o l'url potrebbero non esistere o non essere leggibili"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:682
 msgid "Rename error"
-msgstr "Errore nel rinominare"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:703
 msgid "Error creating new folder"
-msgstr "Errore nel creare la nuova cartella"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1351
 msgid "items"
-msgstr "elementi"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:327
 msgid "File or Directory does not exist"
-msgstr "File o directory non esistente"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:328
 msgid " does not exist"
-msgstr " non esite"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr "Impossibile accedere al file o alla directory"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr " richiede l'autenticazione"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
-msgstr "Impossibile copiare/spostare gli elementi"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
 msgid "no write permission on folder "
-msgstr "Permessi di scrittura mancanti sulla cartella "
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:692
 msgid "Could not remove the item "
-msgstr "Impossibile rimuovere l'elemento "
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:733
 msgid "Could not find a suitable name to backup"
-msgstr "Impossibile trovare un nome adeguato per il backup"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:791
 msgid "Could not create the directory"
-msgstr "Impossibile creare la directory"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:800
 msgid "Could not create link to"
-msgstr "Impossibile creare il collegamento a"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:812
 msgid "Could not set permissions to dir"
-msgstr "Impossibile impostare i permessi per la directory"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:826
 msgid "Could not open file"
-msgstr "Impossibile aprire il file"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr "Spazio insufficiente per copiare"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
-msgstr "Impossibile creare il file"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:920
 msgid "Could not remove the directory/file "
-msgstr "Impossibile rimuovere "
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:936
 msgid "Could not move the directory/file "
-msgstr "Impossibile spostare "
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1196
 msgid "Write error in "
-msgstr "Errore di scrittura in "
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1212
 msgid "Read error in "
-msgstr "Errore di lettura in "
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1450
 msgid " Copy"
-msgstr " copia"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1510
 msgid "Set permissions error in "
-msgstr "Errore nell'impostazione dei permessi in "
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1579
 msgid "Could not create trash info file"
-msgstr "Impossibile creare il file info del cestino"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1592
 msgid "Could not remove the trash info file"
-msgstr "Impossibile rimuovere il file info del cestino"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1617
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1625
 msgid "Cannot move items"
-msgstr "Impossibile spostare l'elemento"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1619
 msgid "origin and destination folders are the same"
-msgstr "Le cartelle di origine e destinazione sono le stesse"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr "Spazio insufficiente per scaricare"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
-msgstr "strumento di rete non trovato, verificare l'installazione di samba"
+msgstr ""
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
-msgstr "impossibile scrivere in "
+msgstr ""

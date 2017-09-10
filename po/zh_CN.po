@@ -8,15 +8,17 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2015-08-06 02:18+0000\n"
-"Last-Translator: Cheng Lu <chenglu1990@gmail.com>\n"
-"Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
+"PO-Revision-Date: 2017-07-20 13:21+0000\n"
+"Last-Translator: wangyou <1078360711@qq.com>\n"
+"Language-Team: Chinese (Simplified) "
+"<https://ubpweblate.tnvcomp.com/projects/ubports/filemanager-app/zh_Hans/>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 2.15\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
-"X-Generator: Launchpad (build 18343)\n"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:138
@@ -148,12 +150,12 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:258
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:258
 msgid "File"
-msgstr ""
+msgstr "文件"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:265
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:265
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
@@ -930,7 +932,7 @@ msgstr "输入新文件名称"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:376
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:376
@@ -941,7 +943,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Select"
-msgstr "选定"
+msgstr "选择"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:478
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:478
@@ -1102,7 +1104,7 @@ msgstr "复制"
 #: ../src/app/qml/ui/FolderListPage.qml:634
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:634
 msgid "Share"
-msgstr ""
+msgstr "分享"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:643
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:764
@@ -1254,7 +1256,7 @@ msgstr "~/模版"
 #: ../src/app/qml/ui/FolderListPage.qml:890
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:890
 msgid "Home"
-msgstr "主文件夹"
+msgstr "主页"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:894
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:894
@@ -1528,7 +1530,7 @@ msgstr "筛选"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr ""
+msgstr "未知"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"

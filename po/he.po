@@ -8,15 +8,17 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2014-05-19 07:23+0000\n"
-"Last-Translator: Yaron <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew <he@li.org>\n"
+"PO-Revision-Date: 2017-07-17 08:58+0000\n"
+"Last-Translator: Eran <etherpulse@gmail.com>\n"
+"Language-Team: Hebrew <https://ubpweblate.tnvcomp.com/projects/ubports"
+"/filemanager-app/he/>\n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.15\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
-"X-Generator: Launchpad (build 18343)\n"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:138
@@ -153,7 +155,7 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:265
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:265
 msgid "Edit"
-msgstr ""
+msgstr "עריכה"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
@@ -933,7 +935,7 @@ msgstr "נא להזין שם לקובץ החדש"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Save"
-msgstr ""
+msgstr "שמירה"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:376
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:376
@@ -944,7 +946,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Select"
-msgstr ""
+msgstr "בחירה"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:478
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:478
@@ -1105,7 +1107,7 @@ msgstr "העתקה"
 #: ../src/app/qml/ui/FolderListPage.qml:634
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:634
 msgid "Share"
-msgstr ""
+msgstr "שיתוף"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:643
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:764
@@ -1388,7 +1390,7 @@ msgstr ""
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:66
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr ""
+msgstr "סיסמה"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:79
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:79
