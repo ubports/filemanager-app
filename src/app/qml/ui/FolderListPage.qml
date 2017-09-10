@@ -372,7 +372,7 @@ PageWithBottomEdge {
             var result = 0
             for (var i = 0; i < selectionManager.counter; i++)
             {
-                result += !(paths[i].indexOf("/home/phablet/.") === -1)
+                result += (paths[i].indexOf("/home/phablet/.") !== -1) && pageModel.path === "/home/phablet"
             }
             return result === 0
         }
