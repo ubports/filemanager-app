@@ -8,6 +8,7 @@ set(filemanager_SRCS
 add_executable(filemanager ${filemanager_SRCS})
 
 qt5_use_modules(filemanager Gui Qml Quick)
+target_link_libraries(filemanager stdc++)
 
 if(NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
 add_custom_target(filemanager-qmlfiles ALL
