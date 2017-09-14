@@ -44,6 +44,7 @@ Item {
                 actions: [
                     Action {
                         iconName: "edit-delete"
+                        text: i18n.tr("Delete")
                         visible: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
                         onTriggered: {
                             PopupUtils.open(confirmSingleDeleteDialog, folderListPage,
@@ -54,6 +55,7 @@ Item {
                     },
                     Action {
                         iconName: "edit"
+                        text: i18n.tr("Rename")
                         visible: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
                         onTriggered: {
                             PopupUtils.open(confirmRenameDialog, folderListPage,
@@ -68,6 +70,7 @@ Item {
                 actions: [
                     Action {
                         iconName: "application-x-archive-symbolic"
+                        text: i18n.tr("Extract archive")
                         visible: getArchiveType(model.fileName) !== ""
                         onTriggered: {
                             openFile(model, true)
@@ -75,6 +78,7 @@ Item {
                     },
                     Action {
                         iconName: "info"
+                        text: i18n.tr("Properties")
                         onTriggered: {
                             PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"),
                                             folderListPage,
@@ -85,6 +89,7 @@ Item {
                     },
                     Action {
                         iconName: "edit-cut"
+                        text: i18n.tr("Cut")
                         visible: (model.filePath.indexOf("/home/phablet/.") === -1) && pathIsWritable()
                         onTriggered: {
                             pageModel.cutIndex(model.index)
@@ -93,6 +98,7 @@ Item {
                     },
                     Action {
                         iconName: "edit-copy"
+                        text: i18n.tr("Copy")
                         onTriggered: {
                             pageModel.copyIndex(model.index)
                             helpClipboard = true
@@ -100,6 +106,7 @@ Item {
                     },
                     Action {
                         iconName: "share"
+                        text: i18n.tr("Share")
                         visible: !model.isDir
                         onTriggered: {
                             openFile(model, true)
