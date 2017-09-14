@@ -1,1 +1,10 @@
 *.qmlproject.user
+
+.build
+po/Makefile
+debian/files
+debian/app-template/
+debian/*.debhelper.log
+debian/*.substvars
+.excludes
+*.user
