@@ -267,35 +267,6 @@ PageWithBottomEdge {
     }
 
     Component {
-        id: tabsPopover
-        ActionSelectionPopover {
-            objectName: "tabsPopover"
-
-            property var tab
-
-            grabDismissAreaEvents: true
-
-            actions: ActionList {
-                Action {
-                    text: i18n.tr("Open in a new tab")
-                    onTriggered: {
-                        openTab(folderListPage.folder)
-                    }
-                }
-
-                // The current tab can be closed as long as there is at least one tab remaining
-                Action {
-                    text: i18n.tr("Close this tab")
-                    onTriggered: {
-                        closeTab(tab.index)
-                    }
-                    enabled: tabs.count > 1
-                }
-            }
-        }
-    }
-
-    Component {
         id: createFolderDialog
         ConfirmDialogWithInput {
             title: i18n.tr("Create folder")
