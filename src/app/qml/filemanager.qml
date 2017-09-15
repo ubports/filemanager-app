@@ -19,7 +19,6 @@ import QtQuick 2.4
 import Ubuntu.Components 1.3
 import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 1.3
-import Ubuntu.Unity.Action 1.1 as UnityActions
 import U1db 1.0 as U1db
 import Ubuntu.Content 1.3
 import com.ubuntu.PlacesModel 0.1
