@@ -90,21 +90,6 @@ MainView {
 
     property var pageStack: pageStack
 
-    property var folderTabs: ["/home"]
-
-    function openTab(folder) {
-        var list = folderTabs
-        list.push(folder)
-        folderTabs = list
-    }
-
-    function closeTab(index) {
-        var list = folderTabs
-        list.splice(index, 1)
-        folderTabs = list
-        tabs.selectedTabIndex = 0
-    }
-
     function openFileSelector(selectFolderMode) {
         fileSelector.fileSelectorComponent = pageStack.push(Qt.resolvedUrl("./ui/FolderListPage.qml"), { fileSelectorMode: !selectFolderMode,
                                                                 folderSelectorMode: selectFolderMode,
