@@ -111,14 +111,6 @@ PageWithBottomEdge {
                     }
                 },
                 Action {
-                    id: settingsButton
-                    iconName: "settings"
-                    objectName: "settings"
-                    text: i18n.tr("Settings")
-                    visible: sidebar.expanded
-                    onTriggered: pageStack.push(settingsPage);
-                },
-                Action {
                     id: gotoButton
                     iconName: "find"
                     objectName:"Find"
@@ -156,10 +148,7 @@ PageWithBottomEdge {
     }
 
     property variant fileView: folderListPage
-    property bool showHiddenFiles: showAll
     property bool showingListView: folderListView.visible
-    property string sortingMethod: "Name"
-    property bool sortAscending: true
     property string folder
     property bool loading: pageModel.awaitingResults
     property bool __pathIsWritable: false
@@ -173,32 +162,6 @@ PageWithBottomEdge {
     property FolderListSelection selectionManager: pageModel.selectionObject()
 
     readonly property bool __anchorToHeader: sidebar.expanded
-
-    onShowHiddenFilesChanged: {
-        pageModel.showHiddenFiles = folderListPage.showHiddenFiles
-    }
-
-    onSortingMethodChanged: {
-        console.log("Sorting by: " + sortingMethod)
-        if (sortingMethod === "Name") {
-            pageModel.sortBy = FolderListModel.SortByName
-        } else if (sortingMethod === "Date") {
-            pageModel.sortBy = FolderListModel.SortByDate
-        } else {
-            // Something fatal happened!
-            console.log("ERROR: Invalid sort type:", sortingMethod)
-        }
-    }
-
-    onSortAscendingChanged: {
-        console.log("Sorting ascending: " + sortAscending)
-
-        if (sortAscending) {
-            pageModel.sortOrder = FolderListModel.SortAscending
-        } else {
-            pageModel.sortOrder = FolderListModel.SortDescending
-        }
-    }
 
     onFlickableChanged: {
         if (flickable === null) {
@@ -255,6 +218,27 @@ PageWithBottomEdge {
         }
         onOnlyAllowedPathsChanged: checkIfIsWritable()
         onPathChanged: checkIfIsWritable()
+
+
+        // Following properties are set from global settings, available in filemanager.qml
+        showHiddenFiles: settings.showHidden
+        sortOrder: {
+            switch (settings.sortOrder) {
+            case 0:
+                return FolderListModel.SortAscending
+            case 1:
+                return FolderListModel.SortDescending
+            }
+        }
+
+        sortBy: {
+            switch (settings.sortBy) {
+            case 0:
+                return FolderListModel.SortByName
+            case 1:
+                return FolderListModel.SortByDate
+            }
+        }
     }
 
     FolderListModel {
@@ -451,6 +435,8 @@ PageWithBottomEdge {
         }
     }
 
+    // TODO: Use QML Loader for showing the right Folder*View
+
     FolderIconView {
         id: folderIconView
 
@@ -464,7 +450,7 @@ PageWithBottomEdge {
             right: parent.right
         }
         smallMode: !sidebar.expanded
-        visible: viewMethod === i18n.tr("Icons")
+        visible: settings.viewMethod === 1  // Grid
     }
 
     FolderListView {
@@ -480,7 +466,7 @@ PageWithBottomEdge {
             right: parent.right
         }
         smallMode: !sidebar.expanded
-        visible: viewMethod === i18n.tr("List")
+        visible: settings.viewMethod === 0  // List
     }
 
     function getArchiveType(fileName) {

@@ -24,7 +24,7 @@ ListItem {
     objectName: "folder" + index
 
     property string fileName: model.fileName
-    property string filePath: path
+    property string filePath: model.filePath
     height: layout.height
     // Because Flickable is used over ListView??
     // we cannot set the highlight component so

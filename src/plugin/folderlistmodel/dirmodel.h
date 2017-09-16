@@ -36,6 +36,7 @@
 #include <QStringList>
 #include <QDir>
 #include <QSet>
+#include <QQmlParserStatus>
 
 #include "iorequest.h"
 #include "filecompare.h"
@@ -50,7 +51,7 @@ class Location;
 class ExternalFSWatcher;
 class NetAuthenticationDataList;
 
-class DirModel : public DirItemAbstractListModel
+class DirModel : public DirItemAbstractListModel, public QQmlParserStatus
 {
     Q_OBJECT
 public:
@@ -182,6 +183,15 @@ private:
 public:
 
     Q_INVOKABLE DirSelection * selectionObject() const ;
+
+    //[1] new stuff UBports
+private:
+    bool mQmlCompleted;
+    QString mQmlCachePath;
+public:
+    void classBegin();
+    // WORKAROUND: check componentComplete() definition in .cpp file
+    void componentComplete();
 
     //[0] new stuff Ubuntu File Manager
     Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
