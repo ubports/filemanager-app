@@ -45,7 +45,7 @@ Item {
                     Action {
                         iconName: "edit-delete"
                         text: i18n.tr("Delete")
-                        visible: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
+                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
                         onTriggered: {
                             PopupUtils.open(confirmSingleDeleteDialog, folderListPage,
                                             { "filePath" : model.filePath,
@@ -56,7 +56,7 @@ Item {
                     Action {
                         iconName: "edit"
                         text: i18n.tr("Rename")
-                        visible: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
+                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
                         onTriggered: {
                             PopupUtils.open(confirmRenameDialog, folderListPage,
                                             { "modelRow"  : model.index,
@@ -90,7 +90,7 @@ Item {
                     Action {
                         iconName: "edit-cut"
                         text: i18n.tr("Cut")
-                        visible: (model.filePath.indexOf("/home/phablet/.") === -1) && pathIsWritable()
+                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
                         onTriggered: {
                             pageModel.cutIndex(model.index)
                             helpClipboard = true

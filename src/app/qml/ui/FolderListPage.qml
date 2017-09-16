@@ -363,7 +363,7 @@ PageWithBottomEdge {
             anchors.topMargin: units.gu(1)
             color: "#F5F5F5"
             iconName: "edit-cut"
-            enabled: ((selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)) && parent.checkIfOnlyAllowed(selectionManager.selectedAbsFilePaths())
+            enabled: ((selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)) // we should discuss that: && parent.checkIfOnlyAllowed(selectionManager.selectedAbsFilePaths())
             visible: selectionMode && !isContentHub && pathIsWritable()
             onClicked: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
@@ -399,7 +399,7 @@ PageWithBottomEdge {
             anchors.topMargin: units.gu(1)
             color: "#F5F5F5"
             iconName: "edit-delete"
-            enabled: ((selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)) && parent.checkIfOnlyAllowed(selectionManager.selectedAbsFilePaths())
+            enabled: ((selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)) // we should discuss that: && parent.checkIfOnlyAllowed(selectionManager.selectedAbsFilePaths())
             visible: selectionMode && !isContentHub && pathIsWritable()
             onClicked: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
