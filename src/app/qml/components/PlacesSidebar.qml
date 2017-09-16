@@ -28,13 +28,11 @@ Sidebar {
     color: UbuntuColors.porcelain
     width: expanded ? (collapsed ? units.gu(8) : units.gu(22)) : 0
 
-    property bool collapsed: collapsedSidebar
+    property bool collapsed: settings.collapsedSidebar
 
     MouseArea {
         anchors.fill: parent
-        onClicked: {
-            saveSetting("collapsedSidebar", !collapsedSidebar)
-        }
+        onClicked: settings.collapsedSidebar = !settings.collapsedSidebar
     }
 
     property bool tempExpanded: false

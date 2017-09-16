@@ -19,7 +19,7 @@ import QtQuick 2.4
 import Ubuntu.Components 1.3
 import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 1.3
-import U1db 1.0 as U1db
+import Qt.labs.settings 1.0
 import Ubuntu.Content 1.3
 import com.ubuntu.PlacesModel 0.1
 import com.ubuntu.PamAuthentication 0.1
@@ -37,8 +37,7 @@ MainView {
 
     property alias filemanager: mainView
 
-    property bool wideAspect: width > units.gu(50) && loaded
-    property bool loaded: false
+    property bool wideAspect: width > units.gu(50)
 
     property bool allowSidebarExpanded: width > units.gu(50)
     property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()
@@ -48,7 +47,7 @@ MainView {
 
     onAllowSidebarExpandedChanged: {
         if (!allowSidebarExpanded)
-            saveSetting("collapsedSidebar", true)
+            settings.collapsedSidebar = true
     }
 
     property bool showSidebar: width >= units.gu(50)
@@ -77,16 +76,6 @@ MainView {
         id: pamAuthentication
         serviceName: "filemanager"
     }
-
-    // HUD Actions
-    Action {
-        id: settingsAction
-        text: i18n.tr("Settings")
-        description: i18n.tr("Change app settings")
-        iconSource: getIcon("settings")
-        onTriggered: showSettings()
-    }
-    actions: [settingsAction]
 
     property var pageStack: pageStack
 
@@ -166,80 +155,17 @@ MainView {
 
     PageStack {
         id: pageStack
-
-         Component.onCompleted: {
-            reloadSettings()
-            pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"), { folder: userplaces.locationHome })
-            loaded = true
-        }
     }
 
     /* Settings Storage */
-
-    U1db.Database {
-        id: storage
-        path: "ubuntu-filemanager-app.db"
-    }
-
-    U1db.Document {
-        id: settings
-
-        database: storage
-        docId: 'settings'
-        create: true
-
-        defaults: {
-            showAdvancedFeatures: false
-            collapsedSidebar: false
-        }
-    }
-
-    // Individual settings, used for bindings
-    property bool showAdvancedFeatures: false
-
-    property var viewMethod
-
-    property bool showAll
-
-    property bool collapsedSidebar: false
-
-    function getSetting(name, def) {
-        var tempContents = {};
-        tempContents = settings.contents
-        var value = tempContents.hasOwnProperty(name)
-                ? tempContents[name]
-                : settings.defaults.hasOwnProperty(name)
-                  ? settings.defaults[name]
-                  : def
-        //print(name, JSON.stringify(def), JSON.stringify(value))
-        return value
-    }
-
-    function saveSetting(name, value) {
-        if (getSetting(name) !== value) {
-            //print(name, "=>", value)
-            var tempContents = {}
-            tempContents = settings.contents
-            tempContents[name] = value
-            settings.contents = tempContents
-
-            reloadSettings()
-        }
-    }
-
-    function showSettings() {
-        PopupUtils.open(Qt.resolvedUrl("ui/SettingsSheet.qml"), mainView)
-    }
-
-    function reloadSettings() {
-        //showAdvancedFeatures = getSetting("showAdvancedFeatures", false)
-        viewMethod = getSetting("viewMethod", wideAspect ? i18n.tr("Icons") : i18n.tr("List"))
-        showAll = getSetting("showHiddenFiles", false)
-        collapsedSidebar = getSetting("collapsedSidebar", false)
-    }
-
-    Component.onCompleted: {
-        reloadSettings()
+    property alias settings: settingsObj
+    Settings {
+        id: settingsObj
+        property bool collapsedSidebar: false
+        property int viewMethod: 0  // 0=List; 1=Grid
+        property bool showHidden: false
+        property int sortOrder: 0   // 0=Ascending; 1=Descending
+        property int sortBy: 0  // 0=Name; 1=Date
     }
 
     function getIcon(name) {
@@ -271,5 +197,9 @@ MainView {
     Keys.onPressed: {
         print("Key pressed!")
         event.accepted = tabs.currentPage.keyPressed(event.key, event.modifiers)
+    }
+
+    Component.onCompleted:  {
+        pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"), { folder: userplaces.locationHome })
     }
 }
