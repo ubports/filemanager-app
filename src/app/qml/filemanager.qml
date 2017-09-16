@@ -93,7 +93,7 @@ MainView {
     function openFileSelector(selectFolderMode) {
         fileSelector.fileSelectorComponent = pageStack.push(Qt.resolvedUrl("./ui/FolderListPage.qml"), { fileSelectorMode: !selectFolderMode,
                                                                 folderSelectorMode: selectFolderMode,
-                                                                folder: "/home"})
+                                                                folder: userplaces.locationHome })
     }
 
     function cancelFileSelector() {
@@ -169,7 +169,7 @@ MainView {
 
          Component.onCompleted: {
             reloadSettings()
-            pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"), { folder: "/home" })
+            pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"), { folder: userplaces.locationHome })
             loaded = true
         }
     }
