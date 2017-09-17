@@ -17,7 +17,6 @@
  */
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3 as OldListItems
 import Ubuntu.Components.Popups 1.3
 import org.nemomobile.folderlistmodel 1.0
 
@@ -31,11 +30,10 @@ Item {
         anchors.fill: parent
         model: folderListModel
         // This must be visible so Autopilot can see it
-        header: OldListItems.Header {
+        header: SectionDivider {
             objectName: "listViewSmallHeader"
             text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(folderPath).arg(root.count)
             height: smallMode ? units.gu(4) : 0
-            clip: true
         }
 
         delegate: FolderListDelegate {

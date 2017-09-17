@@ -18,7 +18,6 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
-import Ubuntu.Components.ListItems 1.3 as ListItem
 
 Item {
     id: root
@@ -29,25 +28,17 @@ Item {
     property Flickable flickable: flickable
     property bool smallMode: !wideAspect
 
-    Flickable {
+    ScrollView {
         id: flickable
         clip: true
         anchors.fill: parent
 
-        contentWidth: width
-        contentHeight: column.height
-
         Column {
             id: column
-
-            anchors {
-                left: parent.left
-                top: parent.top
-                right: parent.right
-            }
+            width: scrollView.width
 
             // This must be visible so Autopilot can see it
-            ListItem.Header {
+            SectionDivider {
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -56,7 +47,6 @@ Item {
                 objectName: "iconViewHeader"
                 text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(root.folderPath).arg(root.count)
                 height: smallMode ? units.gu(4) : 0
-                clip: true
             }
 
             AutoSpacedGrid {
@@ -78,9 +68,5 @@ Item {
                 }
             }
         }
-    }
-
-    Scrollbar {
-        flickableItem: flickable
     }
 }
