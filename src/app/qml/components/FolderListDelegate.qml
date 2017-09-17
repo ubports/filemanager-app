@@ -17,7 +17,6 @@
  */
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3
 import org.nemomobile.folderlistmodel 1.0
 
 ListItem {
@@ -42,7 +41,7 @@ ListItem {
 
         Icon {
             property string path: fileView.folder + '/' + model.fileName
-            source: fileIcon(path, model)
+            name: model.iconName
             height: units.gu(5); width: height
             SlotsLayout.position: SlotsLayout.Leading
         }

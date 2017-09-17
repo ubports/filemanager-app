@@ -19,50 +19,31 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
-import Ubuntu.Components.ListItems 1.3
 import org.nemomobile.folderlistmodel 1.0
 import com.ubuntu.Archives 0.1
 import "../components"
-import "../upstream"
+import "../actions" as FMActions
 
-PageWithBottomEdge {
+Page {
     id: folderListPage
-
-    bottomEdgeTitle: i18n.tr("Places")
-    bottomEdgeEnabled: !sidebar.expanded
-    bottomEdgePageSource: Qt.resolvedUrl("PlacesPage.qml")
 
     property bool helpClipboard: false
 
     header: PageHeader {
         title: basename(folder)
         contents: PathHistoryRow {}
-        flickable: !sidebar.expanded ?
-                       (folderListView.visible ? folderListView.flickable : folderIconView.flickable) : null
         leadingActionBar.actions: [
             /* Go to last folder visited */
-            Action {
-                id: back
-                objectName: "back"
-                iconName: "back"
-
-                onTriggered: {
-                    goBack()
-                }
+            FMActions.GoBack {
+                onTriggered: goBack()
             }
         ]
+
         trailingActionBar {
             numberOfSlots: 3
             actions: [
-                Action {
-                    id: pasteButton
-                    objectName: "paste"
-                    iconName: "edit-paste"
-                    // Translation message was implemented according to:
-                    // http://developer.ubuntu.com/api/qml/sdk-14.04/Ubuntu.Components.i18n/
-                    // It allows correct translation for languages with more than two plural forms:
-                    // http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
-                    text: i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
+                FMActions.FilePaste {
+                    clipboardUrlsCounter: pageModel.clipboardUrlsCounter
                     visible: helpClipboard // pageModel.clipboardUrlsCounter > 0
                     onTriggered: {
                         console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
@@ -70,11 +51,9 @@ PageWithBottomEdge {
                         pageModel.paste()
                     }
                 },
-                Action {
-                    id: clearClipboardButton
-                    objectName: "clearClipboard"
-                    iconName: "edit-clear"
-                    text: i18n.tr("Clear clipboard")
+
+                FMActions.FileClearSelection {
+                    clipboardUrlsCounter: pageModel.clipboardUrlsCounter
                     visible: helpClipboard // pageModel.clipboardUrlsCounter > 0
                     onTriggered: {
                         console.log("Clearing clipboard")
@@ -82,61 +61,44 @@ PageWithBottomEdge {
                         helpClipboard = false
                     }
                 },
-                Action {
-                    id: optionsButton
-                    iconName: "view-list-symbolic"
-                    text: i18n.tr("Properties")
-                    onTriggered: {
-                        PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent)
-                    }
+
+                FMActions.Settings {
+                    onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent)
                 },
-                Action {
-                    id: createNewFolder
-                    objectName: "createFolder"
-                    iconName: "add"
-                    text: i18n.tr("New Folder")
+
+                FMActions.NewFolder {
                     visible: folderListPage.__pathIsWritable
                     onTriggered: {
                         print(text)
                         PopupUtils.open(createFolderDialog, folderListPage)
                     }
                 },
-                Action {
-                    id: viewProperties
-                    iconName: "info"
-                    text: i18n.tr("Properties")
+
+                FMActions.Properties {
                     onTriggered: {
                         print(text)
                         PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), folderListPage,{ "model": pageModel})
                     }
                 },
-                Action {
-                    id: gotoButton
-                    iconName: "find"
-                    objectName:"Find"
-                    text: i18n.tr("Go To")
+
+                FMActions.GoTo {
                     visible: sidebar.expanded
                     onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
                 },
-                Action {
-                    id: unlockButton
-                    iconName: "lock"
-                    text: i18n.tr("Unlock full access")
+
+                FMActions.UnlockFullAccess {
                     visible: pageModel.onlyAllowedPaths
                     onTriggered: {
                         console.log("Full access clicked")
-                        var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
-                                                         folderListPage)
+                        var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"), folderListPage)
 
                         authDialog.passwordEntered.connect(function(password) {
                             if (pamAuthentication.validatePasswordToken(password)) {
                                 console.log("Authenticated for full access")
                                 mainView.fullAccessGranted = true
                             } else {
-                                PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
-                                                {
-                                                    title: i18n.tr("Authentication failed")
-                                                })
+                                var props = { title: i18n.tr("Authentication failed") }
+                                PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage, props)
 
                                 console.log("Could not authenticate")
                             }
@@ -161,51 +123,15 @@ PageWithBottomEdge {
 
     property FolderListSelection selectionManager: pageModel.selectionObject()
 
-    readonly property bool __anchorToHeader: sidebar.expanded
-
-    onFlickableChanged: {
-        if (flickable === null) {
-            folderListView.topMargin = 0
-            folderIconView.flickable.topMargin = 0
-        } else {
-            folderListView.topMargin = units.gu(9.5)
-            folderIconView.flickable.topMargin = units.gu(9.5)
-        }
-    }
-
     NetAuthenticationHandler {
         id: authenticationHandler
     }
 
-    FolderListModel {
+    FolderListModelBackend {
         id: pageModel
         path: folderListPage.folder
-        enableExternalFSWatcher: true
         onlyAllowedPaths: !mainView.fullAccessGranted
 
-        // Properties to emulate a model entry for use by FileDetailsPopover
-        property bool isDir: true
-        property string fileName: pathName(pageModel.path)
-        property string fileSize: i18n.tr("%1 file", "%1 files", folderListView.count).arg(folderListView.count)
-        property bool isReadable: true
-        property bool isExecutable: true
-
-        function checkIfIsWritable() {
-            if (pageModel.path) {
-                folderListPage.__pathIsWritable = pageModel.curPathIsWritable() &&
-                        (!pageModel.onlyAllowedPaths || pageModel.isAllowedPath(path))
-            }
-        }
-
-
-        Component.onCompleted: {
-            // Add default allowed paths
-            addAllowedDirectory(userplaces.locationDocuments)
-            addAllowedDirectory(userplaces.locationDownloads)
-            addAllowedDirectory(userplaces.locationMusic)
-            addAllowedDirectory(userplaces.locationPictures)
-            addAllowedDirectory(userplaces.locationVideos)
-        }
         onNeedsAuthentication: {
             console.log("FolderListModel needsAuthentication() signal arrived")
             authenticationHandler.showDialog(urlPath,user)
@@ -216,9 +142,6 @@ PageWithBottomEdge {
             console.log("onDownloadTemporaryComplete received filename="+filename + "name="+nameOnly)
             openFromDisk(filename, nameOnly)
         }
-        onOnlyAllowedPathsChanged: checkIfIsWritable()
-        onPathChanged: checkIfIsWritable()
-
 
         // Following properties are set from global settings, available in filemanager.qml
         showHiddenFiles: settings.showHidden
@@ -238,15 +161,6 @@ PageWithBottomEdge {
             case 1:
                 return FolderListModel.SortByDate
             }
-        }
-    }
-
-    FolderListModel {
-        id: repeaterModel
-        path: folderListPage.folder
-
-        onPathChanged: {
-            console.log("Path changed to: " + repeaterModel.path)
         }
     }
 
@@ -444,12 +358,11 @@ PageWithBottomEdge {
 
         folderListModel: pageModel
         anchors {
-            top: __anchorToHeader ? folderListPage.header.bottom : parent.top
+            top: folderListPage.header.bottom
             bottom: bottomBar.top
             left: sidebar.right
             right: parent.right
         }
-        smallMode: !sidebar.expanded
         visible: settings.viewMethod === 1  // Grid
     }
 
@@ -460,12 +373,11 @@ PageWithBottomEdge {
 
         folderListModel: pageModel
         anchors {
-            top: __anchorToHeader ? folderListPage.header.bottom : parent.top
+            top: folderListPage.header.bottom
             bottom: bottomBar.top
             left: sidebar.right
             right: parent.right
         }
-        smallMode: !sidebar.expanded
         visible: settings.viewMethod === 0  // List
     }
 
@@ -496,6 +408,13 @@ PageWithBottomEdge {
         } else {
             return ""
         }
+    }
+
+    PlacesBottomEdge {
+        id: bottomEdge
+
+        enabled: !sidebar.expanded
+        visible: enabled
     }
 
     Item {
@@ -630,10 +549,7 @@ PageWithBottomEdge {
             }
 
             actions: ActionList {
-                Action {
-                    text: i18n.tr("Cut")
-                    // TODO: temporary
-                    iconSource: "image://theme/edit-cut"
+                FMActions.FileCut {
                     onTriggered: {
                         console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
                         pageModel.cutIndex(actionSelectionPopover.model.index)
@@ -642,11 +558,7 @@ PageWithBottomEdge {
                     }
                 }
 
-                Action {
-                    text: i18n.tr("Copy")
-                    // TODO: temporary.
-                    iconSource: "image://theme/edit-copy"
-
+                FMActions.FileCopy {
                     onTriggered: {
                         console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
                         pageModel.copyIndex(actionSelectionPopover.model.index)
@@ -655,63 +567,50 @@ PageWithBottomEdge {
                     }
                 }
 
-                Action {
-                    text: i18n.tr("Delete")
-                    // TODO: temporary
-                    iconSource: "image://theme/edit-delete"
+                FMActions.Delete {
+                    onTriggered: {                       
+                        var props = {
+                            "filePath" : actionSelectionPopover.model.filePath,
+                            "fileName" : actionSelectionPopover.model.fileName
+                        }
+
+                        print(text)
+                        PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller, props)
+                    }
+                }
+
+                FMActions.Rename {
+                    onTriggered: {
+                        var props = {
+                            "modelRow"  : actionSelectionPopover.model.index,
+                            "inputText" : actionSelectionPopover.model.fileName
+                        }
+
+                        print(text)
+                        PopupUtils.open(confirmRenameDialog, actionSelectionPopover.caller, props)
+                    }
+                }
+
+                FMActions.Share {
+                    onTriggered: openFile(actionSelectionPopover.model, true)
+                }
+
+                FMActions.ArchiveExtract {
+                    onTriggered: {
+                        var props = {
+                            "filePath" : actionSelectionPopover.model.filePath,
+                            "fileName" : actionSelectionPopover.model.fileName,
+                            "archiveType" : actionSelectionPopover.archiveType
+                        }
+                        PopupUtils.open(confirmExtractDialog, actionSelectionPopover.caller, props)
+                    }
+                }
+
+                FMActions.Properties {
                     onTriggered: {
                         print(text)
-                        PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller,
-                                        { "filePath" : actionSelectionPopover.model.filePath,
-                                            "fileName" : actionSelectionPopover.model.fileName }
-                                        )
-                    }
-                }
-
-                Action {
-                    text: i18n.tr("Rename")
-                    // TODO: temporary
-                    iconSource: "image://theme/rotate"
-                    onTriggered: {
-                        print(text)
-                        PopupUtils.open(confirmRenameDialog, actionSelectionPopover.caller,
-                                        { "modelRow"  : actionSelectionPopover.model.index,
-                                            "inputText" : actionSelectionPopover.model.fileName
-                                        })
-                    }
-                }
-
-                Action {
-                    id: shareAction
-                    text: i18n.tr("Share")
-                    onTriggered: {
-                        openFile(actionSelectionPopover.model, true)
-                    }
-                }
-
-                Action {
-                    id: extractAction
-                    visible: actionSelectionPopover.isArchive
-                    text: i18n.tr("Extract archive")
-                    onTriggered: {
-                        PopupUtils.open(confirmExtractDialog, actionSelectionPopover.caller,
-                                        { "filePath" : actionSelectionPopover.model.filePath,
-                                            "fileName" : actionSelectionPopover.model.fileName,
-                                            "archiveType" : actionSelectionPopover.archiveType
-                                        })
-                    }
-                }
-
-                Action {
-                    text: i18n.tr("Properties")
-
-                    onTriggered: {
-                        print(text)
-                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
-                                        actionSelectionPopover.caller,
-                                        { "model": actionSelectionPopover.model
-                                        }
-                                        )
+                        var props = { "model": actionSelectionPopover.model }
+                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), actionSelectionPopover.caller, props)
                     }
                 }
             }
@@ -864,16 +763,6 @@ PageWithBottomEdge {
         pageModel.refresh()
     }
 
-    function pathAccessedDate() {
-        console.log("calling method pageModel.curPathAccessedDate()")
-        return pageModel.curPathAccessedDate()
-    }
-
-    function pathModifiedDate() {
-        console.log("calling method pageModel.curPathModifiedDate()")
-        return pageModel.curPathModifiedDate()
-    }
-
     function pathIsWritable() {
         console.log("calling method pageModel.curPathIsWritable()")
         return pageModel.curPathIsWritable()
@@ -887,54 +776,6 @@ PageWithBottomEdge {
             strDate += ", " + model.fileSize //show the size even it is "Unknown"
         }
         return strDate;
-    }
-
-    // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
-    // Nemo mobile has icon provider. Have to figure out what's the proper way
-    // to get "system wide" icons in Ubuntu Touch, or if we have to use
-    // icons packaged into the application. Both folder and individual
-    // files will need an icon.
-
-    function fileIcon(file, model) {
-        var iconPath = model ? "empty" :
-                               "folder"
-
-        if (model && model.isSmbWorkgroup) {
-            iconPath = "network_local"
-        } else if (model && model.isHost) {
-            iconPath = "server"
-        } else if (model && model.isBrowsable) {
-            iconPath = "folder"
-        } else if (file === userplaces.locationHome) {
-            iconPath = "folder-home"
-        } else if (file === i18n.tr("~/Desktop")) {
-            iconPath = "user-desktop"
-        } else if (file === userplaces.locationDocuments) {
-            iconPath = "folder-documents"
-        } else if (file === userplaces.locationDownloads) {
-            iconPath = "folder-downloads"
-        } else if (file === userplaces.locationMusic) {
-            iconPath = "folder-music"
-        } else if (file === userplaces.locationPictures) {
-            iconPath = "folder-pictures"
-        } else if (file === i18n.tr("~/Public")) {
-            iconPath = "folder-publicshare"
-        } else if (file === i18n.tr("~/Programs")) {
-            iconPath = "folder-system"
-        } else if (file === i18n.tr("~/Templates")) {
-            iconPath = "folder-templates"
-        } else if (file === userplaces.locationVideos) {
-            iconPath = "folder-videos"
-        } else if (file === "/") {
-            iconPath = "drive-harddisk"
-        } else if (file === userplaces.locationSamba) {
-            iconPath = "network_local"
-        }  else if (userplaces.isUserMountDirectory(file)) {
-            // In context of Ubuntu Touch this means SDCard currently.
-            iconPath = "drive-removable-media"
-        }
-
-        return "image://theme/%1".arg(iconPath)
     }
 
     function folderDisplayName(folder) {
@@ -989,15 +830,8 @@ PageWithBottomEdge {
         if (path === '/')
             return true
 
-        if(path.charAt(0) === '/') {
-            console.log("Directory: " + path.substring(0, path.lastIndexOf('/')+1))
-            repeaterModel.path = path.substring(0, path.lastIndexOf('/')+1)
-            console.log("Sub dir: " + path.substring(path.lastIndexOf('/')+1))
-            if (path.substring(path.lastIndexOf('/')+1) !== "" && !repeaterModel.cdIntoPath(path.substring(path.lastIndexOf('/')+1))) {
-                return false
-            } else {
-                return true
-            }
+        if (path.charAt(0) === '/') {
+           return pageModel.existsDir(path)
         } else {
             return false
         }
@@ -1063,10 +897,8 @@ PageWithBottomEdge {
 
     function itemLongPress(delegate, model) {
         console.log("FolderListDelegate onPressAndHold")
-        PopupUtils.open(actionSelectionPopoverComponent, delegate,
-                        {
-                            model: model
-                        })
+        var props = { model: model }
+        PopupUtils.open(actionSelectionPopoverComponent, delegate, props)
     }
 
     function keyPressed(key, modifiers) {

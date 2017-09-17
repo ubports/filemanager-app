@@ -18,7 +18,6 @@
 import QtQuick 2.4
 import QtGraphicalEffects 1.0
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3
 import Ubuntu.Components.Popups 1.3
 
 Sidebar {
@@ -48,7 +47,7 @@ Sidebar {
             top: parent.top
         }
 
-        Header {
+        SectionDivider {
             text: i18n.tr("Places")
         }
 
@@ -99,7 +98,7 @@ Sidebar {
                     Icon {
                         height: units.gu(4)
                         width: height
-                        source: model.icon || fileIcon(model.path)
+                        name: pageModel.getIcon(model.path)
                         SlotsLayout.position: SlotsLayout.Leading
                     }
                 }

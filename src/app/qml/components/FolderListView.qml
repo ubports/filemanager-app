@@ -17,102 +17,75 @@
  */
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3 as OldListItems
 import Ubuntu.Components.Popups 1.3
 import org.nemomobile.folderlistmodel 1.0
 
-Item {
+import "../actions" as FMActions
+
+ScrollView {
     property FolderListModel folderListModel
     property string folderPath: folderListModel.path
-    property bool smallMode: !wideAspect
-    property Flickable flickable: root
+
     ListView {
         id: root
         anchors.fill: parent
         model: folderListModel
         // This must be visible so Autopilot can see it
-        header: OldListItems.Header {
+        header: SectionDivider {
             objectName: "listViewSmallHeader"
             text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(folderPath).arg(root.count)
-            height: smallMode ? units.gu(4) : 0
-            clip: true
         }
 
         delegate: FolderListDelegate {
             id: delegate
             leadingActions: ListItemActions {
                 actions: [
-                    Action {
-                        iconName: "edit-delete"
-                        text: i18n.tr("Delete")
+                    FMActions.Delete {
                         visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
                         onTriggered: {
-                            PopupUtils.open(confirmSingleDeleteDialog, folderListPage,
-                                            { "filePath" : model.filePath,
-                                                "fileName" : model.fileName }
-                                            )
+                            var props = { "filePath" : model.filePath, "fileName" : model.fileName }
+                            PopupUtils.open(confirmSingleDeleteDialog, folderListPage, props)
                         }
                     },
-                    Action {
-                        iconName: "edit"
-                        text: i18n.tr("Rename")
+
+                    FMActions.Rename {
                         visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
                         onTriggered: {
-                            PopupUtils.open(confirmRenameDialog, folderListPage,
-                                            { "modelRow"  : model.index,
-                                                "inputText" : model.fileName
-                                            })
+                            var props = { "modelRow"  : model.index, "inputText" : model.fileName }
+                            PopupUtils.open(confirmRenameDialog, folderListPage, props)
                         }
                     }
                 ]
             }
             trailingActions: ListItemActions {
                 actions: [
-                    Action {
-                        iconName: "application-x-archive-symbolic"
-                        text: i18n.tr("Extract archive")
+                    FMActions.ArchiveExtract {
                         visible: getArchiveType(model.fileName) !== ""
+                        onTriggered: openFile(model, true)
+                    },
+                    FMActions.Properties {
                         onTriggered: {
-                            openFile(model, true)
+                            var props = { "model": model }
+                            PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"), folderListPage, props)
                         }
                     },
-                    Action {
-                        iconName: "info"
-                        text: i18n.tr("Properties")
-                        onTriggered: {
-                            PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"),
-                                            folderListPage,
-                                            { "model": model
-                                            }
-                                            )
-                        }
-                    },
-                    Action {
-                        iconName: "edit-cut"
-                        text: i18n.tr("Cut")
+                    FMActions.FileCut {
                         visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
                         onTriggered: {
                             pageModel.cutIndex(model.index)
                             helpClipboard = true
                         }
                     },
-                    Action {
-                        iconName: "edit-copy"
-                        text: i18n.tr("Copy")
+                    FMActions.FileCopy {
                         onTriggered: {
                             pageModel.copyIndex(model.index)
                             helpClipboard = true
                         }
                     },
-                    Action {
-                        iconName: "share"
-                        text: i18n.tr("Share")
+                    FMActions.Share {
                         visible: !model.isDir
-                        onTriggered: {
-                            openFile(model, true)
-                        }
+                        onTriggered: openFile(model, true)
                     }
-
                 ]
             }
 
@@ -124,9 +97,5 @@ Item {
                 fileSelector.fileSelectorComponent = pageStack
             }
         }
-    }
-    Scrollbar {
-        flickableItem: root
-        align: Qt.AlignTrailing
     }
 }
