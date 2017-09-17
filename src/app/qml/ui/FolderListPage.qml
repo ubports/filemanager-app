@@ -164,15 +164,6 @@ Page {
         }
     }
 
-    FolderListModel {
-        id: repeaterModel
-        path: folderListPage.folder
-
-        onPathChanged: {
-            console.log("Path changed to: " + repeaterModel.path)
-        }
-    }
-
     Component {
         id: createFolderDialog
         ConfirmDialogWithInput {
@@ -897,15 +888,8 @@ Page {
         if (path === '/')
             return true
 
-        if(path.charAt(0) === '/') {
-            console.log("Directory: " + path.substring(0, path.lastIndexOf('/')+1))
-            repeaterModel.path = path.substring(0, path.lastIndexOf('/')+1)
-            console.log("Sub dir: " + path.substring(path.lastIndexOf('/')+1))
-            if (path.substring(path.lastIndexOf('/')+1) !== "" && !repeaterModel.cdIntoPath(path.substring(path.lastIndexOf('/')+1))) {
-                return false
-            } else {
-                return true
-            }
+        if (path.charAt(0) === '/') {
+           return pageModel.existsDir(path)
         } else {
             return false
         }
