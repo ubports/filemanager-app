@@ -493,19 +493,8 @@ Page {
         }
     }
 
-    BottomEdge {
+    PlacesBottomEdge {
         id: bottomEdge
-        hint {
-            iconName: "location"
-            text: i18n.tr("Places")
-            enabled: visible
-            visible: bottomEdge.enabled
-        }
-
-        contentComponent: PlacesPage {
-            width: bottomEdge.width
-            height: bottomEdge.height
-        }
 
         enabled: !sidebar.expanded
         visible: enabled
