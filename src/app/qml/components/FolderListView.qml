@@ -95,6 +95,8 @@ ScrollView {
                 isContentHub = false
                 fileSelectorMode = true
                 fileSelector.fileSelectorComponent = pageStack
+                if (!model.isDir)
+                    selectionManager.select(model.index,false,true)
             }
         }
     }
