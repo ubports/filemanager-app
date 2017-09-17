@@ -22,6 +22,7 @@ import Ubuntu.Components.Popups 1.3
 import org.nemomobile.folderlistmodel 1.0
 import com.ubuntu.Archives 0.1
 import "../components"
+import "../actions" as FMActions
 
 Page {
     id: folderListPage
@@ -33,28 +34,16 @@ Page {
         contents: PathHistoryRow {}
         leadingActionBar.actions: [
             /* Go to last folder visited */
-            Action {
-                id: back
-                objectName: "back"
-                iconName: "back"
-
-                onTriggered: {
-                    goBack()
-                }
+            FMActions.GoBack {
+                onTriggered: goBack()
             }
         ]
+
         trailingActionBar {
             numberOfSlots: 3
             actions: [
-                Action {
-                    id: pasteButton
-                    objectName: "paste"
-                    iconName: "edit-paste"
-                    // Translation message was implemented according to:
-                    // http://developer.ubuntu.com/api/qml/sdk-14.04/Ubuntu.Components.i18n/
-                    // It allows correct translation for languages with more than two plural forms:
-                    // http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
-                    text: i18n.tr("Paste %1 File", "Paste %1 Files", pageModel.clipboardUrlsCounter).arg(pageModel.clipboardUrlsCounter)
+                FMActions.FilePaste {
+                    clipboardUrlsCounter: pageModel.clipboardUrlsCounter
                     visible: helpClipboard // pageModel.clipboardUrlsCounter > 0
                     onTriggered: {
                         console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
@@ -62,11 +51,9 @@ Page {
                         pageModel.paste()
                     }
                 },
-                Action {
-                    id: clearClipboardButton
-                    objectName: "clearClipboard"
-                    iconName: "edit-clear"
-                    text: i18n.tr("Clear clipboard")
+
+                FMActions.FileClearSelection {
+                    clipboardUrlsCounter: pageModel.clipboardUrlsCounter
                     visible: helpClipboard // pageModel.clipboardUrlsCounter > 0
                     onTriggered: {
                         console.log("Clearing clipboard")
@@ -74,61 +61,44 @@ Page {
                         helpClipboard = false
                     }
                 },
-                Action {
-                    id: optionsButton
-                    iconName: "view-list-symbolic"
-                    text: i18n.tr("Properties")
-                    onTriggered: {
-                        PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent)
-                    }
+
+                FMActions.Settings {
+                    onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent)
                 },
-                Action {
-                    id: createNewFolder
-                    objectName: "createFolder"
-                    iconName: "add"
-                    text: i18n.tr("New Folder")
+
+                FMActions.NewFolder {
                     visible: folderListPage.__pathIsWritable
                     onTriggered: {
                         print(text)
                         PopupUtils.open(createFolderDialog, folderListPage)
                     }
                 },
-                Action {
-                    id: viewProperties
-                    iconName: "info"
-                    text: i18n.tr("Properties")
+
+                FMActions.Properties {
                     onTriggered: {
                         print(text)
                         PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), folderListPage,{ "model": pageModel})
                     }
                 },
-                Action {
-                    id: gotoButton
-                    iconName: "find"
-                    objectName:"Find"
-                    text: i18n.tr("Go To")
+
+                FMActions.GoTo {
                     visible: sidebar.expanded
                     onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
                 },
-                Action {
-                    id: unlockButton
-                    iconName: "lock"
-                    text: i18n.tr("Unlock full access")
+
+                FMActions.UnlockFullAccess {
                     visible: pageModel.onlyAllowedPaths
                     onTriggered: {
                         console.log("Full access clicked")
-                        var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"),
-                                                         folderListPage)
+                        var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"), folderListPage)
 
                         authDialog.passwordEntered.connect(function(password) {
                             if (pamAuthentication.validatePasswordToken(password)) {
                                 console.log("Authenticated for full access")
                                 mainView.fullAccessGranted = true
                             } else {
-                                PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage,
-                                                {
-                                                    title: i18n.tr("Authentication failed")
-                                                })
+                                var props = { title: i18n.tr("Authentication failed") }
+                                PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage, props)
 
                                 console.log("Could not authenticate")
                             }
@@ -588,10 +558,7 @@ Page {
             }
 
             actions: ActionList {
-                Action {
-                    text: i18n.tr("Cut")
-                    // TODO: temporary
-                    iconSource: "image://theme/edit-cut"
+                FMActions.FileCut {
                     onTriggered: {
                         console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
                         pageModel.cutIndex(actionSelectionPopover.model.index)
@@ -600,11 +567,7 @@ Page {
                     }
                 }
 
-                Action {
-                    text: i18n.tr("Copy")
-                    // TODO: temporary.
-                    iconSource: "image://theme/edit-copy"
-
+                FMActions.FileCopy {
                     onTriggered: {
                         console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
                         pageModel.copyIndex(actionSelectionPopover.model.index)
@@ -613,63 +576,50 @@ Page {
                     }
                 }
 
-                Action {
-                    text: i18n.tr("Delete")
-                    // TODO: temporary
-                    iconSource: "image://theme/edit-delete"
+                FMActions.Delete {
+                    onTriggered: {                       
+                        var props = {
+                            "filePath" : actionSelectionPopover.model.filePath,
+                            "fileName" : actionSelectionPopover.model.fileName
+                        }
+
+                        print(text)
+                        PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller, props)
+                    }
+                }
+
+                FMActions.Rename {
+                    onTriggered: {
+                        var props = {
+                            "modelRow"  : actionSelectionPopover.model.index,
+                            "inputText" : actionSelectionPopover.model.fileName
+                        }
+
+                        print(text)
+                        PopupUtils.open(confirmRenameDialog, actionSelectionPopover.caller, props)
+                    }
+                }
+
+                FMActions.Share {
+                    onTriggered: openFile(actionSelectionPopover.model, true)
+                }
+
+                FMActions.ArchiveExtract {
+                    onTriggered: {
+                        var props = {
+                            "filePath" : actionSelectionPopover.model.filePath,
+                            "fileName" : actionSelectionPopover.model.fileName,
+                            "archiveType" : actionSelectionPopover.archiveType
+                        }
+                        PopupUtils.open(confirmExtractDialog, actionSelectionPopover.caller, props)
+                    }
+                }
+
+                FMActions.Properties {
                     onTriggered: {
                         print(text)
-                        PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller,
-                                        { "filePath" : actionSelectionPopover.model.filePath,
-                                            "fileName" : actionSelectionPopover.model.fileName }
-                                        )
-                    }
-                }
-
-                Action {
-                    text: i18n.tr("Rename")
-                    // TODO: temporary
-                    iconSource: "image://theme/rotate"
-                    onTriggered: {
-                        print(text)
-                        PopupUtils.open(confirmRenameDialog, actionSelectionPopover.caller,
-                                        { "modelRow"  : actionSelectionPopover.model.index,
-                                            "inputText" : actionSelectionPopover.model.fileName
-                                        })
-                    }
-                }
-
-                Action {
-                    id: shareAction
-                    text: i18n.tr("Share")
-                    onTriggered: {
-                        openFile(actionSelectionPopover.model, true)
-                    }
-                }
-
-                Action {
-                    id: extractAction
-                    visible: actionSelectionPopover.isArchive
-                    text: i18n.tr("Extract archive")
-                    onTriggered: {
-                        PopupUtils.open(confirmExtractDialog, actionSelectionPopover.caller,
-                                        { "filePath" : actionSelectionPopover.model.filePath,
-                                            "fileName" : actionSelectionPopover.model.fileName,
-                                            "archiveType" : actionSelectionPopover.archiveType
-                                        })
-                    }
-                }
-
-                Action {
-                    text: i18n.tr("Properties")
-
-                    onTriggered: {
-                        print(text)
-                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"),
-                                        actionSelectionPopover.caller,
-                                        { "model": actionSelectionPopover.model
-                                        }
-                                        )
+                        var props = { "model": actionSelectionPopover.model }
+                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), actionSelectionPopover.caller, props)
                     }
                 }
             }
@@ -1021,10 +971,8 @@ Page {
 
     function itemLongPress(delegate, model) {
         console.log("FolderListDelegate onPressAndHold")
-        PopupUtils.open(actionSelectionPopoverComponent, delegate,
-                        {
-                            model: model
-                        })
+        var props = { model: model }
+        PopupUtils.open(actionSelectionPopoverComponent, delegate, props)
     }
 
     function keyPressed(key, modifiers) {
