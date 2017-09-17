@@ -763,16 +763,6 @@ Page {
         pageModel.refresh()
     }
 
-    function pathAccessedDate() {
-        console.log("calling method pageModel.curPathAccessedDate()")
-        return pageModel.curPathAccessedDate()
-    }
-
-    function pathModifiedDate() {
-        console.log("calling method pageModel.curPathModifiedDate()")
-        return pageModel.curPathModifiedDate()
-    }
-
     function pathIsWritable() {
         console.log("calling method pageModel.curPathIsWritable()")
         return pageModel.curPathIsWritable()
