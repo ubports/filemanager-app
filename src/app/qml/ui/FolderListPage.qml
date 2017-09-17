@@ -354,8 +354,6 @@ Page {
     FolderIconView {
         id: folderIconView
 
-        clip: true
-
         folderListModel: pageModel
         anchors {
             top: folderListPage.header.bottom
@@ -368,8 +366,6 @@ Page {
 
     FolderListView {
         id: folderListView
-
-        clip: true
 
         folderListModel: pageModel
         anchors {
@@ -568,7 +564,7 @@ Page {
                 }
 
                 FMActions.Delete {
-                    onTriggered: {                       
+                    onTriggered: {
                         var props = {
                             "filePath" : actionSelectionPopover.model.filePath,
                             "fileName" : actionSelectionPopover.model.fileName

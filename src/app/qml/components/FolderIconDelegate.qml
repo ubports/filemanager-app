@@ -21,8 +21,6 @@ import Ubuntu.Components 1.3
 
 Item {
     id: delegate
-    height: units.gu(11)
-    width: units.gu(11)
 
     property bool selected
     property alias mouseOver: mouseArea.containsMouse
