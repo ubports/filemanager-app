@@ -157,35 +157,11 @@ Page {
         id: authenticationHandler
     }
 
-    FolderListModel {
+    FolderListModelBackend {
         id: pageModel
         path: folderListPage.folder
-        enableExternalFSWatcher: true
         onlyAllowedPaths: !mainView.fullAccessGranted
 
-        // Properties to emulate a model entry for use by FileDetailsPopover
-        property bool isDir: true
-        property string fileName: pathName(pageModel.path)
-        property string fileSize: i18n.tr("%1 file", "%1 files", folderListView.count).arg(folderListView.count)
-        property bool isReadable: true
-        property bool isExecutable: true
-
-        function checkIfIsWritable() {
-            if (pageModel.path) {
-                folderListPage.__pathIsWritable = pageModel.curPathIsWritable() &&
-                        (!pageModel.onlyAllowedPaths || pageModel.isAllowedPath(path))
-            }
-        }
-
-
-        Component.onCompleted: {
-            // Add default allowed paths
-            addAllowedDirectory(userplaces.locationDocuments)
-            addAllowedDirectory(userplaces.locationDownloads)
-            addAllowedDirectory(userplaces.locationMusic)
-            addAllowedDirectory(userplaces.locationPictures)
-            addAllowedDirectory(userplaces.locationVideos)
-        }
         onNeedsAuthentication: {
             console.log("FolderListModel needsAuthentication() signal arrived")
             authenticationHandler.showDialog(urlPath,user)
@@ -196,9 +172,6 @@ Page {
             console.log("onDownloadTemporaryComplete received filename="+filename + "name="+nameOnly)
             openFromDisk(filename, nameOnly)
         }
-        onOnlyAllowedPathsChanged: checkIfIsWritable()
-        onPathChanged: checkIfIsWritable()
-
 
         // Following properties are set from global settings, available in filemanager.qml
         showHiddenFiles: settings.showHidden
