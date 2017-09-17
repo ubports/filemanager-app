@@ -20,11 +20,10 @@ import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import org.nemomobile.folderlistmodel 1.0
 
-Item {
+ScrollView {
     property FolderListModel folderListModel
     property string folderPath: folderListModel.path
-    property bool smallMode: !wideAspect
-    property Flickable flickable: root
+
     ListView {
         id: root
         anchors.fill: parent
@@ -33,7 +32,6 @@ Item {
         header: SectionDivider {
             objectName: "listViewSmallHeader"
             text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(folderPath).arg(root.count)
-            height: smallMode ? units.gu(4) : 0
         }
 
         delegate: FolderListDelegate {
@@ -122,9 +120,5 @@ Item {
                 fileSelector.fileSelectorComponent = pageStack
             }
         }
-    }
-    Scrollbar {
-        flickableItem: root
-        align: Qt.AlignTrailing
     }
 }

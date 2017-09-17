@@ -31,8 +31,6 @@ Page {
     header: PageHeader {
         title: basename(folder)
         contents: PathHistoryRow {}
-        flickable: !sidebar.expanded ?
-                       (folderListView.visible ? folderListView.flickable : folderIconView.flickable) : null
         leadingActionBar.actions: [
             /* Go to last folder visited */
             Action {
@@ -154,18 +152,6 @@ Page {
     readonly property bool selectionMode: fileSelectorMode || folderSelectorMode
 
     property FolderListSelection selectionManager: pageModel.selectionObject()
-
-    readonly property bool __anchorToHeader: sidebar.expanded
-
-    onFlickableChanged: {
-        if (flickable === null) {
-            folderListView.topMargin = 0
-            folderIconView.flickable.topMargin = 0
-        } else {
-            folderListView.topMargin = units.gu(9.5)
-            folderIconView.flickable.topMargin = units.gu(9.5)
-        }
-    }
 
     NetAuthenticationHandler {
         id: authenticationHandler
@@ -438,12 +424,11 @@ Page {
 
         folderListModel: pageModel
         anchors {
-            top: __anchorToHeader ? folderListPage.header.bottom : parent.top
+            top: folderListPage.header.bottom
             bottom: bottomBar.top
             left: sidebar.right
             right: parent.right
         }
-        smallMode: !sidebar.expanded
         visible: settings.viewMethod === 1  // Grid
     }
 
@@ -454,12 +439,11 @@ Page {
 
         folderListModel: pageModel
         anchors {
-            top: __anchorToHeader ? folderListPage.header.bottom : parent.top
+            top: folderListPage.header.bottom
             bottom: bottomBar.top
             left: sidebar.right
             right: parent.right
         }
-        smallMode: !sidebar.expanded
         visible: settings.viewMethod === 0  // List
     }
 

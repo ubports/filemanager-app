@@ -19,54 +19,38 @@ import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 
-Item {
+ScrollView {
     id: root
 
     property var folderListModel
     property string folderPath: folderListModel.path
     property int count: repeater.count
-    property Flickable flickable: flickable
-    property bool smallMode: !wideAspect
 
-    ScrollView {
-        id: flickable
-        clip: true
-        anchors.fill: parent
+    Column {
+        width: root.width
 
-        Column {
-            id: column
-            width: scrollView.width
+        // This must be visible so Autopilot can see it
+        SectionDivider {
+            objectName: "iconViewHeader"
+            text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(root.folderPath).arg(root.count)
+        }
 
-            // This must be visible so Autopilot can see it
-            SectionDivider {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
+        AutoSpacedGrid {
+            id: grid
+            width: root.width
 
-                objectName: "iconViewHeader"
-                text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(root.folderPath).arg(root.count)
-                height: smallMode ? units.gu(4) : 0
-            }
+            cellCount: repeater.count
+            cellWidth: units.gu(11)
+            cellHeight: units.gu(11)
+            minSpacing: units.gu(2)
+            ySpacing: 1/2 * spacing
 
-            AutoSpacedGrid {
-                id: grid
-                width: root.width
-
-                cellCount: repeater.count
-                cellWidth: units.gu(11)
-                cellHeight: units.gu(11)
-                minSpacing: units.gu(2)
-                ySpacing: 1/2 * spacing
-
-                Repeater {
-                    id: repeater
-                    model: folderListModel
-                    delegate: FolderIconDelegate {
-
-                    }
-                }
+            Repeater {
+                id: repeater
+                model: folderListModel
+                delegate: FolderIconDelegate {}
             }
         }
     }
 }
+
