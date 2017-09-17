@@ -52,10 +52,6 @@ MainView {
 
     property bool showSidebar: width >= units.gu(50)
 
-    headerColor: "#F5F5F5"
-    backgroundColor: "#F5F5F5"
-    footerColor: "#F5F5F5"
-
     QtObject {
         id: fileSelector
         property var activeTransfer: null
