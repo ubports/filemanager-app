@@ -23,14 +23,9 @@ import Ubuntu.Components.ListItems 1.3
 import org.nemomobile.folderlistmodel 1.0
 import com.ubuntu.Archives 0.1
 import "../components"
-import "../upstream"
 
-PageWithBottomEdge {
+Page {
     id: folderListPage
-
-    bottomEdgeTitle: i18n.tr("Places")
-    bottomEdgeEnabled: !sidebar.expanded
-    bottomEdgePageSource: Qt.resolvedUrl("PlacesPage.qml")
 
     property bool helpClipboard: false
 
@@ -496,6 +491,24 @@ PageWithBottomEdge {
         } else {
             return ""
         }
+    }
+
+    BottomEdge {
+        id: bottomEdge
+        hint {
+            iconName: "location"
+            text: i18n.tr("Places")
+            enabled: visible
+            visible: bottomEdge.enabled
+        }
+
+        contentComponent: PlacesPage {
+            width: bottomEdge.width
+            height: bottomEdge.height
+        }
+
+        enabled: !sidebar.expanded
+        visible: enabled
     }
 
     Item {
