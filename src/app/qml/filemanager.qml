@@ -168,10 +168,6 @@ MainView {
         property int sortBy: 0  // 0=Name; 1=Date
     }
 
-    function getIcon(name) {
-        return "/usr/share/icons/ubuntu-mobile/actions/scalable/" + name + ".svg" //Qt.resolvedUrl("icons/" + name + ".png")
-    }
-
     function error(title, message) {
         PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), mainView,
                         {
