@@ -119,7 +119,7 @@ BottomEdge {
                             Icon {
                                 SlotsLayout.position: SlotsLayout.Leading
                                 width: units.gu(4); height: width
-                                source: model.icon || fileIcon(model.path, true)
+                                name: pageModel.getIcon(model.path)
                             }
                         }
 

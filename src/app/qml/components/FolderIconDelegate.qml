@@ -52,8 +52,6 @@ Item {
     property string text: fileName
     property string subText: itemDateAndSize(model)
 
-    property var icon:   fileIcon(filePath, model)
-
     Item {
         anchors {
             left: parent.left
@@ -66,13 +64,13 @@ Item {
             rightMargin: units.gu(1)
         }
 
-        Image {
+        Icon {
             id: image
             anchors.centerIn: parent
             width: units.gu(6)
             height: width
 
-            source: delegate.icon
+            name: model.iconName
         }
 
         BrightnessContrast {

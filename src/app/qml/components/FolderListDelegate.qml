@@ -41,7 +41,7 @@ ListItem {
 
         Icon {
             property string path: fileView.folder + '/' + model.fileName
-            source: fileIcon(path, model)
+            name: model.iconName
             height: units.gu(5); width: height
             SlotsLayout.position: SlotsLayout.Leading
         }

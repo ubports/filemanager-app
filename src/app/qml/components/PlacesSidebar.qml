@@ -98,7 +98,7 @@ Sidebar {
                     Icon {
                         height: units.gu(4)
                         width: height
-                        source: model.icon || fileIcon(model.path)
+                        name: pageModel.getIcon(model.path)
                         SlotsLayout.position: SlotsLayout.Leading
                     }
                 }

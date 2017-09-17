@@ -778,54 +778,6 @@ Page {
         return strDate;
     }
 
-    // FIXME: hard coded path for icon, assumes Ubuntu desktop icon available.
-    // Nemo mobile has icon provider. Have to figure out what's the proper way
-    // to get "system wide" icons in Ubuntu Touch, or if we have to use
-    // icons packaged into the application. Both folder and individual
-    // files will need an icon.
-
-    function fileIcon(file, model) {
-        var iconPath = model ? "empty" :
-                               "folder"
-
-        if (model && model.isSmbWorkgroup) {
-            iconPath = "network_local"
-        } else if (model && model.isHost) {
-            iconPath = "server"
-        } else if (model && model.isBrowsable) {
-            iconPath = "folder"
-        } else if (file === userplaces.locationHome) {
-            iconPath = "folder-home"
-        } else if (file === i18n.tr("~/Desktop")) {
-            iconPath = "user-desktop"
-        } else if (file === userplaces.locationDocuments) {
-            iconPath = "folder-documents"
-        } else if (file === userplaces.locationDownloads) {
-            iconPath = "folder-downloads"
-        } else if (file === userplaces.locationMusic) {
-            iconPath = "folder-music"
-        } else if (file === userplaces.locationPictures) {
-            iconPath = "folder-pictures"
-        } else if (file === i18n.tr("~/Public")) {
-            iconPath = "folder-publicshare"
-        } else if (file === i18n.tr("~/Programs")) {
-            iconPath = "folder-system"
-        } else if (file === i18n.tr("~/Templates")) {
-            iconPath = "folder-templates"
-        } else if (file === userplaces.locationVideos) {
-            iconPath = "folder-videos"
-        } else if (file === "/") {
-            iconPath = "drive-harddisk"
-        } else if (file === userplaces.locationSamba) {
-            iconPath = "network_local"
-        }  else if (userplaces.isUserMountDirectory(file)) {
-            // In context of Ubuntu Touch this means SDCard currently.
-            iconPath = "drive-removable-media"
-        }
-
-        return "image://theme/%1".arg(iconPath)
-    }
-
     function folderDisplayName(folder) {
         if (folder === userplaces.locationHome) {
             return i18n.tr("Home")
