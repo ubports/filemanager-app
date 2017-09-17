@@ -105,6 +105,7 @@ DirModel::DirModel(QObject *parent)
     , mAwaitingResults(false)
     , mIsRecursive(false)
     , mReadsMediaMetadata(false)
+    , mQmlCompleted(false)
     , mShowHiddenFiles(false)
     , mOnlyAllowedPaths(false)
     , mSortBy(SortByName)
@@ -469,6 +470,12 @@ void DirModel::setPath(const QString &pathName, const QString& user, const QStri
 {
     if (pathName.isEmpty())
         return;   
+
+    if (!mQmlCompleted) {
+        qDebug() << Q_FUNC_INFO << this << "Ignoring path change request, QML is not ready yet";
+        mQmlCachePath = pathName;
+        return;
+    }
 
    if (mAwaitingResults) {
         // TODO: handle the case where pathName != our current path, cancel old
@@ -1675,6 +1682,25 @@ DirSelection * DirModel::selectionObject() const
     return mSelection;
 }
 
+void DirModel::classBegin()
+{
+    // Do nothing
+}
+
+void DirModel::componentComplete()
+{
+    // WORKAROUND: DirModel fetches result asynchronously. If the mCurLocation
+    // folder is huge, this operation could take a while. Since we use this class
+    // from QML, we've got huge issue since DirModel used to start fetching results
+    // when not all the QML properties were already set. The result was that our last
+    // requests (with all the properties set) were skipped
+    // (check for ref. setPath() -> mAwaitingResults).
+    // We have therefore decided to defer any operation until everything was properly
+    // set up and initialized from the QML side.
+
+    mQmlCompleted = true;
+    setPath(mQmlCachePath);
+}
 
 void DirModel::registerMetaTypes()
 {

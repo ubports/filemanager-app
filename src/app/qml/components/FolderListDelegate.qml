@@ -17,23 +17,38 @@
  */
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3 as ListItem
+import Ubuntu.Components.ListItems 1.3
 import org.nemomobile.folderlistmodel 1.0
 
-ListItem.Subtitled {
+ListItem {
     objectName: "folder" + index
 
     property string fileName: model.fileName
-    property string filePath: path
+    property string filePath: model.filePath
+    height: layout.height
+    // Because Flickable is used over ListView??
+    // we cannot set the highlight component so
+    // instead fudge it here with a rectangle.
+    Rectangle {
+        anchors.fill: parent
+        color: UbuntuColors.silk
+        visible: model.isSelected
+    }
 
-    text: model.fileName
-    subText: itemDateAndSize(model)
+    ListItemLayout {
+        id: layout
+        title.text: model.fileName
+        subtitle.text: itemDateAndSize(model)
 
-    property string path: fileView.folder + '/' + model.fileName
-    iconSource: fileIcon(path, model)
+        Icon {
+            property string path: fileView.folder + '/' + model.fileName
+            source: fileIcon(path, model)
+            height: units.gu(5); width: height
+            SlotsLayout.position: SlotsLayout.Leading
+        }
 
-    progression: model.isBrowsable
-    iconFrame: false
-
-    selected: model.isSelected
+        ProgressionSlot{
+            visible: model.isBrowsable
+        }
+ }
 }

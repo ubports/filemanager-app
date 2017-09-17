@@ -9,7 +9,3 @@
 
 override_dh_auto_configure:
 	dh_auto_configure -- -DCLICK_MODE=OFF
-
-override_dh_install:
-	dh_install --fail-missing
-	dh_apparmor -pubuntu-filemanager-app --profile-name=ubuntu-filemanager-app

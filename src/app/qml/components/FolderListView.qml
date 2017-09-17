@@ -40,10 +40,89 @@ Item {
 
         delegate: FolderListDelegate {
             id: delegate
+            leadingActions: ListItemActions {
+                actions: [
+                    Action {
+                        iconName: "edit-delete"
+                        text: i18n.tr("Delete")
+                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
+                        onTriggered: {
+                            PopupUtils.open(confirmSingleDeleteDialog, folderListPage,
+                                            { "filePath" : model.filePath,
+                                                "fileName" : model.fileName }
+                                            )
+                        }
+                    },
+                    Action {
+                        iconName: "edit"
+                        text: i18n.tr("Rename")
+                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
+                        onTriggered: {
+                            PopupUtils.open(confirmRenameDialog, folderListPage,
+                                            { "modelRow"  : model.index,
+                                                "inputText" : model.fileName
+                                            })
+                        }
+                    }
+                ]
+            }
+            trailingActions: ListItemActions {
+                actions: [
+                    Action {
+                        iconName: "application-x-archive-symbolic"
+                        text: i18n.tr("Extract archive")
+                        visible: getArchiveType(model.fileName) !== ""
+                        onTriggered: {
+                            openFile(model, true)
+                        }
+                    },
+                    Action {
+                        iconName: "info"
+                        text: i18n.tr("Properties")
+                        onTriggered: {
+                            PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"),
+                                            folderListPage,
+                                            { "model": model
+                                            }
+                                            )
+                        }
+                    },
+                    Action {
+                        iconName: "edit-cut"
+                        text: i18n.tr("Cut")
+                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
+                        onTriggered: {
+                            pageModel.cutIndex(model.index)
+                            helpClipboard = true
+                        }
+                    },
+                    Action {
+                        iconName: "edit-copy"
+                        text: i18n.tr("Copy")
+                        onTriggered: {
+                            pageModel.copyIndex(model.index)
+                            helpClipboard = true
+                        }
+                    },
+                    Action {
+                        iconName: "share"
+                        text: i18n.tr("Share")
+                        visible: !model.isDir
+                        onTriggered: {
+                            openFile(model, true)
+                        }
+                    }
+
+                ]
+            }
 
             onClicked: itemClicked(model)
 
-            onPressAndHold: itemLongPress(delegate, model)
+            onPressAndHold: {
+                isContentHub = false
+                fileSelectorMode = true
+                fileSelector.fileSelectorComponent = pageStack
+            }
         }
     }
     Scrollbar {

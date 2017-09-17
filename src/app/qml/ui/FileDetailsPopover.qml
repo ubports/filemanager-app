@@ -100,6 +100,7 @@ Popover {
                 objectName: "pathLabel"
                 text: root.path
                 color: UbuntuColors.ash
+                wrapMode: Text.WrapAnywhere
             }
 
             Label {

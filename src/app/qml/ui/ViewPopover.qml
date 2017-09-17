@@ -37,8 +37,6 @@ Popover {
 
             Label {
                 text: i18n.tr("Show Hidden Files")
-                fontSize: "medium"
-                color: UbuntuColors.ash
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
                 anchors.verticalCenter: parent.verticalCenter
@@ -47,82 +45,66 @@ Popover {
             control: CheckBox {
                 anchors.verticalCenter: parent.verticalCenter
 
-                checked: fileView.showHiddenFiles
-                onCheckedChanged: {
-                    fileView.showHiddenFiles = checked
-                }
+                checked: settings.showHidden
+                onCheckedChanged: settings.showHidden = checked
             }
         }
 
         ValueSelector {
             Label {
                 text: i18n.tr("View As")
-                fontSize: "medium"
-                color: UbuntuColors.ash
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
                 anchors.top: parent.top
                 anchors.topMargin: units.gu(1.6)
             }
 
-            selectedIndex: values.indexOf(viewMethod)
+            selectedIndex: settings.viewMethod
             values: [
-                i18n.tr("Icons"),
-                i18n.tr("List")
+                i18n.tr("List"),
+                i18n.tr("Icons")
             ]
 
-            onSelectedIndexChanged: {
-                saveSetting("viewMethod", values[selectedIndex])
-            }
+            onSelectedIndexChanged: settings.viewMethod = selectedIndex
         }
 
         ValueSelector {
             Label {
                 text: i18n.tr("Sort By")
-                fontSize: "medium"
-                color: UbuntuColors.ash
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
                 anchors.top: parent.top
                 anchors.topMargin: units.gu(1.6)
             }
 
-            selectedIndex: values.indexOf(fileView.sortingMethod)
+            selectedIndex: settings.sortBy
             values: [
                 i18n.tr("Name"),
                 i18n.tr("Date")
             ]
 
-            onSelectedIndexChanged: {
-                fileView.sortingMethod = values[selectedIndex]
-            }
+            onSelectedIndexChanged: settings.sortBy = selectedIndex
         }
 
         ValueSelector {
             Label {
                 text: i18n.tr("Sort Order")
-                fontSize: "medium"
-                color: UbuntuColors.ash
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
                 anchors.top: parent.top
                 anchors.topMargin: units.gu(1.7)
             }
 
-            selectedIndex: sortAscending ? 0 : 1
+            selectedIndex: settings.sortOrder
             values: [
                 i18n.tr("Ascending"),
                 i18n.tr("Descending")
             ]
 
-            onSelectedIndexChanged: {
-                fileView.sortAscending = (values[selectedIndex] === i18n.tr("Ascending"))
-            }
+            onSelectedIndexChanged: settings.sortOrder = selectedIndex
         }
 
         Standard {
-            visible: showAdvancedFeatures
-
             Label {
                 text: i18n.tr("Filter")
                 fontSize: "medium"
