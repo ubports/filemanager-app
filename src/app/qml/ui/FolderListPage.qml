@@ -117,8 +117,9 @@ Page {
 
 
     // Set to true if called as file selector for ContentHub
-    property bool fileSelectorMode: fileSelectorModeG
-    property bool folderSelectorMode: folderSelectorModeG
+    property bool fileSelectorMode: false
+    property bool folderSelectorMode: false
+    property bool saveMode: false
     readonly property bool selectionMode: fileSelectorMode || folderSelectorMode
 
     property FolderListSelection selectionManager: pageModel.selectionObject()
@@ -218,7 +219,7 @@ Page {
         id: bottomBar
         anchors {
             bottom: parent.bottom
-            bottomMargin: bottomEdgeTipArea + units.gu(1) // Avoid being over the bottom edge pull page
+            bottomMargin: units.gu(1) // Avoid being over the bottom edge pull page
             left: sidebar.right
             right: parent.right
         }
