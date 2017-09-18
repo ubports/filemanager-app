@@ -26,6 +26,9 @@ ScrollView {
     property var fileOperationDialog
     property var folderModel
 
+    property alias footer: view.footer
+    property alias header: view.header
+
     GridView {
         id: view
         anchors.fill: parent

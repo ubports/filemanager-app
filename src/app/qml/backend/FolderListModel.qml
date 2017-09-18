@@ -31,13 +31,7 @@ QtObject {
     property string title: pathTitle(path)
     property string folder: pathName(path)
 
-    /*property alias*/  /*readonly*/ property int count/*: __model.count*/
-    onBusyChanged: {
-        // WORKAROUND: For some reason,
-        // Q_PROPERTY(int count READ rowCount NOTIFY awaitingResultsChanged)
-        // doesn't seem to work in DirModel
-        count = __model.rowCount()
-    }
+    property alias count: __model.count
 
     property alias busy: __model.awaitingResults
     property alias canGoBack: __model.canGoBack
@@ -221,6 +215,8 @@ QtObject {
         property bool isExecutable: true
         property bool isWritable: true
 
+        property bool isCurAllowedPath: true
+
         onOnlyAllowedPathsChanged: __checkIfIsWritable()
         onPathChanged: __checkIfIsWritable()
 
@@ -236,6 +232,7 @@ QtObject {
         function __checkIfIsWritable() {
             if (model.path) {
                 model.isWritable = model.curPathIsWritable() && (!model.onlyAllowedPaths || model.isAllowedPath(path))
+                model.isCurAllowedPath = !model.onlyAllowedPaths || model.isAllowedPath(path)
             }
         }
     }

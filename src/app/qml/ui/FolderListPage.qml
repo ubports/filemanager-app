@@ -149,6 +149,9 @@ SidebarPageLayout {
                 folderModel: pageModel
                 folderListPage: folderPage
                 fileOperationDialog: fileOperationDialogObj
+                header: pageModel.count > 0 && !folderModel.model.isCurAllowedPath && folderModel.model.onlyAllowedPaths
+                        ? authReqHeader
+                        : null
             }
         }
 
@@ -159,24 +162,100 @@ SidebarPageLayout {
                 folderModel: pageModel
                 folderListPage: folderPage
                 fileOperationDialog: fileOperationDialogObj
+                header: pageModel.count > 0 && !folderModel.model.isCurAllowedPath && folderModel.model.onlyAllowedPaths
+                        ? authReqHeader
+                        : null
             }
         }
 
-        Item {
-            id: contents
-            anchors.fill: parent
+        FMActions.UnlockFullAccess {
+            id: authAction
+            onTriggered: {
+                console.log("Full access clicked")
+                var authDialog = PopupUtils.open(Qt.resolvedUrl("../dialogs/AuthenticationDialog.qml"), mainView)
 
-            Label {
-                text: i18n.tr("No files")
-                fontSize: "large"
-                opacity: 0.5
-                anchors.centerIn: parent
-                visible: folderListView.count == 0 && !pageModel.busy
+                authDialog.passwordEntered.connect(function(password) {
+                    if (pamAuthentication.validatePasswordToken(password)) {
+                        console.log("Authenticated for full access")
+                        mainView.fullAccessGranted = true
+                    } else {
+                        var props = { title: i18n.tr("Authentication failed") }
+                        PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
+
+                        console.log("Could not authenticate")
+                    }
+                })
+            }
+        }
+
+        Component {
+            id: authReqHeader
+            ListItem {
+                anchors { left: parent.left; right: parent.right }
+                divider.visible: false
+                height: layout.height
+                ListItemLayout {
+                    id: layout
+                    title.text: i18n.tr("Restricted access")
+                    subtitle.text: i18n.tr("Authentication is required in order to see all the content of this folder.")
+                    Button {
+                        width: units.gu(16)
+                        SlotsLayout.position: SlotsLayout.Last
+                        color: UbuntuColors.green
+                        action: authAction
+                    }
+                }
+            }
+        }
+
+        Loader {
+            id: emptyStateLoader
+            anchors.fill: parent
+            sourceComponent: {
+                if (folderModel.count == 0 && !folderModel.model.isCurAllowedPath && folderModel.model.onlyAllowedPaths)
+                    return authEmptyState
+
+                if (folderModel.count == 0 && !folderModel.awaitingResults)
+                    return noFilesEmptyState
             }
 
             ActivityIndicator {
-                running: pageModel.busy
                 anchors.centerIn: parent
+                running: folderModel.model.awaitingResults
+            }
+        }
+
+        Component {
+            id: noFilesEmptyState
+
+            Item {
+                anchors.fill: parent
+                EmptyState {
+                    anchors.centerIn: parent
+                    iconName: "document-open"
+                    title: i18n.tr("No files")
+                    subTitle: i18n.tr("This folder is empty.")
+                }
+            }
+        }
+
+        Component {
+            id: authEmptyState
+
+            Item {
+                anchors.fill: parent
+                EmptyState {
+                    anchors.centerIn: parent
+                    iconName: "lock"
+                    title: i18n.tr("Restricted access")
+                    subTitle: i18n.tr("Authentication is required in order to see the content of this folder.")
+
+                    controlComponent: Button {
+                        width: units.gu(24)
+                        color: UbuntuColors.green
+                        action: authAction
+                    }
+                }
             }
         }
 

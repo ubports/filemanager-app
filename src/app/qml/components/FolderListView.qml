@@ -29,6 +29,9 @@ ScrollView {
     property var fileOperationDialog
     property var folderModel
 
+    property alias footer: root.footer
+    property alias header: root.header
+
     ListView {
         id: root
         anchors.fill: parent

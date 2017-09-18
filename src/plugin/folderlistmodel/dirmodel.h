@@ -101,6 +101,7 @@ public:
     virtual int                 getIndex(const QString& name);
     virtual void                notifyItemChanged(int row);
 
+    Q_PROPERTY(int count READ rowCount NOTIFY awaitingResultsChanged)
     int rowCount(const QModelIndex &index = QModelIndex()) const
     {
         if (index.parent() != QModelIndex())

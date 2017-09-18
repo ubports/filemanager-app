@@ -71,26 +71,6 @@ PageHeader {
                 print(text)
                 PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), mainView,{ "model": folderModel.model })
             }
-        },
-
-        FMActions.UnlockFullAccess {
-            visible: folderModel.model.onlyAllowedPaths
-            onTriggered: {
-                console.log("Full access clicked")
-                var authDialog = PopupUtils.open(Qt.resolvedUrl("../dialogs/AuthenticationDialog.qml"), mainView)
-
-                authDialog.passwordEntered.connect(function(password) {
-                    if (pamAuthentication.validatePasswordToken(password)) {
-                        console.log("Authenticated for full access")
-                        mainView.fullAccessGranted = true
-                    } else {
-                        var props = { title: i18n.tr("Authentication failed") }
-                        PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
-
-                        console.log("Could not authenticate")
-                    }
-                })
-            }
         }
     ]
 
