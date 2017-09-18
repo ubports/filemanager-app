@@ -18,7 +18,6 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
-import org.nemomobile.folderlistmodel 1.0
 
 import "../actions" as FMActions
 import "../components"
@@ -28,25 +27,30 @@ ScrollView {
 
     property var folderListPage
     property var fileOperationDialog
-    property FolderListModel folderListModel
-    property string folderPath: folderListModel.path
+    property var folderModel
 
     ListView {
         id: root
         anchors.fill: parent
-        model: folderListModel
+        model: folderModel.model
         // This must be visible so Autopilot can see it
         header: SectionDivider {
             objectName: "listViewSmallHeader"
-            text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(folderPath).arg(root.count)
+            text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(folderModel.path).arg(root.count)
         }
 
         delegate: FolderListDelegate {
             id: delegate
 
+            title: model.fileName
+            subtitle: __delegateActions.itemDateAndSize(model)
+            iconName: model.iconName
+            showProgressionSlot: model.isBrowsable
+            isSelected: model.isSelected
+
             property var __delegateActions: FolderDelegateActions {
                 folderListPage: folderListView.folderListPage
-                folderListModel: folderListView.folderListModel
+                folderModel: folderListView.folderModel
                 fileOperationDialog: folderListView.fileOperationDialog
             }
 

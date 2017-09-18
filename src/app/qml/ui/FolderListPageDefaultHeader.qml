@@ -9,63 +9,64 @@ PageHeader {
     id: rootItem
 
     // temp
-    property var folderListPage
     property var fileOperationDialog
-    property var pageModel
+    property var folderModel
 
-    title: folderListPage.basename(folder)
-    contents: Components.PathHistoryRow {}
+    title: folderModel.basename(folderModel.path)
+
+    // FIXME: Disabled for now as it's broken, to replace with new one
+    //contents: Components.PathHistoryRow {}
 
     leadingActionBar.actions: FMActions.GoBack {
-        onTriggered: goBack()
+        onTriggered: folderModel.goBack()
     }
 
     trailingActionBar.numberOfSlots: 3
     trailingActionBar.actions: [
         FMActions.FilePaste {
-            clipboardUrlsCounter: pageModel.clipboardUrlsCounter
-            visible: folderListPage.helpClipboard // pageModel.clipboardUrlsCounter > 0
+            clipboardUrlsCounter: folderModel.model.clipboardUrlsCounter
+            visible: folderModel.model.clipboardUrlsCounter > 0
             onTriggered: {
-                console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
+                console.log("Pasting to current folder items of count " + folderModel.model.clipboardUrlsCounter)
                 fileOperationDialog.startOperation(i18n.tr("Paste files"))
-                pageModel.paste()
+                folderModel.model.paste()
             }
         },
 
         FMActions.FileClearSelection {
-            clipboardUrlsCounter: pageModel.clipboardUrlsCounter
-            visible: folderListPage.helpClipboard // pageModel.clipboardUrlsCounter > 0
+            clipboardUrlsCounter: folderModel.model.clipboardUrlsCounter
+            visible: folderModel.model.clipboardUrlsCounter > 0
             onTriggered: {
                 console.log("Clearing clipboard")
-                pageModel.clearClipboard()
-                folderListPage.helpClipboard = false
+                // FIXME: Seems not to clear actually
+                folderModel.model.clearClipboard()
             }
         },
 
         FMActions.Settings {
-            onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent, { folderListModel: pageModel })
+            onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent, { folderListModel: folderModel.model })
         },
 
         FMActions.NewFolder {
-            visible: folderListPage.__pathIsWritable
+            visible: folderModel.model.isWritable
             onTriggered: {
                 print(text)
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/CreateFolderDialog.qml"), folderListPage, { folderModel: pageModel })
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/CreateFolderDialog.qml"), mainView, { folderModel: folderModel.model })
             }
         },
 
         FMActions.Properties {
             onTriggered: {
                 print(text)
-                PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), folderListPage,{ "model": pageModel})
+                PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), mainView,{ "model": folderModel.model })
             }
         },
 
         FMActions.UnlockFullAccess {
-            visible: pageModel.onlyAllowedPaths
+            visible: folderModel.model.onlyAllowedPaths
             onTriggered: {
                 console.log("Full access clicked")
-                var authDialog = PopupUtils.open(Qt.resolvedUrl("../dialogs/AuthenticationDialog.qml"), folderListPage)
+                var authDialog = PopupUtils.open(Qt.resolvedUrl("../dialogs/AuthenticationDialog.qml"), mainView)
 
                 authDialog.passwordEntered.connect(function(password) {
                     if (pamAuthentication.validatePasswordToken(password)) {
@@ -73,7 +74,7 @@ PageHeader {
                         mainView.fullAccessGranted = true
                     } else {
                         var props = { title: i18n.tr("Authentication failed") }
-                        PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), folderListPage, props)
+                        PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
 
                         console.log("Could not authenticate")
                     }

@@ -19,25 +19,26 @@ import QtQuick 2.4
 import QtGraphicalEffects 1.0
 import Ubuntu.Components 1.3
 
+// TODO: Check color usage
+// TODO: Check design
+
 Item {
     id: delegate
 
-    property bool selected
+    property bool isSelected
     property alias mouseOver: mouseArea.containsMouse
+
+    property string iconName
+    property string title
 
     signal clicked(var mouse)
     signal pressAndHold(var mouse)
 
     Rectangle {
         anchors.centerIn: parent
-       // anchors.verticalCenterOffset: units.gu(0.5)
-        height: parent.height// + units.gu(1)
-        width: height
-
-        radius: units.gu(2)
-        smooth: true
-        antialiasing: true
-        opacity: model.isSelected ? 0.5 : 0
+        height: parent.height; width: height
+        radius: units.dp(8)
+        opacity: delegate.isSelected ? 0.5 : 0
         color: UbuntuColors.orange
 
         Behavior on opacity {
@@ -45,35 +46,23 @@ Item {
         }
     }
 
-    objectName: "folder" + index
-
-    property string fileName: model.fileName
-    property string filePath: model.filePath
-
-    property string text: fileName
-    property string subText: itemDateAndSize(model)
-
     Item {
         anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-            bottom: label.top
-            topMargin: units.gu(0.5)
-            bottomMargin: units.gu(1)
-            leftMargin: units.gu(1)
-            rightMargin: units.gu(1)
+            left: parent.left; leftMargin: units.gu(1)
+            right: parent.right; rightMargin: units.gu(1)
+            top: parent.top; topMargin: units.gu(0.5)
+            bottom: label.top; bottomMargin: units.gu(1)
         }
 
         Icon {
             id: image
             anchors.centerIn: parent
-            width: units.gu(6)
-            height: width
+            width: units.gu(6); height: width
 
-            name: model.iconName
+            name: delegate.iconName
         }
 
+        // TODO: Check performance, QtGraphicalEffects in a delegate might become a problem
         BrightnessContrast {
             anchors.fill: image
             brightness: 0.3
@@ -97,9 +86,10 @@ Item {
             rightMargin: units.gu(-1)
         }
         color: "white"
-        radius: height/2
+        radius: units.dp(4)
         border.color: UbuntuColors.slate
-        antialiasing: true
+        border.width: units.dp(1)
+
         opacity: expand ? 1 : 0
 
         Behavior on opacity {
@@ -124,7 +114,7 @@ Item {
         horizontalAlignment: Text.AlignHCenter
         elide: Text.ElideMiddle
 
-        text: delegate.text
+        text: delegate.title
         color: UbuntuColors.graphite
     }
 

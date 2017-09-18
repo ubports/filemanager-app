@@ -23,7 +23,7 @@ import Ubuntu.Components.Popups 1.3
 Sidebar {
     id: root
 
-    property var folderListModel
+    property var folderModel
 
     //color: Qt.rgba(0.5,0.5,0.5,0.3)
     color: UbuntuColors.porcelain
@@ -57,22 +57,19 @@ Sidebar {
             id: placesList
             objectName: "placesList"
 
-            model: userplaces
+            model: folderModel.places
 
             delegate: ListItem {
-                objectName: "place" + folderDisplayName(path).replace(/ /g,'')
                 divider.visible: !collapsed
                 height: layout.height
 
-                onClicked: {
-                    goTo(model.path)
-                }
+                onClicked: folderModel.goTo(model.path)
 
                 Rectangle {
                     id: selectedHighlight
                     anchors.fill: parent
                     color: UbuntuColors.silk
-                    visible: folder === path
+                    visible: folderModel.path === model.path
                 }
 
                 Image {
@@ -95,12 +92,12 @@ Sidebar {
                 ListItemLayout {
                     id: layout
                     height: units.gu(5)
-                    title.text: folderDisplayName(path)
+                    title.text: folderModel.pathTitle(path)
 
                     Icon {
                         height: units.gu(4)
                         width: height
-                        name: folderListModel.getIcon(model.path)
+                        name: folderModel.model.getIcon(model.path)
                         SlotsLayout.position: SlotsLayout.Leading
                     }
                 }

@@ -53,12 +53,9 @@ BottomEdge {
 
             ListView {
                 anchors.fill: parent
-                model: userplaces
+                model: folderListModel.places
 
                 delegate: ListItem {
-                    objectName: "place" + folderDisplayName(model.path).replace(/ /g,'')
-                    property string name: folderDisplayName(model.path)
-
                     Rectangle {
                         anchors.fill: parent
                         color: Qt.rgba(0, 0, 0, 0.2)
@@ -67,7 +64,7 @@ BottomEdge {
 
                     ListItemLayout {
                         anchors.fill: parent
-                        title.text: folderDisplayName(model.path)
+                        title.text: folderListModel.pathTitle(model.path)
 
                         Icon {
                             SlotsLayout.position: SlotsLayout.Leading

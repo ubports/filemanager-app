@@ -224,6 +224,8 @@ QHash<int, QByteArray> DirModel::buildRoleNames() const
         roles.insert(IconSourceRole, QByteArray("iconSource"));
         roles.insert(IconNameRole, QByteArray("iconName"));
         roles.insert(FilePathRole, QByteArray("filePath"));
+        roles.insert(MimeTypeRole, QByteArray("mimeType"));
+        roles.insert(MimeTypeDescriptionRole, QByteArray("mimeTypeDescription"));
         roles.insert(IsDirRole, QByteArray("isDir"));        
         roles.insert(IsHostRole, QByteArray("isHost"));
         roles.insert(IsRemoteRole,QByteArray("isRemote"));
@@ -396,6 +398,10 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
             return DirModel::getIcon(fi.absoluteFilePath(), fi.mimeType(), fi.isWorkGroup(), fi.isBrowsable(), fi.isHost());
         case FilePathRole:
             return fi.filePath();
+        case MimeTypeRole:
+            return fi.mimeType().name();
+        case MimeTypeDescriptionRole:
+            return fi.mimeType().comment();
         case IsDirRole:
             return fi.isDir();
         case IsFileRole:
@@ -530,9 +536,15 @@ void DirModel::setPathFromCurrentLocation()
     {
         mPathList.append(mCurrentDir);
     }
+
+    emit canGoBackChanged();
     emit pathChanged(mCurLocation->urlPath());
 }
 
+bool DirModel::canGoBack() const
+{
+    return mPathList.count() > 1;
+}
 
 void DirModel::goBack()
 {

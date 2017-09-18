@@ -20,33 +20,36 @@ import Ubuntu.Components 1.3
 import org.nemomobile.folderlistmodel 1.0
 
 ListItem {
-    objectName: "folder" + index
+    id: del
 
-    property string fileName: model.fileName
-    property string filePath: model.filePath
-    height: layout.height
+    property string title
+    property string subtitle
+    property string iconName
+    property bool showProgressionSlot
+    property bool isSelected
+
     // Because Flickable is used over ListView??
     // we cannot set the highlight component so
     // instead fudge it here with a rectangle.
     Rectangle {
         anchors.fill: parent
         color: UbuntuColors.silk
-        visible: model.isSelected
+        visible: del.isSelected
     }
 
     ListItemLayout {
         id: layout
-        title.text: model.fileName
-        subtitle.text: itemDateAndSize(model)
+        title.text: del.title
+        subtitle.text: del.subtitle
 
         Icon {
-            name: model.iconName
+            name: del.iconName
             height: units.gu(5); width: height
             SlotsLayout.position: SlotsLayout.Leading
         }
 
         ProgressionSlot{
-            visible: model.isBrowsable
+            visible: del.showProgressionSlot
         }
- }
+    }
 }

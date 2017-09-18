@@ -24,8 +24,7 @@ ScrollView {
 
     property var folderListPage
     property var fileOperationDialog
-    property var folderListModel
-    property string folderPath: folderListModel.path
+    property var folderModel
     property int count: view.count
 
     GridView {
@@ -35,21 +34,25 @@ ScrollView {
         // This must be visible so Autopilot can see it
         header: SectionDivider {
             objectName: "iconViewHeader"
-            text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", folderIconView.count).arg(folderIconView.folderPath).arg(folderIconView.count)
+            text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", folderIconView.count).arg(folderIconView.folderModel.path).arg(folderIconView.count)
         }
 
         cellWidth: units.gu(12)
         cellHeight: units.gu(12)
 
-        model: folderListModel
+        model: folderModel.model
         delegate: FolderIconDelegate {
             id: delegate
             width: view.cellWidth
             height: view.cellHeight
 
+            iconName: model.iconName
+            title: model.fileName
+            isSelected: model.isSelected
+
             property var __delegateActions: FolderDelegateActions {
                 folderListPage: folderIconView.folderListPage
-                folderListModel: folderIconView.folderListModel
+                folderModel: folderIconView.folderModel
                 fileOperationDialog: folderIconView.fileOperationDialog
             }
 

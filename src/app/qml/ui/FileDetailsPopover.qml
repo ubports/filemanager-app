@@ -36,7 +36,7 @@ Popover {
         if (model.isReadable) {
             permissions.push(i18n.tr("Readable"))
         }
-        if (pathIsWritable()) {
+        if (model.isWritable) {
             permissions.push(i18n.tr("Writable"))
         }
         if (model.isExecutable) {
@@ -76,7 +76,7 @@ Popover {
             Label {
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: folderDisplayName(root.path)
+                text: folderModel.pathTitle(root.path)
                 color: UbuntuColors.ash
                 font.bold: true
             }

@@ -11,6 +11,7 @@ Dialog {
     property string fileName
     property string archiveType
     property var folderListPage
+    property var folderModel
 
     Button {
         id: extractButton
@@ -18,7 +19,7 @@ Dialog {
         color: UbuntuColors.green
         onClicked: {
             PopupUtils.close(dialog)
-            folderListPage.extractArchive(filePath, fileName, archiveType)
+            folderModel.extractArchive(filePath, fileName, archiveType)
         }
     }
 
@@ -28,7 +29,7 @@ Dialog {
         color: UbuntuColors.red
         onClicked: {
             PopupUtils.close(dialog)
-            folderListPage.openLocalFile(filePath)
+            openLocalFile(filePath)
         }
     }
 

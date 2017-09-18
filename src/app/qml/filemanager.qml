@@ -17,11 +17,9 @@
  */
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 1.3
 import Qt.labs.settings 1.0
 import Ubuntu.Content 1.3
-import com.ubuntu.PlacesModel 0.1
 import com.ubuntu.PamAuthentication 0.1
 
 import "ui"
@@ -35,22 +33,17 @@ MainView {
     width: phone ? units.gu(40) : units.gu(100)
     height: units.gu(75)
 
-    property alias filemanager: mainView
-
     property bool wideAspect: width > units.gu(50)
 
+    property bool showSidebar: width >= units.gu(50)
     property bool allowSidebarExpanded: width > units.gu(50)
-    property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()
-
-    property bool isContentHub: true
-
-
     onAllowSidebarExpandedChanged: {
         if (!allowSidebarExpanded)
             settings.collapsedSidebar = true
     }
 
-    property bool showSidebar: width >= units.gu(50)
+    property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()
+    property bool isContentHub: true
 
     QtObject {
         id: fileSelector
@@ -62,10 +55,6 @@ MainView {
     Component {
         id: fileSelectorResultComponent
         ContentItem {}
-    }
-
-    PlacesModel {
-        id: userplaces
     }
 
     PamAuthentication {
@@ -115,7 +104,7 @@ MainView {
         var fileNames = []
         for(var i=0; i < activeTransfer.items.length; i++) {
             var item = activeTransfer.items[i]
-            var uniqueName = fileSelector.fileSelectorComponent.newFileUniqueName(destDir,
+            var uniqueName = fileSelector.fileSelectorComponent.folderModel.newFileUniqueName(destDir,
                                                                                   fileSelector.fileSelectorComponent.basename(String(item.url)))
             console.log("Move file to:" + destDir + " with name: " + uniqueName)
             activeTransfer.items[i].move(destDir, uniqueName)

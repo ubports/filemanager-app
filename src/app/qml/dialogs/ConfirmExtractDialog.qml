@@ -10,12 +10,12 @@ ConfirmDialog {
     property string filePath
     property string fileName
     property string archiveType
-    property var folderListPage
+    property var folderModel
 
     title: i18n.tr("Extract Archive")
     text: i18n.tr("Are you sure you want to extract '%1' here?").arg(fileName)
 
     onAccepted: {
-        folderListPage.extractArchive(filePath, fileName, archiveType)
+        folderModel.extractArchive(filePath, fileName, archiveType)
     }
 }

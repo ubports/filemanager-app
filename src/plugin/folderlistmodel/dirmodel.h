@@ -64,6 +64,8 @@ public:
         IconSourceRole,
         IconNameRole,
         FilePathRole,
+        MimeTypeRole,
+        MimeTypeDescriptionRole,
         IsDirRole,
         IsHostRole,         //!< it can also be used for other protocols than smb/cifs
         IsRemoteRole,
@@ -129,6 +131,10 @@ public:
     Q_INVOKABLE QString     curPathModifiedDateLocaleShort() const;
     Q_INVOKABLE bool        curPathIsWritable() const;
 
+    Q_PROPERTY(bool canGoBack READ canGoBack NOTIFY canGoBackChanged)
+
+    bool canGoBack() const;
+
     Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
     bool awaitingResults() const;
 
@@ -160,6 +166,7 @@ public slots:
     void onItemsFetched();
 
 signals:
+    void canGoBackChanged();
     void awaitingResultsChanged();
     void nameFiltersChanged();
     void filterDirectoriesChanged();

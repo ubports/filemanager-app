@@ -9,7 +9,7 @@ QtObject {
     id: rootItem
 
     property var folderListPage
-    property var folderListModel
+    property var folderModel
     property var fileOperationDialog
 
     function itemLongPress(delegate, model) {
@@ -31,10 +31,7 @@ QtObject {
                     (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
                     ) {
                 console.log("Changing to dir", model.filePath)
-                //prefer pageModel.cdIntoIndex() because it is not necessary to parse the path
-                //goTo(model.filePath)
-                folder = model.filePath
-                pageModel.cdIntoIndex(model.index)
+                folderModel.goTo(model.filePath)
             } else {
                 var props = {
                     title: i18n.tr("Folder not accessible"),
@@ -47,43 +44,53 @@ QtObject {
         } else {
             console.log("Non dir clicked")
             if (fileSelectorMode) {
-                selectionManager.select(model.index,false,true)
+                folderModel.model.selectionObject().select(model.index,false,true)
             } else if (!folderSelectorMode){
                 openFile(model)
             }
         }
     }
 
+    function itemDateAndSize(model) {
+        var strDate = Qt.formatDateTime(model.modifiedDate, Qt.DefaultLocaleShortDate);
+        //local file systems always have date and size for both files and directories
+        //remote file systems may have not size for directories, it comes as "Unknown"
+        if (strDate) {
+            strDate += ", " + model.fileSize //show the size even it is "Unknown"
+        }
+        return strDate;
+    }
+
     property ActionList leadingActions: ActionList {
         FMActions.Delete {
-            visible: folderListPage.__pathIsWritable
+            visible: folderModel.model.isWritable
             onTriggered: {
                 var props = {
-                    "folderModel": folderListModel,
+                    "folderModel": folderModel.model,
                     "fileOperationDialog": fileOperationDialog,
                     "filePath" : model.filePath,
                     "fileName" : model.fileName
                 }
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmSingleDeleteDialog.qml"), folderListPage, props)
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmSingleDeleteDialog.qml"), mainView, props)
             }
         }
 
         FMActions.Rename {
-            visible: folderListPage.__pathIsWritable
+            visible: folderModel.model.isWritable
             onTriggered: {
                 var props = {
                     "modelRow" : model.index,
                     "inputText" : model.fileName,
-                    "folderModel": folderListModel
+                    "folderModel": folderModel.model
                 }
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmRenameDialog.qml"), folderListPage, props)
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmRenameDialog.qml"), mainView, props)
             }
         }
     }
 
     property ActionList trailingActions: ActionList {
         FMActions.ArchiveExtract {
-            visible: folderListPage.getArchiveType(model.fileName) !== ""
+            visible: folderModel.getArchiveType(model.fileName) !== ""
             onTriggered: folderListPage.openFile(model, true)
         }
 
@@ -92,22 +99,20 @@ QtObject {
                 var props = {
                     "model": model
                 }
-                PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"), folderListPage, props)
+                PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"), mainView, props)
             }
         }
 
         FMActions.FileCopy {
             onTriggered: {
-                folderListModel.copyIndex(model.index)
-                folderListPage.helpClipboard = true
+                folderModel.model.copyIndex(model.index)
             }
         }
 
         FMActions.FileCut {
-            visible: folderListPage.__pathIsWritable
+            visible: folderModel.model.isWritable
             onTriggered: {
-                folderListModel.cutIndex(model.index)
-                folderListPage.helpClipboard = true
+                folderModel.model.cutIndex(model.index)
             }
         }
 
