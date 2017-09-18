@@ -33,11 +33,6 @@ ScrollView {
         id: root
         anchors.fill: parent
         model: folderModel.model
-        // This must be visible so Autopilot can see it
-        header: SectionDivider {
-            objectName: "listViewSmallHeader"
-            text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(folderModel.path).arg(root.count)
-        }
 
         delegate: FolderListDelegate {
             id: delegate
@@ -66,6 +61,11 @@ ScrollView {
 
             onClicked: __delegateActions.itemClicked(model)
             onPressAndHold: __delegateActions.listLongPress()
+        }
+
+        section.property: "isDir"
+        section.delegate: SectionDivider {
+            text: section == "true" ? i18n.tr("Directories") : i18n.tr("Files")
         }
     }
 }
