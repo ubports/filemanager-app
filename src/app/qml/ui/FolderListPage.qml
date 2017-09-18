@@ -32,84 +32,14 @@ Page {
 
     property bool helpClipboard: false
 
-    header: PageHeader {
-        title: basename(folder)
-        contents: PathHistoryRow {}
-        leadingActionBar.actions: [
-            /* Go to last folder visited */
-            FMActions.GoBack {
-                onTriggered: goBack()
-            }
-        ]
-
-        trailingActionBar {
-            numberOfSlots: 3
-            actions: [
-                FMActions.FilePaste {
-                    clipboardUrlsCounter: pageModel.clipboardUrlsCounter
-                    visible: helpClipboard // pageModel.clipboardUrlsCounter > 0
-                    onTriggered: {
-                        console.log("Pasting to current folder items of count " + pageModel.clipboardUrlsCounter)
-                        fileOperationDialog.startOperation(i18n.tr("Paste files"))
-                        pageModel.paste()
-                    }
-                },
-
-                FMActions.FileClearSelection {
-                    clipboardUrlsCounter: pageModel.clipboardUrlsCounter
-                    visible: helpClipboard // pageModel.clipboardUrlsCounter > 0
-                    onTriggered: {
-                        console.log("Clearing clipboard")
-                        pageModel.clearClipboard()
-                        helpClipboard = false
-                    }
-                },
-
-                FMActions.Settings {
-                    onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent, { folderListModel: pageModel })
-                },
-
-                FMActions.NewFolder {
-                    visible: folderListPage.__pathIsWritable
-                    onTriggered: {
-                        print(text)
-                        PopupUtils.open(Qt.resolvedUrl("../dialogs/CreateFolderDialog.qml"), folderListPage, { folderModel: pageModel })
-                    }
-                },
-
-                FMActions.Properties {
-                    onTriggered: {
-                        print(text)
-                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), folderListPage,{ "model": pageModel})
-                    }
-                },
-
-                FMActions.UnlockFullAccess {
-                    visible: pageModel.onlyAllowedPaths
-                    onTriggered: {
-                        console.log("Full access clicked")
-                        var authDialog = PopupUtils.open(Qt.resolvedUrl("../dialogs/AuthenticationDialog.qml"), folderListPage)
-
-                        authDialog.passwordEntered.connect(function(password) {
-                            if (pamAuthentication.validatePasswordToken(password)) {
-                                console.log("Authenticated for full access")
-                                mainView.fullAccessGranted = true
-                            } else {
-                                var props = { title: i18n.tr("Authentication failed") }
-                                PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), folderListPage, props)
-
-                                console.log("Could not authenticate")
-                            }
-                        })
-                    }
-                }
-            ]
-        }
+    header: FolderListPageDefaultHeader {
+        folderListPage: folderListPage
+        fileOperationDialog: fileOperationDialog
+        pageModel: pageModel
     }
 
     property string folder
     property bool __pathIsWritable: false
-
 
     // Set to true if called as file selector for ContentHub
     property bool fileSelectorMode: fileSelectorModeG
