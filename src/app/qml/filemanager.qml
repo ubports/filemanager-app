@@ -36,13 +36,6 @@ MainView {
 
     property bool wideAspect: width > units.gu(50)
 
-    property bool showSidebar: width >= units.gu(50)
-    property bool allowSidebarExpanded: width > units.gu(50)
-    onAllowSidebarExpandedChanged: {
-        if (!allowSidebarExpanded)
-            settings.collapsedSidebar = true
-    }
-
     property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()
     property bool isContentHub: true
 
@@ -144,7 +137,7 @@ MainView {
     }
 
     /* Settings Storage */
-    property QtObject settings: Backend.GlobalSettings { }
+    property QtObject globalSettings: Backend.GlobalSettings { }
 
 
     function error(title, message) {

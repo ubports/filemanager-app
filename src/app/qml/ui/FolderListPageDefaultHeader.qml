@@ -11,6 +11,7 @@ PageHeader {
     // temp
     property var fileOperationDialog
     property var folderModel
+    property var showPanelAction
 
     title: folderModel.basename(folderModel.path)
 
@@ -24,9 +25,7 @@ PageHeader {
         folderModel: rootItem.folderModel
     }
 
-    leadingActionBar.actions: FMActions.GoBack {
-        onTriggered: folderModel.goBack()
-    }
+    leadingActionBar.actions: showPanelAction
 
     trailingActionBar.numberOfSlots: 3
     trailingActionBar.actions: [
@@ -89,5 +88,9 @@ PageHeader {
             }
         }
     ]
+
+    // *** STYLE HINTS ***
+
+    StyleHints { dividerColor: "transparent" }
 }
 
