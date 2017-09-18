@@ -14,8 +14,15 @@ PageHeader {
 
     title: folderModel.basename(folderModel.path)
 
-    // FIXME: Disabled for now as it's broken, to replace with new one
-    //contents: Components.PathHistoryRow {}
+    contents: ListItemLayout {
+        anchors.verticalCenter: parent.verticalCenter
+        title.text: rootItem.title
+        subtitle.text: i18n.tr("%1 item", "%1 items", folderModel.count).arg(folderModel.count)
+    }
+
+    extension: Components.PathHistoryRow {
+        folderModel: rootItem.folderModel
+    }
 
     leadingActionBar.actions: FMActions.GoBack {
         onTriggered: folderModel.goBack()

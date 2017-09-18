@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Canonical Ltd
+ * Copyright (C) 2016, 2017 Stefano Verzegnassi
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -12,208 +12,318 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Authored by: Akiva
  */
+
 import QtQuick 2.4
 import Ubuntu.Components 1.3
+import com.ubuntu.filemanager 1.0
 
-/* Full path of your current folder and recent history, that you can jump to by clicking its members */
+import "../backend"
 
+ListView {
+    id: rootItem
+    anchors { left: parent.left; right: parent.right }
+    implicitHeight: units.gu(4)
 
-Flickable {
-    id: flickable
-    anchors {
-        fill: parent
-        topMargin: units.gu(1)
-        rightMargin: units.gu(1)
-        bottomMargin: units.gu(1)
-    }
-    /* Convenience properties ; used a large amount of times to warrant a variable */
-    property int iconWidth: units.gu(2.5)
-    property string textSize: "large"
-    property string separatorText: " /"
+    property FolderListModel folderModel
 
-
-    /* contentWidth equals this to allow it to hide Device and Home */
-    contentWidth: {
-        repeater.model > 0 ?
-                    memoryRepeater.model > 0 ?
-                        width + row.width - memoryRepeater.itemAt(memoryRepeater.model-1).width + memoryRow.width
-                      : width + row.width - repeater.itemAt(repeater.model-1).width
-        : width + memoryRow.width - memoryRepeater.itemAt(memoryRepeater.model-1).width
-    }
-    anchors {
-        fill: parent
-    }
-    clip: true
+    orientation: ListView.Horizontal
     boundsBehavior: Flickable.StopAtBounds
+    snapMode: ListView.SnapToItem
+    clip: true
 
-    Behavior on contentX { SmoothedAnimation { duration: 555 }}
+    delegate: AbstractButton {
+        property bool isCurrentFolder: ListView.isCurrentItem
+        property bool isLastItem: model.index == (rootItem.count - 1)
+        property string name: model.name
 
-    /* This prevents the contentWidth from causing sudden flicks */
-    Behavior on contentWidth { SmoothedAnimation { duration: 500 }}
+        height: rootItem.height
+        style: delegateStyle  // Style defined below
 
-    /* Flickable Contents */
-    Row {
-        id: row
+        onClicked: folderModel.path = model.path.replace("~", folderModel.model.homePath())
+    }
+
+    model: ListModel {
+        id: internal
+        property string storedPath
+
+        // The magical core of this component
+        function updateModel() {
+            var currentPath = folderModel.path.toString()
+
+            // WORKAROUND: Apparently Samba paths are an empty string. Append "smb://" so that everything works
+            if (currentPath == "") {
+                currentPath = "smb://" + currentPath
+            }
+
+            var isTrashPath = currentPath.indexOf("trash://") > -1
+            var isRemotePath = currentPath.indexOf("smb://") > -1
+            var isLocalPath = !isTrashPath && !isRemotePath
+
+
+            console.log("CURRENT PATH:", currentPath, folderModel.path.toString(), isTrashPath, isRemotePath, isLocalPath)
+            if (internal.storedPath && internal.storedPath.indexOf(currentPath) > -1) {
+                if (currentPath !== "/") {
+                    currentPath = internal.storedPath
+                }
+            }
+
+            currentPath = currentPath.replace("smb://", "")
+                                     .replace("trash://", "")
+
+            if (isLocalPath) {
+                currentPath = currentPath.replace(folderModel.model.homePath(), "~")
+            }
+
+            // Get an array of folders for the following manipulation
+            var splitted_path = currentPath.split("/")
+
+            if (splitted_path.length > 1 && (splitted_path[0] === "" && splitted_path[1] === "")) {
+                splitted_path.shift()
+            }
+
+
+            console.log(currentPath, splitted_path)
+
+            // Clear the model.
+            internal.clear()
+
+            var cur = 0 // Cursor for getting the path to the folder
+            for (var i = 0; i < splitted_path.length; ++i) {
+                var f = splitted_path[i]
+
+                console.log(i, f)
+
+                var objName;
+                if (isTrashPath)
+                    objName = (i === 0 && f === "") ? "trash:///" : f
+                else if (isRemotePath)
+                    objName = (i === 0 && f === "") ? "smb:///" : f
+                else
+                    objName = (i === 0 && f === "") ? "/" : f
+
+                var objPath;
+                if (isTrashPath)
+                    objPath = (i === 0 && f === "") ? "trash:///" : "trash://" + currentPath.substring(0, cur + f.length)
+                else if (isRemotePath)
+                    objName = (i === 0 && f === "") ? "smb:///" : "smb://" + currentPath.substring(0, cur + f.length)
+                else
+                    objPath = (i === 0 && f === "") ? "/" : currentPath.substring(0, cur + f.length)
+
+                var obj = {
+                    name: objName,
+                    path: objPath
+                }
+
+                internal.append(obj)
+
+                // Set the current item, if necessary
+                if (obj.path == (isTrashPath ? "trash://" : isRemotePath ? "smb://" : "") + folderModel.path.toString().replace(folderModel.model.homePath(), "~"))
+                    rootItem.currentIndex = i
+
+                console.log(JSON.stringify(obj))
+
+                cur += f.length + 1  // Move cursor
+            }
+
+            if (!internal.storedPath ||
+                    (folderModel.path.toString() == "/" && currentPath.indexOf("~") == 0) ||    // FIXME
+                    (internal.storedPath.indexOf(folderModel.path.toString()) == -1)) {
+                internal.storedPath = folderModel.path.toString()
+            }
+        }
+    }
+
+    // Ensure the currentItem is always visible
+    onCurrentIndexChanged: {
+        positionViewAtIndex(currentIndex, ListView.Center)
+    }
+
+    // Subscribe to folderModel 'folder' changes
+    Component.onCompleted: internal.updateModel()
+    Connections {
+        target: folderModel
+        onPathChanged: internal.updateModel()
+    }
+
+    /*
+     * Scroll helpers
+     * On desktop, or when a mouse is connected to the device, we may want to make easier
+     * for the user to scroll the path bar.
+     * For that reason, we add a MouseArea which automatically scrolls the content when
+     * the mouse cursor hovers rootItem's boundaries.
+     */
+
+    MouseArea {
+        id: scrollLeftArea
+        width: units.gu(4)
         anchors {
             left: parent.left
             top: parent.top
             bottom: parent.bottom
         }
-        spacing: 0 // Safety; having any spacing will throw off the contentX calculations.
 
-        function repositionScrollable() {
-            if (repeater.count === 0) {
-                flickable.contentX = 0;
-            } else {
-                flickable.contentX = row.width - repeater.itemAt(repeater.model - 1).width
-            }
-        }
-        /* Adjust contentX according to the current folder */
-        onWidthChanged: {
-            repositionScrollable()
-        }
+        // TODO: Uncomment when UITK will support this property
+        enabled: rootItem.contentX != 0 && (rootItem.contentWidth > rootItem.width)  // && QuickUtils.mouseAttached
+        visible: enabled  // Don't steal mouse event when not enabled
 
-        /* Root Folder displayed as "Device" */
-        AbstractButton {
-            id: device
-            width: deviceLabel.width + flickable.iconWidth
-            height: parent.height
-            onClicked: goTo("/")
-
-            Label {
-                id: deviceLabel
-                text: i18n.tr("Device")
-                fontSize: flickable.textSize
-                anchors.verticalCenter: parent.verticalCenter
-                color: UbuntuColors.inkstone
-                clip: true
-                /* Maximum Width = Flickable Width */
-                width: if (contentWidth > flickable.width) { flickable.width }
-            }
-        }
-
-        /* Current Directory and its parents */
-        Repeater {
-            id: repeater
-
-            model: pathModel(folder)
-            property int memoryModel: memoryModel ? memoryModel : pathModel(userplaces.locationHome)
-            property string memoryPath: memoryPath ? memoryPath : userplaces.locationHome
-
-            /* Memory Management */
-            onModelChanged: {
-                /* Extend Memory */
-                if (model > memoryModel && memoryPath === pathRaw(folder, memoryModel-1)) {
-                    memoryModel = model
-                    memoryPath = folder
-                    // console.log("/* Extend Memory */")
-                    // console.log("model > memoryModel && memoryPath === pathRaw(folder, memoryModel-1")
-                }
-                /* Reset Memory to Current */
-                else if (folder !== pathRaw(memoryPath,model-1) && model > 0) {
-                    memoryModel = pathModel(folder)
-                    memoryPath = folder
-                    // console.log("/* Reset Memory to Current */")
-                    // console.log("folder !== pathRaw(memoryPath,model")
-                }
-                // console.log("Repeat Model = " + repeater.model)
-                // console.log("Current Path = " + folder)
-                // console.log("Memory Model = " + memoryModel)
-                // console.log("Memory Path  = " + memoryPath)
-            }
-
-            delegate: AbstractButton {
-                visible: folder !== "/" // This is to avoid issues with naming the root folder, "Device"
-                width: label.width + pathSeparator.width
-                height: row.height
-                onClicked: {
-                    // When clicking on an already selected item, go up one level. Otherwise go to
-                    // the clicked item. This behaviour is to make it easy to go up in the folder
-                    // hierarchy now that the "back" button goes back in history and not up the directory
-                    // hierarchy
-                    if (repeater.model === index + 1) {
-                        goUp()
-                    } else {
-                        goTo(pathRaw(folder, index))
-                    }
-                }
-
-                Label {
-                    id: label
-                    text: pathText(folder,index)
-                    fontSize: flickable.textSize
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: UbuntuColors.inkstone
-                    opacity: repeater.model === index + 1 ? 1.0 : 0.3
-                    clip: true
-
-                    /* Maximum Width = Flickable Width */
-                    width: if (contentWidth > flickable.width) { flickable.width } else { contentWidth }
-                }
-
-                Label {
-                    id: pathSeparator
-                    text: separatorText
-                    fontSize: flickable.textSize
-                    width: flickable.iconWidth
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: label.left
-                    color: UbuntuColors.inkstone
-                    opacity: label.opacity
-                    // clip: true
-                }
-            }
+        hoverEnabled: true
+        SmoothedAnimation {
+            target: rootItem
+            property: "contentX"
+            to: 0
+            velocity: units.gu(30)
+            running: scrollLeftArea.containsMouse
         }
     }
 
-    /* Memory of Previously visited folders */
-    Row {
-        id: memoryRow
+    MouseArea {
+        id: scrollRightArea
+        width: units.gu(4)
         anchors {
+            right: parent.right
             top: parent.top
             bottom: parent.bottom
-            left: row.right // Not placed in the other row, to help avoid making contentX calculations more complicated.
         }
-        /* Previously visited folders */
-        Repeater {
-            id: memoryRepeater
-            model: repeater.memoryModel - repeater.model
 
-            delegate: AbstractButton {
-                width: memoryLabel.width + memoryPathSeparator.width
-                height: memoryRow.height
-                onClicked: goTo(pathRaw(repeater.memoryPath, repeater.memoryModel-memoryRepeater.model+index))
+        // TODO: Uncomment when UITK will support this property
+        enabled: rootItem.contentX != parseInt(rootItem.contentWidth - rootItem.width) && (rootItem.contentWidth > rootItem.width)  // && QuickUtils.mouseAttached
+        visible: enabled  // Don't steal mouse event when not enabled
 
-                Label {
-                    id: memoryLabel
-                    text: repeater.model > 0 ? pathText(repeater.memoryPath,repeater.memoryModel-memoryRepeater.model+index)
-                                             : pathText(repeater.memoryPath,index)
-                    fontSize: flickable.textSize
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: UbuntuColors.inkstone
-                    opacity: 0.3
-                    clip: true
+        hoverEnabled: true
+        SmoothedAnimation {
+            target: rootItem
+            property: "contentX"
+            to: contentWidth - width
+            velocity: units.gu(30)
+            running: scrollRightArea.containsMouse
+        }
+    }
 
-                    /* Maximum Width = Flickable Width */
-                    width: if (contentWidth > flickable.width) { flickable.width } else { contentWidth }
+    /*
+     * Delegate style
+     * AbstractButton inherits StyledItem. This allows us to keep logic and style
+     * separated, improving the readability of the code.
+     */
+
+    Rectangle {
+        anchors.fill: parent
+        color: "#CDCDCD"
+        z: -1000
+    }
+
+    Component {
+        id: delegateStyle
+        Item {
+            property color  inactiveColor: theme.palette.normal.backgroundText
+            property color  activeColor: UbuntuColors.orange
+
+            property int    labelMaximumWidth: units.gu(24)
+            property int    labelTextSize: Label.Small  /*Medium*/
+
+            property string dividerIconName: "go-next"
+            property int    dividerIconSize: units.gu(1.5)
+
+            implicitWidth: delegateRow.width + delegateRow.spacing
+
+            PathArrowBackground {
+                anchors.fill: parent
+                anchors.margins: units.dp(1)
+                anchors.leftMargin: units.dp(1) - arrowWidth
+                arrowWidth: units.gu(2)
+                color: styledItem.pressed ? theme.palette.highlighted.background
+                                          : styledItem.hovered ? theme.palette.selected.background : theme.palette.normal.background
+            }
+
+            Row {
+                id: delegateRow
+                anchors.verticalCenter: parent.verticalCenter
+                //spacing: units.gu(0.5)
+
+                property bool isHomePath: styledItem.name == "~"
+                property bool isRootPath: styledItem.name == "/"
+                property bool isTrashPath: styledItem.name == "trash:///"
+                property bool isSmbPath: styledItem.name == "smb:///"
+
+                Component.onCompleted: console.log(styledItem.name, styledItem.name == "smb:///", isSmbPath)
+
+                Item {
+                    height: parent.height
+                    width: units.gu(2)
+                    /* SPACER */
                 }
 
                 Label {
-                    id: memoryPathSeparator
-                    text: separatorText
-                    fontSize: flickable.textSize
-                    width: flickable.iconWidth
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: memoryLabel.left
-                    color: UbuntuColors.inkstone
-                    opacity: 0.3
-                    // clip: true
+                    width: visible ? Math.min(implicitWidth, labelMaximumWidth) : 0
+                    textSize: labelTextSize
+                    elide: Text.ElideMiddle
+                    text: delIcon.visible ? "" : styledItem.name
+                    color: styledItem.isCurrentFolder ? activeColor : inactiveColor
+                    font.weight: styledItem.hovered ? Font.Normal : Font.Light
+                }
+
+                Icon {
+                    id: delIcon
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: visible ? units.gu(2) : 0
+                    height: width
+                    name: delegateRow.isRootPath
+                          ? "computer-symbolic"
+                          : delegateRow.isHomePath ? "go-home"
+                                                   : delegateRow.isSmbPath ? "network-vpn" : "delete"
+                    color: styledItem.isCurrentFolder ? activeColor : inactiveColor
+                    visible: delegateRow.isRootPath || delegateRow.isHomePath || delegateRow.isTrashPath || delegateRow.isSmbPath
+                }
+
+                Item {
+                    height: parent.height
+                    width: units.gu(4)
+                    /* SPACER */
                 }
             }
         }
     }
-}
 
+    /*
+     * Fade out ListView at boundaries.
+     * This is enabled only when if content is wider than the container, in
+     * order to suggest that it can be flipped.
+     * Also this works as hint for scrolling by mouse hovering.
+     *
+     * ref. http://stackoverflow.com/questions/13138868/qt-qml-fade-image-horizontally-i-e-from-left-to-right-not-whole-image
+     */
+
+    layer.enabled: true
+    layer.effect: ShaderEffect {
+        property int fadeOutEffectWidth: units.gu(4)
+        property real fadeOutEffectRelativeWidth: fadeOutEffectWidth / rootItem.width
+
+        property bool leftFadeOutEffectActive: scrollLeftArea.enabled
+        property bool rightFadeOutEffectActive: scrollRightArea.enabled
+
+        fragmentShader: "
+            varying highp vec2 qt_TexCoord0;
+            uniform lowp sampler2D source;
+
+            // Properties defined above
+            uniform lowp float fadeOutEffectRelativeWidth;
+            uniform bool leftFadeOutEffectActive;
+            uniform bool rightFadeOutEffectActive;
+
+            void main(void)
+            {
+                highp vec4 texture = texture2D(source, qt_TexCoord0);
+                lowp float alpha = 1.0;
+
+                if (leftFadeOutEffectActive && (qt_TexCoord0.x < fadeOutEffectRelativeWidth))
+                    alpha = 0.25 + (qt_TexCoord0.x / fadeOutEffectRelativeWidth) * 0.75;
+
+                if (rightFadeOutEffectActive && (qt_TexCoord0.x > (1.0 - fadeOutEffectRelativeWidth)))
+                    alpha = 0.25 + (1.0 - qt_TexCoord0.x) / fadeOutEffectRelativeWidth * 0.75;
+
+                gl_FragColor = texture * alpha;
+            }
+        "
+    }
+}

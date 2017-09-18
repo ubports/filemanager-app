@@ -29,11 +29,16 @@
 
 #include <QDebug>
 
+// UI
+#include "patharrowbackground.h"
+
 int main(int argc, char *argv[])
 {
     QGuiApplication a(argc, argv);
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    qmlRegisterType<PathArrowBackground>("com.ubuntu.filemanager", 1, 0, "PathArrowBackground");
 
     // Set up import paths
     QStringList importPathList = view.engine()->importPathList();

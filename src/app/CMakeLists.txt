@@ -2,6 +2,8 @@ file(GLOB_RECURSE QML_SRCS *.qml *.js)
 
 set(filemanager_SRCS
     main.cpp
+    patharrowbackground.cpp
+    patharrowbackground.h
     ${QML_SRCS}
 )
 
