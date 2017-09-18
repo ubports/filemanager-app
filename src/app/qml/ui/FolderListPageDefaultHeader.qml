@@ -25,7 +25,12 @@ PageHeader {
         folderModel: rootItem.folderModel
     }
 
-    leadingActionBar.actions: showPanelAction
+    FMActions.GoBack {
+        id: goBackAction
+        onTriggered: folderModel.goBack()
+    }
+
+    leadingActionBar.actions: showPanelAction.visible ? showPanelAction : goBackAction
 
     trailingActionBar.numberOfSlots: 3
     trailingActionBar.actions: [
