@@ -23,6 +23,7 @@ import org.nemomobile.folderlistmodel 1.0
 import com.ubuntu.Archives 0.1
 import "../components"
 import "../actions" as FMActions
+import "../dialogs" as Dialogs
 
 Page {
     id: folderListPage
@@ -70,7 +71,7 @@ Page {
                     visible: folderListPage.__pathIsWritable
                     onTriggered: {
                         print(text)
-                        PopupUtils.open(createFolderDialog, folderListPage)
+                        PopupUtils.open(Qt.resolvedUrl("../dialogs/CreateFolderDialog.qml"), folderListPage, { folderModel: pageModel })
                     }
                 },
 
@@ -83,14 +84,14 @@ Page {
 
                 FMActions.GoTo {
                     visible: sidebar.expanded
-                    onTriggered: PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), parent)
+                    onTriggered: PopupUtils.open(Qt.resolvedUrl("../dialogs/GoToDialog.qml"), parent)
                 },
 
                 FMActions.UnlockFullAccess {
                     visible: pageModel.onlyAllowedPaths
                     onTriggered: {
                         console.log("Full access clicked")
-                        var authDialog = PopupUtils.open(Qt.resolvedUrl("AuthenticationDialog.qml"), folderListPage)
+                        var authDialog = PopupUtils.open(Qt.resolvedUrl("../dialogs/AuthenticationDialog.qml"), folderListPage)
 
                         authDialog.passwordEntered.connect(function(password) {
                             if (pamAuthentication.validatePasswordToken(password)) {
@@ -98,7 +99,7 @@ Page {
                                 mainView.fullAccessGranted = true
                             } else {
                                 var props = { title: i18n.tr("Authentication failed") }
-                                PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), folderListPage, props)
+                                PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), folderListPage, props)
 
                                 console.log("Could not authenticate")
                             }
@@ -160,43 +161,6 @@ Page {
                 return FolderListModel.SortByName
             case 1:
                 return FolderListModel.SortByDate
-            }
-        }
-    }
-
-    Component {
-        id: createFolderDialog
-        ConfirmDialogWithInput {
-            title: i18n.tr("Create folder")
-            text: i18n.tr("Enter name for new folder")
-
-            onAccepted: {
-                console.log("Create folder accepted", inputText)
-                if (inputText !== '') {
-                    var folderName = inputText.trim()
-                    if (pageModel.mkdir(folderName)) {
-                        folder = pageModel.path + "/" + folderName
-                    }
-                } else {
-                    console.log("Empty directory name, ignored")
-                }
-            }
-        }
-    }
-
-    Component {
-        id: createFileDialog
-        ConfirmDialogWithInput {
-            title: i18n.tr("Create file")
-            text: i18n.tr("Enter name for new file")
-
-            onAccepted: {
-                console.log("Create file accepted", inputText)
-                if (inputText !== '') {
-                    //FIXME: Actually create a new file!
-                } else {
-                    console.log("Empty file name, ignored")
-                }
             }
         }
     }
@@ -317,9 +281,14 @@ Page {
             visible: selectionMode && !isContentHub && pathIsWritable()
             onClicked: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                PopupUtils.open(confirmMultipleDeleteDialog, folderListPage,
-                                { "paths" : selectedAbsPaths }
-                                )
+
+                var props = {
+                    "paths" : selectedAbsPaths,
+                    "folderModel": pageModel,
+                    "fileOperationDialog": fileOperationDialog
+                }
+
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmMultipleDeleteDialog.qml"), folderListPage, props)
                 selectionManager.clear()
                 fileSelectorMode = false
                 fileSelector.fileSelectorComponent = null
@@ -440,88 +409,6 @@ Page {
         }
     }
 
-    Component {
-        id: confirmSingleDeleteDialog
-        ConfirmDialog {
-            property string filePath
-            property string fileName
-            title: i18n.tr("Delete")
-            text: i18n.tr("Are you sure you want to permanently delete '%1'?").arg(fileName)
-
-            onAccepted: {
-                console.log("Delete accepted for filePath, fileName", filePath, fileName)
-
-                fileOperationDialog.startOperation(i18n.tr("Deleting files"))
-                console.log("Doing delete")
-                pageModel.rm(filePath)
-            }
-        }
-    }
-
-    Component {
-        id: confirmMultipleDeleteDialog
-        ConfirmDialog {
-            property var paths
-            title: i18n.tr("Delete")
-            text: i18n.tr("Are you sure you want to permanently delete '%1'?").arg(i18n.tr("these files"))
-
-            onAccepted: {
-                fileOperationDialog.startOperation(i18n.tr("Deleting files"))
-                console.log("Doing delete")
-                pageModel.removePaths(paths)
-            }
-        }
-    }
-
-    Component {
-        id: confirmRenameDialog
-        ConfirmDialogWithInput {
-            // IMPROVE: this does not seem good: the backend expects row and new name.
-            // But what if new files are added/deleted in the background while user is
-            // entering the new name? The indices change and wrong file is renamed.
-            // Perhaps the backend should take as parameters the "old name" and "new name"?
-            // This is not currently a problem since the backend does not poll changes in
-            // the filesystem, but may be a problem in the future.
-            property int modelRow
-
-            title: i18n.tr("Rename")
-            text: i18n.tr("Enter a new name")
-
-            onAccepted: {
-                console.log("Rename accepted", inputText)
-                if (inputText !== '') {
-                    console.log("Rename commensed, modelRow/inputText", modelRow, inputText.trim())
-                    if (pageModel.rename(modelRow, inputText.trim()) === false) {
-                        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
-                                        {
-                                            title: i18n.tr("Could not rename"),
-                                            text: i18n.tr("Insufficient permissions or name already exists?")
-                                        }
-                                        )
-
-                    }
-                } else {
-                    console.log("Empty new name given, ignored")
-                }
-            }
-        }
-    }
-
-    Component {
-        id: confirmExtractDialog
-        ConfirmDialog {
-            property string filePath
-            property string fileName
-            property string archiveType
-            title: i18n.tr("Extract Archive")
-            text: i18n.tr("Are you sure you want to extract '%1' here?").arg(fileName)
-
-            onAccepted: {
-                extractArchive(filePath, fileName, archiveType)
-            }
-        }
-    }
-
     Archives {
         id: archives
     }
@@ -566,12 +453,14 @@ Page {
                 FMActions.Delete {
                     onTriggered: {
                         var props = {
+                            "folderModel": pageModel,
+                            "fileOperationDialog": fileOperationDialog,
                             "filePath" : actionSelectionPopover.model.filePath,
                             "fileName" : actionSelectionPopover.model.fileName
                         }
 
                         print(text)
-                        PopupUtils.open(confirmSingleDeleteDialog, actionSelectionPopover.caller, props)
+                        PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmSingleDeleteDialog.qml"), actionSelectionPopover.caller, props)
                     }
                 }
 
@@ -579,11 +468,12 @@ Page {
                     onTriggered: {
                         var props = {
                             "modelRow"  : actionSelectionPopover.model.index,
-                            "inputText" : actionSelectionPopover.model.fileName
+                            "inputText" : actionSelectionPopover.model.fileName,
+                            "folderModel": pageModel
                         }
 
                         print(text)
-                        PopupUtils.open(confirmRenameDialog, actionSelectionPopover.caller, props)
+                        PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmRenameDialog.qml"), actionSelectionPopover.caller, props)
                     }
                 }
 
@@ -596,9 +486,10 @@ Page {
                         var props = {
                             "filePath" : actionSelectionPopover.model.filePath,
                             "fileName" : actionSelectionPopover.model.fileName,
-                            "archiveType" : actionSelectionPopover.archiveType
+                            "archiveType" : actionSelectionPopover.archiveType,
+                            "folderListPage": folderListPage
                         }
-                        PopupUtils.open(confirmExtractDialog, actionSelectionPopover.caller, props)
+                        PopupUtils.open(Qt.resolvedUrl("../ConfirmExtractDialog.qml"), actionSelectionPopover.caller, props)
                     }
                 }
 
@@ -622,119 +513,11 @@ Page {
         }
     }
 
-    FileOperationProgressDialog {
+    Dialogs.FileOperationProgressDialog {
         id: fileOperationDialog
 
         page: folderListPage
         model: pageModel
-    }
-
-    Component {
-        id: extractingDialog
-
-        Dialog {
-            id: dialog
-            modal: true
-            property string fileName: ""
-
-            Row {
-                id: row
-                width: parent.width
-                spacing: units.gu(2)
-
-                ActivityIndicator {
-                    id: loadingSpinner
-                    running: true
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
-                Label {
-                    text: qsTr(i18n.tr("Extracting archive '%1'")).arg(fileName)
-                    color: UbuntuColors.slate
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: row.width - loadingSpinner.width - row.spacing
-                    maximumLineCount: 2
-                    wrapMode: Text.WrapAnywhere
-                    elide: Text.ElideRight
-                }
-            }
-
-            Button {
-                id: cancelButton
-                text: i18n.tr("Cancel")
-                visible: true
-                onClicked: {
-                    archives.cancelArchiveExtraction()
-                }
-            }
-
-            Button {
-                id: okButton
-                text: i18n.tr("OK")
-                visible: false
-                onClicked: {
-                    PopupUtils.close(dialog)
-                }
-            }
-
-            Connections {
-                target: archives
-                onFinished: {
-                    if (success) {
-                        PopupUtils.close(dialog)
-                    } else {
-                        row.visible = false
-                        cancelButton.visible = false
-                        title = i18n.tr("Extracting failed")
-                        text = qsTr(i18n.tr("Extracting the archive '%1' failed.")).arg(fileName)
-                        okButton.visible = true
-                    }
-                }
-            }
-        }
-    }
-
-    Component {
-        id: openArchiveDialog
-
-        Dialog {
-            id: dialog
-            modal: true
-            title: i18n.tr("Archive file")
-            text: i18n.tr("Do you want to extract the archive here?")
-            property string filePath
-            property string fileName
-            property string archiveType
-
-            Button {
-                id: extractButton
-                text: i18n.tr("Extract archive")
-                color: UbuntuColors.green
-                onClicked: {
-                    PopupUtils.close(dialog)
-                    extractArchive(filePath, fileName, archiveType)
-                }
-            }
-
-            Button {
-                id: openExternallyButton
-                text: i18n.tr("Open with another app")
-                color: UbuntuColors.red
-                onClicked: {
-                    PopupUtils.close(dialog)
-                    openLocalFile(filePath)
-                }
-            }
-
-            Button {
-                id: cancelButton
-                text: i18n.tr("Cancel")
-                color: UbuntuColors.graphite
-                onClicked: {
-                    PopupUtils.close(dialog)
-                }
-            }
-        }
     }
 
     function goTo(location) {
@@ -840,11 +623,13 @@ Page {
         if (archiveType === "") {
             openLocalFile(fullpathname, share)
         } else {
-            PopupUtils.open(openArchiveDialog, folderListView,
-                            {   "filePath" : fullpathname,
-                                "fileName" : name,
-                                "archiveType" : archiveType
-                            })
+            var props = {
+                "filePath" : fullpathname,
+                "fileName" : name,
+                "archiveType" : archiveType,
+                "folderListPage" : folderListPage
+            }
+            PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenArchiveDialog.qml"), folderListView, props)
         }
 
     }
@@ -910,7 +695,7 @@ Page {
 
     function extractArchive(filePath, fileName, archiveType) {
         console.log("Extract accepted for filePath, fileName", filePath, fileName)
-        PopupUtils.open(extractingDialog, mainView, { "fileName" : fileName })
+        PopupUtils.open(Qt.resolvedUrl("../dialogs/ExtractingDialog.qml"), mainView, { "fileName" : fileName, "archives": archives })
         console.log("Extracting...")
 
         var parentDirectory = filePath.substring(0, filePath.lastIndexOf("/"))

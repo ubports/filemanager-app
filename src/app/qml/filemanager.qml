@@ -165,11 +165,12 @@ MainView {
     }
 
     function error(title, message) {
-        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), mainView,
-                        {
-                            title: title,
-                            text: message
-                        })
+        var props = {
+            title: title,
+            text: message
+        }
+
+        PopupUtils.open(Qt.resolvedUrl("dialogs/NotifyDialog.qml"), mainView, props)
     }
 
     function finishImport(folder, urls) {
@@ -179,11 +180,13 @@ MainView {
         fileSelector.fileSelectorComponent = null
         pageStack.currentPage.currentPage.folder = folder
         pageStack.currentPage.currentPage.refresh()
-        PopupUtils.open(Qt.resolvedUrl("./ui/NotifyDialog.qml"), mainView,
-                        {
-                            title: (count === 1 ? i18n.tr("File %1").arg(urls[0]) : i18n.tr("%1 Files").arg(count)),
-                            text: i18n.tr("Saved to: %1").arg(folder)
-                        })
+
+        var props = {
+            title: (count === 1 ? i18n.tr("File %1").arg(urls[0]) : i18n.tr("%1 Files").arg(count)),
+            text: i18n.tr("Saved to: %1").arg(folder)
+        }
+
+        PopupUtils.open(Qt.resolvedUrl("dialogs/NotifyDialog.qml"), mainView, props)
     }
 
     Keys.onPressed: {

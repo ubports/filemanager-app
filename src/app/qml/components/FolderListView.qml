@@ -43,16 +43,21 @@ ScrollView {
                     FMActions.Delete {
                         visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
                         onTriggered: {
-                            var props = { "filePath" : model.filePath, "fileName" : model.fileName }
-                            PopupUtils.open(confirmSingleDeleteDialog, folderListPage, props)
+                            var props = {
+                                "folderModel": pageModel,
+                                "fileOperationDialog": fileOperationDialog,
+                                "filePath" : model.filePath,
+                                "fileName" : model.fileName
+                            }
+                            PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmSingleDeleteDialog.qml"), folderListPage, props)
                         }
                     },
 
                     FMActions.Rename {
                         visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
                         onTriggered: {
-                            var props = { "modelRow"  : model.index, "inputText" : model.fileName }
-                            PopupUtils.open(confirmRenameDialog, folderListPage, props)
+                            var props = { "modelRow"  : model.index, "inputText" : model.fileName, "folderModel": pageModel }
+                            PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmRenameDialog.qml"), folderListPage, props)
                         }
                     }
                 ]
