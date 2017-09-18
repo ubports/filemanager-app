@@ -23,6 +23,7 @@ import Ubuntu.Content 1.3
 import com.ubuntu.PamAuthentication 0.1
 
 import "ui"
+import "backend" as Backend
 
 MainView {
     id: mainView
@@ -143,15 +144,8 @@ MainView {
     }
 
     /* Settings Storage */
-    property alias settings: settingsObj
-    Settings {
-        id: settingsObj
-        property bool collapsedSidebar: false
-        property int viewMethod: 0  // 0=List; 1=Grid
-        property bool showHidden: false
-        property int sortOrder: 0   // 0=Ascending; 1=Descending
-        property int sortBy: 0  // 0=Name; 1=Date
-    }
+    property QtObject settings: Backend.GlobalSettings { }
+
 
     function error(title, message) {
         var props = {
