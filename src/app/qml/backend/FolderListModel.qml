@@ -23,6 +23,7 @@ import org.nemomobile.folderlistmodel 1.0
 FolderListModel {
     id: pageModel
     enableExternalFSWatcher: true
+    path: userplaces.locationHome
 
     // Properties to emulate a model entry for use by FileDetailsPopover
     property bool isDir: true

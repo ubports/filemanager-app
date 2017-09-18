@@ -45,7 +45,7 @@ Item {
     objectName: "folder" + index
 
     property string fileName: model.fileName
-    property string filePath: fileView.folder + '/' + fileName
+    property string filePath: model.filePath
 
     property string text: fileName
     property string subText: itemDateAndSize(model)

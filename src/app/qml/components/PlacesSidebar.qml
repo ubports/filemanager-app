@@ -23,6 +23,8 @@ import Ubuntu.Components.Popups 1.3
 Sidebar {
     id: root
 
+    property var folderListModel
+
     //color: Qt.rgba(0.5,0.5,0.5,0.3)
     color: UbuntuColors.porcelain
     width: expanded ? (collapsed ? units.gu(8) : units.gu(22)) : 0
@@ -98,7 +100,7 @@ Sidebar {
                     Icon {
                         height: units.gu(4)
                         width: height
-                        name: pageModel.getIcon(model.path)
+                        name: folderListModel.getIcon(model.path)
                         SlotsLayout.position: SlotsLayout.Leading
                     }
                 }

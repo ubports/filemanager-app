@@ -8,6 +8,7 @@ Item  {
 
    property bool savePassword: true
    property var dialogObject: null
+   property var folderListModel
 
    function showDialog(urlPath,user) {
        if (dialogObject)
@@ -22,12 +23,12 @@ Item  {
        interval: 200
        repeat: false
        onTriggered:  {           
-           pageModel.setPathWithAuthentication(
-                         netAuthenticationDialog.currentPath,
-                         netAuthenticationDialog.currentUserName,
-                         netAuthenticationDialog.currentPassword,
-                         netAuthenticatinHandler.savePassword
-                        )
+           folderListModel.setPathWithAuthentication(
+                       netAuthenticationDialog.currentPath,
+                       netAuthenticationDialog.currentUserName,
+                       netAuthenticationDialog.currentPassword,
+                       netAuthenticatinHandler.savePassword
+                       )
        }
    }
 

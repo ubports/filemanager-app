@@ -76,9 +76,11 @@ MainView {
     property var pageStack: pageStack
 
     function openFileSelector(selectFolderMode) {
-        fileSelector.fileSelectorComponent = pageStack.push(Qt.resolvedUrl("./ui/FolderListPage.qml"), { fileSelectorMode: !selectFolderMode,
-                                                                folderSelectorMode: selectFolderMode,
-                                                                folder: userplaces.locationHome })
+        var props = {
+            fileSelectorMode: !selectFolderMode,
+            folderSelectorMode: selectFolderMode
+        }
+        fileSelector.fileSelectorComponent = pageStack.push(Qt.resolvedUrl("./ui/FolderListPage.qml"), props)
     }
 
     function cancelFileSelector() {
@@ -92,9 +94,7 @@ MainView {
         console.log("accept file selector " + fileUrls)
         if (fileSelector.importMode) {
             importFiles(fileSelector.activeTransfer, fileUrls[0])
-        }
-        else
-        {
+        } else {
             exportFiles(fileSelector.activeTransfer, fileUrls)
         }
     }
@@ -178,8 +178,8 @@ MainView {
 
         pageStack.pop()
         fileSelector.fileSelectorComponent = null
-        pageStack.currentPage.currentPage.folder = folder
-        pageStack.currentPage.currentPage.refresh()
+        pageStack.currentPage.folderModel.path = folder
+        pageStack.currentPage.refresh()
 
         var props = {
             title: (count === 1 ? i18n.tr("File %1").arg(urls[0]) : i18n.tr("%1 Files").arg(count)),
@@ -195,6 +195,6 @@ MainView {
     }
 
     Component.onCompleted:  {
-        pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"), { folder: userplaces.locationHome })
+        pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"))
     }
 }

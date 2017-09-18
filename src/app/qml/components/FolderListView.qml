@@ -41,10 +41,10 @@ ScrollView {
             leadingActions: ListItemActions {
                 actions: [
                     FMActions.Delete {
-                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
+                        visible: folderListPage.__pathIsWritable
                         onTriggered: {
                             var props = {
-                                "folderModel": pageModel,
+                                "folderModel": folderListModel,
                                 "fileOperationDialog": fileOperationDialog,
                                 "filePath" : model.filePath,
                                 "fileName" : model.fileName
@@ -54,9 +54,9 @@ ScrollView {
                     },
 
                     FMActions.Rename {
-                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
+                        visible: folderListPage.__pathIsWritable
                         onTriggered: {
-                            var props = { "modelRow"  : model.index, "inputText" : model.fileName, "folderModel": pageModel }
+                            var props = { "modelRow"  : model.index, "inputText" : model.fileName, "folderModel": folderListModel }
                             PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmRenameDialog.qml"), folderListPage, props)
                         }
                     }
@@ -75,15 +75,15 @@ ScrollView {
                         }
                     },
                     FMActions.FileCut {
-                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
+                        visible: folderListPage.__pathIsWritable
                         onTriggered: {
-                            pageModel.cutIndex(model.index)
+                            folderListModel.cutIndex(model.index)
                             helpClipboard = true
                         }
                     },
                     FMActions.FileCopy {
                         onTriggered: {
-                            pageModel.copyIndex(model.index)
+                            folderListModel.copyIndex(model.index)
                             helpClipboard = true
                         }
                     },

@@ -78,7 +78,7 @@ Dialog {
 
     // Errors from model
     Connections {
-        target: pageModel
+        target: model
         onError: {
             PopupUtils.close(root)
         }

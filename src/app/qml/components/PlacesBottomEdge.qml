@@ -23,6 +23,8 @@ import org.nemomobile.folderlistmodel 1.0
 BottomEdge {
     id: bottomEdge
 
+    property var folderListModel
+
     hint {
         iconName: "location"
         text: i18n.tr("Places")
@@ -49,84 +51,34 @@ BottomEdge {
             anchors.fill: parent
             anchors.topMargin: root.header.height
 
-            Column {
-                id: content
-                width: scrollView.width
+            ListView {
+                anchors.fill: parent
+                model: userplaces
 
-                ListItem {
-                    TextField {
-                        id: locationField
-                        objectName: "placePath"
-                        anchors {
-                            verticalCenter: parent.verticalCenter
-                            left: parent.left
-                            right: goButton.left
-                            margins: units.gu(1)
-                        }
+                delegate: ListItem {
+                    objectName: "place" + folderDisplayName(model.path).replace(/ /g,'')
+                    property string name: folderDisplayName(model.path)
 
-                        inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-
-                        property bool valid: pathExists(text)
-
-                        text: fileView.folder
-
-                        placeholderText: i18n.tr("Location...")
-
-                        onAccepted: goButton.clicked()
+                    Rectangle {
+                        anchors.fill: parent
+                        color: Qt.rgba(0, 0, 0, 0.2)
+                        visible: model.path == folderListModel.path
                     }
 
-                    Button {
-                        id: goButton
-                        objectName: "okButton"
-                        anchors {
-                            top: locationField.top
-                            bottom: locationField.bottom
-                            right: parent.right
-                            rightMargin: units.gu(1)
-                        }
+                    ListItemLayout {
+                        anchors.fill: parent
+                        title.text: folderDisplayName(model.path)
 
-                        text: i18n.tr("Go")
-                        color: UbuntuColors.green
-                        enabled: locationField.acceptableInput && locationField.valid
-
-                        onClicked: {
-                            print("User switched to:", locationField.text)
-                            goTo(locationField.text)
-                            pageStack.pop()
+                        Icon {
+                            SlotsLayout.position: SlotsLayout.Leading
+                            width: units.gu(4); height: width
+                            name: folderListModel.getIcon(model.path)
                         }
                     }
-                }
 
-                Repeater {
-                    id: placesList
-                    objectName: "placesList"
-                    model: userplaces
-
-                    ListItem {
-                        objectName: "place" + folderDisplayName(model.path).replace(/ /g,'')
-                        property string name: folderDisplayName(model.path)
-
-                        Rectangle {
-                            anchors.fill: parent
-                            color: Qt.rgba(0, 0, 0, 0.2)
-                            visible: model.path == folderListPage.folder
-                        }
-
-                        ListItemLayout {
-                            anchors.fill: parent
-                            title.text: folderDisplayName(model.path)
-
-                            Icon {
-                                SlotsLayout.position: SlotsLayout.Leading
-                                width: units.gu(4); height: width
-                                name: pageModel.getIcon(model.path)
-                            }
-                        }
-
-                        onClicked: {
-                            goTo(model.path)
-                            bottomEdge.collapse()
-                        }
+                    onClicked: {
+                        goTo(model.path)
+                        bottomEdge.collapse()
                     }
                 }
             }

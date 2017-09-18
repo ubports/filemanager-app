@@ -40,7 +40,6 @@ ListItem {
         subtitle.text: itemDateAndSize(model)
 
         Icon {
-            property string path: fileView.folder + '/' + model.fileName
             name: model.iconName
             height: units.gu(5); width: height
             SlotsLayout.position: SlotsLayout.Leading

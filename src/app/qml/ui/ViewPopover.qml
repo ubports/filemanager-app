@@ -24,6 +24,8 @@ Popover {
     id: root
     objectName: "viewPopover"
 
+    property var folderListModel
+
     Column {
         anchors {
             left: parent.left
@@ -124,12 +126,12 @@ Popover {
 
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
 
-                text: pageModel.nameFilters
+                text: folderListModel.nameFilters
 
                 onAccepted: goButton.clicked()
                 onTextChanged: {
-                    if (text !== pageModel.nameFilters)
-                        pageModel.nameFilters = [text]
+                    if (text !== folderListModel.nameFilters)
+                        folderListModel.nameFilters = [text]
                 }
             }
         }

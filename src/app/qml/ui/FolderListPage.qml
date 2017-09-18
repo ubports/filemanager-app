@@ -21,9 +21,11 @@ import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import org.nemomobile.folderlistmodel 1.0
 import com.ubuntu.Archives 0.1
+
 import "../components"
 import "../actions" as FMActions
 import "../dialogs" as Dialogs
+import "../backend" as Backend
 
 Page {
     id: folderListPage
@@ -64,7 +66,7 @@ Page {
                 },
 
                 FMActions.Settings {
-                    onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent)
+                    onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent, { folderListModel: pageModel })
                 },
 
                 FMActions.NewFolder {
@@ -80,11 +82,6 @@ Page {
                         print(text)
                         PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), folderListPage,{ "model": pageModel})
                     }
-                },
-
-                FMActions.GoTo {
-                    visible: sidebar.expanded
-                    onTriggered: PopupUtils.open(Qt.resolvedUrl("../dialogs/GoToDialog.qml"), parent)
                 },
 
                 FMActions.UnlockFullAccess {
@@ -110,10 +107,7 @@ Page {
         }
     }
 
-    property variant fileView: folderListPage
-    property bool showingListView: folderListView.visible
     property string folder
-    property bool loading: pageModel.awaitingResults
     property bool __pathIsWritable: false
 
 
@@ -126,11 +120,12 @@ Page {
 
     NetAuthenticationHandler {
         id: authenticationHandler
+        folderListModel: pageModel
     }
 
-    FolderListModelBackend {
+    property alias folderModel: pageModel
+    Backend.FolderListModel {
         id: pageModel
-        path: folderListPage.folder
         onlyAllowedPaths: !mainView.fullAccessGranted
 
         onNeedsAuthentication: {
@@ -148,19 +143,15 @@ Page {
         showHiddenFiles: settings.showHidden
         sortOrder: {
             switch (settings.sortOrder) {
-            case 0:
-                return FolderListModel.SortAscending
-            case 1:
-                return FolderListModel.SortDescending
+            case 0: return FolderListModel.SortAscending
+            case 1: return FolderListModel.SortDescending
             }
         }
 
         sortBy: {
             switch (settings.sortBy) {
-            case 0:
-                return FolderListModel.SortByName
-            case 1:
-                return FolderListModel.SortByDate
+            case 0: return FolderListModel.SortByName
+            case 1: return FolderListModel.SortByDate
             }
         }
     }
@@ -168,6 +159,8 @@ Page {
     PlacesSidebar {
         id: sidebar
         objectName: "placesSidebar"
+
+        folderListModel: pageModel
         anchors {
             left: mode === "left" ? parent.left : undefined
             right: mode === "right" ? parent.right : undefined
@@ -182,7 +175,6 @@ Page {
         id: bottomBar
         anchors {
             bottom: parent.bottom
-            bottomMargin: bottomEdgeTipArea + units.gu(1) // Avoid being over the bottom edge pull page
             left: sidebar.right
             right: parent.right
         }
@@ -241,7 +233,7 @@ Page {
             anchors.topMargin: units.gu(1)
             color: "#F5F5F5"
             iconName: "edit-cut"
-            enabled: ((selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)) // we should discuss that: && parent.checkIfOnlyAllowed(selectionManager.selectedAbsFilePaths())
+            enabled: ((selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable))
             visible: selectionMode && !isContentHub && pathIsWritable()
             onClicked: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
@@ -277,7 +269,7 @@ Page {
             anchors.topMargin: units.gu(1)
             color: "#F5F5F5"
             iconName: "edit-delete"
-            enabled: ((selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable)) // we should discuss that: && parent.checkIfOnlyAllowed(selectionManager.selectedAbsFilePaths())
+            enabled: ((selectionManager.counter > 0) || (folderSelectorMode && folderListPage.__pathIsWritable))
             visible: selectionMode && !isContentHub && pathIsWritable()
             onClicked: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
@@ -304,12 +296,9 @@ Page {
             visible: selectionMode
             onClicked: {
                 console.log("FileSelector cancelled")
-                if (isContentHub)
-                {
+                if (isContentHub) {
                     cancelFileSelector()
-                }
-                else
-                {
+                } else {
                     selectionManager.clear()
                     fileSelectorMode = false
                     fileSelector.fileSelectorComponent = null
@@ -378,6 +367,7 @@ Page {
     PlacesBottomEdge {
         id: bottomEdge
 
+        folderListModel: pageModel
         enabled: !sidebar.expanded
         visible: enabled
     }
@@ -523,7 +513,7 @@ Page {
     function goTo(location) {
         // This allows us to enter "~" as a shortcut to the home folder
         // when entering a location on the Go To dialog
-        folderListPage.folder = location.replace("~", userplaces.locationHome)
+        folderListPage.folderModel.path = location.replace("~", userplaces.locationHome)
         refresh()
     }
 
@@ -683,10 +673,7 @@ Page {
     }
 
     function keyPressed(key, modifiers) {
-        if (key === Qt.Key_L && modifiers & Qt.ControlModifier) {
-            PopupUtils.open(Qt.resolvedUrl("GoToDialog.qml"), mainView);
-            return true;
-        } else if (key === Qt.Key_Backspace) {
+        if (key === Qt.Key_Backspace) {
             goUp()
         }
 
