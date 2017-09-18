@@ -1,0 +1,150 @@
+import QtQuick 2.4
+import QtQml 2.2
+import Ubuntu.Components 1.3
+import Ubuntu.Components.Popups 1.3
+
+import "../actions" as FMActions
+
+QtObject {
+    id: rootItem
+
+    property var folderListPage
+    property var folderListModel
+    property var fileOperationDialog
+
+    function itemLongPress(delegate, model) {
+        console.log("FolderListDelegate onPressAndHold")
+        var props = { model: model }
+        PopupUtils.open(__actionSelectionPopoverComponent, delegate, props)
+    }
+
+    function listLongPress() {
+        isContentHub = false
+        fileSelectorMode = true
+        fileSelector.fileSelectorComponent = pageStack
+    }
+
+    function itemClicked(model) {
+        if (model.isBrowsable) {
+            console.log("browsable path="+model.filePath+" isRemote="+model.isRemote+" needsAuthentication="+model.needsAuthentication)
+            if ((model.isReadable && model.isExecutable) ||
+                    (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
+                    ) {
+                console.log("Changing to dir", model.filePath)
+                //prefer pageModel.cdIntoIndex() because it is not necessary to parse the path
+                //goTo(model.filePath)
+                folder = model.filePath
+                pageModel.cdIntoIndex(model.index)
+            } else {
+                var props = {
+                    title: i18n.tr("Folder not accessible"),
+                    // TRANSLATORS: this refers to a folder name
+                    text: i18n.tr("Can not access %1").arg(model.fileName)
+                }
+
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), delegate, props)
+            }
+        } else {
+            console.log("Non dir clicked")
+            if (fileSelectorMode) {
+                selectionManager.select(model.index,false,true)
+            } else if (!folderSelectorMode){
+                openFile(model)
+            }
+        }
+    }
+
+    property ActionList leadingActions: ActionList {
+        FMActions.Delete {
+            visible: folderListPage.__pathIsWritable
+            onTriggered: {
+                var props = {
+                    "folderModel": folderListModel,
+                    "fileOperationDialog": fileOperationDialog,
+                    "filePath" : model.filePath,
+                    "fileName" : model.fileName
+                }
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmSingleDeleteDialog.qml"), folderListPage, props)
+            }
+        }
+
+        FMActions.Rename {
+            visible: folderListPage.__pathIsWritable
+            onTriggered: {
+                var props = {
+                    "modelRow" : model.index,
+                    "inputText" : model.fileName,
+                    "folderModel": folderListModel
+                }
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmRenameDialog.qml"), folderListPage, props)
+            }
+        }
+    }
+
+    property ActionList trailingActions: ActionList {
+        FMActions.ArchiveExtract {
+            visible: folderListPage.getArchiveType(model.fileName) !== ""
+            onTriggered: folderListPage.openFile(model, true)
+        }
+
+        FMActions.Properties {
+            onTriggered: {
+                var props = {
+                    "model": model
+                }
+                PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"), folderListPage, props)
+            }
+        }
+
+        FMActions.FileCopy {
+            onTriggered: {
+                folderListModel.copyIndex(model.index)
+                folderListPage.helpClipboard = true
+            }
+        }
+
+        FMActions.FileCut {
+            visible: folderListPage.__pathIsWritable
+            onTriggered: {
+                folderListModel.cutIndex(model.index)
+                folderListPage.helpClipboard = true
+            }
+        }
+
+        FMActions.Share {
+            visible: !model.isDir
+            onTriggered: folderListPage.openFile(model, true)
+        }
+    }
+
+
+    // *** COMPONENTS ***
+
+    property Component __actionSelectionPopoverComponent: Component {
+        ActionSelectionPopover {
+            grabDismissAreaEvents: true
+            property var model
+
+            actions: ActionList {
+                Component.onCompleted: {
+                    // Build a single list of actions from the two lists above
+                    var tmp = trailingActions.actions
+                    var copy = []
+                    var i;
+
+                    for (i = 0; i < tmp.length; ++i) {
+                        copy[i] = tmp[i]
+                    }
+
+                    tmp = leadingActions.actions
+                    var j = copy.length
+                    for (i = 0; i < tmp.length; ++i) {
+                        copy[i+j] = tmp[i]
+                    }
+
+                    actions = copy;
+                }
+            }
+        }
+    }
+}

@@ -21,8 +21,13 @@ import Ubuntu.Components.Popups 1.3
 import org.nemomobile.folderlistmodel 1.0
 
 import "../actions" as FMActions
+import "../components"
 
 ScrollView {
+    id: folderListView
+
+    property var folderListPage
+    property var fileOperationDialog
     property FolderListModel folderListModel
     property string folderPath: folderListModel.path
 
@@ -38,69 +43,25 @@ ScrollView {
 
         delegate: FolderListDelegate {
             id: delegate
+
+            property var __delegateActions: FolderDelegateActions {
+                folderListPage: folderListView.folderListPage
+                folderListModel: folderListView.folderListModel
+                fileOperationDialog: folderListView.fileOperationDialog
+            }
+
             leadingActions: ListItemActions {
-                actions: [
-                    FMActions.Delete {
-                        visible: folderListPage.__pathIsWritable
-                        onTriggered: {
-                            var props = {
-                                "folderModel": folderListModel,
-                                "fileOperationDialog": fileOperationDialog,
-                                "filePath" : model.filePath,
-                                "fileName" : model.fileName
-                            }
-                            PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmSingleDeleteDialog.qml"), folderListPage, props)
-                        }
-                    },
-
-                    FMActions.Rename {
-                        visible: folderListPage.__pathIsWritable
-                        onTriggered: {
-                            var props = { "modelRow"  : model.index, "inputText" : model.fileName, "folderModel": folderListModel }
-                            PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmRenameDialog.qml"), folderListPage, props)
-                        }
-                    }
-                ]
+                // Children is an alias for 'actions' property, this way we don't get any warning about non-NOTIFYable props
+                actions: __delegateActions.leadingActions.children
             }
+
             trailingActions: ListItemActions {
-                actions: [
-                    FMActions.ArchiveExtract {
-                        visible: getArchiveType(model.fileName) !== ""
-                        onTriggered: openFile(model, true)
-                    },
-                    FMActions.Properties {
-                        onTriggered: {
-                            var props = { "model": model }
-                            PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"), folderListPage, props)
-                        }
-                    },
-                    FMActions.FileCut {
-                        visible: folderListPage.__pathIsWritable
-                        onTriggered: {
-                            folderListModel.cutIndex(model.index)
-                            helpClipboard = true
-                        }
-                    },
-                    FMActions.FileCopy {
-                        onTriggered: {
-                            folderListModel.copyIndex(model.index)
-                            helpClipboard = true
-                        }
-                    },
-                    FMActions.Share {
-                        visible: !model.isDir
-                        onTriggered: openFile(model, true)
-                    }
-                ]
+                // Children is an alias for 'actions' property, this way we don't get any warning about non-NOTIFYable props
+                actions: __delegateActions.trailingActions.children
             }
 
-            onClicked: itemClicked(model)
-
-            onPressAndHold: {
-                isContentHub = false
-                fileSelectorMode = true
-                fileSelector.fileSelectorComponent = pageStack
-            }
+            onClicked: __delegateActions.itemClicked(model)
+            onPressAndHold: __delegateActions.listLongPress()
         }
     }
 }

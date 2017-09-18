@@ -22,6 +22,8 @@ import Ubuntu.Components.Popups 1.3
 ScrollView {
     id: folderIconView
 
+    property var folderListPage
+    property var fileOperationDialog
     property var folderListModel
     property string folderPath: folderListModel.path
     property int count: view.count
@@ -41,8 +43,25 @@ ScrollView {
 
         model: folderListModel
         delegate: FolderIconDelegate {
+            id: delegate
             width: view.cellWidth
             height: view.cellHeight
+
+            property var __delegateActions: FolderDelegateActions {
+                folderListPage: folderIconView.folderListPage
+                folderListModel: folderIconView.folderListModel
+                fileOperationDialog: folderIconView.fileOperationDialog
+            }
+
+            onClicked: {
+                if (mouse.button === Qt.RightButton) {
+                    delegate.pressAndHold(mouse)
+                } else {
+                    __delegateActions.itemClicked(model)
+                }
+            }
+
+            onPressAndHold: __delegateActions.itemLongPress(delegate, model)
         }
     }
 }

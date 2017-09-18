@@ -25,6 +25,9 @@ Item {
     property bool selected
     property alias mouseOver: mouseArea.containsMouse
 
+    signal clicked(var mouse)
+    signal pressAndHold(var mouse)
+
     Rectangle {
         anchors.centerIn: parent
        // anchors.verticalCenterOffset: units.gu(0.5)
@@ -130,16 +133,9 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         acceptedButtons: (Qt.LeftButton | Qt.RightButton)
-
-        onClicked: {
-            if (mouse.button === Qt.RightButton)
-                pressAndHold(mouse)
-            else
-                itemClicked(model)
-        }
-
         propagateComposedEvents: true
 
-        onPressAndHold: itemLongPress(delegate, model)
+        onClicked: delegate.clicked(mouse)
+        onPressAndHold: delegate.pressAndHold(mouse)
     }
 }

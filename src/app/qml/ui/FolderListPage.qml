@@ -243,6 +243,9 @@ Page {
         id: folderIconView
 
         folderListModel: pageModel
+        folderListPage: folderListPage
+        fileOperationDialog: fileOperationDialog
+
         anchors {
             top: folderListPage.header.bottom
             bottom: bottomBar.top
@@ -256,6 +259,9 @@ Page {
         id: folderListView
 
         folderListModel: pageModel
+        folderListPage: folderListPage
+        fileOperationDialog: fileOperationDialog
+
         anchors {
             top: folderListPage.header.bottom
             bottom: bottomBar.top
@@ -331,97 +337,6 @@ Page {
 
     Archives {
         id: archives
-    }
-
-    Component {
-        id: actionSelectionPopoverComponent
-
-        ActionSelectionPopover {
-            id: actionSelectionPopover
-            objectName: "fileActionsPopover"
-
-            grabDismissAreaEvents: true
-
-            property var model
-
-            property bool isArchive: archiveType !== ""
-            property string archiveType: ""
-
-            Component.onCompleted: {
-                archiveType = getArchiveType(actionSelectionPopover.model.fileName)
-            }
-
-            actions: ActionList {
-                FMActions.FileCut {
-                    onTriggered: {
-                        console.log("Cut on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
-                        pageModel.cutIndex(actionSelectionPopover.model.index)
-                        console.log("CliboardUrlsCounter after copy", pageModel.clipboardUrlsCounter)
-                        helpClipboard = true
-                    }
-                }
-
-                FMActions.FileCopy {
-                    onTriggered: {
-                        console.log("Copy on row called for", actionSelectionPopover.model.fileName, actionSelectionPopover.model.index)
-                        pageModel.copyIndex(actionSelectionPopover.model.index)
-                        console.log("CliboardUrlsCounter after copy", pageModel.clipboardUrlsCounter)
-                        helpClipboard = true
-                    }
-                }
-
-                FMActions.Delete {
-                    onTriggered: {
-                        var props = {
-                            "folderModel": pageModel,
-                            "fileOperationDialog": fileOperationDialog,
-                            "filePath" : actionSelectionPopover.model.filePath,
-                            "fileName" : actionSelectionPopover.model.fileName
-                        }
-
-                        print(text)
-                        PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmSingleDeleteDialog.qml"), actionSelectionPopover.caller, props)
-                    }
-                }
-
-                FMActions.Rename {
-                    onTriggered: {
-                        var props = {
-                            "modelRow"  : actionSelectionPopover.model.index,
-                            "inputText" : actionSelectionPopover.model.fileName,
-                            "folderModel": pageModel
-                        }
-
-                        print(text)
-                        PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmRenameDialog.qml"), actionSelectionPopover.caller, props)
-                    }
-                }
-
-                FMActions.Share {
-                    onTriggered: openFile(actionSelectionPopover.model, true)
-                }
-
-                FMActions.ArchiveExtract {
-                    onTriggered: {
-                        var props = {
-                            "filePath" : actionSelectionPopover.model.filePath,
-                            "fileName" : actionSelectionPopover.model.fileName,
-                            "archiveType" : actionSelectionPopover.archiveType,
-                            "folderListPage": folderListPage
-                        }
-                        PopupUtils.open(Qt.resolvedUrl("../ConfirmExtractDialog.qml"), actionSelectionPopover.caller, props)
-                    }
-                }
-
-                FMActions.Properties {
-                    onTriggered: {
-                        print(text)
-                        var props = { "model": actionSelectionPopover.model }
-                        PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), actionSelectionPopover.caller, props)
-                    }
-                }
-            }
-        }
     }
 
     // Errors from model
@@ -564,50 +479,6 @@ Page {
         else {
             openFromDisk(model.filePath, model.fileName, share)
         }
-    }
-
-    function itemClicked(model) {
-        if (model.isBrowsable) {
-            console.log("browsable path="+model.filePath+" isRemote="+model.isRemote+" needsAuthentication="+model.needsAuthentication)
-            if ((model.isReadable && model.isExecutable) ||
-                    (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
-                    ) {
-                console.log("Changing to dir", model.filePath)
-                //prefer pageModel.cdIntoIndex() because it is not necessary to parse the path
-                //goTo(model.filePath)
-                folder = model.filePath
-                pageModel.cdIntoIndex(model.index)
-            } else {
-                PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate,
-                                {
-                                    title: i18n.tr("Folder not accessible"),
-                                    // TRANSLATORS: this refers to a folder name
-                                    text: i18n.tr("Can not access %1").arg(model.fileName)
-
-                                })
-            }
-        } else {
-            console.log("Non dir clicked")
-            if (fileSelectorMode) {
-                selectionManager.select(model.index,false,true)
-            } else if (!folderSelectorMode){
-                openFile(model)
-            }
-        }
-    }
-
-    function itemLongPress(delegate, model) {
-        console.log("FolderListDelegate onPressAndHold")
-        var props = { model: model }
-        PopupUtils.open(actionSelectionPopoverComponent, delegate, props)
-    }
-
-    function keyPressed(key, modifiers) {
-        if (key === Qt.Key_Backspace) {
-            goUp()
-        }
-
-        return false;
     }
 
     function extractArchive(filePath, fileName, archiveType) {

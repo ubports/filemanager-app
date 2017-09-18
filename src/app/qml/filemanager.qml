@@ -189,11 +189,6 @@ MainView {
         PopupUtils.open(Qt.resolvedUrl("dialogs/NotifyDialog.qml"), mainView, props)
     }
 
-    Keys.onPressed: {
-        print("Key pressed!")
-        event.accepted = tabs.currentPage.keyPressed(event.key, event.modifiers)
-    }
-
     Component.onCompleted:  {
         pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"))
     }
