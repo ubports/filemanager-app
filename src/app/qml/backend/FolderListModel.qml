@@ -217,6 +217,8 @@ QtObject {
 
         property bool isCurAllowedPath: true
 
+        property string mimeTypeDescription: i18n.tr("Folder")
+
         onOnlyAllowedPathsChanged: __checkIfIsWritable()
         onPathChanged: __checkIfIsWritable()
 
