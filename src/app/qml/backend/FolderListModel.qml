@@ -209,6 +209,7 @@ QtObject {
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
         property string fileName: pathName(model.path)
+        property string filePath: model.path
         property string fileSize: model.count === 1 ? i18n.tr("%1 file").arg(model.count)
                                                     : i18n.tr("%1 files").arg(model.count)
         property bool isReadable: true
@@ -217,7 +218,12 @@ QtObject {
 
         property bool isCurAllowedPath: true
 
+        property var accessedDate
+        property var modifiedDate
+        property var creationDate
+
         property string mimeTypeDescription: i18n.tr("Folder")
+        property string iconName: "folder"
 
         onOnlyAllowedPathsChanged: __checkIfIsWritable()
         onPathChanged: __checkIfIsWritable()
@@ -235,6 +241,9 @@ QtObject {
             if (model.path) {
                 model.isWritable = model.curPathIsWritable() && (!model.onlyAllowedPaths || model.isAllowedPath(path))
                 model.isCurAllowedPath = !model.onlyAllowedPaths || model.isAllowedPath(path)
+                model.accessedDate = model.curPathAccessedDate()
+                model.modifiedDate = model.curPathModifiedDate()
+                model.creationDate = model.curPathCreatedDate()
             }
         }
     }

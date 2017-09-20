@@ -25,7 +25,7 @@ Dialog {
     property var model
 
     function dateTimeFormat(dateTime) {
-        return Qt.formatDateTime(dateTime, Qt.DefaultLocaleShortDate) || "Unknown"
+        return Qt.formatDateTime(dateTime, Qt.TextDate) || "Unknown"
     }
 
     function permissionsToString(model) {
@@ -96,23 +96,57 @@ Dialog {
         color: theme.palette.normal.base
     }
 
-    RowLayout {
-        anchors { left: parent.left; right: parent.right }
-        anchors.leftMargin: units.gu(-2)
-        anchors.rightMargin: units.gu(-2)
+    ListItem {
+        divider.visible: false
+        height: dateGrid.height + units.gu(4)
 
-        ListItemLayout {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            subtitle.text: i18n.tr("Accessed:")
-            summary.text: dateTimeFormat(model.accessedDate)
-        }
+        GridLayout {
+            id: dateGrid
+            anchors.verticalCenter: parent.verticalCenter
+            columns: 2
+            rowSpacing: units.dp(2)
 
-        ListItemLayout {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            subtitle.text: i18n.tr("Modified:")
-            summary.text: dateTimeFormat(model.modifiedDate)
+            // Row #1
+            Label {
+                Layout.fillWidth: true
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundSecondaryText
+                text: i18n.tr("Created:")
+            }
+
+            Label {
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundTertiaryText
+                text: dateTimeFormat(model.creationDate)
+            }
+
+            // Row #2
+            Label {
+                Layout.fillWidth: true
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundSecondaryText
+                text: i18n.tr("Modified:")
+            }
+
+            Label {
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundTertiaryText
+                text: dateTimeFormat(model.modifiedDate)
+            }
+
+            // Row #3
+            Label {
+                Layout.fillWidth: true
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundSecondaryText
+                text: i18n.tr("Accessed:")
+            }
+
+            Label {
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundTertiaryText
+                text: dateTimeFormat(model.accessedDate)
+            }
         }
     }
 
