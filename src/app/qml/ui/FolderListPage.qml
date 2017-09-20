@@ -97,8 +97,8 @@ SidebarPageLayout {
         }
 
         // Set to true if called as file selector for ContentHub
-        property bool fileSelectorMode: fileSelectorModeG
-        property bool folderSelectorMode: folderSelectorModeG
+        property bool fileSelectorMode: false
+        property bool folderSelectorMode: false
         readonly property bool selectionMode: fileSelectorMode || folderSelectorMode
 
         NetAuthenticationHandler {
@@ -109,8 +109,8 @@ SidebarPageLayout {
         Loader {
             id: viewLoader
             anchors.fill: parent
-            anchors.topMargin: folderPage.header.height
-            anchors.bottomMargin: selectionBottomBar.height
+            anchors.topMargin: folderPage.header.height - (globalSettings.viewMethod === 0 ? units.gu(2) : 0)
+            anchors.bottomMargin: selectionMode ? selectionBottomBar.height : units.gu(2)
 
             sourceComponent: {
                 if (globalSettings.viewMethod === 1) { // Grid
@@ -134,6 +134,7 @@ SidebarPageLayout {
             }
 
             folderModel: pageModel
+            fileOperationDialog: fileOperationDialogObj
             visible: selectionMode || pageModel.model.onlyAllowedPaths
         }
 

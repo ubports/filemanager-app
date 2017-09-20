@@ -52,4 +52,10 @@ ListItem {
             visible: del.showProgressionSlot
         }
     }
+
+    ListView.onRemove: SequentialAnimation {
+        PropertyAction { target: del; property: "ListView.delayRemove"; value: true }
+        NumberAnimation { target: del; property: "scale"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
+        PropertyAction { target: del; property: "ListView.delayRemove"; value: false }
+    }
 }

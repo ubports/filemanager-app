@@ -36,6 +36,7 @@ ScrollView {
         id: root
         anchors.fill: parent
         model: folderModel.model
+        contentY: folderPage.header.lastPos
 
         delegate: FolderListDelegate {
             id: delegate
@@ -63,7 +64,7 @@ ScrollView {
             }
 
             onClicked: __delegateActions.itemClicked(model)
-            onPressAndHold: __delegateActions.listLongPress()
+            onPressAndHold: __delegateActions.listLongPress(model)
         }
 
         section.property: "isDir"

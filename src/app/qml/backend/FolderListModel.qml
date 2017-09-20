@@ -44,10 +44,13 @@ QtObject {
     property alias places: __places
     property alias archives: __archives
 
-    function goTo(location) {
+    property int lastPos
+
+    function goTo(location, pos) {
         // This allows us to enter "~" as a shortcut to the home folder
         // when entering a location on the Go To dialog
         path = location.replace("~", places.locationHome)
+        lastPos = pos
 
         refresh()
     }
@@ -56,11 +59,12 @@ QtObject {
     function goBack() {
         model.goBack()
         path = model.path
+        return lastPos
     }
 
     /* Go up one directory */
     function goUp() {
-        goTo(model.parentPath)
+        goTo(model.parentPath, 0)
     }
 
     function refresh() {

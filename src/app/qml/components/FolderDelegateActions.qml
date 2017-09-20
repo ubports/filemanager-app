@@ -12,16 +12,29 @@ QtObject {
     property var folderModel
     property var fileOperationDialog
 
+    function rememberScrollPos() {
+        var lastPos
+        if (globalSettings.viewMethod === 1)
+        {
+            lastPos = folderIconView.contentItem.contentY
+        } else {
+            lastPos = folderListView.contentItem.contentY
+        }
+        return lastPos
+    }
+
     function itemLongPress(delegate, model) {
         console.log("FolderListDelegate onPressAndHold")
         var props = { model: model }
         PopupUtils.open(__actionSelectionPopoverComponent, delegate, props)
     }
 
-    function listLongPress() {
+    function listLongPress(model) {
         isContentHub = false
         fileSelectorMode = true
         fileSelector.fileSelectorComponent = pageStack
+        if (!model.isDir)
+            folderModel.model.selectionObject().select(model.index,false,true)
     }
 
     function itemClicked(model) {
@@ -31,7 +44,9 @@ QtObject {
                     (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
                     ) {
                 console.log("Changing to dir", model.filePath)
-                folderModel.goTo(model.filePath)
+
+
+                folderModel.goTo(model.filePath, rememberScrollPos())
             } else {
                 var props = {
                     title: i18n.tr("Folder not accessible"),
@@ -122,6 +137,13 @@ QtObject {
         }
     }
 
+    property ActionList additionalActions: ActionList {
+       FMActions.Select {
+           visible: true
+           onTriggered: listLongPress(model)
+       }
+    }
+
 
     // *** COMPONENTS ***
 
@@ -133,12 +155,15 @@ QtObject {
             actions: ActionList {
                 Component.onCompleted: {
                     // Build a single list of actions from the two lists above
-                    var tmp = trailingActions.actions
+                    var tmp = additionalActions.actions
                     var copy = []
+                    copy[0] = tmp[0]
+
+                    tmp = trailingActions.actions
                     var i;
 
                     for (i = 0; i < tmp.length; ++i) {
-                        copy[i] = tmp[i]
+                        copy[i+1] = tmp[i]
                     }
 
                     tmp = leadingActions.actions

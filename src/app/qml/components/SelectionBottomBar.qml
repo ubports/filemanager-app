@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
+import Ubuntu.Components.Popups 1.3
 
 Item {
     id: bottomBar
@@ -7,34 +8,13 @@ Item {
 
     property var folderModel
     property var selectionManager: folderModel.model.selectionObject()
+    property var fileOperationDialog
 
     property bool __actionsEnabled: (selectionManager.counter > 0) || (folderSelectorMode && folderModel.model.isWritable)
     property bool __actionsVisible: selectionMode && !isContentHub
 
     ActionList {
         id: selectionActions
-
-        Action {
-            property bool showText: false
-            text: i18n.tr("Select")
-            iconName: "tick"
-            enabled: __actionsEnabled
-            visible: __actionsVisible
-            onTriggered: {
-                var selectedAbsUrls = []
-                if (folderSelectorMode) {
-                    selectedAbsUrls = [ folder ]
-                } else {
-                    var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                    // For now support only selection in filesystem
-                    selectedAbsUrls = selectedAbsPaths.map(function(item) {
-                        return "file://" + item;
-                    });
-                }
-                console.log("FileSelector OK clicked, selected items: " + selectedAbsUrls)
-                acceptFileSelector(selectedAbsUrls)
-            }
-        }
 
         Action {
             property bool showText: false
@@ -54,38 +34,33 @@ Item {
         }
 
         Action {
-            text: i18n.tr("Cut")
-            iconName: "edit-cut"
+            property bool showText: false
+            text: i18n.tr("Select")
+            iconName: "tick"
             enabled: __actionsEnabled
-            visible: __actionsVisible && folderModel.model.isWritable
+            visible: __actionsVisible && isContentHub
             onTriggered: {
-                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                pageModel.model.cutPaths(selectedAbsPaths)
-                selectionManager.clear()
-                fileSelectorMode = false
-                fileSelector.fileSelectorComponent = null
+                var selectedAbsUrls = []
+                if (folderSelectorMode) {
+                    selectedAbsUrls = [ folder ]
+                } else {
+                    var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                    // For now support only selection in filesystem
+                    selectedAbsUrls = selectedAbsPaths.map(function(item) {
+                        return "file://" + item;
+                    });
+                }
+                console.log("FileSelector OK clicked, selected items: " + selectedAbsUrls)
+                acceptFileSelector(selectedAbsUrls)
             }
         }
 
         Action {
-            text: i18n.tr("Copy")
-            iconName: "edit-copy"
-            enabled: __actionsEnabled
-            visible: __actionsVisible
-            onTriggered: {
-                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                pageModel.model.copyPaths(selectedAbsPaths)
-                selectionManager.clear()
-                fileSelectorMode = false
-                fileSelector.fileSelectorComponent = null
-            }
-        }
-
-        Action {
+            property bool showText: false
             text: i18n.tr("Delete")
             iconName: "edit-delete"
             enabled: __actionsEnabled
-            visible: __actionsVisible && folderModel.model.isWritable
+            visible: __actionsVisible && folderModel.model.isWritable && !isContentHub
             onTriggered: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
 
@@ -101,12 +76,43 @@ Item {
                 fileSelector.fileSelectorComponent = null
             }
         }
+
+        Action {
+            property bool showText: false
+            text: i18n.tr("Copy")
+            iconName: "edit-copy"
+            enabled: __actionsEnabled
+            visible: __actionsVisible && !isContentHub
+            onTriggered: {
+                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                pageModel.model.copyPaths(selectedAbsPaths)
+                selectionManager.clear()
+                fileSelectorMode = false
+                fileSelector.fileSelectorComponent = null
+            }
+        }
+
+        Action {
+            property bool showText: false
+            text: i18n.tr("Cut")
+            iconName: "edit-cut"
+            enabled: __actionsEnabled
+            visible: __actionsVisible && folderModel.model.isWritable && !isContentHub
+            onTriggered: {
+                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                pageModel.model.cutPaths(selectedAbsPaths)
+                selectionManager.clear()
+                fileSelectorMode = false
+                fileSelector.fileSelectorComponent = null
+            }
+        }
     }
 
     ActionBar {
         id: bottomBarButtons
-        anchors.fill: parent
-        numberOfSlots: MathUtils.clamp(bottomBar.width/units.gu(12), 3, 6)
+        //anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        numberOfSlots: 5 // MathUtils.clamp(bottomBar.width/units.gu(12), 3, 6)
         delegate: TextualButtonStyle { }
         actions: selectionActions.actions
     }

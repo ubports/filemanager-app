@@ -128,4 +128,10 @@ Item {
         onClicked: delegate.clicked(mouse)
         onPressAndHold: delegate.pressAndHold(mouse)
     }
+
+    GridView.onRemove: SequentialAnimation {
+        PropertyAction { target: delegate; property: "GridView.delayRemove"; value: true }
+        NumberAnimation { target: delegate; property: "scale"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
+        PropertyAction { target: delegate; property: "GridView.delayRemove"; value: false }
+    }
 }
