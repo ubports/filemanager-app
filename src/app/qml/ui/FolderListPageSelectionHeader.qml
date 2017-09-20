@@ -30,7 +30,7 @@ PageHeader {
         visible: selectionMode
         onTriggered: {
             console.log("FileSelector cancelled")
-            if (isContentHub) {
+            if (isContentHub) {    // 'isContentHub' property declared in root QML file
                 cancelFileSelector()
             } else {
                 selectionManager.clear()

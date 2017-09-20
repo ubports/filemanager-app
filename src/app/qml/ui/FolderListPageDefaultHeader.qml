@@ -36,7 +36,7 @@ PageHeader {
     trailingActionBar.numberOfSlots: 3
     trailingActionBar.actions: [
         FMActions.Settings {
-            onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent, { folderListModel: folderModel.model })
+            onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), mainView, { folderListModel: folderModel.model })
         },
 
         FMActions.NewFolder {

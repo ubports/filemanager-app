@@ -26,6 +26,8 @@ import "../actions" as FMActions
 import "../dialogs" as Dialogs
 import "../backend" as Backend
 
+// TODO: Review last position code, which is referenced in FolderListModel (backend), FolderDelegateActions, FolderIconView, FolderListView, FolderListPageDefaultHeader, (PlacesPage)
+
 SidebarPageLayout {
     id: folderListPage
 
@@ -321,7 +323,7 @@ SidebarPageLayout {
                     "folderListPage" : folderPage,
                     "folderModel": pageModel
                 }
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenArchiveDialog.qml"), folderListView, props)
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenArchiveDialog.qml"), mainView, props)
             }
 
         }

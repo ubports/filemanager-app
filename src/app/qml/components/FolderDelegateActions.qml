@@ -30,7 +30,7 @@ QtObject {
     }
 
     function listLongPress(model) {
-        isContentHub = false
+        isContentHub = false    // Property declared in root QML file
         fileSelectorMode = true
         fileSelector.fileSelectorComponent = pageStack
         if (!model.isDir)
