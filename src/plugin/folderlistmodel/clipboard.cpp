@@ -511,5 +511,10 @@ QStringList Clipboard::paste(ClipboardOperation &operation)
 void Clipboard::clear()
 {
     qDebug() << Q_FUNC_INFO << "Clearing clipboard";
-    storeOnClipboard(QStringList(), ClipboardCopy, "");
+    //storeOnClipboard(QStringList(), ClipboardCopy, "");
+
+    // WORKAROUND: the storeOnClipboard() method above doesn't
+    // seem to work. In waiting for further investiagation, we
+    // rely on the standard Qt method.
+    QApplication::clipboard()->clear(QClipboard::Clipboard);
 }
