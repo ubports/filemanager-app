@@ -2,11 +2,15 @@ import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 
-Item {
-    id: bottomBar
-    height: visible ? units.gu(6) : 0
+import "../backend"
 
-    property var folderModel
+Rectangle {
+    id: bottomBar
+    height: visible ? bottomBarButtons.height : 0
+    color: theme.palette.normal.background
+    enabled: visible
+
+    property FolderListModel folderModel
     property var selectionManager: folderModel.model.selectionObject()
     property var fileOperationDialog
 
@@ -66,7 +70,7 @@ Item {
 
                 var props = {
                     "paths" : selectedAbsPaths,
-                    "folderModel": pageModel.model,
+                    "folderModel": folderModel.model,
                     "fileOperationDialog": fileOperationDialog
                 }
 
@@ -85,7 +89,7 @@ Item {
             visible: __actionsVisible && !isContentHub
             onTriggered: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                pageModel.model.copyPaths(selectedAbsPaths)
+                folderModel.model.copyPaths(selectedAbsPaths)
                 selectionManager.clear()
                 fileSelectorMode = false
                 fileSelector.fileSelectorComponent = null
@@ -100,7 +104,7 @@ Item {
             visible: __actionsVisible && folderModel.model.isWritable && !isContentHub
             onTriggered: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                pageModel.model.cutPaths(selectedAbsPaths)
+                folderModel.model.cutPaths(selectedAbsPaths)
                 selectionManager.clear()
                 fileSelectorMode = false
                 fileSelector.fileSelectorComponent = null

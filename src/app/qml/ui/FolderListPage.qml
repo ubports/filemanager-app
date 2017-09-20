@@ -110,7 +110,8 @@ SidebarPageLayout {
             id: viewLoader
             anchors.fill: parent
             anchors.topMargin: folderPage.header.height
-            anchors.bottomMargin: selectionBottomBar.visible ? selectionBottomBar.height : 0
+            anchors.bottomMargin: selectionBottomBar.visible ? selectionBottomBar.height
+                                                             : clipboardBottomBar.visible ? clipboardBottomBar.height : 0
 
             sourceComponent: {
                 if (globalSettings.viewMethod === 1) { // Grid
@@ -121,8 +122,19 @@ SidebarPageLayout {
             }
         }
 
-        // TODO: ClipboardBottomBar
-        // Should stay here, so it goes below SelectionBottomBar if visible
+        ClipboardBottomBar {
+            id: clipboardBottomBar
+
+            anchors {
+                bottom: parent.bottom
+                left: parent.left
+                right: parent.right
+            }
+
+            folderModel: pageModel
+            fileOperationDialog: fileOperationDialogObj
+            visible: pageModel.model.clipboardUrlsCounter > 0
+        }
 
         SelectionBottomBar {
             id: selectionBottomBar
@@ -135,7 +147,7 @@ SidebarPageLayout {
 
             folderModel: pageModel
             fileOperationDialog: fileOperationDialogObj
-            visible: selectionMode || pageModel.model.onlyAllowedPaths
+            visible: selectionMode
         }
 
         // TODO: Create another bottom panel, only for ContentHub actions
