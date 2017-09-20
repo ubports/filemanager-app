@@ -109,8 +109,8 @@ SidebarPageLayout {
         Loader {
             id: viewLoader
             anchors.fill: parent
-            anchors.topMargin: folderPage.header.height - (globalSettings.viewMethod === 0 ? units.gu(2) : 0)
-            anchors.bottomMargin: selectionMode ? selectionBottomBar.height : units.gu(2)
+            anchors.topMargin: folderPage.header.height
+            anchors.bottomMargin: selectionBottomBar.visible ? selectionBottomBar.height : 0
 
             sourceComponent: {
                 if (globalSettings.viewMethod === 1) { // Grid
