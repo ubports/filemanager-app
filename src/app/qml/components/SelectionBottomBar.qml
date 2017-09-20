@@ -11,7 +11,7 @@ Rectangle {
     enabled: visible
 
     property FolderListModel folderModel
-    property var selectionManager: folderModel.model.selectionObject()
+    property var selectionManager: folderModel.model.selectionObject
     property var fileOperationDialog
 
     property bool __actionsEnabled: (selectionManager.counter > 0) || (folderSelectorMode && folderModel.model.isWritable)
@@ -19,23 +19,6 @@ Rectangle {
 
     ActionList {
         id: selectionActions
-
-        Action {
-            property bool showText: false
-            text: i18n.tr("Cancel")
-            iconName: "edit-clear"
-            visible: selectionMode
-            onTriggered: {
-                console.log("FileSelector cancelled")
-                if (isContentHub) {
-                    cancelFileSelector()
-                } else {
-                    selectionManager.clear()
-                    fileSelectorMode = false
-                    fileSelector.fileSelectorComponent = null
-                }
-            }
-        }
 
         Action {
             property bool showText: false

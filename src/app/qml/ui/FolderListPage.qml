@@ -62,6 +62,8 @@ SidebarPageLayout {
             case 1: return FolderListModel.SortByDate
             }
         }
+
+        onPathChanged: pageModel.model.selectionObject.clear()
     }
 
     sidebarWidth: globalSettings.sidebarWidth
@@ -90,15 +92,32 @@ SidebarPageLayout {
     mainLoader.sourceComponent: Page {
         id: folderPage
 
-        header: FolderListPageDefaultHeader {
+        // *** HEADERS ***
+
+        header: defaultHeader
+
+        FolderListPageDefaultHeader {
+            id: defaultHeader
             fileOperationDialog: fileOperationDialogObj
             folderModel: pageModel
             showPanelAction: folderListPage.showPanelAction
+            visible: !selectionMode
+            enabled: visible
+        }
+
+        FolderListPageSelectionHeader {
+            id: selectionHeader
+            folderModel: pageModel
+            selectionMode: folderPage.selectionMode
+            visible: selectionMode
+            enabled: visible
         }
 
         // Set to true if called as file selector for ContentHub
         property bool fileSelectorMode: false
         property bool folderSelectorMode: false
+
+        // FIXME: Clearing selection (by cancel btn in the header, or changing the folder, should exit selection mode)
         readonly property bool selectionMode: fileSelectorMode || folderSelectorMode
 
         NetAuthenticationHandler {
@@ -342,6 +361,6 @@ SidebarPageLayout {
         }
 
         enabled: visible
-        visible: !folderListPage.sidebarActive /* && !selectionBottomBar.visible*/
+        visible: !folderListPage.sidebarActive  && !mainLoader.item.selectionMode
     }
 }

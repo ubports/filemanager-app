@@ -34,7 +34,7 @@ QtObject {
         fileSelectorMode = true
         fileSelector.fileSelectorComponent = pageStack
         if (!model.isDir)
-            folderModel.model.selectionObject().select(model.index,false,true)
+            folderModel.model.selectionObject.select(model.index,false,true)
     }
 
     function itemClicked(model) {
@@ -54,12 +54,12 @@ QtObject {
                     text: i18n.tr("Can not access %1").arg(model.fileName)
                 }
 
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), delegate, props)
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
             }
         } else {
             console.log("Non dir clicked")
             if (fileSelectorMode) {
-                folderModel.model.selectionObject().select(model.index,false,true)
+                folderModel.model.selectionObject.select(model.index,false,true)
             } else if (!folderSelectorMode){
                 openFile(model)
             }

@@ -191,7 +191,8 @@ private:
 
 public:
 
-    Q_INVOKABLE DirSelection * selectionObject() const ;
+    Q_PROPERTY(DirSelection* selectionObject READ selectionObject CONSTANT)
+    DirSelection * selectionObject() const;
 
     //[1] new stuff UBports
 private:
