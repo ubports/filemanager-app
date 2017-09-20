@@ -24,6 +24,8 @@ Popover {
     id: root
     objectName: "viewPopover"
 
+    property var folderListModel
+
     Column {
         anchors {
             left: parent.left
@@ -45,8 +47,8 @@ Popover {
             control: CheckBox {
                 anchors.verticalCenter: parent.verticalCenter
 
-                checked: settings.showHidden
-                onCheckedChanged: settings.showHidden = checked
+                checked: globalSettings.showHidden
+                onCheckedChanged: globalSettings.showHidden = checked
             }
         }
 
@@ -59,13 +61,13 @@ Popover {
                 anchors.topMargin: units.gu(1.6)
             }
 
-            selectedIndex: settings.viewMethod
+            selectedIndex: globalSettings.viewMethod
             values: [
                 i18n.tr("List"),
                 i18n.tr("Icons")
             ]
 
-            onSelectedIndexChanged: settings.viewMethod = selectedIndex
+            onSelectedIndexChanged: globalSettings.viewMethod = selectedIndex
         }
 
         ValueSelector {
@@ -77,13 +79,13 @@ Popover {
                 anchors.topMargin: units.gu(1.6)
             }
 
-            selectedIndex: settings.sortBy
+            selectedIndex: globalSettings.sortBy
             values: [
                 i18n.tr("Name"),
                 i18n.tr("Date")
             ]
 
-            onSelectedIndexChanged: settings.sortBy = selectedIndex
+            onSelectedIndexChanged: globalSettings.sortBy = selectedIndex
         }
 
         ValueSelector {
@@ -95,13 +97,13 @@ Popover {
                 anchors.topMargin: units.gu(1.7)
             }
 
-            selectedIndex: settings.sortOrder
+            selectedIndex: globalSettings.sortOrder
             values: [
                 i18n.tr("Ascending"),
                 i18n.tr("Descending")
             ]
 
-            onSelectedIndexChanged: settings.sortOrder = selectedIndex
+            onSelectedIndexChanged: globalSettings.sortOrder = selectedIndex
         }
 
         Standard {
@@ -124,12 +126,12 @@ Popover {
 
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
 
-                text: pageModel.nameFilters
+                text: folderListModel.nameFilters
 
                 onAccepted: goButton.clicked()
                 onTextChanged: {
-                    if (text !== pageModel.nameFilters)
-                        pageModel.nameFilters = [text]
+                    if (text !== folderListModel.nameFilters)
+                        folderListModel.nameFilters = [text]
                 }
             }
         }

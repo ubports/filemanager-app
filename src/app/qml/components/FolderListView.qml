@@ -17,116 +17,58 @@
  */
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3 as OldListItems
 import Ubuntu.Components.Popups 1.3
-import org.nemomobile.folderlistmodel 1.0
 
-Item {
-    property FolderListModel folderListModel
-    property string folderPath: folderListModel.path
-    property bool smallMode: !wideAspect
-    property Flickable flickable: root
+import "../actions" as FMActions
+import "../components"
+
+ScrollView {
+    id: folderListView
+
+    property var folderListPage
+    property var fileOperationDialog
+    property var folderModel
+
+    property alias footer: root.footer
+    property alias header: root.header
+
     ListView {
         id: root
         anchors.fill: parent
-        model: folderListModel
-        // This must be visible so Autopilot can see it
-        header: OldListItems.Header {
-            objectName: "listViewSmallHeader"
-            text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(folderPath).arg(root.count)
-            height: smallMode ? units.gu(4) : 0
-            clip: true
-        }
+        model: folderModel.model
 
         delegate: FolderListDelegate {
             id: delegate
+
+            title: model.fileName
+            subtitle: __delegateActions.itemDateAndSize(model)
+            iconName: model.iconName
+            showProgressionSlot: model.isBrowsable
+            isSelected: model.isSelected
+
+            property var __delegateActions: FolderDelegateActions {
+                folderListPage: folderListView.folderListPage
+                folderModel: folderListView.folderModel
+                fileOperationDialog: folderListView.fileOperationDialog
+            }
+
             leadingActions: ListItemActions {
-                actions: [
-                    Action {
-                        iconName: "edit-delete"
-                        text: i18n.tr("Delete")
-                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
-                        onTriggered: {
-                            PopupUtils.open(confirmSingleDeleteDialog, folderListPage,
-                                            { "filePath" : model.filePath,
-                                                "fileName" : model.fileName }
-                                            )
-                        }
-                    },
-                    Action {
-                        iconName: "edit"
-                        text: i18n.tr("Rename")
-                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
-                        onTriggered: {
-                            PopupUtils.open(confirmRenameDialog, folderListPage,
-                                            { "modelRow"  : model.index,
-                                                "inputText" : model.fileName
-                                            })
-                        }
-                    }
-                ]
+                // Children is an alias for 'actions' property, this way we don't get any warning about non-NOTIFYable props
+                actions: __delegateActions.leadingActions.children
             }
+
             trailingActions: ListItemActions {
-                actions: [
-                    Action {
-                        iconName: "application-x-archive-symbolic"
-                        text: i18n.tr("Extract archive")
-                        visible: getArchiveType(model.fileName) !== ""
-                        onTriggered: {
-                            openFile(model, true)
-                        }
-                    },
-                    Action {
-                        iconName: "info"
-                        text: i18n.tr("Properties")
-                        onTriggered: {
-                            PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"),
-                                            folderListPage,
-                                            { "model": model
-                                            }
-                                            )
-                        }
-                    },
-                    Action {
-                        iconName: "edit-cut"
-                        text: i18n.tr("Cut")
-                        visible: pathIsWritable() //we should discuss that: ((model.filePath.indexOf("/home/phablet/.") === -1) || pageModel.path !== "/home/phablet") && pathIsWritable()
-                        onTriggered: {
-                            pageModel.cutIndex(model.index)
-                            helpClipboard = true
-                        }
-                    },
-                    Action {
-                        iconName: "edit-copy"
-                        text: i18n.tr("Copy")
-                        onTriggered: {
-                            pageModel.copyIndex(model.index)
-                            helpClipboard = true
-                        }
-                    },
-                    Action {
-                        iconName: "share"
-                        text: i18n.tr("Share")
-                        visible: !model.isDir
-                        onTriggered: {
-                            openFile(model, true)
-                        }
-                    }
-
-                ]
+                // Children is an alias for 'actions' property, this way we don't get any warning about non-NOTIFYable props
+                actions: __delegateActions.trailingActions.children
             }
 
-            onClicked: itemClicked(model)
-
-            onPressAndHold: {
-                isContentHub = false
-                fileSelectorMode = true
-                fileSelector.fileSelectorComponent = pageStack
-            }
+            onClicked: __delegateActions.itemClicked(model)
+            onPressAndHold: __delegateActions.listLongPress()
         }
-    }
-    Scrollbar {
-        flickableItem: root
-        align: Qt.AlignTrailing
+
+        section.property: "isDir"
+        section.delegate: SectionDivider {
+            text: section == "true" ? i18n.tr("Directories") : i18n.tr("Files")
+        }
     }
 }

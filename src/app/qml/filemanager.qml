@@ -17,14 +17,13 @@
  */
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 1.3
 import Qt.labs.settings 1.0
 import Ubuntu.Content 1.3
-import com.ubuntu.PlacesModel 0.1
 import com.ubuntu.PamAuthentication 0.1
 
 import "ui"
+import "backend" as Backend
 
 MainView {
     id: mainView
@@ -35,26 +34,10 @@ MainView {
     width: phone ? units.gu(40) : units.gu(100)
     height: units.gu(75)
 
-    property alias filemanager: mainView
-
     property bool wideAspect: width > units.gu(50)
 
-    property bool allowSidebarExpanded: width > units.gu(50)
     property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()
-
     property bool isContentHub: true
-
-
-    onAllowSidebarExpandedChanged: {
-        if (!allowSidebarExpanded)
-            settings.collapsedSidebar = true
-    }
-
-    property bool showSidebar: width >= units.gu(50)
-
-    headerColor: "#F5F5F5"
-    backgroundColor: "#F5F5F5"
-    footerColor: "#F5F5F5"
 
     QtObject {
         id: fileSelector
@@ -68,10 +51,6 @@ MainView {
         ContentItem {}
     }
 
-    PlacesModel {
-        id: userplaces
-    }
-
     PamAuthentication {
         id: pamAuthentication
         serviceName: "filemanager"
@@ -80,9 +59,11 @@ MainView {
     property var pageStack: pageStack
 
     function openFileSelector(selectFolderMode) {
-        fileSelector.fileSelectorComponent = pageStack.push(Qt.resolvedUrl("./ui/FolderListPage.qml"), { fileSelectorMode: !selectFolderMode,
-                                                                folderSelectorMode: selectFolderMode,
-                                                                folder: userplaces.locationHome })
+        var props = {
+            fileSelectorMode: !selectFolderMode,
+            folderSelectorMode: selectFolderMode
+        }
+        fileSelector.fileSelectorComponent = pageStack.push(Qt.resolvedUrl("./ui/FolderListPage.qml"), props)
     }
 
     function cancelFileSelector() {
@@ -96,9 +77,7 @@ MainView {
         console.log("accept file selector " + fileUrls)
         if (fileSelector.importMode) {
             importFiles(fileSelector.activeTransfer, fileUrls[0])
-        }
-        else
-        {
+        } else {
             exportFiles(fileSelector.activeTransfer, fileUrls)
         }
     }
@@ -119,7 +98,7 @@ MainView {
         var fileNames = []
         for(var i=0; i < activeTransfer.items.length; i++) {
             var item = activeTransfer.items[i]
-            var uniqueName = fileSelector.fileSelectorComponent.newFileUniqueName(destDir,
+            var uniqueName = fileSelector.fileSelectorComponent.folderModel.newFileUniqueName(destDir,
                                                                                   fileSelector.fileSelectorComponent.basename(String(item.url)))
             console.log("Move file to:" + destDir + " with name: " + uniqueName)
             activeTransfer.items[i].move(destDir, uniqueName)
@@ -158,26 +137,16 @@ MainView {
     }
 
     /* Settings Storage */
-    property alias settings: settingsObj
-    Settings {
-        id: settingsObj
-        property bool collapsedSidebar: false
-        property int viewMethod: 0  // 0=List; 1=Grid
-        property bool showHidden: false
-        property int sortOrder: 0   // 0=Ascending; 1=Descending
-        property int sortBy: 0  // 0=Name; 1=Date
-    }
+    property QtObject globalSettings: Backend.GlobalSettings { }
 
-    function getIcon(name) {
-        return "/usr/share/icons/ubuntu-mobile/actions/scalable/" + name + ".svg" //Qt.resolvedUrl("icons/" + name + ".png")
-    }
 
     function error(title, message) {
-        PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), mainView,
-                        {
-                            title: title,
-                            text: message
-                        })
+        var props = {
+            title: title,
+            text: message
+        }
+
+        PopupUtils.open(Qt.resolvedUrl("dialogs/NotifyDialog.qml"), mainView, props)
     }
 
     function finishImport(folder, urls) {
@@ -185,21 +154,18 @@ MainView {
 
         pageStack.pop()
         fileSelector.fileSelectorComponent = null
-        pageStack.currentPage.currentPage.folder = folder
-        pageStack.currentPage.currentPage.refresh()
-        PopupUtils.open(Qt.resolvedUrl("./ui/NotifyDialog.qml"), mainView,
-                        {
-                            title: (count === 1 ? i18n.tr("File %1").arg(urls[0]) : i18n.tr("%1 Files").arg(count)),
-                            text: i18n.tr("Saved to: %1").arg(folder)
-                        })
-    }
+        pageStack.currentPage.folderModel.path = folder
+        pageStack.currentPage.refresh()
 
-    Keys.onPressed: {
-        print("Key pressed!")
-        event.accepted = tabs.currentPage.keyPressed(event.key, event.modifiers)
+        var props = {
+            title: (count === 1 ? i18n.tr("File %1").arg(urls[0]) : i18n.tr("%1 Files").arg(count)),
+            text: i18n.tr("Saved to: %1").arg(folder)
+        }
+
+        PopupUtils.open(Qt.resolvedUrl("dialogs/NotifyDialog.qml"), mainView, props)
     }
 
     Component.onCompleted:  {
-        pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"), { folder: userplaces.locationHome })
+        pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"))
     }
 }

@@ -62,7 +62,10 @@ public:
         ModifiedDateRole,
         FileSizeRole,
         IconSourceRole,
+        IconNameRole,
         FilePathRole,
+        MimeTypeRole,
+        MimeTypeDescriptionRole,
         IsDirRole,
         IsHostRole,         //!< it can also be used for other protocols than smb/cifs
         IsRemoteRole,
@@ -98,6 +101,7 @@ public:
     virtual int                 getIndex(const QString& name);
     virtual void                notifyItemChanged(int row);
 
+    Q_PROPERTY(int count READ rowCount NOTIFY awaitingResultsChanged)
     int rowCount(const QModelIndex &index = QModelIndex()) const
     {
         if (index.parent() != QModelIndex())
@@ -127,6 +131,10 @@ public:
     Q_INVOKABLE QString     curPathCreatedDateLocaleShort()  const;
     Q_INVOKABLE QString     curPathModifiedDateLocaleShort() const;
     Q_INVOKABLE bool        curPathIsWritable() const;
+
+    Q_PROPERTY(bool canGoBack READ canGoBack NOTIFY canGoBackChanged)
+
+    bool canGoBack() const;
 
     Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
     bool awaitingResults() const;
@@ -159,6 +167,7 @@ public slots:
     void onItemsFetched();
 
 signals:
+    void canGoBackChanged();
     void awaitingResultsChanged();
     void nameFiltersChanged();
     void filterDirectoriesChanged();
@@ -192,6 +201,9 @@ public:
     void classBegin();
     // WORKAROUND: check componentComplete() definition in .cpp file
     void componentComplete();
+
+    Q_INVOKABLE QString getIcon(const QString & path) const;
+    static QString getIcon(QString absoluteFilePath, QMimeType mime, bool isSmbWorkgroup = false, bool isBrowsable = false, bool isHost = false);
 
     //[0] new stuff Ubuntu File Manager
     Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)

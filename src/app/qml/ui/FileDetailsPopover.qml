@@ -23,7 +23,7 @@ Popover {
     id: root
     property var model
 
-    property string path: model.path || (fileView.folder + '/' + model.fileName)
+    property string path: model.filePath
 
     contentHeight: contents.height + 2 * contents.anchors.margins
 
@@ -36,7 +36,7 @@ Popover {
         if (model.isReadable) {
             permissions.push(i18n.tr("Readable"))
         }
-        if (pathIsWritable()) {
+        if (model.isWritable) {
             permissions.push(i18n.tr("Writable"))
         }
         if (model.isExecutable) {
@@ -67,21 +67,16 @@ Popover {
 
         Row {
             spacing: units.gu(1)
-            Image {
+            Icon {
                 anchors.verticalCenter: parent.verticalCenter
-
-                // TODO: how to get proper icon?
-                source: fileIcon(root.path, model.isDir)
-                sourceSize {
-                    width: 48
-                    height: 48
-                }
+                width: units.gu(6); height: width
+                name: model.iconName
             }
 
             Label {
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: folderDisplayName(root.path)
+                text: folderModel.pathTitle(root.path)
                 color: UbuntuColors.ash
                 font.bold: true
             }

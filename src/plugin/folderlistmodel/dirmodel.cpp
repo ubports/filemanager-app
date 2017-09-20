@@ -222,7 +222,10 @@ QHash<int, QByteArray> DirModel::buildRoleNames() const
         roles.insert(ModifiedDateRole, QByteArray("modifiedDate"));
         roles.insert(FileSizeRole, QByteArray("fileSize"));
         roles.insert(IconSourceRole, QByteArray("iconSource"));
+        roles.insert(IconNameRole, QByteArray("iconName"));
         roles.insert(FilePathRole, QByteArray("filePath"));
+        roles.insert(MimeTypeRole, QByteArray("mimeType"));
+        roles.insert(MimeTypeDescriptionRole, QByteArray("mimeTypeDescription"));
         roles.insert(IsDirRole, QByteArray("isDir"));        
         roles.insert(IsHostRole, QByteArray("isHost"));
         roles.insert(IsRemoteRole,QByteArray("isRemote"));
@@ -391,8 +394,14 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
 
             return "image://theme/icon-m-content-document";
         }
+        case IconNameRole:
+            return DirModel::getIcon(fi.absoluteFilePath(), fi.mimeType(), fi.isWorkGroup(), fi.isBrowsable(), fi.isHost());
         case FilePathRole:
             return fi.filePath();
+        case MimeTypeRole:
+            return fi.mimeType().name();
+        case MimeTypeDescriptionRole:
+            return fi.mimeType().comment();
         case IsDirRole:
             return fi.isDir();
         case IsFileRole:
@@ -527,9 +536,15 @@ void DirModel::setPathFromCurrentLocation()
     {
         mPathList.append(mCurrentDir);
     }
+
+    emit canGoBackChanged();
     emit pathChanged(mCurLocation->urlPath());
 }
 
+bool DirModel::canGoBack() const
+{
+    return mPathList.count() > 1;
+}
 
 void DirModel::goBack()
 {
@@ -1651,7 +1666,7 @@ QString DirModel::curPathAccessedDateLocaleShort() const
 }
 
 
-DirItemInfo  DirModel::setParentIfRelative(const QString &fileOrDir) const
+DirItemInfo DirModel::setParentIfRelative(const QString &fileOrDir) const
 {
     QScopedPointer<DirItemInfo> myFi(mCurLocation->newItemInfo(fileOrDir));
     if (!myFi->isAbsolute())
@@ -1700,6 +1715,60 @@ void DirModel::componentComplete()
 
     mQmlCompleted = true;
     setPath(mQmlCachePath);
+}
+
+QString DirModel::getIcon(const QString &path) const
+{
+    QFileInfo fi(path);
+    QMimeType mt = QMimeDatabase().mimeTypeForFile(path);
+
+    return getIcon(fi.absoluteFilePath(), mt);
+}
+
+QString DirModel::getIcon(QString absoluteFilePath, QMimeType mime, bool isSmbWorkgroup, bool isBrowsable, bool isHost)
+{
+    QString iconName = "unknown";
+
+    if (isSmbWorkgroup && QIcon::hasThemeIcon("network_local")) {
+        iconName = "network_local";
+    } else if (isBrowsable && QIcon::hasThemeIcon("folder")) {
+        iconName = "folder";
+    } else if (isHost && QIcon::hasThemeIcon("server")) {
+        iconName = "server";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) && QIcon::hasThemeIcon("desktop")) {
+        iconName = "desktop";
+    } else if (absoluteFilePath == "/") {
+        iconName = "drive-harddisk";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) && QIcon::hasThemeIcon("folder-documents")) {
+        iconName = "folder-documents";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) && QIcon::hasThemeIcon("folder-download")) {
+        iconName = "folder-download";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::HomeLocation) && QIcon::hasThemeIcon("folder-home")) {
+        iconName = "folder-home";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) && QIcon::hasThemeIcon("folder-pictures")) {
+        iconName = "folder-pictures";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::MusicLocation) && QIcon::hasThemeIcon("folder-music")) {
+        iconName = "folder-music";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::MoviesLocation) && QIcon::hasThemeIcon("folder-videos")) {
+        iconName = "folder-videos";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Templates" && QIcon::hasThemeIcon("folder-templates")) {
+        iconName = "folder-templates";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Public" && QIcon::hasThemeIcon("folder-publicshare")) {
+        iconName = "folder-publicshare";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Programs" && QIcon::hasThemeIcon("folder-system")) {
+        iconName = "folder-system";
+    } else if (absoluteFilePath.startsWith("/media/") && QIcon::hasThemeIcon("drive-removable-media")) {
+        // In context of Ubuntu Touch this means SDCard currently.
+        iconName = "drive-removable-media";
+    } else if (absoluteFilePath.startsWith("smb://") && QIcon::hasThemeIcon("network_local")) {
+        iconName = "network_local";
+    } else if (QIcon::hasThemeIcon(mime.iconName())) {
+        iconName = mime.iconName();
+    } else if (QIcon::hasThemeIcon(mime.genericIconName())) {
+        iconName = mime.genericIconName();
+    }
+
+    return iconName;
 }
 
 void DirModel::registerMetaTypes()
