@@ -25,6 +25,7 @@ ListItem {
     property string title
     property string subtitle
     property string iconName
+    property string path
     property bool showProgressionSlot
     property bool isSelected
 
@@ -42,14 +43,36 @@ ListItem {
         title.text: del.title
         subtitle.text: del.subtitle
 
-        Icon {
-            name: del.iconName
-            height: units.gu(5); width: height
+        Item {
             SlotsLayout.position: SlotsLayout.Leading
+            height: units.gu(5); width: height
+
+            Icon {
+                anchors.fill: parent
+                visible: !image.visible
+                name: del.iconName
+            }
+
+            Image {
+                id: image
+                anchors.fill: parent
+                sourceSize: Qt.size(image.width, image.height)
+                visible: status == Image.Ready
+
+                source: model.mimeType.indexOf("image/") > -1 ? "image://thumbnailer/file://" + delegate.path : ""
+                fillMode: Image.PreserveAspectFit
+                asynchronous: true
+            }
         }
 
         ProgressionSlot{
             visible: del.showProgressionSlot
         }
+    }
+
+    ListView.onRemove: SequentialAnimation {
+        PropertyAction { target: del; property: "ListView.delayRemove"; value: true }
+        NumberAnimation { target: del; property: "scale"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
+        PropertyAction { target: del; property: "ListView.delayRemove"; value: false }
     }
 }

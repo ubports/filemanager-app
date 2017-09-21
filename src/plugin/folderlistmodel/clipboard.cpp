@@ -511,5 +511,19 @@ QStringList Clipboard::paste(ClipboardOperation &operation)
 void Clipboard::clear()
 {
     qDebug() << Q_FUNC_INFO << "Clearing clipboard";
-    storeOnClipboard(QStringList(), ClipboardCopy, "");
+
+    QClipboard * clipboard = QApplication::clipboard();
+
+    if (clipboard) {
+        clipboard->clear(QClipboard::Clipboard);
+
+        if (!clipboard->mimeData()->urls().isEmpty()) {
+            // On an Ubuntu desktop clipboard->clear() does the job, but for some reason
+            // it fails on Ubuntu Touch. Instead of setting mimeData to '0', try
+            // to fill it with empty data.
+            clipboard->setMimeData(new QMimeData());
+        }
+    } else {
+        storeOnClipboard(QStringList(), ClipboardCopy, "");
+    }
 }

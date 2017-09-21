@@ -26,10 +26,14 @@ import "../actions" as FMActions
 import "../dialogs" as Dialogs
 import "../backend" as Backend
 
+// TODO: Review last position code, which is referenced in FolderListModel (backend), FolderDelegateActions, FolderIconView, FolderListView, FolderListPageDefaultHeader, (PlacesPage)
+
 SidebarPageLayout {
     id: folderListPage
 
     property alias folderModel: pageModel
+    property bool fileSelectorMode: false
+    property bool folderSelectorMode: false
     Backend.FolderListModel {
         id: pageModel
         path: places.locationHome
@@ -62,6 +66,8 @@ SidebarPageLayout {
             case 1: return FolderListModel.SortByDate
             }
         }
+
+        onPathChanged: pageModel.model.selectionObject.clear()
     }
 
     sidebarWidth: globalSettings.sidebarWidth
@@ -90,15 +96,34 @@ SidebarPageLayout {
     mainLoader.sourceComponent: Page {
         id: folderPage
 
-        header: FolderListPageDefaultHeader {
+        // *** HEADERS ***
+
+        header: defaultHeader
+
+        FolderListPageDefaultHeader {
+            id: defaultHeader
             fileOperationDialog: fileOperationDialogObj
             folderModel: pageModel
             showPanelAction: folderListPage.showPanelAction
+            visible: !selectionMode
+            enabled: visible
         }
 
-        // Set to true if called as file selector for ContentHub
-        property bool fileSelectorMode: fileSelectorModeG
-        property bool folderSelectorMode: folderSelectorModeG
+        FolderListPageSelectionHeader {
+            id: selectionHeader
+            folderModel: pageModel
+            visible: selectionMode && !isContentHub
+            enabled: visible
+        }
+
+        FolderListPagePickModeHeader {
+            id: pickModeHeader
+            folderModel: pageModel
+            visible: selectionMode && isContentHub
+            enabled: visible
+        }
+
+        // FIXME: Clearing selection (by cancel btn in the header, or changing the folder, should exit selection mode)
         readonly property bool selectionMode: fileSelectorMode || folderSelectorMode
 
         NetAuthenticationHandler {
@@ -110,7 +135,9 @@ SidebarPageLayout {
             id: viewLoader
             anchors.fill: parent
             anchors.topMargin: folderPage.header.height
-            anchors.bottomMargin: selectionBottomBar.height
+            anchors.bottomMargin: (bottomEdge.enabled ? bottomEdge.hint.height : 0) + (selectionBottomBar.visible ? selectionBottomBar.height
+                                                                                                                  : clipboardBottomBar.visible ? clipboardBottomBar.height
+                                                                                                                                               : 0)
 
             sourceComponent: {
                 if (globalSettings.viewMethod === 1) { // Grid
@@ -121,24 +148,33 @@ SidebarPageLayout {
             }
         }
 
-        // TODO: ClipboardBottomBar
-        // Should stay here, so it goes below SelectionBottomBar if visible
-
-        SelectionBottomBar {
-            id: selectionBottomBar
+        ClipboardBottomBar {
+            id: clipboardBottomBar
 
             anchors {
-                bottom: parent.bottom
+                bottom: parent.bottom; bottomMargin: bottomEdge.enabled ? bottomEdge.hint.height : 0
                 left: parent.left
                 right: parent.right
             }
 
             folderModel: pageModel
-            visible: selectionMode || pageModel.model.onlyAllowedPaths
+            fileOperationDialog: fileOperationDialogObj
+            visible: pageModel.model.clipboardUrlsCounter > 0 && !selectionMode
         }
 
-        // TODO: Create another bottom panel, only for ContentHub actions
+        SelectionBottomBar {
+            id: selectionBottomBar
 
+            anchors {
+                bottom: parent.bottom   // No bottom margin here, since BottomEdge is disabled during selection.
+                left: parent.left
+                right: parent.right
+            }
+
+            folderModel: pageModel
+            fileOperationDialog: fileOperationDialogObj
+            visible: selectionMode
+        }
 
         // *** VIEW COMPONENTS ***
 
@@ -289,7 +325,7 @@ SidebarPageLayout {
                     "folderListPage" : folderPage,
                     "folderModel": pageModel
                 }
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenArchiveDialog.qml"), folderListView, props)
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenArchiveDialog.qml"), mainView, props)
             }
 
         }
@@ -329,6 +365,6 @@ SidebarPageLayout {
         }
 
         enabled: visible
-        visible: !folderListPage.sidebarActive /* && !selectionBottomBar.visible*/
+        visible: !folderListPage.sidebarActive  && !mainLoader.item.selectionMode
     }
 }

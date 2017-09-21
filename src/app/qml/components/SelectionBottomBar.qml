@@ -1,57 +1,26 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
+import Ubuntu.Components.Popups 1.3
 
-Item {
+import "../backend"
+
+// TODO: check origin of properties used in bindings
+
+Rectangle {
     id: bottomBar
     height: visible ? units.gu(6) : 0
+    color: theme.palette.normal.background
+    enabled: visible
 
-    property var folderModel
-    property var selectionManager: folderModel.model.selectionObject()
+    property FolderListModel folderModel
+    property var selectionManager: folderModel.model.selectionObject
+    property var fileOperationDialog
 
     property bool __actionsEnabled: (selectionManager.counter > 0) || (folderSelectorMode && folderModel.model.isWritable)
-    property bool __actionsVisible: selectionMode && !isContentHub
+    property bool __actionsVisible: selectionMode
 
     ActionList {
         id: selectionActions
-
-        Action {
-            property bool showText: false
-            text: i18n.tr("Select")
-            iconName: "tick"
-            enabled: __actionsEnabled
-            visible: __actionsVisible
-            onTriggered: {
-                var selectedAbsUrls = []
-                if (folderSelectorMode) {
-                    selectedAbsUrls = [ folder ]
-                } else {
-                    var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                    // For now support only selection in filesystem
-                    selectedAbsUrls = selectedAbsPaths.map(function(item) {
-                        return "file://" + item;
-                    });
-                }
-                console.log("FileSelector OK clicked, selected items: " + selectedAbsUrls)
-                acceptFileSelector(selectedAbsUrls)
-            }
-        }
-
-        Action {
-            property bool showText: false
-            text: i18n.tr("Cancel")
-            iconName: "edit-clear"
-            visible: selectionMode
-            onTriggered: {
-                console.log("FileSelector cancelled")
-                if (isContentHub) {
-                    cancelFileSelector()
-                } else {
-                    selectionManager.clear()
-                    fileSelectorMode = false
-                    fileSelector.fileSelectorComponent = null
-                }
-            }
-        }
 
         Action {
             text: i18n.tr("Cut")
@@ -60,7 +29,7 @@ Item {
             visible: __actionsVisible && folderModel.model.isWritable
             onTriggered: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                pageModel.model.cutPaths(selectedAbsPaths)
+                folderModel.model.cutPaths(selectedAbsPaths)
                 selectionManager.clear()
                 fileSelectorMode = false
                 fileSelector.fileSelectorComponent = null
@@ -74,12 +43,13 @@ Item {
             visible: __actionsVisible
             onTriggered: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                pageModel.model.copyPaths(selectedAbsPaths)
+                folderModel.model.copyPaths(selectedAbsPaths)
                 selectionManager.clear()
                 fileSelectorMode = false
                 fileSelector.fileSelectorComponent = null
             }
         }
+
 
         Action {
             text: i18n.tr("Delete")
@@ -91,23 +61,35 @@ Item {
 
                 var props = {
                     "paths" : selectedAbsPaths,
-                    "folderModel": pageModel.model,
+                    "folderModel": folderModel.model,
                     "fileOperationDialog": fileOperationDialog
                 }
 
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmMultipleDeleteDialog.qml"), mainView, props)
-                selectionManager.clear()
-                fileSelectorMode = false
-                fileSelector.fileSelectorComponent = null
+                var dialog = PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmMultipleDeleteDialog.qml"), mainView, props)
+
+                dialog.accepted.connect(function() {
+                    selectionManager.clear()
+                    fileSelectorMode = false
+                    fileSelector.fileSelectorComponent = null
+                })
             }
         }
     }
 
-    ActionBar {
+    Flow {
         id: bottomBarButtons
-        anchors.fill: parent
-        numberOfSlots: MathUtils.clamp(bottomBar.width/units.gu(12), 3, 6)
-        delegate: TextualButtonStyle { }
-        actions: selectionActions.actions
+        anchors.centerIn: parent
+        spacing: units.gu(2)
+        Repeater {
+            id: repeater
+            model: selectionActions.actions
+            delegate: Button {
+                action: modelData
+                width: Math.min(bottomBar.width, units.gu(80)) / repeater.count - bottomBarButtons.spacing
+                height: units.gu(5)
+                anchors.topMargin: units.gu(1)
+                color: theme.palette.normal.foreground
+            }
+        }
     }
 }

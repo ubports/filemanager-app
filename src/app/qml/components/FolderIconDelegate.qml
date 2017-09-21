@@ -16,30 +16,26 @@
  * Authored by: Michael Spencer <sonrisesoftware@gmail.com>
  */
 import QtQuick 2.4
-import QtGraphicalEffects 1.0
 import Ubuntu.Components 1.3
+import QtGraphicalEffects 1.0
 
-// TODO: Check color usage
-// TODO: Check design
-
-Item {
+MouseArea {
     id: delegate
 
     property bool isSelected
-    property alias mouseOver: mouseArea.containsMouse
 
     property string iconName
     property string title
+    property string path
 
-    signal clicked(var mouse)
-    signal pressAndHold(var mouse)
+    // Ensure that file name can overlap the items below.
+    z: delegate.containsMouse ? 10 : 0
 
     Rectangle {
-        anchors.centerIn: parent
-        height: parent.height; width: height
+        anchors { fill: parent; margins: units.dp(1) }
         radius: units.dp(8)
         opacity: delegate.isSelected ? 0.5 : 0
-        color: UbuntuColors.orange
+        color: UbuntuColors.green
 
         Behavior on opacity {
             UbuntuNumberAnimation {}
@@ -47,27 +43,34 @@ Item {
     }
 
     Item {
-        anchors {
-            left: parent.left; leftMargin: units.gu(1)
-            right: parent.right; rightMargin: units.gu(1)
-            top: parent.top; topMargin: units.gu(0.5)
-            bottom: label.top; bottomMargin: units.gu(1)
-        }
+        id: imgContainer
+        anchors { top: parent.top; topMargin: units.gu(1) }
+        anchors.horizontalCenter: parent.horizontalCenter
+        height: units.gu(6); width: height
 
         Icon {
-            id: image
-            anchors.centerIn: parent
-            width: units.gu(6); height: width
-
+            anchors.fill: parent
+            visible: !image.visible
             name: delegate.iconName
         }
 
-        // TODO: Check performance, QtGraphicalEffects in a delegate might become a problem
+        Image {
+            id: image
+            anchors.fill: parent
+            sourceSize: Qt.size(image.width, image.height)
+            visible: status == Image.Ready
+
+            source: model.mimeType.indexOf("image/") > -1 ? "image://thumbnailer/file://" + delegate.path : ""
+            fillMode: Image.PreserveAspectFit
+            asynchronous: true
+        }
+
         BrightnessContrast {
-            anchors.fill: image
+            anchors.fill: imgContainer
             brightness: 0.3
-            source: image
-            opacity: mouseOver ? 1 : 0
+            source: imgContainer
+            opacity: visible ? 1.0 : 0.0
+            visible: delegate.containsMouse
 
             Behavior on opacity {
                 UbuntuNumberAnimation {}
@@ -75,57 +78,36 @@ Item {
         }
     }
 
-    property bool expand: mouseOver && label.implicitWidth >= label.width
-    z: expand ? 1 : 0
-
-    Rectangle {
-        anchors {
-            fill: label
-            margins: units.gu(-0.5)
-            leftMargin: units.gu(-1)
-            rightMargin: units.gu(-1)
-        }
-        color: "white"
-        radius: units.dp(4)
-        border.color: UbuntuColors.slate
-        border.width: units.dp(1)
-
-        opacity: expand ? 1 : 0
-
-        Behavior on opacity {
-            UbuntuNumberAnimation {}
-        }
-    }
-
     Label {
-        id: label
         anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
-            bottomMargin: units.gu(0.75)
-        }
-
-        width: expand ? implicitWidth : (parent.width - units.gu(0.5))
-
-        Behavior on width {
-            UbuntuNumberAnimation {}
+            left: parent.left; leftMargin: units.gu(0.5)
+            right: parent.right; rightMargin: units.gu(0.5)
+            top: imgContainer.bottom; topMargin: units.gu(1)
         }
 
         horizontalAlignment: Text.AlignHCenter
-        elide: Text.ElideMiddle
+        color: theme.palette.normal.backgroundSecondaryText
 
         text: delegate.title
-        color: UbuntuColors.graphite
+
+        // TODO: This is probably too small, but this way we are sure that text has always
+        // a good contrast with bg, since it doesn't overlay other icons or strings.
+        textSize: Label.Small
+
+        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+        elide: Text.ElideMiddle
+        maximumLineCount: delegate.containsMouse ? Number.MAX_VALUE : 3
+
+        style: delegate.containsMouse && !delegate.isSelected ? Text.Outline : Text.Normal
+        styleColor: theme.palette.normal.background
     }
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        hoverEnabled: true
-        acceptedButtons: (Qt.LeftButton | Qt.RightButton)
-        propagateComposedEvents: true
+    acceptedButtons: (Qt.LeftButton | Qt.RightButton)
+    hoverEnabled: true
 
-        onClicked: delegate.clicked(mouse)
-        onPressAndHold: delegate.pressAndHold(mouse)
+    GridView.onRemove: SequentialAnimation {
+        PropertyAction { target: delegate; property: "GridView.delayRemove"; value: true }
+        NumberAnimation { target: delegate; property: "scale"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
+        PropertyAction { target: delegate; property: "GridView.delayRemove"; value: false }
     }
 }

@@ -34,7 +34,7 @@ ScrollView {
         anchors.fill: parent
 
         cellWidth: units.gu(12)
-        cellHeight: units.gu(12)
+        cellHeight: units.gu(14)
 
         model: folderModel.model
         delegate: FolderIconDelegate {
@@ -45,6 +45,7 @@ ScrollView {
             iconName: model.iconName
             title: model.fileName
             isSelected: model.isSelected
+            path: model.filePath
 
             property var __delegateActions: FolderDelegateActions {
                 folderListPage: folderIconView.folderListPage

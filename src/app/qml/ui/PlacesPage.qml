@@ -12,7 +12,7 @@ Page {
     signal pathClicked()
 
     header: PageHeader {
-        title: i18n.tr("Sources")
+        title: i18n.tr("Places")
 
         /*trailingActionBar {
             anchors.rightMargin: 0

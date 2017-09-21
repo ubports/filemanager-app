@@ -29,7 +29,7 @@ ConfirmDialogWithInput {
                     title: i18n.tr("Could not rename"),
                     text: i18n.tr("Insufficient permissions or name already exists?")
                 }
-                PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), delegate, props)
+                PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), mainView, props)
 
             }
         } else {

@@ -22,6 +22,9 @@ import Qt.labs.settings 1.0
 import Ubuntu.Content 1.3
 import com.ubuntu.PamAuthentication 0.1
 
+// This makes the Ubuntu Thumbnailer available in all the other QML documents.
+import Ubuntu.Thumbnailer 0.1
+
 import "ui"
 import "backend" as Backend
 
@@ -166,6 +169,7 @@ MainView {
     }
 
     Component.onCompleted:  {
+        QuickUtils.mouseAttached = true
         pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"))
     }
 }

@@ -34,28 +34,8 @@ PageHeader {
 
     trailingActionBar.numberOfSlots: 3
     trailingActionBar.actions: [
-        FMActions.FilePaste {
-            clipboardUrlsCounter: folderModel.model.clipboardUrlsCounter
-            visible: folderModel.model.clipboardUrlsCounter > 0
-            onTriggered: {
-                console.log("Pasting to current folder items of count " + folderModel.model.clipboardUrlsCounter)
-                fileOperationDialog.startOperation(i18n.tr("Paste files"))
-                folderModel.model.paste()
-            }
-        },
-
-        FMActions.FileClearSelection {
-            clipboardUrlsCounter: folderModel.model.clipboardUrlsCounter
-            visible: folderModel.model.clipboardUrlsCounter > 0
-            onTriggered: {
-                console.log("Clearing clipboard")
-                // FIXME: Seems not to clear actually
-                folderModel.model.clearClipboard()
-            }
-        },
-
         FMActions.Settings {
-            onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), parent, { folderListModel: folderModel.model })
+            onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), mainView, { folderListModel: folderModel.model })
         },
 
         FMActions.NewFolder {

@@ -18,10 +18,12 @@ QtObject {
         PopupUtils.open(__actionSelectionPopoverComponent, delegate, props)
     }
 
-    function listLongPress() {
-        isContentHub = false
+    function listLongPress(model) {
+        isContentHub = false    // Property declared in root QML file
         fileSelectorMode = true
         fileSelector.fileSelectorComponent = pageStack
+        if (!model.isDir)
+            folderModel.model.selectionObject.select(model.index,false,true)
     }
 
     function itemClicked(model) {
@@ -31,6 +33,8 @@ QtObject {
                     (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
                     ) {
                 console.log("Changing to dir", model.filePath)
+
+
                 folderModel.goTo(model.filePath)
             } else {
                 var props = {
@@ -39,13 +43,38 @@ QtObject {
                     text: i18n.tr("Can not access %1").arg(model.fileName)
                 }
 
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), delegate, props)
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
             }
         } else {
             console.log("Non dir clicked")
             if (fileSelectorMode) {
-                folderModel.model.selectionObject().select(model.index,false,true)
+                folderModel.model.selectionObject.select(model.index,false,true)
             } else if (!folderSelectorMode){
+                /*var props
+                if (model.filePath.indexOf(".jpg") !== -1 || model.filePath.indexOf(".png") !== -1 || model.filePath.indexOf(".gif") !== -1 || model.filePath.indexOf(".bmp") !== -1 || model.filePath.indexOf(".svg") !== -1)
+                {
+                    props = {
+                        model: model,
+                        fileType: "Image"
+                    }
+                    PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
+                } else if (model.filePath.indexOf(".mp3") !== -1 || model.filePath.indexOf(".wav") !== -1 || model.filePath.indexOf(".wma") !== -1 || model.filePath.indexOf(".ogg") !== -1)
+                {
+                    props = {
+                        model: model,
+                        fileType: "Audio"
+                    }
+                    PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
+                } else if (model.filePath.indexOf(".mp4") !== -1 || model.filePath.indexOf(".avi") !== -1 || model.filePath.indexOf(".wmv") !== -1 || model.filePath.indexOf(".mpg") !== -1)
+                {
+                    props = {
+                        model: model,
+                        fileType: "Video"
+                    }
+                    PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
+                } else {
+                    openFile(model)
+                }*/ //this is going to be added soon
                 openFile(model)
             }
         }
@@ -122,6 +151,13 @@ QtObject {
         }
     }
 
+    property ActionList additionalActions: ActionList {
+        FMActions.Select {
+            visible: true
+            onTriggered: listLongPress(model)
+        }
+    }
+
 
     // *** COMPONENTS ***
 
@@ -133,12 +169,15 @@ QtObject {
             actions: ActionList {
                 Component.onCompleted: {
                     // Build a single list of actions from the two lists above
-                    var tmp = trailingActions.actions
+                    var tmp = additionalActions.actions
                     var copy = []
+                    copy[0] = tmp[0]
+
+                    tmp = trailingActions.actions
                     var i;
 
                     for (i = 0; i < tmp.length; ++i) {
-                        copy[i] = tmp[i]
+                        copy[i+1] = tmp[i]
                     }
 
                     tmp = leadingActions.actions
