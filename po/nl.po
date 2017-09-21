@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-08-24 18:56+0000\n"
-"Last-Translator: Sander <sander.k1007@kpnmail.nl>\n"
-"Language-Team: Dutch <https://ubpweblate.tnvcomp.com/projects/ubports"
+"PO-Revision-Date: 2017-09-21 14:42+0000\n"
+"Last-Translator: Andrzej Stamburski <stambur@wp.pl>\n"
+"Language-Team: Dutch <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
 msgid "&New"
-msgstr ""
+msgstr "&Nieuw"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:159
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:159
@@ -160,7 +160,7 @@ msgstr "Bewerken"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
 msgid "Ready"
-msgstr ""
+msgstr "Klaar"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:308
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:327
@@ -169,7 +169,7 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:327
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:354
 msgid "Application"
-msgstr ""
+msgstr "App"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:309
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:309
@@ -615,8 +615,9 @@ msgstr ""
 #: ../qbuild/src/app/qml/ui/FileActionDialog.qml:35
 #: ../src/app/qml/ui/FileActionDialog.qml:35
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
+#, fuzzy
 msgid "Open"
-msgstr ""
+msgstr "Openen"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
