@@ -68,6 +68,7 @@ ListItem {
 
             source: delegate.path
             fillMode: Image.PreserveAspectFit
+            asynchronous: true
         }
 
         ProgressionSlot{

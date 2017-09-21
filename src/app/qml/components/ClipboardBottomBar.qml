@@ -33,7 +33,7 @@ Rectangle {
                 console.log("Clearing clipboard")
                 // FIXME: Seems not to clear actually
                 folderModel.model.clearClipboard()
-                folderModel.helpClipboard = false
+                folderModel.helpClipboard = false // to be removed, when the cpp clipboard parts are working
             }
         }
     }

@@ -59,9 +59,9 @@ QtObject {
         } else {
             console.log("Non dir clicked")
             if (fileSelectorMode) {
-                folderModel.model.selectionObject().select(model.index,false,true)
+                folderModel.model.selectionObject.select(model.index,false,true)
             } else if (!folderSelectorMode){
-                var props
+                /*var props
                 if (model.filePath.indexOf(".jpg") !== -1 || model.filePath.indexOf(".png") !== -1 || model.filePath.indexOf(".gif") !== -1 || model.filePath.indexOf(".bmp") !== -1)
                 {
                     props = {
@@ -85,7 +85,8 @@ QtObject {
                     PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
                 } else {
                     openFile(model)
-                }
+                }*/ //this is going to be added soon
+                openFile(model)
             }
         }
     }
@@ -145,7 +146,7 @@ QtObject {
         FMActions.FileCopy {
             onTriggered: {
                 folderModel.model.copyIndex(model.index)
-                folderModel.helpClipboard = true
+                folderModel.helpClipboard = true // to be removed, when the cpp clipboard parts are working
             }
         }
 
@@ -153,7 +154,7 @@ QtObject {
             visible: folderModel.model.isWritable
             onTriggered: {
                 folderModel.model.cutIndex(model.index)
-                folderModel.helpClipboard = true
+                folderModel.helpClipboard = true // to be removed, when the cpp clipboard parts are working
             }
         }
 

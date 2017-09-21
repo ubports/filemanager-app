@@ -75,6 +75,7 @@ Item {
 
             source: delegate.path
             fillMode: Image.PreserveAspectFit
+            asynchronous: true
         }
 
         // TODO: Check performance, QtGraphicalEffects in a delegate might become a problem

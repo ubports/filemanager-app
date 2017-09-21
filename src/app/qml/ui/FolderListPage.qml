@@ -130,7 +130,7 @@ SidebarPageLayout {
             anchors.fill: parent
             anchors.topMargin: folderPage.header.height
             anchors.bottomMargin: selectionBottomBar.visible ? selectionBottomBar.height
-                                                             : clipboardBottomBar.visible ? clipboardBottomBar.height : units.gu(2)
+                                                             : clipboardBottomBar.visible ? clipboardBottomBar.height : units.gu(0.5) // margin is necessary due to bottomEdge problems
 
             sourceComponent: {
                 if (globalSettings.viewMethod === 1) { // Grid
@@ -152,7 +152,7 @@ SidebarPageLayout {
 
             folderModel: pageModel
             fileOperationDialog: fileOperationDialogObj
-            visible: pageModel.helpClipboard // pageModel.model.clipboardUrlsCounter > 0
+            visible: pageModel.helpClipboard  // to be removed, when the cpp clipboard parts are working // pageModel.model.clipboardUrlsCounter > 0
         }
 
         SelectionBottomBar {
