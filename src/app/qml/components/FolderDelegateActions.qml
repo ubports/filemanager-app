@@ -59,9 +59,33 @@ QtObject {
         } else {
             console.log("Non dir clicked")
             if (fileSelectorMode) {
-                folderModel.model.selectionObject.select(model.index,false,true)
+                folderModel.model.selectionObject().select(model.index,false,true)
             } else if (!folderSelectorMode){
-                openFile(model)
+                var props
+                if (model.filePath.indexOf(".jpg") !== -1 || model.filePath.indexOf(".png") !== -1 || model.filePath.indexOf(".gif") !== -1 || model.filePath.indexOf(".bmp") !== -1)
+                {
+                    props = {
+                        model: model,
+                        fileType: "Image"
+                    }
+                    PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
+                } else if (model.filePath.indexOf(".mp3") !== -1 || model.filePath.indexOf(".wav") !== -1 || model.filePath.indexOf(".wma") !== -1 || model.filePath.indexOf(".ogg") !== -1)
+                {
+                    props = {
+                        model: model,
+                        fileType: "Audio"
+                    }
+                    PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
+                } else if (model.filePath.indexOf(".mp4") !== -1 || model.filePath.indexOf(".avi") !== -1 || model.filePath.indexOf(".wmv") !== -1 || model.filePath.indexOf(".mpg") !== -1)
+                {
+                    props = {
+                        model: model,
+                        fileType: "Video"
+                    }
+                    PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
+                } else {
+                    openFile(model)
+                }
             }
         }
     }
@@ -121,6 +145,7 @@ QtObject {
         FMActions.FileCopy {
             onTriggered: {
                 folderModel.model.copyIndex(model.index)
+                folderModel.helpClipboard = true
             }
         }
 
@@ -128,6 +153,7 @@ QtObject {
             visible: folderModel.model.isWritable
             onTriggered: {
                 folderModel.model.cutIndex(model.index)
+                folderModel.helpClipboard = true
             }
         }
 
@@ -138,10 +164,10 @@ QtObject {
     }
 
     property ActionList additionalActions: ActionList {
-       FMActions.Select {
-           visible: true
-           onTriggered: listLongPress(model)
-       }
+        FMActions.Select {
+            visible: true
+            onTriggered: listLongPress(model)
+        }
     }
 
 

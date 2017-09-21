@@ -27,6 +27,7 @@ Action {
     // http://developer.ubuntu.com/api/qml/sdk-14.04/Ubuntu.Components.i18n/
     // It allows correct translation for languages with more than two plural forms:
     // http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
+    property bool showText: false
     text: i18n.tr("Paste %1 file", "Paste %1 files", clipboardUrlsCounter).arg(clipboardUrlsCounter)
     visible: clipboardUrlsCounter > 0
     iconName: "edit-paste"

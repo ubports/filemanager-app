@@ -33,6 +33,7 @@ Rectangle {
                 console.log("Clearing clipboard")
                 // FIXME: Seems not to clear actually
                 folderModel.model.clearClipboard()
+                folderModel.helpClipboard = false
             }
         }
     }

@@ -5,6 +5,7 @@ Action {
     property int clipboardUrlsCounter
 
     iconName: "edit-clear"
+    property bool showText: false
     text: i18n.tr("Clear clipboard")
     visible: clipboardUrlsCounter > 0
 }

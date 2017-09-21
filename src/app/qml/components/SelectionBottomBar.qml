@@ -41,6 +41,7 @@ Rectangle {
                 selectionManager.clear()
                 fileSelectorMode = false
                 fileSelector.fileSelectorComponent = null
+                folderModel.helpClipboard = true
             }
         }
 
@@ -60,6 +61,7 @@ Rectangle {
                 selectionManager.clear()
                 fileSelectorMode = false
                 fileSelector.fileSelectorComponent = null
+                folderModel.helpClipboard = true
             }
         }
 
@@ -112,27 +114,6 @@ Rectangle {
                 }
                 console.log("FileSelector OK clicked, selected items: " + selectedAbsUrls)
                 acceptFileSelector(selectedAbsUrls)
-            }
-        }
-
-        Button {
-            property bool showText: false
-            text: i18n.tr("Cancel")
-            iconName: "edit-clear"
-            width: units.gu(5)
-            height: units.gu(5)
-            anchors.topMargin: units.gu(1)
-            color: "white"
-            visible: selectionMode
-            onClicked: {
-                console.log("FileSelector cancelled")
-                if (isContentHub) {
-                    cancelFileSelector()
-                } else {
-                    selectionManager.clear()
-                    fileSelectorMode = false
-                    fileSelector.fileSelectorComponent = null
-                }
             }
         }
     }

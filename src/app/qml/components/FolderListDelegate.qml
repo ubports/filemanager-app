@@ -30,7 +30,14 @@ ListItem {
     property bool isSelected
 
     function isPicture() {
-        return path.indexOf(".jpg") !== -1 || path.indexOf(".png") !== -1 || path.indexOf(".gif") !== -1 || path.indexOf(".bmp") !== -1
+        var result = path.indexOf(".jpg") !== -1 || path.indexOf(".png") !== -1 || path.indexOf(".gif") !== -1 || path.indexOf(".bmp") !== -1
+        if (result)
+        {
+            image.SlotsLayout.position = SlotsLayout.Leading
+        } else {
+            icon.SlotsLayout.position = SlotsLayout.Leading
+        }
+        return result
     }
 
     // Because Flickable is used over ListView??
@@ -48,15 +55,15 @@ ListItem {
         subtitle.text: del.subtitle
 
         Icon {
+            id: icon
             name: del.iconName
             height: units.gu(5); width: height
-            SlotsLayout.position: SlotsLayout.Leading
             visible: !isPicture()
         }
 
         Image {
+            id: image
             sourceSize.width: units.gu(6); sourceSize.height: width
-            SlotsLayout.position: SlotsLayout.Leading
             visible: isPicture()
 
             source: delegate.path

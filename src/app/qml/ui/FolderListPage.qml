@@ -130,7 +130,7 @@ SidebarPageLayout {
             anchors.fill: parent
             anchors.topMargin: folderPage.header.height
             anchors.bottomMargin: selectionBottomBar.visible ? selectionBottomBar.height
-                                                             : clipboardBottomBar.visible ? clipboardBottomBar.height : 0
+                                                             : clipboardBottomBar.visible ? clipboardBottomBar.height : units.gu(2)
 
             sourceComponent: {
                 if (globalSettings.viewMethod === 1) { // Grid
@@ -152,7 +152,7 @@ SidebarPageLayout {
 
             folderModel: pageModel
             fileOperationDialog: fileOperationDialogObj
-            visible: pageModel.model.clipboardUrlsCounter > 0
+            visible: pageModel.helpClipboard // pageModel.model.clipboardUrlsCounter > 0
         }
 
         SelectionBottomBar {
