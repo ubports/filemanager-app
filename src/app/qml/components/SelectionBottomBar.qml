@@ -8,7 +8,7 @@ import "../backend"
 
 Rectangle {
     id: bottomBar
-    height: visible ? bottomBarButtons.height : 0
+    height: visible ? units.gu(6) : 0
     color: theme.palette.normal.background
     enabled: visible
 
@@ -75,9 +75,8 @@ Rectangle {
 
     Flow {
         id: bottomBarButtons
-        height: units.gu(7)
+        anchors.centerIn: parent
         spacing: units.gu(2)
-        anchors.horizontalCenter: parent.horizontalCenter
         Repeater{
             model: selectionActions.actions
             delegate: Button {

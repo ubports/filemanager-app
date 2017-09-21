@@ -135,8 +135,9 @@ SidebarPageLayout {
             id: viewLoader
             anchors.fill: parent
             anchors.topMargin: folderPage.header.height
-            anchors.bottomMargin: selectionBottomBar.visible ? selectionBottomBar.height
-                                                             : clipboardBottomBar.visible ? clipboardBottomBar.height : units.gu(0.5) // margin is necessary due to bottomEdge problems
+            anchors.bottomMargin: (bottomEdge.enabled ? bottomEdge.hint.height : 0) + (selectionBottomBar.visible ? selectionBottomBar.height
+                                                                                                                  : clipboardBottomBar.visible ? clipboardBottomBar.height
+                                                                                                                                               : 0)
 
             sourceComponent: {
                 if (globalSettings.viewMethod === 1) { // Grid
@@ -151,21 +152,21 @@ SidebarPageLayout {
             id: clipboardBottomBar
 
             anchors {
-                bottom: parent.bottom
+                bottom: parent.bottom; bottomMargin: bottomEdge.enabled ? bottomEdge.hint.height : 0
                 left: parent.left
                 right: parent.right
             }
 
             folderModel: pageModel
             fileOperationDialog: fileOperationDialogObj
-            visible: pageModel.model.clipboardUrlsCounter > 0
+            visible: pageModel.model.clipboardUrlsCounter > 0 && !selectionMode
         }
 
         SelectionBottomBar {
             id: selectionBottomBar
 
             anchors {
-                bottom: parent.bottom
+                bottom: parent.bottom   // No bottom margin here, since BottomEdge is disabled during selection.
                 left: parent.left
                 right: parent.right
             }
@@ -174,9 +175,6 @@ SidebarPageLayout {
             fileOperationDialog: fileOperationDialogObj
             visible: selectionMode
         }
-
-        // TODO: Create another bottom panel, only for ContentHub actions
-
 
         // *** VIEW COMPONENTS ***
 

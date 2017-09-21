@@ -6,7 +6,7 @@ import "../actions" as FMActions
 
 Rectangle {
     id: bottomBar
-    height: visible ? bottomBarButtons.height : 0
+    height: visible ? units.gu(6) : 0
     color: theme.palette.normal.background
     enabled: visible
 
@@ -45,7 +45,6 @@ Rectangle {
     }
 
     ActionBar {
-        id: bottomBarButtons
         anchors.right: parent.right
         delegate: TextualButtonStyle { }
         actions: selectionActions.actions
