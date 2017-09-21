@@ -17,6 +17,7 @@ Rectangle {
         id: selectionActions
 
         FMActions.FilePaste {
+            property bool showText: false
             clipboardUrlsCounter: folderModel.model.clipboardUrlsCounter
             visible: folderModel.model.clipboardUrlsCounter > 0
             onTriggered: {
@@ -27,6 +28,7 @@ Rectangle {
         }
 
         FMActions.FileClearSelection {
+            property bool showText: false
             clipboardUrlsCounter: folderModel.model.clipboardUrlsCounter
             visible: folderModel.model.clipboardUrlsCounter > 0
             onTriggered: {
