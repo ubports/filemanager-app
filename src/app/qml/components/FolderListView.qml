@@ -46,6 +46,7 @@ ScrollView {
             iconName: model.iconName
             showProgressionSlot: model.isBrowsable
             isSelected: model.isSelected
+            path: model.filePath
 
             property var __delegateActions: FolderDelegateActions {
                 folderListPage: folderListView.folderListPage

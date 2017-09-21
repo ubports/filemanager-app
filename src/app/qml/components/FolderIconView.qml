@@ -46,6 +46,7 @@ ScrollView {
             iconName: model.iconName
             title: model.fileName
             isSelected: model.isSelected
+            path: model.filePath
 
             property var __delegateActions: FolderDelegateActions {
                 folderListPage: folderIconView.folderListPage

@@ -25,8 +25,13 @@ ListItem {
     property string title
     property string subtitle
     property string iconName
+    property string path
     property bool showProgressionSlot
     property bool isSelected
+
+    function isPicture() {
+        return path.indexOf(".jpg") !== -1 || path.indexOf(".png") !== -1 || path.indexOf(".gif") !== -1 || path.indexOf(".bmp") !== -1
+    }
 
     // Because Flickable is used over ListView??
     // we cannot set the highlight component so
@@ -46,6 +51,16 @@ ListItem {
             name: del.iconName
             height: units.gu(5); width: height
             SlotsLayout.position: SlotsLayout.Leading
+            visible: !isPicture()
+        }
+
+        Image {
+            sourceSize.width: units.gu(6); sourceSize.height: width
+            SlotsLayout.position: SlotsLayout.Leading
+            visible: isPicture()
+
+            source: delegate.path
+            fillMode: Image.PreserveAspectFit
         }
 
         ProgressionSlot{

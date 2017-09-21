@@ -17,18 +17,89 @@ Rectangle {
     property var fileOperationDialog
 
     property bool __actionsEnabled: (selectionManager.counter > 0) || (folderSelectorMode && folderModel.model.isWritable)
-    property bool __actionsVisible: selectionMode && !isContentHub    // 'isContentHub' property declared in root QML file
+    property bool __actionsVisible: selectionMode
 
-    ActionList {
-        id: selectionActions
+    Flow {
+        id: bottomBarButtons
+        height: units.gu(7)
+        spacing: units.gu(2)
+        anchors.horizontalCenter: parent.horizontalCenter
 
-        Action {
+        Button {
+            property bool showText: false
+            text: i18n.tr("Cut")
+            iconName: "edit-cut"
+            width: units.gu(5)
+            height: units.gu(5)
+            anchors.topMargin: units.gu(1)
+            color: "white"
+            enabled: __actionsEnabled
+            visible: __actionsVisible && folderModel.model.isWritable && !isContentHub    // 'isContentHub' property declared in root QML file
+            onClicked: {
+                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                pageModel.model.cutPaths(selectedAbsPaths)
+                selectionManager.clear()
+                fileSelectorMode = false
+                fileSelector.fileSelectorComponent = null
+            }
+        }
+
+        Button {
+            property bool showText: false
+            text: i18n.tr("Copy")
+            iconName: "edit-copy"
+            width: units.gu(5)
+            height: units.gu(5)
+            anchors.topMargin: units.gu(1)
+            color: "white"
+            enabled: __actionsEnabled
+            visible: __actionsVisible && !isContentHub    // 'isContentHub' property declared in root QML file
+            onClicked: {
+                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+                pageModel.model.copyPaths(selectedAbsPaths)
+                selectionManager.clear()
+                fileSelectorMode = false
+                fileSelector.fileSelectorComponent = null
+            }
+        }
+
+        Button {
+            property bool showText: false
+            text: i18n.tr("Delete")
+            iconName: "edit-delete"
+            width: units.gu(5)
+            height: units.gu(5)
+            anchors.topMargin: units.gu(1)
+            color: "white"
+            enabled: __actionsEnabled
+            visible: __actionsVisible && folderModel.model.isWritable && !isContentHub    // 'isContentHub' property declared in root QML file
+            onClicked: {
+                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
+
+                var props = {
+                    "paths" : selectedAbsPaths,
+                    "folderModel": pageModel.model,
+                    "fileOperationDialog": fileOperationDialog
+                }
+
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmMultipleDeleteDialog.qml"), mainView, props)
+//                selectionManager.clear()
+//                fileSelectorMode = false
+//                fileSelector.fileSelectorComponent = null
+            }
+        }
+
+        Button {
             property bool showText: false
             text: i18n.tr("Select")
             iconName: "tick"
+            width: units.gu(5)
+            height: units.gu(5)
+            anchors.topMargin: units.gu(1)
+            color: "white"
             enabled: __actionsEnabled
             visible: __actionsVisible && isContentHub     // 'isContentHub' property declared in root QML file
-            onTriggered: {
+            onClicked: {
                 var selectedAbsUrls = []
                 if (folderSelectorMode) {
                     selectedAbsUrls = [ folder ]
@@ -44,65 +115,25 @@ Rectangle {
             }
         }
 
-        Action {
+        Button {
             property bool showText: false
-            text: i18n.tr("Delete")
-            iconName: "edit-delete"
-            enabled: __actionsEnabled
-            visible: __actionsVisible && folderModel.model.isWritable && !isContentHub    // 'isContentHub' property declared in root QML file
-            onTriggered: {
-                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-
-                var props = {
-                    "paths" : selectedAbsPaths,
-                    "folderModel": folderModel.model,
-                    "fileOperationDialog": fileOperationDialog
+            text: i18n.tr("Cancel")
+            iconName: "edit-clear"
+            width: units.gu(5)
+            height: units.gu(5)
+            anchors.topMargin: units.gu(1)
+            color: "white"
+            visible: selectionMode
+            onClicked: {
+                console.log("FileSelector cancelled")
+                if (isContentHub) {
+                    cancelFileSelector()
+                } else {
+                    selectionManager.clear()
+                    fileSelectorMode = false
+                    fileSelector.fileSelectorComponent = null
                 }
-
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmMultipleDeleteDialog.qml"), mainView, props)
-                selectionManager.clear()
-                fileSelectorMode = false
-                fileSelector.fileSelectorComponent = null
             }
         }
-
-        Action {
-            property bool showText: false
-            text: i18n.tr("Copy")
-            iconName: "edit-copy"
-            enabled: __actionsEnabled
-            visible: __actionsVisible && !isContentHub    // 'isContentHub' property declared in root QML file
-            onTriggered: {
-                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                folderModel.model.copyPaths(selectedAbsPaths)
-                selectionManager.clear()
-                fileSelectorMode = false
-                fileSelector.fileSelectorComponent = null
-            }
-        }
-
-        Action {
-            property bool showText: false
-            text: i18n.tr("Cut")
-            iconName: "edit-cut"
-            enabled: __actionsEnabled
-            visible: __actionsVisible && folderModel.model.isWritable && !isContentHub    // 'isContentHub' property declared in root QML file
-            onTriggered: {
-                var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                folderModel.model.cutPaths(selectedAbsPaths)
-                selectionManager.clear()
-                fileSelectorMode = false
-                fileSelector.fileSelectorComponent = null
-            }
-        }
-    }
-
-    ActionBar {
-        id: bottomBarButtons
-        //anchors.fill: parent
-        anchors.horizontalCenter: parent.horizontalCenter
-        numberOfSlots: 5 // MathUtils.clamp(bottomBar.width/units.gu(12), 3, 6)
-        delegate: TextualButtonStyle { }
-        actions: selectionActions.actions
     }
 }

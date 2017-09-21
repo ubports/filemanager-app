@@ -32,6 +32,8 @@ SidebarPageLayout {
     id: folderListPage
 
     property alias folderModel: pageModel
+    property bool fileSelectorMode: false
+    property bool folderSelectorMode: false
     Backend.FolderListModel {
         id: pageModel
         path: places.locationHome
@@ -114,10 +116,6 @@ SidebarPageLayout {
             visible: selectionMode
             enabled: visible
         }
-
-        // Set to true if called as file selector for ContentHub
-        property bool fileSelectorMode: false
-        property bool folderSelectorMode: false
 
         // FIXME: Clearing selection (by cancel btn in the header, or changing the folder, should exit selection mode)
         readonly property bool selectionMode: fileSelectorMode || folderSelectorMode

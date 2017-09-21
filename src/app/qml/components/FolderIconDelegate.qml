@@ -30,9 +30,14 @@ Item {
 
     property string iconName
     property string title
+    property string path
 
     signal clicked(var mouse)
     signal pressAndHold(var mouse)
+
+    function isPicture() {
+        return path.indexOf(".jpg") !== -1 || path.indexOf(".png") !== -1 || path.indexOf(".gif") !== -1 || path.indexOf(".bmp") !== -1
+    }
 
     Rectangle {
         anchors.centerIn: parent
@@ -58,8 +63,18 @@ Item {
             id: image
             anchors.centerIn: parent
             width: units.gu(6); height: width
+            visible: !isPicture()
 
             name: delegate.iconName
+        }
+
+        Image {
+            anchors.centerIn: parent
+            sourceSize.width: units.gu(6); sourceSize.height: width
+            visible: isPicture()
+
+            source: delegate.path
+            fillMode: Image.PreserveAspectFit
         }
 
         // TODO: Check performance, QtGraphicalEffects in a delegate might become a problem
