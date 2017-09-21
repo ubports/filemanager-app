@@ -10,7 +10,6 @@ PageHeader {
 
     property var folderModel
     property var selectionManager: folderModel.model.selectionObject
-    property bool selectionMode
 
     title: folderModel.basename(folderModel.path)
 
@@ -27,16 +26,11 @@ PageHeader {
     leadingActionBar.actions: Action {
         text: i18n.tr("Cancel")
         iconName: "close"
-        visible: selectionMode
         onTriggered: {
             console.log("FileSelector cancelled")
-            if (isContentHub) {    // 'isContentHub' property declared in root QML file
-                cancelFileSelector()
-            } else {
-                selectionManager.clear()
-                fileSelectorMode = false
-                fileSelector.fileSelectorComponent = null
-            }
+            selectionManager.clear()
+            fileSelectorMode = false
+            fileSelector.fileSelectorComponent = null
         }
     }
 

@@ -23,30 +23,10 @@ Rectangle {
         id: selectionActions
 
         Action {
-            text: i18n.tr("Select")
-            iconName: "tick"
-            enabled: __actionsEnabled
-            visible: __actionsVisible && isContentHub     // 'isContentHub' property declared in root QML file
-            onTriggered: {
-                var selectedAbsUrls = []
-                if (folderSelectorMode) {
-                    selectedAbsUrls = [ folder ]
-                } else {
-                    var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                    // For now support only selection in filesystem
-                    selectedAbsUrls = selectedAbsPaths.map(function(item) {
-                        return "file://" + item;
-                    });
-                }
-                console.log("FileSelector OK clicked, selected items: " + selectedAbsUrls)
-                acceptFileSelector(selectedAbsUrls)
-            }
-        }
-        Action {
             text: i18n.tr("Cut")
             iconName: "edit-cut"
             enabled: __actionsEnabled
-            visible: __actionsVisible && folderModel.model.isWritable && !isContentHub    // 'isContentHub' property declared in root QML file
+            visible: __actionsVisible && folderModel.model.isWritable
             onTriggered: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
                 folderModel.model.cutPaths(selectedAbsPaths)
@@ -60,7 +40,7 @@ Rectangle {
             text: i18n.tr("Copy")
             iconName: "edit-copy"
             enabled: __actionsEnabled
-            visible: __actionsVisible && !isContentHub    // 'isContentHub' property declared in root QML file
+            visible: __actionsVisible
             onTriggered: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
                 folderModel.model.copyPaths(selectedAbsPaths)
@@ -75,7 +55,7 @@ Rectangle {
             text: i18n.tr("Delete")
             iconName: "edit-delete"
             enabled: __actionsEnabled
-            visible: __actionsVisible && folderModel.model.isWritable && !isContentHub    // 'isContentHub' property declared in root QML file
+            visible: __actionsVisible && folderModel.model.isWritable
             onTriggered: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
 
