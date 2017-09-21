@@ -29,17 +29,21 @@ ScrollView {
     property alias footer: view.footer
     property alias header: view.header
 
+    function calcCellwidth () {
+        return folderListPage.width / ((folderListPage.width / units.gu(12)).toFixed(0))
+    }
+
     GridView {
         id: view
         anchors.fill: parent
 
-        cellWidth: units.gu(12)
+        cellWidth: calcCellwidth()
         cellHeight: units.gu(14)
 
         model: folderModel.model
         delegate: FolderIconDelegate {
             id: delegate
-            width: view.cellWidth
+            width: units.gu(12)
             height: view.cellHeight
 
             iconName: model.iconName
