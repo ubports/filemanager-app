@@ -29,17 +29,6 @@ ListItem {
     property bool showProgressionSlot
     property bool isSelected
 
-    function isPicture() {
-        var result = path.indexOf(".jpg") !== -1 || path.indexOf(".png") !== -1 || path.indexOf(".gif") !== -1 || path.indexOf(".bmp") !== -1 || path.indexOf(".svg") !== -1
-        if (result)
-        {
-            image.SlotsLayout.position = SlotsLayout.Leading
-        } else {
-            icon.SlotsLayout.position = SlotsLayout.Leading
-        }
-        return result
-    }
-
     // Because Flickable is used over ListView??
     // we cannot set the highlight component so
     // instead fudge it here with a rectangle.
@@ -54,22 +43,26 @@ ListItem {
         title.text: del.title
         subtitle.text: del.subtitle
 
-        Icon {
-            id: icon
-            name: del.iconName
+        Item {
+            SlotsLayout.position: SlotsLayout.Leading
             height: units.gu(5); width: height
-            visible: !isPicture()
-        }
 
-        Image {
-            id: image
-            height: units.gu(5); width: height
-            sourceSize.width: units.gu(5); sourceSize.height: width
-            visible: isPicture()
+            Icon {
+                anchors.fill: parent
+                visible: !image.visible
+                name: del.iconName
+            }
 
-            source: delegate.path
-            fillMode: Image.PreserveAspectFit
-            asynchronous: true
+            Image {
+                id: image
+                anchors.fill: parent
+                sourceSize: Qt.size(image.width, image.height)
+                visible: status == Image.Ready
+
+                source: model.mimeType.indexOf("image/") > -1 ? "image://thumbnailer/file://" + delegate.path : ""
+                fillMode: Image.PreserveAspectFit
+                asynchronous: true
+            }
         }
 
         ProgressionSlot{

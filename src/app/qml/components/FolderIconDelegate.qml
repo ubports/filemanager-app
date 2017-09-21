@@ -35,10 +35,6 @@ Item {
     signal clicked(var mouse)
     signal pressAndHold(var mouse)
 
-    function isPicture() {
-        return path.indexOf(".jpg") !== -1 || path.indexOf(".png") !== -1 || path.indexOf(".gif") !== -1 || path.indexOf(".bmp") !== -1 || path.indexOf(".svg") !== -1
-    }
-
     Rectangle {
         anchors.centerIn: parent
         height: parent.height; width: height
@@ -59,31 +55,34 @@ Item {
             bottom: label.top; bottomMargin: units.gu(1)
         }
 
-        Icon {
-            id: image
+        Item {
+            id: imgContainer
             anchors.centerIn: parent
-            width: units.gu(6); height: width
-            visible: !isPicture()
+            height: units.gu(6); width: height
 
-            name: delegate.iconName
-        }
+            Icon {
+                anchors.fill: parent
+                visible: !image.visible
+                name: delegate.iconName
+            }
 
-        Image {
-            anchors.centerIn: parent
-            width: units.gu(6); height: width
-            sourceSize.width: units.gu(6); sourceSize.height: width
-            visible: isPicture()
+            Image {
+                id: image
+                anchors.fill: parent
+                sourceSize: Qt.size(image.width, image.height)
+                visible: status == Image.Ready
 
-            source: delegate.path
-            fillMode: Image.PreserveAspectFit
-            asynchronous: true
+                source: model.mimeType.indexOf("image/") > -1 ? "image://thumbnailer/file://" + delegate.path : ""
+                fillMode: Image.PreserveAspectFit
+                asynchronous: true
+            }
         }
 
         // TODO: Check performance, QtGraphicalEffects in a delegate might become a problem
         BrightnessContrast {
-            anchors.fill: image
+            anchors.fill: imgContainer
             brightness: 0.3
-            source: image
+            source: imgContainer
             opacity: mouseOver ? 1 : 0
 
             Behavior on opacity {
