@@ -18,17 +18,14 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
+import QtQuick.Layouts 1.1
 
-Popover {
+Dialog {
     id: root
     property var model
 
-    property string path: model.filePath
-
-    contentHeight: contents.height + 2 * contents.anchors.margins
-
     function dateTimeFormat(dateTime) {
-        return Qt.formatDateTime(dateTime, Qt.DefaultLocaleShortDate) || "Unknown"
+        return Qt.formatDateTime(dateTime, Qt.TextDate) || "Unknown"
     }
 
     function permissionsToString(model) {
@@ -55,95 +52,117 @@ Popover {
         return permStr
     }
 
-    Column {
-        id: contents
-        spacing: units.gu(1)
-        anchors {
-            margins: units.gu(2)
-            left: parent.left
-            right: parent.right
-            top: parent.top
+    __closeOnDismissAreaPress: true
+
+    Component.onCompleted: {
+        __foreground.itemSpacing = units.gu(0)
+    }
+
+    RowLayout {
+        Icon {
+            Layout.preferredWidth: units.gu(6)
+            Layout.preferredHeight: width
+            name: model.iconName
         }
 
-        Row {
-            spacing: units.gu(1)
-            Icon {
-                anchors.verticalCenter: parent.verticalCenter
-                width: units.gu(6); height: width
-                name: model.iconName
-            }
-
-            Label {
-                anchors.verticalCenter: parent.verticalCenter
-
-                text: folderModel.pathTitle(root.path)
-                color: UbuntuColors.ash
-                font.bold: true
-            }
+        ListItemLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            title.text: folderModel.pathTitle(model.filePath)
+            subtitle.text: model.mimeTypeDescription
+            summary.text: model.fileSize
         }
+    }
 
-        Grid {
+    Rectangle {
+        anchors { left: parent.left; right: parent.right }
+        height: units.dp(1)
+        color: theme.palette.normal.base
+    }
+
+    ListItemLayout {
+        anchors { left: parent.left; right: parent.right }
+        anchors.leftMargin: units.gu(-2)
+        anchors.rightMargin: units.gu(-2)
+        subtitle.text: i18n.tr("Where:")
+        summary.maximumLineCount: Number.MAX_VALUE
+        summary.wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+        summary.text: model.filePath.toString().replace(/^\//, i18n.tr("My Device") + " > ").replace(/\//g, " > ")
+    }
+
+    Rectangle {
+        anchors { left: parent.left; right: parent.right }
+        height: units.dp(1)
+        color: theme.palette.normal.base
+    }
+
+    ListItem {
+        divider.visible: false
+        height: dateGrid.height + units.gu(4)
+
+        GridLayout {
+            id: dateGrid
+            anchors.verticalCenter: parent.verticalCenter
             columns: 2
-            spacing: units.gu(1)
+            rowSpacing: units.dp(2)
 
+            // Row #1
             Label {
-                text: i18n.tr("Path:")
-                color: UbuntuColors.ash
-            }
-
-            Label {
-                objectName: "pathLabel"
-                text: root.path
-                color: UbuntuColors.ash
-                wrapMode: Text.WrapAnywhere
+                Layout.fillWidth: true
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundSecondaryText
+                text: i18n.tr("Created:")
             }
 
             Label {
-                text: model.isDir ? i18n.tr("Contents:")
-                                  : i18n.tr("Size:")
-                color: UbuntuColors.ash
-            }
-            Label {
-                text: model.fileSize
-                color: UbuntuColors.ash
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundTertiaryText
+                text: dateTimeFormat(model.creationDate)
             }
 
+            // Row #2
             Label {
-                text: i18n.tr("Accessed:")
-                color: UbuntuColors.ash
-            }
-            Label {
-                text: dateTimeFormat(model.accessedDate)
-                color: UbuntuColors.ash
-            }
-
-            Label {
+                Layout.fillWidth: true
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundSecondaryText
                 text: i18n.tr("Modified:")
-                color: UbuntuColors.ash
             }
+
             Label {
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundTertiaryText
                 text: dateTimeFormat(model.modifiedDate)
-                color: UbuntuColors.ash
+            }
+
+            // Row #3
+            Label {
+                Layout.fillWidth: true
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundSecondaryText
+                text: i18n.tr("Accessed:")
             }
 
             Label {
-                text: i18n.tr("Permissions:")
-                color: UbuntuColors.ash
+                textSize: Label.Small
+                color: theme.palette.normal.backgroundTertiaryText
+                text: dateTimeFormat(model.accessedDate)
             }
-            Label {
-                text: permissionsToString(model)
-                color: UbuntuColors.ash
-                // This is a a work-around for bug #1354508.
-                // This basically forces all permissions to be on different lines, which looks
-                // good enough. But a similar issue as described in the bug can happen
-                // with other fields also. A better solution might be possible by using Qt5's
-                // GridLayout QML component, but I couldn't get it working with the time I had (with Ubuntu 14.04 desktop).
-                // So at least for now this quick-fix solves the bug and improves situation a bit.
-                width: 10
-                wrapMode: Text.WordWrap
-
-            }
-
         }
+    }
+
+    Rectangle {
+        anchors { left: parent.left; right: parent.right }
+        height: units.dp(1)
+        color: theme.palette.normal.base
+    }
+
+    ListItemLayout {
+        anchors { left: parent.left; right: parent.right }
+        anchors.leftMargin: units.gu(-2)
+        anchors.rightMargin: units.gu(-2)
+        subtitle.text: i18n.tr("Permissions:")
+        summary.maximumLineCount: Number.MAX_VALUE
+        summary.wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+        summary.text: permissionsToString(model)
     }
 }
