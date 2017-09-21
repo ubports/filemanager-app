@@ -35,7 +35,7 @@ ScrollView {
         contentY: folderPage.header.lastPos
 
         cellWidth: units.gu(12)
-        cellHeight: units.gu(12)
+        cellHeight: units.gu(14)
 
         model: folderModel.model
         delegate: FolderIconDelegate {
