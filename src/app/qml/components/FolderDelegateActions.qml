@@ -62,7 +62,7 @@ QtObject {
                 folderModel.model.selectionObject.select(model.index,false,true)
             } else if (!folderSelectorMode){
                 /*var props
-                if (model.filePath.indexOf(".jpg") !== -1 || model.filePath.indexOf(".png") !== -1 || model.filePath.indexOf(".gif") !== -1 || model.filePath.indexOf(".bmp") !== -1)
+                if (model.filePath.indexOf(".jpg") !== -1 || model.filePath.indexOf(".png") !== -1 || model.filePath.indexOf(".gif") !== -1 || model.filePath.indexOf(".bmp") !== -1 || model.filePath.indexOf(".svg") !== -1)
                 {
                     props = {
                         model: model,

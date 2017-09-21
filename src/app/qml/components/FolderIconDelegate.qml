@@ -36,7 +36,7 @@ Item {
     signal pressAndHold(var mouse)
 
     function isPicture() {
-        return path.indexOf(".jpg") !== -1 || path.indexOf(".png") !== -1 || path.indexOf(".gif") !== -1 || path.indexOf(".bmp") !== -1
+        return path.indexOf(".jpg") !== -1 || path.indexOf(".png") !== -1 || path.indexOf(".gif") !== -1 || path.indexOf(".bmp") !== -1 || path.indexOf(".svg") !== -1
     }
 
     Rectangle {
@@ -70,6 +70,7 @@ Item {
 
         Image {
             anchors.centerIn: parent
+            width: units.gu(6); height: width
             sourceSize.width: units.gu(6); sourceSize.height: width
             visible: isPicture()
 

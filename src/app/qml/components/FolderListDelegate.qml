@@ -30,7 +30,7 @@ ListItem {
     property bool isSelected
 
     function isPicture() {
-        var result = path.indexOf(".jpg") !== -1 || path.indexOf(".png") !== -1 || path.indexOf(".gif") !== -1 || path.indexOf(".bmp") !== -1
+        var result = path.indexOf(".jpg") !== -1 || path.indexOf(".png") !== -1 || path.indexOf(".gif") !== -1 || path.indexOf(".bmp") !== -1 || path.indexOf(".svg") !== -1
         if (result)
         {
             image.SlotsLayout.position = SlotsLayout.Leading
@@ -63,7 +63,8 @@ ListItem {
 
         Image {
             id: image
-            sourceSize.width: units.gu(6); sourceSize.height: width
+            height: units.gu(5); width: height
+            sourceSize.width: units.gu(5); sourceSize.height: width
             visible: isPicture()
 
             source: delegate.path
