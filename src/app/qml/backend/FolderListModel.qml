@@ -44,8 +44,6 @@ QtObject {
     property alias places: __places
     property alias archives: __archives
 
-    property bool helpClipboard: false
-
     property int lastPos
 
     function goTo(location, pos) {

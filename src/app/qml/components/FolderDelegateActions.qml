@@ -146,7 +146,6 @@ QtObject {
         FMActions.FileCopy {
             onTriggered: {
                 folderModel.model.copyIndex(model.index)
-                folderModel.helpClipboard = true // to be removed, when the cpp clipboard parts are working
             }
         }
 
@@ -154,7 +153,6 @@ QtObject {
             visible: folderModel.model.isWritable
             onTriggered: {
                 folderModel.model.cutIndex(model.index)
-                folderModel.helpClipboard = true // to be removed, when the cpp clipboard parts are working
             }
         }
 

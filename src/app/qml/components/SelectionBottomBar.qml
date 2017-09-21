@@ -53,7 +53,6 @@ Rectangle {
                 selectionManager.clear()
                 fileSelectorMode = false
                 fileSelector.fileSelectorComponent = null
-                folderModel.helpClipboard = true // to be removed, when the cpp clipboard parts are working
             }
         }
 
@@ -68,7 +67,6 @@ Rectangle {
                 selectionManager.clear()
                 fileSelectorMode = false
                 fileSelector.fileSelectorComponent = null
-                folderModel.helpClipboard = true // to be removed, when the cpp clipboard parts are working
             }
         }
 

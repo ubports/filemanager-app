@@ -152,7 +152,7 @@ SidebarPageLayout {
 
             folderModel: pageModel
             fileOperationDialog: fileOperationDialogObj
-            visible: pageModel.helpClipboard  // to be removed, when the cpp clipboard parts are working // pageModel.model.clipboardUrlsCounter > 0
+            visible: pageModel.model.clipboardUrlsCounter > 0
         }
 
         SelectionBottomBar {
