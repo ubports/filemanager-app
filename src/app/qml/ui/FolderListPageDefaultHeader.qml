@@ -12,7 +12,6 @@ PageHeader {
     property var fileOperationDialog
     property var folderModel
     property var showPanelAction
-    property int lastPos
 
     title: folderModel.basename(folderModel.path)
 
@@ -28,7 +27,7 @@ PageHeader {
 
     FMActions.GoBack {
         id: goBackAction
-        onTriggered: lastPos = folderModel.goBack()
+        onTriggered: folderModel.goBack()
     }
 
     leadingActionBar.actions: showPanelAction.visible ? showPanelAction : goBackAction

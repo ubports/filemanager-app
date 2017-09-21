@@ -32,7 +32,6 @@ ScrollView {
     GridView {
         id: view
         anchors.fill: parent
-        contentY: folderPage.header.lastPos
 
         cellWidth: units.gu(12)
         cellHeight: units.gu(14)

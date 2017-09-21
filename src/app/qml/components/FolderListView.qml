@@ -36,7 +36,6 @@ ScrollView {
         id: root
         anchors.fill: parent
         model: folderModel.model
-        contentY: folderPage.header.lastPos
 
         delegate: FolderListDelegate {
             id: delegate

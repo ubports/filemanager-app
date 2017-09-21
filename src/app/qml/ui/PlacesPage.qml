@@ -57,7 +57,7 @@ Page {
                 }
 
                 onClicked: {
-                    folderModel.goTo(model.path, 0)
+                    folderModel.goTo(model.path)
                     root.pathClicked()
                 }
             }

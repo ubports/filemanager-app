@@ -12,17 +12,6 @@ QtObject {
     property var folderModel
     property var fileOperationDialog
 
-    function rememberScrollPos() {
-        var lastPos
-        if (globalSettings.viewMethod === 1)
-        {
-            lastPos = folderIconView.contentItem.contentY
-        } else {
-            lastPos = folderListView.contentItem.contentY
-        }
-        return lastPos
-    }
-
     function itemLongPress(delegate, model) {
         console.log("FolderListDelegate onPressAndHold")
         var props = { model: model }
@@ -46,7 +35,7 @@ QtObject {
                 console.log("Changing to dir", model.filePath)
 
 
-                folderModel.goTo(model.filePath, rememberScrollPos())
+                folderModel.goTo(model.filePath)
             } else {
                 var props = {
                     title: i18n.tr("Folder not accessible"),
