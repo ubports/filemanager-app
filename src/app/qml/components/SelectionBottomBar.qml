@@ -77,15 +77,15 @@ Rectangle {
         id: bottomBarButtons
         anchors.centerIn: parent
         spacing: units.gu(2)
-        Repeater{
+        Repeater {
+            id: repeater
             model: selectionActions.actions
             delegate: Button {
-                // property bool showText: false
                 action: modelData
-                width: bottomBar.width / 3 - bottomBarButtons.spacing
+                width: Math.min(bottomBar.width, units.gu(80)) / repeater.count - bottomBarButtons.spacing
                 height: units.gu(5)
                 anchors.topMargin: units.gu(1)
-                color: "white"
+                color: theme.palette.normal.foreground
             }
         }
     }
