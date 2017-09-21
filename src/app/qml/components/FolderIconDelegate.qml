@@ -65,7 +65,7 @@ MouseArea {
             asynchronous: true
         }
 
-        BrightnessContrast {
+        /*BrightnessContrast {
             anchors.fill: imgContainer
             brightness: 0.3
             source: imgContainer
@@ -75,7 +75,7 @@ MouseArea {
             Behavior on opacity {
                 UbuntuNumberAnimation {}
             }
-        }
+        }*/
     }
 
     Label {
