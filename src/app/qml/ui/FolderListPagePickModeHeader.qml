@@ -12,7 +12,6 @@ PageHeader {
     // temp
     property FolderListModel folderModel
     property var selectionManager: folderModel.model.selectionObject
-    property var fileOperationDialog
 
     title: folderModel.basename(folderModel.path)
 

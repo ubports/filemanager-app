@@ -112,7 +112,6 @@ SidebarPageLayout {
         FolderListPageSelectionHeader {
             id: selectionHeader
             folderModel: pageModel
-            selectionMode: folderPage.selectionMode
             visible: selectionMode && !isContentHub
             enabled: visible
         }
@@ -120,7 +119,6 @@ SidebarPageLayout {
         FolderListPagePickModeHeader {
             id: pickModeHeader
             folderModel: pageModel
-            selectionMode: folderPage.selectionMode
             visible: selectionMode && isContentHub
             enabled: visible
         }
