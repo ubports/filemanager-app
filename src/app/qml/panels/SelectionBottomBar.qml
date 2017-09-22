@@ -80,7 +80,7 @@ Template.Panel {
         spacing: units.gu(2)
         Repeater {
             id: repeater
-            model: selectionActions.actions
+            model: selectionActions.children  // WORKAROUND: 'actions' is a non-NOTIFYable property
             delegate: Button {
                 action: modelData
                 width: Math.min(bottomBar.width, units.gu(80)) / repeater.count - bottomBarButtons.spacing

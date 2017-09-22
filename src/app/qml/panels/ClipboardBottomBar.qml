@@ -48,6 +48,6 @@ Template.Panel {
     ActionBar {
         anchors.right: parent.right
         delegate: Components.TextualButtonStyle { }
-        actions: clipboardActions.actions
+        actions: clipboardActions.children  // WORKAROUND: 'actions' is a non-NOTIFYable property
     }
 }
