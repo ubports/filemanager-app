@@ -135,9 +135,8 @@ SidebarPageLayout {
             id: viewLoader
             anchors.fill: parent
             anchors.topMargin: folderPage.header.height
-            anchors.bottomMargin: (bottomEdge.enabled ? bottomEdge.hint.height : 0) + (selectionBottomBar.visible ? selectionBottomBar.height
-                                                                                                                  : clipboardBottomBar.visible ? clipboardBottomBar.height
-                                                                                                                                               : 0)
+            anchors.bottomMargin: selectionBottomBar.visible ? selectionBottomBar.height
+                                                             : clipboardBottomBar.visible ? clipboardBottomBar.height : 0
 
             sourceComponent: {
                 if (globalSettings.viewMethod === 1) { // Grid
@@ -152,7 +151,7 @@ SidebarPageLayout {
             id: clipboardBottomBar
 
             anchors {
-                bottom: parent.bottom; bottomMargin: bottomEdge.enabled ? bottomEdge.hint.height : 0
+                bottom: parent.bottom
                 left: parent.left
                 right: parent.right
             }
@@ -166,7 +165,7 @@ SidebarPageLayout {
             id: selectionBottomBar
 
             anchors {
-                bottom: parent.bottom   // No bottom margin here, since BottomEdge is disabled during selection.
+                bottom: parent.bottom
                 left: parent.left
                 right: parent.right
             }
@@ -345,26 +344,5 @@ SidebarPageLayout {
         Component.onCompleted: {
             forceActiveFocus()
         }
-    }
-
-    BottomEdge {
-        id: bottomEdge
-
-        hint {
-            iconName: "location"
-            text: i18n.tr("Places")
-            enabled: visible
-            visible: bottomEdge.enabled
-        }
-
-        contentComponent: PlacesPage {
-            width: bottomEdge.width
-            height: bottomEdge.height
-            folderModel: pageModel
-            onPathClicked: bottomEdge.collapse()
-        }
-
-        enabled: visible
-        visible: !folderListPage.sidebarActive  && !mainLoader.item.selectionMode
     }
 }

@@ -169,7 +169,6 @@ MainView {
     }
 
     Component.onCompleted:  {
-        QuickUtils.mouseAttached = true
         pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"))
     }
 }
