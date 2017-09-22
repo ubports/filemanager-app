@@ -4,12 +4,10 @@ import Ubuntu.Components.Popups 1.3
 
 import "../actions" as FMActions
 import "../components" as Components
+import "template" as Template
 
-Rectangle {
+Template.Panel {
     id: bottomBar
-    height: visible ? units.gu(6) : 0
-    color: theme.palette.normal.background
-    enabled: visible
 
     property var folderModel
     property var fileOperationDialog

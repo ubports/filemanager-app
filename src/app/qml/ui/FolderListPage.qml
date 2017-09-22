@@ -137,8 +137,7 @@ SidebarPageLayout {
             id: viewLoader
             anchors.fill: parent
             anchors.topMargin: folderPage.header.height
-            anchors.bottomMargin: selectionBottomBar.visible ? selectionBottomBar.height
-                                                             : clipboardBottomBar.visible ? clipboardBottomBar.height : 0
+            anchors.bottomMargin: bottomPanelStack.height
 
             sourceComponent: {
                 if (globalSettings.viewMethod === 1) { // Grid
@@ -149,32 +148,22 @@ SidebarPageLayout {
             }
         }
 
-        Panels.ClipboardBottomBar {
-            id: clipboardBottomBar
+        BottomPanelStack {
+            id: bottomPanelStack
 
-            anchors {
-                bottom: parent.bottom
-                left: parent.left
-                right: parent.right
+            onHeightChanged: console.log(height)
+
+            Panels.ClipboardBottomBar {
+                folderModel: pageModel
+                fileOperationDialog: fileOperationDialogObj
+                visible: pageModel.model.clipboardUrlsCounter > 0 && !selectionMode
             }
 
-            folderModel: pageModel
-            fileOperationDialog: fileOperationDialogObj
-            visible: pageModel.model.clipboardUrlsCounter > 0 && !selectionMode
-        }
-
-        Panels.SelectionBottomBar {
-            id: selectionBottomBar
-
-            anchors {
-                bottom: parent.bottom
-                left: parent.left
-                right: parent.right
+            Panels.SelectionBottomBar {
+                folderModel: pageModel
+                fileOperationDialog: fileOperationDialogObj
+                visible: selectionMode
             }
-
-            folderModel: pageModel
-            fileOperationDialog: fileOperationDialogObj
-            visible: selectionMode
         }
 
         // *** VIEW COMPONENTS ***
