@@ -26,6 +26,7 @@ import "../actions" as FMActions
 import "../dialogs" as Dialogs
 import "../backend" as Backend
 import "../panels" as Panels
+import "../views" as Views
 
 // TODO: Review last position code, which is referenced in FolderListModel (backend), FolderDelegateActions, FolderIconView, FolderListView, FolderListPageDefaultHeader, (PlacesPage)
 
@@ -180,7 +181,7 @@ SidebarPageLayout {
 
         Component {
             id: folderIconView
-            FolderIconView {
+            Views.FolderIconView {
                 anchors.fill: parent
                 folderModel: pageModel
                 folderListPage: folderPage
@@ -193,7 +194,7 @@ SidebarPageLayout {
 
         Component {
             id: folderListView
-            FolderListView {
+            Views.FolderListView {
                 anchors.fill: parent
                 folderModel: pageModel
                 folderListPage: folderPage
