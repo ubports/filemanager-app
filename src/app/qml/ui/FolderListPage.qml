@@ -34,6 +34,7 @@ SidebarPageLayout {
     property alias folderModel: pageModel
     property bool fileSelectorMode: false
     property bool folderSelectorMode: false
+    property bool search: false
     Backend.FolderListModel {
         id: pageModel
         path: places.locationHome
@@ -105,7 +106,7 @@ SidebarPageLayout {
             fileOperationDialog: fileOperationDialogObj
             folderModel: pageModel
             showPanelAction: folderListPage.showPanelAction
-            visible: !selectionMode
+            visible: !selectionMode && !search
             enabled: visible
         }
 
@@ -120,6 +121,13 @@ SidebarPageLayout {
             id: pickModeHeader
             folderModel: pageModel
             visible: selectionMode && isContentHub
+            enabled: visible
+        }
+
+        FolderListPageSearchHeader {
+            id: searchHeader
+            folderModel: pageModel
+            visible: !selectionMode && search
             enabled: visible
         }
 

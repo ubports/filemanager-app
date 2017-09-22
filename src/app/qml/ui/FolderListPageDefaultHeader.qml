@@ -32,10 +32,17 @@ PageHeader {
 
     leadingActionBar.actions: showPanelAction.visible ? showPanelAction : goBackAction
 
-    trailingActionBar.numberOfSlots: 3
+    trailingActionBar.numberOfSlots: 4
     trailingActionBar.actions: [
         FMActions.Settings {
             onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), mainView, { folderListModel: folderModel.model })
+        },
+
+        FMActions.Search {
+            onTriggered: {
+                print(text)
+                search = true
+            }
         },
 
         FMActions.NewFolder {

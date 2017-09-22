@@ -106,7 +106,7 @@ Popover {
             onSelectedIndexChanged: globalSettings.sortOrder = selectedIndex
         }
 
-        Standard {
+        /*Standard {
             Label {
                 text: i18n.tr("Filter")
                 fontSize: "medium"
@@ -134,6 +134,6 @@ Popover {
                         folderListModel.nameFilters = [text]
                 }
             }
-        }
+        }*/
     }
 }
