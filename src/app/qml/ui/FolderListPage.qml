@@ -173,7 +173,7 @@ SidebarPageLayout {
 
             folderModel: pageModel
             fileOperationDialog: fileOperationDialogObj
-            visible: selectionMode
+            visible: selectionMode && !isContentHub
         }
 
         // *** VIEW COMPONENTS ***
