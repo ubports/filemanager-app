@@ -25,6 +25,7 @@ import "../components"
 import "../actions" as FMActions
 import "../dialogs" as Dialogs
 import "../backend" as Backend
+import "../panels" as Panels
 
 // TODO: Review last position code, which is referenced in FolderListModel (backend), FolderDelegateActions, FolderIconView, FolderListView, FolderListPageDefaultHeader, (PlacesPage)
 
@@ -147,7 +148,7 @@ SidebarPageLayout {
             }
         }
 
-        ClipboardBottomBar {
+        Panels.ClipboardBottomBar {
             id: clipboardBottomBar
 
             anchors {
@@ -161,7 +162,7 @@ SidebarPageLayout {
             visible: pageModel.model.clipboardUrlsCounter > 0 && !selectionMode
         }
 
-        SelectionBottomBar {
+        Panels.SelectionBottomBar {
             id: selectionBottomBar
 
             anchors {
