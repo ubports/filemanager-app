@@ -19,36 +19,31 @@ QtObject {
     }
 
     function listLongPress(model) {
+        isContentHub = false    // Property declared in root QML file
         fileSelectorMode = true
         fileSelector.fileSelectorComponent = pageStack
-        folderModel.model.selectionObject.select(model.index,false,true)
+        if (!model.isDir)
+            folderModel.model.selectionObject.select(model.index,false,true)
     }
 
     function itemClicked(model) {
         if (model.isBrowsable) {
             console.log("browsable path="+model.filePath+" isRemote="+model.isRemote+" needsAuthentication="+model.needsAuthentication)
+            if ((model.isReadable && model.isExecutable) ||
+                    (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
+                    ) {
+                console.log("Changing to dir", model.filePath)
 
-            if(!isContentHub && fileSelectorMode)
-            {
-                folderModel.model.selectionObject.select(model.index,false,true)
+
+                folderModel.goTo(model.filePath)
             } else {
-
-                if ((model.isReadable && model.isExecutable) ||
-                        (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
-                        ) {
-                    console.log("Changing to dir", model.filePath)
-
-
-                    folderModel.goTo(model.filePath)
-                } else {
-                    var props = {
-                        title: i18n.tr("Folder not accessible"),
-                        // TRANSLATORS: this refers to a folder name
-                        text: i18n.tr("Can not access %1").arg(model.fileName)
-                    }
-
-                    PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
+                var props = {
+                    title: i18n.tr("Folder not accessible"),
+                    // TRANSLATORS: this refers to a folder name
+                    text: i18n.tr("Can not access %1").arg(model.fileName)
                 }
+
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
             }
         } else {
             console.log("Non dir clicked")
@@ -97,7 +92,7 @@ QtObject {
 
     property ActionList leadingActions: ActionList {
         FMActions.Delete {
-            visible: folderModel.model.isWritable && importMode
+            visible: folderModel.model.isWritable
             onTriggered: {
                 var props = {
                     "folderModel": folderModel.model,
@@ -110,7 +105,7 @@ QtObject {
         }
 
         FMActions.Rename {
-            visible: folderModel.model.isWritable && importMode
+            visible: folderModel.model.isWritable
             onTriggered: {
                 var props = {
                     "modelRow" : model.index,
@@ -124,7 +119,7 @@ QtObject {
 
     property ActionList trailingActions: ActionList {
         FMActions.ArchiveExtract {
-            visible: folderModel.getArchiveType(model.fileName) !== "" && importMode
+            visible: folderModel.getArchiveType(model.fileName) !== ""
             onTriggered: folderListPage.openFile(model, true)
         }
 
@@ -137,29 +132,28 @@ QtObject {
             }
         }
 
-        FMActions.FileCut {
-            visible: folderModel.model.isWritable && importMode
-            onTriggered: {
-                folderModel.model.cutIndex(model.index)
-            }
-        }
-
         FMActions.FileCopy {
-            visible: importMode
             onTriggered: {
                 folderModel.model.copyIndex(model.index)
             }
         }
 
+        FMActions.FileCut {
+            visible: folderModel.model.isWritable
+            onTriggered: {
+                folderModel.model.cutIndex(model.index)
+            }
+        }
+
         FMActions.Share {
-            visible: !model.isDir && importMode
+            visible: !model.isDir
             onTriggered: folderListPage.openFile(model, true)
         }
     }
 
     property ActionList additionalActions: ActionList {
         FMActions.Select {
-            visible: !isContentHub
+            visible: true
             onTriggered: listLongPress(model)
         }
     }

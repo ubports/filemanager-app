@@ -39,7 +39,6 @@ PageHeader {
         },
 
         FMActions.Search {
-            visible: !isContentHub || !importMode
             onTriggered: {
                 print(text)
                 search = true

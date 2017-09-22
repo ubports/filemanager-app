@@ -40,13 +40,13 @@ MainView {
     property bool wideAspect: width > units.gu(50)
 
     property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()
-    property bool isContentHub: false
-    property bool importMode: true
+    property bool isContentHub: true
 
     QtObject {
         id: fileSelector
         property var activeTransfer: null
         property var fileSelectorComponent: null
+        property bool importMode: false
     }
 
     Component {
@@ -78,7 +78,7 @@ MainView {
 
     function acceptFileSelector(fileUrls) {
         console.log("accept file selector " + fileUrls)
-        if (importMode) {
+        if (fileSelector.importMode) {
             importFiles(fileSelector.activeTransfer, fileUrls[0])
         } else {
             exportFiles(fileSelector.activeTransfer, fileUrls)
@@ -89,12 +89,11 @@ MainView {
         pageStack.push(Qt.resolvedUrl("content-hub/FileOpener.qml"), { fileUrl: "file://" + filePath, share: share} )
     }
 
-    function startTransfer(activeTransfer, iMode) {
-        if (activeTransfer.state === ContentTransfer.Charged || !iMode) {
+    function startImport(activeTransfer) {
+        if (activeTransfer.state === ContentTransfer.Charged) {
             fileSelector.activeTransfer = activeTransfer
-            isContentHub = true
-            importMode = iMode
-            openFileSelector(iMode)
+            fileSelector.importMode = true
+            openFileSelector(true)
         }
     }
 
@@ -103,7 +102,7 @@ MainView {
         for(var i=0; i < activeTransfer.items.length; i++) {
             var item = activeTransfer.items[i]
             var uniqueName = fileSelector.fileSelectorComponent.folderModel.newFileUniqueName(destDir,
-                                                                                  fileSelector.fileSelectorComponent.folderModel.basename(String(item.url)))
+                                                                                  fileSelector.fileSelectorComponent.basename(String(item.url)))
             console.log("Move file to:" + destDir + " with name: " + uniqueName)
             activeTransfer.items[i].move(destDir, uniqueName)
             fileNames.push(uniqueName)
@@ -128,9 +127,12 @@ MainView {
 
     Connections {
         target: ContentHub
-        onExportRequested: startTransfer(transfer, false)
-        onImportRequested: startTransfer(transfer, true)
-        onShareRequested: startTransfer(transfer, true)
+        onExportRequested: {
+            fileSelector.activeTransfer = transfer
+            openFileSelector(false)
+        }
+        onImportRequested: startImport(transfer)
+        onShareRequested: startImport(transfer)
     }
 
     PageStack {
