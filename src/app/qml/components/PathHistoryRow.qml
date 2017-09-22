@@ -25,11 +25,12 @@ ListView {
     anchors { left: parent.left; right: parent.right }
     implicitHeight: units.gu(4)
 
+    rightMargin: rootItem.width * 0.382
+
     property FolderListModel folderModel
 
     orientation: ListView.Horizontal
     boundsBehavior: Flickable.StopAtBounds
-    snapMode: ListView.SnapToItem
     clip: true
 
     delegate: AbstractButton {
@@ -111,8 +112,9 @@ ListView {
                 internal.append(obj)
 
                 // Set the current item, if necessary
-                if (obj.path == (isTrashPath ? "trash://" : isRemotePath ? "smb://" : "") + folderModel.path.toString().replace(folderModel.model.homePath(), "~"))
+                if (obj.path == (isTrashPath ? "trash://" : isRemotePath ? "smb://" : "") + folderModel.path.toString().replace(folderModel.model.homePath(), "~")) {
                     rootItem.currentIndex = i
+                }
 
                 cur += f.length + 1  // Move cursor
             }
@@ -127,7 +129,34 @@ ListView {
 
     // Ensure the currentItem is always visible
     onCurrentIndexChanged: {
-        positionViewAtIndex(currentIndex, ListView.Center)
+        positionViewTimerWorkaround.restart()
+    }
+
+    Timer {
+        id: positionViewTimerWorkaround
+
+        function __gotoIndex(i) {
+            if (currentItem.x > rootItem.contentX &&
+                    currentItem.x + currentItem.height < rootItem.contentX + rootItem.width)
+                return;
+
+            var pX = rootItem.contentX
+            var dpX
+            rootItem.positionViewAtIndex(i, ListView.Center)
+            dpX = rootItem.contentX
+            positionAnimation.from = pX
+            positionAnimation.to = dpX
+            positionAnimation.running = true
+        }
+
+        interval: 1
+        onTriggered: __gotoIndex(currentIndex)
+
+        property QtObject positionAnimation: UbuntuNumberAnimation {
+            target: rootItem
+            property: "contentX"
+            duration: UbuntuAnimation.SnapDuration
+        }
     }
 
     // Subscribe to folderModel 'folder' changes
