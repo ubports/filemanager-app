@@ -25,12 +25,19 @@ PageHeader {
         folderModel: rootItem.folderModel
     }
 
-    FMActions.GoBack {
-        id: goBackAction
-        onTriggered: folderModel.goBack()
+    Action {
+        id: placesPageAction
+        iconName: "navigation-menu"
+        text: i18n.tr("Places")
+        onTriggered: {
+            var pp = pageStack.push(Qt.resolvedUrl("PlacesPage.qml"), { folderModel: rootItem.folderModel })
+            pp.pathClicked.connect(function() {
+                pp.pageStack.pop()
+            })
+        }
     }
 
-    leadingActionBar.actions: showPanelAction.visible ? showPanelAction : goBackAction
+    leadingActionBar.actions: showPanelAction.visible ? showPanelAction : placesPageAction
 
     trailingActionBar.numberOfSlots: 4
     trailingActionBar.actions: [

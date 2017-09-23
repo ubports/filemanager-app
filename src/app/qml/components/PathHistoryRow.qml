@@ -25,11 +25,12 @@ ListView {
     anchors { left: parent.left; right: parent.right }
     implicitHeight: units.gu(4)
 
+    rightMargin: rootItem.width * 0.382
+
     property FolderListModel folderModel
 
     orientation: ListView.Horizontal
     boundsBehavior: Flickable.StopAtBounds
-    snapMode: ListView.SnapToItem
     clip: true
 
     delegate: AbstractButton {
@@ -60,8 +61,6 @@ ListView {
             var isRemotePath = currentPath.indexOf("smb://") > -1
             var isLocalPath = !isTrashPath && !isRemotePath
 
-
-            console.log("CURRENT PATH:", currentPath, folderModel.path.toString(), isTrashPath, isRemotePath, isLocalPath)
             if (internal.storedPath && internal.storedPath.indexOf(currentPath) > -1) {
                 if (currentPath !== "/") {
                     currentPath = internal.storedPath
@@ -82,17 +81,12 @@ ListView {
                 splitted_path.shift()
             }
 
-
-            console.log(currentPath, splitted_path)
-
             // Clear the model.
             internal.clear()
 
             var cur = 0 // Cursor for getting the path to the folder
             for (var i = 0; i < splitted_path.length; ++i) {
                 var f = splitted_path[i]
-
-                console.log(i, f)
 
                 var objName;
                 if (isTrashPath)
@@ -118,10 +112,9 @@ ListView {
                 internal.append(obj)
 
                 // Set the current item, if necessary
-                if (obj.path == (isTrashPath ? "trash://" : isRemotePath ? "smb://" : "") + folderModel.path.toString().replace(folderModel.model.homePath(), "~"))
+                if (obj.path == (isTrashPath ? "trash://" : isRemotePath ? "smb://" : "") + folderModel.path.toString().replace(folderModel.model.homePath(), "~")) {
                     rootItem.currentIndex = i
-
-                console.log(JSON.stringify(obj))
+                }
 
                 cur += f.length + 1  // Move cursor
             }
@@ -136,7 +129,34 @@ ListView {
 
     // Ensure the currentItem is always visible
     onCurrentIndexChanged: {
-        positionViewAtIndex(currentIndex, ListView.Center)
+        positionViewTimerWorkaround.restart()
+    }
+
+    Timer {
+        id: positionViewTimerWorkaround
+
+        function __gotoIndex(i) {
+            if (currentItem.x > rootItem.contentX &&
+                    currentItem.x + currentItem.height < rootItem.contentX + rootItem.width)
+                return;
+
+            var pX = rootItem.contentX
+            var dpX
+            rootItem.positionViewAtIndex(i, ListView.Center)
+            dpX = rootItem.contentX
+            positionAnimation.from = pX
+            positionAnimation.to = dpX
+            positionAnimation.running = true
+        }
+
+        interval: 1
+        onTriggered: __gotoIndex(currentIndex)
+
+        property QtObject positionAnimation: UbuntuNumberAnimation {
+            target: rootItem
+            property: "contentX"
+            duration: UbuntuAnimation.SnapDuration
+        }
     }
 
     // Subscribe to folderModel 'folder' changes
@@ -244,8 +264,6 @@ ListView {
                 property bool isRootPath: styledItem.name == "/"
                 property bool isTrashPath: styledItem.name == "trash:///"
                 property bool isSmbPath: styledItem.name == "smb:///"
-
-                Component.onCompleted: console.log(styledItem.name, styledItem.name == "smb:///", isSmbPath)
 
                 Item {
                     height: parent.height

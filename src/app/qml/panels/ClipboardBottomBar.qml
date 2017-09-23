@@ -3,18 +3,17 @@ import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 
 import "../actions" as FMActions
+import "../components" as Components
+import "template" as Template
 
-Rectangle {
+Template.Panel {
     id: bottomBar
-    height: visible ? units.gu(6) : 0
-    color: theme.palette.normal.background
-    enabled: visible
 
     property var folderModel
     property var fileOperationDialog
 
     ActionList {
-        id: selectionActions
+        id: clipboardActions
 
         FMActions.FilePaste {
             property bool showText: false
@@ -48,7 +47,7 @@ Rectangle {
 
     ActionBar {
         anchors.right: parent.right
-        delegate: TextualButtonStyle { }
-        actions: selectionActions.actions
+        delegate: Components.TextualButtonStyle { }
+        actions: clipboardActions.children  // WORKAROUND: 'actions' is a non-NOTIFYable property
     }
 }
