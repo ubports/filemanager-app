@@ -33,19 +33,22 @@ class QSettings;
  *  Just keeps data for Network authentication (protocol independent)
  */
 
-struct NetAuthenticationData
-{
+struct NetAuthenticationData {
 public:
     NetAuthenticationData() {}
-    NetAuthenticationData(const QString&u, const QString& p) :
-         user(u), password(p) {}
-    inline bool isEmpty() const { return user.isEmpty(); }
-    QString user;
-    QString password; 
-    static const QString& currentUser();
-    static const QString& noPassword();
-};
+    NetAuthenticationData(const QString &u, const QString &p) : user(u), password(p) {}
 
+    inline bool isEmpty() const
+    {
+        return user.isEmpty();
+    }
+
+    QString user;
+    QString password;
+
+    static const QString &currentUser();
+    static const QString &noPassword();
+};
 
 /*!
  * \brief The NetAuthenticationDataList class
@@ -69,31 +72,31 @@ public:
 class NetAuthenticationDataList
 {
 public:
-  static  NetAuthenticationDataList *  getInstance(void *parent);
-  static  void                         releaseInstance(void *parent);
-  ~NetAuthenticationDataList();
+    static NetAuthenticationDataList *getInstance(void *parent);
+    static void releaseInstance(void *parent);
+    ~NetAuthenticationDataList();
 
 public:
-  bool                           store(const QUrl& url, bool save = false);
-  bool                           store(const QString& url, const QString& u, const QString& p, bool save =false);
-  const NetAuthenticationData *  get(const QString&) const;
+    bool store(const QUrl &url, bool save = false);
+    bool store(const QString &url, const QString &u, const QString &p, bool save = false);
+    const NetAuthenticationData *get(const QString &) const;
 
 private:
-  NetAuthenticationDataList();
+    NetAuthenticationDataList();
 
 private:
-  void                  openAuthenticationStore();
-  void                  closeAuthenticationStore();
-  QString               encryptPassord(const QString& p);
-  QString               decryptPassword(const QString& p);
-  void                  loadSavedAuthenticationData();
-  bool                  saveAuthenticationData(const QString& url, const NetAuthenticationData * );
+    void openAuthenticationStore();
+    void closeAuthenticationStore();
+    QString encryptPassord(const QString &p);
+    QString decryptPassword(const QString &p);
+    void loadSavedAuthenticationData();
+    bool saveAuthenticationData(const QString &url, const NetAuthenticationData * );
 
 private:  //url     authentication data
-  QHash <QString , NetAuthenticationData*>  m_urlEntries;
-  static NetAuthenticationDataList *        m_instance;
-  static void                      *        m_parent;
-  QSettings                        *        m_savedAuths;
+    QHash<QString , NetAuthenticationData *> m_urlEntries;
+    static NetAuthenticationDataList *m_instance;
+    static void *m_parent;
+    QSettings *m_savedAuths;
 };
 
 #endif // NETAUTHENTICATIONDATA_H
