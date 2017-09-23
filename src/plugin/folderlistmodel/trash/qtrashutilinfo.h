@@ -32,15 +32,14 @@
  *        files/           info/
  *              item           item.trashinfo
  */
-struct QTrashUtilInfo
-{
+struct QTrashUtilInfo {
 public:
     /*!
      * \brief setInfo()          build the whole Trash information
      * \param trashRootDir       the root Trash Dir usually a folder "Trash"
      * \param filename           the item, it can be either a relative file name or a full path name
      */
-    void setInfo(const QString& trashRootDir, const QString& filename);
+    void setInfo(const QString &trashRootDir, const QString &filename);
 
     /*!
      * \brief setInfoFromTrashItem() build the whole Trash information from the absolute path name from a trash item
@@ -48,13 +47,13 @@ public:
      *
      *  The item pointed by \a absTrashItem does not need to exist
      */
-    void setInfoFromTrashItem(const QString& absTrashItem);
+    void setInfoFromTrashItem(const QString &absTrashItem);
     void clear();
     bool existsInfoFile();
     bool existsFile();
     bool isValid();
     QString getOriginalPathName();
-    bool createTrashInfoFile(const QString& orignalPathname);
+    bool createTrashInfoFile(const QString &orignalPathname);
     bool removeTrashInfoFile();
 
     /*!
@@ -62,21 +61,21 @@ public:
      * \param trashDir
      * \return trashDir/files
      */
-    static QString       filesTrashDir(const QString& trashDir);
+    static QString filesTrashDir(const QString &trashDir);
 
     /*!
      * \brief infoTrashDir() gets gets the "info" directory under Trash Dir
      * \param trashDir
      * \return trashDir/info
      */
-    static QString       infoTrashDir(const QString& trashDir);
+    static QString infoTrashDir(const QString &trashDir);
 
-    QString  trashRoot; // root
-    QString  filesDir;  // root/files
-    QString  absFile;   // root/files/item
-    QString  infoDir;   // root/info
-    QString  absInfo;   // root/info/item.trashinfo
-    bool     valid;
+    QString trashRoot; // root
+    QString filesDir;  // root/files
+    QString absFile;   // root/files/item
+    QString infoDir;   // root/info
+    QString absInfo;   // root/info/item.trashinfo
+    bool valid;
 };
 
 #endif // QTRASHUTILINFO_H
