@@ -56,7 +56,7 @@ PageHeader {
             visible: folderModel.model.isWritable
             onTriggered: {
                 print(text)
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/CreateFolderDialog.qml"), mainView, { folderModel: folderModel.model })
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/CreateItemDialog.qml"), mainView, { folderModel: folderModel.model })
             }
         },
 

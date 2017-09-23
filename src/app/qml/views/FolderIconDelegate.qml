@@ -109,5 +109,6 @@ MouseArea {
         PropertyAction { target: delegate; property: "GridView.delayRemove"; value: true }
         NumberAnimation { target: delegate; property: "scale"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
         PropertyAction { target: delegate; property: "GridView.delayRemove"; value: false }
+        ScriptAction { script: folderIconView.folderModel.model.refresh() }
     }
 }

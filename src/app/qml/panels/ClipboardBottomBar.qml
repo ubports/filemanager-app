@@ -23,6 +23,7 @@ Template.Panel {
                 console.log("Pasting to current folder items of count " + folderModel.model.clipboardUrlsCounter)
                 fileOperationDialog.startOperation(i18n.tr("Paste files"))
                 folderModel.model.paste()
+                folderModel.model.refresh()
             }
         }
 
