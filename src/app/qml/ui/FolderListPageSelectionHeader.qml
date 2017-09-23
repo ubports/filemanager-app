@@ -35,6 +35,8 @@ PageHeader {
         }
     }
 
+    trailingActionBar.anchors.rightMargin: 0
+    trailingActionBar.delegate: Components.TextualButtonStyle {}
     trailingActionBar.actions: FMActions.SelectUnselectAll {
         selectedAll: rootItem.allSelected
         onTriggered: {
