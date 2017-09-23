@@ -10,8 +10,6 @@ PageHeader {
 
     property var folderModel
     property var selectionManager: folderModel.model.selectionObject
-    property bool allSelected: false
-
     title: folderModel.basename(folderModel.path)
 
     contents: ListItemLayout {
@@ -38,18 +36,12 @@ PageHeader {
     trailingActionBar.anchors.rightMargin: 0
     trailingActionBar.delegate: Components.TextualButtonStyle {}
     trailingActionBar.actions: FMActions.SelectUnselectAll {
-        selectedAll: rootItem.allSelected
+        selectedAll: selectionManager.selectedAll
         onTriggered: {
-            console.log("Select all items")
-            if (allSelected)
-            {
-                console.log("Unselect all items")
+            if (selectionManager.selectedAll) {
                 selectionManager.clear()
-                allSelected = false
             } else {
-                console.log("Select all items")
                 selectionManager.selectAll()
-                allSelected = true
             }
         }
     }

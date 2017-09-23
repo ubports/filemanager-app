@@ -145,6 +145,11 @@ int DirSelection::counter() const
     return m_selectedCounter;
 }
 
+bool DirSelection::selectedAll() const
+{
+    return m_selectedCounter == m_model->rowCount();
+}
+
 
 DirSelection::Mode DirSelection::mode() const
 {
