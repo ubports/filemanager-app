@@ -44,7 +44,7 @@ private slots:
 private:
     void extractArchive(const QString program, const QStringList arguments);
 
-    QProcess* _process = nullptr;
+    QProcess *_process = nullptr;
 };
 
 

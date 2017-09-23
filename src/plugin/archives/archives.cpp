@@ -21,7 +21,8 @@
 
 void Archives::extractZip(const QString path, const QString destination)
 {
-    QString program = "unzip"; // This programm is available in the images as it is one of the dependencies of the ubuntu-download-manager package.
+    // This programm is available in the images as it is one of the dependencies of the ubuntu-download-manager package.
+    QString program = "unzip";
     QStringList arguments;
     arguments << path << "-d" << destination;
 
@@ -90,7 +91,8 @@ void Archives::_onError(QProcess::ProcessError error)
 
 void Archives::_onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    if ((exitStatus == QProcess::NormalExit || exitCode == 0) && _process->readAllStandardError().trimmed().isEmpty()) {
+    if ((exitStatus == QProcess::NormalExit || exitCode == 0)
+            && _process->readAllStandardError().trimmed().isEmpty()) {
         emit finished(true, -1);
     } else {
         qDebug() << "Extraction failed (2) with the following error:" << _process->readAllStandardError();
