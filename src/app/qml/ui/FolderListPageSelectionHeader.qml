@@ -35,9 +35,8 @@ PageHeader {
         }
     }
 
-    trailingActionBar.actions: Action {
-        text: allSelected ? i18n.tr("Unselect all") : i18n.tr("Select all")
-        iconName: allSelected ? "select-none" : "select"
+    trailingActionBar.actions: FMActions.SelectUnselectAll {
+        selectedAll: rootItem.allSelected
         onTriggered: {
             console.log("Select all items")
             if (allSelected)
