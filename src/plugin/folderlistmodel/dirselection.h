@@ -53,12 +53,14 @@ public:
             Multi
         };
         Q_PROPERTY(int counter   READ counter   NOTIFY selectionChanged)
+        Q_PROPERTY(bool selectedAll READ selectedAll NOTIFY selectionChanged)
         Q_PROPERTY(Mode mode  READ mode WRITE setMode NOTIFY modeChanged)
         Q_INVOKABLE  QStringList selectedNames()      const;
         Q_INVOKABLE  void        setMode(Mode m);
         Q_INVOKABLE  QStringList selectedAbsFilePaths()  const;   //full path
         Q_INVOKABLE  QList<int>  selectedIndexes()    const;
         int                      counter()            const;
+        bool                     selectedAll()        const;
         Mode                     mode()               const;
 
 public:
