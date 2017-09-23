@@ -10,6 +10,7 @@ PageHeader {
 
     property var folderModel
     property var selectionManager: folderModel.model.selectionObject
+    property bool allSelected: false
 
     title: folderModel.basename(folderModel.path)
 
@@ -31,6 +32,24 @@ PageHeader {
             selectionManager.clear()
             fileSelectorMode = false
             fileSelector.fileSelectorComponent = null
+        }
+    }
+
+    trailingActionBar.actions: Action {
+        text: allSelected ? i18n.tr("Unselect all") : i18n.tr("Select all")
+        iconName: allSelected ? "select-none" : "select"
+        onTriggered: {
+            console.log("Select all items")
+            if (allSelected)
+            {
+                console.log("Unselect all items")
+                selectionManager.clear()
+                allSelected = false
+            } else {
+                console.log("Select all items")
+                selectionManager.selectAll()
+                allSelected = true
+            }
         }
     }
 
