@@ -263,7 +263,7 @@ public:
 
     //DirItemAbstractListModel
     virtual int getIndex(const QString &name);
-    virtual voidnotifyItemChanged(int row);
+    virtual void notifyItemChanged(int row);
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
