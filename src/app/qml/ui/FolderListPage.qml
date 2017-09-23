@@ -25,6 +25,8 @@ import "../components"
 import "../actions" as FMActions
 import "../dialogs" as Dialogs
 import "../backend" as Backend
+import "../panels" as Panels
+import "../views" as Views
 
 // TODO: Review last position code, which is referenced in FolderListModel (backend), FolderDelegateActions, FolderIconView, FolderListView, FolderListPageDefaultHeader, (PlacesPage)
 
@@ -135,9 +137,7 @@ SidebarPageLayout {
             id: viewLoader
             anchors.fill: parent
             anchors.topMargin: folderPage.header.height
-            anchors.bottomMargin: (bottomEdge.enabled ? bottomEdge.hint.height : 0) + (selectionBottomBar.visible ? selectionBottomBar.height
-                                                                                                                  : clipboardBottomBar.visible ? clipboardBottomBar.height
-                                                                                                                                               : 0)
+            anchors.bottomMargin: bottomPanelStack.height
 
             sourceComponent: {
                 if (globalSettings.viewMethod === 1) { // Grid
@@ -148,39 +148,29 @@ SidebarPageLayout {
             }
         }
 
-        ClipboardBottomBar {
-            id: clipboardBottomBar
+        BottomPanelStack {
+            id: bottomPanelStack
 
-            anchors {
-                bottom: parent.bottom; bottomMargin: bottomEdge.enabled ? bottomEdge.hint.height : 0
-                left: parent.left
-                right: parent.right
+            onHeightChanged: console.log(height)
+
+            Panels.ClipboardBottomBar {
+                folderModel: pageModel
+                fileOperationDialog: fileOperationDialogObj
+                visible: pageModel.model.clipboardUrlsCounter > 0 && !selectionMode
             }
 
-            folderModel: pageModel
-            fileOperationDialog: fileOperationDialogObj
-            visible: pageModel.model.clipboardUrlsCounter > 0 && !selectionMode
-        }
-
-        SelectionBottomBar {
-            id: selectionBottomBar
-
-            anchors {
-                bottom: parent.bottom   // No bottom margin here, since BottomEdge is disabled during selection.
-                left: parent.left
-                right: parent.right
+            Panels.SelectionBottomBar {
+                folderModel: pageModel
+                fileOperationDialog: fileOperationDialogObj
+                visible: selectionMode && !isContentHub
             }
-
-            folderModel: pageModel
-            fileOperationDialog: fileOperationDialogObj
-            visible: selectionMode && !isContentHub
         }
 
         // *** VIEW COMPONENTS ***
 
         Component {
             id: folderIconView
-            FolderIconView {
+            Views.FolderIconView {
                 anchors.fill: parent
                 folderModel: pageModel
                 folderListPage: folderPage
@@ -193,7 +183,7 @@ SidebarPageLayout {
 
         Component {
             id: folderListView
-            FolderListView {
+            Views.FolderListView {
                 anchors.fill: parent
                 folderModel: pageModel
                 folderListPage: folderPage
@@ -345,26 +335,5 @@ SidebarPageLayout {
         Component.onCompleted: {
             forceActiveFocus()
         }
-    }
-
-    BottomEdge {
-        id: bottomEdge
-
-        hint {
-            iconName: "location"
-            text: i18n.tr("Places")
-            enabled: visible
-            visible: bottomEdge.enabled
-        }
-
-        contentComponent: PlacesPage {
-            width: bottomEdge.width
-            height: bottomEdge.height
-            folderModel: pageModel
-            onPathClicked: bottomEdge.collapse()
-        }
-
-        enabled: visible
-        visible: !folderListPage.sidebarActive  && !mainLoader.item.selectionMode
     }
 }

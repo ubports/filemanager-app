@@ -3,14 +3,12 @@ import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 
 import "../backend"
+import "template" as Template
 
 // TODO: check origin of properties used in bindings
 
-Rectangle {
+Template.Panel {
     id: bottomBar
-    height: visible ? units.gu(6) : 0
-    color: theme.palette.normal.background
-    enabled: visible
 
     property FolderListModel folderModel
     property var selectionManager: folderModel.model.selectionObject
@@ -82,7 +80,7 @@ Rectangle {
         spacing: units.gu(2)
         Repeater {
             id: repeater
-            model: selectionActions.actions
+            model: selectionActions.children  // WORKAROUND: 'actions' is a non-NOTIFYable property
             delegate: Button {
                 action: modelData
                 width: Math.min(bottomBar.width, units.gu(80)) / repeater.count - bottomBarButtons.spacing
