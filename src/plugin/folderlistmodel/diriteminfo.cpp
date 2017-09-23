@@ -29,99 +29,96 @@ QMimeDatabase DirItemInfoPrivate::mimeDatabase;
 
 
 DirItemInfoPrivate::DirItemInfoPrivate() :
-   _isValid(false)
-  ,_isLocal(false)
-  ,_isRemote(false)
-  ,_isSelected(false)
-  ,_isAbsolute(false)
-  ,_exists(false)
-  ,_isFile(false)
-  ,_isDir(false)
-  ,_isSymLink(false)
-  ,_isRoot(false)
-  ,_isReadable(false)
-  ,_isWritable(false)
-  ,_isExecutable(false)
-  ,_isLocalSharedDir(false)
-  ,_isHost(false)
-  ,_isWorkGroup(false)
-  ,_isNetworkShare(false)
-  ,_needsAuthentication(false)
-  ,_permissions(0)
-  ,_size(0)
+    _isValid(false)
+    , _isLocal(false)
+    , _isRemote(false)
+    , _isSelected(false)
+    , _isAbsolute(false)
+    , _exists(false)
+    , _isFile(false)
+    , _isDir(false)
+    , _isSymLink(false)
+    , _isRoot(false)
+    , _isReadable(false)
+    , _isWritable(false)
+    , _isExecutable(false)
+    , _isLocalSharedDir(false)
+    , _isHost(false)
+    , _isWorkGroup(false)
+    , _isNetworkShare(false)
+    , _needsAuthentication(false)
+    , _permissions(0)
+    , _size(0)
 {
 
 }
 
 
 DirItemInfoPrivate::DirItemInfoPrivate(const DirItemInfoPrivate &other):
-   QSharedData(other)
-  ,_isValid(other._isValid)
-  ,_isLocal(other._isLocal)
-  ,_isRemote(other._isRemote)
-  ,_isSelected(other._isSelected)
-  ,_isAbsolute(other._isAbsolute)
-  ,_exists(other._exists)
-  ,_isFile(other._isFile)
-  ,_isDir(other._isDir)
-  ,_isSymLink(other._isSymLink)
-  ,_isRoot(other._isRoot)
-  ,_isReadable(other._isReadable)
-  ,_isWritable(other._isWritable)
-  ,_isExecutable(other._isExecutable)
-  ,_isLocalSharedDir(other._isLocalSharedDir)
-  ,_isHost(other._isHost)
-  ,_isWorkGroup(other._isWorkGroup)
-  ,_isNetworkShare(other._isNetworkShare)
-  ,_needsAuthentication(other._needsAuthentication)
-  ,_permissions(other._permissions)
-  ,_size(other._size)
-  ,_created(other._created)
-  ,_lastModified(other._lastModified)
-  ,_lastRead(other._lastRead)
-  ,_path(other._path)
-  ,_fileName(other._fileName) 
-  ,_normalizedPath(other._normalizedPath)
-  ,_authenticationPath(other._authenticationPath)
+    QSharedData(other)
+    , _isValid(other._isValid)
+    , _isLocal(other._isLocal)
+    , _isRemote(other._isRemote)
+    , _isSelected(other._isSelected)
+    , _isAbsolute(other._isAbsolute)
+    , _exists(other._exists)
+    , _isFile(other._isFile)
+    , _isDir(other._isDir)
+    , _isSymLink(other._isSymLink)
+    , _isRoot(other._isRoot)
+    , _isReadable(other._isReadable)
+    , _isWritable(other._isWritable)
+    , _isExecutable(other._isExecutable)
+    , _isLocalSharedDir(other._isLocalSharedDir)
+    , _isHost(other._isHost)
+    , _isWorkGroup(other._isWorkGroup)
+    , _isNetworkShare(other._isNetworkShare)
+    , _needsAuthentication(other._needsAuthentication)
+    , _permissions(other._permissions)
+    , _size(other._size)
+    , _created(other._created)
+    , _lastModified(other._lastModified)
+    , _lastRead(other._lastRead)
+    , _path(other._path)
+    , _fileName(other._fileName)
+    , _normalizedPath(other._normalizedPath)
+    , _authenticationPath(other._authenticationPath)
 {
 
 }
 
 
 DirItemInfoPrivate::DirItemInfoPrivate(const QFileInfo &fi):
-   _isValid(true)
-  ,_isLocal(true)
-  ,_isRemote(false)
-  ,_isSelected(false)
-  ,_isAbsolute(false)
-  ,_exists(false)
-  ,_isFile(false)
-  ,_isDir(false)
-  ,_isSymLink(false)
-  ,_isRoot(false)
-  ,_isReadable(false)
-  ,_isWritable(false)
-  ,_isExecutable(false)
-  ,_isLocalSharedDir(false)
-  ,_isHost(false)
-  ,_isWorkGroup(false)
-  ,_isNetworkShare(false)
-  ,_needsAuthentication(false)
-  ,_permissions(0)
-  ,_size(0)
+    _isValid(true)
+    , _isLocal(true)
+    , _isRemote(false)
+    , _isSelected(false)
+    , _isAbsolute(false)
+    , _exists(false)
+    , _isFile(false)
+    , _isDir(false)
+    , _isSymLink(false)
+    , _isRoot(false)
+    , _isReadable(false)
+    , _isWritable(false)
+    , _isExecutable(false)
+    , _isLocalSharedDir(false)
+    , _isHost(false)
+    , _isWorkGroup(false)
+    , _isNetworkShare(false)
+    , _needsAuthentication(false)
+    , _permissions(0)
+    , _size(0)
 {
     setFileInfo(fi);
 }
 
 void DirItemInfoPrivate::setFileInfo(const QFileInfo &fi)
 {
-    if (fi.exists() && fi.isRelative())
-    {
+    if (fi.exists() && fi.isRelative()) {
         QFileInfo abs(fi.absoluteFilePath());
         setFileInfo(abs);
-    }
-    else
-    {
+    } else {
         _path           = fi.absolutePath();
         _normalizedPath = _path;
         _fileName       = fi.fileName();
@@ -145,36 +142,24 @@ void DirItemInfoPrivate::setFileInfo(const QFileInfo &fi)
 //================================================================
 
 DirItemInfo::DirItemInfo(): d_ptr(new DirItemInfoPrivate())
-{
-}
+{ }
 
 
 DirItemInfo::~DirItemInfo()
-{
-}
-
-
+{ }
 
 DirItemInfo::DirItemInfo(const QFileInfo &fi):
     d_ptr(new DirItemInfoPrivate(fi))
-{
+{ }
 
-}
-
-
-
-DirItemInfo::DirItemInfo(const QString& filePath):
+DirItemInfo::DirItemInfo(const QString &filePath):
     d_ptr(  new DirItemInfoPrivate(QFileInfo(filePath)) )
+{ }
+
+DirItemInfo::DirItemInfo(const DirItemInfo &other)
 {
-
+    d_ptr = other.d_ptr;
 }
-
-
-DirItemInfo::DirItemInfo(const DirItemInfo& other)
-{
-   d_ptr = other.d_ptr;
-}
-
 
 bool DirItemInfo::isSelected() const
 {
@@ -190,9 +175,9 @@ bool DirItemInfo::setSelection(bool selected)
 {
     bool ret = selected != isSelected();
     d_ptr->_isSelected = selected;
+
     return ret;
 }
-
 
 bool DirItemInfo::isValid() const
 {
@@ -214,13 +199,10 @@ bool DirItemInfo::exists() const
     return d_ptr->_exists;
 }
 
-
-
 QString DirItemInfo::filePath() const
 {
-   return filePathFrom(d_ptr->_path);
+    return filePathFrom(d_ptr->_path);
 }
-
 
 QString DirItemInfo::fileName() const
 {
@@ -249,10 +231,11 @@ bool  DirItemInfo::isReadable() const
 bool  DirItemInfo::isContentReadable() const
 {
     bool readable = d_ptr->_isReadable;
-    if (isDir() && !isSymLink())
-    {
-       readable &= isExecutable();
+
+    if (isDir() && !isSymLink()) {
+        readable &= isExecutable();
     }
+
     return readable;
 }
 
@@ -323,16 +306,16 @@ QDateTime DirItemInfo::lastRead() const
 
 void DirItemInfo::setFile(const QString &dir, const QString &file)
 {
-   QFileInfo f;
-   f.setFile(dir,file);
-   d_ptr->setFileInfo(f);
+    QFileInfo f;
+    f.setFile(dir, file);
+    d_ptr->setFileInfo(f);
 }
 
 void DirItemInfo::setFile(const QString &fullname)
 {
-   QFileInfo f;
-   f.setFile(fullname);
-   d_ptr->setFileInfo(f);
+    QFileInfo f;
+    f.setFile(fullname);
+    d_ptr->setFileInfo(f);
 }
 
 QFileInfo DirItemInfo::diskFileInfo() const
@@ -346,31 +329,30 @@ QString DirItemInfo::path() const
     return d_ptr->_path;
 }
 
-
 QMimeType DirItemInfo::mimeType() const
 {
     return d_ptr->mimeDatabase.mimeTypeForFile(diskFileInfo());
 }
-
 
 QString DirItemInfo::urlPath() const
 {
     return filePathFrom(d_ptr->_normalizedPath);
 }
 
-
-QString DirItemInfo::filePathFrom(const QString& p) const
+QString DirItemInfo::filePathFrom(const QString &p) const
 {
     QString filepath;
-    if (!p.isEmpty())
-    {
+
+    if (!p.isEmpty()) {
         filepath = p;
-        if (!p.endsWith(QDir::separator()) && !d_ptr->_fileName.isEmpty())
-        {
+
+        if (!p.endsWith(QDir::separator()) && !d_ptr->_fileName.isEmpty()) {
             filepath += QDir::separator();
         }
     }
+
     filepath += d_ptr->_fileName;
+
     return filepath;
 }
 
@@ -389,7 +371,6 @@ bool DirItemInfo::isHost() const
     return d_ptr->_isHost;
 }
 
-
 bool DirItemInfo::isWorkGroup() const
 {
     return d_ptr->_isWorkGroup;
@@ -406,7 +387,7 @@ bool DirItemInfo::isShare() const
  */
 bool DirItemInfo::isBrowsable() const
 {
-   return isDir() || isHost() || isShare() || isWorkGroup();
+    return isDir() || isHost() || isShare() || isWorkGroup();
 }
 
 bool DirItemInfo::needsAuthentication() const
@@ -419,12 +400,11 @@ QString DirItemInfo::authenticationPath() const
     return  d_ptr->_authenticationPath;
 }
 
-
 /*!
  * \brief  DirItemInfo::fillFromStatBuf() This was copied from \ref QFileSystemMetaData::fillFromStatBuf()
  * \param statBuffer
  */
-void DirItemInfo::fillFromStatBuf(const struct stat & statBuffer)
+void DirItemInfo::fillFromStatBuf(const struct stat &statBuffer)
 {
 #define LinkType       0x00010000
 #define FileType       0x00020000
@@ -433,22 +413,25 @@ void DirItemInfo::fillFromStatBuf(const struct stat & statBuffer)
 
     //size
     d_ptr->_size = statBuffer.st_size;
+
     //times
     d_ptr->_lastModified = statBuffer.st_mtime ?
-                            QDateTime::fromTime_t(statBuffer.st_mtime) :
-                            QDateTime(QDate(), QTime());
-    d_ptr->_created = statBuffer.st_ctime ?
-                       QDateTime::fromTime_t(statBuffer.st_ctime) :
-                       d_ptr->_lastModified ;
-    d_ptr->_lastRead = statBuffer.st_atime ?
-                        QDateTime::fromTime_t(statBuffer.st_atime) :
-                        d_ptr->_lastModified;
+                           QDateTime::fromTime_t(statBuffer.st_mtime) :
+                           QDateTime(QDate(), QTime());
 
-   /*
-    //user, group
-    userId_ =  statBuffer.st_uid;
-    groupId_ = statBuffer.st_gid;
-   */
+    d_ptr->_created = statBuffer.st_ctime ?
+                      QDateTime::fromTime_t(statBuffer.st_ctime) :
+                      d_ptr->_lastModified;
+
+    d_ptr->_lastRead = statBuffer.st_atime ?
+                       QDateTime::fromTime_t(statBuffer.st_atime) :
+                       d_ptr->_lastModified;
+
+    /*
+     //user, group
+     userId_ =  statBuffer.st_uid;
+     groupId_ = statBuffer.st_gid;
+    */
 
     /*
      *  When handling filesystems other than local (e.g. any network)
@@ -457,49 +440,48 @@ void DirItemInfo::fillFromStatBuf(const struct stat & statBuffer)
      *  So it is necessary to qualify the user accessing the resource as
      *   owner / belongs to group or / others
      */
-   // quint32 userMatches     = 0;
+    // quint32 userMatches     = 0;
     QFile::Permissions readPermission  = 0;
     QFile::Permissions writePermission = 0;
     QFile::Permissions execPermission  = 0;
 
 
     //owner permissions
-    if (statBuffer.st_mode & S_IRUSR)
-    {
+    if (statBuffer.st_mode & S_IRUSR) {
         readPermission  |= QFile::ReadOwner |  QFile::ReadUser;
     }
-    if (statBuffer.st_mode & S_IWUSR)
-    {
+
+    if (statBuffer.st_mode & S_IWUSR) {
         writePermission |= QFile::WriteOwner | QFile::WriteUser;
     }
-    if (statBuffer.st_mode & S_IXUSR)
-    {
+
+    if (statBuffer.st_mode & S_IXUSR) {
         execPermission  |= QFile::ExeOwner |  QFile::ExeUser;
     }
+
     //group permissions
-    if (statBuffer.st_mode & S_IRGRP)
-    {
+    if (statBuffer.st_mode & S_IRGRP) {
         readPermission |= QFile::ReadGroup;
     }
-    if (statBuffer.st_mode & S_IWGRP)
-    {
+
+    if (statBuffer.st_mode & S_IWGRP) {
         writePermission |= QFile::WriteGroup;
     }
-    if (statBuffer.st_mode & S_IXGRP)
-    {
+
+    if (statBuffer.st_mode & S_IXGRP) {
         execPermission |= QFile::ExeGroup;
     }
+
     //other permissions
-    if (statBuffer.st_mode & S_IROTH)
-    {
+    if (statBuffer.st_mode & S_IROTH) {
         readPermission |= QFile::ReadOther;
     }
-    if (statBuffer.st_mode & S_IWOTH)
-    {
+
+    if (statBuffer.st_mode & S_IWOTH) {
         writePermission |= QFile::WriteOther;
     }
-    if (statBuffer.st_mode & S_IXOTH)
-    {
+
+    if (statBuffer.st_mode & S_IXOTH) {
         execPermission |= QFile::ExeOther;
     }
 
@@ -507,16 +489,15 @@ void DirItemInfo::fillFromStatBuf(const struct stat & statBuffer)
      * Permissions are relative to a remote user
      * it was necessary to be the user being accessing the file
      */
-    if (readPermission)
-    {
+    if (readPermission) {
         d_ptr->_isReadable = true;
     }
-    if (writePermission)
-    {
+
+    if (writePermission) {
         d_ptr->_isWritable = true;
     }
-    if (execPermission)
-    {
+
+    if (execPermission) {
         d_ptr->_isExecutable = true;
     }
 
@@ -524,71 +505,62 @@ void DirItemInfo::fillFromStatBuf(const struct stat & statBuffer)
     d_ptr->_permissions = readPermission | writePermission | execPermission;
 
     // Type
-    if ((statBuffer.st_mode & S_IFMT) == S_IFREG)
-    {
-       //  d_ptr->_permissions   |= FileType;
-        d_ptr->_isFile    = true;
-    }
-    else if ((statBuffer.st_mode & S_IFMT) == S_IFDIR)
-    {
-       // d_ptr->_permissions |= DirectoryType;
-        d_ptr->_isDir        = true;
-    }
-    else
-    {
-       // d_ptr->_permissions |= SequentialType;
+    if ((statBuffer.st_mode & S_IFMT) == S_IFREG) {
+        //  d_ptr->_permissions   |= FileType;
+        d_ptr->_isFile = true;
+
+    } else if ((statBuffer.st_mode & S_IFMT) == S_IFDIR) {
+        // d_ptr->_permissions |= DirectoryType;
+        d_ptr->_isDir = true;
+
+    } else {
+        // d_ptr->_permissions |= SequentialType;
     }
 }
-
-
 
 QString DirItemInfo::removeExtraSlashes(const QString &url, int firstSlashIndex)
 {
     QString ret;
-    if (firstSlashIndex == -1)
-    {
+
+    if (firstSlashIndex == -1) {
         firstSlashIndex = url.indexOf(LocationUrl::UrlIndicator);
-        if (firstSlashIndex != -1)
-        {
+
+        if (firstSlashIndex != -1) {
             ++firstSlashIndex;
-        }
-        else
-        {
+
+        } else {
             firstSlashIndex = -1;
         }
     }
-    if (firstSlashIndex >=0)
-    {
-        while ( firstSlashIndex < url.length() && url.at(firstSlashIndex) == QDir::separator())
-        {
+
+    if (firstSlashIndex >= 0) {
+        while ( firstSlashIndex < url.length() && url.at(firstSlashIndex) == QDir::separator()) {
             ++firstSlashIndex;
         }
-        if (firstSlashIndex < url.length())
-        {
+
+        if (firstSlashIndex < url.length()) {
             ret = url.mid(firstSlashIndex);
         }
-    }
-    else
-    {
+
+    } else {
         ret = url;
         firstSlashIndex = -1;
     }
-    if (firstSlashIndex >= 0 && ret.endsWith(QDir::separator()))
-    {
+
+    if (firstSlashIndex >= 0 && ret.endsWith(QDir::separator())) {
         ret.chop(1);
     }
+
     //replace any double slashes by just one
-    for(int charCounter = ret.size() -1; charCounter > 0; --charCounter)
-    {
+    for (int charCounter = ret.size() - 1; charCounter > 0; --charCounter) {
         if (ret.at(charCounter) == QDir::separator() &&
-                ret.at(charCounter-1) == QDir::separator())
-        {
-            ret.remove(charCounter,1);
+                ret.at(charCounter - 1) == QDir::separator()) {
+            ret.remove(charCounter, 1);
         }
     }
+
     return ret;
 }
-
 
 void DirItemInfo::setAsHost()
 {

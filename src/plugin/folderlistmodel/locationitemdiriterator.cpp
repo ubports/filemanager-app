@@ -26,10 +26,10 @@ LocationItemDirIterator::LocationItemDirIterator(const QString &path,
                                                  QDir::Filters filters,
                                                  QDirIterator::IteratorFlags flags,
                                                  LocationItemDirIterator::LoadMode loadmode)
-                                                 : m_path(path)
-                                                 , m_nameFilters(nameFilters)
-                                                 , m_filters(filters)
-                                                 , m_flags(flags)
+    : m_path(path)
+    , m_nameFilters(nameFilters)
+    , m_filters(filters)
+    , m_flags(flags)
 
 {
     Q_UNUSED(loadmode);
@@ -40,21 +40,21 @@ LocationItemDirIterator::LocationItemDirIterator(const QString &path,
                                                  QDir::Filters filters,
                                                  QDirIterator::IteratorFlags flags,
                                                  LocationItemDirIterator::LoadMode loadmode)
-                                                 : m_path(path)
-                                                 , m_filters(filters)
-                                                 , m_flags(flags)
+    : m_path(path)
+    , m_filters(filters)
+    , m_flags(flags)
 {
-     Q_UNUSED(loadmode);
+    Q_UNUSED(loadmode);
 }
 
 LocationItemDirIterator::LocationItemDirIterator(const QString &path,
-                         QDirIterator::IteratorFlags flags,
-                         LocationItemDirIterator::LoadMode loadmode)
-                         : m_path(path)
-                         , m_filters(QDir::NoFilter)
-                         , m_flags(flags)
+                                                 QDirIterator::IteratorFlags flags,
+                                                 LocationItemDirIterator::LoadMode loadmode)
+    : m_path(path)
+    , m_filters(QDir::NoFilter)
+    , m_flags(flags)
 {
-     Q_UNUSED(loadmode);
+    Q_UNUSED(loadmode);
 }
 
 LocationItemDirIterator::~LocationItemDirIterator()

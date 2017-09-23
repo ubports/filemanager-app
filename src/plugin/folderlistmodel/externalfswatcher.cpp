@@ -40,9 +40,9 @@
 
 ExternalFSWatcher::ExternalFSWatcher(QObject *parent) :
     QFileSystemWatcher(parent)
-  , m_waitingEmitCounter(0)
-  , m_msWaitTime(DEFAULT_NOTICATION_PERIOD)
-  , m_lastChangedIndex(-1)
+    , m_waitingEmitCounter(0)
+    , m_msWaitTime(DEFAULT_NOTICATION_PERIOD)
+    , m_lastChangedIndex(-1)
 {
     connect(this,   SIGNAL(directoryChanged(QString)),
             this,   SLOT(slotDirChanged(QString)));
@@ -51,29 +51,25 @@ ExternalFSWatcher::ExternalFSWatcher(QObject *parent) :
 
 void ExternalFSWatcher::setCurrentPath(const QString &curPath)
 {
-    if (!curPath.isEmpty() && (m_setPaths.count() != 1 || m_setPaths.at(0) != curPath))
-    {
-       setCurrentPaths(QStringList(curPath));
+    if (!curPath.isEmpty() && (m_setPaths.count() != 1 || m_setPaths.at(0) != curPath)) {
+        setCurrentPaths(QStringList(curPath));
     }
 }
 
 
 void ExternalFSWatcher::setCurrentPaths(const QStringList &paths)
-{    
-    if (paths.count() > 0)
-    {
+{
+    if (paths.count() > 0) {
         QStringList myPaths(paths);
         ::qSort(myPaths);
         m_setPaths = myPaths;
-    }
-    else
-    {
+    } else {
         m_setPaths = paths;
     }
     clearPaths();
     //cleaning m_changedPath avoids any notification for a change
     // already scheduled to happen in slotFireChanges()
-    m_changedPath.clear();    
+    m_changedPath.clear();
     QFileSystemWatcher::addPaths(m_setPaths);
     DEBUG_FSWATCHER();
 }
@@ -82,8 +78,7 @@ void ExternalFSWatcher::setCurrentPaths(const QStringList &paths)
 void ExternalFSWatcher::clearPaths()
 {
     QStringList existentPaths = QFileSystemWatcher::directories();
-    if (existentPaths.count() > 0)
-    {
+    if (existentPaths.count() > 0) {
         QFileSystemWatcher::removePaths(existentPaths);
     }
 }
@@ -102,8 +97,7 @@ void ExternalFSWatcher::slotDirChanged(const QString &dir)
 {
     DEBUG_FSWATCHER();
     int index = m_setPaths.indexOf(dir);
-    if (index != -1  && (m_waitingEmitCounter == 0 || dir != m_changedPath))
-    {
+    if (index != -1  && (m_waitingEmitCounter == 0 || dir != m_changedPath)) {
         m_lastChangedIndex = index;
         //changed path is taken from the QFileSystemWatcher and it becomes the current changed
         //in this case there will not be slotDirChanged() for this path until slotFireChanges()
@@ -111,7 +105,7 @@ void ExternalFSWatcher::slotDirChanged(const QString &dir)
         removePath(m_setPaths.at(m_lastChangedIndex));
         ++m_waitingEmitCounter;
         m_changedPath = dir;
-        QTimer::singleShot(m_msWaitTime, this, SLOT(slotFireChanges()));       
+        QTimer::singleShot(m_msWaitTime, this, SLOT(slotFireChanges()));
     }
 }
 
@@ -126,23 +120,21 @@ void ExternalFSWatcher::slotDirChanged(const QString &dir)
  */
 void ExternalFSWatcher::slotFireChanges()
 {
-   DEBUG_FSWATCHER();
-   if ( --m_waitingEmitCounter == 0 ) //no more changes queued (it is the LAST), time to notify
-   {
-       //the notification will not fired if either setCurrentPath() or setCurrentPaths()
-       //was called after the change in the disk be noticed
-       if (m_lastChangedIndex != -1 &&
-           m_lastChangedIndex < m_setPaths.count() &&
-           m_setPaths.at(m_lastChangedIndex) == m_changedPath)
-       {          
-           emit pathModified(m_changedPath);
-           DEBUG_FSWATCHER_MSG("emit pathModified()");
-       }
-       //restore the original m_setPaths list in QFileSystemWatcher anyway
-       //it does not matter if the notification was fired or not.
-       clearPaths();
-       QFileSystemWatcher::addPaths(m_setPaths);
-   }
+    DEBUG_FSWATCHER();
+    if ( --m_waitingEmitCounter == 0 ) { //no more changes queued (it is the LAST), time to notify
+        //the notification will not fired if either setCurrentPath() or setCurrentPaths()
+        //was called after the change in the disk be noticed
+        if (m_lastChangedIndex != -1 &&
+                m_lastChangedIndex < m_setPaths.count() &&
+                m_setPaths.at(m_lastChangedIndex) == m_changedPath) {
+            emit pathModified(m_changedPath);
+            DEBUG_FSWATCHER_MSG("emit pathModified()");
+        }
+        //restore the original m_setPaths list in QFileSystemWatcher anyway
+        //it does not matter if the notification was fired or not.
+        clearPaths();
+        QFileSystemWatcher::addPaths(m_setPaths);
+    }
 }
 
 

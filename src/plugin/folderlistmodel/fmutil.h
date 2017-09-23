@@ -33,11 +33,14 @@ class FMUtil
 {
 public:
     static void           setThemeName();
-    static inline bool    hasTriedThemeName()  { return m_triedThemeName; }
+    static inline bool    hasTriedThemeName()
+    {
+        return m_triedThemeName;
+    }
 
 private:
     FMUtil();
-    static bool           testThemeName(const QString& themeName);
+    static bool           testThemeName(const QString &themeName);
 
 private:
     static bool           m_triedThemeName;

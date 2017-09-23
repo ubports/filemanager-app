@@ -53,38 +53,43 @@
 
 CoverArtImageProvider::CoverArtImageProvider() : QQuickImageProvider(QQuickImageProvider::Image) {}
 
-QImage CoverArtImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
-{
-    Q_UNUSED(size);    
-    Q_UNUSED(requestedSize);
-    QImage img;
-#ifndef DO_NOT_USE_TAG_LIB
-    TagLib::MPEG::File mp3(id.toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
-    TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];   
-    if(!list.isEmpty()) {
-        TagLib::ID3v2::AttachedPictureFrame *Pic = static_cast<TagLib::ID3v2::AttachedPictureFrame *>(list.front());
-        img.loadFromData((const uchar *) Pic->picture().data(), Pic->picture().size());
-        img = img.scaled(45,45);
-    }
-#endif
-    return img;
-}
-
-
-CoverArtFullImageProvider::CoverArtFullImageProvider() : QQuickImageProvider(QQuickImageProvider::Image) {}
-
-QImage CoverArtFullImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
+QImage CoverArtImageProvider::requestImage(const QString &id, QSize *size,
+                                           const QSize &requestedSize)
 {
     Q_UNUSED(size);
     Q_UNUSED(requestedSize);
     QImage img;
 #ifndef DO_NOT_USE_TAG_LIB
     TagLib::MPEG::File mp3(id.toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
-    TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];   
-    if(!list.isEmpty()) {
-        TagLib::ID3v2::AttachedPictureFrame *Pic = static_cast<TagLib::ID3v2::AttachedPictureFrame *>(list.front());
+    TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];
+    if (!list.isEmpty()) {
+        TagLib::ID3v2::AttachedPictureFrame *Pic = static_cast<TagLib::ID3v2::AttachedPictureFrame *>
+                                                   (list.front());
         img.loadFromData((const uchar *) Pic->picture().data(), Pic->picture().size());
-        img = img.scaled(300,300);
+        img = img.scaled(45, 45);
+    }
+#endif
+    return img;
+}
+
+
+CoverArtFullImageProvider::CoverArtFullImageProvider() : QQuickImageProvider(
+        QQuickImageProvider::Image) {}
+
+QImage CoverArtFullImageProvider::requestImage(const QString &id, QSize *size,
+                                               const QSize &requestedSize)
+{
+    Q_UNUSED(size);
+    Q_UNUSED(requestedSize);
+    QImage img;
+#ifndef DO_NOT_USE_TAG_LIB
+    TagLib::MPEG::File mp3(id.toStdString().c_str(), true, TagLib::MPEG::Properties::Fast);
+    TagLib::ID3v2::FrameList list = mp3.ID3v2Tag()->frameListMap()["APIC"];
+    if (!list.isEmpty()) {
+        TagLib::ID3v2::AttachedPictureFrame *Pic = static_cast<TagLib::ID3v2::AttachedPictureFrame *>
+                                                   (list.front());
+        img.loadFromData((const uchar *) Pic->picture().data(), Pic->picture().size());
+        img = img.scaled(300, 300);
     }
 #endif
     return img;

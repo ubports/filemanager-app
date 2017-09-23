@@ -95,170 +95,170 @@ class LocationsFactory;
 class FileSystemAction : public QObject
 {
     Q_OBJECT
-public:  
+public:
     explicit FileSystemAction(LocationsFactory *locationsFactory, QObject *parent = 0);
     ~FileSystemAction();
 
 public:
     bool     isBusy() const;
-    int      getProgressCounter() const;   
+    int      getProgressCounter() const;
 
 public slots:
     void     cancel();
-    void     remove(const QStringList & filePaths);
-    void     pathChanged(const QString& path);   
-    void     copyIntoCurrentPath(const QStringList& items);
-    void     moveIntoCurrentPath(const QStringList& items);
-    void     moveToTrash(const ActionPathList& pairPaths );
-    void     restoreFromTrash(const ActionPathList& pairPaths);
-    void     removeFromTrash(const QStringList& paths);
-    void     onClipboardChanged();   
-    bool     downloadAndSaveAs(const DirItemInfo& remoteFile, const QString& fileName);
-    bool     downloadAsTemporaryFile(const DirItemInfo& remoteFile);
+    void     remove(const QStringList &filePaths);
+    void     pathChanged(const QString &path);
+    void     copyIntoCurrentPath(const QStringList &items);
+    void     moveIntoCurrentPath(const QStringList &items);
+    void     moveToTrash(const ActionPathList &pairPaths );
+    void     restoreFromTrash(const ActionPathList &pairPaths);
+    void     removeFromTrash(const QStringList &paths);
+    void     onClipboardChanged();
+    bool     downloadAndSaveAs(const DirItemInfo &remoteFile, const QString &fileName);
+    bool     downloadAsTemporaryFile(const DirItemInfo &remoteFile);
 
 signals:
-    void     error(const QString& errorTitle, const QString &errorMessage);
-    void     removed(const DirItemInfo&);
-    void     added(const DirItemInfo& );
-    void     changed(const DirItemInfo&);
+    void     error(const QString &errorTitle, const QString &errorMessage);
+    void     removed(const DirItemInfo &);
+    void     added(const DirItemInfo & );
+    void     changed(const DirItemInfo &);
     void     progress(int curItem, int totalItems, int percent);
-    void     recopy(const QStringList &names, const QString& path);
-    void     downloadTemporaryComplete(const QString&);
+    void     recopy(const QStringList &names, const QString &path);
+    void     downloadTemporaryComplete(const QString &);
 
 private slots:
     void     processAction();
-    void     processActionEntry();   
+    void     processActionEntry();
     void     processCopyEntry();
     bool     processCopySingleFile();
 
- private:
-   enum ActionNotification
-   {
+private:
+    enum ActionNotification {
         ItemAdded,
         ItemRemoved,
         ItemChanged
-   };
+    };
 
-   enum ActionType
-   {
-       ActionRemove,
-       ActionCopy,
-       ActionMove,
-       ActionHardMoveCopy,
-       ActionHardMoveRemove,
-       ActionMoveToTrash,
-       ActionRestoreFromTrash,
-       ActionRemoveFromTrash,
-       ActionDownload,
-       ActionDownLoadAsTemporary
-   };
+    enum ActionType {
+        ActionRemove,
+        ActionCopy,
+        ActionMove,
+        ActionHardMoveCopy,
+        ActionHardMoveRemove,
+        ActionMoveToTrash,
+        ActionRestoreFromTrash,
+        ActionRemoveFromTrash,
+        ActionDownload,
+        ActionDownLoadAsTemporary
+    };
 
-   void     createAndProcessAction(ActionType actionType, const QStringList& paths);
+    void     createAndProcessAction(ActionType actionType, const QStringList &paths);
 
-   struct CopyFile
-   {
-     public:
-       CopyFile();
-       ~CopyFile();
-       void clear();
-       qint64             bytesWritten;           // set 0 when reach  bytesToNotify, notify progress
-       LocationItemFile * source;
-       LocationItemFile * target;
-       QString            targetName;
-       bool               isEntryItem;  //true when the file being copied is at toplevel of the copy/cut operation
-       qint64             amountSavedToRefresh;
-   };
-
-   /*!
-       An ActionEntry represents a high level item as a File or a Directory which an Action is required
-
-       For directories \a reversedOrder keeps all children
-    */
-   struct ActionEntry
-   {
-     public:
-       ActionEntry();
-       ~ActionEntry();
-       void init();
-       void reset();
-       ActionPaths        itemPaths;            //!< identifies the item being handled source and destination
-       ActionType         type;
-       QList<DirItemInfo> reversedOrder;   //!< last item must be the item from the list
-       int                currStep;
-       int                currItem;      
-       QString *          newName; //TODO:  allow to rename an existent file when it already exists.
-                                   //       So far it is possible to backup items when copy/paste in the
-                                   //       same place, in this case it is renamed to "<name> Copy (%d).termination"
-       bool               added :1;   //!< signal added() already emitted for the current ActionEntry
-       bool               alreadyExists :1;
-   };
-
-   struct Action
-   {
+    struct CopyFile {
     public:
-       Action();
-       ~Action();
-       void                reset();
-       void                toggleLocation();
-       bool                matchLocations() const;
-       bool                isRemote() const;
-       ActionType          type;
-       QList<ActionEntry*> entries;
-       int                 totalItems;
-       int                 currItem;              
-       quint64             totalBytes;
-       quint64             bytesWritten;
-       int                 currEntryIndex;
-       ActionEntry  *      currEntry;     
-       CopyFile            copyFile;       
-       Action *            auxAction;
-       bool                isAux   :1;
-       bool                done    :1; 
-       int                 steps;
-       Location         *  sourceLocation;
-       Location         *  targetLocation;
+        CopyFile();
+        ~CopyFile();
+        void clear();
+        qint64             bytesWritten;           // set 0 when reach  bytesToNotify, notify progress
+        LocationItemFile *source;
+        LocationItemFile *target;
+        QString            targetName;
+        bool
+        isEntryItem;  //true when the file being copied is at toplevel of the copy/cut operation
+        qint64             amountSavedToRefresh;
+    };
 
-   };
+    /*!
+        An ActionEntry represents a high level item as a File or a Directory which an Action is required
 
-   QVector<Action*>        m_queuedActions;  //!< work always at item 0, after finishing taking item 0 out
-   Action            *     m_curAction;
-   bool                    m_cancelCurrentAction;
-   bool                    m_busy; 
-   QString                 m_path;
+        For directories \a reversedOrder keeps all children
+     */
+    struct ActionEntry {
+    public:
+        ActionEntry();
+        ~ActionEntry();
+        void init();
+        void reset();
+        ActionPaths
+        itemPaths;            //!< identifies the item being handled source and destination
+        ActionType         type;
+        QList<DirItemInfo> reversedOrder;   //!< last item must be the item from the list
+        int                currStep;
+        int                currItem;
+        QString           *newName; //TODO:  allow to rename an existent file when it already exists.
+        //       So far it is possible to backup items when copy/paste in the
+        //       same place, in this case it is renamed to "<name> Copy (%d).termination"
+        bool               added : 1;  //!< signal added() already emitted for the current ActionEntry
+        bool               alreadyExists : 1;
+    };
 
-   QString                 m_errorTitle;
-   QString                 m_errorMsg;
-   bool                    m_clipboardChanged; //!< this is set to false in \ref moveIntoCurrentPath() and \ref copyIntoCurrentPath();
-   LocationsFactory *      m_locationsFactory;
+    struct Action {
+    public:
+        Action();
+        ~Action();
+        void                reset();
+        void                toggleLocation();
+        bool                matchLocations() const;
+        bool                isRemote() const;
+        ActionType          type;
+        QList<ActionEntry *> entries;
+        int                 totalItems;
+        int                 currItem;
+        quint64             totalBytes;
+        quint64             bytesWritten;
+        int                 currEntryIndex;
+        ActionEntry        *currEntry;
+        CopyFile            copyFile;
+        Action             *auxAction;
+        bool                isAux   : 1;
+        bool                done    : 1;
+        int                 steps;
+        Location           *sourceLocation;
+        Location           *targetLocation;
+
+    };
+
+    QVector<Action *>
+    m_queuedActions; //!< work always at item 0, after finishing taking item 0 out
+    Action                 *m_curAction;
+    bool                    m_cancelCurrentAction;
+    bool                    m_busy;
+    QString                 m_path;
+
+    QString                 m_errorTitle;
+    QString                 m_errorMsg;
+    bool
+    m_clipboardChanged; //!< this is set to false in \ref moveIntoCurrentPath() and \ref copyIntoCurrentPath();
+    LocationsFactory       *m_locationsFactory;
 
 
-private:  
-   Action * createAction(ActionType, const QString& pathUrl);
-   void     addEntry(Action* action, const ActionPaths& pairPaths);
-   bool     populateEntry(Action* action, ActionEntry* entry);
-   void     removeEntry(ActionEntry *);   
-   void     moveEntry(ActionEntry *entry);
-   bool     moveUsingSameFileSystem(const ActionPaths &movedItem);
-   QString  targetFrom(const QString& origItem, ActionEntry * entry);
-   void     endCurrentAction();
-   int      percentWorkDone();
-   int      notifyProgress(int forcePercent = 0);
-   void     endActionEntry();
-   bool     copySymLink(const QString& target, const QFileInfo& orig);
-   void     scheduleSlot(const char *slot);
-   void     moveDirToTempAndRemoveItLater(const QString& dir);
-   bool     makeBackupNameForCurrentItem(ActionEntry *entry);
-   bool     endCopySingleFile();
-   void     queueAction(Action *myAction);
-   void     createTrashInfoFileFromEntry(ActionEntry *entry);
-   void     removeTrashInfoFileFromEntry(ActionEntry *entry);
-   void     notifyActionOnItem(const DirItemInfo& item, ActionNotification action);
-   bool     canMoveItems(Action *action, const QStringList &items);
-   bool     createAndProcessDownloadAction(ActionType a, const DirItemInfo& remoteFile, const QString& fileName);
+private:
+    Action *createAction(ActionType, const QString &pathUrl);
+    void     addEntry(Action *action, const ActionPaths &pairPaths);
+    bool     populateEntry(Action *action, ActionEntry *entry);
+    void     removeEntry(ActionEntry *);
+    void     moveEntry(ActionEntry *entry);
+    bool     moveUsingSameFileSystem(const ActionPaths &movedItem);
+    QString  targetFrom(const QString &origItem, ActionEntry *entry);
+    void     endCurrentAction();
+    int      percentWorkDone();
+    int      notifyProgress(int forcePercent = 0);
+    void     endActionEntry();
+    bool     copySymLink(const QString &target, const QFileInfo &orig);
+    void     scheduleSlot(const char *slot);
+    void     moveDirToTempAndRemoveItLater(const QString &dir);
+    bool     makeBackupNameForCurrentItem(ActionEntry *entry);
+    bool     endCopySingleFile();
+    void     queueAction(Action *myAction);
+    void     createTrashInfoFileFromEntry(ActionEntry *entry);
+    void     removeTrashInfoFileFromEntry(ActionEntry *entry);
+    void     notifyActionOnItem(const DirItemInfo &item, ActionNotification action);
+    bool     canMoveItems(Action *action, const QStringList &items);
+    bool     createAndProcessDownloadAction(ActionType a, const DirItemInfo &remoteFile,
+                                            const QString &fileName);
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
-   bool     m_forceUsingOtherFS;
-   friend class TestDirModel;
+    bool     m_forceUsingOtherFS;
+    friend class TestDirModel;
 #endif
 };
 

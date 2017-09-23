@@ -54,6 +54,25 @@ class NetAuthenticationDataList;
 class DirModel : public DirItemAbstractListModel, public QQmlParserStatus
 {
     Q_OBJECT
+
+    Q_PROPERTY(int count READ rowCount NOTIFY awaitingResultsChanged)
+    Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
+    Q_PROPERTY(bool canGoBack READ canGoBack NOTIFY canGoBackChanged)
+    Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
+    Q_PROPERTY(bool filterDirectories READ filterDirectories WRITE setFilterDirectories NOTIFY filterDirectoriesChanged)
+    Q_PROPERTY(bool isRecursive READ isRecursive WRITE setIsRecursive NOTIFY isRecursiveChanged)
+    Q_PROPERTY(bool readsMediaMetadata READ readsMediaMetadata WRITE setReadsMediaMetadata NOTIFY readsMediaMetadataChanged)
+    Q_PROPERTY(bool showDirectories READ showDirectories WRITE setShowDirectories NOTIFY showDirectoriesChanged)
+    Q_PROPERTY(QStringList nameFilters READ nameFilters WRITE setNameFilters NOTIFY nameFiltersChanged)
+    Q_PROPERTY(DirSelection *selectionObject READ selectionObject CONSTANT)
+    Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
+    Q_PROPERTY(bool showHiddenFiles READ getShowHiddenFiles WRITE setShowHiddenFiles NOTIFY showHiddenFilesChanged)
+    Q_PROPERTY(bool onlyAllowedPaths READ getOnlyAllowedPaths WRITE setOnlyAllowedPaths NOTIFY onlyAllowedPathsChanged)
+    Q_PROPERTY(SortBy sortBy READ getSortBy WRITE setSortBy NOTIFY sortByChanged)
+    Q_PROPERTY(SortOrder sortOrder READ getSortOrder WRITE setSortOrder NOTIFY sortOrderChanged)
+    Q_PROPERTY(int clipboardUrlsCounter READ getClipboardUrlsCounter NOTIFY clipboardChanged)
+    Q_PROPERTY(bool enableExternalFSWatcher READ getEnabledExternalFSWatcher WRITE setEnabledExternalFSWatcher NOTIFY enabledExternalFSWatcherChanged)
+
 public:
     enum Roles {
         FileNameRole = Qt::UserRole,
@@ -95,150 +114,21 @@ public:
     explicit DirModel(QObject *parent = 0);
     ~DirModel();
 
-    static void registerMetaTypes();
-
-    //DirItemAbstractListModel
-    virtual int                 getIndex(const QString& name);
-    virtual void                notifyItemChanged(int row);
-
-    Q_PROPERTY(int count READ rowCount NOTIFY awaitingResultsChanged)
-    int rowCount(const QModelIndex &index = QModelIndex()) const
-    {
-        if (index.parent() != QModelIndex())
-            return 0;
-        return mDirectoryContents.count();
-    }
-
-    // TODO: this won't be safe if the model can change under the holder of the row
-    Q_INVOKABLE QVariant data(int row, const QByteArray &stringRole) const;
-
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-
-    Q_INVOKABLE void refresh()
-    {
-        // just some syntactical sugar really
-        setPath(path());
-    }
-
-    Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
-    inline QString path() const { return mCurrentDir; }
-    void setPath(const QString &pathName, const QString& user = QString(), const QString& password = QString(), bool savePassword = false);
-
-    Q_INVOKABLE QDateTime   curPathAccessedDate() const;
-    Q_INVOKABLE QDateTime   curPathCreatedDate()  const;
-    Q_INVOKABLE QDateTime   curPathModifiedDate() const;
-    Q_INVOKABLE QString     curPathAccessedDateLocaleShort() const;
-    Q_INVOKABLE QString     curPathCreatedDateLocaleShort()  const;
-    Q_INVOKABLE QString     curPathModifiedDateLocaleShort() const;
-    Q_INVOKABLE bool        curPathIsWritable() const;
-
-    Q_PROPERTY(bool canGoBack READ canGoBack NOTIFY canGoBackChanged)
-
-    bool canGoBack() const;
-
-    Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
-    bool awaitingResults() const;
+    // TODO: Make them properties
+    Q_INVOKABLE QDateTime curPathAccessedDate() const;
+    Q_INVOKABLE QDateTime curPathCreatedDate()  const;
+    Q_INVOKABLE QDateTime curPathModifiedDate() const;
+    Q_INVOKABLE QString curPathAccessedDateLocaleShort() const;
+    Q_INVOKABLE QString curPathCreatedDateLocaleShort()  const;
+    Q_INVOKABLE QString curPathModifiedDateLocaleShort() const;
+    Q_INVOKABLE bool curPathIsWritable() const;
 
     Q_INVOKABLE void rm(const QStringList &paths);
-
-    Q_INVOKABLE bool rename(const QString& oldName, const QString& newName);
+    Q_INVOKABLE bool rename(const QString &oldName, const QString &newName);
     Q_INVOKABLE bool rename(int row, const QString &newName);
-
     Q_INVOKABLE bool mkdir(const QString &newdir);
 
-    Q_PROPERTY(bool filterDirectories READ filterDirectories WRITE setFilterDirectories NOTIFY filterDirectoriesChanged)
-    bool filterDirectories() const;
-
-    Q_PROPERTY(bool isRecursive READ isRecursive WRITE setIsRecursive NOTIFY isRecursiveChanged)
-    bool isRecursive() const;
-
-    Q_PROPERTY(bool readsMediaMetadata READ readsMediaMetadata WRITE setReadsMediaMetadata NOTIFY readsMediaMetadataChanged)
-    bool readsMediaMetadata() const;
-
-    Q_PROPERTY(bool showDirectories READ showDirectories WRITE setShowDirectories NOTIFY showDirectoriesChanged)
-    bool showDirectories() const;
-
-    Q_PROPERTY(QStringList nameFilters READ nameFilters WRITE setNameFilters NOTIFY nameFiltersChanged)
-    QStringList nameFilters() const;
-    void setNameFilters(const QStringList &nameFilters);
-
-public slots:
-    void onItemsAdded(const DirItemInfoList &newFiles);
-    void onItemsFetched();
-
-signals:
-    void canGoBackChanged();
-    void awaitingResultsChanged();
-    void nameFiltersChanged();
-    void filterDirectoriesChanged();
-    void isRecursiveChanged();
-    void readsMediaMetadataChanged();
-    void showDirectoriesChanged();
-    void pathChanged(const QString& newPath);
-    void error(const QString &errorTitle, const QString &errorMessage);
-
-private:
-    QHash<int, QByteArray> buildRoleNames() const;   
-    QHash<int, QByteArray> roleNames() const;
-    QStringList mNameFilters;
-    bool mFilterDirectories;
-    bool mShowDirectories;
-    bool mAwaitingResults;
-    bool mIsRecursive;
-    bool mReadsMediaMetadata;
-    QString mCurrentDir;
-    DirItemInfoList  mDirectoryContents;
-
-public:
-
-    Q_PROPERTY(DirSelection* selectionObject READ selectionObject CONSTANT)
-    DirSelection * selectionObject() const;
-
-    //[1] new stuff UBports
-private:
-    bool mQmlCompleted;
-    QString mQmlCachePath;
-public:
-    void classBegin();
-    // WORKAROUND: check componentComplete() definition in .cpp file
-    void componentComplete();
-
-    Q_INVOKABLE QString getIcon(const QString & path) const;
-    static QString getIcon(QString absoluteFilePath, QMimeType mime, bool isSmbWorkgroup = false, bool isBrowsable = false, bool isHost = false);
-
-    //[0] new stuff Ubuntu File Manager
-    Q_PROPERTY(QString parentPath READ parentPath NOTIFY pathChanged)
-    QString parentPath() const;
-
-    Q_PROPERTY(bool showHiddenFiles READ getShowHiddenFiles WRITE setShowHiddenFiles NOTIFY showHiddenFilesChanged)
-    bool getShowHiddenFiles() const;
-
-    Q_PROPERTY(bool onlyAllowedPaths READ getOnlyAllowedPaths WRITE setOnlyAllowedPaths NOTIFY onlyAllowedPathsChanged)
-    bool getOnlyAllowedPaths() const;
-
-    Q_ENUMS(SortBy)
-    enum SortBy
-    {
-        SortByName,
-        SortByDate
-    };
-    Q_PROPERTY(SortBy sortBy READ getSortBy WRITE setSortBy NOTIFY sortByChanged)
-    SortBy getSortBy() const;
-
-    Q_ENUMS(SortOrder)
-    enum SortOrder
-    {
-        SortAscending   = Qt::AscendingOrder,
-        SortDescending = Qt::DescendingOrder
-    };
-    Q_PROPERTY(SortOrder sortOrder READ getSortOrder WRITE setSortOrder NOTIFY sortOrderChanged)
-    SortOrder getSortOrder() const;
-
-    Q_PROPERTY(int clipboardUrlsCounter READ getClipboardUrlsCounter NOTIFY clipboardChanged)
-    int getClipboardUrlsCounter() const;
-
-    Q_PROPERTY(bool enableExternalFSWatcher READ getEnabledExternalFSWatcher WRITE setEnabledExternalFSWatcher NOTIFY enabledExternalFSWatcherChanged)
-    bool  getEnabledExternalFSWatcher() const;
+    Q_INVOKABLE QString getIcon(const QString &path) const;
 
     Q_INVOKABLE QString homePath() const;
 
@@ -250,7 +140,7 @@ public:
      *    \return true if row points to a directory and the directory is readble, false otherwise
      */
     Q_INVOKABLE  bool cdIntoIndex(int row);
-    Q_INVOKABLE  bool cdIntoPath(const QString& filename);
+    Q_INVOKABLE  bool cdIntoPath(const QString &filename);
 
     /*!
      * \brief copyIndex() puts the item pointed by \a row (dir or file) into the clipboard
@@ -262,7 +152,7 @@ public:
      *  \brief copyPaths(const QStringList& urls) several items (dirs or files) into the clipboard
      *  \param items  fullpathnames or names only
      */
-    Q_INVOKABLE void  copyPaths(const QStringList& items);
+    Q_INVOKABLE void  copyPaths(const QStringList &items);
 
     /*!
      * \brief cutIndex() puts the item into the clipboard as \ref copy(),
@@ -276,7 +166,7 @@ public:
      *         mark the item to be removed after \ref paste()
      *   \param items  fullpathnames or names only
      */
-    Q_INVOKABLE void  cutPaths(const QStringList& items);
+    Q_INVOKABLE void  cutPaths(const QStringList &items);
 
     /*!
      * \brief removeIndex();  remove a item file or directory
@@ -291,7 +181,7 @@ public:
     /*!
      *  Just calls \ref rm()
      */
-    Q_INVOKABLE void removePaths(const QStringList& items);
+    Q_INVOKABLE void removePaths(const QStringList &items);
 
     /*!
      *  Tries to open a file using a suitable application, if the index points to a directory
@@ -308,7 +198,7 @@ public:
      *
      *  \sa \ref cdIntoPath()
      */
-    Q_INVOKABLE bool  openPath(const QString& filename);
+    Q_INVOKABLE bool  openPath(const QString &filename);
 
     /*!
      *   \brief getProgressCounter() returns the number of \ref progress() notifications an Action will perform
@@ -324,21 +214,18 @@ public:
     Q_INVOKABLE int   getProgressCounter() const;
 
     // some helper functions that can be useful to other QML applications than File Manager
-    Q_INVOKABLE  bool  existsDir(const QString&  folderName) const;
-    Q_INVOKABLE  bool  canReadDir(const QString& folderName) const;
-    Q_INVOKABLE  bool  existsFile(const QString& fileName)   const;
-    Q_INVOKABLE  bool  canReadFile(const QString& fileName)  const;
+    Q_INVOKABLE bool existsDir(const QString  &folderName) const;
+    Q_INVOKABLE bool canReadDir(const QString &folderName) const;
+    Q_INVOKABLE bool existsFile(const QString &fileName) const;
+    Q_INVOKABLE bool canReadFile(const QString &fileName) const;
 
     // Trash functions
     Q_INVOKABLE  void  moveIndexToTrash(int index);
-                 void  moveIndexesToTrash(const QList<int>&);
-    Q_INVOKABLE  void  restoreIndexFromTrash(int index);
-                 void  restoreIndexesFromTrash(const QList<int>&);
 
-    Q_INVOKABLE  void  setPathWithAuthentication(const QString& path,
-                                                 const QString& user,
-                                                 const QString& password,
-                                                 bool  savePassword);
+    Q_INVOKABLE  void  restoreIndexFromTrash(int index);
+
+
+    Q_INVOKABLE  void  setPathWithAuthentication(const QString &path, const QString &user, const QString &password, bool  savePassword);
 
     //download functions
     //
@@ -353,7 +240,7 @@ public:
      * \return true if the download could be started, othewise false
      *
      */
-    Q_INVOKABLE  bool downloadAndSaveAs(int index, const QString& filename);
+    Q_INVOKABLE  bool downloadAndSaveAs(int index, const QString &filename);
 
     /*! \brief downloadAsTemporaryFile(int index)  save download as temporary, useful to open remote files
      *
@@ -364,11 +251,87 @@ public:
      */
     Q_INVOKABLE  bool downloadAsTemporaryFile(int index);
 
+    // TODO: this won't be safe if the model can change under the holder of the row
+    Q_INVOKABLE QVariant data(int row, const QByteArray &stringRole) const;
+    Q_INVOKABLE void refresh()
+    {
+        // just some syntactical sugar really
+        setPath(path());
+    }
 
-public slots:
-  /*!
-     * \brief copySelection() copy selected items to the clipboard
-     */
+    static void registerMetaTypes();
+
+    //DirItemAbstractListModel
+    virtual int getIndex(const QString &name);
+    virtual voidnotifyItemChanged(int row);
+
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+
+    int rowCount(const QModelIndex &index = QModelIndex()) const
+    {
+        if (index.parent() != QModelIndex())
+            return 0;
+
+        return mDirectoryContents.count();
+    }
+
+    inline QString path() const
+    {
+        return mCurrentDir;
+    }
+    void setPath(const QString &pathName, const QString &user = QString(),
+                 const QString &password = QString(), bool savePassword = false);
+
+    bool canGoBack() const;
+    bool awaitingResults() const;
+    bool filterDirectories() const;
+    bool isRecursive() const;
+    bool readsMediaMetadata() const;
+    bool showDirectories() const;
+    QStringList nameFilters() const;
+
+    void setNameFilters(const QStringList &nameFilters);
+
+    DirSelection *selectionObject() const;
+
+    void classBegin();
+    // WORKAROUND: check componentComplete() definition in .cpp file
+    void componentComplete();
+
+    static QString getIcon(QString absoluteFilePath, QMimeType mime, bool isSmbWorkgroup = false,
+                           bool isBrowsable = false, bool isHost = false);
+
+    QString parentPath() const;
+
+
+    bool getShowHiddenFiles() const;
+    bool getOnlyAllowedPaths() const;
+
+    Q_ENUMS(SortBy)
+    enum SortBy {
+        SortByName,
+        SortByDate
+    };
+    SortBy getSortBy() const;
+
+    Q_ENUMS(SortOrder)
+    enum SortOrder {
+        SortAscending   = Qt::AscendingOrder,
+        SortDescending = Qt::DescendingOrder
+    };
+    SortOrder getSortOrder() const;
+
+
+    int getClipboardUrlsCounter() const;
+    bool  getEnabledExternalFSWatcher() const;
+    void  restoreIndexesFromTrash(const QList<int> &);
+    void  moveIndexesToTrash(const QList<int> &);
+
+
+public slots:   // Also invokable from QML
+    /*!
+       * \brief copySelection() copy selected items to the clipboard
+       */
     void  copySelection();
 
     /*!
@@ -380,7 +343,7 @@ public slots:
      * \brief removeSelection() remove selected items, it handles Trash items
      */
     void  removeSelection();
-    
+
     /*!
      * \brief moveSelectionToTrash() move selected items from Local Disk (only) to Local Trash
      */
@@ -437,15 +400,15 @@ public slots:
      */
     void paste();
 
-   /*!
-    * \brief clears clipboard entries
-    */
+    /*!
+     * \brief clears clipboard entries
+     */
     void clearClipboard();
 
     /*!
      * \brief cancelAction() any copy/cut/remove can be cancelled
      */
-    void cancelAction();    
+    void cancelAction();
 
     void setIsRecursive(bool isRecursive);
     void setReadsMediaMetadata(bool readsMediaMetadata);
@@ -469,14 +432,43 @@ public slots:
     /*!
      * \brief Adds a directory to the set of directories that are accessible when "onlyAllowedPaths" property is set.
      */
-    inline void addAllowedDirectory(const QString &allowedDirAbsolutePath) {
+    inline void addAllowedDirectory(const QString &allowedDirAbsolutePath)
+    {
         m_allowedDirs << allowedDirAbsolutePath;
     }
 
-    inline void removeAllowedDirectory(const QString &allowedDirAbsolutePath) {
+    inline void removeAllowedDirectory(const QString &allowedDirAbsolutePath)
+    {
         m_allowedDirs.remove(allowedDirAbsolutePath);
     }
     bool isAllowedPath(const QString &absolutePath) const;
+
+public slots:
+    void onItemsAdded(const DirItemInfoList &newFiles);
+    void onItemsFetched();
+
+signals:
+    void canGoBackChanged();
+    void awaitingResultsChanged();
+    void nameFiltersChanged();
+    void filterDirectoriesChanged();
+    void isRecursiveChanged();
+    void readsMediaMetadataChanged();
+    void showDirectoriesChanged();
+    void pathChanged(const QString &newPath);
+    void error(const QString &errorTitle, const QString &errorMessage);
+
+private:
+    QHash<int, QByteArray> buildRoleNames() const;
+    QHash<int, QByteArray> roleNames() const;
+    QStringList mNameFilters;
+    bool mFilterDirectories;
+    bool mShowDirectories;
+    bool mAwaitingResults;
+    bool mIsRecursive;
+    bool mReadsMediaMetadata;
+    QString mCurrentDir;
+    DirItemInfoList  mDirectoryContents;
 
 signals:
     /*!
@@ -490,8 +482,8 @@ signals:
      * \param user       current user being used
      * \param urlPath    the current URL asked to be browsed
      */
-    void     needsAuthentication(const QString& user, const QString& urlPath);
-    
+    void     needsAuthentication(const QString &user, const QString &urlPath);
+
     /*!
      * \brief insertedRow()
      *
@@ -499,7 +491,7 @@ signals:
      *  for example from  \ref mkdir() or \ref paste()
      *
      *  It can be used to make the new row visible to the user doing a scroll to
-     */    
+     */
     void  insertedRow(int row);
 
     /*!
@@ -523,33 +515,33 @@ signals:
      * \brief downloadTemporaryComplete() says that download has been completed and
      *    the \a filename is ready to be used, filename is a full pathname
      */
-    void     downloadTemporaryComplete(const QString& filename);
+    void     downloadTemporaryComplete(const QString &filename);
 
-private slots:    
-    void onItemRemoved(const DirItemInfo&);  
-    void onItemAdded(const DirItemInfo&);
-    void onItemChanged(const DirItemInfo&);
+private slots:
+    void onItemRemoved(const DirItemInfo &);
+    void onItemAdded(const DirItemInfo &);
+    void onItemChanged(const DirItemInfo &);
 
 private:
-    int           addItem(const DirItemInfo& fi);
+    int           addItem(const DirItemInfo &fi);
     void          setCompareAndReorder();
-    int           rowOfItem(const DirItemInfo& fi);
+    int           rowOfItem(const DirItemInfo &fi);
     QDir::Filters currentDirFilter()  const;
-    QString       dirItems(const DirItemInfo& fi) const;
-    bool          cdIntoItem(const DirItemInfo& fi);
-    bool          openItem(const DirItemInfo& fi);     
+    QString       dirItems(const DirItemInfo &fi) const;
+    bool          cdIntoItem(const DirItemInfo &fi);
+    bool          openItem(const DirItemInfo &fi);
     DirItemInfo   setParentIfRelative(const QString &fileOrDir) const;
     void          setPathFromCurrentLocation();
 
 private:
     void          startExternalFsWatcher();
     void          stoptExternalFsWatcher();
-    void          clear();   
+    void          clear();
 
 private slots:
-    void          onItemAddedOutsideFm(const DirItemInfo&fi);
-    void          onItemRemovedOutSideFm(const DirItemInfo&);
-    void          onItemChangedOutSideFm(const DirItemInfo&fi);
+    void          onItemAddedOutsideFm(const DirItemInfo &fi);
+    void          onItemRemovedOutSideFm(const DirItemInfo &);
+    void          onItemChangedOutSideFm(const DirItemInfo &fi);
     void          onThereAreExternalChanges(const QString &);
     void          onExternalFsWorkerFinished(int);
 
@@ -561,25 +553,29 @@ private:
     SortOrder           mSortOrder;
     CompareFunction     mCompareFunction;
     bool                mExtFSWatcher;
-    Clipboard *         mClipboard;
-    DirSelection *      mSelection;
+    Clipboard          *mClipboard;
+    DirSelection       *mSelection;
     NetAuthenticationDataList *mAuthData;
-    LocationsFactory *  mLocationFactory;
-    Location         *  mCurLocation;
+    LocationsFactory   *mLocationFactory;
+    Location           *mCurLocation;
     QStringList         mPathList;    //!< it will be used for goBack()
 
 private:
-    FileSystemAction  *  m_fsAction;  //!< it does file system recursive remove/copy/move
+    bool mQmlCompleted;
+    QString mQmlCachePath;
+
+private:
+    FileSystemAction    *m_fsAction;  //!< it does file system recursive remove/copy/move
     QString  fileSize(qint64 size)  const;
 #ifndef DO_NOT_USE_TAG_LIB
-    QVariant getAudioMetaData(const QFileInfo& fi, int role) const;
+    QVariant getAudioMetaData(const QFileInfo &fi, int role) const;
 #endif
     QSet<QString> m_allowedDirs;
 
 //[0]
 
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL)    
-    ExternalFSWatcher * getExternalFSWatcher() const;
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL)
+    ExternalFSWatcher *getExternalFSWatcher() const;
     virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
     virtual QVariant  headerData(int section, Qt::Orientation orientation, int role) const;
     friend class TestDirModel;

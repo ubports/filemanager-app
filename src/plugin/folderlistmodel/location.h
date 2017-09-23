@@ -50,8 +50,8 @@ class LocationItemDir;
  */
 class Location : public QObject
 {
-   Q_OBJECT
-public:  
+    Q_OBJECT
+public:
 
     Q_ENUMS(Locations)
     /*!
@@ -59,9 +59,8 @@ public:
      *
      * \note Items also work as indexes for \a m_locations, they must be 0..(n-1)
      */
-    enum Locations
-    {
-        LocalDisk=0,   //<! any mounted file system
+    enum Locations {
+        LocalDisk = 0, //<! any mounted file system
         TrashDisk,     //<! special trash location in the disk
         NetSambaShare  //<! SAMBA or CIFS shares
 #if 0
@@ -72,24 +71,24 @@ public:
 public:
     virtual ~Location();
 protected:
-    explicit Location( int type, QObject *parent=0);
+    explicit Location( int type, QObject *parent = 0);
 
-    IOWorkerThread * workerThread() const;
+    IOWorkerThread *workerThread() const;
 
 signals:
     void     itemsAdded(const DirItemInfoList &files);
     void     itemsFetched();
-    void     extWatcherPathChanged(const QString&);
-    void     extWatcherItemRemoved(const DirItemInfo&);
-    void     extWatcherItemChanged(const DirItemInfo&);
-    void     extWatcherItemAdded(const   DirItemInfo&);
+    void     extWatcherPathChanged(const QString &);
+    void     extWatcherItemRemoved(const DirItemInfo &);
+    void     extWatcherItemChanged(const DirItemInfo &);
+    void     extWatcherItemAdded(const   DirItemInfo &);
     void     extWatcherChangesFetched(int);
-    void     needsAuthentication(const QString& user, const QString& urlPath);
+    void     needsAuthentication(const QString &user, const QString &urlPath);
 
 public slots:
     virtual void setUsingExternalWatcher(bool use);
-    virtual void setAuthentication(const QString& user,
-                                   const QString& password);
+    virtual void setAuthentication(const QString &user,
+                                   const QString &password);
 
 
 public: //pure functions
@@ -100,7 +99,7 @@ public: //pure functions
      * \param urlPath  it can also contain User and Password when in the form of an URL
      * \return the object created
      */
-    virtual DirItemInfo *    newItemInfo(const QString& urlPath) = 0;
+    virtual DirItemInfo     *newItemInfo(const QString &urlPath) = 0;
 
     /*!
      * \brief newListWorker() creates a Location suitable DirListWorker object which will create a new \ref DirItemInfoList for browsing items
@@ -112,7 +111,8 @@ public: //pure functions
      * \param isRecursive
      * \return the object which will fill a new \ref DirItemInfoList for browsing items
      */
-    virtual DirListWorker *  newListWorker(const QString &urlPath, QDir::Filters filter, const bool isRecursive) = 0;
+    virtual DirListWorker   *newListWorker(const QString &urlPath, QDir::Filters filter,
+                                           const bool isRecursive) = 0;
 
     /*!
      * \brief newDirIterator() creates a LocationItemDirIterator object which is similar to Qt QDirIterator object
@@ -123,10 +123,10 @@ public: //pure functions
      * \param flags
      * \return
      */
-     virtual LocationItemDirIterator * newDirIterator(const QString & path,
-                                                     QDir::Filters filters,
-                                                     QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
-                                                     LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor)  = 0;
+    virtual LocationItemDirIterator *newDirIterator(const QString &path,
+                                                    QDir::Filters filters,
+                                                    QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
+                                                    LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor)  = 0;
     /*!
       * \brief newFile() creates a LocationItemFile object which is similar to Qt QFile object
       *
@@ -135,7 +135,7 @@ public: //pure functions
       * \param path
       * \return
       */
-     virtual LocationItemFile   * newFile(const QString & path) = 0;
+    virtual LocationItemFile    *newFile(const QString &path) = 0;
 
     /*!
       * \brief newDir() creates a LocationItemDir object which is simila to Qt QDir object
@@ -145,7 +145,7 @@ public: //pure functions
       * \param dir
       * \return
       */
-     virtual LocationItemDir    * newDir(const QString & dir = QLatin1String(0)) = 0;
+    virtual LocationItemDir     *newDir(const QString &dir = QLatin1String(0)) = 0;
 
     /*!
       * \brief urlBelongsToLocation() Returns a good  url if the \a urlPath is valid URL that belongs to its location
@@ -166,7 +166,7 @@ public: //pure functions
       *    The return will be: an empty string meaning that this URL is not related to Samba
       *\endcode
       */
-     virtual QString         urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlash) = 0;
+    virtual QString         urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlash) = 0;
 
 public:
     /*!
@@ -182,7 +182,7 @@ public:
      *
      *        The default implementation just returns true and let the copy fail if there is enough space
      */
-    virtual bool     isThereDiskSpace(const QString& pathname, qint64 requiredSize);
+    virtual bool     isThereDiskSpace(const QString &pathname, qint64 requiredSize);
 
     /*!
      * \brief fetchItems() gets the content of the Location
@@ -190,7 +190,7 @@ public:
      * \param dirFilter   current Filter
      * \param recursive   should get the content all sub dirs or not, (hardly ever it is true)
      */
-     virtual void        fetchItems(QDir::Filters dirFilter, bool recursive=false);
+    virtual void        fetchItems(QDir::Filters dirFilter, bool recursive = false);
 
     /*!
      * \brief refreshInfo() It must refresh the DirItemInfo
@@ -211,7 +211,7 @@ public:
      *
      * \return true if it is possible to do like a cdUp.
      */
-     virtual bool        becomeParent();
+    virtual bool        becomeParent();
 
     /*!
       * \brief validateUrlPath()  Validates the urlPath (file or Directory) and creates a new Obeject from this path
@@ -221,19 +221,28 @@ public:
       * \param urlPath
       * \return a valid pointer to DirItemInfo object or NULL indicating something wrong with the path
       */
-     virtual DirItemInfo *       validateUrlPath(const QString& urlPath);
+    virtual DirItemInfo        *validateUrlPath(const QString &urlPath);
 
     /*!
       * \brief isRemote() It must return TRUE when type() is greater than Location::TrashDisk
       * \return
       */
-     inline  bool       isRemote()     const { return m_type > TrashDisk; }
-     inline  bool       isLocalDisk()  const { return m_type == LocalDisk;}
-     inline  bool       isTrashDisk()  const { return m_type == TrashDisk; }
+    inline  bool       isRemote()     const
+    {
+        return m_type > TrashDisk;
+    }
+    inline  bool       isLocalDisk()  const
+    {
+        return m_type == LocalDisk;
+    }
+    inline  bool       isTrashDisk()  const
+    {
+        return m_type == TrashDisk;
+    }
 
 public: //virtual
-    virtual void        fetchExternalChanges(const QString& urlPath,
-                                             const DirItemInfoList& list,
+    virtual void        fetchExternalChanges(const QString &urlPath,
+                                             const DirItemInfoList &list,
                                              QDir::Filters dirFilter) ;
     virtual void        setInfoItem(const DirItemInfo &itemInfo);
     virtual void        setInfoItem(DirItemInfo *itemInfo);
@@ -250,14 +259,20 @@ public: //non virtual
     void                notifyItemNeedsAuthentication(const DirItemInfo *item = 0);
     bool                useAuthenticationDataIfExists(const DirItemInfo &item);
 
-    inline const DirItemInfo*  info() const  { return m_info; }
-    inline int                 type() const  { return m_type; }
-    const DirItemInfo*         currentInfo(); //updated information about the current path
+    inline const DirItemInfo  *info() const
+    {
+        return m_info;
+    }
+    inline int                 type() const
+    {
+        return m_type;
+    }
+    const DirItemInfo         *currentInfo(); //updated information about the current path
 
 protected:
-     DirItemInfo *                m_info;
-     int                          m_type;
-     bool                         m_usingExternalWatcher;
+    DirItemInfo                 *m_info;
+    int                          m_type;
+    bool                         m_usingExternalWatcher;
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
     friend class TestDirModel;

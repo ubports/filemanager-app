@@ -43,8 +43,8 @@ public:
      *
      * \return URLs list
      */
-    static const QStringList&  supportedURLs();
-    static bool                isSupportedUrl(const QUrl& url);
+    static const QStringList  &supportedURLs();
+    static bool                isSupportedUrl(const QUrl &url);
 private:
     LocationUrl();
     static   const QStringList   m_supportedURLs;

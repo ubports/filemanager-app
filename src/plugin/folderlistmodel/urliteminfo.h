@@ -36,17 +36,17 @@
 class UrlItemInfo : public DirItemInfo
 {
 public:
-    static QStringList separatePathFilename(const QString& urlPath);
+    static QStringList separatePathFilename(const QString &urlPath);
 protected:
-    UrlItemInfo(const QString& urlPath, const QString& urlRoot);
+    UrlItemInfo(const QString &urlPath, const QString &urlRoot);
     UrlItemInfo();
 
 protected:
-    void               setRoot(const QString& urlRoot);
+    void               setRoot(const QString &urlRoot);
 
 
 private:
-    void    init(const QString& urlPath);
+    void    init(const QString &urlPath);
     void    verifyHost(const QString urlPath);
 };
 

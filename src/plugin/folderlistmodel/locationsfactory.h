@@ -52,21 +52,30 @@ class NetAuthenticationData;
  */
 class LocationsFactory : public QObject
 {
-   Q_OBJECT
+    Q_OBJECT
 public:
     explicit LocationsFactory(QObject *parent = 0);
     ~LocationsFactory();
 
-    inline  Location * getLocation(int index) const {return m_locations.at(index);}
-    inline  Location * getDiskLocation()  const { return getLocation(Location::LocalDisk); }
-    inline  Location * getTrashLocation() const { return getLocation(Location::TrashDisk); }
+    inline  Location *getLocation(int index) const
+    {
+        return m_locations.at(index);
+    }
+    inline  Location *getDiskLocation()  const
+    {
+        return getLocation(Location::LocalDisk);
+    }
+    inline  Location *getTrashLocation() const
+    {
+        return getLocation(Location::TrashDisk);
+    }
 
     /*!
      * \brief parse()  Just parses (does not set/change the current location) according to \a urlPath
      * \param urlPath  urlPath the url like: file:///Item trash:///item /item, it MUST point to a valid Directory
      * \return   The location which supports the \a  urlPath
      */
-    Location * parse(const QString& urlPath);
+    Location *parse(const QString &urlPath);
 
     /*!
      * \brief setNewPath() Sets a new path, it can be in the current location or on another location
@@ -81,23 +90,29 @@ public:
      *
      *  \sa \ref parse() \ref location()
      */
-    Location * setNewPath(const QString& urlPath,
-                          const QString& user = QString(),
-                          const QString& password = QString(),
-                          bool savePassword = false);
+    Location *setNewPath(const QString &urlPath,
+                         const QString &user = QString(),
+                         const QString &password = QString(),
+                         bool savePassword = false);
 
     /*!
      * \brief location()
      * \return The current location
      */
-    Location * currentLocation() const { return m_curLoc; }
+    Location *currentLocation() const
+    {
+        return m_curLoc;
+    }
 
     /*!
      * \brief availableLocations()
      * \return
      */
-    const QList<Location*>&
-                     availableLocations() const { return m_locations; }
+    const QList<Location *> &
+    availableLocations() const
+    {
+        return m_locations;
+    }
 
     /*!
      * \brief lastValidFileInfo()
@@ -109,7 +124,10 @@ public:
      *
      * \return The last valid DirItemInfo parsed which is not a Directory
      */
-    const DirItemInfo* lastValidFileInfo() const { return m_lastValidFileInfo; }
+    const DirItemInfo *lastValidFileInfo() const
+    {
+        return m_lastValidFileInfo;
+    }
 
     /*!
      * \brief lastUrlNeedsAuthentication()
@@ -143,13 +161,13 @@ private:
      *
      * \return new Item validated (authenticated when remote authentication is required), otherwise NULL
      */
-    DirItemInfo *validateCurrentUrl(Location *location, const NetAuthenticationData&);
+    DirItemInfo *validateCurrentUrl(Location *location, const NetAuthenticationData &);
 
     /*!
      * \brief addLocation() just appends the location in the list \ref m_locations and connect signals
      * \param location
      */
-    void        addLocation(Location * location);
+    void        addLocation(Location *location);
 
 signals:
     void        locationChanged(const Location *old, const Location *current);
@@ -158,12 +176,12 @@ private slots:
     void        onUrlNeedsAuthentication(QString, QString);
 
 private:
-     Location         *  m_curLoc;
-     QList<Location*>    m_locations;
-     QString             m_tmpPath;
-     DirItemInfo      *  m_lastValidFileInfo;
-     NetAuthenticationDataList * m_authDataStore;
-     bool                m_lastUrlNeedsAuthentication;
+    Location           *m_curLoc;
+    QList<Location *>    m_locations;
+    QString             m_tmpPath;
+    DirItemInfo        *m_lastValidFileInfo;
+    NetAuthenticationDataList *m_authDataStore;
+    bool                m_lastUrlNeedsAuthentication;
 
 #if defined(REGRESSION_TEST_FOLDERLISTMODEL)
     friend class TestDirModel;
