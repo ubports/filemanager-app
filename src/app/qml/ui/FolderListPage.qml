@@ -162,7 +162,7 @@ SidebarPageLayout {
             Panels.SelectionBottomBar {
                 folderModel: pageModel
                 fileOperationDialog: fileOperationDialogObj
-                visible: selectionMode
+                visible: selectionMode && !isContentHub
             }
         }
 

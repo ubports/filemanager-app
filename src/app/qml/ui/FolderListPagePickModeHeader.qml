@@ -18,7 +18,7 @@ PageHeader {
     contents: ListItemLayout {
         anchors.verticalCenter: parent.verticalCenter
         title.text: rootItem.title
-        subtitle.text: i18n.tr("%1 item", "%1 items", folderModel.count).arg(folderModel.count)
+        subtitle.text: !importMode ? i18n.tr("%1 item", "%1 items", folderModel.count).arg(folderModel.count) : i18n.tr("Save here")
     }
 
     extension: Components.PathHistoryRow {
@@ -49,11 +49,11 @@ PageHeader {
             Action {
                 text: i18n.tr("Select")
                 iconName: "tick"
-                enabled: selectionManager.counter > 0
+                enabled: selectionManager.counter > 0 || importMode
                 onTriggered: {
                     var selectedAbsUrls = []
                     if (folderSelectorMode) {
-                        selectedAbsUrls = [ folder ]
+                        selectedAbsUrls = [ folderModel.path ]
                     } else {
                         var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
                         // For now support only selection in filesystem
