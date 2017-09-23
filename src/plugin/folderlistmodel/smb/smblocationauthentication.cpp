@@ -30,21 +30,16 @@
 # define DEBUG_AUTHENTICATION() /**/
 #endif
 
-
-namespace
-{
-   QByteArray  m_AuthUser[MAX_AUTH_INSTANCES];
-   QByteArray  m_AuthPass[MAX_AUTH_INSTANCES];
-   void *      m_instances[MAX_AUTH_INSTANCES];
+namespace {
+QByteArray  m_AuthUser[MAX_AUTH_INSTANCES];
+QByteArray  m_AuthPass[MAX_AUTH_INSTANCES];
+void       *m_instances[MAX_AUTH_INSTANCES];
 }
-
 
 SmbLocationAuthentication::SmbLocationAuthentication() : m_infoIndex(-1)
 {
-    for(int counter = 0; counter < MAX_AUTH_INSTANCES; ++counter)
-    {
-        if (m_instances[counter] == 0)
-        {
+    for (int counter = 0; counter < MAX_AUTH_INSTANCES; ++counter) {
+        if (m_instances[counter] == 0) {
             m_infoIndex = counter;
             m_instances[m_infoIndex] = this;
             break;
@@ -52,23 +47,18 @@ SmbLocationAuthentication::SmbLocationAuthentication() : m_infoIndex(-1)
     }
 }
 
-//============================================================================
 /*!
  * \brief SmbLocationAuthentication::~SmbLocationAuthentication
  */
 SmbLocationAuthentication::~SmbLocationAuthentication()
 {
-    if (GOOD_INDEX())
-    {
+    if (GOOD_INDEX()) {
         m_instances[m_infoIndex] = 0;
-    }
-    else
-    {
+    } else {
         qDebug() << Q_FUNC_INFO << "ERROR no m_instances[] index";
     }
 }
 
-//============================================================================
 /*!
  * \brief SmbLocationAuthentication::setInfo
  * \param user
@@ -76,36 +66,35 @@ SmbLocationAuthentication::~SmbLocationAuthentication()
  */
 void SmbLocationAuthentication::setInfo(const QString &user, const QString &password)
 {
-    if (GOOD_INDEX())
-    {
+    if (GOOD_INDEX()) {
         m_AuthUser[m_infoIndex] = user.toLocal8Bit();
         m_AuthPass[m_infoIndex] = password.toLocal8Bit();
-    }
-    else
-    {
+
+    } else {
         qDebug() << Q_FUNC_INFO << "ERROR no m_instances[] index";
     }
 }
 
-//============================================================================
 /*!
  * \brief SmbLocationAuthentication::suitableAuthenticationFunction
  * \return
  */
-Smb::AuthenticationFunction
-SmbLocationAuthentication::suitableAuthenticationFunction() const
+Smb::AuthenticationFunction SmbLocationAuthentication::suitableAuthenticationFunction() const
 {
-    switch(m_infoIndex)
-    {
-       case 0:  return  &SmbLocationAuthentication::authenticateCallBack0;
-       case 1:  return  &SmbLocationAuthentication::authenticateCallBack1;
-       case 2:  return  &SmbLocationAuthentication::authenticateCallBack2;
-       case 3:  return  &SmbLocationAuthentication::authenticateCallBack3;
-       default: return  0;
+    switch (m_infoIndex) {
+    case 0:
+        return &SmbLocationAuthentication::authenticateCallBack0;
+    case 1:
+        return &SmbLocationAuthentication::authenticateCallBack1;
+    case 2:
+        return &SmbLocationAuthentication::authenticateCallBack2;
+    case 3:
+        return &SmbLocationAuthentication::authenticateCallBack3;
+    default:
+        return 0;
     }
 }
 
-//============================================================================
 /*!
  * \brief SmbLocationAuthentication::authenticateCallBack0
  * \param server
@@ -117,14 +106,7 @@ SmbLocationAuthentication::suitableAuthenticationFunction() const
  * \param passwd
  * \param passwdlen
  */
-void SmbLocationAuthentication::authenticateCallBack0(const char *server,
-                                                      const char *share,
-                                                      char *wrkgrp,
-                                                      int wrkgrplen,
-                                                      char *user,
-                                                      int userlen,
-                                                      char *passwd,
-                                                      int passwdlen)
+void SmbLocationAuthentication::authenticateCallBack0(const char *server, const char *share, char *wrkgrp, int wrkgrplen, char *user, int userlen, char *passwd, int passwdlen)
 {
     Q_UNUSED(server);
     Q_UNUSED(share);
@@ -136,7 +118,6 @@ void SmbLocationAuthentication::authenticateCallBack0(const char *server,
     DEBUG_AUTHENTICATION();
 }
 
-//============================================================================
 /*!
  * \brief SmbLocationAuthentication::authenticateCallBack1
  * \param server
@@ -148,14 +129,7 @@ void SmbLocationAuthentication::authenticateCallBack0(const char *server,
  * \param passwd
  * \param passwdlen
  */
-void SmbLocationAuthentication::authenticateCallBack1(const char *server,
-                                                      const char *share,
-                                                      char *wrkgrp,
-                                                      int wrkgrplen,
-                                                      char *user,
-                                                      int userlen,
-                                                      char *passwd,
-                                                      int passwdlen)
+void SmbLocationAuthentication::authenticateCallBack1(const char *server, const char *share, char *wrkgrp, int wrkgrplen, char *user, int userlen, char *passwd, int passwdlen)
 {
     Q_UNUSED(server);
     Q_UNUSED(share);
@@ -167,7 +141,6 @@ void SmbLocationAuthentication::authenticateCallBack1(const char *server,
     DEBUG_AUTHENTICATION();
 }
 
-//============================================================================
 /*!
  * \brief SmbLocationAuthentication::authenticateCallBack2
  * \param server
@@ -179,14 +152,7 @@ void SmbLocationAuthentication::authenticateCallBack1(const char *server,
  * \param passwd
  * \param passwdlen
  */
-void SmbLocationAuthentication::authenticateCallBack2(const char *server,
-                                                      const char *share,
-                                                      char *wrkgrp,
-                                                      int wrkgrplen,
-                                                      char *user,
-                                                      int userlen,
-                                                      char *passwd,
-                                                      int passwdlen)
+void SmbLocationAuthentication::authenticateCallBack2(const char *server, const char *share, char *wrkgrp, int wrkgrplen, char *user, int userlen, char *passwd, int passwdlen)
 {
     Q_UNUSED(server);
     Q_UNUSED(share);
@@ -198,7 +164,6 @@ void SmbLocationAuthentication::authenticateCallBack2(const char *server,
     DEBUG_AUTHENTICATION();
 }
 
-//============================================================================
 /*!
  * \brief SmbLocationAuthentication::authenticateCallBack3
  * \param server
@@ -210,14 +175,7 @@ void SmbLocationAuthentication::authenticateCallBack2(const char *server,
  * \param passwd
  * \param passwdlen
  */
-void SmbLocationAuthentication::authenticateCallBack3(const char *server,
-                                                      const char *share,
-                                                      char *wrkgrp,
-                                                      int wrkgrplen,
-                                                      char *user,
-                                                      int userlen,
-                                                      char *passwd,
-                                                      int passwdlen)
+void SmbLocationAuthentication::authenticateCallBack3(const char *server, const char *share, char *wrkgrp, int wrkgrplen, char *user, int userlen, char *passwd, int passwdlen)
 {
     Q_UNUSED(server);
     Q_UNUSED(share);
@@ -229,25 +187,22 @@ void SmbLocationAuthentication::authenticateCallBack3(const char *server,
     DEBUG_AUTHENTICATION();
 }
 
-
 QString SmbLocationAuthentication::currentAuthUser() const
 {
     QString ret;
-    if (GOOD_INDEX())
-    {
-       ret = m_AuthUser[m_infoIndex];
+    if (GOOD_INDEX()) {
+        ret = m_AuthUser[m_infoIndex];
     }
+
     return ret;
 }
-
-
 
 QString SmbLocationAuthentication::currentAuthPassword() const
 {
     QString ret;
-    if (GOOD_INDEX())
-    {
-       ret = m_AuthPass[m_infoIndex];
+    if (GOOD_INDEX()) {
+        ret = m_AuthPass[m_infoIndex];
     }
+
     return ret;
 }
