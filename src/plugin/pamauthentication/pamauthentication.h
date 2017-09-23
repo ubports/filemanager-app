@@ -98,20 +98,20 @@ public:
      * \brief Should be set to the application's name in lowercase. For example, for FileManager it would be "filemanager".
      */
     Q_PROPERTY(QString serviceName READ serviceName WRITE setServiceName NOTIFY serviceNameChanged)
-    inline const QString &serviceName() const {
+    inline const QString &serviceName() const
+    {
         return m_serviceName;
     }
 
     void setServiceName(const QString &serviceName);
+
 signals:
     void serviceNameChanged();
 
 public slots:
 private:
-    static int ConversationFunction(int num_msg,
-                                    const pam_message** msg,
-                                    pam_response** resp,
-                                    void* appdata_ptr);
+    static int ConversationFunction(int num_msg, const pam_message **msg,
+                                    pam_response **resp, void *appdata_ptr);
 
     bool initPam(pam_handle **pamHandle);
     int validateAccount(pam_handle *pamHandle);
