@@ -26,25 +26,25 @@
 #include <QStandardPaths>
 #include <QDebug>
 
-namespace
-{
-  const QString userSavedLocationsName("userSavedLocations");
-  const QString userRemovedLocationsName("userRemovedLocations");
+namespace {
+const QString userSavedLocationsName("userSavedLocations");
+const QString userRemovedLocationsName("userRemovedLocations");
 }
 
 PlacesModel::PlacesModel(QObject *parent) :
-    QAbstractListModel(parent) 
-  , m_going_to_rescanMtab(false)
+    QAbstractListModel(parent)
+    , m_going_to_rescanMtab(false)
 {
     m_userMountLocation = "/media/" + qgetenv("USER");
+
     // For example /run/user/1000
     m_runtimeLocations = QStandardPaths::standardLocations(QStandardPaths::RuntimeLocation);
 
     // Set the storage location to a path that works well
     // with app isolation
     QString settingsLocation =
-            QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first()
-            + "/" + QCoreApplication::applicationName() + "/" + "places.conf";
+        QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first()
+        + "/" + QCoreApplication::applicationName() + "/" + "places.conf";
     m_settings = new QSettings(settingsLocation, QSettings::IniFormat, this);
 
     m_userSavedLocations   = m_settings->value(userSavedLocationsName).toStringList();
@@ -63,7 +63,7 @@ PlacesModel::PlacesModel(QObject *parent) :
     addDefaultLocation(locationDownloads());
     addDefaultLocation(locationMusic());
     addDefaultLocation(locationPictures());
-    addDefaultLocation(locationVideos());    
+    addDefaultLocation(locationVideos());
 
     //Network locations
     addDefaultLocation(locationSamba());
@@ -74,9 +74,10 @@ PlacesModel::PlacesModel(QObject *parent) :
     rescanMtab();
 
     //other user saved locations
-    foreach (const QString& userLocation, m_userSavedLocations) {
-       addLocationNotRemovedWithoutStoring(userLocation);
+    foreach (const QString &userLocation, m_userSavedLocations) {
+        addLocationNotRemovedWithoutStoring(userLocation);
     }
+
     m_settings->sync();
 
     foreach (const QString &location, m_locations) {
@@ -84,18 +85,21 @@ PlacesModel::PlacesModel(QObject *parent) :
     }
 }
 
-PlacesModel::~PlacesModel() {
+PlacesModel::~PlacesModel()
+{
 
 }
 
-void
-PlacesModel::initNewUserMountsWatcher() {
+void PlacesModel::initNewUserMountsWatcher()
+{
     m_newUserMountsWatcher = new QFileSystemWatcher(this);
 
     connect(m_newUserMountsWatcher, SIGNAL(fileChanged(QString)), this, SLOT(mtabChanged(QString)));
-    connect(m_newUserMountsWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(mtabChanged(QString)));
+    connect(m_newUserMountsWatcher, SIGNAL(directoryChanged(QString)), this,
+            SLOT(mtabChanged(QString)));
 
     m_newUserMountsWatcher->addPath(m_mtabParser.path());
+
     /*
      it looks like QFileSystemWatcher does not work for /etc/mtab sometimes, lets use /media/<user> as well
      See:
@@ -108,8 +112,8 @@ PlacesModel::initNewUserMountsWatcher() {
              << m_newUserMountsWatcher->files() << "and" << m_newUserMountsWatcher->directories();
 }
 
-void
-PlacesModel::mtabChanged(const QString &path) {
+void PlacesModel::mtabChanged(const QString &path)
+{
     qDebug() << Q_FUNC_INFO << "file changed in " << path;
     if (!m_going_to_rescanMtab) {
         m_going_to_rescanMtab = true;
@@ -120,10 +124,10 @@ PlacesModel::mtabChanged(const QString &path) {
     m_newUserMountsWatcher->addPath(path);
 }
 
-void
-PlacesModel::rescanMtab() {
+void PlacesModel::rescanMtab()
+{
     m_going_to_rescanMtab = false;
-    const QString& path = m_mtabParser.path();
+    const QString &path = m_mtabParser.path();
     qDebug() << Q_FUNC_INFO << "rescanning mtab" << path;
 
     QList<QMtabEntry> entries = m_mtabParser.parseEntries();
@@ -131,7 +135,8 @@ PlacesModel::rescanMtab() {
     QSet<QString> userMounts;
 
     foreach (QMtabEntry e, entries) {
-        qDebug() << Q_FUNC_INFO << "Considering" << "fsName:" <<  e.fsName << "dir:" << e.dir << "type:" << e.type;
+        qDebug() << Q_FUNC_INFO << "Considering" << "fsName:" <<  e.fsName << "dir:" << e.dir << "type:" <<
+                 e.type;
         if (isMtabEntryUserMount(e)) {
             qDebug() << Q_FUNC_INFO << "Adding as userMount directory dir" << e.dir;
             userMounts << e.dir;
@@ -159,7 +164,8 @@ PlacesModel::rescanMtab() {
     }
 }
 
-bool PlacesModel::isMtabEntryUserMount(const QMtabEntry &e) const {
+bool PlacesModel::isMtabEntryUserMount(const QMtabEntry &e) const
+{
     if (e.fsName == "none") {
         qDebug() << Q_FUNC_INFO << "Ignoring mounts with filesystem name 'none'";
         return false;
@@ -178,7 +184,8 @@ bool PlacesModel::isMtabEntryUserMount(const QMtabEntry &e) const {
     return false;
 }
 
-bool PlacesModel::isSubDirectory(const QString &dir, const QString &path) const {
+bool PlacesModel::isSubDirectory(const QString &dir, const QString &path) const
+{
     QFileInfo dirFi = QFileInfo(dir);
     QFileInfo pathFi = QFileInfo(path);
 
@@ -264,28 +271,30 @@ QHash<int, QByteArray> PlacesModel::roleNames() const
 
 void PlacesModel::removeItem(int indexToRemove)
 {
-    if (indexToRemove >= 0 && indexToRemove < m_locations.count())
-    {
+    if (indexToRemove >= 0 && indexToRemove < m_locations.count()) {
         bool sync_settings = false;
-        const QString & location = m_locations.at(indexToRemove);
+        const QString &location = m_locations.at(indexToRemove);
         //check if the index belongs to a  user saved location
         int index_user_location = m_userSavedLocations.indexOf(location);
-        if (index_user_location > -1)
-        {
+
+        if (index_user_location > -1) {
             // Remove the User saved location permanently
             m_userSavedLocations.removeAt(index_user_location);
             m_settings->setValue(userSavedLocationsName, m_userSavedLocations);
             sync_settings = true;
         }
+
         //save it as removed location, even a default location can be removed
         if (!m_userRemovedLocations.contains(location)) {
             m_userRemovedLocations.append(location);
             m_settings->setValue(userRemovedLocationsName, m_userRemovedLocations);
             sync_settings = true;
         }
+
         removeItemWithoutStoring(indexToRemove);
+
         if (sync_settings) {
-             m_settings->sync();
+            m_settings->sync();
         }
     }
 }
@@ -319,7 +328,7 @@ void PlacesModel::removeItemWithoutStoring(int indexToRemove)
  * \param location
  */
 void PlacesModel::addLocation(const QString &location)
-{   
+{
     bool sync_settings = false;
     //verify it the user had deleted it before and now is inserting it again
     int indexRemoved = m_userRemovedLocations.indexOf(location);
@@ -330,12 +339,11 @@ void PlacesModel::addLocation(const QString &location)
     }
     if (addLocationNotRemovedWithoutStoring(location)) {
         // Store the location permanently if it is not default location
-        if (!isDefaultLocation(location) && !m_userSavedLocations.contains(location))
-        {
+        if (!isDefaultLocation(location) && !m_userSavedLocations.contains(location)) {
             m_userSavedLocations.append(location);
             m_settings->setValue(userSavedLocationsName, m_userSavedLocations);
             sync_settings = true;
-        }                
+        }
     }
     if (sync_settings) {
         m_settings->sync();
@@ -380,7 +388,7 @@ void PlacesModel::addDefaultLocation(const QString &location)
 {
     // a Default location can be removed by the user
     if (addLocationNotRemovedWithoutStoring(location)) {
-         m_defaultLocations.append(location);
+        m_defaultLocations.append(location);
     }
 }
 
