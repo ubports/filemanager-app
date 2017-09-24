@@ -19,8 +19,7 @@ import QtQuick 2.4
 import Ubuntu.Components 1.3
 import org.nemomobile.folderlistmodel 1.0
 import Ubuntu.Components.Popups 1.3
-import Ubuntu.Unity.Action 1.1 as UnityActions
-import U1db 1.0 as U1db
+import Qt.labs.settings 1.0
 import Ubuntu.Content 1.3
 import com.ubuntu.PlacesModel 0.1
 import com.ubuntu.PamAuthentication 0.1
@@ -31,30 +30,27 @@ MainView {
     id: mainView
     // objectName for functional testing purposes (autopilot-qt5)
     objectName: "filemanager"
-    applicationName: "ubuntu-filemanager-app"
+    applicationName: "com.ubuntu.filemanager"
 
     width: phone ? units.gu(40) : units.gu(100)
     height: units.gu(75)
 
     property alias filemanager: mainView
 
-    property bool wideAspect: width > units.gu(50) && loaded
-    property bool loaded: false
+    property bool wideAspect: width > units.gu(50)
 
     property bool allowSidebarExpanded: width > units.gu(50)
     property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()
 
+    property bool isContentHub: true
+
 
     onAllowSidebarExpandedChanged: {
         if (!allowSidebarExpanded)
-            saveSetting("collapsedSidebar", true)
+            settings.collapsedSidebar = true
     }
 
     property bool showSidebar: width >= units.gu(50)
-
-    headerColor: "#F5F5F5"
-    backgroundColor: "#F5F5F5"
-    footerColor: "#F5F5F5"
 
     QtObject {
         id: fileSelector
@@ -69,7 +65,7 @@ MainView {
     }
 
     PlacesModel {
-       id: userplaces
+        id: userplaces
     }
 
     PamAuthentication {
@@ -77,38 +73,12 @@ MainView {
         serviceName: "filemanager"
     }
 
-    // HUD Actions
-    Action {
-        id: settingsAction
-        text: i18n.tr("Settings")
-        description: i18n.tr("Change app settings")
-        iconSource: getIcon("settings")
-        onTriggered: showSettings()
-    }
-    actions: [settingsAction]
-
     property var pageStack: pageStack
 
-    property var folderTabs: [userplaces.locationHome]
-
-    function openTab(folder) {
-        var list = folderTabs
-        list.push(folder)
-        folderTabs = list
-    }
-
-    function closeTab(index) {
-        var list = folderTabs
-        list.splice(index, 1)
-        folderTabs = list
-        tabs.selectedTabIndex = 0
-    }
-
-    function openFileSelector(selectFolderMode, saveMode) {
+    function openFileSelector(selectFolderMode) {
         fileSelector.fileSelectorComponent = pageStack.push(Qt.resolvedUrl("./ui/FolderListPage.qml"), { fileSelectorMode: !selectFolderMode,
-                                                                                                         folderSelectorMode: selectFolderMode,
-                                                                                                         folder: userplaces.locationHome,
-                                                                                                         saveMode: saveMode})
+                                                                folderSelectorMode: selectFolderMode,
+                                                                folder: userplaces.locationHome })
     }
 
     function cancelFileSelector() {
@@ -125,14 +95,7 @@ MainView {
         }
         else
         {
-            if (exportFiles(fileSelector.activeTransfer, fileUrls)) {
-                pageStack.pop()
-                fileSelector.activeTransfer = null
-                fileSelector.fileSelectorComponent = null
-                pageStack.currentPage.currentPage.refresh()
-                fileSelector.importMode = false
-            }
-
+            exportFiles(fileSelector.activeTransfer, fileUrls)
         }
     }
 
@@ -141,11 +104,10 @@ MainView {
     }
 
     function startImport(activeTransfer) {
-        console.debug("Import requested")
         if (activeTransfer.state === ContentTransfer.Charged) {
             fileSelector.activeTransfer = activeTransfer
             fileSelector.importMode = true
-            openFileSelector(true, true)
+            openFileSelector(true)
         }
     }
 
@@ -170,11 +132,9 @@ MainView {
         if (activeTransfer !== null) {
             activeTransfer.items = results
             activeTransfer.state = ContentTransfer.Charged
-            console.debug("Import done")
-            return true
+            console.log("set activeTransfer")
         } else {
             console.log("activeTransfer null, not setting, testing code")
-            return false
         }
     }
 
@@ -183,7 +143,7 @@ MainView {
         target: ContentHub
         onExportRequested: {
             fileSelector.activeTransfer = transfer
-            openFileSelector(false, false)
+            openFileSelector(false)
         }
         onImportRequested: startImport(transfer)
         onShareRequested: startImport(transfer)
@@ -191,121 +151,17 @@ MainView {
 
     PageStack {
         id: pageStack
-
-        Tabs {
-            id: tabs
-
-            Tab {
-                title: page.title
-                page: FolderListPage {
-                    objectName: "folderPage"
-
-                    folder: userplaces.locationHome //modelData
-                }
-            }
-            Tab {
-                title: "page.title"
-                page: Page {
-                    objectName: "settingsPage"
-                }
-            }
-            Tab {
-                title: "page.title"
-                page: SettingsSheet {
-                    id: settingsPage
-                }
-            }
-
-
-            // TODO: Temporarily disabled tabs support since this is broken in the SDK (lp:1295242)
-//            Repeater {
-//                model: folderTabs
-//                delegate: Tab {
-//                    title: page.title
-//                    page: FolderListPage {
-//                        objectName: "folderPage"
-
-//                        folder: modelData
-//                    }
-//                }
-//            }
-        }
-
-        Component.onCompleted: {
-            pageStack.push(tabs)
-            pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"))
-            pageStack.pop()
-            loaded = true
-        }
     }
 
     /* Settings Storage */
-
-    U1db.Database {
-        id: storage
-        path: "ubuntu-filemanager-app.db"
-    }
-
-    U1db.Document {
-        id: settings
-
-        database: storage
-        docId: 'settings'
-        create: true
-
-        defaults: {
-            showAdvancedFeatures: false
-            collapsedSidebar: false
-        }
-    }
-
-    // Individual settings, used for bindings
-    property bool showAdvancedFeatures: false
-
-    property var viewMethod
-
-    property bool collapsedSidebar: false
-
-    function getSetting(name, def) {
-        var tempContents = {};
-        tempContents = settings.contents
-        var value = tempContents.hasOwnProperty(name)
-                ? tempContents[name]
-                : settings.defaults.hasOwnProperty(name)
-                  ? settings.defaults[name]
-                  : def
-        //print(name, JSON.stringify(def), JSON.stringify(value))
-        return value
-    }
-
-    function saveSetting(name, value) {
-        if (getSetting(name) !== value) {
-            //print(name, "=>", value)
-            var tempContents = {}
-            tempContents = settings.contents
-            tempContents[name] = value
-            settings.contents = tempContents
-
-            reloadSettings()
-        }
-    }
-
-    function showSettings() {
-        PopupUtils.open(Qt.resolvedUrl("ui/SettingsSheet.qml"), mainView)
-    }
-
-    function reloadSettings() {
-        //showAdvancedFeatures = getSetting("showAdvancedFeatures", false)
-        viewMethod = getSetting("viewMethod", wideAspect ? i18n.tr("Icons") : i18n.tr("List"))
-        collapsedSidebar = getSetting("collapsedSidebar", false)
-    }
-
-    Component.onCompleted: {
-        reloadSettings()
-    }
-
-    function getIcon(name) {
-        return "/usr/share/icons/ubuntu-mobile/actions/scalable/" + name + ".svg" //Qt.resolvedUrl("icons/" + name + ".png")
+    property alias settings: settingsObj
+    Settings {
+        id: settingsObj
+        property bool collapsedSidebar: false
+        property int viewMethod: 0  // 0=List; 1=Grid
+        property bool showHidden: false
+        property int sortOrder: 0   // 0=Ascending; 1=Descending
+        property int sortBy: 0  // 0=Name; 1=Date
     }
 
     function error(title, message) {
@@ -328,11 +184,14 @@ MainView {
                             title: (count === 1 ? i18n.tr("File %1").arg(urls[0]) : i18n.tr("%1 Files").arg(count)),
                             text: i18n.tr("Saved to: %1").arg(folder)
                         })
-        fileSelector.importMode = false
     }
 
     Keys.onPressed: {
         print("Key pressed!")
         event.accepted = tabs.currentPage.keyPressed(event.key, event.modifiers)
+    }
+
+    Component.onCompleted:  {
+        pageStack.push(Qt.resolvedUrl("ui/FolderListPage.qml"), { folder: userplaces.locationHome })
     }
 }

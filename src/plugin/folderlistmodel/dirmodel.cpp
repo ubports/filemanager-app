@@ -105,6 +105,7 @@ DirModel::DirModel(QObject *parent)
     , mAwaitingResults(false)
     , mIsRecursive(false)
     , mReadsMediaMetadata(false)
+    , mQmlCompleted(false)
     , mShowHiddenFiles(false)
     , mOnlyAllowedPaths(false)
     , mSortBy(SortByName)
@@ -221,6 +222,7 @@ QHash<int, QByteArray> DirModel::buildRoleNames() const
         roles.insert(ModifiedDateRole, QByteArray("modifiedDate"));
         roles.insert(FileSizeRole, QByteArray("fileSize"));
         roles.insert(IconSourceRole, QByteArray("iconSource"));
+        roles.insert(IconNameRole, QByteArray("iconName"));
         roles.insert(FilePathRole, QByteArray("filePath"));
         roles.insert(IsDirRole, QByteArray("isDir"));        
         roles.insert(IsHostRole, QByteArray("isHost"));
@@ -390,6 +392,8 @@ QVariant DirModel::data(const QModelIndex &index, int role) const
 
             return "image://theme/icon-m-content-document";
         }
+        case IconNameRole:
+            return DirModel::getIcon(fi.absoluteFilePath(), fi.mimeType(), fi.isWorkGroup(), fi.isBrowsable(), fi.isHost());
         case FilePathRole:
             return fi.filePath();
         case IsDirRole:
@@ -469,6 +473,12 @@ void DirModel::setPath(const QString &pathName, const QString& user, const QStri
 {
     if (pathName.isEmpty())
         return;   
+
+    if (!mQmlCompleted) {
+        qDebug() << Q_FUNC_INFO << this << "Ignoring path change request, QML is not ready yet";
+        mQmlCachePath = pathName;
+        return;
+    }
 
    if (mAwaitingResults) {
         // TODO: handle the case where pathName != our current path, cancel old
@@ -1644,7 +1654,7 @@ QString DirModel::curPathAccessedDateLocaleShort() const
 }
 
 
-DirItemInfo  DirModel::setParentIfRelative(const QString &fileOrDir) const
+DirItemInfo DirModel::setParentIfRelative(const QString &fileOrDir) const
 {
     QScopedPointer<DirItemInfo> myFi(mCurLocation->newItemInfo(fileOrDir));
     if (!myFi->isAbsolute())
@@ -1675,6 +1685,79 @@ DirSelection * DirModel::selectionObject() const
     return mSelection;
 }
 
+void DirModel::classBegin()
+{
+    // Do nothing
+}
+
+void DirModel::componentComplete()
+{
+    // WORKAROUND: DirModel fetches result asynchronously. If the mCurLocation
+    // folder is huge, this operation could take a while. Since we use this class
+    // from QML, we've got huge issue since DirModel used to start fetching results
+    // when not all the QML properties were already set. The result was that our last
+    // requests (with all the properties set) were skipped
+    // (check for ref. setPath() -> mAwaitingResults).
+    // We have therefore decided to defer any operation until everything was properly
+    // set up and initialized from the QML side.
+
+    mQmlCompleted = true;
+    setPath(mQmlCachePath);
+}
+
+QString DirModel::getIcon(const QString &path) const
+{
+    QFileInfo fi(path);
+    QMimeType mt = QMimeDatabase().mimeTypeForFile(path);
+
+    return getIcon(fi.absoluteFilePath(), mt);
+}
+
+QString DirModel::getIcon(QString absoluteFilePath, QMimeType mime, bool isSmbWorkgroup, bool isBrowsable, bool isHost)
+{
+    QString iconName = "unknown";
+
+    if (isSmbWorkgroup && QIcon::hasThemeIcon("network_local")) {
+        iconName = "network_local";
+    } else if (isBrowsable && QIcon::hasThemeIcon("folder")) {
+        iconName = "folder";
+    } else if (isHost && QIcon::hasThemeIcon("server")) {
+        iconName = "server";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) && QIcon::hasThemeIcon("desktop")) {
+        iconName = "desktop";
+    } else if (absoluteFilePath == "/") {
+        iconName = "drive-harddisk";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) && QIcon::hasThemeIcon("folder-documents")) {
+        iconName = "folder-documents";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) && QIcon::hasThemeIcon("folder-download")) {
+        iconName = "folder-download";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::HomeLocation) && QIcon::hasThemeIcon("folder-home")) {
+        iconName = "folder-home";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) && QIcon::hasThemeIcon("folder-pictures")) {
+        iconName = "folder-pictures";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::MusicLocation) && QIcon::hasThemeIcon("folder-music")) {
+        iconName = "folder-music";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::MoviesLocation) && QIcon::hasThemeIcon("folder-videos")) {
+        iconName = "folder-videos";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Templates" && QIcon::hasThemeIcon("folder-templates")) {
+        iconName = "folder-templates";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Public" && QIcon::hasThemeIcon("folder-publicshare")) {
+        iconName = "folder-publicshare";
+    } else if (absoluteFilePath == QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Programs" && QIcon::hasThemeIcon("folder-system")) {
+        iconName = "folder-system";
+    } else if (absoluteFilePath.startsWith("/media/") && QIcon::hasThemeIcon("drive-removable-media")) {
+        // In context of Ubuntu Touch this means SDCard currently.
+        iconName = "drive-removable-media";
+    } else if (absoluteFilePath.startsWith("smb://") && QIcon::hasThemeIcon("network_local")) {
+        iconName = "network_local";
+    } else if (QIcon::hasThemeIcon(mime.iconName())) {
+        iconName = mime.iconName();
+    } else if (QIcon::hasThemeIcon(mime.genericIconName())) {
+        iconName = mime.genericIconName();
+    }
+
+    return iconName;
+}
 
 void DirModel::registerMetaTypes()
 {

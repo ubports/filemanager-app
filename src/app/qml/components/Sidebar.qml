@@ -19,7 +19,6 @@
  ***************************************************************************/
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3
 
 /*!
     \qmltype Sidebar
@@ -62,8 +61,6 @@ Rectangle {
     }
 
     VerticalDivider {
-        mode: root.mode
-
         anchors {
             top: parent.top
             bottom: parent.bottom
@@ -89,7 +86,7 @@ Rectangle {
 
     default property alias contents: contents.data
 
-    Header {
+    SectionDivider {
         id: headerItem
 
         visible: text !== ""

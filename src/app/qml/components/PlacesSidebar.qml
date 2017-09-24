@@ -18,7 +18,6 @@
 import QtQuick 2.4
 import QtGraphicalEffects 1.0
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3
 import Ubuntu.Components.Popups 1.3
 
 Sidebar {
@@ -28,13 +27,11 @@ Sidebar {
     color: UbuntuColors.porcelain
     width: expanded ? (collapsed ? units.gu(8) : units.gu(22)) : 0
 
-    property bool collapsed: collapsedSidebar
+    property bool collapsed: settings.collapsedSidebar
 
     MouseArea {
         anchors.fill: parent
-        onClicked: {
-            saveSetting("collapsedSidebar", !collapsedSidebar)
-        }
+        onClicked: settings.collapsedSidebar = !settings.collapsedSidebar
     }
 
     property bool tempExpanded: false
@@ -50,7 +47,7 @@ Sidebar {
             top: parent.top
         }
 
-        Header {
+        SectionDivider {
             text: i18n.tr("Places")
         }
 
@@ -60,10 +57,21 @@ Sidebar {
 
             model: userplaces
 
-            delegate: Standard {
+            delegate: ListItem {
                 objectName: "place" + folderDisplayName(path).replace(/ /g,'')
-                text: folderDisplayName(path)
-                __foregroundColor: "black"
+                divider.visible: !collapsed
+                height: layout.height
+
+                onClicked: {
+                    goTo(model.path)
+                }
+
+                Rectangle {
+                    id: selectedHighlight
+                    anchors.fill: parent
+                    color: UbuntuColors.silk
+                    visible: folder === path
+                }
 
                 Image {
                     anchors {
@@ -75,25 +83,25 @@ Sidebar {
                     width: height
 
                     source: Qt.resolvedUrl("../icons/arrow.png")
-                    opacity: selected && collapsed ? 1 : 0
+                    opacity: selectedHighlight.visible && collapsed ? 1 : 0
 
                     Behavior on opacity {
                         UbuntuNumberAnimation {}
                     }
                 }
 
-                iconSource: model.icon || fileIcon(model.path) //using only path, model is null
+                ListItemLayout {
+                    id: layout
+                    height: units.gu(5)
+                    title.text: folderDisplayName(path)
 
-                onClicked: {
-                    goTo(model.path)
+                    Icon {
+                        height: units.gu(4)
+                        width: height
+                        name: pageModel.getIcon(model.path)
+                        SlotsLayout.position: SlotsLayout.Leading
+                    }
                 }
-
-                height: units.gu(5)
-                showDivider: !collapsed
-
-                // This refers to a parent FolderListPage.folder
-                selected: folder === path
-                iconFrame: false
             }
         }
     }

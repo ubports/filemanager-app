@@ -67,15 +67,10 @@ Popover {
 
         Row {
             spacing: units.gu(1)
-            Image {
+            Icon {
                 anchors.verticalCenter: parent.verticalCenter
-
-                // TODO: how to get proper icon?
-                source: fileIcon(root.path, model.isDir)
-                sourceSize {
-                    width: 48
-                    height: 48
-                }
+                width: units.gu(6); height: width
+                name: model.iconName
             }
 
             Label {
@@ -100,6 +95,7 @@ Popover {
                 objectName: "pathLabel"
                 text: root.path
                 color: UbuntuColors.ash
+                wrapMode: Text.WrapAnywhere
             }
 
             Label {

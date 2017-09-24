@@ -18,69 +18,32 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
-import Ubuntu.Components.ListItems 1.3 as ListItem
 
-Item {
-    id: root
+ScrollView {
+    id: folderIconView
 
     property var folderListModel
     property string folderPath: folderListModel.path
     property int count: repeater.count
-    property Flickable flickable: flickable
-    property bool smallMode: !wideAspect
 
-    Flickable {
-        id: flickable
-        clip: true
+    GridView {
+        id: view
         anchors.fill: parent
 
-        contentWidth: width
-        contentHeight: column.height
+        // This must be visible so Autopilot can see it
+        header: SectionDivider {
+            objectName: "iconViewHeader"
+            text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", folderIconView.count).arg(folderIconView.folderPath).arg(folderIconView.count)
+        }
 
-        Column {
-            id: column
+        cellWidth: units.gu(12)
+        cellHeight: units.gu(12)
 
-            anchors {
-                left: parent.left
-                top: parent.top
-                right: parent.right
-            }
-
-            // This must be visible so Autopilot can see it
-            ListItem.Header {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-
-                objectName: "iconViewHeader"
-                text: i18n.tr("%1 (%2 file)", "%1 (%2 files)", root.count).arg(root.folderPath).arg(root.count)
-                height: smallMode ? units.gu(4) : 0
-                clip: true
-            }
-
-            AutoSpacedGrid {
-                id: grid
-                width: root.width
-
-                cellCount: repeater.count
-                cellWidth: units.gu(11)
-                cellHeight: units.gu(11)
-                minSpacing: units.gu(2)
-                ySpacing: 1/2 * spacing
-
-                Repeater {
-                    id: repeater
-                    model: folderListModel
-                    delegate: FolderIconDelegate {
-
-                    }
-                }
-            }
+        model: folderListModel
+        delegate: FolderIconDelegate {
+            width: view.cellWidth
+            height: view.cellHeight
         }
     }
-
-    Scrollbar {
-        flickableItem: flickable
-    }
 }
+
