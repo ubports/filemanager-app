@@ -154,7 +154,6 @@ DirModel::DirModel(QObject *parent)
 
     // Connect signals for 'count' property
     connect(this, &DirModel::awaitingResultsChanged, this, &DirModel::countChanged);
-    connect(this, &DirModel::rowsInserted, this, &DirModel::countChanged);
     connect(this, &DirModel::rowsRemoved, this, &DirModel::countChanged);
 
     setCompareAndReorder();
@@ -625,6 +624,8 @@ void DirModel::onItemsAdded(const DirItemInfoList &newFiles)
 
         addItem(fi);
     }
+
+    Q_EMIT countChanged();
 }
 
 void DirModel::rm(const QStringList &paths)
@@ -1049,6 +1050,7 @@ void DirModel::onItemAdded(const DirItemInfo &fi)
 {
     int newRow = addItem(fi);
     emit insertedRow(newRow);
+    emit countChanged();
 }
 
 /*!
