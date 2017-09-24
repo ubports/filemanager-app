@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-24 22:03+0000\n"
+"PO-Revision-Date: 2017-09-24 22:05+0000\n"
 "Last-Translator: Daniel Frańczak <danielfranczak5@wp.pl>\n"
 "Language-Team: Polish <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/pl/>\n"
@@ -446,7 +446,7 @@ msgstr "Zapisano: %1"
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:25
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:26
 msgid "Authentication required"
-msgstr "Wymagane uwierzytelnienie"
+msgstr "Wymagane jest uwierzytelnienie"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
@@ -1064,7 +1064,7 @@ msgstr "Nie udało się zmienić nazwy"
 #: ../src/app/qml/ui/FolderListPage.qml:533
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:533
 msgid "Insufficient permissions or name already exists?"
-msgstr "Niewystarczające uprawnienia lub nazwa już istnieje."
+msgstr "Niewystarczające uprawnienia lub nazwa już istnieje?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:551
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:551
@@ -1329,7 +1329,7 @@ msgstr "Przejdź do lokalizacji"
 #: ../src/app/qml/ui/GoToDialog.qml:28
 #: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:28
 msgid "Enter a location to go to:"
-msgstr "Do jakiej lokalizacji się przenieść?"
+msgstr "Wprowadź lokalizację, aby przejść do:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:45
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPage.qml:65
