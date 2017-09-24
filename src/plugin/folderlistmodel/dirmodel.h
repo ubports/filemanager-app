@@ -55,7 +55,7 @@ class DirModel : public DirItemAbstractListModel, public QQmlParserStatus
 {
     Q_OBJECT
 
-    Q_PROPERTY(int count READ rowCount NOTIFY awaitingResultsChanged)
+    Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
     Q_PROPERTY(bool canGoBack READ canGoBack NOTIFY canGoBackChanged)
     Q_PROPERTY(bool awaitingResults READ awaitingResults NOTIFY awaitingResultsChanged)
@@ -460,6 +460,7 @@ private:
     DirItemInfoList  mDirectoryContents;
 
 signals:
+    void countChanged();
     void canGoBackChanged();
     void awaitingResultsChanged();
     void nameFiltersChanged();
