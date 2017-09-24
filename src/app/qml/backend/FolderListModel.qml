@@ -114,7 +114,7 @@ QtObject {
 
         // Properties to emulate a model entry for use by FileDetailsPopover
         property bool isDir: true
-        property string fileName: pathName(model.path)
+        property string fileName: FmUtils.pathName(model.path)
         property string filePath: model.path
         property string fileSize: model.count === 1 ? i18n.tr("%1 file").arg(model.count)
                                                     : i18n.tr("%1 files").arg(model.count)
