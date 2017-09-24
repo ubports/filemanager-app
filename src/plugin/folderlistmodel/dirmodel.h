@@ -447,17 +447,6 @@ public slots:
     void onItemsAdded(const DirItemInfoList &newFiles);
     void onItemsFetched();
 
-signals:
-    void canGoBackChanged();
-    void awaitingResultsChanged();
-    void nameFiltersChanged();
-    void filterDirectoriesChanged();
-    void isRecursiveChanged();
-    void readsMediaMetadataChanged();
-    void showDirectoriesChanged();
-    void pathChanged(const QString &newPath);
-    void error(const QString &errorTitle, const QString &errorMessage);
-
 private:
     QHash<int, QByteArray> buildRoleNames() const;
     QHash<int, QByteArray> roleNames() const;
@@ -471,6 +460,16 @@ private:
     DirItemInfoList  mDirectoryContents;
 
 signals:
+    void canGoBackChanged();
+    void awaitingResultsChanged();
+    void nameFiltersChanged();
+    void filterDirectoriesChanged();
+    void isRecursiveChanged();
+    void readsMediaMetadataChanged();
+    void showDirectoriesChanged();
+    void pathChanged(const QString &newPath);
+    void error(const QString &errorTitle, const QString &errorMessage);
+
     /*!
      * \brief needsAuthentication()
      *  This notifies the UI that the current URL being browsed needs to set
