@@ -39,7 +39,6 @@ Dialog {
                 var folderName = inputText.text.trim()
                 if (folderModel.mkdir(folderName)) {
                     folder = folderModel.path + "/" + folderName
-                    folderModel.refresh()
                 }
             } else {
                 console.log("Empty directory name, ignored")
