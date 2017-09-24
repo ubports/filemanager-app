@@ -63,13 +63,7 @@ Template.Panel {
                     "fileOperationDialog": fileOperationDialog
                 }
 
-                var dialog = PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmMultipleDeleteDialog.qml"), mainView, props)
-
-                dialog.accepted.connect(function() {
-                    selectionManager.clear()
-                    fileSelectorMode = false
-                    fileSelector.fileSelectorComponent = null
-                })
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmMultipleDeleteDialog.qml"), mainView, props)
             }
         }
     }
