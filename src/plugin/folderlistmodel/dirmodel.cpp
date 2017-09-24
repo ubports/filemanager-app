@@ -152,6 +152,14 @@ DirModel::DirModel(QObject *parent)
     connect(m_fsAction, SIGNAL(downloadTemporaryComplete(QString)),
             this,       SIGNAL(downloadTemporaryComplete(QString)));
 
+    // WORKAROUND: When a new folder or file is created in an empty folder,
+    // 'count' property is not updated.
+    connect(this, &DirModel::insertedRow, this, &DirModel::awaitingResultsChanged);
+
+    // WORKAROUND: The same applies when the only file/folder is removed.
+    // TODO: There might be other cases still uncovered?
+    connect(m_fsAction, &FileSystemAction::removed, this, &DirModel::awaitingResultsChanged);
+
     setCompareAndReorder();
 
     if (QIcon::themeName().isEmpty() && !FMUtil::hasTriedThemeName()) {

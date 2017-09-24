@@ -20,6 +20,8 @@ import com.ubuntu.filemanager 1.0
 
 import "../backend"
 
+// FIXME: Update model when a folder is removed from the path we have stored
+
 ListView {
     id: rootItem
     anchors { left: parent.left; right: parent.right }
