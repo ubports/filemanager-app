@@ -13,7 +13,7 @@ PageHeader {
     property FolderListModel folderModel
     property var selectionManager: folderModel.model.selectionObject
 
-    title: folderModel.basename(folderModel.path)
+    title: FmUtils.basename(folderModel.path)
 
     contents: ListItemLayout {
         anchors.verticalCenter: parent.verticalCenter

@@ -47,7 +47,7 @@ Page {
 
                 ListItemLayout {
                     anchors.fill: parent
-                    title.text: folderModel.pathTitle(model.path)
+                    title.text: FmUtils.pathTitle(model.path)
 
                     Icon {
                         SlotsLayout.position: SlotsLayout.Leading

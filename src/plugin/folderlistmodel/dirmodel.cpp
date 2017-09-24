@@ -1663,9 +1663,6 @@ QString DirModel::getIcon(QString absoluteFilePath, QMimeType mime, bool isSmbWo
     if (isSmbWorkgroup && QIcon::hasThemeIcon("network_local")) {
         iconName = "network_local";
 
-    } else if (isBrowsable && QIcon::hasThemeIcon("folder")) {
-        iconName = "folder";
-
     } else if (isHost && QIcon::hasThemeIcon("server")) {
         iconName = "server";
 
@@ -1718,6 +1715,9 @@ QString DirModel::getIcon(QString absoluteFilePath, QMimeType mime, bool isSmbWo
 
     } else if (absoluteFilePath.startsWith("smb://") && QIcon::hasThemeIcon("network_local")) {
         iconName = "network_local";
+
+    } else if (isBrowsable && QIcon::hasThemeIcon("folder")) {
+        iconName = "folder";
 
     } else if (QIcon::hasThemeIcon(mime.iconName())) {
         iconName = mime.iconName();

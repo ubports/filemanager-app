@@ -64,6 +64,8 @@ void Archives::extractArchive(const QString program, const QStringList arguments
 
     _process = new QProcess(this);
 
+    connect(_process, &QProcess::stateChanged, this, &Archives::extractingChanged);
+
     // Connect to internal slots in order to have one unified onFinished slot handling both events for QML.
     connect(_process,
             static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>
@@ -75,6 +77,31 @@ void Archives::extractArchive(const QString program, const QStringList arguments
             _process, &QProcess::kill);
 
     _process->start(program, arguments);
+}
+
+bool Archives::extract(const QString path, const QString destination)
+{
+    if (path.lastIndexOf(".zip")) {
+        extractZip(path, destination);
+        return true;
+    }
+
+    if (path.lastIndexOf(".tar")) {
+        extractTar(path, destination);
+        return true;
+    }
+
+    if (path.lastIndexOf(".tar.gz")) {
+        extractGzipTar(path, destination);
+        return true;
+    }
+
+    if (path.lastIndexOf(".tar.bz2")) {
+        extractBzipTar(path, destination);
+        return true;
+    }
+
+    return false;
 }
 
 void Archives::cancelArchiveExtraction()

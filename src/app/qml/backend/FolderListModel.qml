@@ -28,8 +28,8 @@ QtObject {
     id: folderModel
 
     property alias path: __model.path
-    property string title: pathTitle(path)
-    property string folder: pathName(path)
+    property string title: FmUtils.pathName(path)
+    property string folder: FmUtils.pathName(path)
 
     property alias count: __model.count
 
@@ -67,74 +67,6 @@ QtObject {
         model.refresh()
     }
 
-    function pathAccessedDate() {
-        console.log("calling method model.curPathAccessedDate()")
-        return model.curPathAccessedDate()
-    }
-
-    function pathModifiedDate() {
-        console.log("calling method model.curPathModifiedDate()")
-        return model.curPathModifiedDate()
-    }
-
-    function pathIsWritable() {
-        console.log("calling method model.curPathIsWritable()")
-        return model.curPathIsWritable()
-    }
-
-    function fileType(type, description) {
-        if (type in fileTypes) {
-            description = fileTypes[type]
-        } else {
-            print(type)
-        }
-
-        return capitalize(description)
-    }
-
-    function pathTitle(folder) {
-        if (folder === places.locationHome) {
-            return i18n.tr("Home")
-        } else if (folder === "/") {
-            return i18n.tr("My Device")
-        } else if (folder === places.locationSamba) {
-            return i18n.tr("Network")
-        } else {
-            return basename(folder)
-        }
-    }
-
-    function pathName(folder) {
-        if (folder === "/") {
-            return "/"
-        } else {
-            return basename(folder)
-        }
-    }
-
-    function basename(folder) {
-        // Returns the latest component (folder) of an absolute path
-        // E.g. basename('/home/phablet/Música') returns 'Música'
-
-        // Remove the last trailing '/' if there is one
-
-        folder.replace(/\/$/, "")
-        return folder.substr(folder.lastIndexOf('/') + 1)
-    }
-
-    function pathExists(path) {
-        path = path.replace("~", model.homePath())
-
-        if (path === '/')
-            return true
-
-        if (path.charAt(0) === '/') {
-           return model.existsDir(path)
-        } else {
-            return false
-        }
-    }
-
     function getArchiveType(fileName) {
         var splitName = fileName.split(".")
         var fileExtension = splitName[splitName.length - 1]
@@ -145,10 +77,6 @@ QtObject {
         } else {
             return ""
         }
-    }
-
-    function capitalize(string) {
-        return string.substring(0, 1).toUpperCase() + string.substring(1)
     }
 
     function extractArchive(filePath, fileName, archiveType) {
@@ -175,29 +103,7 @@ QtObject {
 
         folderModel.model.mkdir(extractDirectory) // This is needed for the tar command as the given destination has to be an already existing directory
 
-        if (archiveType === "zip") {
-            archives.extractZip(filePath, extractDirectory)
-        } else if (archiveType === "tar") {
-            archives.extractTar(filePath, extractDirectory)
-        } else if (archiveType === "tar.gz") {
-            archives.extractGzipTar(filePath, extractDirectory)
-        } else if (archiveType === "tar.bz2") {
-            archives.extractBzipTar(filePath, extractDirectory)
-        }
-    }
-
-    function newFileUniqueName(filePath, fileName) {
-        var fileBaseName = fileName.substring(0, fileName.lastIndexOf("."))
-        var fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1)
-        var fullName = filePath + "/" + fileName
-        var index = 1
-
-        while (pageModel.model.existsFile(fullName)) {
-            fullName = filePath + "/" + fileBaseName + "-" + index + "." + fileExtension;
-            index++
-        }
-
-        return fullName.substring(fullName.lastIndexOf("/") + 1);
+        archives.extract(filePath, extractDirectory)
     }
 
     // TODO: Set onlyAllowedPaths for restricted user accounts

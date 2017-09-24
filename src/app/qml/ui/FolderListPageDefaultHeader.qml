@@ -13,7 +13,7 @@ PageHeader {
     property var folderModel
     property var showPanelAction
 
-    title: folderModel.basename(folderModel.path)
+    title: FmUtils.basename(folderModel.path)
 
     contents: ListItemLayout {
         anchors.verticalCenter: parent.verticalCenter
