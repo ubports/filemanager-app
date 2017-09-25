@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-07 21:27+0000\n"
-"Last-Translator: Mike <miguel2000@livecom.it>\n"
+"PO-Revision-Date: 2017-09-20 21:09+0000\n"
+"Last-Translator: Stefano Melchior <stefano.melchior@me.com>\n"
 "Language-Team: Italian <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/it/>\n"
 "Language: it\n"
@@ -67,9 +67,8 @@ msgstr "Salva il documento sul disco"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:174
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:174
-#, fuzzy
 msgid "Save &As..."
-msgstr "Salva Come..."
+msgstr "Salv&a Come..."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:176
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:176
@@ -78,9 +77,8 @@ msgstr "Salva il documento con un nuovo nome"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:180
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:180
-#, fuzzy
 msgid "E&xit"
-msgstr "Esci"
+msgstr "Chiudi"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:183
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:183
@@ -89,7 +87,6 @@ msgstr "Chiudi l'applicazione"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:187
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:187
-#, fuzzy
 msgid "Cu&t"
 msgstr "Taglia"
 
@@ -110,7 +107,6 @@ msgstr "Copia il contenuto della selezione corrente"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:200
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:200
-#, fuzzy
 msgid "&Paste"
 msgstr "Incolla"
 
@@ -121,15 +117,13 @@ msgstr "Incolla il contenuto degli appunti nella selezione corrente"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:206
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:206
-#, fuzzy
 msgid "&About"
-msgstr "Riguardo"
+msgstr "Informazioni"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:207
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:207
-#, fuzzy
 msgid "Show the application's About box"
-msgstr "Mostra il riquadro di Info dell'aplicazione"
+msgstr "Mostrare il riquadro Informazioni dell'aplicazione"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:211
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:211
@@ -138,25 +132,21 @@ msgstr "Riguardo &Qt"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:212
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:212
-#, fuzzy
 msgid "Show the Qt library's About box"
-msgstr "Mostra il riquadro di Info dilla libreria Qt"
+msgstr "Mostra il riquadro di Informazioni della libreria Qt"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:231
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:231
-#, fuzzy
 msgid "&File"
 msgstr "&File"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:242
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:242
-#, fuzzy
 msgid "&Edit"
 msgstr "Modifica"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:249
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:249
-#, fuzzy
 msgid "&Help"
 msgstr "Aiuto"
 
@@ -210,12 +200,12 @@ msgstr "File caricato"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:355
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:355
-#, fuzzy, qt-format
+#, qt-format
 msgid ""
 "Cannot write file %1:\n"
 "%2."
 msgstr ""
-"Non riesco a scrivere il file %1:\n"
+"Impossibile scrivere il file %1:\n"
 "%2."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:371
@@ -1070,7 +1060,7 @@ msgstr "Impossibile rinominare"
 #: ../src/app/qml/ui/FolderListPage.qml:533
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:533
 msgid "Insufficient permissions or name already exists?"
-msgstr "Permessi insufficienti o nome già esistente"
+msgstr "Permessi insufficienti o nome già esistente?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:551
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:551

@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-05 17:59+0000\n"
-"Last-Translator: Gerd Sänger <gerdsaenger@t-online.de>\n"
-"Language-Team: German <https://ubpweblate.tnvcomp.com/projects/ubports"
+"PO-Revision-Date: 2017-09-17 19:21+0000\n"
+"Last-Translator: Bjarne Roß <ross.b@freenet.de>\n"
+"Language-Team: German <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -1267,7 +1267,7 @@ msgstr "~/Vorlagen"
 #: ../src/app/qml/ui/FolderListPage.qml:890
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:890
 msgid "Home"
-msgstr "Hauptseite"
+msgstr "Persönlicher Ordner"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:894
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:894

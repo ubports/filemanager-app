@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-06 06:44+0000\n"
-"Last-Translator: Francisco Molinero <paco@byasl.com>\n"
-"Language-Team: Spanish <https://ubpweblate.tnvcomp.com/projects/ubports"
+"PO-Revision-Date: 2017-09-21 21:50+0000\n"
+"Last-Translator: advocatux <advocatux@airpost.net>\n"
+"Language-Team: Spanish <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -997,7 +997,7 @@ msgstr "Eliminar"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:499
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "¿Quiere eliminar «%1» permanentemente?"
+msgstr "¿Quiere eliminar '%1' permanentemente?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:504
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:504
@@ -1071,7 +1071,7 @@ msgstr "¿Permisos insuficientes o el nombre ya existe?"
 #: ../src/app/qml/ui/FolderListPage.qml:551
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:551
 msgid "Extract Archive"
-msgstr "Extraer archivador"
+msgstr "Extraer archivo"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:552
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:552
@@ -1083,7 +1083,7 @@ msgstr "Extraer archivador"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:552
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr "¿Confirma que quiere extraer «%1» aquí?"
+msgstr "¿Confirma que quiere extraer '%1' aquí?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:584
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:584
@@ -1135,7 +1135,7 @@ msgstr "Compartir"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:643
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:764
 msgid "Extract archive"
-msgstr "Extraer archivador"
+msgstr "Extraer archivo"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:674
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:674
@@ -1145,7 +1145,7 @@ msgstr "Extraer archivador"
 #: ../src/app/qml/ui/FolderListPage.qml:674
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:674
 msgid "File operation error"
-msgstr "Error de operación de archivos"
+msgstr "Error de operación de archivo"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:705
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:705
@@ -1157,7 +1157,7 @@ msgstr "Error de operación de archivos"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:705
 #, qt-format
 msgid "Extracting archive '%1'"
-msgstr "Extrayendo archivador «%1»"
+msgstr "Extrayendo archivo '%1'"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:741
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:741
@@ -1180,7 +1180,7 @@ msgstr "Falló la extracción"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:742
 #, qt-format
 msgid "Extracting the archive '%1' failed."
-msgstr "Falló la extracción del archivador «%1»."
+msgstr "Falló la extracción del archivo '%1'."
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:756
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:756
@@ -1191,7 +1191,7 @@ msgstr "Falló la extracción del archivador «%1»."
 #: ../src/app/qml/ui/FolderListPage.qml:756
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:756
 msgid "Archive file"
-msgstr "Archivador"
+msgstr "Archivo de almacenamiento"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:757
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:757
@@ -1202,7 +1202,7 @@ msgstr "Archivador"
 #: ../src/app/qml/ui/FolderListPage.qml:757
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:757
 msgid "Do you want to extract the archive here?"
-msgstr "¿Quiere extraer el archivador aquí?"
+msgstr "¿Quiere extraer el archivo aquí?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:774
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:774
@@ -1325,7 +1325,7 @@ msgstr "Ir a ubicación"
 #: ../src/app/qml/ui/GoToDialog.qml:28
 #: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:28
 msgid "Enter a location to go to:"
-msgstr "Escriba la ubicación a abrir:"
+msgstr "Escriba la ubicación a la que ir:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:45
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPage.qml:65
@@ -1562,7 +1562,7 @@ msgstr "elementos"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:327
 msgid "File or Directory does not exist"
-msgstr "El archivo o carpeta no existe"
+msgstr "El archivo o directorio no existe"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:328
 msgid " does not exist"
@@ -1591,11 +1591,12 @@ msgstr "No se pudo eliminar el elemento "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:733
 msgid "Could not find a suitable name to backup"
-msgstr "No se pudo encontrar un nombre apto para el respaldo"
+msgstr ""
+"No se pudo encontrar un nombre adecuado para realizar la copia de seguridad"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:791
 msgid "Could not create the directory"
-msgstr "No se pudo crear la carpeta"
+msgstr "No se pudo crear el directorio"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:800
 msgid "Could not create link to"
@@ -1619,7 +1620,7 @@ msgstr "No se pudo crear el archivo"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:920
 msgid "Could not remove the directory/file "
-msgstr "No se pudo eliminar el archivo o carpeta "
+msgstr "No se pudo eliminar el archivo/directorio "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:936
 msgid "Could not move the directory/file "
@@ -1643,11 +1644,11 @@ msgstr "Error al establecer permisos en "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1579
 msgid "Could not create trash info file"
-msgstr "No se pudo crear el archivo de información .trash"
+msgstr "No se pudo crear el archivo de información de la papelera"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1592
 msgid "Could not remove the trash info file"
-msgstr "No se pudo eliminar el archivo .trashinfo"
+msgstr "No se pudo eliminar el archivo de información de la papelera"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1617
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1625
