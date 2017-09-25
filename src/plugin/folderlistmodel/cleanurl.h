@@ -34,14 +34,16 @@ class CleanUrl
 public:
     CleanUrl(const QString &urlPath);
     ~CleanUrl();
-    bool         hasAuthenticationData() const;
-    QString      cleanUrl() const;
-    QString      user() const;
-    QString      password() const; 
+
+    bool hasAuthenticationData() const;
+    QString cleanUrl() const;
+    QString user() const;
+    QString password() const;
+
 private:
     QString      m_url;   //!<  keeps the url without user/password
-    QString    * m_user;
-    QString    * m_password;
+    QString     *m_user;
+    QString     *m_password;
 };
 
 #endif // CLEANURL_H

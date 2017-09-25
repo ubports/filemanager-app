@@ -34,20 +34,21 @@ PamAuthentication::PamAuthentication(QObject *parent) :
     m_userLogin = qgetenv("USER");
 }
 
-PamAuthentication::~PamAuthentication() {
+PamAuthentication::~PamAuthentication()
+{
 
 }
 
-void
-PamAuthentication::setServiceName(const QString &serviceName) {
+void PamAuthentication::setServiceName(const QString &serviceName)
+{
     if (serviceName != m_serviceName) {
         m_serviceName = serviceName;
         emit serviceNameChanged();
     }
 }
 
-bool
-PamAuthentication::requireAuthentication() {
+bool PamAuthentication::requireAuthentication()
+{
     QDBusInterface dbus_iface(UNITYGREETER_SERVICE, UNITYGREETER_PATH, UNITYGREETER_INTERFACE);
 
     qDebug() << Q_FUNC_INFO << "Querying if authentication required";
@@ -70,8 +71,8 @@ PamAuthentication::requireAuthentication() {
     return true;
 }
 
-bool
-PamAuthentication::validatePasswordToken(const QString &token) {
+bool PamAuthentication::validatePasswordToken(const QString &token)
+{
     pam_handle *pamHandle = 0;
     if (!initPam(&pamHandle)) {
         qDebug() << Q_FUNC_INFO << "Pam init failed";
@@ -92,8 +93,8 @@ PamAuthentication::validatePasswordToken(const QString &token) {
     return status == PAM_SUCCESS;
 }
 
-int
-PamAuthentication::validateAccount(pam_handle *pamHandle) {
+int PamAuthentication::validateAccount(pam_handle *pamHandle)
+{
     // This makes sure account and password are still valid
     int status = pam_acct_mgmt(pamHandle, 0);
     qDebug() << Q_FUNC_INFO << "pam_acct_mgmt: " << status << pam_strerror(pamHandle, status);
@@ -112,8 +113,7 @@ PamAuthentication::validateAccount(pam_handle *pamHandle) {
     return status;
 }
 
-bool
-PamAuthentication::initPam(pam_handle **pamHandle)
+bool PamAuthentication::initPam(pam_handle **pamHandle)
 {
     pam_conv conversation;
     conversation.conv = ConversationFunction;
@@ -123,48 +123,41 @@ PamAuthentication::initPam(pam_handle **pamHandle)
                      &conversation, pamHandle) == PAM_SUCCESS;
 }
 
-int PamAuthentication::ConversationFunction(int num_msg,
-                                            const pam_message **msg,
-                                            pam_response **resp,
-                                            void* appdata_ptr)
+int PamAuthentication::ConversationFunction(int num_msg, const pam_message **msg,
+                                            pam_response **resp, void *appdata_ptr)
 {
     if (num_msg <= 0) {
         return PAM_CONV_ERR;
     }
 
-    *resp = static_cast<pam_response*>(calloc(num_msg, sizeof(pam_response)));
+    *resp = static_cast<pam_response *>(calloc(num_msg, sizeof(pam_response)));
 
-    PamAuthentication *self = static_cast<PamAuthentication*>(appdata_ptr);
+    PamAuthentication *self = static_cast<PamAuthentication *>(appdata_ptr);
 
     for (int count = 0; count < num_msg; ++count) {
         switch (msg[count]->msg_style) {
-        case PAM_PROMPT_ECHO_ON:
-        {
+        case PAM_PROMPT_ECHO_ON: {
             qDebug() << Q_FUNC_INFO << "PAM_PROMPT_ECHO_ON received";
             resp[count]->resp = strdup(self->m_passwordToken.toLocal8Bit().data());
             resp[count]->resp_retcode = 0;
             break;
         }
-        case PAM_PROMPT_ECHO_OFF:
-        {
+        case PAM_PROMPT_ECHO_OFF: {
             qDebug() << Q_FUNC_INFO << "PAM_PROMPT_ECHO_OFF received";
             resp[count]->resp = strdup(self->m_passwordToken.toLocal8Bit().data());
             resp[count]->resp_retcode = 0;
             break;
         }
-        case PAM_TEXT_INFO:
-        {
+        case PAM_TEXT_INFO: {
             QString message(msg[count]->msg);
             qDebug() << Q_FUNC_INFO << "PAM_TEXT_INFO received" << message;
             break;
         }
-        case PAM_AUTHTOK:
-        {
+        case PAM_AUTHTOK: {
             qDebug() << Q_FUNC_INFO << "PAM_AUTHTOK received";
             break;
         }
-        default:
-        {
+        default: {
             qDebug() << Q_FUNC_INFO << "Other PAM msg received: " << msg[count]->msg_style;
         }
         }

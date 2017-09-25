@@ -13,7 +13,7 @@ PageHeader {
     property var folderModel
     property var showPanelAction
 
-    title: folderModel.basename(folderModel.path)
+    title: FmUtils.basename(folderModel.path)
 
     contents: ListItemLayout {
         anchors.verticalCenter: parent.verticalCenter
@@ -39,24 +39,17 @@ PageHeader {
 
     leadingActionBar.actions: showPanelAction.visible ? showPanelAction : placesPageAction
 
-    trailingActionBar.numberOfSlots: 4
+    trailingActionBar.numberOfSlots: 3
     trailingActionBar.actions: [
         FMActions.Settings {
             onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), mainView, { folderListModel: folderModel.model })
-        },
-
-        FMActions.Search {
-            onTriggered: {
-                print(text)
-                search = true
-            }
         },
 
         FMActions.NewFolder {
             visible: folderModel.model.isWritable
             onTriggered: {
                 print(text)
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/CreateFolderDialog.qml"), mainView, { folderModel: folderModel.model })
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/CreateItemDialog.qml"), mainView, { folderModel: folderModel.model })
             }
         },
 

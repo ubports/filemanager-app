@@ -64,7 +64,7 @@ struct QTrashUtilInfo;
  */
 
 class QTrashDir
-{   
+{
 public:
     explicit QTrashDir();
 
@@ -72,7 +72,7 @@ public:
      * \brief homeTrash() gets/crates the curret Home Trash Dir
      * \return the Trash Dir, it can be empty when it cannot be created
      */
-    QString       homeTrash() const;
+    QString homeTrash() const;
 
     /*!
      * \brief allTrashes() makes a list of all Trashes avaialable to the user
@@ -84,34 +84,35 @@ public:
      *
      * \return a list of all Trashes for the current user.
      */
-    QStringList   allTrashes() const;
+    QStringList allTrashes() const;
 
     /*!
      * \brief suitableTrash() gets/creates a Trash Dir for a such file/dir
      * \param fullPathName  a file or dir intended to be sent to Trash
      * \return the Trash Dir, it can be empty when it cannot be created
      */
-    QString       suitableTrash(const QString &fullPathName) const;
+    QString suitableTrash(const QString &fullPathName) const;
+    bool suitableTrash(const QString &fullPathName, QTrashUtilInfo &fullInfo) const;
 
-    bool          suitableTrash(const QString &fullPathName, QTrashUtilInfo& fullInfo) const;
-
-
-private:          
-    bool          validate(const QString& trashDir, bool create=false) const;
-    bool          isMountPointSharedWithStickBit(const QString& mountPoint) const;
-    bool          checkUserDirPermissions(const QString& dir) const;
-    bool          createUserDir(const QString& dir) const;
-    QStringList   mountedPoints() const;
-    QString       getMountPoint(const QString& fileOrDir) const;
-    QString       getSuitableTopTrashDir(const QString& mountPoint) const;
-    QString       getSharedTopTrashDir(const QString& mountPoint) const;
-    QString       getSingleTopTrashDir(const QString& mountPoint, bool create = false) const;
 
 private:
-    uint          m_userId;
-#if defined(REGRESSION_TEST_FOLDERLISTMODEL) //used in Unit/Regression tests
-   friend class TestDirModel;
+    bool validate(const QString &trashDir, bool create = false) const;
+    bool isMountPointSharedWithStickBit(const QString &mountPoint) const;
+    bool checkUserDirPermissions(const QString &dir) const;
+    bool createUserDir(const QString &dir) const;
+    QStringList mountedPoints() const;
+    QString getMountPoint(const QString &fileOrDir) const;
+    QString getSuitableTopTrashDir(const QString &mountPoint) const;
+    QString getSharedTopTrashDir(const QString &mountPoint) const;
+    QString getSingleTopTrashDir(const QString &mountPoint, bool create = false) const;
+
+private:
+    uint m_userId;
+
+#if defined(REGRESSION_TEST_FOLDERLISTMODEL) // used in Unit/Regression tests
+    friend class TestDirModel;
 #endif
+
 };
 
 #endif // QTRASHDIR_H

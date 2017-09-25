@@ -4,6 +4,8 @@ set(filemanager_SRCS
     main.cpp
     patharrowbackground.cpp
     patharrowbackground.h
+    fmutils.cpp
+    fmutils.h
     ${QML_SRCS}
 )
 

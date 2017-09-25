@@ -24,27 +24,32 @@
 #include <QFileInfo>
 #include <QStringList>
 
-class MtabFileGuard {
+class MtabFileGuard
+{
     FILE *mtabFile;
 
 public:
-    MtabFileGuard(FILE *f) {
+    MtabFileGuard(FILE *f)
+    {
         mtabFile = f;
     }
-    ~MtabFileGuard() {
+    ~MtabFileGuard()
+    {
         endmntent(mtabFile);
     }
 };
 
-QMtabParser::QMtabParser(const QString& path, QObject *parent)
-    : QObject(parent) {
+QMtabParser::QMtabParser(const QString &path, QObject *parent)
+    : QObject(parent)
+{
     m_path = path.isEmpty() ? _PATH_MOUNTED : path;
 }
 
 QMtabParser::~QMtabParser() {}
 
 QList<QMtabEntry>
-QMtabParser::parseEntries() {
+QMtabParser::parseEntries()
+{
     QList<QMtabEntry> entries;
 
     FILE *f = setmntent(m_path.toLocal8Bit().data(), "r");

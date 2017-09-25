@@ -68,7 +68,7 @@ Dialog {
         ListItemLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            title.text: folderModel.pathTitle(model.filePath)
+            title.text: FmUtils.pathTitle(model.filePath)
             subtitle.text: model.mimeTypeDescription
             summary.text: model.fileSize
         }

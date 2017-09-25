@@ -59,8 +59,7 @@ Location::Location(int type, QObject *parent)
 
 Location::~Location()
 {
-    if (m_info)
-    {
+    if (m_info) {
         delete m_info;
         m_info = 0;
     }
@@ -69,7 +68,7 @@ Location::~Location()
 
 bool Location::isRoot() const
 {
-     return m_info ? m_info->isRoot() : false;
+    return m_info ? m_info->isRoot() : false;
 }
 
 
@@ -91,8 +90,7 @@ void Location::setInfoItem(const DirItemInfo &itemInfo)
 
 void Location::setInfoItem(DirItemInfo *itemInfo)
 {
-    if (m_info)
-    {
+    if (m_info) {
         delete m_info;
     }
     m_info = itemInfo;
@@ -101,7 +99,7 @@ void Location::setInfoItem(DirItemInfo *itemInfo)
 
 QString Location::urlPath() const
 {
-    return m_info ? m_info->urlPath(): QString();
+    return m_info ? m_info->urlPath() : QString();
 }
 
 
@@ -116,7 +114,7 @@ void Location::stopWorking()
 }
 
 
-IOWorkerThread * Location::workerThread() const
+IOWorkerThread *Location::workerThread() const
 {
     return ioWorkerThread();
 }
@@ -141,8 +139,8 @@ void Location::fetchExternalChanges(const QString &path,
  */
 void Location::setUsingExternalWatcher(bool use)
 {
-   Q_UNUSED(use)
-   m_usingExternalWatcher = false;
+    Q_UNUSED(use)
+    m_usingExternalWatcher = false;
 }
 
 
@@ -161,7 +159,7 @@ void Location::setAuthentication(const QString &user,
 
 {
     Q_UNUSED(user);
-    Q_UNUSED(password);   
+    Q_UNUSED(password);
 }
 
 /*!
@@ -199,28 +197,25 @@ QString  Location::currentAuthenticationPassword()
  */
 void Location::notifyItemNeedsAuthentication(const DirItemInfo *item)
 {
-    if (item == 0)
-    {
+    if (item == 0) {
         item = m_info;
     }
-    if (item != 0)
-    {
+    if (item != 0) {
         emit needsAuthentication(currentAuthenticationUser(), item->urlPath());
     }
 }
 
 
 
-bool Location::useAuthenticationDataIfExists(const DirItemInfo& item)
+bool Location::useAuthenticationDataIfExists(const DirItemInfo &item)
 {
     NetAuthenticationDataList *authData = NetAuthenticationDataList::getInstance(this);
     const NetAuthenticationData *auth = authData->get(item.authenticationPath());
     bool ret = false;
     if (auth && !(     auth->user      == currentAuthenticationUser()
-                   &&  auth->password  == currentAuthenticationPassword()
+                       &&  auth->password  == currentAuthenticationPassword()
                  )
-       )
-    {
+       ) {
         setAuthentication(auth->user, auth->password);
         ret =  true;
     }
@@ -232,8 +227,7 @@ bool Location::useAuthenticationDataIfExists(const DirItemInfo& item)
 
 void Location::refreshInfo()
 {
-    if (m_info)
-    {
+    if (m_info) {
         DirItemInfo *item = newItemInfo(m_info->absoluteFilePath());
         delete m_info;
         m_info = item;
@@ -244,17 +238,13 @@ void Location::refreshInfo()
 bool Location::becomeParent()
 {
     bool ret = false;
-    if (m_info && !m_info->isRoot())
-    {
+    if (m_info && !m_info->isRoot()) {
         DirItemInfo *other = newItemInfo(m_info->absolutePath());
-        if (other->isValid())
-        {
+        if (other->isValid()) {
             delete m_info;
             m_info = other;
             ret = true;
-        }
-        else
-        {
+        } else {
             delete other;
         }
     }
@@ -262,24 +252,23 @@ bool Location::becomeParent()
 }
 
 
-DirItemInfo * Location::validateUrlPath(const QString & uPath)
+DirItemInfo *Location::validateUrlPath(const QString &uPath)
 {
     QString myPath(uPath);
-    DirItemInfo * item = newItemInfo(myPath);
-    if (item->isRelative() && m_info)
-    {
+    DirItemInfo *item = newItemInfo(myPath);
+    if (item->isRelative() && m_info) {
         item->setFile(m_info->urlPath(), uPath);
         myPath  =  item->urlPath();
     }
 
 #if DEBUG_MESSAGES
-    qDebug() << Q_FUNC_INFO << "path:" << myPath << "needsAuthentication:" << item->needsAuthentication();
+    qDebug() << Q_FUNC_INFO << "path:" << myPath << "needsAuthentication:" <<
+             item->needsAuthentication();
 #endif
 
     // the isContentReadable() is not checked here
     // because it will be false when authentication is required
-    if (!item->isValid() || !item->exists())
-    {
+    if (!item->isValid() || !item->exists()) {
         delete item;
         item = 0;
     }
@@ -290,17 +279,14 @@ DirItemInfo * Location::validateUrlPath(const QString & uPath)
 void Location::fetchItems(QDir::Filters dirFilter, bool recursive)
 {
     //it should never happen here
-    if (m_info->needsAuthentication())
-    {
+    if (m_info->needsAuthentication()) {
         emit needsAuthentication(currentAuthenticationUser(), m_info->absoluteFilePath());
-    }
-    else
-    {
+    } else {
         DirListWorker *dlw  = newListWorker(m_info->absoluteFilePath(), dirFilter, recursive);
         connect(dlw,  SIGNAL(itemsAdded(DirItemInfoList)),
                 this, SIGNAL(itemsAdded(DirItemInfoList)));
         connect(dlw,  SIGNAL(workerFinished()),
-            this,     SIGNAL(itemsFetched()));
+                this,     SIGNAL(itemsFetched()));
         workerThread()->addRequest(dlw);
     }
 }
@@ -322,8 +308,7 @@ bool Location::isThereDiskSpace(const QString &pathname, qint64 requiredSize)
  */
 const DirItemInfo *Location::currentInfo()
 {
-    if (m_info == 0)
-    {
+    if (m_info == 0) {
         m_info = new DirItemInfo();
     }
     refreshInfo(); //update information

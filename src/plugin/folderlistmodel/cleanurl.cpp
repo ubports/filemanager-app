@@ -26,20 +26,21 @@
 CleanUrl::CleanUrl(const QString &urlPath) : m_user(0), m_password(0)
 {
     QUrl  url(urlPath);
-    if (url.isValid())
-    {
+
+    if (url.isValid()) {
         QString user = url.userName();
-        if (!user.isEmpty())
-        {
-            m_user     = new QString(user);
+
+        if (!user.isEmpty()) {
+            m_user = new QString(user);
             m_password = new QString(url.password());
+
             url.setPassword(QLatin1String(0));
             url.setUserName(QLatin1String(0));
         }
+
         m_url = url.toString();
-    }
-    else
-    {
+
+    } else {
         m_url = urlPath;
     }
 }
@@ -47,8 +48,13 @@ CleanUrl::CleanUrl(const QString &urlPath) : m_user(0), m_password(0)
 
 CleanUrl::~CleanUrl()
 {
-    if (m_user)     { delete m_user; }
-    if (m_password) { delete m_password;}
+    if (m_user) {
+        delete m_user;
+    }
+
+    if (m_password) {
+        delete m_password;
+    }
 }
 
 

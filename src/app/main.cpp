@@ -32,6 +32,9 @@
 // UI
 #include "patharrowbackground.h"
 
+// Utils
+#include "fmutils.h"
+
 int main(int argc, char *argv[])
 {
     QGuiApplication a(argc, argv);
@@ -110,6 +113,9 @@ int main(int argc, char *argv[])
 
     view.engine()->rootContext()->setContextProperty("tablet", QVariant(false));
     view.engine()->rootContext()->setContextProperty("phone", QVariant(false));
+
+    view.engine()->rootContext()->setContextProperty("FmUtils", new FMUtils());
+
 
     if (args.contains("-t") || args.contains("--tablet")) {
         qDebug() << "running in tablet mode";

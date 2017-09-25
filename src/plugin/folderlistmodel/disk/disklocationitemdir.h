@@ -26,19 +26,19 @@
 
 class QDir;
 
-
 class DiskLocationItemDir : public LocationItemDir
 {
 public:
-    DiskLocationItemDir(const QString& dir = QLatin1String(0) );
-   ~DiskLocationItemDir();
+    DiskLocationItemDir(const QString &dir = QLatin1String(0) );
+    ~DiskLocationItemDir();
+
 public:
-    virtual bool    exists()                   const;
-    virtual bool    mkdir(const QString& dir)  const;
-    virtual bool    mkpath(const QString& dir) const;
-    virtual bool    rmdir(const QString& dir)  const;
+    virtual bool exists() const;
+    virtual bool mkdir(const QString &dir) const;
+    virtual bool mkpath(const QString &dir) const;
+    virtual bool rmdir(const QString &dir) const;
 private:
-    QDir  * m_qtQDir;
+    QDir *m_qtQDir;
 
 };
 

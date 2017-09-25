@@ -30,11 +30,14 @@ NetworkLocation::NetworkLocation(int type, QObject *parent): Location(type, pare
 
 
 
-DirListWorker * NetworkLocation::newListWorker(const QString &urlPath, QDir::Filters filter, const bool isRecursive)
+DirListWorker *NetworkLocation::newListWorker(const QString &urlPath, QDir::Filters filter,
+                                              const bool isRecursive)
 {
-    QDirIterator::IteratorFlags flags = isRecursive ? QDirIterator::Subdirectories : QDirIterator::NoIteratorFlags;
+    QDirIterator::IteratorFlags flags = isRecursive ? QDirIterator::Subdirectories :
+                                        QDirIterator::NoIteratorFlags;
 
-    LocationItemDirIterator *dirIterator  = newDirIterator(urlPath,filter,flags,LocationItemDirIterator::LoadLater);
+    LocationItemDirIterator *dirIterator  = newDirIterator(urlPath, filter, flags,
+                                                           LocationItemDirIterator::LoadLater);
     DirItemInfo             *baseitemInfo = newItemInfo(QLatin1String(0));
     // the NetworkListWorker object takes ownership of baseitemInfo and also creates its own copy of m_info
     return new NetworkListWorker(dirIterator, baseitemInfo, m_info);

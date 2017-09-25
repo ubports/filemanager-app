@@ -44,61 +44,46 @@ void FMUtil::setThemeName()
     QLatin1String  ubuntu_mobileTheme("ubuntu-mobile");
     QStringList paths(QIcon::themeSearchPaths());
 #if defined(Q_OS_UNIX)
-    if (paths.isEmpty())
-    {
+    if (paths.isEmpty()) {
         paths.append(QLatin1String("/usr/share/icons"));
     }
 #endif
-    foreach (const QString&  dir, paths)
-    {
+    foreach (const QString  &dir, paths) {
         QDir D(dir);
-        if (D.exists())
-        {
+        if (D.exists()) {
 #if DEBUG_MESSAGES
-      qDebug() << Q_FUNC_INFO << "trying theme on Dir" << D.path();
+            qDebug() << Q_FUNC_INFO << "trying theme on Dir" << D.path();
 #endif
-           QFileInfoList inf =  D.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::System );
-           int counter = inf.count();
-           //specific names
-           while (counter--)
-           {
-               if (inf.at(counter).fileName() == ubuntu_mobileTheme)
-               {
-                   if (testThemeName(ubuntu_mobileTheme))
-                   {
-                       return;
-                   }
-                   else
-                   {
-                       inf.removeAt(counter);
-                   }
-               }
-           }
-           //try symlinks
-           counter = inf.count();
-           while (counter--)
-           {
-               if (inf.at(counter).isSymLink())
-               {
-                   if (testThemeName(inf.at(counter).fileName()))
-                   {
-                       return;
-                   }
-                   else
-                   {
-                       inf.removeAt(counter);
-                   }
-               }
-           }
-           //try common directories
-           counter = inf.count();
-           while (counter--)
-           {
-               if (testThemeName(inf.at(counter).fileName()))
-               {
-                   return;
-               }
-           }
+            QFileInfoList inf =  D.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::System );
+            int counter = inf.count();
+            //specific names
+            while (counter--) {
+                if (inf.at(counter).fileName() == ubuntu_mobileTheme) {
+                    if (testThemeName(ubuntu_mobileTheme)) {
+                        return;
+                    } else {
+                        inf.removeAt(counter);
+                    }
+                }
+            }
+            //try symlinks
+            counter = inf.count();
+            while (counter--) {
+                if (inf.at(counter).isSymLink()) {
+                    if (testThemeName(inf.at(counter).fileName())) {
+                        return;
+                    } else {
+                        inf.removeAt(counter);
+                    }
+                }
+            }
+            //try common directories
+            counter = inf.count();
+            while (counter--) {
+                if (testThemeName(inf.at(counter).fileName())) {
+                    return;
+                }
+            }
         }
     }
     name.clear();
@@ -106,21 +91,20 @@ void FMUtil::setThemeName()
 }
 
 
-bool FMUtil::testThemeName(const QString& themeName)
+bool FMUtil::testThemeName(const QString &themeName)
 {
     QMimeDatabase mimeBase;
     QStringList mimesToTest = QStringList()
-                             << "text/plain"
-                             << "inode/directory"
-                             << "application/pdf"
-                             << "application/postscript"
-                             << "application/x-gzip";
+                              << "text/plain"
+                              << "inode/directory"
+                              << "application/pdf"
+                              << "application/postscript"
+                              << "application/x-gzip";
 
     QIcon::setThemeName(themeName);
     bool hasTheme = true;
     int counter = mimesToTest.count();
-    while(hasTheme  && counter--)
-    {
+    while (hasTheme  && counter--) {
         QMimeType mimetype = mimeBase.mimeTypeForName(mimesToTest.at(counter));
         hasTheme = QIcon::hasThemeIcon( mimetype.iconName() ) ||
                    QIcon::hasThemeIcon( mimetype.genericIconName() ) ;

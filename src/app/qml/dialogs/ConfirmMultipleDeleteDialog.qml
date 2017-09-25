@@ -18,5 +18,8 @@ ConfirmDialog {
         fileOperationDialog.startOperation(i18n.tr("Deleting files"))
         console.log("Doing delete")
         folderModel.removePaths(paths)
+        selectionManager.clear()
+        fileSelectorMode = false
+        fileSelector.fileSelectorComponent = null
     }
 }

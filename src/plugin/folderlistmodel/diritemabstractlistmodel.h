@@ -33,14 +33,15 @@ class DirItemModel;
 class DirItemAbstractListModel : public QAbstractListModel
 {
     Q_OBJECT
+
 public:
-    virtual int                 getIndex(const QString& name) = 0;
-    virtual void                notifyItemChanged(int index)  = 0;
+    virtual int getIndex(const QString &name) = 0;
+    virtual void notifyItemChanged(int index) = 0;
+
 protected:
     explicit DirItemAbstractListModel(QObject *parent = 0) :
         QAbstractListModel(parent)
-    {
-    }
+    { }
 };
 
 #endif // DIRITEMABSTRACTLISTMODEL_H

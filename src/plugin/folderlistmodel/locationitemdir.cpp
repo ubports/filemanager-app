@@ -22,7 +22,7 @@
 #include "locationitemdir.h"
 #include <QString>
 
-LocationItemDir::LocationItemDir(const QString& dir)
+LocationItemDir::LocationItemDir(const QString &dir)
 {
     Q_UNUSED(dir);
 }
