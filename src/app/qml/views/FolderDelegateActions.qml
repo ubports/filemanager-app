@@ -12,12 +12,6 @@ QtObject {
     property var folderModel
     property var fileOperationDialog
 
-    function itemLongPress(delegate, model) {
-        console.log("FolderListDelegate onPressAndHold")
-        var props = { model: model }
-        PopupUtils.open(__actionSelectionPopoverComponent, delegate, props)
-    }
-
     function listLongPress(model) {
         fileSelectorMode = true
         fileSelector.fileSelectorComponent = pageStack
@@ -154,47 +148,6 @@ QtObject {
         FMActions.Share {
             visible: !model.isDir && importMode
             onTriggered: folderListPage.openFile(model, true)
-        }
-    }
-
-    property ActionList additionalActions: ActionList {
-        FMActions.Select {
-            visible: !isContentHub
-            onTriggered: listLongPress(model)
-        }
-    }
-
-
-    // *** COMPONENTS ***
-
-    property Component __actionSelectionPopoverComponent: Component {
-        ActionSelectionPopover {
-            grabDismissAreaEvents: true
-            property var model
-
-            actions: ActionList {
-                Component.onCompleted: {
-                    // Build a single list of actions from the two lists above
-                    var tmp = additionalActions.actions
-                    var copy = []
-                    copy[0] = tmp[0]
-
-                    tmp = trailingActions.actions
-                    var i;
-
-                    for (i = 0; i < tmp.length; ++i) {
-                        copy[i+1] = tmp[i]
-                    }
-
-                    tmp = leadingActions.actions
-                    var j = copy.length
-                    for (i = 0; i < tmp.length; ++i) {
-                        copy[i+j] = tmp[i]
-                    }
-
-                    actions = copy;
-                }
-            }
         }
     }
 }

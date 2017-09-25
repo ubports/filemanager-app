@@ -31,6 +31,15 @@ MouseArea {
     // Ensure that file name can overlap the items below.
     z: delegate.containsMouse ? 10 : 0
 
+    function getTextSize () {
+        switch (folderIconView.folderModel.gridSize) {
+        case 0: return Label.XSmall
+        case 1: return Label.Small
+        case 2: return Label.Medium
+        case 3: return Label.Large
+        }
+    }
+
     Rectangle {
         anchors { fill: parent; margins: units.dp(1) }
         radius: units.dp(8)
@@ -46,7 +55,9 @@ MouseArea {
         id: imgContainer
         anchors { top: parent.top; topMargin: units.gu(1) }
         anchors.horizontalCenter: parent.horizontalCenter
-        height: units.gu(6); width: height
+        height: delegate.width / 1.7
+        width: height
+        opacity: delegate.isSelectedForCut ? 0.5 : 1
 
         Icon {
             anchors.fill: parent
@@ -92,7 +103,7 @@ MouseArea {
 
         // TODO: This is probably too small, but this way we are sure that text has always
         // a good contrast with bg, since it doesn't overlay other icons or strings.
-        textSize: Label.Small
+        textSize: getTextSize()
 
         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
         elide: Text.ElideMiddle

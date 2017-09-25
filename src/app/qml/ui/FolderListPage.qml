@@ -70,6 +70,11 @@ SidebarPageLayout {
         }
 
         onPathChanged: pageModel.model.selectionObject.clear()
+
+        gridSize: {
+            return globalSettings.gridSize
+        }
+
     }
 
     sidebarWidth: globalSettings.sidebarWidth
@@ -152,6 +157,12 @@ SidebarPageLayout {
             id: bottomPanelStack
 
             onHeightChanged: console.log(height)
+
+            Panels.DefaultBottomBar {
+                folderModel: pageModel
+                fileOperationDialog: fileOperationDialogObj
+                visible: pageModel.model.clipboardUrlsCounter === 0 && !selectionMode
+            }
 
             Panels.ClipboardBottomBar {
                 folderModel: pageModel

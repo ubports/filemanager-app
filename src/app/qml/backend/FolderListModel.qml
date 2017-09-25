@@ -44,6 +44,8 @@ QtObject {
     property alias places: __places
     property alias archives: __archives
 
+    property int gridSize: 1
+
     function goTo(location) {
         // This allows us to enter "~" as a shortcut to the home folder
         // when entering a location on the Go To dialog

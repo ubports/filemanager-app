@@ -30,7 +30,18 @@ ScrollView {
     property alias header: view.header
 
     function calcCellwidth () {
-        return folderListPage.width / ((folderListPage.width / units.gu(12)).toFixed(0))
+        var gridSize = 12 // default
+        switch (folderModel.gridSize) {
+            case 0: gridSize = 10
+                break
+            case 1: gridSize = 12
+                break
+            case 2: gridSize = 16
+                break
+            case 3: gridSize = 22
+                break
+            }
+        return folderListPage.width / ((folderListPage.width / units.gu(gridSize)).toFixed(0))
     }
 
     GridView {
@@ -38,12 +49,12 @@ ScrollView {
         anchors.fill: parent
 
         cellWidth: calcCellwidth()
-        cellHeight: units.gu(14)
+        cellHeight: cellWidth + units.gu(2)
 
         model: folderModel.model
         delegate: FolderIconDelegate {
             id: delegate
-            width: units.gu(12)
+            width: view.cellWidth
             height: view.cellHeight
 
             iconName: model.iconName
@@ -65,7 +76,7 @@ ScrollView {
                 }
             }
 
-            onPressAndHold: __delegateActions.itemLongPress(delegate, model)
+            onPressAndHold: __delegateActions.listLongPress(model)
         }
     }
 }

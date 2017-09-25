@@ -26,4 +26,5 @@ Settings {
     property int sortOrder: 0   // 0=Ascending; 1=Descending
     property int sortBy: 0  // 0=Name; 1=Date
     property int sidebarWidth: units.gu(20)
+    property int gridSize: 1 // 0=S; 1=M; 2=L; 3=XL
 }
