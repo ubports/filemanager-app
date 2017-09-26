@@ -30,18 +30,18 @@ ScrollView {
     property alias header: view.header
 
     function calcCellwidth () {
-        var gridSize = 12 // default
-        switch (folderModel.gridSize) {
-            case 0: gridSize = 10
+        var s = 12 // default
+        switch (globalSettings.gridSize) {
+            case 0: s = 10
                 break
-            case 1: gridSize = 12
+            case 1: s = 12
                 break
-            case 2: gridSize = 16
+            case 2: s = 16
                 break
-            case 3: gridSize = 22
+            case 3: s = 22
                 break
             }
-        return folderListPage.width / ((folderListPage.width / units.gu(gridSize)).toFixed(0))
+        return folderListPage.width / ((folderListPage.width / units.gu(s)).toFixed(0))
     }
 
     GridView {

@@ -70,11 +70,6 @@ SidebarPageLayout {
         }
 
         onPathChanged: pageModel.model.selectionObject.clear()
-
-        gridSize: {
-            return globalSettings.gridSize
-        }
-
     }
 
     sidebarWidth: globalSettings.sidebarWidth

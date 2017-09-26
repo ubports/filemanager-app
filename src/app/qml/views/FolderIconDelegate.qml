@@ -32,7 +32,7 @@ MouseArea {
     z: delegate.containsMouse ? 10 : 0
 
     function getTextSize () {
-        switch (folderIconView.folderModel.gridSize) {
+        switch (globalSettings.gridSize) {
         case 0: return Label.XSmall
         case 1: return Label.Small
         case 2: return Label.Medium
