@@ -41,10 +41,10 @@ MouseArea {
     }
 
     Rectangle {
-        anchors { fill: parent; margins: units.dp(1) }
-        radius: units.dp(8)
+        anchors { fill: parent; margins: units.dp(2) }
+        radius: units.dp(4)
         opacity: delegate.isSelected ? 0.5 : 0
-        color: UbuntuColors.green
+        color: UbuntuColors.blue
 
         Behavior on opacity {
             UbuntuNumberAnimation {}
