@@ -3,5 +3,5 @@ import Ubuntu.Components 1.3
 
 Action {
     iconName: "add"
-    text: i18n.tr("New Folder")
+    text: i18n.tr("New Item")
 }

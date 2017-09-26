@@ -153,6 +153,12 @@ SidebarPageLayout {
 
             onHeightChanged: console.log(height)
 
+            Panels.DefaultBottomBar {
+                folderModel: pageModel
+                fileOperationDialog: fileOperationDialogObj
+                visible: pageModel.model.clipboardUrlsCounter === 0 && !selectionMode
+            }
+
             Panels.ClipboardBottomBar {
                 folderModel: pageModel
                 fileOperationDialog: fileOperationDialogObj

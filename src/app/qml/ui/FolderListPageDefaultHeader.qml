@@ -25,39 +25,27 @@ PageHeader {
         folderModel: rootItem.folderModel
     }
 
-    Action {
-        id: placesPageAction
-        iconName: "navigation-menu"
-        text: i18n.tr("Places")
-        onTriggered: {
-            var pp = pageStack.push(Qt.resolvedUrl("PlacesPage.qml"), { folderModel: rootItem.folderModel })
-            pp.pathClicked.connect(function() {
-                pp.pageStack.pop()
-            })
-        }
+    FMActions.GoBack {
+        id: goBackAction
+        onTriggered: folderModel.goBack()
     }
 
-    leadingActionBar.actions: showPanelAction.visible ? showPanelAction : placesPageAction
+    leadingActionBar.actions: showPanelAction.visible ? showPanelAction : goBackAction
 
-    trailingActionBar.numberOfSlots: 3
+    trailingActionBar.numberOfSlots: 2
     trailingActionBar.actions: [
+        FMActions.PlacesBookmarks {
+            visible: !showPanelAction.visible
+            onTriggered: {
+                var pp = pageStack.push(Qt.resolvedUrl("PlacesPage.qml"), { folderModel: rootItem.folderModel })
+                pp.pathClicked.connect(function() {
+                    pp.pageStack.pop()
+                })
+            }
+        },
+
         FMActions.Settings {
             onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), mainView, { folderListModel: folderModel.model })
-        },
-
-        FMActions.NewFolder {
-            visible: folderModel.model.isWritable
-            onTriggered: {
-                print(text)
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/CreateItemDialog.qml"), mainView, { folderModel: folderModel.model })
-            }
-        },
-
-        FMActions.Properties {
-            onTriggered: {
-                print(text)
-                PopupUtils.open(Qt.resolvedUrl("FileDetailsPopover.qml"), mainView,{ "model": folderModel.model })
-            }
         }
     ]
 

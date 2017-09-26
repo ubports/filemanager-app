@@ -72,6 +72,27 @@ Popover {
 
         ValueSelector {
             Label {
+                text: i18n.tr("Grid size")
+                anchors.left: parent.left
+                anchors.leftMargin: units.gu(2)
+                anchors.top: parent.top
+                anchors.topMargin: units.gu(1.6)
+            }
+
+            visible: globalSettings.viewMethod === 1
+            selectedIndex: globalSettings.gridSize
+            values: [
+                i18n.tr("S"),
+                i18n.tr("M"),
+                i18n.tr("L"),
+                i18n.tr("XL")
+            ]
+
+            onSelectedIndexChanged: globalSettings.gridSize = selectedIndex
+        }
+
+        ValueSelector {
+            Label {
                 text: i18n.tr("Sort By")
                 anchors.left: parent.left
                 anchors.leftMargin: units.gu(2)
