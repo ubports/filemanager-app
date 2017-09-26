@@ -34,20 +34,18 @@ PageHeader {
 
     trailingActionBar.numberOfSlots: 2
     trailingActionBar.actions: [
-        FMActions.Settings {
-            onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), mainView, { folderListModel: folderModel.model })
-        },
-
-        Action {
-            id: placesPageAction
-            iconName: "navigation-menu"
-            text: i18n.tr("Places")
+        FMActions.PlacesBookmarks {
+            visible: !showPanelAction.visible
             onTriggered: {
                 var pp = pageStack.push(Qt.resolvedUrl("PlacesPage.qml"), { folderModel: rootItem.folderModel })
                 pp.pathClicked.connect(function() {
                     pp.pageStack.pop()
                 })
             }
+        },
+
+        FMActions.Settings {
+            onTriggered: PopupUtils.open(Qt.resolvedUrl("ViewPopover.qml"), mainView, { folderListModel: folderModel.model })
         }
     ]
 
