@@ -31,6 +31,10 @@ ListItem {
     ListItemLayout {
         id: layout
 
+        anchors { left: parent.left; right: parent.right }
+        anchors.leftMargin: units.gu(-2)
+        anchors.rightMargin: units.gu(-2)
+
         title.text: rootItem.title
         subtitle.text: rootItem.subtitle
         summary.text: rootItem.summary

@@ -17,7 +17,10 @@ Dialog {
 
     ListItem {
         ListItemLayout {
-            anchors.centerIn: parent
+            anchors { left: parent.left; right: parent.right }
+            anchors.leftMargin: units.gu(-2)
+            anchors.rightMargin: units.gu(-2)
+
             subtitle.text: i18n.tr("Show Hidden Files")
 
             Switch{
