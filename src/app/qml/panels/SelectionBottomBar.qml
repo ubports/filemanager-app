@@ -23,16 +23,20 @@ Template.Panel {
 
         Action {
             property bool smallText: true
-            text: i18n.tr("Cut")
-            iconName: "edit-cut"
+            text: i18n.tr("Delete")
+            iconName: "edit-delete"
             enabled: __actionsEnabled
             visible: __actionsVisible && folderModel.model.isWritable
             onTriggered: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-                folderModel.model.cutPaths(selectedAbsPaths)
-                selectionManager.clear()
-                fileSelectorMode = false
-                fileSelector.fileSelectorComponent = null
+
+                var props = {
+                    "paths" : selectedAbsPaths,
+                    "folderModel": folderModel.model,
+                    "fileOperationDialog": fileOperationDialog
+                }
+
+                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmMultipleDeleteDialog.qml"), mainView, props)
             }
         }
 
@@ -53,20 +57,16 @@ Template.Panel {
 
         Action {
             property bool smallText: true
-            text: i18n.tr("Delete")
-            iconName: "edit-delete"
+            text: i18n.tr("Cut")
+            iconName: "edit-cut"
             enabled: __actionsEnabled
             visible: __actionsVisible && folderModel.model.isWritable
             onTriggered: {
                 var selectedAbsPaths = selectionManager.selectedAbsFilePaths();
-
-                var props = {
-                    "paths" : selectedAbsPaths,
-                    "folderModel": folderModel.model,
-                    "fileOperationDialog": fileOperationDialog
-                }
-
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmMultipleDeleteDialog.qml"), mainView, props)
+                folderModel.model.cutPaths(selectedAbsPaths)
+                selectionManager.clear()
+                fileSelectorMode = false
+                fileSelector.fileSelectorComponent = null
             }
         }
     }
