@@ -156,13 +156,7 @@ SidebarPageLayout {
             Panels.DefaultBottomBar {
                 folderModel: pageModel
                 fileOperationDialog: fileOperationDialogObj
-                visible: pageModel.model.clipboardUrlsCounter === 0 && !selectionMode
-            }
-
-            Panels.ClipboardBottomBar {
-                folderModel: pageModel
-                fileOperationDialog: fileOperationDialogObj
-                visible: pageModel.model.clipboardUrlsCounter > 0 && !selectionMode
+                visible: !selectionMode
             }
 
             Panels.SelectionBottomBar {
@@ -170,6 +164,14 @@ SidebarPageLayout {
                 fileOperationDialog: fileOperationDialogObj
                 visible: selectionMode && !isContentHub
             }
+        }
+
+        Rectangle { // BottomPanelStack divider
+            anchors.bottom: bottomPanelStack.top
+            anchors { left: parent.left; right: parent.right }
+            height: units.dp(1)
+            color: theme.palette.normal.base
+            visible: viewLoader.item.flickableItem.contentHeight > viewLoader.item.flickableItem.height
         }
 
         // *** VIEW COMPONENTS ***
