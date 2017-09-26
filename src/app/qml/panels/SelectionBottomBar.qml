@@ -4,6 +4,7 @@ import Ubuntu.Components.Popups 1.3
 
 import "../backend"
 import "template" as Template
+import "../components" as Components
 
 // TODO: check origin of properties used in bindings
 
@@ -21,6 +22,7 @@ Template.Panel {
         id: selectionActions
 
         Action {
+            property bool smallText: true
             text: i18n.tr("Cut")
             iconName: "edit-cut"
             enabled: __actionsEnabled
@@ -35,6 +37,7 @@ Template.Panel {
         }
 
         Action {
+            property bool smallText: true
             text: i18n.tr("Copy")
             iconName: "edit-copy"
             enabled: __actionsEnabled
@@ -48,8 +51,8 @@ Template.Panel {
             }
         }
 
-
         Action {
+            property bool smallText: true
             text: i18n.tr("Delete")
             iconName: "edit-delete"
             enabled: __actionsEnabled
@@ -68,20 +71,11 @@ Template.Panel {
         }
     }
 
-    Flow {
-        id: bottomBarButtons
-        anchors.centerIn: parent
-        spacing: units.gu(2)
-        Repeater {
-            id: repeater
-            model: selectionActions.children  // WORKAROUND: 'actions' is a non-NOTIFYable property
-            delegate: Button {
-                action: modelData
-                width: Math.min(bottomBar.width, units.gu(80)) / repeater.count - bottomBarButtons.spacing
-                height: units.gu(5)
-                anchors.topMargin: units.gu(1)
-                color: theme.palette.normal.foreground
-            }
-        }
+    ActionBar {
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        delegate: Components.TextualButtonStyle { }
+        numberOfSlots: 3
+        actions: selectionActions.children  // WORKAROUND: 'actions' is a non-NOTIFYable property
     }
 }
