@@ -21,6 +21,16 @@ import org.nemomobile.folderlistmodel 1.0
 
 ListItem {
     id: del
+    height: layout.height
+
+    function getTextSize (subtitle) {
+        switch (globalSettings.listSize) {
+        case 0: return Label.Small - (subtitle ? 1 : 0)
+        case 1: return Label.Medium - (subtitle ? 1 : 0)
+        case 2: return Label.Large - (subtitle ? 1 : 0)
+        case 3: return Label.XLarge - (subtitle ? 1 : 0)
+        }
+    }
 
     property string title
     property string subtitle
@@ -43,9 +53,13 @@ ListItem {
         title.text: del.title
         subtitle.text: del.subtitle
 
+        title.textSize: getTextSize()
+        subtitle.textSize: getTextSize(true)
+
         Item {
             SlotsLayout.position: SlotsLayout.Leading
-            height: units.gu(5); width: height
+            height: units.gu(5) * (layout.title.font.pixelSize / FontUtils.sizeToPixels("medium"))
+            width: height
 
             Icon {
                 anchors.fill: parent
