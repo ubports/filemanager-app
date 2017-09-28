@@ -1719,7 +1719,7 @@ QString DirModel::getIcon(QString absoluteFilePath, QMimeType mime, bool isSmbWo
                "/Programs" && QIcon::hasThemeIcon("folder-system")) {
         iconName = "folder-system";
 
-    } else if (absoluteFilePath.startsWith("/media/phablet/") && std::count(absoluteFilePath.begin(), absoluteFilePath.end(), '/') == 3 && QIcon::hasThemeIcon("drive-removable-media")) {
+    } else if (absoluteFilePath.startsWith("/media/") && std::count(absoluteFilePath.begin(), absoluteFilePath.end(), '/') == 3 && QIcon::hasThemeIcon("drive-removable-media")) {
         // In context of Ubuntu Touch this means SDCard currently.
         iconName = "drive-removable-media";
 
