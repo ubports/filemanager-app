@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-07 19:03+0000\n"
-"Last-Translator: t-h-e-p-e-t-e-r <peter.valachovic@gmail.com>\n"
+"PO-Revision-Date: 2017-09-30 06:46+0000\n"
+"Last-Translator: Peter Valachovič <peter.valachovic@gmail.com>\n"
 "Language-Team: Slovak <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/sk/>\n"
 "Language: sk\n"
@@ -1063,8 +1063,8 @@ msgstr "Nepodarilo sa zmeniť názov"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:533
 msgid "Insufficient permissions or name already exists?"
 msgstr ""
-"Skontrolujte, či máte dostatočné oprávnenia alebo či neexistuje súbor s "
-"rovnakým názvom."
+"Skontrolujte, či máte dostatočné oprávnenia. Neexistuje už súbor s rovnakým "
+"názvom?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:551
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:551
@@ -1480,7 +1480,7 @@ msgstr "Triediť podľa"
 #: ../src/app/qml/ui/ViewPopover.qml:92
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr "Názvu"
+msgstr "Názov"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:93
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:93
