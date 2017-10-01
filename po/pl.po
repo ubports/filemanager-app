@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-19 21:11+0000\n"
-"Last-Translator: Beton <betonn@protonmail.com>\n"
+"PO-Revision-Date: 2017-09-24 22:05+0000\n"
+"Last-Translator: Daniel Frańczak <danielfranczak5@wp.pl>\n"
 "Language-Team: Polish <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/pl/>\n"
 "Language: pl\n"
@@ -32,6 +32,9 @@ msgid ""
 "The <b>Application</b> example demonstrates how to write modern GUI "
 "applications using Qt, with a menu bar, toolbars, and a status bar."
 msgstr ""
+"Przykład <b>Aplikacji</b> ilustruje sposób pisania nowoczesnych aplikacji "
+"GUI przy użyciu protokołu Qt, z paskiem menu, paskami narzędzi i paskiem "
+"stanu."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
@@ -443,7 +446,7 @@ msgstr "Zapisano: %1"
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:25
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:26
 msgid "Authentication required"
-msgstr "Wymagane uwierzytelnienie"
+msgstr "Wymagane jest uwierzytelnienie"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
@@ -1061,7 +1064,7 @@ msgstr "Nie udało się zmienić nazwy"
 #: ../src/app/qml/ui/FolderListPage.qml:533
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:533
 msgid "Insufficient permissions or name already exists?"
-msgstr "Niewystarczające uprawnienia lub nazwa już istnieje."
+msgstr "Niewystarczające uprawnienia lub nazwa już istnieje?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:551
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:551
@@ -1326,7 +1329,7 @@ msgstr "Przejdź do lokalizacji"
 #: ../src/app/qml/ui/GoToDialog.qml:28
 #: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:28
 msgid "Enter a location to go to:"
-msgstr "Do jakiej lokalizacji się przenieść?"
+msgstr "Wprowadź lokalizację, aby przejść do:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:45
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPage.qml:65
@@ -1665,7 +1668,7 @@ msgstr "Brak miejsca aby pobrać plik"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
-msgstr ""
+msgstr "nie znaleziono narzędzia sieciowego, sprawdź instalację samby"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
