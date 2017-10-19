@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-10-18 11:14+0000\n"
+"PO-Revision-Date: 2017-10-19 12:21+0000\n"
 "Last-Translator: Ivo Xavier <ivofernandes12@gmail.com>\n"
 "Language-Team: Portuguese <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/pt/>\n"
@@ -93,7 +93,7 @@ msgstr "Co&rtar"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:190
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:190
 msgid "Cut the current selection's contents to the clipboard"
-msgstr "Corta a seleção atual de conteúdos para o quadro de transferências"
+msgstr "Corta a seleção atual de conteúdos para a área de transferências"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:194
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:194
@@ -103,7 +103,7 @@ msgstr "&Copiar"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:196
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:196
 msgid "Copy the current selection's contents to the clipboard"
-msgstr "Copia a seleção atual de conteúdo para o quadro de transferências"
+msgstr "Copia a seleção atual de conteúdo para a área de transferências"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:200
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:200
@@ -113,7 +113,7 @@ msgstr "&Colar"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:202
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:202
 msgid "Paste the clipboard's contents into the current selection"
-msgstr "Cola os conteúdos do quadro de transferência na seleção atual"
+msgstr "Cola os conteúdos da área de transferência na seleção atual"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:206
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:206
@@ -444,7 +444,7 @@ msgstr "Guardado para: %1"
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:25
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:26
 msgid "Authentication required"
-msgstr "Autenticação necessária"
+msgstr "Autenticação pedida"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
@@ -1008,7 +1008,7 @@ msgstr "Quer mesmo eliminar  '%1'?"
 #: ../src/app/qml/ui/FolderListPage.qml:504
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:504
 msgid "Deleting files"
-msgstr "A eliminar ficheiros..."
+msgstr "A eliminar ficheiros"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:522
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:620
@@ -1224,7 +1224,7 @@ msgstr "Abrir com outra app"
 #: ../src/app/qml/ui/FolderListPage.qml:858
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:858
 msgid "~/Desktop"
-msgstr "~/Desktop"
+msgstr "~/Mesa"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:868
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:868
