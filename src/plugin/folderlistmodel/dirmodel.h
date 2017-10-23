@@ -127,6 +127,7 @@ public:
     Q_INVOKABLE bool rename(const QString &oldName, const QString &newName);
     Q_INVOKABLE bool rename(int row, const QString &newName);
     Q_INVOKABLE bool mkdir(const QString &newdir);
+    Q_INVOKABLE bool touch(const QString &newfile);
 
     Q_INVOKABLE QString getIcon(const QString &path) const;
 
