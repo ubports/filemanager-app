@@ -22,6 +22,7 @@ Dialog {
             anchors.rightMargin: units.gu(-2)
 
             subtitle.text: i18n.tr("Show Hidden Files")
+            subtitle.textSize: Label.Medium
 
             Switch{
                 SlotsLayout.position: SlotsLayout.Last

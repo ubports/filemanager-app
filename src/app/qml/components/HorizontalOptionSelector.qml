@@ -36,8 +36,11 @@ ListItem {
         anchors.rightMargin: units.gu(-2)
 
         title.text: rootItem.title
+        title.textSize: Label.Medium
         subtitle.text: rootItem.subtitle
+        subtitle.textSize: Label.Medium
         summary.text: rootItem.summary
+        summary.textSize: Label.Medium
 
         Row {
             id: choicesRow
@@ -66,7 +69,7 @@ ListItem {
                         id: delLabel
                         anchors.centerIn: parent
                         text: modelData
-                        textSize: Label.Small
+                        textSize: Label.Medium
                         color: isSelected ? theme.palette.normal.backgroundText : theme.palette.disabled.backgroundText
                     }
                 }
