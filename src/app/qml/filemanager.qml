@@ -37,6 +37,10 @@ MainView {
     width: phone ? units.gu(40) : units.gu(100)
     height: units.gu(75)
 
+    theme.name: globalSettings.darkTheme
+                ? "Ubuntu.Components.Themes.SuruDark"
+                : "Ubuntu.Components.Themes.Ambiance"
+
     property bool wideAspect: width > units.gu(50)
 
     property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()

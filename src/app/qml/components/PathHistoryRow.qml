@@ -230,7 +230,7 @@ ListView {
 
     Rectangle {
         anchors.fill: parent
-        color: "#CDCDCD"
+        color: theme.palette.normal.base
         z: -1000
     }
 
@@ -238,7 +238,7 @@ ListView {
         id: delegateStyle
         Item {
             property color  inactiveColor: theme.palette.normal.backgroundText
-            property color  activeColor: UbuntuColors.orange
+            property color  activeColor: theme.palette.selected.positionText
 
             property int    labelMaximumWidth: units.gu(24)
             property int    labelTextSize: Label.Small  /*Medium*/
