@@ -41,7 +41,7 @@ MainView {
                 ? "Ubuntu.Components.Themes.SuruDark"
                 : "Ubuntu.Components.Themes.Ambiance"
 
-    property bool wideAspect: width > units.gu(50)
+    property bool wideAspect: width > units.gu(80)
 
     property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()
     property bool isContentHub: false
