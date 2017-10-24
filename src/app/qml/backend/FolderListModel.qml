@@ -135,12 +135,15 @@ QtObject {
         onPathChanged: __checkIfIsWritable()
 
         Component.onCompleted: {
-            // Add default allowed paths
+            // Add default allowed paths: XDG folders
             addAllowedDirectory(places.locationDocuments)
             addAllowedDirectory(places.locationDownloads)
             addAllowedDirectory(places.locationMusic)
             addAllowedDirectory(places.locationPictures)
             addAllowedDirectory(places.locationVideos)
+
+            // Add default allowed paths: user's external media (i.e. "/media/USER/**")
+            addAllowedDirectory(places.userMountLocation)
         }
 
         function __checkIfIsWritable() {

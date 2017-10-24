@@ -41,6 +41,7 @@ class PlacesModel : public QAbstractListModel
     Q_PROPERTY(QString locationPictures READ locationPictures CONSTANT)
     Q_PROPERTY(QString locationVideos READ locationVideos CONSTANT)
     Q_PROPERTY(QString locationSamba READ locationSamba CONSTANT)
+    Q_PROPERTY(QString userMountLocation READ userMountLocation CONSTANT)
 
 public:
     explicit PlacesModel(QObject *parent = 0);
@@ -53,6 +54,7 @@ public:
     QString locationPictures() const;
     QString locationVideos() const;
     QString locationSamba() const;
+    QString userMountLocation() const;
 
     int rowCount(const QModelIndex &parent = QModelIndex() ) const override;
     QVariant data(const QModelIndex &index, int role) const override;

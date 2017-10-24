@@ -1,3 +1,6 @@
+# Disable TagLib in folderlistmodel plugin
+ADD_DEFINITIONS(-DDO_NOT_USE_TAG_LIB)
+
 include(FindPkgConfig)
 find_package(Qt5Core)
 find_package(Qt5Qml)
