@@ -231,9 +231,13 @@ SidebarPageLayout {
                 ListItemLayout {
                     id: layout
                     title.text: i18n.tr("Restricted access")
+                    title.maximumLineCount: 2
+                    title.wrapMode: Text.WordWrap
+
                     subtitle.text: i18n.tr("Authentication is required in order to see all the content of this folder.")
+                    subtitle.maximumLineCount: Math.MAX_VALUE
+                    subtitle.wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     Button {
-                        width: units.gu(16)
                         SlotsLayout.position: SlotsLayout.Last
                         color: UbuntuColors.green
                         action: authAction
