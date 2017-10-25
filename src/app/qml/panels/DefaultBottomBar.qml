@@ -23,6 +23,9 @@ Template.Panel {
                 console.log("Pasting to current folder items of count " + folderModel.model.clipboardUrlsCounter)
                 fileOperationDialog.startOperation(i18n.tr("Paste files"))
                 folderModel.model.paste()
+
+                // We want this in a mobile environment.
+                folderModel.model.clearClipboard()
             }
         }
 
@@ -44,7 +47,6 @@ Template.Panel {
             visible: folderModel.model.clipboardUrlsCounter > 0
             onTriggered: {
                 console.log("Clearing clipboard")
-                // FIXME: Seems not to clear actually
                 folderModel.model.clearClipboard()
             }
         }
