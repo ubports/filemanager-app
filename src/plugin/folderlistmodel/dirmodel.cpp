@@ -94,9 +94,10 @@ QHash<QByteArray, int> roleMapping;
  *  to organize it items again. New items order/position are organized by \ref addItem()
  *
  */
-static CompareFunction availableCompareFunctions[2][2] = {
+static CompareFunction availableCompareFunctions[3][2] = {
     {fileCompareAscending, fileCompareDescending}
     , {dateCompareAscending, dateCompareDescending}
+    , {sizeCompareAscending, sizeCompareDescending}
 };
 
 

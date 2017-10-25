@@ -105,3 +105,25 @@ bool dateCompareAscending(const DirItemInfo &a, const DirItemInfo &b)
     return a.lastModified() < b.lastModified();
 }
 
+bool sizeCompareDescending(const DirItemInfo &a, const DirItemInfo &b)
+{
+    if (a.isDir() && !b.isDir())
+        return true;
+
+    if (b.isDir() && !a.isDir())
+        return false;
+
+    return a.size() > b.size();
+}
+
+
+bool sizeCompareAscending(const DirItemInfo &a, const DirItemInfo &b)
+{
+    if (a.isDir() && !b.isDir())
+        return true;
+
+    if (b.isDir() && !a.isDir())
+        return false;
+
+    return a.size() < b.size();
+}

@@ -59,7 +59,7 @@ Dialog {
     Components.HorizontalOptionSelector {
         subtitle: i18n.tr("Sort By")
         selectedIndex: globalSettings.sortBy
-        model: [ i18n.tr("Name"), i18n.tr("Date") ]
+        model: [ i18n.tr("Name"), i18n.tr("Date"), i18n.tr("Size") ]
         onSelectedIndexChanged: globalSettings.sortBy = selectedIndex
     }
 

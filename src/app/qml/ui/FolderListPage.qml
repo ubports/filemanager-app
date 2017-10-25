@@ -66,6 +66,7 @@ SidebarPageLayout {
             switch (globalSettings.sortBy) {
             case 0: return FolderListModel.SortByName
             case 1: return FolderListModel.SortByDate
+            case 2: return FolderListModel.SortBySize
             }
         }
 

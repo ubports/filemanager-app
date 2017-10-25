@@ -311,7 +311,8 @@ public:
     Q_ENUMS(SortBy)
     enum SortBy {
         SortByName,
-        SortByDate
+        SortByDate,
+        SortBySize
     };
     SortBy getSortBy() const;
 
