@@ -19,14 +19,16 @@ import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import com.ubuntu.PamAuthentication 0.1
-import Biometryd 0.0 as BiometrydPlugin
+//import Biometryd 0.0
 
 Item {
     id: handler
 
     property string serviceName
 
-    readonly property bool isFingerprintAvailable: BiometrydPlugin.Biometryd.available
+    // TODO: We keep fingerprint authentication disabled for now
+    readonly property bool isFingerprintAvailable: false    //Biometryd.available
+
     readonly property bool isAlphanumeric: true     // TODO: Implement
 
     property bool requireAuthentication: true
