@@ -1,4 +1,4 @@
-file(GLOB_RECURSE QML_SRCS *.qml *.js)
+file(GLOB_RECURSE QML_SRCS *.qml *.js *.png)
 
 set(filemanager_SRCS
     main.cpp

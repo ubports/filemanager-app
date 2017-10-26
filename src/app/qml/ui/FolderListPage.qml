@@ -207,18 +207,11 @@ SidebarPageLayout {
             id: authAction
             onTriggered: {
                 console.log("Full access clicked")
-                var authDialog = PopupUtils.open(Qt.resolvedUrl("../dialogs/AuthenticationDialog.qml"), mainView)
+                authentication.authenticate()
 
-                authDialog.passwordEntered.connect(function(password) {
-                    if (pamAuthentication.validatePasswordToken(password)) {
-                        console.log("Authenticated for full access")
-                        mainView.fullAccessGranted = true
-                    } else {
-                        var props = { title: i18n.tr("Authentication failed") }
-                        PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
-
-                        console.log("Could not authenticate")
-                    }
+                authentication.authenticationSucceeded.connect(function() {
+                    console.log("Authentication for full access succeeded!")
+                    mainView.fullAccessGranted = true
                 })
             }
         }

@@ -27,6 +27,7 @@ import Ubuntu.Thumbnailer 0.1
 
 import "ui"
 import "backend" as Backend
+import "authentication"
 
 MainView {
     id: mainView
@@ -43,7 +44,7 @@ MainView {
 
     property bool wideAspect: width > units.gu(80)
 
-    property bool fullAccessGranted: noAuthentication || !pamAuthentication.requireAuthentication()
+    property bool fullAccessGranted: noAuthentication || !authentication.requireAuthentication
     property bool isContentHub: false
     property bool importMode: true
 
@@ -58,9 +59,9 @@ MainView {
         ContentItem {}
     }
 
-    PamAuthentication {
-        id: pamAuthentication
-        serviceName: "filemanager"
+    AuthenticationHandler {
+        id: authentication
+        serviceName: mainView.applicationName
     }
 
     property var pageStack: pageStack
