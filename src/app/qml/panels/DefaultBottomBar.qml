@@ -57,6 +57,14 @@ Template.Panel {
                 PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"), mainView,{ "model": folderModel.model })
             }
         }
+
+        FMActions.AddBookmark {
+            onTriggered: {
+                print(text)
+                folderModel.places.addLocation(folderModel.model.path)
+
+            }
+        }
     }
 
     ActionBar {

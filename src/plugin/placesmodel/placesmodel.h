@@ -30,6 +30,9 @@
 
 #include "qmtabparser.h"
 
+// TODO: Add new roles for user mounted locations, user's bookmarks
+// TODO: Add new roles for location name and icon
+
 class PlacesModel : public QAbstractListModel
 {
     Q_OBJECT
