@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-07-01 21:36+0000\n"
+"PO-Revision-Date: 2017-10-29 22:12+0000\n"
 "Last-Translator: Brînzariu Cristian <info@ebeton.ro>\n"
-"Language-Team: Romanian <https://ubpweblate.tnvcomp.com/projects/ubports"
+"Language-Team: Romanian <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
@@ -322,7 +322,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:114
 #: ../stage/usr/share/filemanager/qml/ui/SettingsSheet.qml:33
 msgid "Settings"
-msgstr "Configurări"
+msgstr "Setări"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:84
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:84
@@ -436,7 +436,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:25
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:26
 msgid "Authentication required"
-msgstr ""
+msgstr "Autentificare necesară"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
@@ -501,7 +501,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr "OK"
+msgstr "Ok"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
@@ -845,7 +845,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:143
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:143
 msgid "Authentication failed"
-msgstr ""
+msgstr "Autentificare eşuată"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:224
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:224
@@ -947,7 +947,7 @@ msgstr "Salvează"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Select"
-msgstr ""
+msgstr "Selectează"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:478
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:478
@@ -977,7 +977,7 @@ msgstr "Niciun fișier"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:498
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:607
 msgid "Delete"
-msgstr "Ştergeţi"
+msgstr "Șterge"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:499
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:499
@@ -1413,7 +1413,7 @@ msgstr ""
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
-msgstr "În regulă"
+msgstr "Ok"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/SettingsSheet.qml:45
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
