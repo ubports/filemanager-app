@@ -49,32 +49,17 @@ QtObject {
             if (fileSelectorMode) {
                 folderModel.model.selectionObject.select(model.index,false,true)
             } else if (!folderSelectorMode){
-                /*var props
-                if (model.filePath.indexOf(".jpg") !== -1 || model.filePath.indexOf(".png") !== -1 || model.filePath.indexOf(".gif") !== -1 || model.filePath.indexOf(".bmp") !== -1 || model.filePath.indexOf(".svg") !== -1)
+                var props
+                var isMedia = model.mimeType.indexOf("image/") + model.mimeType.indexOf("audio/") + model.mimeType.indexOf("video/")
+                if (isMedia !== -3)
                 {
                     props = {
-                        model: model,
-                        fileType: "Image"
-                    }
-                    PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
-                } else if (model.filePath.indexOf(".mp3") !== -1 || model.filePath.indexOf(".wav") !== -1 || model.filePath.indexOf(".wma") !== -1 || model.filePath.indexOf(".ogg") !== -1)
-                {
-                    props = {
-                        model: model,
-                        fileType: "Audio"
-                    }
-                    PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
-                } else if (model.filePath.indexOf(".mp4") !== -1 || model.filePath.indexOf(".avi") !== -1 || model.filePath.indexOf(".wmv") !== -1 || model.filePath.indexOf(".mpg") !== -1)
-                {
-                    props = {
-                        model: model,
-                        fileType: "Video"
+                        model: model
                     }
                     PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
                 } else {
                     openFile(model)
-                }*/ //this is going to be added soon
-                openFile(model)
+                }
             }
         }
     }

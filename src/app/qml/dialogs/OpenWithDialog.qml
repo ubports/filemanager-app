@@ -7,8 +7,6 @@ Dialog {
     modal: true
     title: i18n.tr("Open file")
     text: i18n.tr("What do you want to do with the clicked file?")
-    property string fileType
-
     property var model
 
     Button {
@@ -18,10 +16,13 @@ Dialog {
         onClicked: {
             PopupUtils.close(dialog)
             var props = {
-                model: model,
-                path: model.filePath
+                model: model
             }
-            pageStack.push(Qt.resolvedUrl("../ui/" + fileType + "Preview.qml"), props)
+            if(model.mimeType !== -1)
+            pageStack.push(Qt.resolvedUrl("../ui/ImagePreview.qml"), props)
+            else {
+                Qt.openUrlExternally("video://" + filePath)
+            }
         }
     }
 
