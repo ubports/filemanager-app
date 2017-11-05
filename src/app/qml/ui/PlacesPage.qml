@@ -3,6 +3,7 @@ import Ubuntu.Components 1.3
 
 import "../backend"
 import "../components" as Components
+import "../actions" as FMActions
 
 Page {
     id: root
@@ -53,6 +54,15 @@ Page {
                         SlotsLayout.position: SlotsLayout.Leading
                         width: units.gu(4); height: width
                         name: folderModel.model.getIcon(model.path)
+                    }
+                }
+
+                leadingActions: ListItemActions {
+                    actions: FMActions.Delete {
+                        visible: enabled
+                        enabled: !folderModel.places.isDefaultLocation(model.path)
+                            && !folderModel.places.isUserMountDirectory(model.path)
+                        onTriggered: folderModel.places.removeItem(model.index)
                     }
                 }
 

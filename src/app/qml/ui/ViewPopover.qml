@@ -59,7 +59,7 @@ Dialog {
     Components.HorizontalOptionSelector {
         subtitle: i18n.tr("Sort By")
         selectedIndex: globalSettings.sortBy
-        model: [ i18n.tr("Name"), i18n.tr("Date") ]
+        model: [ i18n.tr("Name"), i18n.tr("Date"), i18n.tr("Size") ]
         onSelectedIndexChanged: globalSettings.sortBy = selectedIndex
     }
 
@@ -68,5 +68,12 @@ Dialog {
         selectedIndex: globalSettings.sortOrder
         model: [ "A ➡ Z", "Z ➡ A" ]
         onSelectedIndexChanged: globalSettings.sortOrder = selectedIndex
+    }
+
+    Components.HorizontalOptionSelector {
+        subtitle: i18n.tr("Theme")
+        selectedIndex: globalSettings.darkTheme
+        model: [ i18n.tr("Light"), i18n.tr("Dark") ]
+        onSelectedIndexChanged: globalSettings.darkTheme = selectedIndex
     }
 }

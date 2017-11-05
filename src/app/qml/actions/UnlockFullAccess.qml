@@ -3,5 +3,5 @@ import Ubuntu.Components 1.3
 
 Action {
     //iconName: "lock"
-    text: i18n.tr("Unlock full access")
+    text: i18n.tr("Unlock")
 }

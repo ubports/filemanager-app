@@ -66,6 +66,7 @@ SidebarPageLayout {
             switch (globalSettings.sortBy) {
             case 0: return FolderListModel.SortByName
             case 1: return FolderListModel.SortByDate
+            case 2: return FolderListModel.SortBySize
             }
         }
 
@@ -206,18 +207,11 @@ SidebarPageLayout {
             id: authAction
             onTriggered: {
                 console.log("Full access clicked")
-                var authDialog = PopupUtils.open(Qt.resolvedUrl("../dialogs/AuthenticationDialog.qml"), mainView)
+                authentication.authenticate()
 
-                authDialog.passwordEntered.connect(function(password) {
-                    if (pamAuthentication.validatePasswordToken(password)) {
-                        console.log("Authenticated for full access")
-                        mainView.fullAccessGranted = true
-                    } else {
-                        var props = { title: i18n.tr("Authentication failed") }
-                        PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
-
-                        console.log("Could not authenticate")
-                    }
+                authentication.authenticationSucceeded.connect(function() {
+                    console.log("Authentication for full access succeeded!")
+                    mainView.fullAccessGranted = true
                 })
             }
         }
@@ -231,9 +225,13 @@ SidebarPageLayout {
                 ListItemLayout {
                     id: layout
                     title.text: i18n.tr("Restricted access")
+                    title.maximumLineCount: 2
+                    title.wrapMode: Text.WordWrap
+
                     subtitle.text: i18n.tr("Authentication is required in order to see all the content of this folder.")
+                    subtitle.maximumLineCount: Math.MAX_VALUE
+                    subtitle.wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     Button {
-                        width: units.gu(16)
                         SlotsLayout.position: SlotsLayout.Last
                         color: UbuntuColors.green
                         action: authAction

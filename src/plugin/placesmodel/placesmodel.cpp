@@ -247,6 +247,11 @@ QString PlacesModel::locationSamba() const
     return QLatin1Literal("smb://");
 }
 
+QString PlacesModel::userMountLocation() const
+{
+    return m_userMountLocation;
+}
+
 int PlacesModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)

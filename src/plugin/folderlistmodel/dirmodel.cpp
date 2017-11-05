@@ -94,9 +94,10 @@ QHash<QByteArray, int> roleMapping;
  *  to organize it items again. New items order/position are organized by \ref addItem()
  *
  */
-static CompareFunction availableCompareFunctions[2][2] = {
+static CompareFunction availableCompareFunctions[3][2] = {
     {fileCompareAscending, fileCompareDescending}
     , {dateCompareAscending, dateCompareDescending}
+    , {sizeCompareAscending, sizeCompareDescending}
 };
 
 
@@ -717,6 +718,29 @@ bool DirModel::mkdir(const QString &newDir)
             subItem->setFile(mCurrentDir, newDir);
         }
         onItemAdded(*subItem);
+    }
+
+    return retval;
+}
+
+bool DirModel::touch(const QString &newfile)
+{
+    if (!allowCurrentPathAccess()) {
+        qDebug() << Q_FUNC_INFO << "Access denied in current path" << mCurrentDir;
+        return false;
+    }
+
+    QString newFullFilename(mCurrentDir + QDir::separator() + newfile);
+
+    QFile f(newFullFilename);
+    bool retval = f.open(QIODevice::ReadWrite);
+
+    if (!retval) {
+        qDebug() << Q_FUNC_INFO << this << "Touch file returned error code: " << f.error() << f.errorString();
+        emit(QObject::tr("Touch file error"), f.errorString());
+    } else {
+        f.close();
+        addItem(DirItemInfo(QFileInfo(newFullFilename)));
     }
 
     return retval;

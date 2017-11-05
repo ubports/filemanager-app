@@ -230,7 +230,7 @@ ListView {
 
     Rectangle {
         anchors.fill: parent
-        color: "#CDCDCD"
+        color: theme.palette.normal.base
         z: -1000
     }
 
@@ -238,7 +238,7 @@ ListView {
         id: delegateStyle
         Item {
             property color  inactiveColor: theme.palette.normal.backgroundText
-            property color  activeColor: UbuntuColors.orange
+            property color  activeColor: theme.palette.selected.positionText
 
             property int    labelMaximumWidth: units.gu(24)
             property int    labelTextSize: Label.Small  /*Medium*/
@@ -252,7 +252,7 @@ ListView {
                 anchors.fill: parent
                 anchors.margins: units.dp(1)
                 anchors.leftMargin: units.dp(1) - arrowWidth
-                arrowWidth: units.gu(2)
+                arrowWidth: units.gu(1)
                 color: styledItem.pressed ? theme.palette.highlighted.background
                                           : styledItem.hovered ? theme.palette.selected.background : theme.palette.normal.background
             }
@@ -269,7 +269,7 @@ ListView {
 
                 Item {
                     height: parent.height
-                    width: units.gu(2)
+                    width: units.gu(2.25)
                     /* SPACER */
                 }
 
@@ -298,7 +298,7 @@ ListView {
 
                 Item {
                     height: parent.height
-                    width: units.gu(4)
+                    width: units.gu(3.25)
                     /* SPACER */
                 }
             }

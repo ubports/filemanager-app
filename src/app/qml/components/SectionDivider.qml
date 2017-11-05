@@ -27,10 +27,9 @@ Item {
 
     RowLayout {
         anchors {
-            left: parent.left; //leftMargin: units.gu(2)
-            right: parent.right //; rightMargin: units.gu(2)
-            verticalCenter: parent.verticalCenter
-            verticalCenterOffset: units.gu(2)
+            left: parent.left;
+            right: parent.right
+            verticalCenter: parent.bottom
         }
 
         spacing: units.gu(2)
@@ -38,7 +37,7 @@ Item {
         Rectangle {
             height: units.dp(1)
             color: theme.palette.normal.base
-            Layout.preferredWidth: units.gu(6)
+            Layout.preferredWidth: units.gu(7)
             Layout.alignment: Qt.AlignVCenter
         }
 
