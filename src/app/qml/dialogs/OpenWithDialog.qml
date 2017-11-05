@@ -29,10 +29,19 @@ Dialog {
     Button {
         id: openExternallyButton
         text: i18n.tr("Open with another app")
-        color: UbuntuColors.red
+        color: UbuntuColors.green
         onClicked: {
             PopupUtils.close(dialog)
             openLocalFile(filePath)
+        }
+    }
+
+    Button {
+        id: propertiesButton
+        text: i18n.tr("Properties")
+        color: UbuntuColors.blue
+        onClicked: {
+            PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"), mainView,{ "model": model })
         }
     }
 
