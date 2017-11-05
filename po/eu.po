@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-07-05 15:42+0000\n"
+"PO-Revision-Date: 2017-10-29 17:11+0000\n"
 "Last-Translator: Aitzol Berasategi <aitzol76@gmail.com>\n"
-"Language-Team: Basque <https://ubpweblate.tnvcomp.com/projects/ubports"
+"Language-Team: Basque <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/eu/>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
@@ -500,7 +500,7 @@ msgstr "pasahitza"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr "Ados"
+msgstr "ADOS"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
