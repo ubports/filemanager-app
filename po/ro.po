@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-11-06 22:54+0000\n"
+"PO-Revision-Date: 2017-11-06 22:55+0000\n"
 "Last-Translator: Brînzariu Cristian <info@ebeton.ro>\n"
 "Language-Team: Romanian <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/ro/>\n"
@@ -1227,7 +1227,7 @@ msgstr "Dechide cu altă aplicație"
 #: ../src/app/qml/ui/FolderListPage.qml:858
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:858
 msgid "~/Desktop"
-msgstr "~/Desktop"
+msgstr "~/Spațiu de lucru"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:868
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:868
