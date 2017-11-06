@@ -18,7 +18,7 @@ Dialog {
             var props = {
                 model: model
             }
-            if(model.mimeType !== -1)
+            if(model.mimeType.indexOf("image/") !== -1)
             pageStack.push(Qt.resolvedUrl("../ui/ImagePreview.qml"), props)
             else {
                 Qt.openUrlExternally("video://" + filePath)
