@@ -121,7 +121,7 @@ QtObject {
                         if (folderModel.model.rename(model.index, inputText.trim()) === false) {
                             var props = {
                                 title: i18n.tr("Could not rename"),
-                                text: i18n.tr("Insufficient permissions or name already exists?")
+                                text: i18n.tr("Insufficient permissions, name contains special chars (e.g. '/'), or already exists")
                             }
                             PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
                         }
