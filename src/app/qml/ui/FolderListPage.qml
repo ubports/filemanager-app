@@ -328,6 +328,7 @@ SidebarPageLayout {
 
         //High Level openFile() function
         //remote files are saved as temporary files and then opened
+        // TODO: This is deprecated. Should be removed, with all the actions that actually uses it.
         function openFile(model, share) {
             if (model.isRemote) {
                 //download and open later when the signal downloadTemporaryComplete() arrives
