@@ -58,7 +58,7 @@ QtObject {
 
                     var props = {
                         model: model,
-                        previewButtonVisible: model.mimeType.indexOf("image/") + model.mimeType.indexOf("audio/") + model.mimeType.indexOf("video/") > 0,
+                        previewButtonVisible: model.mimeType.indexOf("image/") + model.mimeType.indexOf("audio/") + model.mimeType.indexOf("video/") > -3,
                         extractButtonVisible: archiveType !== ""
                     }
 
