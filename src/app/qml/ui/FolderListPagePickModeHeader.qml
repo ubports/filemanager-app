@@ -30,7 +30,17 @@ PageHeader {
         onTriggered: lastPos = folderModel.goBack()
     }
 
-    leadingActionBar.actions: showPanelAction.visible ? showPanelAction : goBackAction
+    FMActions.PlacesBookmarks {
+        id: placesBookmarkAction
+        onTriggered: {
+            var pp = pageStack.push(Qt.resolvedUrl("PlacesPage.qml"), { folderModel: rootItem.folderModel })
+            pp.pathClicked.connect(function() {
+                pp.pageStack.pop()
+            })
+        }
+    }
+
+    leadingActionBar.actions: showPanelAction.visible ? showPanelAction : placesBookmarkAction
 
     trailingActionBar {
         anchors.rightMargin: 0

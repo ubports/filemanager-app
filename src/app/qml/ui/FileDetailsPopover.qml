@@ -63,6 +63,19 @@ Dialog {
             Layout.preferredWidth: units.gu(6)
             Layout.preferredHeight: width
             name: model.iconName
+            visible: !image.visible
+        }
+
+        Image {
+            id: image
+            Layout.preferredWidth: units.gu(6)
+            Layout.preferredHeight: width
+            sourceSize: Qt.size(units.gu(6), width)
+            visible: status == Image.Ready
+
+            source: model.mimeType.indexOf("image/") > -1 ? model.filePath : ""
+            fillMode: Image.PreserveAspectFit
+            asynchronous: true
         }
 
         ListItemLayout {

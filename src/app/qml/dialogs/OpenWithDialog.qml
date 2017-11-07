@@ -7,31 +7,55 @@ Dialog {
     modal: true
     title: i18n.tr("Open file")
     text: i18n.tr("What do you want to do with the clicked file?")
-    property string fileType
-
     property var model
+
+    property bool previewButtonVisible: false
+    property bool extractButtonVisible: false
+
+    signal showPreview()
+    signal extractArchive()
+    signal openWith()
+    signal showProperties()
 
     Button {
         id: previewButton
         text: i18n.tr("Preview")
         color: UbuntuColors.green
+        visible: previewButtonVisible
         onClicked: {
             PopupUtils.close(dialog)
-            var props = {
-                model: model,
-                path: model.filePath
-            }
-            pageStack.push(Qt.resolvedUrl("../ui/" + fileType + "Preview.qml"), props)
+            showPreview()
+        }
+    }
+
+    Button {
+        id: extractButton
+        text: i18n.tr("Extract archive")
+        color: UbuntuColors.green
+        visible: extractButtonVisible
+        onClicked: {
+            PopupUtils.close(dialog)
+            extractArchive()
         }
     }
 
     Button {
         id: openExternallyButton
         text: i18n.tr("Open with another app")
-        color: UbuntuColors.red
+        color: UbuntuColors.green
         onClicked: {
             PopupUtils.close(dialog)
-            openLocalFile(filePath)
+            openWith()
+        }
+    }
+
+    Button {
+        id: propertiesButton
+        text: i18n.tr("Properties")
+        color: UbuntuColors.blue
+        onClicked: {
+            PopupUtils.close(dialog)
+            showProperties()
         }
     }
 

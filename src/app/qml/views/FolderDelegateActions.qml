@@ -19,20 +19,21 @@ QtObject {
     }
 
     function itemClicked(model) {
-        if (model.isBrowsable) {
-            console.log("browsable path="+model.filePath+" isRemote="+model.isRemote+" needsAuthentication="+model.needsAuthentication)
+        if (model.isBrowsable) {    // Item is dir
+            console.log("browsable path=", model.filePath,
+                        "isRemote=", model.isRemote,
+                        "needsAuthentication=", model.needsAuthentication)
 
-            if(!isContentHub && fileSelectorMode)
-            {
+            if (!isContentHub && fileSelectorMode) {
                 folderModel.model.selectionObject.select(model.index,false,true)
-            } else {
+            }
 
-                if ((model.isReadable && model.isExecutable) ||
-                        (model.isRemote && model.needsAuthentication) //in this case it is necessary to generate the signal needsAuthentication()
-                        ) {
+            else {
+                var isReadableDir = model.isReadable && model.isExecutable
+                var isRemoteWithAuth = model.isRemote && model.needsAuthentication //in this case it is necessary to generate the signal needsAuthentication()
+
+                if (isReadableDir || isRemoteWithAuth) {
                     console.log("Changing to dir", model.filePath)
-
-
                     folderModel.goTo(model.filePath)
                 } else {
                     var props = {
@@ -44,37 +45,49 @@ QtObject {
                     PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
                 }
             }
-        } else {
+        }
+
+        else {  // Item is file
             console.log("Non dir clicked")
+
             if (fileSelectorMode) {
                 folderModel.model.selectionObject.select(model.index,false,true)
             } else if (!folderSelectorMode){
-                /*var props
-                if (model.filePath.indexOf(".jpg") !== -1 || model.filePath.indexOf(".png") !== -1 || model.filePath.indexOf(".gif") !== -1 || model.filePath.indexOf(".bmp") !== -1 || model.filePath.indexOf(".svg") !== -1)
-                {
-                    props = {
+                if (model.isLocal) {    // Item is local file
+                    var archiveType = folderModel.getArchiveType(model.fileName)
+
+                    var props = {
                         model: model,
-                        fileType: "Image"
+                        previewButtonVisible: model.mimeType.indexOf("image/") + model.mimeType.indexOf("audio/") + model.mimeType.indexOf("video/") > -3,
+                        extractButtonVisible: archiveType !== ""
                     }
-                    PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
-                } else if (model.filePath.indexOf(".mp3") !== -1 || model.filePath.indexOf(".wav") !== -1 || model.filePath.indexOf(".wma") !== -1 || model.filePath.indexOf(".ogg") !== -1)
-                {
-                    props = {
-                        model: model,
-                        fileType: "Audio"
-                    }
-                    PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
-                } else if (model.filePath.indexOf(".mp4") !== -1 || model.filePath.indexOf(".avi") !== -1 || model.filePath.indexOf(".wmv") !== -1 || model.filePath.indexOf(".mpg") !== -1)
-                {
-                    props = {
-                        model: model,
-                        fileType: "Video"
-                    }
-                    PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
-                } else {
-                    openFile(model)
-                }*/ //this is going to be added soon
-                openFile(model)
+
+                    var popup = PopupUtils.open(Qt.resolvedUrl("../dialogs/OpenWithDialog.qml"), delegate, props)
+
+                    popup.showPreview.connect(function() {
+                        if(model.mimeType.indexOf("image/") !== -1)
+                            pageStack.push(Qt.resolvedUrl("../ui/ImagePreview.qml"), props)
+                        else {
+                            Qt.openUrlExternally("video://" + filePath)
+                        }
+                    })
+
+                    popup.extractArchive.connect(function() {
+                        folderModel.extractArchive(model.filePath, model.fileName, archiveType)
+                    })
+
+                    popup.openWith.connect(function() {
+                        openLocalFile(model.filePath)
+                    })
+
+                    popup.showProperties.connect(function() {
+                        PopupUtils.open(Qt.resolvedUrl("../ui/FileDetailsPopover.qml"), mainView,{ "model": model })
+                    })
+
+                } else {    // Item is remote file
+                    //download and open later when the signal downloadTemporaryComplete() arrives
+                    folderModel.model.downloadAsTemporaryFile(model.index)
+                }
             }
         }
     }
