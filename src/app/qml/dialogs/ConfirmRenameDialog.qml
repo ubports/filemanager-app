@@ -19,21 +19,4 @@ ConfirmDialogWithInput {
 
     title: i18n.tr("Rename")
     text: i18n.tr("Enter a new name")
-
-    onAccepted: {
-        console.log("Rename accepted", inputText)
-        if (inputText !== '') {
-            console.log("Rename commensed, modelRow/inputText", modelRow, inputText.trim())
-            if (folderModel.rename(modelRow, inputText.trim()) === false) {
-                var props = {
-                    title: i18n.tr("Could not rename"),
-                    text: i18n.tr("Insufficient permissions or name already exists?")
-                }
-                PopupUtils.open(Qt.resolvedUrl("NotifyDialog.qml"), mainView, props)
-
-            }
-        } else {
-            console.log("Empty new name given, ignored")
-        }
-    }
 }
