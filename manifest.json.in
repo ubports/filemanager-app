@@ -13,5 +13,5 @@
     "maintainer": "Ubuntu App Cats <ubuntu-touch-coreapps@lists.launchpad.net>",
     "name": "com.ubuntu.filemanager",
     "title": "File Manager",
-    "version": "0.5.@GIT_REVNO@"
+    "version": "0.5.@GIT_REVNO@~@GIT_HASH@"
 }

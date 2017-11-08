@@ -40,6 +40,7 @@ if(CLICK_MODE)
     set(QT_IMPORTS_DIR "/lib/${ARCH_TRIPLET}")
     set(BIN_DIR /lib/${ARCH_TRIPLET}/bin)
     set(DESKTOP_DIR ${DATA_DIR})
+
     if(NOT GIT_REVNO)
         execute_process(
           COMMAND git rev-list --first-parent --all --count
@@ -51,6 +52,18 @@ if(CLICK_MODE)
     if(NOT GIT_REVNO)
         set(GIT_REVNO "latest")
     endif(NOT GIT_REVNO)
+
+    if(NOT GIT_HASH)
+        execute_process(
+          COMMAND git rev-parse --short=7 HEAD
+          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+          OUTPUT_VARIABLE GIT_HASH
+          OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+    endif(NOT GIT_HASH)
+    if(NOT GIT_HASH)
+        set(GIT_HASH "unknownhash")
+    endif(NOT GIT_HASH)
 
     #query the target architecture
     execute_process(
