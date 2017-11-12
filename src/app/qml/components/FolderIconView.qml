@@ -24,7 +24,7 @@ ScrollView {
 
     property var folderListModel
     property string folderPath: folderListModel.path
-    property int count: repeater.count
+    property int count: view.count
 
     GridView {
         id: view
