@@ -21,7 +21,7 @@
  * For now a simple static mapping of file extensions to ContentHub types.
  * This is enough for RTM, but in the future a better strategy would be
  * for asking for the MIME-type of the file and mapping that to the
- * CH.ContentType
+ * ContentType
  */
 
 function extToContentType(ext) {
@@ -236,12 +236,12 @@ function resolveContentType(fileUrl) {
     console.log("file extension:", extension)
     var contentType = extToContentType(extension)
 
-    if (contentType === null) {
+    if (contentType === undefined) {
         console.log("Unrecognized extension", extension)
         contentType = CH.ContentType.Unknown
     }
 
-    console.log("returning CH.ContentType:", CH.ContentType)
+    console.log("returning contentType:", contentType)
 
     return contentType
 }
