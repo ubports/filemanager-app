@@ -236,7 +236,7 @@ function resolveContentType(fileUrl) {
     console.log("file extension:", extension)
     var contentType = extToContentType(extension)
 
-    if (contentType === undefined) {
+    if (typeof contentType === undefined) {
         console.log("Unrecognized extension", extension)
         contentType = CH.ContentType.Unknown
     }
