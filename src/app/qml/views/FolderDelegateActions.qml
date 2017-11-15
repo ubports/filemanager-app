@@ -124,7 +124,24 @@ QtObject {
                     "inputText" : model.fileName,
                     "folderModel": folderModel.model
                 }
-                PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmRenameDialog.qml"), mainView, props)
+
+                var popup = PopupUtils.open(Qt.resolvedUrl("../dialogs/ConfirmRenameDialog.qml"), mainView, props)
+
+                popup.accepted.connect(function(inputText) {
+                    console.log("Rename accepted", inputText)
+                    if (inputText !== '') {
+                        console.log("Rename commensed, modelRow/inputText", model.index, inputText.trim())
+                        if (folderModel.model.rename(model.index, inputText.trim()) === false) {
+                            var props = {
+                                title: i18n.tr("Could not rename"),
+                                text: i18n.tr("Insufficient permissions, name contains special chars (e.g. '/'), or already exists")
+                            }
+                            PopupUtils.open(Qt.resolvedUrl("../dialogs/NotifyDialog.qml"), mainView, props)
+                        }
+                    } else {
+                        console.log("Empty new name given, ignored")
+                    }
+                })
             }
         }
     }

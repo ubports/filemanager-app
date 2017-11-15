@@ -24,7 +24,7 @@ Dialog {
 
     property alias inputText: input.text
     property alias placeholderText: input.placeholderText
-    signal accepted
+    signal accepted(var text)
     signal rejected
 
     Component.onCompleted: {
@@ -48,8 +48,9 @@ Dialog {
         objectName: "okButton"
         text: i18n.tr("OK")
         enabled: input.acceptableInput
+        color: UbuntuColors.green
         onClicked: {
-            accepted()
+            accepted(input.text)
             PopupUtils.close(root)
         }
     }
@@ -57,18 +58,7 @@ Dialog {
     Button {
         objectName: "cancelButton"
         text: i18n.tr("Cancel")
-
-        gradient: Gradient {
-            GradientStop {
-                position: 0
-                color: "gray"
-            }
-
-            GradientStop {
-                position: 1
-                color: "lightgray"
-            }
-        }
+        color: UbuntuColors.graphite
 
         onClicked: {
             rejected()
