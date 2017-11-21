@@ -48,6 +48,10 @@ MainView {
     property bool isContentHub: false
     property bool importMode: true
 
+    // This is used when it invokes folderListModel.setPathWithAuthentication()
+    // We store user's preference only for the current instance of FM
+    property bool sambaSavePassword: true
+
     QtObject {
         id: fileSelector
         property var activeTransfer: null

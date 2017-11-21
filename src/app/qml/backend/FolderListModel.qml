@@ -106,6 +106,10 @@ QtObject {
         archives.extract(filePath, extractDirectory)
     }
 
+    function setPathWithAuthentication(currentPath, currentUserName, currentPassword, savePassword) {
+        __model.setPathWithAuthentication(currentPath, currentUserName, currentPassword, savePassword)
+    }
+
     // TODO: Set onlyAllowedPaths for restricted user accounts
     property QtObject __model: FolderListModel {
         id: __model

@@ -36,6 +36,7 @@ SidebarPageLayout {
     property alias folderModel: pageModel
     property bool fileSelectorMode: false
     property bool folderSelectorMode: false
+
     Backend.FolderListModel {
         id: pageModel
         path: places.locationHome
@@ -43,7 +44,25 @@ SidebarPageLayout {
         model.onlyAllowedPaths: !mainView.fullAccessGranted
         model.onNeedsAuthentication: {
             console.log("FolderListModel needsAuthentication() signal arrived")
-            authenticationHandler.showDialog(urlPath, user)
+
+            var props = {
+                currentPath: urlPath,
+                currentUserName: user,
+                savePassword: mainView.sambaSavePassword
+            }
+
+            var popup = PopupUtils.open(Qt.resolvedUrl("../dialogs/NetAuthenticationDialog.qml"), mainView, props)
+
+            popup.savePasswordChanged.connect(function() {
+                mainView.sambaSavePassword = popup.savePassword
+            })
+
+            popup.ok.connect(function() {
+                pageModel.setPathWithAuthentication(popup.currentPath,
+                                                    popup.currentUserName,
+                                                    popup.currentPassword,
+                                                    popup.savePassword)
+            })
         }
 
         model.onDownloadTemporaryComplete: {
@@ -128,11 +147,6 @@ SidebarPageLayout {
 
         // FIXME: Clearing selection (by cancel btn in the header, or changing the folder, should exit selection mode)
         readonly property bool selectionMode: fileSelectorMode || folderSelectorMode
-
-        NetAuthenticationHandler {
-            id: authenticationHandler
-            folderListModel: pageModel.model
-        }
 
         Loader {
             id: viewLoader

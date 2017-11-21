@@ -28,16 +28,9 @@ Dialog {
     property alias  currentPath:     authCurrentPath.text
     property alias  currentUserName: authUserName.text
     property alias  currentPassword: authPassword.text
+    property alias  savePassword: autcheckSavePassword.checked
 
     signal ok()
-    signal savePasswordChanged(bool check)
-
-    function showDialog(path,user) {
-        currentPath     = path
-        currentUserName = user
-        autcheckSavePassword.checked    = true
-        authenticationDialog.show()
-    }
 
     Component.onCompleted: {
         authUserName.forceActiveFocus()
