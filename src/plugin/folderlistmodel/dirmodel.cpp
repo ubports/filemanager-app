@@ -510,9 +510,9 @@ void DirModel::setPathFromCurrentLocation()
 
     clear();
 
+    mCurrentDir = mCurLocation->urlPath();
     mCurLocation->fetchItems(currentDirFilter(), mIsRecursive);
 
-    mCurrentDir = mCurLocation->urlPath();
     if (mPathList.count() == 0 || mPathList.last() != mCurrentDir) {
         mPathList.append(mCurrentDir);
     }
