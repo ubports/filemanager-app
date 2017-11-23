@@ -65,7 +65,7 @@ ListView {
             // we still keep a trace of older nodes
             var stored_path = internal.storedPath
             var cur = stored_path.indexOf(current_path)
-            if (stored_path && cur > -1) {
+            if (stored_path && cur == 0) {
                 cur += current_path.length
                 current_path = current_path + stored_path.slice(cur)
             }
@@ -108,7 +108,8 @@ ListView {
                 var objName = f
                 var objPath = ""
 
-                if (path_slices[path_slices.length - 1].path != smb_prefix) {
+                if (path_slices[path_slices.length - 1].path != smb_prefix
+                        && path_slices[path_slices.length - 1].path != local_prefix) {
                     objPath = path_slices[path_slices.length - 1].path + "/" + f
                 } else {
                     objPath = path_slices[path_slices.length - 1].path + f
