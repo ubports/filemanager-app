@@ -178,4 +178,13 @@ Dialog {
         summary.wrapMode: Text.WrapAtWordBoundaryOrAnywhere
         summary.text: permissionsToString(model)
     }
+
+    Button {
+        id: cancelButton
+        text: i18n.tr("Cancel")
+        color: UbuntuColors.graphite
+        onClicked: {
+            PopupUtils.close(root)
+        }
+    }
 }

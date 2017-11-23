@@ -21,7 +21,9 @@ import Ubuntu.Components.Popups 1.3
 
 Dialog {
     id: root
+
     Button {
+        color: UbuntuColors.graphite
         text: i18n.tr("OK")
         onClicked: {
             PopupUtils.close(root)
