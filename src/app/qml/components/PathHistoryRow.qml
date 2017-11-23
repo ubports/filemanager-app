@@ -95,11 +95,7 @@ ListView {
 
             var splitted_path = current_path.split("/")
 
-            if (splitted_path.length > 1 && (splitted_path[0] === "" && splitted_path[1] === "")) {
-                splitted_path.shift()
-            }
-
-            // Sanitize splitted_path
+            // Sanitize splitted_path. Remove empty strings from array
             splitted_path = splitted_path.filter(Boolean)
 
             // Clear the model.
@@ -110,7 +106,13 @@ ListView {
                 var f = splitted_path[i]
 
                 var objName = f
-                var objPath = path_slices[path_slices.length - 1].path + "/" + f
+                var objPath = ""
+
+                if (path_slices[path_slices.length - 1].path != smb_prefix) {
+                    objPath = path_slices[path_slices.length - 1].path + "/" + f
+                } else {
+                    objPath = path_slices[path_slices.length - 1].path + f
+                }
 
                 path_slices.push({ name: objName, path: objPath })
 
