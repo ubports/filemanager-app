@@ -50,82 +50,79 @@ ListView {
         id: internal
         property string storedPath
 
-        // The magical core of this component
         function updateModel() {
-            var currentPath = folderModel.path.toString()
+            var current_path = folderModel.path.toString()
+            var path_slices = []
 
-            // WORKAROUND: Apparently Samba paths are an empty string. Append "smb://" so that everything works
-            if (currentPath == "") {
-                currentPath = "smb://" + currentPath
+            var local_prefix = "/"
+            var home_prefix = "~"
+            var smb_prefix = "smb://"
+            var trash_prefix = "trash://"
+
+            current_path = current_path.replace(folderModel.model.homePath(), home_prefix)
+
+            // Check if current path is included in the path we stored previously. This way
+            // we still keep a trace of older nodes
+            var stored_path = internal.storedPath
+            var cur = stored_path.indexOf(current_path)
+            if (stored_path && cur > -1) {
+                cur += current_path.length
+                current_path = current_path + stored_path.slice(cur)
             }
 
-            var isTrashPath = currentPath.indexOf("trash://") > -1
-            var isRemotePath = currentPath.indexOf("smb://") > -1
-            var isLocalPath = !isTrashPath && !isRemotePath
-
-            if (internal.storedPath && internal.storedPath.indexOf(currentPath) > -1) {
-                if (currentPath !== "/") {
-                    currentPath = internal.storedPath
-                }
+            if (current_path.indexOf(smb_prefix) > -1) {
+                current_path = current_path.replace(smb_prefix, "")
+                path_slices.push({ name: smb_prefix, path: smb_prefix })
             }
 
-            currentPath = currentPath.replace("smb://", "")
-                                     .replace("trash://", "")
-
-            if (isLocalPath) {
-                currentPath = currentPath.replace(folderModel.model.homePath(), "~")
+            else if (current_path.indexOf(trash_prefix) > -1) {
+                current_path = current_path.replace(trash_prefix, "")
+                path_slices.push({ name: trash_prefix, path: trash_prefix })
             }
 
-            // Get an array of folders for the following manipulation
-            var splitted_path = currentPath.split("/")
+            else if (current_path.indexOf(home_prefix) > -1) {
+                current_path = current_path.replace(home_prefix, "")
+                current_path = current_path.slice(1)
+                path_slices.push({ name: home_prefix, path: home_prefix })
+
+            }
+
+            else {
+                current_path = current_path.slice(1)
+                path_slices.push({ name: local_prefix, path: local_prefix })
+            }
+
+
+            var splitted_path = current_path.split("/")
 
             if (splitted_path.length > 1 && (splitted_path[0] === "" && splitted_path[1] === "")) {
                 splitted_path.shift()
             }
 
+            // Sanitize splitted_path
+            splitted_path = splitted_path.filter(Boolean)
+
             // Clear the model.
             internal.clear()
 
-            var cur = 0 // Cursor for getting the path to the folder
+            var highlight_index = 0
             for (var i = 0; i < splitted_path.length; ++i) {
                 var f = splitted_path[i]
 
-                var objName;
-                if (isTrashPath)
-                    objName = (i === 0 && f === "") ? "trash:///" : f
-                else if (isRemotePath)
-                    objName = (i === 0 && f === "") ? "smb:///" : f
-                else
-                    objName = (i === 0 && f === "") ? "/" : f
+                var objName = f
+                var objPath = path_slices[path_slices.length - 1].path + "/" + f
 
-                var objPath;
-                if (isTrashPath)
-                    objPath = (i === 0 && f === "") ? "trash:///" : "trash://" + currentPath.substring(0, cur + f.length)
-                else if (isRemotePath)
-                    objName = (i === 0 && f === "") ? "smb:///" : "smb://" + currentPath.substring(0, cur + f.length)
-                else
-                    objPath = (i === 0 && f === "") ? "/" : currentPath.substring(0, cur + f.length)
-
-                var obj = {
-                    name: objName,
-                    path: objPath
-                }
-
-                internal.append(obj)
+                path_slices.push({ name: objName, path: objPath })
 
                 // Set the current item, if necessary
-                if (obj.path == (isTrashPath ? "trash://" : isRemotePath ? "smb://" : "") + folderModel.path.toString().replace(folderModel.model.homePath(), "~")) {
-                    rootItem.currentIndex = i
+                if (objPath == folderModel.path.toString().replace(folderModel.model.homePath(), home_prefix)) {
+                    highlight_index = i + 1
                 }
-
-                cur += f.length + 1  // Move cursor
             }
 
-            if (!internal.storedPath ||
-                    (folderModel.path.toString() == "/" && currentPath.indexOf("~") == 0) ||    // FIXME
-                    (internal.storedPath.indexOf(folderModel.path.toString()) == -1)) {
-                internal.storedPath = folderModel.path.toString()
-            }
+            internal.append(path_slices)
+            rootItem.currentIndex = highlight_index
+            internal.storedPath = path_slices[path_slices.length - 1].path
         }
     }
 
@@ -264,8 +261,8 @@ ListView {
 
                 property bool isHomePath: styledItem.name == "~"
                 property bool isRootPath: styledItem.name == "/"
-                property bool isTrashPath: styledItem.name == "trash:///"
-                property bool isSmbPath: styledItem.name == "smb:///"
+                property bool isTrashPath: styledItem.name == "trash://"
+                property bool isSmbPath: styledItem.name == "smb://"
 
                 Item {
                     height: parent.height
