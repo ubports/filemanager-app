@@ -1,23 +1,11 @@
 {
     "destination": [
-        "pictures",
-        "documents",
-        "videos",
-        "contacts",
-        "music"
+        "all"
     ],
     "share": [
-        "pictures",
-        "documents",
-        "videos",
-        "contacts",
-        "music"
+        "all"
     ],
     "source": [
-        "pictures",
-        "documents",
-        "videos",
-        "contacts",
-        "music"
+        "all"
     ]
 }
