@@ -6,17 +6,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-04-30 02:00+0000\n"
-"Last-Translator: samson <Unknown>\n"
-"Language-Team: Amharic <am@li.org>\n"
+"PO-Revision-Date: 2017-12-25 21:02+0000\n"
+"Last-Translator: Samson <sambelet@yahoo.com>\n"
+"Language-Team: Amharic <https://translate.ubports.com/projects/ubports"
+"/filemanager-app/am/>\n"
+"Language: am\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2.15\n"
 "X-Launchpad-Export-Date: 2017-05-01 06:26+0000\n"
-"X-Generator: Launchpad (build 18364)\n"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:138
@@ -30,7 +32,7 @@ msgid ""
 "applications using Qt, with a menu bar, toolbars, and a status bar."
 msgstr ""
 "የ <b>መተግበሪያ</b> ምሳሌ የሚያሳየው እንዴት እንደሚጻፍ ነው ስለ ዘመናዊ GUI መተግበሪያ በ መጠቀም የ Qt, በ "
-"ዝርዝር መደርደሪያ: እቃ መደርደሪያ እና በ ሁኔታዎች መደርደሪያ ላይ"
+"ዝርዝር መደርደሪያ: እቃ መደርደሪያ እና በ ሁኔታዎች መደርደሪያ ላይ:"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
@@ -327,7 +329,7 @@ msgstr "መክፈቻ በ"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:114
 #: ../stage/usr/share/filemanager/qml/ui/SettingsSheet.qml:33
 msgid "Settings"
-msgstr "ማሰናጃ"
+msgstr "ማሰናጃዎች"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:84
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:84
