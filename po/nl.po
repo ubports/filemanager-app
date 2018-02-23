@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-01-16 09:34+0000\n"
-"Last-Translator: Mathijs Verbeek <m.verbeek@boboti.nl>\n"
+"PO-Revision-Date: 2018-02-23 10:51+0000\n"
+"Last-Translator: Stefan <spleyte@gmail.com>\n"
 "Language-Team: Dutch <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/nl/>\n"
 "Language: nl\n"
@@ -27,12 +27,11 @@ msgstr "Over Applicatie"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:139
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:139
-#, fuzzy
 msgid ""
 "The <b>Application</b> example demonstrates how to write modern GUI "
 "applications using Qt, with a menu bar, toolbars, and a status bar."
 msgstr ""
-"Het <b>Applicatievoorbeeld</b> demonstreert hoe moderne, grafische "
+"Het <b>Applicatievoorbeeld</b> demonstreert hoe moderne grafische "
 "applicaties geschreven kunnen worden met Qt, met een menubalk, toolbars en "
 "een statusbalk."
 
@@ -59,9 +58,8 @@ msgstr "Open een bestaand bestand"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:169
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:169
-#, fuzzy
 msgid "&Save"
-msgstr "&Sla op"
+msgstr "&Opslaan"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:171
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:171
@@ -961,7 +959,7 @@ msgstr "Opslaan"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Select"
-msgstr ""
+msgstr "Selecteren"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:478
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:478
