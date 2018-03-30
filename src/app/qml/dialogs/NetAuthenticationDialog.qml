@@ -18,40 +18,30 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
-import Ubuntu.Components.ListItems 1.3
+import QtQuick.Layouts 1.1
+
+import "../components"
 
 Dialog {
     id: authenticationDialog
     objectName: "authenticationDialog"
     title: i18n.tr("Authentication required")
 
-    property alias  currentPath:     authCurrentPath.text
+    property alias  currentPath:     authenticationDialog.text
     property alias  currentUserName: authUserName.text
     property alias  currentPassword: authPassword.text
+    property alias  savePassword: autcheckSavePassword.checked
 
     signal ok()
-    signal savePasswordChanged(bool check)
-
-    function showDialog(path,user) {
-        currentPath     = path
-        currentUserName = user
-        autcheckSavePassword.checked    = true
-        authenticationDialog.show()
-    }
 
     Component.onCompleted: {
         authUserName.forceActiveFocus()
         authUserName.cursorPosition = authUserName.text.length
     }
 
-    Text {
-        id: authCurrentPath
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.italic: true
-        elide: Text.ElideMiddle
-    }
-
-    Text {
+    Label {
+        color: theme.palette.normal.backgroundTertiaryText
+        textSize: Label.Small
         text: i18n.tr("User")
     }
 
@@ -62,7 +52,9 @@ Dialog {
         focus: true
     }
 
-    Text {
+    Label {
+        color: theme.palette.normal.backgroundTertiaryText
+        textSize: Label.Small
         text: i18n.tr("Password")
     }
 
@@ -74,50 +66,53 @@ Dialog {
         onAccepted: authOkButton.clicked()
     }
 
-    Standard {
-        Label {
-            text: i18n.tr("Save password")
-            color: UbuntuColors.ash
-            anchors.left: parent.left
-            anchors.verticalCenter: parent.verticalCenter
-        }
-        control: CheckBox {
-            id: autcheckSavePassword
-            objectName: "autcheckSavePassword"
-            anchors.verticalCenter: parent.verticalCenter
-            onCheckedChanged: {
-                console.log("NetAuthenticationDialog::onCheckedChanged() checked="+checked)
-                savePasswordChanged(checked)
+    ListItem {
+        divider.visible: false
+        ListItemLayout {
+            title.text: i18n.tr("Save password")
+            title.color: theme.palette.normal.backgroundSecondaryText
+
+            Switch {
+                SlotsLayout.position: SlotsLayout.Last
+                id: autcheckSavePassword
+                objectName: "autcheckSavePassword"
+                onCheckedChanged: {
+                    console.log("NetAuthenticationDialog::onCheckedChanged() checked="+checked)
+                    savePasswordChanged(checked)
+                }
+
             }
         }
     }
 
-    Button {
-        id: authOkButton
-        objectName: "authOkButton"
-        text: i18n.tr("Ok")
-        onClicked: {
-            ok()
-            PopupUtils.close(authenticationDialog)
+    RowLayout {
+        anchors { left: parent.left; right: parent.right }
+        height: units.gu(4)
+        layoutDirection: Qt.RightToLeft
+
+        Button {
+            id: authCancelButton
+            objectName: "authCancelButton"
+            text: i18n.tr("Cancel")
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+
+            onClicked: {
+                PopupUtils.close(authenticationDialog)
+            }
+        }
+
+        Button {
+            id: authOkButton
+            objectName: "authOkButton"
+            text: i18n.tr("Ok")
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+
+            onClicked: {
+                ok()
+                PopupUtils.close(authenticationDialog)
+            }
         }
     }
-
-    Button {
-        id: authCancelButton
-        objectName: "authCancelButton"
-        text: i18n.tr("Cancel")
-        gradient: Gradient {
-            GradientStop {
-                position: 0
-                color: "gray"
-            }
-            GradientStop {
-                position: 1
-                color: "lightgray"
-            }
-        }
-        onClicked: {
-            PopupUtils.close(authenticationDialog)
-        }
-    }//authCancelButton
 }
