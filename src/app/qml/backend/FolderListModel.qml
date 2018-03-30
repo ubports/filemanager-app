@@ -31,10 +31,10 @@ QtObject {
     property string title: FmUtils.pathName(path)
     property string folder: FmUtils.pathName(path)
 
-    // property alias count: __model.count # quick fix, needs attention
+    property alias count: __model.count
 
     property alias busy: __model.awaitingResults
-    // property alias canGoBack: __model.canGoBack # quick fix, needs attention
+    property alias canGoBack: __model.canGoBack
 
     property bool showHiddenFiles: false
     property string sortingMethod: "Name" // or "Date"
