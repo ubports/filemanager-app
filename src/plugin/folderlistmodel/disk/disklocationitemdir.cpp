@@ -22,14 +22,14 @@
 #include "disklocationitemdir.h"
 #include <QDir>
 
-DiskLocationItemDir::DiskLocationItemDir(const QString &dir) : LocationItemDir(dir), m_qtQDir(new QDir())
+DiskLocationItemDir::DiskLocationItemDir(const QString &dir) :
+    LocationItemDir(dir)
+    , m_qtQDir(new QDir())
 {
-    if(!dir.isNull() && !dir.isEmpty())
-    {
+    if (!dir.isNull() && !dir.isEmpty()) {
         m_qtQDir->setPath(dir);
     }
 }
-
 
 DiskLocationItemDir::~DiskLocationItemDir()
 {
@@ -41,20 +41,17 @@ bool DiskLocationItemDir::exists() const
     return m_qtQDir->exists();
 }
 
-
-bool DiskLocationItemDir::mkdir(const QString& dir) const
+bool DiskLocationItemDir::mkdir(const QString &dir) const
 {
     return m_qtQDir->mkdir(dir);
 }
 
-
-bool DiskLocationItemDir::mkpath(const QString& dir) const
+bool DiskLocationItemDir::mkpath(const QString &dir) const
 {
-     return m_qtQDir->mkpath(dir);
+    return m_qtQDir->mkpath(dir);
 }
 
-
-bool DiskLocationItemDir::rmdir(const QString& dir) const
+bool DiskLocationItemDir::rmdir(const QString &dir) const
 {
     return m_qtQDir->rmdir(dir);
 }

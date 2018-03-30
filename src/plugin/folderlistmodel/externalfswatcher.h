@@ -55,29 +55,32 @@ public:
     explicit ExternalFSWatcher(QObject *parent = 0);
     int      getIntervalToNotifyChanges() const;
 
-    inline const QStringList& pathsWatched() const { return m_setPaths;}
+    inline const QStringList &pathsWatched() const
+    {
+        return m_setPaths;
+    }
 
 signals:
-     void      pathModified(const QString& path);
+    void      pathModified(const QString &path);
 
 public slots:
-     void      setCurrentPath(const QString& curPath);
-     void      setCurrentPaths(const QStringList& paths);
-     void      setIntervalToNotifyChanges(int ms);     
+    void      setCurrentPath(const QString &curPath);
+    void      setCurrentPaths(const QStringList &paths);
+    void      setIntervalToNotifyChanges(int ms);
 
 private slots:
-     void      slotDirChanged(const QString&);
-     void      slotFireChanges();
+    void      slotDirChanged(const QString &);
+    void      slotFireChanges();
 
 private:
-     void      clearPaths();
+    void      clearPaths();
 
 private:
-     QStringList m_setPaths;
-     QString     m_changedPath;
-     unsigned    m_waitingEmitCounter;
-     int         m_msWaitTime;
-     int         m_lastChangedIndex;
+    QStringList m_setPaths;
+    QString     m_changedPath;
+    unsigned    m_waitingEmitCounter;
+    int         m_msWaitTime;
+    int         m_lastChangedIndex;
 };
 
 #endif // EXTERNALFSWATCHER_H

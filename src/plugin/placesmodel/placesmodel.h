@@ -30,6 +30,9 @@
 
 #include "qmtabparser.h"
 
+// TODO: Add new roles for user mounted locations, user's bookmarks
+// TODO: Add new roles for location name and icon
+
 class PlacesModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -41,10 +44,12 @@ class PlacesModel : public QAbstractListModel
     Q_PROPERTY(QString locationPictures READ locationPictures CONSTANT)
     Q_PROPERTY(QString locationVideos READ locationVideos CONSTANT)
     Q_PROPERTY(QString locationSamba READ locationSamba CONSTANT)
+    Q_PROPERTY(QString userMountLocation READ userMountLocation CONSTANT)
 
 public:
     explicit PlacesModel(QObject *parent = 0);
     ~PlacesModel();
+
     QString locationHome() const;
     QString locationDocuments() const;
     QString locationDownloads() const;
@@ -52,6 +57,8 @@ public:
     QString locationPictures() const;
     QString locationVideos() const;
     QString locationSamba() const;
+    QString userMountLocation() const;
+
     int rowCount(const QModelIndex &parent = QModelIndex() ) const override;
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
@@ -63,13 +70,19 @@ signals:
 public slots:
     void addLocation(const QString &location);
     void removeItem(int indexToRemove);
-    inline bool isUserMountDirectory(const QString& location) {
+
+    inline bool isUserMountDirectory(const QString &location)
+    {
         return m_userMounts.contains(location);
     }
-    bool isDefaultLocation(const QString& location) const {
+
+    bool isDefaultLocation(const QString &location) const
+    {
         return m_defaultLocations.contains(location);
     }
-    inline int indexOfLocation(const QString& location) const {
+
+    inline int indexOfLocation(const QString &location) const
+    {
         return m_locations.indexOf(location);
     }
 
@@ -78,13 +91,13 @@ private slots:
     void rescanMtab();
 
 private:
-    void initNewUserMountsWatcher();    
+    void initNewUserMountsWatcher();
     bool addLocationNotRemovedWithoutStoring(const QString &location);
     // Returns true if location was not known before, and false if it was known
     void removeItemWithoutStoring(int itemToRemove);
     //just add into m_locations, does not emit any signal
-    void addDefaultLocation(const QString& location);   
-    void removeItem(const QString& location);
+    void addDefaultLocation(const QString &location);
+    void removeItem(const QString &location);
 
     QMtabParser m_mtabParser;
     QStringList m_runtimeLocations;
@@ -92,10 +105,11 @@ private:
     bool isMtabEntryUserMount(const QMtabEntry &entry) const;
     bool isSubDirectory(const QString &dir, const QString &path) const;
     QString standardLocation(QStandardPaths::StandardLocation location) const;
-    QStringList    m_locations;  //<! m_locations = m_defaultLocations + m_userSavedLocations - m_userRemovedLocations
+    QStringList
+    m_locations;  //<! m_locations = m_defaultLocations + m_userSavedLocations - m_userRemovedLocations
     QStringList    m_defaultLocations;
     QStringList    m_userSavedLocations;
-    QStringList    m_userRemovedLocations;   
+    QStringList    m_userRemovedLocations;
     QSettings *m_settings;
     QFileSystemWatcher *m_newUserMountsWatcher;
     QSet<QString> m_userMounts;

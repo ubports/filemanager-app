@@ -51,8 +51,8 @@ IORequestWorker::IORequestWorker()
 void IORequestWorker::addRequest(IORequest *request)
 {
 #if DEBUG_EXT_FS_WATCHER
-        qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
-                 << Q_FUNC_INFO;
+    qDebug() << "[exfsWatcher]" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
+             << Q_FUNC_INFO;
 #endif
 
     request->moveToThread(this);

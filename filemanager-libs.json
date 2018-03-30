@@ -1,7 +1,7 @@
 {
     "armhf": [
         {
-            "url": "http://ports.ubuntu.com/ubuntu-ports",
+            "url": "http://old-releases.ubuntu.com/ubuntu",
             "dist": "vivid",
             "component": "main",
             "packages": [
@@ -17,7 +17,7 @@
     ],
     "amd64": [
         {
-            "url": "http://archive.ubuntu.com/ubuntu",
+            "url": "http://old-releases.ubuntu.com/ubuntu",
             "dist": "vivid",
             "component": "main",
             "packages": [
@@ -33,7 +33,7 @@
     ],
     "i386": [
         {
-            "url": "http://archive.ubuntu.com/ubuntu",
+            "url": "http://old-releases.ubuntu.com/ubuntu",
             "dist": "vivid",
             "component": "main",
             "packages": [

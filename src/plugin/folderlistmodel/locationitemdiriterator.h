@@ -36,65 +36,64 @@
 class LocationItemDirIterator
 {
 public:
-   enum LoadMode
-   {
-     LoadOnConstructor,  //!< loads the entire directory or url in the constructor as Qt QDirIterator does
-     LoadLater           //!< do NOT load the entire directory or url, \ref load() method should be responsible to do that.
-   };
+    enum LoadMode {
+        LoadOnConstructor,  //!< loads the entire directory or url in the constructor as Qt QDirIterator does
+        LoadLater           //!< do NOT load the entire directory or url, \ref load() method should be responsible to do that.
+    };
 
-   virtual ~LocationItemDirIterator();
+    virtual ~LocationItemDirIterator();
 public:
-   virtual bool         hasNext()  const = 0;
-   virtual QString	    next()           = 0;
+    virtual bool         hasNext()  const = 0;
+    virtual QString      next()           = 0;
 
-   virtual DirItemInfo	fileInfo() const = 0;
+    virtual DirItemInfo  fileInfo() const = 0;
     /*!
     * \brief fileName()
     * \return the file name for the current directory entry, without the path prepended.
     */
-   virtual QString	    fileName() const = 0;
+    virtual QString      fileName() const = 0;
 
     /*!
     * \brief filePath()
     * \return the full pathname of the current item
     */
-   virtual QString          filePath() const = 0;
+    virtual QString          filePath() const = 0;
 
     /*!
     * \brief path()
     * \return  the base directory of the iterator path (not the current item)
     */
-   virtual QString          path()     const;
+    virtual QString          path()     const;
 
-   /*!
-    * \brief load()  responsible to load the entire directory or url when \ref LoadLater is passed to the constructor
-    */
-   virtual void         load() ;
+    /*!
+     * \brief load()  responsible to load the entire directory or url when \ref LoadLater is passed to the constructor
+     */
+    virtual void         load() ;
 
-   QDir::Filters        filters()  const;
-   QDirIterator::IteratorFlags flags() const;
-
-protected:
-   LocationItemDirIterator(const QString & path,
-                           QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
-                           LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
-
-   LocationItemDirIterator(const QString & path,
-                           QDir::Filters filters,
-                           QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
-                           LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
-
-   LocationItemDirIterator(const QString & path,
-                           const QStringList & nameFilters,
-                           QDir::Filters filters = QDir::NoFilter,
-                           QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
-                           LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
+    QDir::Filters        filters()  const;
+    QDirIterator::IteratorFlags flags() const;
 
 protected:
-   QString                     m_path;
-   QStringList                 m_nameFilters;
-   QDir::Filters               m_filters;
-   QDirIterator::IteratorFlags m_flags;
+    LocationItemDirIterator(const QString &path,
+                            QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
+                            LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
+
+    LocationItemDirIterator(const QString &path,
+                            QDir::Filters filters,
+                            QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
+                            LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
+
+    LocationItemDirIterator(const QString &path,
+                            const QStringList &nameFilters,
+                            QDir::Filters filters = QDir::NoFilter,
+                            QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
+                            LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
+
+protected:
+    QString                     m_path;
+    QStringList                 m_nameFilters;
+    QDir::Filters               m_filters;
+    QDirIterator::IteratorFlags m_flags;
 };
 
 

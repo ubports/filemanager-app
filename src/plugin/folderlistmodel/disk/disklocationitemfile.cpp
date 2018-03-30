@@ -22,115 +22,98 @@
 #include "disklocationitemfile.h"
 
 DiskLocationItemFile::DiskLocationItemFile(QObject *parent)
-  : LocationItemFile(parent)
-  , m_qtFile( new QFile() )
+    : LocationItemFile(parent)
+    , m_qtFile( new QFile() )
 {
 
 }
 
 DiskLocationItemFile::DiskLocationItemFile(const QString &name, QObject *parent)
-  : LocationItemFile(parent)
-  , m_qtFile( new QFile(name) )
+    : LocationItemFile(parent)
+    , m_qtFile( new QFile(name) )
 {
 
 }
-
 
 DiskLocationItemFile::~DiskLocationItemFile()
 {
     delete m_qtFile;
 }
 
-
 QString DiskLocationItemFile::fileName() const
 {
     return m_qtFile->fileName();
 }
 
-
-bool DiskLocationItemFile::rename(const QString& newName)
+bool DiskLocationItemFile::rename(const QString &newName)
 {
     return m_qtFile->rename(newName);
 }
 
-
-bool DiskLocationItemFile::rename(const QString& oldname, const QString &newName)
+bool DiskLocationItemFile::rename(const QString &oldname, const QString &newName)
 {
     return QFile::rename(oldname, newName);
 }
 
-
 bool DiskLocationItemFile::remove()
 {
-   return m_qtFile->remove();
+    return m_qtFile->remove();
 }
 
-
-bool DiskLocationItemFile::remove(const QString& name)
+bool DiskLocationItemFile::remove(const QString &name)
 {
     return QFile::remove(name);
 }
 
-
-bool DiskLocationItemFile::link(const QString& linkName)
+bool DiskLocationItemFile::link(const QString &linkName)
 {
     return m_qtFile->link(linkName);
 }
-
 
 bool DiskLocationItemFile::open(QIODevice::OpenMode mode)
 {
     return m_qtFile->open(mode);
 }
 
-
-qint64 DiskLocationItemFile::read(char * buffer, qint64 bytes)
+qint64 DiskLocationItemFile::read(char *buffer, qint64 bytes)
 {
     return m_qtFile->read(buffer, bytes);
 }
-
 
 qint64 DiskLocationItemFile::write(const char *buffer, qint64 bytes)
 {
     return m_qtFile->write(buffer, bytes);
 }
 
-
 void DiskLocationItemFile::close()
 {
     m_qtFile->close();
 }
-
 
 bool DiskLocationItemFile::atEnd() const
 {
     return m_qtFile->atEnd();
 }
 
-
 qint64 DiskLocationItemFile::size() const
 {
     return m_qtFile->size();
 }
-
 
 bool DiskLocationItemFile::isOpen() const
 {
     return m_qtFile->isOpen();
 }
 
-
 bool DiskLocationItemFile::setPermissions(QFileDevice::Permissions perm)
 {
     return m_qtFile->setPermissions(perm);
 }
 
-
 bool DiskLocationItemFile::setPermissions(const QString &filename, QFileDevice::Permissions perm)
 {
     return QFile::setPermissions(filename, perm);
 }
-
 
 QFile::Permissions DiskLocationItemFile::permissions() const
 {

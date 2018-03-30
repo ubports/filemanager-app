@@ -1,45 +1,58 @@
+/*
+ * Copyright (C) 2017 Stefano Verzegnassi
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License 3 as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
+ */
+
 import QtQuick 2.4
 import Ubuntu.Components 1.3
+import QtQuick.Layouts 1.1
 
 Item {
-    id: rootItem
-
-    property alias text: sectionLabel.text
-    property alias iconName: icon.name
+    property alias text: label.text
 
     anchors { left: parent.left; right: parent.right }
     height: units.gu(4)
 
-    Row {
+    RowLayout {
         anchors {
-            left: parent.left
+            left: parent.left;
             right: parent.right
-            margins: units.gu(2)
-            verticalCenter: parent.verticalCenter
+            verticalCenter: parent.bottom
         }
-        spacing: units.gu(1)
 
-        Icon {
-            id: icon
-            height: units.gu(2)
-            width: name ? units.gu(2) : 0
-            anchors.verticalCenter: parent.verticalCenter
+        spacing: units.gu(2)
+
+        Rectangle {
+            height: units.dp(1)
+            color: theme.palette.normal.base
+            Layout.preferredWidth: units.gu(7)
+            Layout.alignment: Qt.AlignVCenter
         }
 
         Label {
-            id: sectionLabel
-            anchors.verticalCenter: parent.verticalCenter
-        }
-    }
-
-    Rectangle {
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
+            id: label
+            Layout.alignment: Qt.AlignVCenter
+            textSize: Label.Small
+            color: theme.palette.normal.backgroundSecondaryText
         }
 
-        height: units.dp(1)
-        color: "#cdcdcd"
+        Rectangle {
+            height: units.dp(1)
+            color: theme.palette.normal.base
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignVCenter
+        }
     }
 }

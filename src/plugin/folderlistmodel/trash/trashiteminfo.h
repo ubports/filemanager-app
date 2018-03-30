@@ -41,18 +41,21 @@
 class TrashItemInfo : public DirItemInfo
 {
 public:
-    TrashItemInfo(const QString& urlPath);
-    TrashItemInfo(const QString& trashPath, const QString& urlPath);   
+    TrashItemInfo(const QString &urlPath);
+    TrashItemInfo(const QString &trashPath, const QString &urlPath);
     TrashItemInfo(const TrashItemInfo &other);
+
 public:
-    virtual TrashItemInfo& operator=(const DirItemInfo &other);
-    virtual TrashItemInfo& operator=(const TrashItemInfo &other);
+    virtual TrashItemInfo &operator=(const DirItemInfo &other);
+    virtual TrashItemInfo &operator=(const TrashItemInfo &other);
+
 public:
     QString getTrashDir() const;
     QString getRootTrashDir() const;
+
 private:
-    void    setRoot();
-    void    init(const QString& trashPath);
+    void setRoot();
+    void init(const QString &trashPath);
 };
 
 #endif // TRASHITEMINFO_H

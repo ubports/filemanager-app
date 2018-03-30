@@ -23,9 +23,9 @@
 #include "locationitemdiriterator.h"
 #include "locationurl.h"
 
-NetworkListWorker::NetworkListWorker(LocationItemDirIterator * dirIterator,
-                                     DirItemInfo             * mainItemInfo,
-                                     const DirItemInfo       * parentItemInfo) :
+NetworkListWorker::NetworkListWorker(LocationItemDirIterator *dirIterator,
+                                     DirItemInfo              *mainItemInfo,
+                                     const DirItemInfo        *parentItemInfo) :
     DirListWorker(dirIterator->path(),
                   dirIterator->filters(),
                   dirIterator->flags() == QDirIterator::Subdirectories ? true : false),
@@ -33,13 +33,12 @@ NetworkListWorker::NetworkListWorker(LocationItemDirIterator * dirIterator,
     m_mainItemInfo(mainItemInfo),  // m_mainItemInfo takes ownership of mainItemInfo
     m_parentItemInfo(0)
 {
-     mLoaderType =  NetworkLoader;
-     // create its own instance by doing a copy from parentItemInfo
-     if (parentItemInfo != 0)
-     {
-         m_parentItemInfo = new DirItemInfo();
-         *m_parentItemInfo = *parentItemInfo;
-     }
+    mLoaderType =  NetworkLoader;
+    // create its own instance by doing a copy from parentItemInfo
+    if (parentItemInfo != 0) {
+        m_parentItemInfo = new DirItemInfo();
+        *m_parentItemInfo = *parentItemInfo;
+    }
 }
 
 
@@ -47,8 +46,7 @@ NetworkListWorker::~NetworkListWorker()
 {
     delete m_dirIterator;
     delete m_mainItemInfo;
-    if (m_parentItemInfo != 0)
-    {
+    if (m_parentItemInfo != 0) {
         delete m_parentItemInfo;
     }
 }
@@ -56,19 +54,18 @@ NetworkListWorker::~NetworkListWorker()
 
 DirItemInfoList NetworkListWorker::getNetworkContent()
 {
-     DirItemInfoList netContent;
-     m_dirIterator->load();
-     bool is_parent_of_smb_url = m_parentItemInfo != 0 && m_parentItemInfo->urlPath().startsWith(LocationUrl::SmbURL);
-     while (m_dirIterator->hasNext())
-     {
-         m_mainItemInfo->setFile(m_dirIterator->next());
-         if (is_parent_of_smb_url)
-         {
-             setSmbItemAttributes();
-         }
-         netContent.append(*m_mainItemInfo);
-     }
-     return netContent;
+    DirItemInfoList netContent;
+    m_dirIterator->load();
+    bool is_parent_of_smb_url = m_parentItemInfo != 0
+                                && m_parentItemInfo->urlPath().startsWith(LocationUrl::SmbURL);
+    while (m_dirIterator->hasNext()) {
+        m_mainItemInfo->setFile(m_dirIterator->next());
+        if (is_parent_of_smb_url) {
+            setSmbItemAttributes();
+        }
+        netContent.append(*m_mainItemInfo);
+    }
+    return netContent;
 }
 
 /*!
@@ -78,8 +75,10 @@ DirItemInfoList NetworkListWorker::getNetworkContent()
  *  it will not hurt other protocols implementation.
  */
 void NetworkListWorker::setSmbItemAttributes()
-{    
-    if (m_parentItemInfo->isHost())      { m_mainItemInfo->setAsShare(); }
-    else
-    if (m_parentItemInfo->isWorkGroup()) { m_mainItemInfo->setAsHost(); }
+{
+    if (m_parentItemInfo->isHost())      {
+        m_mainItemInfo->setAsShare();
+    } else if (m_parentItemInfo->isWorkGroup()) {
+        m_mainItemInfo->setAsHost();
+    }
 }

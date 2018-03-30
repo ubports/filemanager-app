@@ -23,30 +23,24 @@
 
 #include <QDirIterator>
 
-DiskLocationItemDirIterator::DiskLocationItemDirIterator(const QString &path,
-                                                         const QStringList &nameFilters,
-                                                         QDir::Filters filters,
-                                                         QDirIterator::IteratorFlags flags)
-          : LocationItemDirIterator(path,nameFilters,filters,flags)
-          , m_qtDirIterator(new QDirIterator(path, nameFilters, filters, flags))
+DiskLocationItemDirIterator::DiskLocationItemDirIterator(const QString &path, const QStringList &nameFilters,
+                                                         QDir::Filters filters, QDirIterator::IteratorFlags flags)
+    : LocationItemDirIterator(path, nameFilters, filters, flags)
+    , m_qtDirIterator(new QDirIterator(path, nameFilters, filters, flags))
 {
 
 }
 
-DiskLocationItemDirIterator::DiskLocationItemDirIterator(const QString &path,
-                                                         QDir::Filters filters,
-                                                         QDirIterator::IteratorFlags flags)
-
-          : LocationItemDirIterator(path,filters,flags)
-          , m_qtDirIterator(new QDirIterator(path,filters, flags))
+DiskLocationItemDirIterator::DiskLocationItemDirIterator(const QString &path, QDir::Filters filters, QDirIterator::IteratorFlags flags)
+    : LocationItemDirIterator(path, filters, flags)
+    , m_qtDirIterator(new QDirIterator(path, filters, flags))
 {
 
 }
 
-DiskLocationItemDirIterator::DiskLocationItemDirIterator(const QString &path,
-                                                         QDirIterator::IteratorFlags flags)
-         : LocationItemDirIterator(path,flags)
-         , m_qtDirIterator(new QDirIterator(path, flags))
+DiskLocationItemDirIterator::DiskLocationItemDirIterator(const QString &path, QDirIterator::IteratorFlags flags)
+    : LocationItemDirIterator(path, flags)
+    , m_qtDirIterator(new QDirIterator(path, flags))
 {
 
 }
@@ -56,37 +50,31 @@ DiskLocationItemDirIterator::~DiskLocationItemDirIterator()
     delete m_qtDirIterator;
 }
 
-
 DirItemInfo DiskLocationItemDirIterator::fileInfo() const
 {
     DirItemInfo itemInfo (m_qtDirIterator->fileInfo());
     return itemInfo;
 }
 
-
 QString DiskLocationItemDirIterator::fileName() const
 {
     return m_qtDirIterator->fileName();
 }
-
 
 QString DiskLocationItemDirIterator::filePath() const
 {
     return m_qtDirIterator->filePath();
 }
 
-
 bool DiskLocationItemDirIterator::hasNext() const
 {
     return m_qtDirIterator->hasNext();
 }
 
-
 QString DiskLocationItemDirIterator::next()
 {
     return m_qtDirIterator->next();
 }
-
 
 QString DiskLocationItemDirIterator::path() const
 {

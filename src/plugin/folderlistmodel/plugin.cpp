@@ -41,9 +41,9 @@ void NemoFolderListModelPlugin::initializeEngine(QmlEngine *engine, const char *
 
 #ifndef DO_NOT_USE_TAG_LIB
     engine->addImageProvider(QLatin1String("cover-art"), new CoverArtImageProvider);
-    engine->addImageProvider(QLatin1String("cover-art-full"), new CoverArtFullImageProvider);    
+    engine->addImageProvider(QLatin1String("cover-art-full"), new CoverArtFullImageProvider);
 #endif //DO_NOT_USE_TAG_LIB
-    
+
     Q_UNUSED(uri);
     Q_UNUSED(engine);
 }
@@ -54,6 +54,6 @@ void NemoFolderListModelPlugin::registerTypes(const char *uri)
     DirModel::registerMetaTypes();
     qmlRegisterType<DirSelection>(uri, 1, 0, "FolderListSelection");
     qmlRegisterType<DirModel>(uri, 1, 0, "FolderListModel");
-    qmlRegisterType<SmbUserShare>(uri, 1, 0,"FolderListSmbUserShare");
+    qmlRegisterType<SmbUserShare>(uri, 1, 0, "FolderListSmbUserShare");
 }
 

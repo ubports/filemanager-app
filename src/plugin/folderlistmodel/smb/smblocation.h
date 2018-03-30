@@ -30,30 +30,29 @@
 class SmbLocation : public NetworkLocation, public SmbLocationAuthentication
 {
     Q_OBJECT
+
 public:
-    explicit SmbLocation(int type, QObject *parent=0);
+    explicit SmbLocation(int type, QObject *parent = 0);
     ~SmbLocation();
 
-public:   
-    virtual DirItemInfo * newItemInfo(const QString& urlPath);
-    virtual LocationItemDirIterator * newDirIterator(const QString & path,
-                                                      QDir::Filters filters,
-                                                      QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
-                                                      LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
-    virtual LocationItemFile   * newFile(const QString & path);   
-    virtual LocationItemDir    * newDir(const QString & dir = QLatin1String(0));
-    virtual bool        isThereDiskSpace(const QString& pathname, qint64 requiredSize);
-    virtual QString     urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlash);
-    virtual QString     currentAuthenticationUser();
-    virtual QString     currentAuthenticationPassword();
+public:
+    virtual DirItemInfo *newItemInfo(const QString &urlPath);
+    virtual LocationItemDirIterator *newDirIterator(const QString &path, QDir::Filters filters,
+                                                    QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
+                                                    LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
 
-public slots:   
-    virtual void setAuthentication(const QString& user,
-                                   const QString& password);
+    virtual LocationItemFile *newFile(const QString &path);
+    virtual LocationItemDir *newDir(const QString &dir = QLatin1String(0));
+    virtual bool isThereDiskSpace(const QString &pathname, qint64 requiredSize);
+    virtual QString urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlash);
+    virtual QString currentAuthenticationUser();
+    virtual QString currentAuthenticationPassword();
 
+public slots:
+    virtual void setAuthentication(const QString &user, const QString &password);
 
 private:
-   SmbUtil_Ptr m_smb;
+    SmbUtil_Ptr m_smb;
 };
 
 #endif // SMBLOCATION_H

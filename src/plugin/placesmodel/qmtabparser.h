@@ -37,12 +37,15 @@ class QMtabParser : public QObject
     QString m_path;
 
 public:
-    explicit QMtabParser(const QString& path = QString(), QObject *parent = 0);
+    explicit QMtabParser(const QString &path = QString(), QObject *parent = 0);
     ~QMtabParser();
 
     QList<QMtabEntry> parseEntries();
 
-    inline const QString& path() { return m_path; }
+    inline const QString &path()
+    {
+        return m_path;
+    }
 };
 
 #endif // QMTABPARSER_H

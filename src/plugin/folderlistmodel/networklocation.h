@@ -79,11 +79,11 @@
 class NetworkLocation: public Location
 {
 protected:
-    explicit NetworkLocation(int type, QObject *parent=0);
+    explicit NetworkLocation(int type, QObject *parent = 0);
 public:
-     virtual DirListWorker * newListWorker(const QString &urlPath,
-                                          QDir::Filters filter,
-                                          const bool isRecursive);
+    virtual DirListWorker *newListWorker(const QString &urlPath,
+                                         QDir::Filters filter,
+                                         const bool isRecursive);
 };
 
 #endif // NETWORKLOCATION_H
