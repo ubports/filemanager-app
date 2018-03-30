@@ -6,11 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-08-24 18:56+0000\n"
-"Last-Translator: Sander <sander.k1007@kpnmail.nl>\n"
-"Language-Team: Dutch <https://ubpweblate.tnvcomp.com/projects/ubports"
+"PO-Revision-Date: 2018-02-23 10:51+0000\n"
+"Last-Translator: Stefan <spleyte@gmail.com>\n"
+"Language-Team: Dutch <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:138
 msgid "About Application"
-msgstr ""
+msgstr "Over Applicatie"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:139
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:139
@@ -31,46 +31,52 @@ msgid ""
 "The <b>Application</b> example demonstrates how to write modern GUI "
 "applications using Qt, with a menu bar, toolbars, and a status bar."
 msgstr ""
+"Het <b>Applicatievoorbeeld</b> demonstreert hoe moderne grafische "
+"applicaties geschreven kunnen worden met Qt, met een menubalk, toolbars en "
+"een statusbalk."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
 msgid "&New"
-msgstr ""
+msgstr "&Nieuw"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:159
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:159
 msgid "Create a new file"
-msgstr ""
+msgstr "Maak een nieuw bestand"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:163
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:163
 msgid "&Open..."
-msgstr ""
+msgstr "&Open..."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:165
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:165
+#, fuzzy
 msgid "Open an existing file"
-msgstr ""
+msgstr "Open een bestaand bestand"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:169
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:169
 msgid "&Save"
-msgstr ""
+msgstr "&Opslaan"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:171
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:171
+#, fuzzy
 msgid "Save the document to disk"
-msgstr ""
+msgstr "Sla het document op op de schijf"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:174
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:174
+#, fuzzy
 msgid "Save &As..."
-msgstr ""
+msgstr "Sla op &Als..."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:176
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:176
 msgid "Save the document under a new name"
-msgstr ""
+msgstr "Sla het document op onder een nieuwe naam"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:180
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:180
@@ -79,8 +85,9 @@ msgstr ""
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:183
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:183
+#, fuzzy
 msgid "Exit the application"
-msgstr ""
+msgstr "Sluit de applicatie af"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:187
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:187
@@ -160,7 +167,7 @@ msgstr "Bewerken"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
 msgid "Ready"
-msgstr ""
+msgstr "Klaar"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:308
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:327
@@ -169,7 +176,7 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:327
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:354
 msgid "Application"
-msgstr ""
+msgstr "App"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:309
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:309
@@ -294,8 +301,9 @@ msgstr ""
 #: ../qbuild/src/app/qml/content-hub/FileOpener.qml:27
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 #: ../stage/usr/share/filemanager/qml/content-hub/FileOpener.qml:27
+#, fuzzy
 msgid "Open with"
-msgstr ""
+msgstr "Openen met"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:83
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:114
@@ -356,8 +364,9 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:299
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:418
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:70
+#, fuzzy
 msgid "Icons"
-msgstr ""
+msgstr "Iconen"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:299
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:434
@@ -382,8 +391,9 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:299
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:434
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:71
+#, fuzzy
 msgid "List"
-msgstr ""
+msgstr "Lijst"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:328
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:328
@@ -392,9 +402,9 @@ msgstr ""
 #: ../prime/usr/share/filemanager/qml/filemanager.qml:328
 #: ../qbuild/src/app/qml/filemanager.qml:328 ../src/app/qml/filemanager.qml:328
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:328
-#, qt-format
+#, fuzzy, qt-format
 msgid "File %1"
-msgstr ""
+msgstr "Bestand %1"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:328
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:328
@@ -403,9 +413,9 @@ msgstr ""
 #: ../prime/usr/share/filemanager/qml/filemanager.qml:328
 #: ../qbuild/src/app/qml/filemanager.qml:328 ../src/app/qml/filemanager.qml:328
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:328
-#, qt-format
+#, fuzzy, qt-format
 msgid "%1 Files"
-msgstr ""
+msgstr "%1 Bestanden"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:329
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:329
@@ -414,9 +424,9 @@ msgstr ""
 #: ../prime/usr/share/filemanager/qml/filemanager.qml:329
 #: ../qbuild/src/app/qml/filemanager.qml:329 ../src/app/qml/filemanager.qml:329
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:329
-#, qt-format
+#, fuzzy, qt-format
 msgid "Saved to: %1"
-msgstr ""
+msgstr "Opgeslagen als: %1"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:25
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:26
@@ -434,8 +444,9 @@ msgstr ""
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:26
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:25
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:26
+#, fuzzy
 msgid "Authentication required"
-msgstr ""
+msgstr "Authenticatie vereist"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
@@ -446,7 +457,7 @@ msgstr ""
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr ""
+msgstr "Wachtwoord is vereist om toegang tot alle bestanden te krijgen"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:39
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
@@ -457,7 +468,7 @@ msgstr ""
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "wachtwoord"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:31
@@ -500,7 +511,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr "Ok"
+msgstr "Oké"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
@@ -593,7 +604,7 @@ msgstr "Annuleren"
 #: ../src/app/qml/ui/FileActionDialog.qml:30
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Kies actie"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:31
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:31
@@ -603,9 +614,9 @@ msgstr ""
 #: ../qbuild/src/app/qml/ui/FileActionDialog.qml:31
 #: ../src/app/qml/ui/FileActionDialog.qml:31
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:31
-#, qt-format
+#, fuzzy, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "Voor bestand: %1"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:35
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
@@ -615,8 +626,9 @@ msgstr ""
 #: ../qbuild/src/app/qml/ui/FileActionDialog.qml:35
 #: ../src/app/qml/ui/FileActionDialog.qml:35
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
+#, fuzzy
 msgid "Open"
-msgstr ""
+msgstr "Openen"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
@@ -626,8 +638,9 @@ msgstr ""
 #: ../qbuild/src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
+#, fuzzy
 msgid "Readable"
-msgstr ""
+msgstr "Leesbaar"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:40
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:40
@@ -638,7 +651,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileDetailsPopover.qml:40
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "Beschrijfbaar"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:43
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:43
@@ -649,7 +662,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileDetailsPopover.qml:43
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "Uitvoerbaar"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:95
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:95
@@ -660,7 +673,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileDetailsPopover.qml:95
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:95
 msgid "Path:"
-msgstr ""
+msgstr "Pad:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:106
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:106
@@ -671,7 +684,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileDetailsPopover.qml:106
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:106
 msgid "Contents:"
-msgstr ""
+msgstr "Inhoud:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:107
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:107
@@ -682,7 +695,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileDetailsPopover.qml:107
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:107
 msgid "Size:"
-msgstr ""
+msgstr "Grootte:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:116
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:116
@@ -946,7 +959,7 @@ msgstr "Opslaan"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Select"
-msgstr ""
+msgstr "Selecteren"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:478
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:478
@@ -1259,7 +1272,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:890
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:890
 msgid "Home"
-msgstr ""
+msgstr "Thuis"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:894
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:894

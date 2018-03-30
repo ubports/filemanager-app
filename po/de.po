@@ -6,11 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-05 17:59+0000\n"
-"Last-Translator: Gerd Sänger <gerdsaenger@t-online.de>\n"
-"Language-Team: German <https://ubpweblate.tnvcomp.com/projects/ubports"
+"PO-Revision-Date: 2018-01-03 12:39+0000\n"
+"Last-Translator: Peter Nerlich <peter.nerlich+ubports@googlemail.com>\n"
+"Language-Team: German <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -1267,7 +1267,7 @@ msgstr "~/Vorlagen"
 #: ../src/app/qml/ui/FolderListPage.qml:890
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:890
 msgid "Home"
-msgstr "Hauptseite"
+msgstr "Zuhause"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:894
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:894
@@ -1563,7 +1563,7 @@ msgstr "Einträge"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:327
 msgid "File or Directory does not exist"
-msgstr "Datei oder Verzeichnis besteht nicht"
+msgstr "Datei oder Verzeichnis existiert nicht"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:328
 msgid " does not exist"
