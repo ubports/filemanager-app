@@ -14,20 +14,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Authored by: Arto Jalkanen <ajalkane@gmail.com>
- *              Niklas Wenzel <nikwen.developer@gmail.com>
  */
-
 import QtQuick 2.4
 import Ubuntu.Components 1.3
+import Ubuntu.Components.Popups 1.3
 
-Action {
-    property int clipboardUrlsCounter
+Dialog {
+    id: root
 
-    // Translation message was implemented according to:
-    // http://developer.ubuntu.com/api/qml/sdk-14.04/Ubuntu.Components.i18n/
-    // It allows correct translation for languages with more than two plural forms:
-    // http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
-    text: i18n.tr("Paste %1 file", "Paste %1 files", clipboardUrlsCounter).arg(clipboardUrlsCounter)
-    visible: clipboardUrlsCounter > 0
-    iconName: "edit-paste"
+    Button {
+        color: UbuntuColors.graphite
+        text: i18n.tr("OK")
+        onClicked: {
+            PopupUtils.close(root)
+        }
+    }
 }
