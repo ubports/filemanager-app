@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
 "PO-Revision-Date: 2018-04-26 20:24+0000\n"
-"Last-Translator: Adrià <adriamartinmor@gmail.com>\n"
+"Last-Translator: Flavia <flavia.efloris@gmail.com>\n"
 "Language-Team: Sardinian <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/sc/>\n"
 "Language: sc\n"
@@ -1497,7 +1497,7 @@ msgstr "Data"
 #: ../src/app/qml/ui/ViewPopover.qml:103
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "Ordinamentu "
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:114
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:119
