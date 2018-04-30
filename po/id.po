@@ -8,158 +8,162 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2015-05-30 08:00+0000\n"
-"Last-Translator: Dirgita <Unknown>\n"
-"Language-Team: Indonesian <id@li.org>\n"
+"PO-Revision-Date: 2018-04-30 13:41+0000\n"
+"Last-Translator: Dito Kurnia P <ditokpl@gmail.com>\n"
+"Language-Team: Indonesian <https://translate.ubports.com/projects/ubports"
+"/filemanager-app/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 2.15\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
-"X-Generator: Launchpad (build 18343)\n"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:138
 msgid "About Application"
-msgstr ""
+msgstr "Tentang Aplikasi"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:139
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:139
+#, fuzzy
 msgid ""
 "The <b>Application</b> example demonstrates how to write modern GUI "
 "applications using Qt, with a menu bar, toolbars, and a status bar."
 msgstr ""
+"Contoh <b>Aplikasi</b> mendemonstrasikan bagaimana cara menulis GUI aplikasi "
+"secara modern dengan QT, dengan bilah menu, toolbar, dan bilah status."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
 msgid "&New"
-msgstr ""
+msgstr "&Baru"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:159
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:159
 msgid "Create a new file"
-msgstr ""
+msgstr "Buat file baru"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:163
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:163
 msgid "&Open..."
-msgstr ""
+msgstr "&Buka..."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:165
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:165
 msgid "Open an existing file"
-msgstr ""
+msgstr "Buka file yang ada"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:169
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:169
 msgid "&Save"
-msgstr ""
+msgstr "&Simpan"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:171
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:171
 msgid "Save the document to disk"
-msgstr ""
+msgstr "Simpan dokumen ke penyimpanan"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:174
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:174
 msgid "Save &As..."
-msgstr ""
+msgstr "Simpan &Sebagai..."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:176
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:176
 msgid "Save the document under a new name"
-msgstr ""
+msgstr "Simpan dokumen dengan nama baru"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:180
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:180
 msgid "E&xit"
-msgstr ""
+msgstr "K&eluar"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:183
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:183
 msgid "Exit the application"
-msgstr ""
+msgstr "Keluar aplikasi"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:187
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:187
 msgid "Cu&t"
-msgstr ""
+msgstr "Poto&ng"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:190
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:190
 msgid "Cut the current selection's contents to the clipboard"
-msgstr ""
+msgstr "Potong konten yang terseleksi ke papan klip"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:194
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:194
 msgid "&Copy"
-msgstr ""
+msgstr "&Salin"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:196
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:196
 msgid "Copy the current selection's contents to the clipboard"
-msgstr ""
+msgstr "Salin konten yang terseleksi ke papan klip"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:200
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:200
 msgid "&Paste"
-msgstr ""
+msgstr "&Tempel"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:202
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:202
 msgid "Paste the clipboard's contents into the current selection"
-msgstr ""
+msgstr "Tempel konten yang ada di papan klip ke tempat yang terseleksi"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:206
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:206
 msgid "&About"
-msgstr ""
+msgstr "&Tentang"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:207
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:207
 msgid "Show the application's About box"
-msgstr ""
+msgstr "Perlihatkan box Tentang aplikasi"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:211
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:211
 msgid "About &Qt"
-msgstr ""
+msgstr "Tentang &Qt"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:212
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:212
 msgid "Show the Qt library's About box"
-msgstr ""
+msgstr "Perlihatkan box Tentang perpustakaan Qt"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:231
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:231
 msgid "&File"
-msgstr ""
+msgstr "&File"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:242
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:242
 msgid "&Edit"
-msgstr ""
+msgstr "&Sunting"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:249
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:249
 msgid "&Help"
-msgstr ""
+msgstr "&Bantuan"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:258
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:258
 msgid "File"
-msgstr ""
+msgstr "File"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:265
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:265
 msgid "Edit"
-msgstr ""
+msgstr "Sunting"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
 msgid "Ready"
-msgstr ""
+msgstr "Siap"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:308
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:327
@@ -168,7 +172,7 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:327
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:354
 msgid "Application"
-msgstr ""
+msgstr "Aplikasi"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:309
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:309
@@ -176,6 +180,8 @@ msgid ""
 "The document has been modified.\n"
 "Do you want to save your changes?"
 msgstr ""
+"Dokumen sudah dimodifikasi.\n"
+"Apa anda mau menyimpan perubahannya?"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:328
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:328
@@ -184,11 +190,14 @@ msgid ""
 "Cannot read file %1:\n"
 "%2."
 msgstr ""
+"Tidak bisa membaca file %1:\n"
+"%2."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:344
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:344
+#, fuzzy
 msgid "File loaded"
-msgstr ""
+msgstr "File dimuat"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:355
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:355
@@ -197,11 +206,13 @@ msgid ""
 "Cannot write file %1:\n"
 "%2."
 msgstr ""
+"Tidak bisa menulis file %1:\n"
+"%2."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:371
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:371
 msgid "File saved"
-msgstr ""
+msgstr "File disimpan"
 
 #: ../parts/ubuntu-filemanager-app/build/po/ubuntu-filemanager-app.desktop.in.in.h:1
 #: ../parts/ubuntu-filemanager-app/src/qbuild/po/ubuntu-filemanager-app.desktop.in.in.h:1
@@ -392,7 +403,7 @@ msgstr "Senarai"
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:328
 #, qt-format
 msgid "File %1"
-msgstr ""
+msgstr "File %1"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:328
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:328
@@ -403,7 +414,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:328
 #, qt-format
 msgid "%1 Files"
-msgstr ""
+msgstr "%1 File"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:329
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:329
@@ -414,7 +425,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:329
 #, qt-format
 msgid "Saved to: %1"
-msgstr ""
+msgstr "Simpan ke: %1"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:25
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:26
@@ -455,7 +466,7 @@ msgstr "Diperlukan sandi untuk mengakses semua berkas"
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr "sandi"
+msgstr "kata sandi"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:31
@@ -498,7 +509,7 @@ msgstr "sandi"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr "Oke"
+msgstr "OK"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
@@ -713,7 +724,7 @@ msgstr "Diubah:"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:134
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:134
 msgid "Permissions:"
-msgstr "Izin"
+msgstr "Izin:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileOperationProgressDialog.qml:27
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileOperationProgressDialog.qml:27
@@ -931,7 +942,7 @@ msgstr "Ketikkan nama berkas baru"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:376
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:376
@@ -1103,7 +1114,7 @@ msgstr "Salin"
 #: ../src/app/qml/ui/FolderListPage.qml:634
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:634
 msgid "Share"
-msgstr ""
+msgstr "Bagikan"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:643
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:764
@@ -1266,7 +1277,7 @@ msgstr "Beranda"
 #: ../src/app/qml/ui/FolderListPage.qml:894
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:894
 msgid "Network"
-msgstr ""
+msgstr "Jaringan"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:996
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:996
@@ -1375,7 +1386,7 @@ msgstr "Buka"
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:55
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "Pengguna"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:66
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:66
@@ -1386,7 +1397,7 @@ msgstr ""
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:66
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:66
 msgid "Password"
-msgstr ""
+msgstr "Kata sandi"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:79
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:79
@@ -1397,7 +1408,7 @@ msgstr ""
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:79
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "Simpan kata sandi"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
@@ -1408,7 +1419,7 @@ msgstr ""
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
-msgstr "Oke"
+msgstr "Ok"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/SettingsSheet.qml:45
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
@@ -1529,7 +1540,7 @@ msgstr "Penyaring"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr ""
+msgstr "Tidak diketahui"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
@@ -1557,20 +1568,20 @@ msgstr " tak ada"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr ""
+msgstr "Tidak bisa mengakses File atau Folder"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr ""
+msgstr " dibutuhkan Autentikasi"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
-msgstr ""
+msgstr "Tidak bisa menyalin/memindahkan item"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
 msgid "no write permission on folder "
-msgstr ""
+msgstr "tidak ada izin menulis di dalam folder "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:692
 msgid "Could not remove the item "
@@ -1578,7 +1589,7 @@ msgstr "Tak dapat menghapus item "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:733
 msgid "Could not find a suitable name to backup"
-msgstr ""
+msgstr "Tidak bisa menemukan nama yang cocok untuk cadangan"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:791
 msgid "Could not create the directory"
@@ -1590,7 +1601,7 @@ msgstr "Tak dapat membuat taut ke"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:812
 msgid "Could not set permissions to dir"
-msgstr ""
+msgstr "Tidak bisa menset izin ke direktori"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:826
 msgid "Could not open file"
@@ -1598,7 +1609,7 @@ msgstr "Tak dpaat membuka berkas"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr ""
+msgstr "Tidak ada ruangan tersisa untuk menyalin"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
@@ -1614,27 +1625,27 @@ msgstr "Tak dapat memindahkan berkas/direktori "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1196
 msgid "Write error in "
-msgstr ""
+msgstr "Penulisan eror di "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1212
 msgid "Read error in "
-msgstr ""
+msgstr "Pembacaan eror di "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1450
 msgid " Copy"
-msgstr ""
+msgstr " Salin"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1510
 msgid "Set permissions error in "
-msgstr ""
+msgstr "Eror dalam menset izin dalam "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1579
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "Tidak bisa membuat informasi file sampah"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1592
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "Tidak bisa menghapus informasi file sampah"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1617
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1625
@@ -1643,16 +1654,16 @@ msgstr "Tak dapat memindahkan item"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1619
 msgid "origin and destination folders are the same"
-msgstr ""
+msgstr "asal dan folder destinasi sama"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr ""
+msgstr "Tidak ada ruangan tersisa untuk mengunduh"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
-msgstr ""
+msgstr "Tidak ditemukan net tool, cek instalasi samba"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
-msgstr ""
+msgstr "tidak bisa menulis ke "
