@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-04-26 21:28+0000\n"
-"Last-Translator: Adrià <adriamartinmor@gmail.com>\n"
+"PO-Revision-Date: 2018-05-06 12:22+0000\n"
+"Last-Translator: Flavia <flavia.efloris@gmail.com>\n"
 "Language-Team: Sardinian <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/sc/>\n"
 "Language: sc\n"
@@ -1144,7 +1144,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:674
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:674
 msgid "File operation error"
-msgstr ""
+msgstr "B'est istada una faddina in s'operatzione de s'archìviu "
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:705
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:705
