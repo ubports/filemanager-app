@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-03-04 21:10+0000\n"
-"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"PO-Revision-Date: 2018-05-11 20:27+0000\n"
+"Last-Translator: Eran <etherpulse@gmail.com>\n"
 "Language-Team: Hebrew <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/he/>\n"
 "Language: he\n"
@@ -506,7 +506,7 @@ msgstr "ססמה"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr "אישור"
+msgstr "בסדר"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
