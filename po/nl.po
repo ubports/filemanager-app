@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-02-23 10:51+0000\n"
-"Last-Translator: Stefan <spleyte@gmail.com>\n"
+"PO-Revision-Date: 2018-05-12 10:03+0000\n"
+"Last-Translator: Laurentijn Tilleman <laurentijn.tilleman@gmail.com>\n"
 "Language-Team: Dutch <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/nl/>\n"
 "Language: nl\n"
@@ -511,7 +511,7 @@ msgstr "wachtwoord"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr "Oké"
+msgstr "OK"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
