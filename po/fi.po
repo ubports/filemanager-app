@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-05-12 19:48+0000\n"
+"PO-Revision-Date: 2018-05-14 12:12+0000\n"
 "Last-Translator: Veli-Matti Rautiainen <velraut@gmail.com>\n"
 "Language-Team: Finnish <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/fi/>\n"
@@ -505,7 +505,6 @@ msgstr "salasana"
 #: ../stage/usr/share/filemanager/qml/ui/ConfirmDialogWithInput.qml:49
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
-#, fuzzy
 msgid "OK"
 msgstr "Selvä"
 
