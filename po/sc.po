@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-05-24 14:08+0000\n"
-"Last-Translator: Flavia <flavia.efloris@gmail.com>\n"
+"PO-Revision-Date: 2018-05-24 14:37+0000\n"
+"Last-Translator: Matteo Mandis <mandismatteo@gmail.com>\n"
 "Language-Team: Sardinian <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/sc/>\n"
 "Language: sc\n"
@@ -1082,7 +1082,7 @@ msgstr "Boga·nde s'archìviu "
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:552
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr "Seguru chi boles bogare '%1' inoghe? "
+msgstr "Seguru chi nde boles bogare '%1' inoghe?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:584
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:584
@@ -1201,7 +1201,7 @@ msgstr "Archìviu "
 #: ../src/app/qml/ui/FolderListPage.qml:757
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:757
 msgid "Do you want to extract the archive here?"
-msgstr "Boles bogare s'archiviu inoghe?"
+msgstr "Nde boles bogare s'archiviu inoghe?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:774
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:774
