@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-05-25 09:01+0000\n"
-"Last-Translator: Adrià <adriamartinmor@gmail.com>\n"
+"PO-Revision-Date: 2018-05-25 10:14+0000\n"
+"Last-Translator: Flavia <flavia.efloris@gmail.com>\n"
 "Language-Team: Sardinian <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/sc/>\n"
 "Language: sc\n"
@@ -1586,7 +1586,7 @@ msgstr "Non bi sunt permissos de iscritura in sa cartella "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:692
 msgid "Could not remove the item "
-msgstr "Non s'est pòdidu cantzellare s'elementu "
+msgstr "Non s'est pòdidu fuliare s'elementu "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:733
 msgid "Could not find a suitable name to backup"
@@ -1618,7 +1618,7 @@ msgstr "Non s'est pòdidu creare s'archìviu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:920
 msgid "Could not remove the directory/file "
-msgstr "Non s'est pòdidu cantzellare s'archìviu/sa cartella "
+msgstr "Non s'est pòdidu fuliare s'archìviu/sa cartella "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:936
 msgid "Could not move the directory/file "
@@ -1638,7 +1638,7 @@ msgstr "Copia"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1510
 msgid "Set permissions error in "
-msgstr "Cunfigura sa faddina de is permissos in "
+msgstr "Imposta sa faddina de permissos in"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1579
 msgid "Could not create trash info file"
@@ -1646,7 +1646,7 @@ msgstr "Non s'est pòdidu creare s'archìviu de informatziones de s'àliga"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1592
 msgid "Could not remove the trash info file"
-msgstr "Non s'est pòdidu cantzellare s'archìviu de informatziones de s'àliga"
+msgstr "Non s'est pòdidu fuliare s'archìviu de informatziones de s'àliga"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1617
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1625
