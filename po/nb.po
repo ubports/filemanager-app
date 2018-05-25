@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-02-19 09:11+0000\n"
+"PO-Revision-Date: 2018-05-25 22:53+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål "
 "<https://translate.ubports.com/projects/ubports/filemanager-app/nb/>\n"
@@ -624,8 +624,9 @@ msgstr "For fil: %1"
 #: ../qbuild/src/app/qml/ui/FileActionDialog.qml:35
 #: ../src/app/qml/ui/FileActionDialog.qml:35
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
+#, fuzzy
 msgid "Open"
-msgstr "Åpen"
+msgstr "Åpne"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
@@ -1420,7 +1421,6 @@ msgstr "Lagre passord"
 #: ../qbuild/src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
-#, fuzzy
 msgid "Ok"
 msgstr "OK"
 
