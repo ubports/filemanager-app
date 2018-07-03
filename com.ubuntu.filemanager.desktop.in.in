@@ -10,3 +10,4 @@ X-Ubuntu-Touch=true
 X-Ubuntu-Default-Department-ID=accessories
 X-Ubuntu-Splash-Show-Header=true
 X-Ubuntu-Splash-Color=#F5F5F5
+X-Ubuntu-Single-Instance=true

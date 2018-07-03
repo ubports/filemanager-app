@@ -91,22 +91,7 @@ if(CLICK_MODE)
     MESSAGE("Grabbing upstream libs to ${UPSTREAM_LIBS_DIR}")
 
     get_filename_component(BLD_CONFIGURATION_NAME ${CMAKE_BINARY_DIR} NAME)
-    set(UPSTREAM_CACHE $ENV{HOME}/dev/upstream-libs-filemanager/${BLD_CONFIGURATION_NAME})
-    MESSAGE("Upstream libs cache path: ${UPSTREAM_CACHE}")
 
-    if(EXISTS "${UPSTREAM_CACHE}")
-      MESSAGE("Upstream libs cache exists.")
-      file(COPY ${UPSTREAM_CACHE}/upstream-libs/ DESTINATION ${UPSTREAM_LIBS_DIR} PATTERN * )
-    else()
-      MESSAGE("Cache miss, downloading from network.")
-      file(MAKE_DIRECTORY ${UPSTREAM_LIBS_DIR})
-      file(MAKE_DIRECTORY ${UPSTREAM_CACHE})
-      execute_process(
-        COMMAND ${GET_CLICK_DEPS_TOOL} -d ${DEPS_MANIFEST} ${CLICK_ARCH} ${UPSTREAM_LIBS_DIR}
-      )
-      # Cache for next usage
-      file(COPY ${UPSTREAM_LIBS_DIR} DESTINATION ${UPSTREAM_CACHE} )
-    endif()
     MESSAGE("Installing upstream libs from ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs/usr/lib/${ARCH_TRIPLET}/ to ${DATA_DIR}lib/${ARCH_TRIPLET}")
     file(GLOB_RECURSE UPSTREAM_LIBS "${CMAKE_CURRENT_BINARY_DIR}/upstream-libs/usr/lib/${ARCH_TRIPLET}/*")
     foreach(ITEM ${UPSTREAM_LIBS})

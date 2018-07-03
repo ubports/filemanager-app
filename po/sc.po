@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-01-13 17:24+0000\n"
+"PO-Revision-Date: 2018-04-26 21:28+0000\n"
 "Last-Translator: Adrià <adriamartinmor@gmail.com>\n"
 "Language-Team: Sardinian <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/sc/>\n"
@@ -443,7 +443,7 @@ msgstr "Sarvadu in: %1"
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:25
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:26
 msgid "Authentication required"
-msgstr "Autenticatzione rechesta"
+msgstr "Autenticatzione rechèdida"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
@@ -996,7 +996,7 @@ msgstr "Cantzella"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:499
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "Seguru chi boles cantzellare '%1' de manera definitiva?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:504
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:504
@@ -1070,7 +1070,7 @@ msgstr "No tenes permissos o su nùmene esistet giai."
 #: ../src/app/qml/ui/FolderListPage.qml:551
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:551
 msgid "Extract Archive"
-msgstr ""
+msgstr "Boga·nde s'archìviu "
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:552
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:552
@@ -1082,7 +1082,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:552
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr ""
+msgstr "Seguru chi boles bogare '%1' inoghe? "
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:584
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:584
@@ -1093,7 +1093,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:584
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:584
 msgid "Cut"
-msgstr ""
+msgstr "Sega"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:595
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:595
@@ -1190,7 +1190,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:756
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:756
 msgid "Archive file"
-msgstr ""
+msgstr "Archìviu "
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:757
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:757
@@ -1223,7 +1223,7 @@ msgstr "Aberi cun un'àtera aplicatzione"
 #: ../src/app/qml/ui/FolderListPage.qml:858
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:858
 msgid "~/Desktop"
-msgstr ""
+msgstr "~/Iscrivania "
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:868
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:868
@@ -1233,8 +1233,9 @@ msgstr ""
 #: ../qbuild/src/app/qml/ui/FolderListPage.qml:868
 #: ../src/app/qml/ui/FolderListPage.qml:868
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:868
+#, fuzzy
 msgid "~/Public"
-msgstr ""
+msgstr "~/Public"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:870
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:870
@@ -1245,7 +1246,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:870
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:870
 msgid "~/Programs"
-msgstr ""
+msgstr "~/Programmas "
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:872
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:872
@@ -1256,7 +1257,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:872
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:872
 msgid "~/Templates"
-msgstr ""
+msgstr "~/Modellos"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:890
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:890
@@ -1289,7 +1290,7 @@ msgstr "Rete"
 #: ../src/app/qml/ui/FolderListPage.qml:996
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:996
 msgid "Folder not accessible"
-msgstr ""
+msgstr "Sa cartella no est atzessìbile"
 
 #. TRANSLATORS: this refers to a folder name
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:998
@@ -1302,7 +1303,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:998
 #, qt-format
 msgid "Can not access %1"
-msgstr ""
+msgstr "Non si podet intrare a %1"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:26
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/GoToDialog.qml:26
@@ -1313,7 +1314,7 @@ msgstr ""
 #: ../src/app/qml/ui/GoToDialog.qml:26
 #: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:26
 msgid "Go To Location"
-msgstr ""
+msgstr "Bae a sa positzione"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:28
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/GoToDialog.qml:28
@@ -1350,7 +1351,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/PlacesPage.qml:65
 #: ../stage/usr/share/filemanager/qml/ui/PlacesPopover.qml:66
 msgid "Location..."
-msgstr ""
+msgstr "Positzione..."
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:54
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPage.qml:80
@@ -1376,7 +1377,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/PlacesPage.qml:80
 #: ../stage/usr/share/filemanager/qml/ui/PlacesPopover.qml:81
 msgid "Go"
-msgstr ""
+msgstr "Bae"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:55
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:55
@@ -1387,7 +1388,7 @@ msgstr ""
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:55
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "Utente "
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:66
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:66
@@ -1409,7 +1410,7 @@ msgstr "Crae"
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:79
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "Sarva sa crae"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
@@ -1431,7 +1432,7 @@ msgstr "AB"
 #: ../src/app/qml/ui/SettingsSheet.qml:45
 #: ../stage/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
 msgid "Show Advanced Features"
-msgstr ""
+msgstr "Ammustra funtziones avantzadas"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:39
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:39
@@ -1442,7 +1443,7 @@ msgstr ""
 #: ../src/app/qml/ui/ViewPopover.qml:39
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:39
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "Ammustra archìvios cuados"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:59
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:59
@@ -1453,7 +1454,7 @@ msgstr ""
 #: ../src/app/qml/ui/ViewPopover.qml:59
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr ""
+msgstr "Visualiza comente "
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:81
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:81
@@ -1464,7 +1465,7 @@ msgstr ""
 #: ../src/app/qml/ui/ViewPopover.qml:81
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr ""
+msgstr "Òrdina pro "
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:92
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:92
@@ -1497,7 +1498,7 @@ msgstr "Data"
 #: ../src/app/qml/ui/ViewPopover.qml:103
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr ""
+msgstr "Ordinamentu "
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:114
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:119
@@ -1537,7 +1538,7 @@ msgstr ""
 #: ../src/app/qml/ui/ViewPopover.qml:127
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:127
 msgid "Filter"
-msgstr ""
+msgstr "Filtru"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
@@ -1545,39 +1546,39 @@ msgstr "Disconnotu"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
-msgstr ""
+msgstr "Su percursu o s'url no esistint o no si podent lìgere"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:682
 msgid "Rename error"
-msgstr ""
+msgstr "Faddina in su càmbiu de nùmene"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:703
 msgid "Error creating new folder"
-msgstr ""
+msgstr "Faddina in sa creatzione de sa cartella noa"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1351
 msgid "items"
-msgstr ""
+msgstr "cuntenutos"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:327
 msgid "File or Directory does not exist"
-msgstr ""
+msgstr "Archìviu o directory chi no esistit"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:328
 msgid " does not exist"
-msgstr ""
+msgstr "no esistit"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr ""
+msgstr "No si podet intrare in s'archìviu o directory"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr ""
+msgstr " abisòngiat autenticatzione"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
-msgstr ""
+msgstr "No si podent copiare/mòvere cuntenutos"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
@@ -1590,7 +1591,7 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:733
 msgid "Could not find a suitable name to backup"
-msgstr ""
+msgstr "Non s'agatat unu nùmene adeguadu pro sa còpia de seguresa"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:791
 msgid "Could not create the directory"
@@ -1606,11 +1607,11 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:826
 msgid "Could not open file"
-msgstr ""
+msgstr "Non si podet abèrrere s'archìviu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr ""
+msgstr "No b'at ispàtziu pro copiare"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
@@ -1626,15 +1627,15 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1196
 msgid "Write error in "
-msgstr ""
+msgstr "Faddina de iscritura in"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1212
 msgid "Read error in "
-msgstr ""
+msgstr "Faddina de letura in "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1450
 msgid " Copy"
-msgstr ""
+msgstr "Copia"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1510
 msgid "Set permissions error in "
@@ -1655,7 +1656,7 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1619
 msgid "origin and destination folders are the same"
-msgstr ""
+msgstr "is cartellas de orìgine e destinatzione sunt is matessi"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
@@ -1667,4 +1668,4 @@ msgstr ""
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "
-msgstr ""
+msgstr "non si podet iscrìere in "

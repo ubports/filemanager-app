@@ -1,8 +1,8 @@
 {
     "armhf": [
         {
-            "url": "http://old-releases.ubuntu.com/ubuntu",
-            "dist": "vivid",
+            "url": "http://ports.ubuntu.com",
+            "dist": "xenial",
             "component": "main",
             "packages": [
                 "libsmbclient",
@@ -10,15 +10,14 @@
                 "libtalloc2",
                 "libtevent0",
                 "libwbclient0",
-                "libldb1",
-                "libntdb1"
+                "libldb1"
             ]
         }
     ],
     "amd64": [
         {
-            "url": "http://old-releases.ubuntu.com/ubuntu",
-            "dist": "vivid",
+            "url": "http://ports.ubuntu.com",
+            "dist": "xenial",
             "component": "main",
             "packages": [
                 "libsmbclient",
@@ -26,15 +25,14 @@
                 "libtalloc2",
                 "libtevent0",
                 "libwbclient0",
-                "libldb1",
-                "libntdb1"
+                "libldb1"
             ]
         }
     ],
     "i386": [
         {
-            "url": "http://old-releases.ubuntu.com/ubuntu",
-            "dist": "vivid",
+            "url": "http://ports.ubuntu.com",
+            "dist": "xenial",
             "component": "main",
             "packages": [
                 "libsmbclient",
@@ -42,8 +40,7 @@
                 "libtalloc2",
                 "libtevent0",
                 "libwbclient0",
-                "libldb1",
-                "libntdb1"
+                "libldb1"
             ]
         }
     ]
