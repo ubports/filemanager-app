@@ -1,0 +1,9 @@
+{
+  "template": "cmake",
+  "kill": "terminal-app",
+  "dependencies": [
+    "libtag1-dev",
+    "libpam0g-dev",
+    "libsmbclient-dev"
+  ]
+}
