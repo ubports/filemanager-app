@@ -1,10 +1,11 @@
 {
-    "template": "cmake",
-    "sdk": "ubuntu-sdk-16.04",
-    "prebuild": "./get_armhf_click_deps.sh",
-    "dependencies": [
-	"libsmbclient-dev",
-	"libpam0g-dev"
-    ]
+  "template": "cmake",
+  "kill": "terminal-app",
+  "sdk": "ubuntu-sdk-16.04",
+  "prebuild": "./get_armhf_click_deps.sh",
+  "dependencies": [
+    "libtag1-dev",
+	  "libsmbclient-dev",
+	  "libpam0g-dev"
+  ]
 }
-
