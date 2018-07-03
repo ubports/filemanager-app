@@ -123,6 +123,7 @@ list(SORT I18N_SRC_FILES)
 file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
      *.qml *.js *.png *.svg *.json)
+list(REMOVE_ITEM SRC_FILES clickable.json)
 install(FILES ${SRC_FILES}  DESTINATION ${DATA_DIR})
 
 configure_file(${DESKTOP_FILE}.in.in ${DESKTOP_FILE}.in)
