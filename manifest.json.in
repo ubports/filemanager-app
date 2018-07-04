@@ -13,5 +13,5 @@
     "maintainer": "UBports <dev@ubports.com>",
     "name": "com.ubuntu.filemanager",
     "title": "File Manager",
-    "version": "0.5.50"
+    "version": "0.5.60"
 }
