@@ -32,7 +32,6 @@
  */
 #define MAX_AUTH_INSTANCES   4
 
-
 /*!
  * \brief The SmbLocationAuthentication class provides authentication Samba Authentication functions
  *
@@ -43,54 +42,18 @@ class SmbLocationAuthentication
 {
 public:
     SmbLocationAuthentication();
-   ~SmbLocationAuthentication();
+    ~SmbLocationAuthentication();
 
     Smb::AuthenticationFunction suitableAuthenticationFunction() const;
 
-    void            setInfo(const QString& user,
-                            const QString& password);
-    QString         currentAuthUser() const;
-    QString         currentAuthPassword() const;
+    void setInfo(const QString &user, const QString &password);
+    QString currentAuthUser() const;
+    QString currentAuthPassword() const;
 
-    static void     authenticateCallBack0(
-                                const char  *server,
-                                const char  *share,
-                                char        *wrkgrp,
-                                int         wrkgrplen,
-                                char        *user,
-                                int         userlen,
-                                char        *passwd,
-                                int         passwdlen);
-
-    static void     authenticateCallBack1(
-                                const char  *server,
-                                const char  *share,
-                                char        *wrkgrp,
-                                int         wrkgrplen,
-                                char        *user,
-                                int         userlen,
-                                char        *passwd,
-                                int         passwdlen);
-
-    static void     authenticateCallBack2(
-                                const char  *server,
-                                const char  *share,
-                                char        *wrkgrp,
-                                int         wrkgrplen,
-                                char        *user,
-                                int         userlen,
-                                char        *passwd,
-                                int         passwdlen);
-
-    static void     authenticateCallBack3(
-                                const char  *server,
-                                const char  *share,
-                                char        *wrkgrp,
-                                int         wrkgrplen,
-                                char        *user,
-                                int         userlen,
-                                char        *passwd,
-                                int         passwdlen);
+    static void authenticateCallBack0(const char *server, const char *share, char *wrkgrp, int wrkgrplen, char *user, int userlen, char *passwd, int passwdlen);
+    static void authenticateCallBack1(const char *server, const char *share, char *wrkgrp, int wrkgrplen, char *user, int userlen, char *passwd, int passwdlen);
+    static void authenticateCallBack2(const char *server, const char *share, char *wrkgrp, int wrkgrplen, char *user, int userlen, char *passwd, int passwdlen);
+    static void authenticateCallBack3(const char *server, const char *share, char *wrkgrp, int wrkgrplen, char *user, int userlen, char *passwd, int passwdlen);
 
 private:
     int  m_infoIndex;

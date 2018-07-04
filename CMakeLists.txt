@@ -15,7 +15,7 @@ option(CLICK_MODE "Installs to a contained location" on)
 set(APP_NAME filemanager)
 set(DESKTOP_FILE "${PROJECT_NAME}.desktop")
 set(LP_PROJECT ubuntu-filemanager-app)
-set(ICON_FILE filemanager64.png)
+set(ICON_FILE filemanager.svg)
 set(AUTOPILOT_DIR ${APP_NAME})
 set(EXEC "${APP_NAME}")
 set(CONTENT_HUB_JSON content-hub.json)
@@ -40,6 +40,7 @@ if(CLICK_MODE)
     set(QT_IMPORTS_DIR "/lib/${ARCH_TRIPLET}")
     set(BIN_DIR /lib/${ARCH_TRIPLET}/bin)
     set(DESKTOP_DIR ${DATA_DIR})
+
     if(NOT GIT_REVNO)
         execute_process(
           COMMAND git rev-list --first-parent --all --count
@@ -51,6 +52,18 @@ if(CLICK_MODE)
     if(NOT GIT_REVNO)
         set(GIT_REVNO "latest")
     endif(NOT GIT_REVNO)
+
+    if(NOT GIT_HASH)
+        execute_process(
+          COMMAND git rev-parse --short=7 HEAD
+          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+          OUTPUT_VARIABLE GIT_HASH
+          OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+    endif(NOT GIT_HASH)
+    if(NOT GIT_HASH)
+        set(GIT_HASH "unknownhash")
+    endif(NOT GIT_HASH)
 
     #query the target architecture
     execute_process(
@@ -67,44 +80,9 @@ if(CLICK_MODE)
          manifest.json.in *.apparmor)
 
     add_custom_target(com_ubuntu_calendar_CLICKFiles ALL SOURCES ${CLICK_FILES})
-
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json filemanager.apparmor ${CONTENT_HUB_JSON} DESTINATION ${CMAKE_INSTALL_PREFIX})
-
-        set(UPSTREAM_LIBS_DIR ${CMAKE_BINARY_DIR}/upstream-libs)
-
-    #grab dependencies
-    set(GET_CLICK_DEPS_TOOL ${CMAKE_SOURCE_DIR}/get-click-deps)
-    set(DEPS_MANIFEST ${CMAKE_CURRENT_SOURCE_DIR}/filemanager-libs.json)
-    MESSAGE("Grabbing upstream libs to ${UPSTREAM_LIBS_DIR}")
-
     get_filename_component(BLD_CONFIGURATION_NAME ${CMAKE_BINARY_DIR} NAME)
-    set(UPSTREAM_CACHE $ENV{HOME}/dev/upstream-libs-filemanager/${BLD_CONFIGURATION_NAME})
-    MESSAGE("Upstream libs cache path: ${UPSTREAM_CACHE}")
 
-    if(EXISTS "${UPSTREAM_CACHE}")
-      MESSAGE("Upstream libs cache exists.")
-      file(COPY ${UPSTREAM_CACHE}/upstream-libs/ DESTINATION ${UPSTREAM_LIBS_DIR} PATTERN * )
-    else()
-      MESSAGE("Cache miss, downloading from network.")
-      file(MAKE_DIRECTORY ${UPSTREAM_LIBS_DIR})
-      file(MAKE_DIRECTORY ${UPSTREAM_CACHE})
-      execute_process(
-        COMMAND ${GET_CLICK_DEPS_TOOL} -d ${DEPS_MANIFEST} ${CLICK_ARCH} ${UPSTREAM_LIBS_DIR}
-      )
-      # Cache for next usage
-      file(COPY ${UPSTREAM_LIBS_DIR} DESTINATION ${UPSTREAM_CACHE} )
-    endif()
-    MESSAGE("Installing upstream libs from ${CMAKE_CURRENT_BINARY_DIR}/upstream-libs/usr/lib/${ARCH_TRIPLET}/ to ${DATA_DIR}lib/${ARCH_TRIPLET}")
-    file(GLOB_RECURSE UPSTREAM_LIBS "${CMAKE_CURRENT_BINARY_DIR}/upstream-libs/usr/lib/${ARCH_TRIPLET}/*")
-    foreach(ITEM ${UPSTREAM_LIBS})
-       IF( IS_DIRECTORY "${ITEM}" )
-          LIST( APPEND DIRS_TO_DEPLOY "${ITEM}" )
-       ELSE()
-          LIST( APPEND FILES_TO_DEPLOY "${ITEM}" )
-       ENDIF()
-    endforeach()
-    MESSAGE("Following files to install:- ${FILES_TO_DEPLOY}")
-    INSTALL( FILES ${FILES_TO_DEPLOY} DESTINATION ${DATA_DIR}lib/${ARCH_TRIPLET} )
 else(CLICK_MODE)
     execute_process(
         COMMAND qmake -query QT_INSTALL_QML
@@ -125,6 +103,7 @@ list(SORT I18N_SRC_FILES)
 file(GLOB SRC_FILES
      RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
      *.qml *.js *.png *.svg *.json)
+list(REMOVE_ITEM SRC_FILES clickable.json)
 install(FILES ${SRC_FILES}  DESTINATION ${DATA_DIR})
 
 configure_file(${DESKTOP_FILE}.in.in ${DESKTOP_FILE}.in)

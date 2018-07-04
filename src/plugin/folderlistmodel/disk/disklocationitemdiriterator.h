@@ -31,19 +31,22 @@ class DiskLocationItemDirIterator : public LocationItemDirIterator
 public:
     explicit DiskLocationItemDirIterator(QObject *parent = 0);
     ~DiskLocationItemDirIterator();
+
 public:
-   virtual DirItemInfo	fileInfo() const;
-   virtual QString	    fileName() const;
-   virtual QString	    filePath() const;
-   virtual bool	        hasNext()  const;
-   virtual QString	    next()          ;
-   virtual QString	    path()     const;
+    virtual DirItemInfo fileInfo() const;
+    virtual QString fileName() const;
+    virtual QString filePath() const;
+    virtual bool hasNext() const;
+    virtual QString next();
+    virtual QString path() const;
+
 public:
-   DiskLocationItemDirIterator(const QString & path, QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags);
-   DiskLocationItemDirIterator(const QString & path, QDir::Filters filters, QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags);
-   DiskLocationItemDirIterator(const QString & path, const QStringList & nameFilters, QDir::Filters filters = QDir::NoFilter, QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags);
+    DiskLocationItemDirIterator(const QString &path, QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags);
+    DiskLocationItemDirIterator(const QString &path, QDir::Filters filters, QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags);
+    DiskLocationItemDirIterator(const QString &path, const QStringList &nameFilters, QDir::Filters filters = QDir::NoFilter, QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags);
+
 private:
-    QDirIterator * m_qtDirIterator;
+    QDirIterator *m_qtDirIterator;
 
 };
 

@@ -44,45 +44,42 @@ class DiskLocation : public Location
 {
     Q_OBJECT
 public:
-    explicit DiskLocation(int type, QObject *parent=0);
+    explicit DiskLocation(int type, QObject *parent = 0);
     virtual ~DiskLocation();
 
-    ExternalFSWatcher  * getExternalFSWatcher() const;
+    ExternalFSWatcher *getExternalFSWatcher() const;
 
-    virtual void        fetchExternalChanges(const QString& urlPath,
-                                             const DirItemInfoList& list,
-                                             QDir::Filters dirFilter) ;
+    virtual void fetchExternalChanges(const QString &urlPath, const DirItemInfoList &list, QDir::Filters dirFilter) ;
 
-    virtual void        startExternalFsWatcher();
-    virtual void        stopExternalFsWatcher();
+    virtual void startExternalFsWatcher();
+    virtual void stopExternalFsWatcher();
 
-    virtual void        startWorking();
-    virtual void        stopWorking();
+    virtual void startWorking();
+    virtual void stopWorking();
 
-    virtual DirItemInfo * newItemInfo(const QString& urlPath);
-    virtual DirListWorker * newListWorker(const QString &urlPath,
-                                          QDir::Filters filter,
-                                          const bool isRecursive);
-    virtual LocationItemDirIterator * newDirIterator(const QString & path,
-                                                     QDir::Filters filters,
-                                                     QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
-                                                     LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
-    virtual LocationItemFile   * newFile(const QString & path);
-    virtual LocationItemDir    * newDir(const QString & dir = QLatin1String(0));
-    virtual bool        isThereDiskSpace(const QString& pathname, qint64 requiredSize);
-    virtual QString     urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlash);
+    virtual DirItemInfo *newItemInfo(const QString &urlPath);
+    virtual DirListWorker *newListWorker(const QString &urlPath, QDir::Filters filter, const bool isRecursive);
+
+    virtual LocationItemDirIterator *newDirIterator(const QString &path, QDir::Filters filters,
+                                                    QDirIterator::IteratorFlags flags = QDirIterator::NoIteratorFlags,
+                                                    LocationItemDirIterator::LoadMode loadmode = LocationItemDirIterator::LoadOnConstructor);
+
+    virtual LocationItemFile *newFile(const QString &path);
+    virtual LocationItemDir *newDir(const QString &dir = QLatin1String(0));
+    virtual bool isThereDiskSpace(const QString &pathname, qint64 requiredSize);
+    virtual QString urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlash);
 
 protected:
-    void    addExternalFsWorkerRequest(ExternalFileSystemChangesWorker *);
+    void addExternalFsWorkerRequest(ExternalFileSystemChangesWorker *);
 
 public slots:
     virtual void setUsingExternalWatcher(bool use);
 
 protected slots:
-    void                onItemsFetched();
+    void onItemsFetched();
 
 protected:
-    ExternalFSWatcher *   m_extWatcher ;
+    ExternalFSWatcher *m_extWatcher ;
 
 };
 

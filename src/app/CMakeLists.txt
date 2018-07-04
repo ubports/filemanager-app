@@ -1,7 +1,11 @@
-file(GLOB_RECURSE QML_SRCS *.qml *.js)
+file(GLOB_RECURSE QML_SRCS *.qml *.js *.png *.svg)
 
 set(filemanager_SRCS
     main.cpp
+    patharrowbackground.cpp
+    patharrowbackground.h
+    fmutils.cpp
+    fmutils.h
     ${QML_SRCS}
 )
 

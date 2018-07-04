@@ -21,7 +21,8 @@
 
 void Archives::extractZip(const QString path, const QString destination)
 {
-    QString program = "unzip"; // This programm is available in the images as it is one of the dependencies of the ubuntu-download-manager package.
+    // This programm is available in the images as it is one of the dependencies of the ubuntu-download-manager package.
+    QString program = "unzip";
     QStringList arguments;
     arguments << path << "-d" << destination;
 
@@ -63,6 +64,8 @@ void Archives::extractArchive(const QString program, const QStringList arguments
 
     _process = new QProcess(this);
 
+    connect(_process, &QProcess::stateChanged, this, &Archives::extractingChanged);
+
     // Connect to internal slots in order to have one unified onFinished slot handling both events for QML.
     connect(_process,
             static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>
@@ -74,6 +77,31 @@ void Archives::extractArchive(const QString program, const QStringList arguments
             _process, &QProcess::kill);
 
     _process->start(program, arguments);
+}
+
+bool Archives::extract(const QString path, const QString destination)
+{
+    if (path.lastIndexOf(".zip")) {
+        extractZip(path, destination);
+        return true;
+    }
+
+    if (path.lastIndexOf(".tar")) {
+        extractTar(path, destination);
+        return true;
+    }
+
+    if (path.lastIndexOf(".tar.gz")) {
+        extractGzipTar(path, destination);
+        return true;
+    }
+
+    if (path.lastIndexOf(".tar.bz2")) {
+        extractBzipTar(path, destination);
+        return true;
+    }
+
+    return false;
 }
 
 void Archives::cancelArchiveExtraction()
@@ -90,7 +118,8 @@ void Archives::_onError(QProcess::ProcessError error)
 
 void Archives::_onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    if ((exitStatus == QProcess::NormalExit || exitCode == 0) && _process->readAllStandardError().trimmed().isEmpty()) {
+    if ((exitStatus == QProcess::NormalExit || exitCode == 0)
+            && _process->readAllStandardError().trimmed().isEmpty()) {
         emit finished(true, -1);
     } else {
         qDebug() << "Extraction failed (2) with the following error:" << _process->readAllStandardError();

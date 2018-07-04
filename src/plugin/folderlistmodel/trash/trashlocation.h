@@ -31,25 +31,21 @@ class TrashLocation : public DiskLocation, public QTrashDir
 {
     Q_OBJECT
 public:
-    explicit TrashLocation(int type, QObject *parent=0);
+    explicit TrashLocation(int type, QObject *parent = 0);
     virtual ~TrashLocation();
-    virtual bool        becomeParent();
-    virtual void        refreshInfo();
-    virtual void        fetchItems(QDir::Filters dirFilter, bool recursive=0);
-    virtual void        fetchExternalChanges(const QString& urlPath,
-                                             const DirItemInfoList& list,
-                                             QDir::Filters dirFilter) ;
+    virtual bool becomeParent();
+    virtual void refreshInfo();
+    virtual void fetchItems(QDir::Filters dirFilter, bool recursive = 0);
+    virtual void fetchExternalChanges(const QString &urlPath, const DirItemInfoList &list, QDir::Filters dirFilter) ;
 
-    virtual void        startWorking();
-    virtual void        startExternalFsWatcher();
+    virtual void startWorking();
+    virtual void startExternalFsWatcher();
 
-    virtual DirItemInfo *validateUrlPath(const QString& urlPath);
+    virtual DirItemInfo *validateUrlPath(const QString &urlPath);
 
-    virtual DirItemInfo * newItemInfo(const QString& urlPath);
-    virtual DirListWorker * newListWorker(const QString &urlPath,
-                                          QDir::Filters filter,
-                                          const bool isRecursive);
-    virtual QString     urlBelongsToLocation(const QString& urlPath, int indexOfColonAndSlashe);
+    virtual DirItemInfo *newItemInfo(const QString &urlPath);
+    virtual DirListWorker *newListWorker(const QString &urlPath, QDir::Filters filter, const bool isRecursive);
+    virtual QString urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlashe);
 
     /*!
      * \brief getMovePairPaths() Get: original path and destination trash path
@@ -60,7 +56,7 @@ public:
      * \return an \ref ActionPaths that contains the source orginal file and
      *                 the suitable Trash path where the source will moved into
      */
-    ActionPaths         getMovePairPaths(const DirItemInfo& item) const;
+    ActionPaths getMovePairPaths(const DirItemInfo &item) const;
 
     /*!
      * \brief getRestorePairPaths() Get: Trash path as source and item original path as destination
@@ -70,14 +66,14 @@ public:
      * \return n \ref ActionPaths that contains the thash item and
      *                 the original source path as destionation
      */
-    ActionPaths         getRestorePairPaths(const DirItemInfo& item) const;
+    ActionPaths getRestorePairPaths(const DirItemInfo &item) const;
 
 private:
-    void               addTrashFetchRequest(TrashListWorker *workerObject);
+    void addTrashFetchRequest(TrashListWorker *workerObject);
 
 private:
-    ActionPathList     m_actionPathList;
-    QStringList        m_currentPaths;  //!< also used in the startExternalFsWatcher(), it can br activated any time
+    ActionPathList m_actionPathList;
+    QStringList m_currentPaths;  //!< also used in the startExternalFsWatcher(), it can br activated any time
 };
 
 #endif // TRASHLOCATION_H

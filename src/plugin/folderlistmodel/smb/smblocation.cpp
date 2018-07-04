@@ -30,29 +30,23 @@
 #include "smblocationitemdir.h"
 #include "netauthenticationdata.h"
 
-
-
 #if defined(Q_OS_UNIX)
 #include <sys/statvfs.h>
 #endif
 
 SmbLocation::SmbLocation(int type, QObject *parent)
-     : NetworkLocation(type, parent)
-     , SmbLocationAuthentication()
+    : NetworkLocation(type, parent)
+    , SmbLocationAuthentication()
 {
-     m_smb = new SmbUtil(suitableAuthenticationFunction());
-     setAuthentication(NetAuthenticationData::currentUser(),
-                       NetAuthenticationData::noPassword());
+    m_smb = new SmbUtil(suitableAuthenticationFunction());
+    setAuthentication(NetAuthenticationData::currentUser(), NetAuthenticationData::noPassword());
 }
-
 
 SmbLocation::~SmbLocation()
 {
 
 }
 
-
-//======================================================================================================
 /*!
  * \brief SmbLocation::setAuthentication() saves user/password ot be used in current SmbLocationAuthentication function
  *
@@ -61,13 +55,11 @@ SmbLocation::~SmbLocation()
  * \param user
  * \param password
  */
-void SmbLocation::setAuthentication(const QString &user,
-                                    const QString &password)
+void SmbLocation::setAuthentication(const QString &user, const QString &password)
 {
     //setInfo is not static
-    SmbLocationAuthentication::setInfo(user,password);
+    SmbLocationAuthentication::setInfo(user, password);
 }
-
 
 QString SmbLocation::currentAuthenticationUser()
 {
@@ -75,69 +67,62 @@ QString SmbLocation::currentAuthenticationUser()
     return SmbLocationAuthentication::currentAuthUser();
 }
 
-
 QString SmbLocation::currentAuthenticationPassword()
 {
     return SmbLocationAuthentication::currentAuthPassword();
 }
 
-
-DirItemInfo * SmbLocation::newItemInfo(const QString &urlPath)
+DirItemInfo *SmbLocation::newItemInfo(const QString &urlPath)
 {
     return new SmbItemInfo(urlPath, m_smb);
 }
 
-
 QString SmbLocation::urlBelongsToLocation(const QString &urlPath, int indexOfColonAndSlash)
 {
     QString ret;
-    if ( urlPath.startsWith(LocationUrl::SmbURL.midRef(0,4)) ||
-         urlPath.startsWith(LocationUrl::CifsURL.midRef(0,5))
-       )
-    {
-        ret  = LocationUrl::SmbURL + DirItemInfo::removeExtraSlashes(urlPath, indexOfColonAndSlash+1);
+    if (urlPath.startsWith(LocationUrl::SmbURL.midRef(0, 4)) ||
+            urlPath.startsWith(LocationUrl::CifsURL.midRef(0, 5))) {
+
+        ret  = LocationUrl::SmbURL + DirItemInfo::removeExtraSlashes(urlPath, indexOfColonAndSlash + 1);
     }
+
     return ret;
 }
 
 
-LocationItemDirIterator *
-SmbLocation::newDirIterator(const QString &path,
-                            QDir::Filters filters,
-                            QDirIterator::IteratorFlags flags,
-                            LocationItemDirIterator::LoadMode loadmode)
+LocationItemDirIterator *SmbLocation::newDirIterator(const QString &path, QDir::Filters filters,
+                                                     QDirIterator::IteratorFlags flags, LocationItemDirIterator::LoadMode loadmode)
 {
     return new SmbLocationDirIterator(path, filters, flags, m_smb, loadmode);
 }
 
 
-LocationItemFile *
-SmbLocation::newFile(const QString &path)
+LocationItemFile *SmbLocation::newFile(const QString &path)
 {
     return new SmbLocationItemFile(path, this, m_smb);
 }
 
 
-LocationItemDir *
-SmbLocation::newDir(const QString &dir)
+LocationItemDir *SmbLocation::newDir(const QString &dir)
 {
     return new SmbLocationItemDir(dir, m_smb);
 }
 
-
-
 bool SmbLocation::isThereDiskSpace(const QString &pathname, qint64 requiredSize)
 {
     bool ret = false;
+
 #if defined(Q_OS_UNIX)
     struct statvfs st;
-    if (m_smb->getStatvfsInfo(pathname, &st) == SmbUtil::StatDone)
-    {
+
+    if (m_smb->getStatvfsInfo(pathname, &st) == SmbUtil::StatDone) {
         qint64 free =  st.f_bsize * st.f_bfree;
         ret = free > requiredSize;
     }
+
 #else
-   ret =  true;
+    ret =  true;
 #endif
-   return ret;
+
+    return ret;
 }

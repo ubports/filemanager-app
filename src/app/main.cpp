@@ -29,11 +29,19 @@
 
 #include <QDebug>
 
+// UI
+#include "patharrowbackground.h"
+
+// Utils
+#include "fmutils.h"
+
 int main(int argc, char *argv[])
 {
     QGuiApplication a(argc, argv);
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    qmlRegisterType<PathArrowBackground>("com.ubuntu.filemanager", 1, 0, "PathArrowBackground");
 
     // Set up import paths
     QStringList importPathList = view.engine()->importPathList();
@@ -105,6 +113,9 @@ int main(int argc, char *argv[])
 
     view.engine()->rootContext()->setContextProperty("tablet", QVariant(false));
     view.engine()->rootContext()->setContextProperty("phone", QVariant(false));
+
+    view.engine()->rootContext()->setContextProperty("FmUtils", new FMUtils());
+
 
     if (args.contains("-t") || args.contains("--tablet")) {
         qDebug() << "running in tablet mode";

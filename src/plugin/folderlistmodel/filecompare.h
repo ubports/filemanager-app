@@ -48,4 +48,7 @@ bool fileCompareDescending(const DirItemInfo &a, const DirItemInfo &b);
 bool dateCompareDescending(const DirItemInfo &a, const DirItemInfo &b);
 bool dateCompareAscending(const DirItemInfo &a, const DirItemInfo &b);
 
+bool sizeCompareDescending(const DirItemInfo &a, const DirItemInfo &b);
+bool sizeCompareAscending(const DirItemInfo &a, const DirItemInfo &b);
+
 #endif // FILECOMPARE_H

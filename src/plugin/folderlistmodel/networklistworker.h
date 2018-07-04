@@ -36,19 +36,20 @@ class DirItemInfo;
  */
 class NetworkListWorker : public DirListWorker
 {
-   Q_OBJECT
+    Q_OBJECT
 public:
-    NetworkListWorker(LocationItemDirIterator * dirIterator,
-                      DirItemInfo             * mainItemInfo,
-                      const DirItemInfo       * parentItemInfo = 0);
+    NetworkListWorker(LocationItemDirIterator *dirIterator,
+                      DirItemInfo              *mainItemInfo,
+                      const DirItemInfo        *parentItemInfo = 0);
     ~NetworkListWorker();
 protected:
     virtual DirItemInfoList getNetworkContent();
     void                    setSmbItemAttributes();
 protected:
-     LocationItemDirIterator     * m_dirIterator;
-     DirItemInfo                 * m_mainItemInfo;   //takes ownership from mainItemInfo
-     DirItemInfo                 * m_parentItemInfo; //create its own instance by doing a copy from parentItemInfo
+    LocationItemDirIterator      *m_dirIterator;
+    DirItemInfo                  *m_mainItemInfo;   //takes ownership from mainItemInfo
+    DirItemInfo
+    *m_parentItemInfo; //create its own instance by doing a copy from parentItemInfo
 };
 
 #endif // NETWORKLISTWORKER_H

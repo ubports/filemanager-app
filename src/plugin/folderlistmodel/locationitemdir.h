@@ -30,12 +30,12 @@ public:
     virtual  ~LocationItemDir();
 public:
     virtual bool    exists()                   const = 0;
-    virtual bool    mkdir(const QString& dir)  const = 0;
-    virtual bool    mkpath(const QString& dir) const = 0;
-    virtual bool    rmdir(const QString& dir)  const = 0;
+    virtual bool    mkdir(const QString &dir)  const = 0;
+    virtual bool    mkpath(const QString &dir) const = 0;
+    virtual bool    rmdir(const QString &dir)  const = 0;
 protected:
     LocationItemDir ();
-    LocationItemDir (const QString& dir =  QLatin1String(0));
+    LocationItemDir (const QString &dir =  QLatin1String(0));
 };
 
 #endif // LOCATIONITEMDIR_H

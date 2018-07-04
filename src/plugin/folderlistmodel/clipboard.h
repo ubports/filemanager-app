@@ -43,46 +43,45 @@
 
 class DirModelMimeData;
 
-enum ClipboardOperation
-{
+enum ClipboardOperation {
     NoClipboard, ClipboardCopy, ClipboardCut
 };
-
-
 
 /*!
  * \brief The Clipboard class handles global clipboard storage
  */
 class Clipboard : public QObject
 {
-   Q_OBJECT
+    Q_OBJECT
 public:
-   explicit Clipboard(QObject *parent = 0);
+    explicit Clipboard(QObject *parent = 0);
     ~Clipboard();
-    QStringList  paste(ClipboardOperation& operation);
-    int          storedUrlsCounter();
-    inline bool  hasClipboardModifiedByOtherApplication() const {return m_clipboardModifiedByOther;}
+
+    QStringList paste(ClipboardOperation &operation);
+    int storedUrlsCounter();
+
+    inline bool hasClipboardModifiedByOtherApplication() const
+    {
+        return m_clipboardModifiedByOther;
+    }
 
 public slots:
-   void         cut(const QStringList&  names, const QString &path);
-   void         copy(const QStringList& names, const QString &path);
-   void         clear();
+    void cut(const QStringList  &names, const QString &path);
+    void copy(const QStringList &names, const QString &path);
+    void clear();
 
 signals:
-   void         clipboardChanged();
+    void clipboardChanged();
 
 private slots:
-   void         onClipboardChanged ();
+    void onClipboardChanged ();
 
 private:
-   void         storeOnClipboard(const QStringList &names,
-                                 ClipboardOperation op,
-                                 const QString &curPath);
+    void storeOnClipboard(const QStringList &names, ClipboardOperation op, const QString &curPath);
 private:
-   DirModelMimeData  *     m_mimeData;
-   bool                    m_clipboardModifiedByOther;
+    DirModelMimeData *m_mimeData;
+    bool m_clipboardModifiedByOther;
 };
-
 
 
 /*!
@@ -93,37 +92,36 @@ class DirModelMimeData : public QMimeData
 public:
     explicit DirModelMimeData();
     ~DirModelMimeData();
-    virtual QStringList     formats() const    { return m_formats; }
-    virtual bool            hasFormat ( const QString & mimeType ) const;
+
+    virtual QStringList formats() const { return m_formats; }
+    virtual bool hasFormat ( const QString &mimeType ) const;
 
 public:
-    enum ClipBoardDataOwner
-    {
+    enum ClipBoardDataOwner {
         Nobody,    // might have failed
         Application,
         MySelf
     };
 
-    ClipBoardDataOwner      setIntoClipboard(const QStringList& files,
-                                             const QString &path,
-                                             ClipboardOperation operation);
-    const QMimeData *       clipboardMimeData();
-    QStringList             storedUrls(ClipboardOperation& operation);
+    ClipBoardDataOwner setIntoClipboard(const QStringList &files, const QString &path, ClipboardOperation operation);
+    const QMimeData *clipboardMimeData();
+    QStringList storedUrls(ClipboardOperation &operation);
 
 private:
-    static QList<QUrl>      gnomeUrls(const QMimeData *mime, ClipboardOperation& operation);
-    ClipboardOperation      clipBoardOperation();
-    bool                    fillClipboard(const QStringList& files, const QString &path, ClipboardOperation operation);
-    QStringList             makeFullPath(const QStringList& files, const QString &path);
-    bool                    testClipboardContent(const QStringList& files, const QString &path);
+    static QList<QUrl> gnomeUrls(const QMimeData *mime, ClipboardOperation &operation);
+    ClipboardOperation clipBoardOperation();
+    bool fillClipboard(const QStringList &files, const QString &path, ClipboardOperation operation);
+    QStringList makeFullPath(const QStringList &files, const QString &path);
+    bool testClipboardContent(const QStringList &files, const QString &path);
 
 private:
-    QStringList              m_formats;
-    const QMimeData *        m_appMime;
-    QByteArray               m_gnomeData;
-    QList<QUrl>              m_urls;
-    static DirModelMimeData* m_globalMimeData; //!< some mobile devices do not use X, they may not have clipboard
-    static   int             m_instances;
+    QStringList m_formats;
+    const QMimeData *m_appMime;
+    QByteArray m_gnomeData;
+    QList<QUrl> m_urls;
+
+    static DirModelMimeData *m_globalMimeData; //!< some mobile devices do not use X, they may not have clipboard
+    static int m_instances;
 };
 
 

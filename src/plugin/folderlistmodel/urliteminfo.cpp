@@ -28,24 +28,17 @@ UrlItemInfo::UrlItemInfo():    DirItemInfo()
 
 }
 
-UrlItemInfo::UrlItemInfo(const QString& urlPath, const QString& urlRoot):
-     DirItemInfo()
+UrlItemInfo::UrlItemInfo(const QString &urlPath, const QString &urlRoot):
+    DirItemInfo()
 {
-    if (!urlPath.isEmpty())
-    {
-        if (urlPath == urlRoot)
-        {
+    if (!urlPath.isEmpty()) {
+        if (urlPath == urlRoot) {
             setRoot(urlPath);
-        }
-        else
-        {
-            if (!urlPath.startsWith(urlRoot))
-            {
+        } else {
+            if (!urlPath.startsWith(urlRoot)) {
                 d_ptr->_isValid    = false;
                 d_ptr->_isAbsolute = false;
-            }
-            else
-            {
+            } else {
                 init(urlPath);
             }
         }
@@ -53,7 +46,7 @@ UrlItemInfo::UrlItemInfo(const QString& urlPath, const QString& urlRoot):
 }
 
 
-void UrlItemInfo::setRoot(const QString& urlPath)
+void UrlItemInfo::setRoot(const QString &urlPath)
 {
     d_ptr->_isValid      = true;
     d_ptr->_isRoot       = true;
@@ -76,8 +69,8 @@ void UrlItemInfo::setRoot(const QString& urlPath)
  *
  * \param urlPath
  */
-void UrlItemInfo::init(const QString& urlPath)
-{    
+void UrlItemInfo::init(const QString &urlPath)
+{
     d_ptr->_isValid      = true;
     d_ptr->_isAbsolute   = true;
     d_ptr->_isRemote     = true;
@@ -86,14 +79,11 @@ void UrlItemInfo::init(const QString& urlPath)
     verifyHost(urlPath);
 
     QStringList pathAndFile = separatePathFilename(urlPath);
-    if (pathAndFile.count() == 2)
-    {
+    if (pathAndFile.count() == 2) {
         d_ptr->_path     = pathAndFile.at(0);
         d_ptr->_fileName = pathAndFile.at(1);
-    }
-    else
-    {
-        d_ptr->_path           = urlPath;    
+    } else {
+        d_ptr->_path           = urlPath;
     }
     d_ptr->_normalizedPath = d_ptr->_path;
 }
@@ -102,12 +92,10 @@ void UrlItemInfo::init(const QString& urlPath)
 void UrlItemInfo::verifyHost(const QString urlPath)
 {
     QUrl url(urlPath);
-    if (url.isValid() && !url.isLocalFile())
-    {       
-        if (url.path().isEmpty())
-        {
+    if (url.isValid() && !url.isLocalFile()) {
+        if (url.path().isEmpty()) {
             //!< initial set is "host", Samba shares also have Workspace which will be handled in \ref SmbItemInfo
-           setAsHost();
+            setAsHost();
         }
     }
 }
@@ -125,10 +113,9 @@ QStringList UrlItemInfo::separatePathFilename(const QString &urlPath)
     //path and filename must fill the url,
     // smb://localost      path=smb://          filename=localhost
     // smb://localhost/dir path=smb://localhost filename=dir
-    if (lastDir != -1)
-    {
-        QString path = urlPath.at(lastDir-1)  == QDir::separator() ?
-                       urlPath.left(lastDir+1) : urlPath.left(lastDir);
+    if (lastDir != -1) {
+        QString path = urlPath.at(lastDir - 1)  == QDir::separator() ?
+                       urlPath.left(lastDir + 1) : urlPath.left(lastDir);
 
         separated.append(path);
         separated.append(urlPath.mid(lastDir + 1));

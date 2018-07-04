@@ -26,14 +26,25 @@ class Archives : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool extracting READ extracting NOTIFY extractingChanged)
+
 public:
-    Q_INVOKABLE void extractZip(const QString path, const QString destination);
-    Q_INVOKABLE void extractTar(const QString path, const QString destination);
-    Q_INVOKABLE void extractGzipTar(const QString path, const QString destination);
-    Q_INVOKABLE void extractBzipTar(const QString path, const QString destination);
+    Q_INVOKABLE bool extract(const QString path, const QString destination);
     Q_INVOKABLE void cancelArchiveExtraction();
 
+    inline bool extracting() const
+    {
+        return _process ? _process->state() == QProcess::Running
+                        : false;
+    }
+
+    void extractZip(const QString path, const QString destination);
+    void extractTar(const QString path, const QString destination);
+    void extractGzipTar(const QString path, const QString destination);
+    void extractBzipTar(const QString path, const QString destination);
+
 signals:
+    void extractingChanged();
     void finished(bool success, int errorCode);
     void killProcess();
 
@@ -44,7 +55,7 @@ private slots:
 private:
     void extractArchive(const QString program, const QStringList arguments);
 
-    QProcess* _process = nullptr;
+    QProcess *_process = nullptr;
 };
 
 

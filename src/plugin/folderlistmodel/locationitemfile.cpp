@@ -30,7 +30,7 @@ LocationItemFile::LocationItemFile(QObject *parent) :
 {
 }
 
-LocationItemFile::LocationItemFile(const QString&, QObject *parent) :
+LocationItemFile::LocationItemFile(const QString &, QObject *parent) :
     QObject(parent)
 {
 }
@@ -43,9 +43,9 @@ LocationItemFile::~LocationItemFile()
 
 mode_t LocationItemFile::getUmask()
 {
-   mode_t mask  = ::umask(0);  //first gets the current umask and sets to 0
-   ::umask(mask);              //second restores the current umask
-   return mask;
+    mode_t mask  = ::umask(0);  //first gets the current umask and sets to 0
+    ::umask(mask);              //second restores the current umask
+    return mask;
 }
 
 /*!

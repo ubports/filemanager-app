@@ -1,9 +1,10 @@
 {
   "template": "cmake",
   "kill": "terminal-app",
+  "sdk": "ubuntu-sdk-16.04",
   "dependencies": [
     "libtag1-dev",
-    "libpam0g-dev",
-    "libsmbclient-dev"
+    "libsmbclient-dev",
+    "libpam0g-dev"
   ]
 }

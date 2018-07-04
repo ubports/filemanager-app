@@ -27,36 +27,35 @@
 #include <QDebug>
 
 NetUtil::NetUtil()
-{
-}
+{ }
 
-
-QString NetUtil::normalizeHostName(const QString& name)
+QString NetUtil::normalizeHostName(const QString &name)
 {
     QString host(name.toLower());
     bool isLoopBack = false;
     QHostInfo info = QHostInfo::fromName(host);
+
     // take advantage of network with Bonjour/Avahi
     // as winbind looks like harder to configure or does not work
-    if (info.error() == QHostInfo::HostNotFound)
-    {
+    if (info.error() == QHostInfo::HostNotFound) {
         host += QLatin1String(".local");
         info = QHostInfo::fromName(host);
     }
-    if (info.error() == QHostInfo::NoError)
-    {
+
+    if (info.error() == QHostInfo::NoError) {
         host = info.hostName();
         QList<QHostAddress> addrs  = info.addresses();
         int counter = addrs.count();
-        while (!isLoopBack && counter--)
-        {
+
+        while (!isLoopBack && counter--) {
             isLoopBack = addrs.at(counter).isLoopback();
         }
     }
-    if (isLoopBack)
-    {
-         host = QLatin1String("localhost");
+
+    if (isLoopBack) {
+        host = QLatin1String("localhost");
     }
+
     return host;
 }
 
@@ -69,21 +68,22 @@ QString NetUtil::urlConvertHostnameToIP(const QString &url)
 {
     QString ret;
     QUrl tmpUrl(url);
-    if (tmpUrl.isValid() && !tmpUrl.host().isEmpty() && tmpUrl.host() != QLatin1String("localhost"))
-    {
-       QString host = tmpUrl.host();
-       QHostInfo info = QHostInfo::fromName(host);
-       if (info.error() == QHostInfo::HostNotFound)
-       {
-           // take advantage of network with Bonjour/Avahi
-           // as winbind looks like harder to configure or does not work
-           info = QHostInfo::fromName(host + QLatin1String(".local"));
-       }
-       if (info.error() == QHostInfo::NoError)
-       {
-           tmpUrl.setHost(info.addresses().at(0).toString());
-           ret = tmpUrl.toString();
-       }
+
+    if (tmpUrl.isValid() && !tmpUrl.host().isEmpty() && tmpUrl.host() != QLatin1String("localhost")) {
+        QString host = tmpUrl.host();
+        QHostInfo info = QHostInfo::fromName(host);
+
+        if (info.error() == QHostInfo::HostNotFound) {
+            // take advantage of network with Bonjour/Avahi
+            // as winbind looks like harder to configure or does not work
+            info = QHostInfo::fromName(host + QLatin1String(".local"));
+        }
+
+        if (info.error() == QHostInfo::NoError) {
+            tmpUrl.setHost(info.addresses().at(0).toString());
+            ret = tmpUrl.toString();
+        }
     }
+
     return ret;
 }
