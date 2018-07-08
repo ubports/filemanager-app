@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-06-11 17:00+0000\n"
+"PO-Revision-Date: 2018-07-08 12:14+0000\n"
 "Last-Translator: Ari Börde Kröyer <ari.kroyer@online.no>\n"
 "Language-Team: Norwegian Bokmål "
 "<https://translate.ubports.com/projects/ubports/filemanager-app/nb/>\n"
@@ -27,12 +27,11 @@ msgstr "Om"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:139
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:139
-#, fuzzy
 msgid ""
 "The <b>Application</b> example demonstrates how to write modern GUI "
 "applications using Qt, with a menu bar, toolbars, and a status bar."
 msgstr ""
-"<b>Program</b>eksempelet demonstrerer hvordan man skriver grafiske "
+"<b>Application</b> eksempelet demonstrerer hvordan man skriver grafiske "
 "programmer ved bruk av Qt, med et menyfelt, verktøylinjer, og statusfelt."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
@@ -1663,7 +1662,6 @@ msgid "There is no space to download"
 msgstr "Mangler plass til å laste ned"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
-#, fuzzy
 msgid "net tool not found, check samba installation"
 msgstr "fant ikke \"net tool\", sjekk Samba-installasjon"
 
