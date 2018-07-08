@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-07-08 12:14+0000\n"
+"PO-Revision-Date: 2018-07-08 12:15+0000\n"
 "Last-Translator: Ari Börde Kröyer <ari.kroyer@online.no>\n"
 "Language-Team: Norwegian Bokmål "
 "<https://translate.ubports.com/projects/ubports/filemanager-app/nb/>\n"
@@ -1642,7 +1642,7 @@ msgstr "Klarte ikke å fastsette rettigheter i "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1579
 msgid "Could not create trash info file"
-msgstr "Kunne ikke opprettepapirkurvsinfofil"
+msgstr "Kunne ikke opprette papirkurvsinfofil"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1592
 msgid "Could not remove the trash info file"
