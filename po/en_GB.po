@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-27 20:52+0000\n"
-"Last-Translator: Florian Leeber <flori@bin.org.in>\n"
-"Language-Team: English (United Kingdom) <https://translate.ubports.com/"
-"projects/ubports/filemanager-app/en_GB/>\n"
+"PO-Revision-Date: 2018-07-05 14:08+0000\n"
+"Last-Translator: konrad <kohofer@gmail.com>\n"
+"Language-Team: English (United Kingdom) "
+"<https://translate.ubports.com/projects/ubports/filemanager-app/en_GB/>\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:138
 msgid "About Application"
-msgstr ""
+msgstr "About Application"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:139
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:139
@@ -31,136 +31,138 @@ msgid ""
 "The <b>Application</b> example demonstrates how to write modern GUI "
 "applications using Qt, with a menu bar, toolbars, and a status bar."
 msgstr ""
+"The <b>Application</b> example demonstrates how to write modern GUI "
+"applications using Qt, with a menu bar, toolbars, and a status bar."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
 msgid "&New"
-msgstr ""
+msgstr "&New"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:159
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:159
 msgid "Create a new file"
-msgstr ""
+msgstr "Create a new file"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:163
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:163
 msgid "&Open..."
-msgstr ""
+msgstr "&Open..."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:165
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:165
 msgid "Open an existing file"
-msgstr ""
+msgstr "Open an existing file"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:169
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:169
 msgid "&Save"
-msgstr ""
+msgstr "&Save"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:171
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:171
 msgid "Save the document to disk"
-msgstr ""
+msgstr "Save the document to disk"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:174
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:174
 msgid "Save &As..."
-msgstr ""
+msgstr "Save &As..."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:176
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:176
 msgid "Save the document under a new name"
-msgstr ""
+msgstr "Save the document under a new name"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:180
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:180
 msgid "E&xit"
-msgstr ""
+msgstr "E&xit"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:183
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:183
 msgid "Exit the application"
-msgstr ""
+msgstr "Exit the application"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:187
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:187
 msgid "Cu&t"
-msgstr ""
+msgstr "Cu&t"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:190
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:190
 msgid "Cut the current selection's contents to the clipboard"
-msgstr ""
+msgstr "Cut the current selection's contents to the clipboard"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:194
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:194
 msgid "&Copy"
-msgstr ""
+msgstr "&Copy"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:196
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:196
 msgid "Copy the current selection's contents to the clipboard"
-msgstr ""
+msgstr "Copy the current selection's contents to the clipboard"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:200
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:200
 msgid "&Paste"
-msgstr ""
+msgstr "&Paste"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:202
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:202
 msgid "Paste the clipboard's contents into the current selection"
-msgstr ""
+msgstr "Paste the clipboard's contents into the current selection"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:206
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:206
 msgid "&About"
-msgstr ""
+msgstr "&About"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:207
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:207
 msgid "Show the application's About box"
-msgstr ""
+msgstr "Show the application's About box"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:211
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:211
 msgid "About &Qt"
-msgstr ""
+msgstr "About &Qt"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:212
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:212
 msgid "Show the Qt library's About box"
-msgstr ""
+msgstr "Show the Qt library's About box"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:231
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:231
 msgid "&File"
-msgstr ""
+msgstr "&File"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:242
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:242
 msgid "&Edit"
-msgstr ""
+msgstr "&Edit"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:249
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:249
 msgid "&Help"
-msgstr ""
+msgstr "&Help"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:258
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:258
 msgid "File"
-msgstr ""
+msgstr "File"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:265
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:265
 msgid "Edit"
-msgstr ""
+msgstr "Edit"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
 msgid "Ready"
-msgstr ""
+msgstr "Ready"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:308
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:327
@@ -169,7 +171,7 @@ msgstr ""
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:327
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:354
 msgid "Application"
-msgstr ""
+msgstr "Application"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:309
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:309
@@ -177,6 +179,8 @@ msgid ""
 "The document has been modified.\n"
 "Do you want to save your changes?"
 msgstr ""
+"The document has been modified.\n"
+"Do you want to save your changes?"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:328
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:328
@@ -185,11 +189,13 @@ msgid ""
 "Cannot read file %1:\n"
 "%2."
 msgstr ""
+"Cannot read file %1:\n"
+"%2."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:344
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:344
 msgid "File loaded"
-msgstr ""
+msgstr "File loaded"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:355
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:355
@@ -198,11 +204,13 @@ msgid ""
 "Cannot write file %1:\n"
 "%2."
 msgstr ""
+"Cannot write file %1:\n"
+"%2."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:371
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:371
 msgid "File saved"
-msgstr ""
+msgstr "File saved"
 
 #: ../parts/ubuntu-filemanager-app/build/po/ubuntu-filemanager-app.desktop.in.in.h:1
 #: ../parts/ubuntu-filemanager-app/src/qbuild/po/ubuntu-filemanager-app.desktop.in.in.h:1
@@ -935,7 +943,7 @@ msgstr "Enter name for new file"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Save"
-msgstr ""
+msgstr "Save"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:376
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:376
@@ -1634,11 +1642,11 @@ msgstr "Set permissions error in "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1579
 msgid "Could not create trash info file"
-msgstr "Could not create Rubbish Bin info file"
+msgstr "Could not create trash info file"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1592
 msgid "Could not remove the trash info file"
-msgstr "Could not remove the Rubbish Bin info file"
+msgstr "Could not remove the trash info file"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1617
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1625
@@ -1655,7 +1663,7 @@ msgstr "There is no space to download"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
-msgstr "net tool not found, check Samba installation"
+msgstr "net tool not found, check samba installation"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "

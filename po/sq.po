@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-29 07:36+0000\n"
+"PO-Revision-Date: 2018-06-02 20:36+0000\n"
 "Last-Translator: Jeff <jeffi27@live.at>\n"
 "Language-Team: Albanian <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/sq/>\n"
@@ -62,7 +62,7 @@ msgstr "&Ruaj"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:171
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:171
 msgid "Save the document to disk"
-msgstr "Ruan skedarin në hard drive"
+msgstr "Ruan skedarin në diskun e ngurt"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:174
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:174
@@ -107,7 +107,7 @@ msgstr "Kopjo përzgjedhjen në kujtesën"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:200
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:200
 msgid "&Paste"
-msgstr "&Fut"
+msgstr "&Ngjit"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:202
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:202
@@ -329,7 +329,7 @@ msgstr "Hap me"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:114
 #: ../stage/usr/share/filemanager/qml/ui/SettingsSheet.qml:33
 msgid "Settings"
-msgstr "Konfigurimi"
+msgstr "Cilsimet"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:84
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:84
@@ -508,7 +508,7 @@ msgstr "fjalëkalimi"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr "Ok"
+msgstr "OK"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
@@ -624,7 +624,7 @@ msgstr "Për Skedar: %1"
 #: ../src/app/qml/ui/FileActionDialog.qml:35
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr "Hap"
+msgstr "Hape"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
@@ -910,7 +910,7 @@ msgstr "Krijo nje dosje"
 #: ../src/app/qml/ui/FolderListPage.qml:300
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:300
 msgid "Enter name for new folder"
-msgstr "Futni emrin për dosjen e re"
+msgstr "Shkruaj emrin për dosjen e re"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:319
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:319
@@ -954,7 +954,7 @@ msgstr "Ruaj"
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Select"
-msgstr "Zgjidhë"
+msgstr "Zgjidh"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:478
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:478
@@ -1602,7 +1602,7 @@ msgstr "Nuk mundi të krijojë lidhje"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:812
 msgid "Could not set permissions to dir"
-msgstr "Nuk mund të caktoja lejet për direktorinë"
+msgstr "Lejet e shtegut nuk mund të vendoseshin"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:826
 msgid "Could not open file"
@@ -1622,7 +1622,7 @@ msgstr "Nuk mund të hiqej dosja/skedari "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:936
 msgid "Could not move the directory/file "
-msgstr "Nuk mund të lëvizte dosjen/skedarin "
+msgstr "Nuk mund të zhvendos dosjen/skedarin "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1196
 msgid "Write error in "

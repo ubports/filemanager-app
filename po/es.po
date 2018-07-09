@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-30 08:31+0000\n"
-"Last-Translator: Francisco Molinero <paco@byasl.com>\n"
-"Language-Team: Spanish <https://translate.ubports.com/projects/ubports/"
-"filemanager-app/es/>\n"
+"PO-Revision-Date: 2018-07-03 11:05+0000\n"
+"Last-Translator: advocatux <advocatux@airpost.net>\n"
+"Language-Team: Spanish <https://translate.ubports.com/projects/ubports"
+"/filemanager-app/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,9 +31,9 @@ msgid ""
 "The <b>Application</b> example demonstrates how to write modern GUI "
 "applications using Qt, with a menu bar, toolbars, and a status bar."
 msgstr ""
-"El ejemplo <b>Aplicación</b> muestra como escribir aplicaciones gráficas "
-"modernas usando Qt, con una barra de menú, barras de herramientas y una "
-"barra de estado."
+"El ejemplo de la <b>Aplicación</b> muestra como escribir aplicaciones "
+"gráficas modernas usando Qt, con una barra de menú, barras de herramientas y "
+"una barra de estado."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
@@ -123,7 +123,7 @@ msgstr "&Acerca de"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:207
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:207
 msgid "Show the application's About box"
-msgstr "Mostrar el cuadro de diálogo Acerca de de la aplicación"
+msgstr "Mostrar el cuadro de diálogo «Acerca de» de la aplicación"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:211
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:211
@@ -133,7 +133,7 @@ msgstr "Acerca de &Qt"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:212
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:212
 msgid "Show the Qt library's About box"
-msgstr "Mostrar el cuadro de diálogo Acerca de de la biblioteca Qt"
+msgstr "Mostrar el cuadro de diálogo «Acerca de» de la biblioteca Qt"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:231
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:231
@@ -340,7 +340,7 @@ msgstr "Configuración"
 #: ../qbuild/src/app/qml/filemanager.qml:84 ../src/app/qml/filemanager.qml:84
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:84
 msgid "Change app settings"
-msgstr "Cambiar opciones de aplicación"
+msgstr "Cambiar opciones de la aplicación"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:299
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:418
@@ -702,7 +702,7 @@ msgstr "Tamaño:"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:116
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:116
 msgid "Accessed:"
-msgstr "Accedido el:"
+msgstr "Accedido:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:125
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:125
@@ -713,7 +713,7 @@ msgstr "Accedido el:"
 #: ../src/app/qml/ui/FileDetailsPopover.qml:125
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:125
 msgid "Modified:"
-msgstr "Modificado el:"
+msgstr "Modificado:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:134
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:134
@@ -782,7 +782,7 @@ msgstr "Pegar archivos"
 #: ../src/app/qml/ui/FolderListPage.qml:75
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:75
 msgid "Clear clipboard"
-msgstr "Vaciar portapapeles"
+msgstr "Vaciar el portapapeles"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:85
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:104
@@ -842,7 +842,7 @@ msgstr "Ir a"
 #: ../src/app/qml/ui/FolderListPage.qml:129
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:129
 msgid "Unlock full access"
-msgstr "Desbloquear acceso completo"
+msgstr "Desbloquear el acceso completo"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:143
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:143
@@ -997,7 +997,7 @@ msgstr "Eliminar"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:499
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "¿Quiere eliminar '%1' permanentemente?"
+msgstr "¿Quiere eliminar «%1» permanentemente?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:504
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:504
@@ -1083,7 +1083,7 @@ msgstr "Extraer archivo"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:552
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr "¿Confirma que quiere extraer '%1' aquí?"
+msgstr "¿Confirma que quiere extraer «%1» aquí?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:584
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:584
@@ -1157,7 +1157,7 @@ msgstr "Error de operación de archivo"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:705
 #, qt-format
 msgid "Extracting archive '%1'"
-msgstr "Extrayendo archivo '%1'"
+msgstr "Extrayendo archivo «%1»"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:741
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:741
@@ -1180,7 +1180,7 @@ msgstr "Falló la extracción"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:742
 #, qt-format
 msgid "Extracting the archive '%1' failed."
-msgstr "Falló la extracción del archivo '%1'."
+msgstr "Falló la extracción del archivo «%1»."
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:756
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:756
@@ -1268,7 +1268,7 @@ msgstr "~/Plantillas"
 #: ../src/app/qml/ui/FolderListPage.qml:890
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:890
 msgid "Home"
-msgstr "Casa"
+msgstr "Inicio"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:894
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:894
@@ -1604,7 +1604,7 @@ msgstr "No se pudo crear el enlace a"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:812
 msgid "Could not set permissions to dir"
-msgstr "No se pudieron establecer los permisos de la carpeta"
+msgstr "No se pudieron establecer los permisos al directorio"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:826
 msgid "Could not open file"
@@ -1624,7 +1624,7 @@ msgstr "No se pudo eliminar el archivo/directorio "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:936
 msgid "Could not move the directory/file "
-msgstr "No se pudo mover el archivo o carpeta "
+msgstr "No se pudo mover el archivo/directorio "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1196
 msgid "Write error in "

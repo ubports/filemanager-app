@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-04-26 21:28+0000\n"
+"PO-Revision-Date: 2018-07-05 16:14+0000\n"
 "Last-Translator: Adrià <adriamartinmor@gmail.com>\n"
 "Language-Team: Sardinian <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/sc/>\n"
@@ -781,7 +781,7 @@ msgstr "Incolla archìvios"
 #: ../src/app/qml/ui/FolderListPage.qml:75
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:75
 msgid "Clear clipboard"
-msgstr "Isbòida sa punta de billete"
+msgstr "Lìmpia sa punta de billete"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:85
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:104
@@ -1070,7 +1070,7 @@ msgstr "No tenes permissos o su nùmene esistet giai."
 #: ../src/app/qml/ui/FolderListPage.qml:551
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:551
 msgid "Extract Archive"
-msgstr "Boga·nde s'archìviu "
+msgstr "Boga·nde s'archìviu"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:552
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:552
@@ -1082,7 +1082,7 @@ msgstr "Boga·nde s'archìviu "
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:552
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr "Seguru chi boles bogare '%1' inoghe? "
+msgstr "Seguru chi nde boles bogare '%1' inoghe?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:584
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:584
@@ -1134,7 +1134,7 @@ msgstr "Cumpartzi"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:643
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:764
 msgid "Extract archive"
-msgstr ""
+msgstr "Boga·nde s'archìviu"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:674
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:674
@@ -1144,7 +1144,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:674
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:674
 msgid "File operation error"
-msgstr ""
+msgstr "B'est istada una faddina in un'operatzione de archìviu"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:705
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:705
@@ -1156,7 +1156,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:705
 #, qt-format
 msgid "Extracting archive '%1'"
-msgstr ""
+msgstr "Boghende s'archìviu '%1'"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:741
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:741
@@ -1167,7 +1167,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:741
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:741
 msgid "Extracting failed"
-msgstr ""
+msgstr "No s'est pòdidu bogare"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:742
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:742
@@ -1179,7 +1179,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:742
 #, qt-format
 msgid "Extracting the archive '%1' failed."
-msgstr ""
+msgstr "No s'est pòdidu bogare s'archìviu '%1'."
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:756
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:756
@@ -1190,7 +1190,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:756
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:756
 msgid "Archive file"
-msgstr "Archìviu "
+msgstr "Archìviu"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:757
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:757
@@ -1201,7 +1201,7 @@ msgstr "Archìviu "
 #: ../src/app/qml/ui/FolderListPage.qml:757
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:757
 msgid "Do you want to extract the archive here?"
-msgstr ""
+msgstr "Nde boles bogare s'archiviu inoghe?"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:774
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:774
@@ -1223,7 +1223,7 @@ msgstr "Aberi cun un'àtera aplicatzione"
 #: ../src/app/qml/ui/FolderListPage.qml:858
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:858
 msgid "~/Desktop"
-msgstr "~/Iscrivania "
+msgstr "~/Iscrivania"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:868
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:868
@@ -1233,9 +1233,8 @@ msgstr "~/Iscrivania "
 #: ../qbuild/src/app/qml/ui/FolderListPage.qml:868
 #: ../src/app/qml/ui/FolderListPage.qml:868
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:868
-#, fuzzy
 msgid "~/Public"
-msgstr "~/Public"
+msgstr "~/Pùblicu"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:870
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:870
@@ -1246,7 +1245,7 @@ msgstr "~/Public"
 #: ../src/app/qml/ui/FolderListPage.qml:870
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:870
 msgid "~/Programs"
-msgstr "~/Programmas "
+msgstr "~/Programmas"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:872
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:872
@@ -1325,7 +1324,7 @@ msgstr "Bae a sa positzione"
 #: ../src/app/qml/ui/GoToDialog.qml:28
 #: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:28
 msgid "Enter a location to go to:"
-msgstr ""
+msgstr "Inserta sa positzione in ue boles andare:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/GoToDialog.qml:45
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/PlacesPage.qml:65
@@ -1388,7 +1387,7 @@ msgstr "Bae"
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:55
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr "Utente "
+msgstr "Utente"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:66
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:66
@@ -1454,7 +1453,7 @@ msgstr "Ammustra archìvios cuados"
 #: ../src/app/qml/ui/ViewPopover.qml:59
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:59
 msgid "View As"
-msgstr "Visualiza comente "
+msgstr "Visualiza comente"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:81
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:81
@@ -1465,7 +1464,7 @@ msgstr "Visualiza comente "
 #: ../src/app/qml/ui/ViewPopover.qml:81
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:81
 msgid "Sort By"
-msgstr "Òrdina pro "
+msgstr "Òrdina pro"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:92
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:92
@@ -1498,7 +1497,7 @@ msgstr "Data"
 #: ../src/app/qml/ui/ViewPopover.qml:103
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:103
 msgid "Sort Order"
-msgstr "Ordinamentu "
+msgstr "Ordinamentu"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:114
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:119
@@ -1516,7 +1515,7 @@ msgstr "Ordinamentu "
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:114
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:119
 msgid "Ascending"
-msgstr ""
+msgstr "Ascendente"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:115
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:115
@@ -1527,7 +1526,7 @@ msgstr ""
 #: ../src/app/qml/ui/ViewPopover.qml:115
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:115
 msgid "Descending"
-msgstr ""
+msgstr "Discendente"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:127
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:127
@@ -1546,7 +1545,7 @@ msgstr "Disconnotu"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
-msgstr "Su percursu o s'url no esistint o no si podent lìgere"
+msgstr "Su percursu o s'url no esistet o non si podet lèghere"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:682
 msgid "Rename error"
@@ -1562,15 +1561,15 @@ msgstr "cuntenutos"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:327
 msgid "File or Directory does not exist"
-msgstr "Archìviu o directory chi no esistit"
+msgstr "S'archìviu o sa cartella no esistit"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:328
 msgid " does not exist"
-msgstr "no esistit"
+msgstr " no esistit"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr "No si podet intrare in s'archìviu o directory"
+msgstr "Non si podet intrare in s'archìviu o in sa cartella"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
@@ -1583,11 +1582,11 @@ msgstr "No si podent copiare/mòvere cuntenutos"
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
 msgid "no write permission on folder "
-msgstr ""
+msgstr "Non bi sunt permissos de iscritura in sa cartella "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:692
 msgid "Could not remove the item "
-msgstr ""
+msgstr "Non s'est pòdidu fuliare s'elementu "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:733
 msgid "Could not find a suitable name to backup"
@@ -1595,15 +1594,15 @@ msgstr "Non s'agatat unu nùmene adeguadu pro sa còpia de seguresa"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:791
 msgid "Could not create the directory"
-msgstr ""
+msgstr "Non s'est pòdida creare sa cartella"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:800
 msgid "Could not create link to"
-msgstr ""
+msgstr "Non s'est pòdidu creare su ligàmene a"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:812
 msgid "Could not set permissions to dir"
-msgstr ""
+msgstr "Non si sunt pòdidos impostare is permissos pro sa cartella"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:826
 msgid "Could not open file"
@@ -1611,23 +1610,23 @@ msgstr "Non si podet abèrrere s'archìviu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr "No b'at ispàtziu pro copiare"
+msgstr "No b'est ispàtziu pro copiare"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
-msgstr ""
+msgstr "Non s'est pòdidu creare s'archìviu"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:920
 msgid "Could not remove the directory/file "
-msgstr ""
+msgstr "Non s'est pòdidu fuliare s'archìviu/sa cartella "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:936
 msgid "Could not move the directory/file "
-msgstr ""
+msgstr "Non s'est pòdida mòvere sa cartella/archìviu "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1196
 msgid "Write error in "
-msgstr "Faddina de iscritura in"
+msgstr "Faddina de iscritura in "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1212
 msgid "Read error in "
@@ -1635,24 +1634,24 @@ msgstr "Faddina de letura in "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1450
 msgid " Copy"
-msgstr "Copia"
+msgstr " Còpia"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1510
 msgid "Set permissions error in "
-msgstr ""
+msgstr "Cunfigura sa faddina de permissos in "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1579
 msgid "Could not create trash info file"
-msgstr ""
+msgstr "Non s'est pòdidu creare s'archìviu de informatziones de s'àliga"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1592
 msgid "Could not remove the trash info file"
-msgstr ""
+msgstr "Non s'est pòdidu fuliare s'archìviu de informatziones de s'àliga"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1617
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1625
 msgid "Cannot move items"
-msgstr ""
+msgstr "Non si podent mòvere is elementos"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1619
 msgid "origin and destination folders are the same"
@@ -1660,11 +1659,11 @@ msgstr "is cartellas de orìgine e destinatzione sunt is matessi"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr ""
+msgstr "Non b'est ispàtziu pro iscarrigare"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"
-msgstr ""
+msgstr "non s'est agatada s'aina de rete, controlla s'installatzione de samba"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
 msgid "cannot write in "

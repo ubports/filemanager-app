@@ -8,17 +8,18 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2014-10-28 14:30+0000\n"
-"Last-Translator: Damir Jerovšek <Unknown>\n"
-"Language-Team: Slovenian <sl@li.org>\n"
+"PO-Revision-Date: 2018-05-12 19:46+0000\n"
+"Last-Translator: Kristijan Tkalec <kristijan.tkalec@biotehna.org>\n"
+"Language-Team: Slovenian <https://translate.ubports.com/projects/ubports"
+"/filemanager-app/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 2.15\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
-"X-Generator: Launchpad (build 18343)\n"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:138
@@ -499,8 +500,9 @@ msgstr "geslo"
 #: ../stage/usr/share/filemanager/qml/ui/ConfirmDialogWithInput.qml:49
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
+#, fuzzy
 msgid "OK"
-msgstr ""
+msgstr "V redu"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41

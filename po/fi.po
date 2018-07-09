@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-09-07 11:27+0000\n"
-"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
-"Language-Team: Finnish <https://ubpweblate.tnvcomp.com/projects/ubports/"
-"filemanager-app/fi/>\n"
+"PO-Revision-Date: 2018-05-14 12:12+0000\n"
+"Last-Translator: Veli-Matti Rautiainen <velraut@gmail.com>\n"
+"Language-Team: Finnish <https://translate.ubports.com/projects/ubports"
+"/filemanager-app/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -506,7 +506,7 @@ msgstr "salasana"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr "OK"
+msgstr "Selvä"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
@@ -588,7 +588,7 @@ msgstr "OK"
 #: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:67
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:108
 msgid "Cancel"
-msgstr "Peru"
+msgstr "Peruuta"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:30
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:30

@@ -2,13 +2,12 @@
 # Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
 # This file is distributed under the same license as the ubuntu-filemanager-app package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-02-24 07:13+0000\n"
+"PO-Revision-Date: 2018-06-28 15:26+0800\n"
 "Last-Translator: Luo Yufan <njlyf2011@hotmail.com>\n"
 "Language-Team: Chinese (Simplified) "
 "<https://translate.ubports.com/projects/ubports/filemanager-app/zh_Hans/>\n"
@@ -17,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.15\n"
+"X-Generator: Poedit 2.0.8\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
@@ -30,7 +29,7 @@ msgstr "关于此应用"
 msgid ""
 "The <b>Application</b> example demonstrates how to write modern GUI "
 "applications using Qt, with a menu bar, toolbars, and a status bar."
-msgstr ""
+msgstr "这个<b>应用</b>示例演示了如何使用 Qt 编写现代 GUI 应用程序，包括菜单栏、工具栏和状态栏。"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
@@ -110,7 +109,7 @@ msgstr "粘贴(&P)"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:202
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:202
 msgid "Paste the clipboard's contents into the current selection"
-msgstr ""
+msgstr "从剪贴板中粘贴内容到当前选区"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:206
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:206
@@ -160,7 +159,7 @@ msgstr "编辑"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
 msgid "Ready"
-msgstr ""
+msgstr "准备就绪"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:308
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:327
@@ -200,11 +199,13 @@ msgid ""
 "Cannot write file %1:\n"
 "%2."
 msgstr ""
+"无法写入文件 %1：\n"
+"%2。"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:371
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:371
 msgid "File saved"
-msgstr ""
+msgstr "文件已保存"
 
 #: ../parts/ubuntu-filemanager-app/build/po/ubuntu-filemanager-app.desktop.in.in.h:1
 #: ../parts/ubuntu-filemanager-app/src/qbuild/po/ubuntu-filemanager-app.desktop.in.in.h:1
@@ -395,7 +396,7 @@ msgstr "列表"
 #: ../stage/usr/share/filemanager/qml/filemanager.qml:328
 #, qt-format
 msgid "File %1"
-msgstr ""
+msgstr "文件 %1"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:328
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:328
@@ -1378,7 +1379,7 @@ msgstr "前往"
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:55
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:55
 msgid "User"
-msgstr ""
+msgstr "用户"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:66
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:66
@@ -1400,7 +1401,7 @@ msgstr "密码"
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:79
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:79
 msgid "Save password"
-msgstr ""
+msgstr "保存密码"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
@@ -1560,15 +1561,15 @@ msgstr " 不存在"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:334
 msgid "Cannot access File or Directory"
-msgstr ""
+msgstr "无法访问文件或文件夹"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:335
 msgid " it needs Authentication"
-msgstr ""
+msgstr " 它需要进行认证"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:366
 msgid "Cannot copy/move items"
-msgstr ""
+msgstr "无法复制、移动项目"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:367
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1626
@@ -1601,7 +1602,7 @@ msgstr "无法打开文件"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:845
 msgid "There is no space to copy"
-msgstr ""
+msgstr "没有空间可供复制"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:855
 msgid "Could not create file"
@@ -1650,7 +1651,7 @@ msgstr "源文件夹和目标文件夹相同"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1663
 msgid "There is no space to download"
-msgstr ""
+msgstr "没有空间可供下载"
 
 #: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
 msgid "net tool not found, check samba installation"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2017-12-25 21:02+0000\n"
+"PO-Revision-Date: 2018-05-13 20:51+0000\n"
 "Last-Translator: Samson <sambelet@yahoo.com>\n"
 "Language-Team: Amharic <https://translate.ubports.com/projects/ubports"
 "/filemanager-app/am/>\n"
@@ -329,7 +329,7 @@ msgstr "መክፈቻ በ"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:114
 #: ../stage/usr/share/filemanager/qml/ui/SettingsSheet.qml:33
 msgid "Settings"
-msgstr "ማሰናጃዎች"
+msgstr "ማሰናጃ"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:84
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/filemanager.qml:84
