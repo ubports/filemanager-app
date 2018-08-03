@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-06-28 15:26+0800\n"
-"Last-Translator: Luo Yufan <njlyf2011@hotmail.com>\n"
-"Language-Team: Chinese (Simplified) "
-"<https://translate.ubports.com/projects/ubports/filemanager-app/zh_Hans/>\n"
+"PO-Revision-Date: 2018-08-05 00:00+0000\n"
+"Last-Translator: joseph <joseph@liau.ca>\n"
+"Language-Team: Chinese (Simplified) <https://translate.ubports.com/projects/"
+"ubports/filemanager-app/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Weblate 2.20\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
@@ -1259,7 +1259,7 @@ msgstr "~/模版"
 #: ../src/app/qml/ui/FolderListPage.qml:890
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:890
 msgid "Home"
-msgstr "主页"
+msgstr "首页"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:894
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:894
