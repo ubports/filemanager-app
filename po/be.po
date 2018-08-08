@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-07-21 11:29+0000\n"
+"PO-Revision-Date: 2018-08-12 06:20+0000\n"
 "Last-Translator: ierihon <idekovets@mail.ru>\n"
-"Language-Team: Belarusian <https://translate.ubports.com/projects/ubports"
-"/filemanager-app/be/>\n"
+"Language-Team: Belarusian <https://translate.ubports.com/projects/ubports/"
+"filemanager-app/be/>\n"
 "Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
 "4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.17\n"
+"X-Generator: Weblate 2.20\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
@@ -502,7 +502,7 @@ msgstr "Пароль"
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:726
 #: ../stage/usr/share/filemanager/qml/ui/NotifyDialog.qml:25
 msgid "OK"
-msgstr "Добра"
+msgstr "ОК"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:61
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:41
@@ -1274,7 +1274,7 @@ msgstr "Хатоўка"
 #: ../src/app/qml/ui/FolderListPage.qml:894
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:894
 msgid "Network"
-msgstr ""
+msgstr "Сетка"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:996
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:996
@@ -1416,7 +1416,7 @@ msgstr ""
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
-msgstr "Добра"
+msgstr "ОК"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/SettingsSheet.qml:45
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
@@ -1482,7 +1482,7 @@ msgstr "Назве"
 #: ../src/app/qml/ui/ViewPopover.qml:93
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:93
 msgid "Date"
-msgstr "Часу"
+msgstr "Дата"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:103
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:103
@@ -1537,7 +1537,7 @@ msgstr "Фільтар"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr "Невядомы"
+msgstr "Невядома"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
