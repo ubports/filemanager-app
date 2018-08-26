@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-08-26 00:00+0000\n"
+"PO-Revision-Date: 2018-09-01 19:36+0000\n"
 "Last-Translator: Øjvind Fritjof Arnfred <fritjofarnfred@protonmail.com>\n"
 "Language-Team: Danish <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/da/>\n"
@@ -582,7 +582,7 @@ msgstr "OK"
 #: ../stage/usr/share/filemanager/qml/ui/GoToDialog.qml:67
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:108
 msgid "Cancel"
-msgstr "Annullér"
+msgstr "Annuller"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:30
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:30
@@ -1270,7 +1270,7 @@ msgstr "Hjem"
 #: ../src/app/qml/ui/FolderListPage.qml:894
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:894
 msgid "Network"
-msgstr ""
+msgstr "Netværk"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:996
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:996
@@ -1467,7 +1467,7 @@ msgstr ""
 #: ../src/app/qml/ui/ViewPopover.qml:92
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:92
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ViewPopover.qml:93
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/ViewPopover.qml:93
