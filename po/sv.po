@@ -8,22 +8,22 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-05-25 00:21+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
-"Language-Team: Swedish <https://translate.ubports.com/projects/ubports"
-"/filemanager-app/sv/>\n"
+"PO-Revision-Date: 2018-09-02 17:28+0000\n"
+"Last-Translator: Rondy Andersson <rondarius@gmail.com>\n"
+"Language-Team: Swedish <https://translate.ubports.com/projects/ubports/"
+"filemanager-app/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.15\n"
+"X-Generator: Weblate 2.20\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:138
 msgid "About Application"
-msgstr ""
+msgstr "Om applikationen"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:139
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:139
@@ -31,6 +31,9 @@ msgid ""
 "The <b>Application</b> example demonstrates how to write modern GUI "
 "applications using Qt, with a menu bar, toolbars, and a status bar."
 msgstr ""
+"<b>Applikationen/b> exemplet demonstrerar hur man skriver moderna GUI "
+"applikationer när man använder Qt, med en menyrad, verktygsrad, och en "
+"statusrad."
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:157
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:157
