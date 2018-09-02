@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-09-02 18:13+0000\n"
+"PO-Revision-Date: 2018-09-09 01:00+0000\n"
 "Last-Translator: Rondy Andersson <rondarius@gmail.com>\n"
 "Language-Team: Swedish <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/sv/>\n"
@@ -460,7 +460,7 @@ msgstr "Autentisering krävs"
 #: ../src/app/qml/ui/AuthenticationDialog.qml:27
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:27
 msgid "Password is required to access all files"
-msgstr "Lösenord krävs för åtkomst till alla fier"
+msgstr "Lösenord krävs för åtkomst till alla filer"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:39
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
@@ -471,7 +471,7 @@ msgstr "Lösenord krävs för åtkomst till alla fier"
 #: ../src/app/qml/ui/AuthenticationDialog.qml:39
 #: ../stage/usr/share/filemanager/qml/ui/AuthenticationDialog.qml:39
 msgid "password"
-msgstr ""
+msgstr "lösenord"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/AuthenticationDialog.qml:49
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/ConfirmDialog.qml:31
@@ -607,7 +607,7 @@ msgstr "Avbryt"
 #: ../src/app/qml/ui/FileActionDialog.qml:30
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:30
 msgid "Choose action"
-msgstr ""
+msgstr "Välj åtgärd"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:31
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:31
@@ -619,7 +619,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:31
 #, qt-format
 msgid "For file: %1"
-msgstr ""
+msgstr "För fil: %1"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileActionDialog.qml:35
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
@@ -630,7 +630,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileActionDialog.qml:35
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "Öppna"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
@@ -641,7 +641,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
 msgid "Readable"
-msgstr ""
+msgstr "Läsbar"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:40
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:40
@@ -652,7 +652,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileDetailsPopover.qml:40
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:40
 msgid "Writable"
-msgstr ""
+msgstr "Skrivbar"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:43
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:43
@@ -663,7 +663,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileDetailsPopover.qml:43
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:43
 msgid "Executable"
-msgstr ""
+msgstr "Körbar"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:95
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:95
@@ -674,7 +674,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileDetailsPopover.qml:95
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:95
 msgid "Path:"
-msgstr ""
+msgstr "Sökväg:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:106
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:106
@@ -685,7 +685,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileDetailsPopover.qml:106
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:106
 msgid "Contents:"
-msgstr ""
+msgstr "Innehåll:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:107
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:107
@@ -696,7 +696,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileDetailsPopover.qml:107
 #: ../stage/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:107
 msgid "Size:"
-msgstr ""
+msgstr "Storlek:"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:116
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:116
@@ -949,7 +949,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:376
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:376
 msgid "Save"
-msgstr ""
+msgstr "Spara"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:376
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:376
@@ -990,7 +990,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:498
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:607
 msgid "Delete"
-msgstr ""
+msgstr "Ta bort"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:499
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:499
@@ -1110,7 +1110,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:595
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:595
 msgid "Copy"
-msgstr ""
+msgstr "Kopiera"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:634
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:634
@@ -1121,7 +1121,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:634
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:634
 msgid "Share"
-msgstr ""
+msgstr "Dela"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:643
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:764
@@ -1273,7 +1273,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:890
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:890
 msgid "Home"
-msgstr ""
+msgstr "Hem"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:894
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:894
