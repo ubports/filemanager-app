@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-09-01 19:36+0000\n"
+"PO-Revision-Date: 2018-09-09 01:00+0000\n"
 "Last-Translator: ArashiHino <hinoaras.hi82@gmail.com>\n"
 "Language-Team: Japanese <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/ja/>\n"
@@ -155,7 +155,7 @@ msgstr "ファイル"
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:265
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:265
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:276
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:276
@@ -976,7 +976,7 @@ msgstr ""
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:498
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:607
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:499
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:499
@@ -1096,7 +1096,7 @@ msgstr ""
 #: ../src/app/qml/ui/FolderListPage.qml:595
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:595
 msgid "Copy"
-msgstr ""
+msgstr "コピー"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:634
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:634
