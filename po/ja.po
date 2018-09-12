@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-09-09 01:00+0000\n"
+"PO-Revision-Date: 2018-10-07 09:15+0000\n"
 "Last-Translator: ArashiHino <hinoaras.hi82@gmail.com>\n"
 "Language-Team: Japanese <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/ja/>\n"
@@ -616,7 +616,7 @@ msgstr ""
 #: ../src/app/qml/ui/FileActionDialog.qml:35
 #: ../stage/usr/share/filemanager/qml/ui/FileActionDialog.qml:35
 msgid "Open"
-msgstr ""
+msgstr "開く"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FileDetailsPopover.qml:37
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FileDetailsPopover.qml:37
@@ -1412,7 +1412,7 @@ msgstr ""
 #: ../src/app/qml/ui/NetAuthenticationDialog.qml:98
 #: ../stage/usr/share/filemanager/qml/ui/NetAuthenticationDialog.qml:98
 msgid "Ok"
-msgstr ""
+msgstr "完了"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/SettingsSheet.qml:45
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/SettingsSheet.qml:45
