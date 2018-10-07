@@ -1,6 +1,19 @@
-Building the app
-================
+# Using clickable
+To build and run the app on the desktop run:
 
+```
+clickable desktop
+```
+To build a click package for the device run:
+
+```
+clickable
+```
+
+See [clickable documentation](http://clickable.bhdouglass.com/en/latest/) for details.
+
+# Without clickable
+## Building the app
 ### For the desktop
 
 Install the following build dependencies:
@@ -48,8 +61,7 @@ Ensure you've selected the kit you want for your build and press the build
 button on Qt Creator's left sidebar (or alternatively Ctrl+B).
 
 
-Running the app
-===============
+## Running the app
 
 ### On the desktop
 
@@ -84,8 +96,7 @@ If you're starting the app on a device, the build will be copied over and the
 code will run unconfined.
 
 
-Building a click package
-========================
+## Building a click package
 
 There are two alternative ways of building a click package.
 
@@ -112,11 +123,11 @@ Notes:
 3. Once finished, click-buddy will tell you the location of your source package
 
 
-Installing a click package
-==========================
+# Installing a click package
 
 First of all, ensure you've got a working Ubuntu device attached over USB to
-your host computer
+your host computer. Besides installing via clickable, OpenStore, UT Tweak
+Tool, you may use one of the following methods.
 
 ### Manually
 
@@ -140,8 +151,7 @@ click package on the device.
 3. You'll find the runtime logs at ~/.cache/upstart/application-click/
 
 
-Uninstalling a click package
-============================
+# Uninstalling a click package
 
 Run the following commands, replacing the version of the click package you want
 to uninstall:
