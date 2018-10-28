@@ -111,10 +111,10 @@ MainView {
         var fileNames = []
         for(var i=0; i < activeTransfer.items.length; i++) {
             var item = activeTransfer.items[i]
-            var uniqueName = FmUtils.newFileUniqueName(destDir, FmUtils.basename(String(item.url)))
-            console.log("Move file to:" + destDir + " with name: " + uniqueName)
-            activeTransfer.items[i].move(destDir, uniqueName)
-            fileNames.push(uniqueName)
+            var destFilename = FmUtils.basename(String(item.url))
+            console.log("Move file to:" + destDir + " with name: " + destFilename)
+            activeTransfer.items[i].move(destDir, destFilename)
+            fileNames.push(destFilename)
         }
         finishImport(destDir, fileNames)
     }
