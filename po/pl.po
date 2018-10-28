@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-10-28 18:05+0000\n"
+"PO-Revision-Date: 2018-10-28 18:07+0000\n"
 "Last-Translator: Daniel Frańczak <danielfranczak5@wp.pl>\n"
 "Language-Team: Polish <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/pl/>\n"
@@ -74,7 +74,7 @@ msgstr "Przejdź do"
 
 #: ../src/app/qml/actions/NewItem.qml:6
 msgid "New Item"
-msgstr "Nowa pozycja"
+msgstr "Nowy element"
 
 #: ../src/app/qml/actions/PlacesBookmarks.qml:6
 #: ../src/app/qml/ui/PlacesPage.qml:16
@@ -254,7 +254,7 @@ msgstr "Podaj nową nazwę"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:13
 msgid "Create Item"
-msgstr "Utwórz pozycję"
+msgstr "Utwórz element"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:14
 msgid "Enter name for new item"
