@@ -167,7 +167,7 @@ MainView {
         pageStack.currentPage.refresh()
 
         var props = {
-            title: (count === 1 ? i18n.tr("File %1").arg(urls[0]) : i18n.tr("%1 Files").arg(count)),
+            title: (count === 1 ? i18n.tr("%1 file").arg(urls[0]) : i18n.tr("%1 files").arg(count)),
             text: i18n.tr("Saved to: %1").arg(folder)
         }
 
