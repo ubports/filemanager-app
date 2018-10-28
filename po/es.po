@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
 "PO-Revision-Date: 2018-10-28 19:15+0000\n"
-"Last-Translator: Sergio Reyes <vincentshergio@gmail.com>\n"
+"Last-Translator: advocatux <advocatux@airpost.net>\n"
 "Language-Team: Spanish <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/es/>\n"
 "Language: es\n"
@@ -52,7 +52,7 @@ msgid "Cut"
 msgstr "Cortar"
 
 #: ../src/app/qml/actions/FilePaste.qml:30
-#, fuzzy, qt-format
+#, qt-format
 msgid "Paste %1 file"
 msgid_plural "Paste %1 files"
 msgstr[0] "Pegar %1 archivo"
@@ -72,7 +72,7 @@ msgstr "Ir a"
 
 #: ../src/app/qml/actions/NewItem.qml:6
 msgid "New Item"
-msgstr ""
+msgstr "Nuevo elemento"
 
 #: ../src/app/qml/actions/PlacesBookmarks.qml:6
 #: ../src/app/qml/ui/PlacesPage.qml:16
@@ -95,9 +95,8 @@ msgid "Select"
 msgstr "Seleccionar"
 
 #: ../src/app/qml/actions/SelectUnselectAll.qml:6
-#, fuzzy
 msgid "Select None"
-msgstr "Seleccionar"
+msgstr "No seleccionar nada"
 
 #: ../src/app/qml/actions/SelectUnselectAll.qml:6
 msgid "Select All"
@@ -135,12 +134,12 @@ msgstr "Se necesita autenticación"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:27
 msgid "Use your fingerprint to access restricted content"
-msgstr ""
+msgstr "Use su huella digital para acceder al contenido restringido"
 
 #. TRANSLATORS: "Touch" here is a verb
 #: ../src/app/qml/authentication/FingerprintDialog.qml:55
 msgid "Touch sensor"
-msgstr ""
+msgstr "Sensor táctil"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:60
 msgid "Use password"
@@ -164,9 +163,8 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:126
-#, fuzzy
 msgid "Authentication failed!"
-msgstr "Falló la autenticación"
+msgstr "¡Falló la autenticación!"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:137
 msgid "Please retry"
@@ -181,9 +179,8 @@ msgid "Your passphrase is required to access restricted content"
 msgstr "Se necesita contraseña para acceder al contenido restringido"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:46
-#, fuzzy
 msgid "Your passcode is required to access restricted content"
-msgstr "Se necesita contraseña para acceder a todos los archivos"
+msgstr "Se necesita un código para acceder al contenido restringido"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passphrase (default is 0000 if unset)"
