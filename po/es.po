@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-10-28 19:31+0000\n"
-"Last-Translator: advocatux <advocatux@airpost.net>\n"
+"PO-Revision-Date: 2018-10-28 19:36+0000\n"
+"Last-Translator: Sergio Reyes <vincentshergio@gmail.com>\n"
 "Language-Team: Spanish <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/es/>\n"
 "Language: es\n"
@@ -72,7 +72,7 @@ msgstr "Ir a"
 
 #: ../src/app/qml/actions/NewItem.qml:6
 msgid "New Item"
-msgstr "Nuevo elemento"
+msgstr "Nuevo"
 
 #: ../src/app/qml/actions/PlacesBookmarks.qml:6
 #: ../src/app/qml/ui/PlacesPage.qml:16
