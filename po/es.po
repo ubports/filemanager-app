@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-10-28 19:36+0000\n"
-"Last-Translator: Sergio Reyes <vincentshergio@gmail.com>\n"
+"PO-Revision-Date: 2018-11-04 00:02+0000\n"
+"Last-Translator: advocatux <advocatux@airpost.net>\n"
 "Language-Team: Spanish <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/es/>\n"
 "Language: es\n"
@@ -60,11 +60,11 @@ msgstr[1] "Pegar %1 archivos"
 
 #: ../src/app/qml/actions/GoBack.qml:5
 msgid "Go back"
-msgstr "Ir atrás"
+msgstr "Volver"
 
 #: ../src/app/qml/actions/GoNext.qml:5
 msgid "Go next"
-msgstr "Siguiente"
+msgstr "Continuar"
 
 #: ../src/app/qml/actions/GoTo.qml:6
 msgid "Go To"
@@ -100,7 +100,7 @@ msgstr "No seleccionar nada"
 
 #: ../src/app/qml/actions/SelectUnselectAll.qml:6
 msgid "Select All"
-msgstr "Seleccionar todos"
+msgstr "Seleccionar todo"
 
 #: ../src/app/qml/actions/Settings.qml:6
 msgid "Settings"
@@ -134,7 +134,7 @@ msgstr "Se necesita autenticación"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:27
 msgid "Use your fingerprint to access restricted content"
-msgstr "Usa tu huella dactilar para acceder al contenido restringido"
+msgstr "Use su huella digital para acceder al contenido restringido"
 
 #. TRANSLATORS: "Touch" here is a verb
 #: ../src/app/qml/authentication/FingerprintDialog.qml:55
@@ -216,7 +216,7 @@ msgstr "Carpeta"
 #: ../src/app/qml/components/TextualButtonStyle.qml:56
 #: ../src/app/qml/components/TextualButtonStyle.qml:63
 msgid "Pick"
-msgstr "Coger"
+msgstr "Escoger"
 
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
@@ -256,7 +256,7 @@ msgstr "Crear elemento"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:14
 msgid "Enter name for new item"
-msgstr "Escriba el nombre del archivo nuevo"
+msgstr "Introducir un nombre para el nuevo elemento"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:18
 msgid "Item name"
@@ -351,7 +351,7 @@ msgstr "¿Qué desea hacer con el archivo seleccionado?"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:22
 msgid "Preview"
-msgstr "Previsualización"
+msgstr "Previsualizar"
 
 #: ../src/app/qml/filemanager.qml:170
 #, qt-format
