@@ -111,7 +111,8 @@ MainView {
         var fileNames = []
         for(var i=0; i < activeTransfer.items.length; i++) {
             var item = activeTransfer.items[i]
-            console.log("Move file to:" + destDir + " with name: " + FmUtils.basename(String(item.url)))
+            auto destFilename = FmUtils.basename(String(item.url));
+            console.log("Move file to:" + destDir + " with name: " + destFilename)
             activeTransfer.items[i].move(destDir, FmUtils.basename(String(item.url)))
             fileNames.push(uniqueName)
         }
