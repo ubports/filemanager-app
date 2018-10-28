@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-16 16:43-0300\n"
-"PO-Revision-Date: 2018-03-06 11:07+0000\n"
-"Last-Translator: P.-H. Lin <cypressyew@gmail.com>\n"
-"Language-Team: Chinese (Traditional) "
-"<https://translate.ubports.com/projects/ubports/filemanager-app/zh_Hant/>\n"
+"PO-Revision-Date: 2018-10-28 00:00+0000\n"
+"Last-Translator: Louies <louies0623@gmail.com>\n"
+"Language-Team: Chinese (Traditional) <https://translate.ubports.com/projects/"
+"ubports/filemanager-app/zh_Hant/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.15\n"
+"X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:138
@@ -39,6 +39,7 @@ msgstr "新增(&N)"
 
 #: ../parts/desktop-ubuntu-app-platform/build/demos/qt5/src/mainwindow.cpp:159
 #: ../parts/desktop-ubuntu-app-platform/src/demos/qt5/src/mainwindow.cpp:159
+#, fuzzy
 msgid "Create a new file"
 msgstr "建立新檔案"
 
@@ -300,7 +301,7 @@ msgstr "位置"
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 #: ../stage/usr/share/filemanager/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
-msgstr "以此開啟："
+msgstr "以此開啟"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/filemanager.qml:83
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:114
@@ -1261,9 +1262,8 @@ msgstr "~/模版"
 #: ../qbuild/src/app/qml/ui/FolderListPage.qml:890
 #: ../src/app/qml/ui/FolderListPage.qml:890
 #: ../stage/usr/share/filemanager/qml/ui/FolderListPage.qml:890
-#, fuzzy
 msgid "Home"
-msgstr "住家"
+msgstr "首頁"
 
 #: ../parts/ubuntu-filemanager-app/build/src/app/qml/ui/FolderListPage.qml:894
 #: ../parts/ubuntu-filemanager-app/install/usr/share/filemanager/qml/ui/FolderListPage.qml:894
@@ -1448,6 +1448,7 @@ msgstr "顯示隱藏檔"
 #: ../qbuild/src/app/qml/ui/ViewPopover.qml:59
 #: ../src/app/qml/ui/ViewPopover.qml:59
 #: ../stage/usr/share/filemanager/qml/ui/ViewPopover.qml:59
+#, fuzzy
 msgid "View As"
 msgstr "檢視為"
 
@@ -1537,7 +1538,7 @@ msgstr "篩選"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:376
 msgid "Unknown"
-msgstr "未知"
+msgstr "不明"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:491
 msgid "path or url may not exist or cannot be read"
@@ -1633,6 +1634,7 @@ msgid " Copy"
 msgstr " 複製"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:1510
+#, fuzzy
 msgid "Set permissions error in "
 msgstr "設定此項目權限時出錯： "
 
