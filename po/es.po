@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
 "PO-Revision-Date: 2018-10-28 19:36+0000\n"
-"Last-Translator: advocatux <advocatux@airpost.net>\n"
+"Last-Translator: Sergio Reyes <vincentshergio@gmail.com>\n"
 "Language-Team: Spanish <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/es/>\n"
 "Language: es\n"
@@ -134,7 +134,7 @@ msgstr "Se necesita autenticación"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:27
 msgid "Use your fingerprint to access restricted content"
-msgstr "Use su huella digital para acceder al contenido restringido"
+msgstr "Usa tu huella dactilar para acceder al contenido restringido"
 
 #. TRANSLATORS: "Touch" here is a verb
 #: ../src/app/qml/authentication/FingerprintDialog.qml:55
