@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-10-28 19:15+0000\n"
+"PO-Revision-Date: 2018-10-28 19:22+0000\n"
 "Last-Translator: advocatux <advocatux@airpost.net>\n"
 "Language-Team: Spanish <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/es/>\n"
@@ -184,24 +184,22 @@ msgstr "Se necesita un código para acceder al contenido restringido"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passphrase (default is 0000 if unset)"
-msgstr "contraseña (por defecto: 0000)"
+msgstr "contraseña (por defecto es 0000)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passcode (default is 0000 if unset)"
-msgstr ""
+msgstr "código (por defecto es 0000)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:69
-#, fuzzy
 msgid "Authentication failed. Please retry"
-msgstr "Falló la autenticación"
+msgstr "Falló la autenticación. Reintentar"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:74
-#, fuzzy
 msgid "Authenticate"
-msgstr "Falló la autenticación"
+msgstr "Autenticar"
 
 #: ../src/app/qml/backend/FolderListModel.qml:123
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 file"
 msgstr "%1 archivo"
 
@@ -253,25 +251,22 @@ msgid "Enter a new name"
 msgstr "Escriba el nombre nuevo"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:13
-#, fuzzy
 msgid "Create Item"
-msgstr "Crear archivo"
+msgstr "Crear elemento"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:14
 msgid "Enter name for new item"
 msgstr "Escriba el nombre del archivo nuevo"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:18
-#, fuzzy
 msgid "Item name"
-msgstr "Renombrar"
+msgstr "Nombre del elemento"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:24
 msgid "Create file"
 msgstr "Crear archivo"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:43
-#, fuzzy
 msgid "Create Folder"
 msgstr "Crear carpeta"
 
@@ -347,9 +342,8 @@ msgid "Open with another app"
 msgstr "Abrir con otra aplicación"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:8
-#, fuzzy
 msgid "Open file"
-msgstr "Abrir con"
+msgstr "Abrir archivo"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:9
 #, fuzzy
