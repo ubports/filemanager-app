@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
 "PO-Revision-Date: 2018-10-28 17:45+0000\n"
-"Last-Translator: Florian Leeber <flori@bin.org.in>\n"
+"Last-Translator: Bjarne Roß <ross.b@freenet.de>\n"
 "Language-Team: German <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/de/>\n"
 "Language: de\n"
@@ -199,7 +199,7 @@ msgid "Authenticate"
 msgstr "Authentifizieren"
 
 #: ../src/app/qml/backend/FolderListModel.qml:123
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 file"
 msgstr "%1 Datei"
 
@@ -251,26 +251,22 @@ msgid "Enter a new name"
 msgstr "Geben Sie einen neuen Namen ein"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:13
-#, fuzzy
 msgid "Create Item"
-msgstr "Datei erstellen"
+msgstr "Element erstellen"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:14
-#, fuzzy
 msgid "Enter name for new item"
-msgstr "Geben Sie einen Namen für die neue Datei ein"
+msgstr "Geben Sie einen Namen für das neue Element ein"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:18
-#, fuzzy
 msgid "Item name"
-msgstr "Umbenennen"
+msgstr "Elementname"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:24
 msgid "Create file"
 msgstr "Datei erstellen"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:43
-#, fuzzy
 msgid "Create Folder"
 msgstr "Ordner erstellen"
 
@@ -346,18 +342,16 @@ msgid "Open with another app"
 msgstr "Mit anderer Anwendung öffnen"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:8
-#, fuzzy
 msgid "Open file"
-msgstr "Öffnen mit"
+msgstr "Datei öffnen"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:9
-#, fuzzy
 msgid "What do you want to do with the clicked file?"
-msgstr "Wollen Sie das Archiv hier entpacken?"
+msgstr "Was möchten Sie mit der Datei tun?"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:22
 msgid "Preview"
-msgstr ""
+msgstr "Vorschau"
 
 #: ../src/app/qml/filemanager.qml:170
 #, qt-format
@@ -392,12 +386,11 @@ msgstr "Anwendung"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:100
 msgid "Where:"
-msgstr ""
+msgstr "Wo:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:127
-#, fuzzy
 msgid "Created:"
-msgstr "Ordner erstellen"
+msgstr "Erstellt:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:141
 msgid "Modified:"
@@ -414,12 +407,12 @@ msgstr "Berechtigungen:"
 #: ../src/app/qml/ui/FolderListPage.qml:241
 #: ../src/app/qml/ui/FolderListPage.qml:296
 msgid "Restricted access"
-msgstr ""
+msgstr "Eingeschränkter Zugriff"
 
 #: ../src/app/qml/ui/FolderListPage.qml:245
 msgid ""
 "Authentication is required in order to see all the content of this folder."
-msgstr ""
+msgstr "Authentifizierung erforderlich, um gesamten Ordnerinhalt zu sehen."
 
 #: ../src/app/qml/ui/FolderListPage.qml:282
 msgid "No files"
@@ -427,11 +420,11 @@ msgstr "Keine Dateien"
 
 #: ../src/app/qml/ui/FolderListPage.qml:283
 msgid "This folder is empty."
-msgstr ""
+msgstr "Dieser Ordner ist leer."
 
 #: ../src/app/qml/ui/FolderListPage.qml:297
 msgid "Authentication is required in order to see the content of this folder."
-msgstr ""
+msgstr "Authentifizierung erforderlich, um gesamten Ordnerinhalt zu sehen."
 
 #: ../src/app/qml/ui/FolderListPage.qml:313
 msgid "File operation error"
@@ -439,23 +432,22 @@ msgstr "Dateiverarbeitungsfehler"
 
 #: ../src/app/qml/ui/FolderListPageDefaultHeader.qml:21
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 item"
 msgid_plural "%1 items"
-msgstr[0] "Einträge"
-msgstr[1] "Einträge"
+msgstr[0] "%1 Element"
+msgstr[1] "%1 Elemente"
 
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
-#, fuzzy
 msgid "Save here"
-msgstr "Speichern"
+msgstr "Hier speichern"
 
 #: ../src/app/qml/ui/FolderListPageSelectionHeader.qml:18
 #, qt-format
 msgid "%1 item selected"
 msgid_plural "%1 items selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 Element gewählt"
+msgstr[1] "%1 Elements gewählt"
 
 #: ../src/app/qml/ui/ViewPopover.qml:24
 msgid "Show Hidden Files"
@@ -475,28 +467,27 @@ msgstr "Symbole"
 
 #: ../src/app/qml/ui/ViewPopover.qml:44
 msgid "Grid size"
-msgstr ""
+msgstr "Gittergröße"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "XL"
-msgstr ""
+msgstr "XL"
 
 #: ../src/app/qml/ui/ViewPopover.qml:52
-#, fuzzy
 msgid "List size"
-msgstr "Liste"
+msgstr "Listengröße"
 
 #: ../src/app/qml/ui/ViewPopover.qml:60
 msgid "Sort By"
@@ -511,9 +502,8 @@ msgid "Date"
 msgstr "Datum"
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
-#, fuzzy
 msgid "Size"
-msgstr "Größe:"
+msgstr "Größe"
 
 #: ../src/app/qml/ui/ViewPopover.qml:67
 msgid "Sort Order"
@@ -521,15 +511,15 @@ msgstr "Sortierreihenfolge"
 
 #: ../src/app/qml/ui/ViewPopover.qml:74
 msgid "Theme"
-msgstr ""
+msgstr "Aussehen"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Light"
-msgstr ""
+msgstr "Hell"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Dark"
-msgstr ""
+msgstr "Dunkel"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:40
 msgid "Folder not accessible"
@@ -546,20 +536,20 @@ msgid "Could not rename"
 msgstr "Umbenennen fehlgeschlagen"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:137
-#, fuzzy
 msgid ""
 "Insufficient permissions, name contains special chars (e.g. '/'), or already "
 "exists"
-msgstr "Fehlende Berechtigungen oder existiert der Name bereits?"
+msgstr ""
+"Fehlende Berechtigungen, Name beinhaltet Sonderzeichen (z.B. '/') oder "
+"existiert bereits"
 
 #: ../src/app/qml/views/FolderListView.qml:72
 msgid "Directories"
-msgstr ""
+msgstr "Verzeichnisse"
 
 #: ../src/app/qml/views/FolderListView.qml:72
-#, fuzzy
 msgid "Files"
-msgstr "Datei"
+msgstr "Dateien"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:360
 msgid "Unknown"
@@ -581,7 +571,7 @@ msgstr "Fehler beim Erstellen eines neuen Ordners"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:740
 msgid "Touch file error"
-msgstr ""
+msgstr "Bearbeitungsfehler"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1353
 msgid "items"
@@ -703,7 +693,7 @@ msgstr "Dateiverwaltung"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:2
 msgid "folder;manager;explore;disk;filesystem;"
-msgstr ""
+msgstr "ordner;verwalten;entdecken;speicher;dateisystem;"
 
 #~ msgid "About Application"
 #~ msgstr "Über die App"
