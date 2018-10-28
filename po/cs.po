@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-10-28 18:50+0000\n"
+"PO-Revision-Date: 2018-10-28 19:08+0000\n"
 "Last-Translator: Milan Korecký <milan.korecky@gmail.com>\n"
 "Language-Team: Czech <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/cs/>\n"
@@ -184,9 +184,8 @@ msgid "Your passcode is required to access restricted content"
 msgstr "Je vyžadováno Vaše heslo pro otevření souborů s omezeným přístupem"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
-#, fuzzy
 msgid "passphrase (default is 0000 if unset)"
-msgstr "heslo (pokud nenastaveno je přednastaveno 0000)"
+msgstr "přístupová fráze (pokud nenastaveno je přednastaveno 0000)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passcode (default is 0000 if unset)"
@@ -437,8 +436,8 @@ msgstr "Chyba při práci se soubory"
 #, qt-format
 msgid "%1 item"
 msgid_plural "%1 items"
-msgstr[0] "%1 položky"
-msgstr[1] "%1 položek"
+msgstr[0] "%1 položka"
+msgstr[1] "%1 položky"
 msgstr[2] "%1 položek"
 
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
@@ -519,11 +518,11 @@ msgstr "Téma"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Light"
-msgstr ""
+msgstr "Světlý"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Dark"
-msgstr ""
+msgstr "Tmavý"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:40
 msgid "Folder not accessible"
@@ -540,20 +539,20 @@ msgid "Could not rename"
 msgstr "Nelze přejmenovat"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:137
-#, fuzzy
 msgid ""
 "Insufficient permissions, name contains special chars (e.g. '/'), or already "
 "exists"
-msgstr "Nedostatečná oprávnění nebo jméno již existuje?"
+msgstr ""
+"Nedostatečná oprávnění, název obsahuje zvláštní znaky (např. '/'), anebo již "
+"existuje"
 
 #: ../src/app/qml/views/FolderListView.qml:72
 msgid "Directories"
-msgstr ""
+msgstr "Složky"
 
 #: ../src/app/qml/views/FolderListView.qml:72
-#, fuzzy
 msgid "Files"
-msgstr "Soubor"
+msgstr "Soubory"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:360
 msgid "Unknown"
@@ -573,7 +572,7 @@ msgstr "Chyba při vytváření nové složky"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:740
 msgid "Touch file error"
-msgstr ""
+msgstr "... chyba souboru"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1353
 msgid "items"
@@ -695,7 +694,7 @@ msgstr "Správce souborů"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:2
 msgid "folder;manager;explore;disk;filesystem;"
-msgstr ""
+msgstr "složka;správce;prohledat;disk; souborový systém;"
 
 #~ msgid "About Application"
 #~ msgstr "O aplikaci"
