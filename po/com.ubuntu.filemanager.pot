@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-03 13:35+0000\n"
+"POT-Creation-Date: 2018-10-28 18:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -197,16 +197,14 @@ msgid "Authenticate"
 msgstr ""
 
 #: ../src/app/qml/backend/FolderListModel.qml:123
+#: ../src/app/qml/filemanager.qml:170
 #, qt-format
 msgid "%1 file"
-msgstr ""
+msgid_plural "%1 files"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../src/app/qml/backend/FolderListModel.qml:124
-#, qt-format
-msgid "%1 files"
-msgstr ""
-
-#: ../src/app/qml/backend/FolderListModel.qml:135
+#: ../src/app/qml/backend/FolderListModel.qml:134
 msgid "Folder"
 msgstr ""
 
@@ -349,16 +347,6 @@ msgstr ""
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:22
 msgid "Preview"
-msgstr ""
-
-#: ../src/app/qml/filemanager.qml:170
-#, qt-format
-msgid "File %1"
-msgstr ""
-
-#: ../src/app/qml/filemanager.qml:170
-#, qt-format
-msgid "%1 Files"
 msgstr ""
 
 #: ../src/app/qml/filemanager.qml:171
