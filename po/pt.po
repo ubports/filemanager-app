@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-10-28 18:50+0000\n"
+"PO-Revision-Date: 2018-10-28 19:28+0000\n"
 "Last-Translator: Ivo Xavier <ivofernandes12@gmail.com>\n"
 "Language-Team: Portuguese <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/pt/>\n"
@@ -52,11 +52,11 @@ msgid "Cut"
 msgstr "Cortar"
 
 #: ../src/app/qml/actions/FilePaste.qml:30
-#, fuzzy, qt-format
+#, qt-format
 msgid "Paste %1 file"
 msgid_plural "Paste %1 files"
-msgstr[0] "Colar %1 Ficheiro"
-msgstr[1] "Colar %1 Ficheiros"
+msgstr[0] "Colar %1 ficheiro"
+msgstr[1] "Colar %1 ficheiros"
 
 #: ../src/app/qml/actions/GoBack.qml:5
 msgid "Go back"
@@ -95,14 +95,12 @@ msgid "Select"
 msgstr "Selecionar"
 
 #: ../src/app/qml/actions/SelectUnselectAll.qml:6
-#, fuzzy
 msgid "Select None"
-msgstr "Selecionar"
+msgstr "Não selecionar nenhum"
 
 #: ../src/app/qml/actions/SelectUnselectAll.qml:6
-#, fuzzy
 msgid "Select All"
-msgstr "Selecionar"
+msgstr "Selecionar todos"
 
 #: ../src/app/qml/actions/Settings.qml:6
 msgid "Settings"
@@ -132,7 +130,7 @@ msgstr "Desbloquear"
 #: ../src/app/qml/authentication/PasswordDialog.qml:43
 #: ../src/app/qml/dialogs/NetAuthenticationDialog.qml:28
 msgid "Authentication required"
-msgstr "Autenticação pedida"
+msgstr "Autenticação necessária"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:27
 msgid "Use your fingerprint to access restricted content"
@@ -141,12 +139,11 @@ msgstr "Use a impressão digital para aceder a conteúdo restrito"
 #. TRANSLATORS: "Touch" here is a verb
 #: ../src/app/qml/authentication/FingerprintDialog.qml:55
 msgid "Touch sensor"
-msgstr ""
+msgstr "Sensor de toque"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:60
-#, fuzzy
 msgid "Use password"
-msgstr "Guardar palavra-passe"
+msgstr "Usar palavra-passe"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:69
 #: ../src/app/qml/authentication/PasswordDialog.qml:80
@@ -166,66 +163,60 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:126
-#, fuzzy
 msgid "Authentication failed!"
-msgstr "Falha na autenticação"
+msgstr "Falha na autenticação!"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:137
 msgid "Please retry"
-msgstr ""
+msgstr "Tente novamente"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:35
 msgid "Authentication failed"
-msgstr "Falha na autenticação"
+msgstr "Autenticação falhou"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:45
-#, fuzzy
 msgid "Your passphrase is required to access restricted content"
-msgstr "É necessária uma palavra-passe para aceder a todos os ficheiros"
+msgstr "A sua frase-senha é necessária para aceder a conteúdo restrito"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:46
-#, fuzzy
 msgid "Your passcode is required to access restricted content"
-msgstr "É necessária uma palavra-passe para aceder a todos os ficheiros"
+msgstr "O seu código é necessário para aceder a conteúdo restrito"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passphrase (default is 0000 if unset)"
-msgstr ""
+msgstr "frase-senha (por defeito é 0000)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passcode (default is 0000 if unset)"
-msgstr ""
+msgstr "código (por defeito é 0000)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:69
-#, fuzzy
 msgid "Authentication failed. Please retry"
-msgstr "Falha na autenticação"
+msgstr "Autenticação falhou. Tente novamente"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:74
-#, fuzzy
 msgid "Authenticate"
-msgstr "Falha na autenticação"
+msgstr "Autenticar"
 
 #: ../src/app/qml/backend/FolderListModel.qml:123
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 file"
 msgstr "%1 ficheiro"
 
 #: ../src/app/qml/backend/FolderListModel.qml:124
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 files"
-msgstr "%1 ficheiro"
+msgstr "%1 ficheiros"
 
 #: ../src/app/qml/backend/FolderListModel.qml:135
-#, fuzzy
 msgid "Folder"
-msgstr "Nova pasta"
+msgstr "Pasta"
 
 #: ../src/app/qml/components/TextualButtonStyle.qml:48
 #: ../src/app/qml/components/TextualButtonStyle.qml:56
 #: ../src/app/qml/components/TextualButtonStyle.qml:63
 msgid "Pick"
-msgstr ""
+msgstr "Escolher"
 
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
@@ -247,9 +238,8 @@ msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "Quer mesmo eliminar  '%1'?"
 
 #: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:15
-#, fuzzy
 msgid "these files"
-msgstr "Colar ficheiros"
+msgstr "estes ficheiros"
 
 #: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:18
 #: ../src/app/qml/dialogs/ConfirmSingleDeleteDialog.qml:21
@@ -261,28 +251,24 @@ msgid "Enter a new name"
 msgstr "Introduzir um nome novo"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:13
-#, fuzzy
 msgid "Create Item"
-msgstr "Criar um ficheiro"
+msgstr "Criar um item"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:14
-#, fuzzy
 msgid "Enter name for new item"
-msgstr "Introduzir um nome para novo ficheiro"
+msgstr "Introduzir um nome novo para o item"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:18
-#, fuzzy
 msgid "Item name"
-msgstr "Mudar nome"
+msgstr "Nome do item"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:24
 msgid "Create file"
 msgstr "Criar um ficheiro"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:43
-#, fuzzy
 msgid "Create Folder"
-msgstr "Criar pasta"
+msgstr "Criar uma pasta"
 
 #: ../src/app/qml/dialogs/ExtractingDialog.qml:23
 #, qt-format
@@ -356,18 +342,16 @@ msgid "Open with another app"
 msgstr "Abrir com outra app"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:8
-#, fuzzy
 msgid "Open file"
-msgstr "Abrir com"
+msgstr "Abrir ficheiro"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:9
-#, fuzzy
 msgid "What do you want to do with the clicked file?"
-msgstr "Quer extrair o arquivo aqui?"
+msgstr "O que pretende fazer com o ficheiro click?"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:22
 msgid "Preview"
-msgstr ""
+msgstr "Pré-visualizar"
 
 #: ../src/app/qml/filemanager.qml:170
 #, qt-format
@@ -377,7 +361,7 @@ msgstr "Ficheiro %1"
 #: ../src/app/qml/filemanager.qml:170
 #, qt-format
 msgid "%1 Files"
-msgstr "%1ficheiros"
+msgstr "%1 ficheiros"
 
 #: ../src/app/qml/filemanager.qml:171
 #, qt-format
@@ -402,12 +386,11 @@ msgstr "Executável"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:100
 msgid "Where:"
-msgstr ""
+msgstr "Onde:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:127
-#, fuzzy
 msgid "Created:"
-msgstr "Criar pasta"
+msgstr "Criado:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:141
 msgid "Modified:"
@@ -424,12 +407,12 @@ msgstr "Permissões:"
 #: ../src/app/qml/ui/FolderListPage.qml:241
 #: ../src/app/qml/ui/FolderListPage.qml:296
 msgid "Restricted access"
-msgstr ""
+msgstr "Acesso restrito"
 
 #: ../src/app/qml/ui/FolderListPage.qml:245
 msgid ""
 "Authentication is required in order to see all the content of this folder."
-msgstr ""
+msgstr "Autenticação é necessária para ver todo o conteúdo desta pasta."
 
 #: ../src/app/qml/ui/FolderListPage.qml:282
 msgid "No files"
@@ -437,11 +420,11 @@ msgstr "Sem ficheiros"
 
 #: ../src/app/qml/ui/FolderListPage.qml:283
 msgid "This folder is empty."
-msgstr ""
+msgstr "Esta pasta está vazia."
 
 #: ../src/app/qml/ui/FolderListPage.qml:297
 msgid "Authentication is required in order to see the content of this folder."
-msgstr ""
+msgstr "Autenticação é necessária para ver o conteúdo desta pasta."
 
 #: ../src/app/qml/ui/FolderListPage.qml:313
 msgid "File operation error"
@@ -449,23 +432,22 @@ msgstr "Erro ao executar operação de ficheiro"
 
 #: ../src/app/qml/ui/FolderListPageDefaultHeader.qml:21
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 item"
 msgid_plural "%1 items"
-msgstr[0] "itens"
-msgstr[1] "itens"
+msgstr[0] "%1 item"
+msgstr[1] "%1 itens"
 
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
-#, fuzzy
 msgid "Save here"
-msgstr "Guardar"
+msgstr "Guardar aqui"
 
 #: ../src/app/qml/ui/FolderListPageSelectionHeader.qml:18
 #, qt-format
 msgid "%1 item selected"
 msgid_plural "%1 items selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 item selecionado"
+msgstr[1] "%1 itens selecionados"
 
 #: ../src/app/qml/ui/ViewPopover.qml:24
 msgid "Show Hidden Files"
@@ -485,28 +467,27 @@ msgstr "Ícones"
 
 #: ../src/app/qml/ui/ViewPopover.qml:44
 msgid "Grid size"
-msgstr ""
+msgstr "Tamanho da grelha"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "XL"
-msgstr ""
+msgstr "XL"
 
 #: ../src/app/qml/ui/ViewPopover.qml:52
-#, fuzzy
 msgid "List size"
-msgstr "Lista"
+msgstr "Tamanho da lista"
 
 #: ../src/app/qml/ui/ViewPopover.qml:60
 msgid "Sort By"
@@ -521,9 +502,8 @@ msgid "Date"
 msgstr "Data"
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
-#, fuzzy
 msgid "Size"
-msgstr "Tamanho:"
+msgstr "Tamanho"
 
 #: ../src/app/qml/ui/ViewPopover.qml:67
 msgid "Sort Order"
@@ -531,15 +511,15 @@ msgstr "Ordem"
 
 #: ../src/app/qml/ui/ViewPopover.qml:74
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Light"
-msgstr ""
+msgstr "Claro"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Dark"
-msgstr ""
+msgstr "Escuro"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:40
 msgid "Folder not accessible"
@@ -556,20 +536,20 @@ msgid "Could not rename"
 msgstr "Não pode mudar o nome"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:137
-#, fuzzy
 msgid ""
 "Insufficient permissions, name contains special chars (e.g. '/'), or already "
 "exists"
-msgstr "Permissões insuficientes ou nome já existente?"
+msgstr ""
+"Permissões insuficientes, nome contém caracteres especiais (ex: '/'), ou já "
+"existe"
 
 #: ../src/app/qml/views/FolderListView.qml:72
 msgid "Directories"
-msgstr ""
+msgstr "Diretórios"
 
 #: ../src/app/qml/views/FolderListView.qml:72
-#, fuzzy
 msgid "Files"
-msgstr "Ficheiro"
+msgstr "Ficheiros"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:360
 msgid "Unknown"
@@ -589,7 +569,7 @@ msgstr "Erro ao criar nova pasta"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:740
 msgid "Touch file error"
-msgstr ""
+msgstr "Erro no ficheiro de toque"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1353
 msgid "items"
@@ -711,7 +691,7 @@ msgstr "Gestor de ficheiros"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:2
 msgid "folder;manager;explore;disk;filesystem;"
-msgstr ""
+msgstr "pasta;gestor;explorar;disco;sistema;"
 
 #~ msgid "About Application"
 #~ msgstr "Sobre a aplicação"
