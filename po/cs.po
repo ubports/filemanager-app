@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-10-28 18:07+0000\n"
+"PO-Revision-Date: 2018-10-28 18:50+0000\n"
 "Last-Translator: Milan Korecký <milan.korecky@gmail.com>\n"
 "Language-Team: Czech <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/cs/>\n"
@@ -135,17 +135,16 @@ msgstr "Požadováno ověření totožnosti"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:27
 msgid "Use your fingerprint to access restricted content"
-msgstr ""
+msgstr "Použijte svůj otisk prstu pro přístup k obsahu s omezeným přístupem"
 
 #. TRANSLATORS: "Touch" here is a verb
 #: ../src/app/qml/authentication/FingerprintDialog.qml:55
 msgid "Touch sensor"
-msgstr ""
+msgstr "Dotkněte se senzoru"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:60
-#, fuzzy
 msgid "Use password"
-msgstr "Uložit heslo"
+msgstr "Použít heslo"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:69
 #: ../src/app/qml/authentication/PasswordDialog.qml:80
@@ -165,65 +164,59 @@ msgid "Cancel"
 msgstr "Zrušit"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:126
-#, fuzzy
 msgid "Authentication failed!"
-msgstr "Ověření selhalo"
+msgstr "Ověření selhalo!"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:137
 msgid "Please retry"
-msgstr ""
+msgstr "Zkuste to znovu"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:35
 msgid "Authentication failed"
 msgstr "Ověření selhalo"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:45
-#, fuzzy
 msgid "Your passphrase is required to access restricted content"
-msgstr "Pro otevření všech souborů je požadováno heslo"
+msgstr "Pro otevření souborů s omezeným přístupem je požadováno heslo"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:46
-#, fuzzy
 msgid "Your passcode is required to access restricted content"
-msgstr "Pro otevření všech souborů je požadováno heslo"
+msgstr "Je vyžadováno Vaše heslo pro otevření souborů s omezeným přístupem"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
+#, fuzzy
 msgid "passphrase (default is 0000 if unset)"
-msgstr ""
+msgstr "heslo (pokud nenastaveno je přednastaveno 0000)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passcode (default is 0000 if unset)"
-msgstr ""
+msgstr "přístupový kód (pokud nenastaven, je přednastaveno 0000)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:69
-#, fuzzy
 msgid "Authentication failed. Please retry"
-msgstr "Ověření selhalo"
+msgstr "Ověření selhalo. Zkuste znovu"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:74
-#, fuzzy
 msgid "Authenticate"
-msgstr "Ověření selhalo"
+msgstr "Ověření"
 
 #: ../src/app/qml/backend/FolderListModel.qml:123
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 file"
 msgstr "%1 soubor"
 
 #: ../src/app/qml/backend/FolderListModel.qml:124
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 files"
-msgstr "%1 soubor"
+msgstr "%1 souborů"
 
 #: ../src/app/qml/backend/FolderListModel.qml:135
-#, fuzzy
 msgid "Folder"
-msgstr "Nová složka"
+msgstr "Složka"
 
 #: ../src/app/qml/components/TextualButtonStyle.qml:48
 #: ../src/app/qml/components/TextualButtonStyle.qml:56
 #: ../src/app/qml/components/TextualButtonStyle.qml:63
-#, fuzzy
 msgid "Pick"
 msgstr "Vybrat"
 
@@ -247,9 +240,8 @@ msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "Opravdu chcete trvale smazat '%1'?"
 
 #: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:15
-#, fuzzy
 msgid "these files"
-msgstr "Vložit soubory"
+msgstr "tyto soubory"
 
 #: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:18
 #: ../src/app/qml/dialogs/ConfirmSingleDeleteDialog.qml:21
@@ -261,26 +253,22 @@ msgid "Enter a new name"
 msgstr "Zadejte nový název"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:13
-#, fuzzy
 msgid "Create Item"
-msgstr "Vytvořit soubor"
+msgstr "Vytvořit položku"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:14
-#, fuzzy
 msgid "Enter name for new item"
-msgstr "Vložte jméno pro nový soubor"
+msgstr "Vložte jméno pro novou položku"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:18
-#, fuzzy
 msgid "Item name"
-msgstr "Přejmenovat"
+msgstr "Název položky"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:24
 msgid "Create file"
 msgstr "Vytvořit soubor"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:43
-#, fuzzy
 msgid "Create Folder"
 msgstr "Vytvořit složku"
 
@@ -356,14 +344,12 @@ msgid "Open with another app"
 msgstr "Otevřít pomocí jiné aplikace"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:8
-#, fuzzy
 msgid "Open file"
-msgstr "Otevřít s"
+msgstr "Otevřít soubor"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:9
-#, fuzzy
 msgid "What do you want to do with the clicked file?"
-msgstr "Chcete archívní soubor rozbalit sem?"
+msgstr "Co chcete udělat s vybraným souborem?"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:22
 msgid "Preview"
@@ -402,12 +388,11 @@ msgstr "Spustitelný"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:100
 msgid "Where:"
-msgstr ""
+msgstr "Kam:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:127
-#, fuzzy
 msgid "Created:"
-msgstr "Vytvořit složku"
+msgstr "Vytvořeno:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:141
 msgid "Modified:"
@@ -424,12 +409,12 @@ msgstr "Oprávnění:"
 #: ../src/app/qml/ui/FolderListPage.qml:241
 #: ../src/app/qml/ui/FolderListPage.qml:296
 msgid "Restricted access"
-msgstr ""
+msgstr "Omezený přístup"
 
 #: ../src/app/qml/ui/FolderListPage.qml:245
 msgid ""
 "Authentication is required in order to see all the content of this folder."
-msgstr ""
+msgstr "Je vyžadováno ověření pro přístup k obsahu souboru."
 
 #: ../src/app/qml/ui/FolderListPage.qml:282
 msgid "No files"
@@ -437,11 +422,11 @@ msgstr "Žádné soubory"
 
 #: ../src/app/qml/ui/FolderListPage.qml:283
 msgid "This folder is empty."
-msgstr ""
+msgstr "Soubor je prázdný."
 
 #: ../src/app/qml/ui/FolderListPage.qml:297
 msgid "Authentication is required in order to see the content of this folder."
-msgstr ""
+msgstr "Je vyžadováno ověření pro přístup k obsahu složky."
 
 #: ../src/app/qml/ui/FolderListPage.qml:313
 msgid "File operation error"
@@ -449,25 +434,24 @@ msgstr "Chyba při práci se soubory"
 
 #: ../src/app/qml/ui/FolderListPageDefaultHeader.qml:21
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 item"
 msgid_plural "%1 items"
-msgstr[0] "položky"
-msgstr[1] "položky"
-msgstr[2] "položky"
+msgstr[0] "%1 položky"
+msgstr[1] "%1 položek"
+msgstr[2] "%1 položek"
 
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
-#, fuzzy
 msgid "Save here"
-msgstr "Uložit"
+msgstr "Uložit zde"
 
 #: ../src/app/qml/ui/FolderListPageSelectionHeader.qml:18
 #, qt-format
 msgid "%1 item selected"
 msgid_plural "%1 items selected"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%1 položka vybrána"
+msgstr[1] "%1 položky vybrány"
+msgstr[2] "%1 položek vybráno"
 
 #: ../src/app/qml/ui/ViewPopover.qml:24
 msgid "Show Hidden Files"
@@ -487,28 +471,27 @@ msgstr "Ikony"
 
 #: ../src/app/qml/ui/ViewPopover.qml:44
 msgid "Grid size"
-msgstr ""
+msgstr "Velikost mřížky"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "XL"
-msgstr ""
+msgstr "XL"
 
 #: ../src/app/qml/ui/ViewPopover.qml:52
-#, fuzzy
 msgid "List size"
-msgstr "Seznam"
+msgstr "Velikost seznamu"
 
 #: ../src/app/qml/ui/ViewPopover.qml:60
 msgid "Sort By"
