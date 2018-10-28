@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-10-28 18:50+0000\n"
+"PO-Revision-Date: 2018-10-28 19:15+0000\n"
 "Last-Translator: Sergio Reyes <vincentshergio@gmail.com>\n"
 "Language-Team: Spanish <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/es/>\n"
@@ -170,16 +170,15 @@ msgstr "Falló la autenticación"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:137
 msgid "Please retry"
-msgstr ""
+msgstr "Reintentar"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:35
 msgid "Authentication failed"
 msgstr "Falló la autenticación"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:45
-#, fuzzy
 msgid "Your passphrase is required to access restricted content"
-msgstr "Se necesita contraseña para acceder a todos los archivos"
+msgstr "Se necesita contraseña para acceder al contenido restringido"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:46
 #, fuzzy
@@ -188,7 +187,7 @@ msgstr "Se necesita contraseña para acceder a todos los archivos"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passphrase (default is 0000 if unset)"
-msgstr ""
+msgstr "contraseña (por defecto: 0000)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passcode (default is 0000 if unset)"
@@ -444,23 +443,22 @@ msgstr "Error de operación de archivo"
 
 #: ../src/app/qml/ui/FolderListPageDefaultHeader.qml:21
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 item"
 msgid_plural "%1 items"
-msgstr[0] "elementos"
-msgstr[1] "elementos"
+msgstr[0] "%1 elemento"
+msgstr[1] "%1 elementos"
 
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
-#, fuzzy
 msgid "Save here"
-msgstr "Guardar"
+msgstr "Guardar aquí"
 
 #: ../src/app/qml/ui/FolderListPageSelectionHeader.qml:18
 #, qt-format
 msgid "%1 item selected"
 msgid_plural "%1 items selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 elemento seleccionado"
+msgstr[1] "%1 elementos seleccionados"
 
 #: ../src/app/qml/ui/ViewPopover.qml:24
 msgid "Show Hidden Files"
@@ -480,28 +478,27 @@ msgstr "Iconos"
 
 #: ../src/app/qml/ui/ViewPopover.qml:44
 msgid "Grid size"
-msgstr ""
+msgstr "Tamaño de la cuadrícula"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "XL"
-msgstr ""
+msgstr "XL"
 
 #: ../src/app/qml/ui/ViewPopover.qml:52
-#, fuzzy
 msgid "List size"
-msgstr "Lista"
+msgstr "Lista de tamaños"
 
 #: ../src/app/qml/ui/ViewPopover.qml:60
 msgid "Sort By"
@@ -516,9 +513,8 @@ msgid "Date"
 msgstr "Fecha"
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
-#, fuzzy
 msgid "Size"
-msgstr "Tamaño:"
+msgstr "Tamaño"
 
 #: ../src/app/qml/ui/ViewPopover.qml:67
 msgid "Sort Order"
@@ -526,15 +522,15 @@ msgstr "Orden de clasificación"
 
 #: ../src/app/qml/ui/ViewPopover.qml:74
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Light"
-msgstr ""
+msgstr "Claro"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Dark"
-msgstr ""
+msgstr "Oscuro"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:40
 msgid "Folder not accessible"
