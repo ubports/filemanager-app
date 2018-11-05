@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-11-04 00:00+0000\n"
+"PO-Revision-Date: 2018-11-11 00:02+0000\n"
 "Last-Translator: Louies <louies0623@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.ubports.com/projects/"
 "ubports/filemanager-app/zh_Hant/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1.1\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
 
 #: ../src/app/qml/actions/AddBookmark.qml:6
@@ -226,7 +226,6 @@ msgstr "新增資料夾"
 #: ../src/app/qml/components/TextualButtonStyle.qml:48
 #: ../src/app/qml/components/TextualButtonStyle.qml:56
 #: ../src/app/qml/components/TextualButtonStyle.qml:63
-#, fuzzy
 msgid "Pick"
 msgstr "選擇"
 
@@ -531,9 +530,8 @@ msgid "Date"
 msgstr "日期"
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
-#, fuzzy
 msgid "Size"
-msgstr "大小："
+msgstr "大小"
 
 #: ../src/app/qml/ui/ViewPopover.qml:67
 msgid "Sort Order"
@@ -727,7 +725,7 @@ msgstr "檔案管理員"
 #: com.ubuntu.filemanager.desktop.in.in.h:2
 #, fuzzy
 msgid "folder;manager;explore;disk;filesystem;"
-msgstr "資料夾;管理器;流覽;磁片;檔案系統"
+msgstr "資料夾;管理器;流覽;磁碟;檔案系統;"
 
 #~ msgid "About Application"
 #~ msgstr "關於此應用程式"
