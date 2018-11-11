@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-11-04 00:01+0000\n"
-"Last-Translator: Mike <miguel2000@livecom.it>\n"
+"PO-Revision-Date: 2018-11-09 06:44+0000\n"
+"Last-Translator: Aurelio Cilia <spacedriver88@gmail.com>\n"
 "Language-Team: Italian <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/it/>\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1.1\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
 
 #: ../src/app/qml/actions/AddBookmark.qml:6
@@ -95,9 +95,8 @@ msgid "Select"
 msgstr "Seleziona"
 
 #: ../src/app/qml/actions/SelectUnselectAll.qml:6
-#, fuzzy
 msgid "Select None"
-msgstr "Seleziona niente"
+msgstr "Non selezionare"
 
 #: ../src/app/qml/actions/SelectUnselectAll.qml:6
 msgid "Select All"
@@ -134,7 +133,6 @@ msgid "Authentication required"
 msgstr "Richiesta autenticazione"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:27
-#, fuzzy
 msgid "Use your fingerprint to access restricted content"
 msgstr "Usa la tua impronta digitale per accedere ai contenuti ristretti"
 
@@ -144,7 +142,6 @@ msgid "Touch sensor"
 msgstr "Tocca il sensore"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:60
-#, fuzzy
 msgid "Use password"
 msgstr "Usa la password"
 
@@ -187,23 +184,22 @@ msgstr "È richiesto il codice per accedere ai contenuti riservati"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passphrase (default is 0000 if unset)"
-msgstr ""
+msgstr "passphrase (se non inserito 0000 è quello preimpostato)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passcode (default is 0000 if unset)"
-msgstr ""
+msgstr "passcode (se non inserito 0000 è quello preimpostato)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:69
 msgid "Authentication failed. Please retry"
 msgstr "Autenticazione non riuscita. Per favore ritenta"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:74
-#, fuzzy
 msgid "Authenticate"
 msgstr "Autenticati"
 
 #: ../src/app/qml/backend/FolderListModel.qml:123
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 file"
 msgstr "%1 file"
 
@@ -389,12 +385,10 @@ msgid "Executable"
 msgstr "Eseguibile"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:100
-#, fuzzy
 msgid "Where:"
 msgstr "Dove:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:127
-#, fuzzy
 msgid "Created:"
 msgstr "Creato:"
 
@@ -523,7 +517,6 @@ msgid "Theme"
 msgstr "Tema"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
-#, fuzzy
 msgid "Light"
 msgstr "Chiaro"
 
@@ -579,7 +572,7 @@ msgstr "Errore nel creare la nuova cartella"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:740
 msgid "Touch file error"
-msgstr ""
+msgstr "File errore Touch"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1353
 msgid "items"

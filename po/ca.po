@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-10-29 01:24+0000\n"
+"PO-Revision-Date: 2018-11-11 00:02+0000\n"
 "Last-Translator: Joan CiberSheep <cibersheep@gmail.com>\n"
 "Language-Team: Catalan <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/ca/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1.1\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
 
 #: ../src/app/qml/actions/AddBookmark.qml:6
@@ -280,7 +280,7 @@ msgstr "S'està extraient l'arxiu «%1»"
 #: ../src/app/qml/dialogs/templates/ConfirmDialog.qml:31
 #: ../src/app/qml/dialogs/templates/ConfirmDialogWithInput.qml:49
 msgid "OK"
-msgstr "D'acord"
+msgstr "D’acord"
 
 #: ../src/app/qml/dialogs/ExtractingDialog.qml:59
 msgid "Extracting failed"
