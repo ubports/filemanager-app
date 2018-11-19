@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-11-04 00:02+0000\n"
+"PO-Revision-Date: 2018-11-19 14:25+0000\n"
 "Last-Translator: ierihon <idekovets@mail.ru>\n"
 "Language-Team: Russian <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/ru/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
 "4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1.1\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
 
 #: ../src/app/qml/actions/AddBookmark.qml:6
@@ -53,12 +53,12 @@ msgid "Cut"
 msgstr "Вырезать"
 
 #: ../src/app/qml/actions/FilePaste.qml:30
-#, fuzzy, qt-format
+#, qt-format
 msgid "Paste %1 file"
 msgid_plural "Paste %1 files"
 msgstr[0] "Вставить %1 файл"
-msgstr[1] "Вставить %1 файла"
-msgstr[2] "Вставить %1 файлов"
+msgstr[1] "Вставить %1 файлов"
+msgstr[2] "Вставить %1 файла"
 
 #: ../src/app/qml/actions/GoBack.qml:5
 msgid "Go back"
@@ -74,7 +74,7 @@ msgstr "Перейти в"
 
 #: ../src/app/qml/actions/NewItem.qml:6
 msgid "New Item"
-msgstr ""
+msgstr "Новый элемент"
 
 #: ../src/app/qml/actions/PlacesBookmarks.qml:6
 #: ../src/app/qml/ui/PlacesPage.qml:16
@@ -141,7 +141,7 @@ msgstr "Используйте отпечаток пальца для досту
 #. TRANSLATORS: "Touch" here is a verb
 #: ../src/app/qml/authentication/FingerprintDialog.qml:55
 msgid "Touch sensor"
-msgstr ""
+msgstr "Сенсорный датчик"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:60
 msgid "Use password"
@@ -434,12 +434,12 @@ msgstr "Ошибка при обработке файла"
 
 #: ../src/app/qml/ui/FolderListPageDefaultHeader.qml:21
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 item"
 msgid_plural "%1 items"
-msgstr[0] "элементы"
-msgstr[1] "элементы"
-msgstr[2] "элементы"
+msgstr[0] "%1 элемент"
+msgstr[1] "%1 элементов"
+msgstr[2] "%1 элемента"
 
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
 msgid "Save here"
@@ -449,9 +449,9 @@ msgstr "Сохранить здесь"
 #, qt-format
 msgid "%1 item selected"
 msgid_plural "%1 items selected"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Выбран %1 элемент"
+msgstr[1] "Выбрано %1 элементов"
+msgstr[2] "Выбрано %1 элемента"
 
 #: ../src/app/qml/ui/ViewPopover.qml:24
 msgid "Show Hidden Files"
@@ -549,7 +549,7 @@ msgstr ""
 
 #: ../src/app/qml/views/FolderListView.qml:72
 msgid "Directories"
-msgstr ""
+msgstr "Папки"
 
 #: ../src/app/qml/views/FolderListView.qml:72
 msgid "Files"
@@ -573,7 +573,7 @@ msgstr "Ошибка создания новой папки"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:740
 msgid "Touch file error"
-msgstr ""
+msgstr "Ошибка при обработке"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1353
 msgid "items"
@@ -695,7 +695,7 @@ msgstr "Менеджер файлов"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:2
 msgid "folder;manager;explore;disk;filesystem;"
-msgstr ""
+msgstr "папка;управление;открыть;диск;файловая система;"
 
 #~ msgid "About Application"
 #~ msgstr "О приложении"
