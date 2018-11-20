@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-11-11 09:52+0000\n"
+"PO-Revision-Date: 2018-11-25 00:03+0000\n"
 "Last-Translator: M.Sugahara <equaaqua@hotmail.com>\n"
 "Language-Team: Japanese <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/ja/>\n"
@@ -195,46 +195,46 @@ msgstr "認証に失敗しました。再試行してください"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:74
 msgid "Authenticate"
-msgstr ""
+msgstr "認証"
 
 #: ../src/app/qml/backend/FolderListModel.qml:123
 #, qt-format
 msgid "%1 file"
-msgstr ""
+msgstr "%1 個のファイル"
 
 #: ../src/app/qml/backend/FolderListModel.qml:124
 #, qt-format
 msgid "%1 files"
-msgstr ""
+msgstr "%1 個のファイル"
 
 #: ../src/app/qml/backend/FolderListModel.qml:135
 msgid "Folder"
-msgstr ""
+msgstr "フォルダ"
 
 #: ../src/app/qml/components/TextualButtonStyle.qml:48
 #: ../src/app/qml/components/TextualButtonStyle.qml:56
 #: ../src/app/qml/components/TextualButtonStyle.qml:63
 msgid "Pick"
-msgstr ""
+msgstr "選択"
 
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
-msgstr ""
+msgstr "アプリで開く"
 
 #: ../src/app/qml/dialogs/ConfirmExtractDialog.qml:15
 msgid "Extract Archive"
-msgstr ""
+msgstr "アーカイブを展開"
 
 #: ../src/app/qml/dialogs/ConfirmExtractDialog.qml:16
 #, qt-format
 msgid "Are you sure you want to extract '%1' here?"
-msgstr ""
+msgstr "ここに '%1' を展開しますか？"
 
 #: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:15
 #: ../src/app/qml/dialogs/ConfirmSingleDeleteDialog.qml:16
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr ""
+msgstr "'%1' を完全に削除します。よろしいですか？"
 
 #: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:15
 msgid "these files"
