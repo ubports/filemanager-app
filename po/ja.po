@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-11-25 00:03+0000\n"
+"PO-Revision-Date: 2018-11-26 20:23+0000\n"
 "Last-Translator: M.Sugahara <equaaqua@hotmail.com>\n"
 "Language-Team: Japanese <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/ja/>\n"
@@ -243,15 +243,15 @@ msgstr ""
 #: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:18
 #: ../src/app/qml/dialogs/ConfirmSingleDeleteDialog.qml:21
 msgid "Deleting files"
-msgstr ""
+msgstr "ファイルを削除中"
 
 #: ../src/app/qml/dialogs/ConfirmRenameDialog.qml:21
 msgid "Enter a new name"
-msgstr ""
+msgstr "新しい名前を入力"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:13
 msgid "Create Item"
-msgstr ""
+msgstr "アイテムを作成"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:14
 msgid "Enter name for new item"
@@ -266,9 +266,8 @@ msgid "Create file"
 msgstr ""
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:43
-#, fuzzy
 msgid "Create Folder"
-msgstr "新しいファイルを作成します"
+msgstr "新しいフォルダを作成"
 
 #: ../src/app/qml/dialogs/ExtractingDialog.qml:23
 #, qt-format
@@ -318,7 +317,7 @@ msgstr ""
 
 #: ../src/app/qml/dialogs/NetAuthenticationDialog.qml:58
 msgid "Password"
-msgstr ""
+msgstr "パスワード"
 
 #: ../src/app/qml/dialogs/NetAuthenticationDialog.qml:72
 msgid "Save password"
@@ -342,9 +341,8 @@ msgid "Open with another app"
 msgstr ""
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:8
-#, fuzzy
 msgid "Open file"
-msgstr "開く"
+msgstr "ファイルを開く"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:9
 msgid "What do you want to do with the clicked file?"
@@ -352,7 +350,7 @@ msgstr ""
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:22
 msgid "Preview"
-msgstr ""
+msgstr "プレビュー"
 
 #: ../src/app/qml/filemanager.qml:170
 #, qt-format
@@ -494,15 +492,15 @@ msgstr ""
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
 msgid "Name"
-msgstr ""
+msgstr "名前"
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
 msgid "Size"
-msgstr ""
+msgstr "サイズ"
 
 #: ../src/app/qml/ui/ViewPopover.qml:67
 msgid "Sort Order"
@@ -545,7 +543,6 @@ msgid "Directories"
 msgstr ""
 
 #: ../src/app/qml/views/FolderListView.qml:72
-#, fuzzy
 msgid "Files"
 msgstr "ファイル"
 
