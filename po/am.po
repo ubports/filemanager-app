@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-11-18 17:33+0000\n"
+"PO-Revision-Date: 2018-12-02 00:00+0000\n"
 "Last-Translator: Samson <sambelet@yahoo.com>\n"
 "Language-Team: Amharic <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/am/>\n"
@@ -387,20 +387,19 @@ msgstr "መፈጸሚያ"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:100
 msgid "Where:"
-msgstr ""
+msgstr "የት:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:127
-#, fuzzy
 msgid "Created:"
-msgstr "ፎልደር መፍጠሪያ"
+msgstr "ተፈጥሯል:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:141
 msgid "Modified:"
-msgstr "የተሻሻለው:"
+msgstr "ተሻሽሏል:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:155
 msgid "Accessed:"
-msgstr "የተደረሰበት:"
+msgstr "የሚደረሰበት:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:176
 msgid "Permissions:"
@@ -409,12 +408,12 @@ msgstr "ፍቃዶች:"
 #: ../src/app/qml/ui/FolderListPage.qml:241
 #: ../src/app/qml/ui/FolderListPage.qml:296
 msgid "Restricted access"
-msgstr ""
+msgstr "መድረስ የ ተከለከለ:"
 
 #: ../src/app/qml/ui/FolderListPage.qml:245
 msgid ""
 "Authentication is required in order to see all the content of this folder."
-msgstr ""
+msgstr "ማረጋገጫ ያስፈልጋል የዚህን ፎልደር ሁሉንም ይዞታ ለ መመልከት:"
 
 #: ../src/app/qml/ui/FolderListPage.qml:282
 msgid "No files"
@@ -422,11 +421,11 @@ msgstr "ፋይሎች የሉም"
 
 #: ../src/app/qml/ui/FolderListPage.qml:283
 msgid "This folder is empty."
-msgstr ""
+msgstr "ይህ ፎልደር ባዶ ነው:"
 
 #: ../src/app/qml/ui/FolderListPage.qml:297
 msgid "Authentication is required in order to see the content of this folder."
-msgstr ""
+msgstr "ማረጋገጫ ያስፈልጋል የዚህን ፎልደር ሁሉንም ይዞታ ለ መመልከት:"
 
 #: ../src/app/qml/ui/FolderListPage.qml:313
 msgid "File operation error"
@@ -470,7 +469,7 @@ msgstr "ምልክቶች"
 
 #: ../src/app/qml/ui/ViewPopover.qml:44
 msgid "Grid size"
-msgstr ""
+msgstr "መጋጠሚያ መጠን:"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "S"
@@ -516,15 +515,15 @@ msgstr "መለያ ደንብ"
 
 #: ../src/app/qml/ui/ViewPopover.qml:74
 msgid "Theme"
-msgstr ""
+msgstr "ገጽታ:"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Light"
-msgstr ""
+msgstr "ነጣ ያለ"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Dark"
-msgstr ""
+msgstr "ጥቁር"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:40
 msgid "Folder not accessible"
@@ -541,20 +540,18 @@ msgid "Could not rename"
 msgstr "መሰየም አልተቻለም"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:137
-#, fuzzy
 msgid ""
 "Insufficient permissions, name contains special chars (e.g. '/'), or already "
 "exists"
-msgstr "በቂ ያልሆነ ፍቃድ ወይንም ስም ቀደም ሲል ነበር?"
+msgstr "በቂ ያልሆነ ፍቃድ ወይንም ስም የ ተለየ ባህሪ (e.g. '/') ቀደም ሲል ነበር:"
 
 #: ../src/app/qml/views/FolderListView.qml:72
 msgid "Directories"
-msgstr ""
+msgstr "ዳይሬክቶሪዎች"
 
 #: ../src/app/qml/views/FolderListView.qml:72
-#, fuzzy
 msgid "Files"
-msgstr "ፋይል"
+msgstr "ፋይሎች"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:360
 msgid "Unknown"
