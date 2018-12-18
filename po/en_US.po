@@ -1,0 +1,677 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Canonical Ltd.
+# This file is distributed under the same license as the  package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-28 18:15+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: ../src/app/qml/actions/AddBookmark.qml:6
+msgid "Add bookmark"
+msgstr ""
+
+#: ../src/app/qml/actions/ArchiveExtract.qml:6
+#: ../src/app/qml/dialogs/OpenArchiveDialog.qml:18
+#: ../src/app/qml/dialogs/OpenWithDialog.qml:33
+msgid "Extract archive"
+msgstr ""
+
+#: ../src/app/qml/actions/Delete.qml:5
+#: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:14
+#: ../src/app/qml/dialogs/ConfirmSingleDeleteDialog.qml:15
+#: ../src/app/qml/panels/SelectionBottomBar.qml:26
+msgid "Delete"
+msgstr ""
+
+#: ../src/app/qml/actions/FileClearSelection.qml:8
+msgid "Clear clipboard"
+msgstr ""
+
+#: ../src/app/qml/actions/FileCopy.qml:5
+#: ../src/app/qml/panels/SelectionBottomBar.qml:45
+msgid "Copy"
+msgstr ""
+
+#: ../src/app/qml/actions/FileCut.qml:5
+#: ../src/app/qml/panels/SelectionBottomBar.qml:60
+msgid "Cut"
+msgstr ""
+
+#: ../src/app/qml/actions/FilePaste.qml:30
+#, qt-format
+msgid "Paste %1 file"
+msgid_plural "Paste %1 files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/app/qml/actions/GoBack.qml:5
+msgid "Go back"
+msgstr ""
+
+#: ../src/app/qml/actions/GoNext.qml:5
+msgid "Go next"
+msgstr ""
+
+#: ../src/app/qml/actions/GoTo.qml:6
+msgid "Go To"
+msgstr ""
+
+#: ../src/app/qml/actions/NewItem.qml:6
+msgid "New Item"
+msgstr ""
+
+#: ../src/app/qml/actions/PlacesBookmarks.qml:6
+#: ../src/app/qml/ui/PlacesPage.qml:16
+msgid "Places"
+msgstr ""
+
+#: ../src/app/qml/actions/Properties.qml:6
+#: ../src/app/qml/dialogs/OpenWithDialog.qml:54
+msgid "Properties"
+msgstr ""
+
+#: ../src/app/qml/actions/Rename.qml:5
+#: ../src/app/qml/dialogs/ConfirmRenameDialog.qml:20
+msgid "Rename"
+msgstr ""
+
+#: ../src/app/qml/actions/Select.qml:5
+#: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:60
+msgid "Select"
+msgstr ""
+
+#: ../src/app/qml/actions/SelectUnselectAll.qml:6
+msgid "Select None"
+msgstr ""
+
+#: ../src/app/qml/actions/SelectUnselectAll.qml:6
+msgid "Select All"
+msgstr ""
+
+#: ../src/app/qml/actions/Settings.qml:6
+msgid "Settings"
+msgstr ""
+
+#: ../src/app/qml/actions/Share.qml:5
+msgid "Share"
+msgstr ""
+
+#: ../src/app/qml/actions/TabsAdd.qml:5
+msgid "Add tab"
+msgstr ""
+
+#: ../src/app/qml/actions/TabsCloseThis.qml:5
+msgid "Close this tab"
+msgstr ""
+
+#: ../src/app/qml/actions/TabsOpenInNewTab.qml:5
+msgid "Open in a new tab"
+msgstr ""
+
+#: ../src/app/qml/actions/UnlockFullAccess.qml:6
+msgid "Unlock"
+msgstr ""
+
+#: ../src/app/qml/authentication/FingerprintDialog.qml:26
+#: ../src/app/qml/authentication/PasswordDialog.qml:43
+#: ../src/app/qml/dialogs/NetAuthenticationDialog.qml:28
+msgid "Authentication required"
+msgstr ""
+
+#: ../src/app/qml/authentication/FingerprintDialog.qml:27
+msgid "Use your fingerprint to access restricted content"
+msgstr ""
+
+#. TRANSLATORS: "Touch" here is a verb
+#: ../src/app/qml/authentication/FingerprintDialog.qml:55
+msgid "Touch sensor"
+msgstr ""
+
+#: ../src/app/qml/authentication/FingerprintDialog.qml:60
+msgid "Use password"
+msgstr ""
+
+#: ../src/app/qml/authentication/FingerprintDialog.qml:69
+#: ../src/app/qml/authentication/PasswordDialog.qml:80
+#: ../src/app/qml/dialogs/CreateItemDialog.qml:60
+#: ../src/app/qml/dialogs/ExtractingDialog.qml:35
+#: ../src/app/qml/dialogs/FileActionDialog.qml:45
+#: ../src/app/qml/dialogs/FileOperationProgressDialog.qml:44
+#: ../src/app/qml/dialogs/NetAuthenticationDialog.qml:96
+#: ../src/app/qml/dialogs/OpenArchiveDialog.qml:38
+#: ../src/app/qml/dialogs/OpenWithDialog.qml:64
+#: ../src/app/qml/dialogs/templates/ConfirmDialog.qml:41
+#: ../src/app/qml/dialogs/templates/ConfirmDialogWithInput.qml:60
+#: ../src/app/qml/ui/FileDetailsPopover.qml:184
+#: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:51
+#: ../src/app/qml/ui/FolderListPageSelectionHeader.qml:26
+msgid "Cancel"
+msgstr ""
+
+#: ../src/app/qml/authentication/FingerprintDialog.qml:126
+msgid "Authentication failed!"
+msgstr ""
+
+#: ../src/app/qml/authentication/FingerprintDialog.qml:137
+msgid "Please retry"
+msgstr ""
+
+#: ../src/app/qml/authentication/PasswordDialog.qml:35
+msgid "Authentication failed"
+msgstr ""
+
+#: ../src/app/qml/authentication/PasswordDialog.qml:45
+msgid "Your passphrase is required to access restricted content"
+msgstr ""
+
+#: ../src/app/qml/authentication/PasswordDialog.qml:46
+msgid "Your passcode is required to access restricted content"
+msgstr ""
+
+#: ../src/app/qml/authentication/PasswordDialog.qml:57
+msgid "passphrase (default is 0000 if unset)"
+msgstr ""
+
+#: ../src/app/qml/authentication/PasswordDialog.qml:57
+msgid "passcode (default is 0000 if unset)"
+msgstr ""
+
+#: ../src/app/qml/authentication/PasswordDialog.qml:69
+msgid "Authentication failed. Please retry"
+msgstr ""
+
+#: ../src/app/qml/authentication/PasswordDialog.qml:74
+msgid "Authenticate"
+msgstr ""
+
+#: ../src/app/qml/backend/FolderListModel.qml:123
+#: ../src/app/qml/filemanager.qml:170
+#, qt-format
+msgid "%1 file"
+msgid_plural "%1 files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/app/qml/backend/FolderListModel.qml:134
+msgid "Folder"
+msgstr ""
+
+#: ../src/app/qml/components/TextualButtonStyle.qml:48
+#: ../src/app/qml/components/TextualButtonStyle.qml:56
+#: ../src/app/qml/components/TextualButtonStyle.qml:63
+msgid "Pick"
+msgstr ""
+
+#: ../src/app/qml/content-hub/FileOpener.qml:27
+msgid "Open with"
+msgstr ""
+
+#: ../src/app/qml/dialogs/ConfirmExtractDialog.qml:15
+msgid "Extract Archive"
+msgstr ""
+
+#: ../src/app/qml/dialogs/ConfirmExtractDialog.qml:16
+#, qt-format
+msgid "Are you sure you want to extract '%1' here?"
+msgstr ""
+
+#: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:15
+#: ../src/app/qml/dialogs/ConfirmSingleDeleteDialog.qml:16
+#, qt-format
+msgid "Are you sure you want to permanently delete '%1'?"
+msgstr ""
+
+#: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:15
+msgid "these files"
+msgstr ""
+
+#: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:18
+#: ../src/app/qml/dialogs/ConfirmSingleDeleteDialog.qml:21
+msgid "Deleting files"
+msgstr ""
+
+#: ../src/app/qml/dialogs/ConfirmRenameDialog.qml:21
+msgid "Enter a new name"
+msgstr ""
+
+#: ../src/app/qml/dialogs/CreateItemDialog.qml:13
+msgid "Create Item"
+msgstr ""
+
+#: ../src/app/qml/dialogs/CreateItemDialog.qml:14
+msgid "Enter name for new item"
+msgstr ""
+
+#: ../src/app/qml/dialogs/CreateItemDialog.qml:18
+msgid "Item name"
+msgstr ""
+
+#: ../src/app/qml/dialogs/CreateItemDialog.qml:24
+msgid "Create file"
+msgstr ""
+
+#: ../src/app/qml/dialogs/CreateItemDialog.qml:43
+msgid "Create Folder"
+msgstr ""
+
+#: ../src/app/qml/dialogs/ExtractingDialog.qml:23
+#, qt-format
+msgid "Extracting archive '%1'"
+msgstr ""
+
+#: ../src/app/qml/dialogs/ExtractingDialog.qml:44
+#: ../src/app/qml/dialogs/NotifyDialog.qml:27
+#: ../src/app/qml/dialogs/templates/ConfirmDialog.qml:31
+#: ../src/app/qml/dialogs/templates/ConfirmDialogWithInput.qml:49
+msgid "OK"
+msgstr ""
+
+#: ../src/app/qml/dialogs/ExtractingDialog.qml:59
+msgid "Extracting failed"
+msgstr ""
+
+#: ../src/app/qml/dialogs/ExtractingDialog.qml:60
+#, qt-format
+msgid "Extracting the archive '%1' failed."
+msgstr ""
+
+#: ../src/app/qml/dialogs/FileActionDialog.qml:30
+msgid "Choose action"
+msgstr ""
+
+#: ../src/app/qml/dialogs/FileActionDialog.qml:31
+#, qt-format
+msgid "For file: %1"
+msgstr ""
+
+#: ../src/app/qml/dialogs/FileActionDialog.qml:35
+msgid "Open"
+msgstr ""
+
+#: ../src/app/qml/dialogs/FileOperationProgressDialog.qml:27
+msgid "Operation in progress"
+msgstr ""
+
+#: ../src/app/qml/dialogs/FileOperationProgressDialog.qml:29
+msgid "File operation"
+msgstr ""
+
+#: ../src/app/qml/dialogs/NetAuthenticationDialog.qml:45
+msgid "User"
+msgstr ""
+
+#: ../src/app/qml/dialogs/NetAuthenticationDialog.qml:58
+msgid "Password"
+msgstr ""
+
+#: ../src/app/qml/dialogs/NetAuthenticationDialog.qml:72
+msgid "Save password"
+msgstr ""
+
+#: ../src/app/qml/dialogs/NetAuthenticationDialog.qml:108
+msgid "Ok"
+msgstr ""
+
+#: ../src/app/qml/dialogs/OpenArchiveDialog.qml:8
+msgid "Archive file"
+msgstr ""
+
+#: ../src/app/qml/dialogs/OpenArchiveDialog.qml:9
+msgid "Do you want to extract the archive here?"
+msgstr ""
+
+#: ../src/app/qml/dialogs/OpenArchiveDialog.qml:28
+#: ../src/app/qml/dialogs/OpenWithDialog.qml:44
+msgid "Open with another app"
+msgstr ""
+
+#: ../src/app/qml/dialogs/OpenWithDialog.qml:8
+msgid "Open file"
+msgstr ""
+
+#: ../src/app/qml/dialogs/OpenWithDialog.qml:9
+msgid "What do you want to do with the clicked file?"
+msgstr ""
+
+#: ../src/app/qml/dialogs/OpenWithDialog.qml:22
+msgid "Preview"
+msgstr ""
+
+#: ../src/app/qml/filemanager.qml:171
+#, qt-format
+msgid "Saved to: %1"
+msgstr ""
+
+#: ../src/app/qml/panels/DefaultBottomBar.qml:24
+msgid "Paste files"
+msgstr ""
+
+#: ../src/app/qml/ui/FileDetailsPopover.qml:34
+msgid "Readable"
+msgstr ""
+
+#: ../src/app/qml/ui/FileDetailsPopover.qml:37
+msgid "Writable"
+msgstr ""
+
+#: ../src/app/qml/ui/FileDetailsPopover.qml:40
+msgid "Executable"
+msgstr ""
+
+#: ../src/app/qml/ui/FileDetailsPopover.qml:100
+msgid "Where:"
+msgstr ""
+
+#: ../src/app/qml/ui/FileDetailsPopover.qml:127
+msgid "Created:"
+msgstr ""
+
+#: ../src/app/qml/ui/FileDetailsPopover.qml:141
+msgid "Modified:"
+msgstr ""
+
+#: ../src/app/qml/ui/FileDetailsPopover.qml:155
+msgid "Accessed:"
+msgstr ""
+
+#: ../src/app/qml/ui/FileDetailsPopover.qml:176
+msgid "Permissions:"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:241
+#: ../src/app/qml/ui/FolderListPage.qml:296
+msgid "Restricted access"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:245
+msgid ""
+"Authentication is required in order to see all the content of this folder."
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:282
+msgid "No files"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:283
+msgid "This folder is empty."
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:297
+msgid "Authentication is required in order to see the content of this folder."
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPage.qml:313
+msgid "File operation error"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPageDefaultHeader.qml:21
+#: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
+#, qt-format
+msgid "%1 item"
+msgid_plural "%1 items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
+msgid "Save here"
+msgstr ""
+
+#: ../src/app/qml/ui/FolderListPageSelectionHeader.qml:18
+#, qt-format
+msgid "%1 item selected"
+msgid_plural "%1 items selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:24
+msgid "Show Hidden Files"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:37
+msgid "View As"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:39
+msgid "List"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:39
+msgid "Icons"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:44
+msgid "Grid size"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
+msgid "S"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
+msgid "M"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
+msgid "L"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
+msgid "XL"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:52
+msgid "List size"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:60
+msgid "Sort By"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:62
+msgid "Name"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:62
+msgid "Date"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:62
+msgid "Size"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:67
+msgid "Sort Order"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:74
+msgid "Theme"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:76
+msgid "Light"
+msgstr ""
+
+#: ../src/app/qml/ui/ViewPopover.qml:76
+msgid "Dark"
+msgstr ""
+
+#: ../src/app/qml/views/FolderDelegateActions.qml:40
+msgid "Folder not accessible"
+msgstr ""
+
+#. TRANSLATORS: this refers to a folder name
+#: ../src/app/qml/views/FolderDelegateActions.qml:42
+#, qt-format
+msgid "Can not access %1"
+msgstr ""
+
+#: ../src/app/qml/views/FolderDelegateActions.qml:136
+msgid "Could not rename"
+msgstr ""
+
+#: ../src/app/qml/views/FolderDelegateActions.qml:137
+msgid ""
+"Insufficient permissions, name contains special chars (e.g. '/'), or already "
+"exists"
+msgstr ""
+
+#: ../src/app/qml/views/FolderListView.qml:72
+msgid "Directories"
+msgstr ""
+
+#: ../src/app/qml/views/FolderListView.qml:72
+msgid "Files"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:360
+msgid "Unknown"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:487
+msgid "path or url may not exist or cannot be read"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:690
+msgid "Rename error"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:713
+msgid "Error creating new folder"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:740
+msgid "Touch file error"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/dirmodel.cpp:1353
+msgid "items"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:320
+msgid "File or Directory does not exist"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:321
+msgid " does not exist"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:326
+msgid "Cannot access File or Directory"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:327
+msgid " it needs Authentication"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:361
+msgid "Cannot copy/move items"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:362
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1487
+msgid "no write permission on folder "
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:642
+msgid "Could not remove the item "
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:680
+msgid "Could not find a suitable name to backup"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:733
+msgid "Could not create the directory"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:738
+msgid "Could not create link to"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:746
+msgid "Could not set permissions to dir"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:756
+msgid "Could not open file"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:772
+msgid "There is no space to copy"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:780
+msgid "Could not create file"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:837
+msgid "Could not remove the directory/file "
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:850
+msgid "Could not move the directory/file "
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1089
+msgid "Write error in "
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1101
+msgid "Read error in "
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1318
+msgid " Copy"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1371
+msgid "Set permissions error in "
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1437
+msgid "Could not create trash info file"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1449
+msgid "Could not remove the trash info file"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1479
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1486
+msgid "Cannot move items"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1481
+msgid "origin and destination folders are the same"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/filesystemaction.cpp:1524
+msgid "There is no space to download"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:72
+msgid "net tool not found, check samba installation"
+msgstr ""
+
+#: ../src/plugin/folderlistmodel/smb/qsambaclient/src/smbusershare.cpp:80
+msgid "cannot write in "
+msgstr ""
+
+#: com.ubuntu.filemanager.desktop.in.in.h:1
+msgid "File Manager"
+msgstr ""
+
+#: com.ubuntu.filemanager.desktop.in.in.h:2
+msgid "folder;manager;explore;disk;filesystem;"
+msgstr ""
