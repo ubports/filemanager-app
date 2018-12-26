@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-11-26 20:23+0000\n"
+"PO-Revision-Date: 2018-12-26 10:53+0000\n"
 "Last-Translator: M.Sugahara <equaaqua@hotmail.com>\n"
 "Language-Team: Japanese <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/ja/>\n"
@@ -238,7 +238,7 @@ msgstr "'%1' を完全に削除します。よろしいですか？"
 
 #: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:15
 msgid "these files"
-msgstr ""
+msgstr "これらのファイル"
 
 #: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:18
 #: ../src/app/qml/dialogs/ConfirmSingleDeleteDialog.qml:21
@@ -255,15 +255,15 @@ msgstr "アイテムを作成"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:14
 msgid "Enter name for new item"
-msgstr ""
+msgstr "新しいアイテムの名前を入力"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:18
 msgid "Item name"
-msgstr ""
+msgstr "アイテム名"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:24
 msgid "Create file"
-msgstr ""
+msgstr "ファイルを作成"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:43
 msgid "Create Folder"
