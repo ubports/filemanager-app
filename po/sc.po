@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-12-28 09:14+0000\n"
+"PO-Revision-Date: 2018-12-30 00:00+0000\n"
 "Last-Translator: Adrià <adriamartinmor@gmail.com>\n"
 "Language-Team: Sardinian <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/sc/>\n"
@@ -513,7 +513,7 @@ msgstr "Òrdina pro"
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
 msgid "Name"
-msgstr "Nùmene"
+msgstr "Nòmine"
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
 msgid "Date"
