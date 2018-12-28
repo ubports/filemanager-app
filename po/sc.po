@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-12-28 09:13+0000\n"
+"PO-Revision-Date: 2018-12-28 09:14+0000\n"
 "Last-Translator: Adrià <adriamartinmor@gmail.com>\n"
 "Language-Team: Sardinian <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/sc/>\n"
@@ -86,7 +86,7 @@ msgstr "Propiedades"
 #: ../src/app/qml/actions/Rename.qml:5
 #: ../src/app/qml/dialogs/ConfirmRenameDialog.qml:20
 msgid "Rename"
-msgstr "Muda su nùmene"
+msgstr "Muda su nòmine"
 
 #: ../src/app/qml/actions/Select.qml:5
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:60
@@ -257,7 +257,7 @@ msgstr "Cantzellende archìvios"
 
 #: ../src/app/qml/dialogs/ConfirmRenameDialog.qml:21
 msgid "Enter a new name"
-msgstr "Inserta·nche unu nùmene nou"
+msgstr "Inserta·nche unu nòmine nou"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:13
 #, fuzzy
@@ -267,12 +267,12 @@ msgstr "Crea un'archìviu"
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:14
 #, fuzzy
 msgid "Enter name for new item"
-msgstr "Inserta·nche su nùmene de s'archìviu nou"
+msgstr "Inserta·nche su nòmine de s'archìviu nou"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:18
 #, fuzzy
 msgid "Item name"
-msgstr "Muda su nùmene"
+msgstr "Muda su nòmine"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:24
 msgid "Create file"
@@ -552,14 +552,14 @@ msgstr "Non si podet intrare a %1"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:136
 msgid "Could not rename"
-msgstr "Impossìbile mudare su nùmene"
+msgstr "Impossìbile mudare su nòmine"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:137
 #, fuzzy
 msgid ""
 "Insufficient permissions, name contains special chars (e.g. '/'), or already "
 "exists"
-msgstr "No tenes permissos o su nùmene esistet giai."
+msgstr "No tenes permissos o su nòmine esistet giai."
 
 #: ../src/app/qml/views/FolderListView.qml:72
 msgid "Directories"
@@ -580,7 +580,7 @@ msgstr "Su percursu o s'url no esistet o non si podet lèghere"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:690
 msgid "Rename error"
-msgstr "Faddina in su càmbiu de nùmene"
+msgstr "Faddina in su càmbiu de nòmine"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:713
 msgid "Error creating new folder"
@@ -625,7 +625,7 @@ msgstr "Non s'est pòdidu fuliare s'elementu "
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:680
 msgid "Could not find a suitable name to backup"
-msgstr "Non s'agatat unu nùmene adeguadu pro sa còpia de seguresa"
+msgstr "Non s'agatat unu nòmine adeguadu pro sa còpia de seguresa"
 
 #: ../src/plugin/folderlistmodel/filesystemaction.cpp:733
 msgid "Could not create the directory"
