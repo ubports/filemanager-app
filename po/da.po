@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-11-04 00:01+0000\n"
+"PO-Revision-Date: 2019-01-06 00:00+0000\n"
 "Last-Translator: Tom Rausner <tomrausner@gmail.com>\n"
 "Language-Team: Danish <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/da/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1.1\n"
 "X-Launchpad-Export-Date: 2017-04-08 06:04+0000\n"
 
 #: ../src/app/qml/actions/AddBookmark.qml:6
@@ -100,9 +100,8 @@ msgid "Select None"
 msgstr "Vælg"
 
 #: ../src/app/qml/actions/SelectUnselectAll.qml:6
-#, fuzzy
 msgid "Select All"
-msgstr "Vælg"
+msgstr "Vælg alle"
 
 #: ../src/app/qml/actions/Settings.qml:6
 msgid "Settings"
@@ -126,7 +125,7 @@ msgstr ""
 
 #: ../src/app/qml/actions/UnlockFullAccess.qml:6
 msgid "Unlock"
-msgstr ""
+msgstr "Lås op"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:26
 #: ../src/app/qml/authentication/PasswordDialog.qml:43
