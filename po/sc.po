@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-12-30 00:00+0000\n"
+"PO-Revision-Date: 2019-01-12 10:43+0000\n"
 "Last-Translator: Adrià <adriamartinmor@gmail.com>\n"
 "Language-Team: Sardinian <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/sc/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../src/app/qml/actions/AddBookmark.qml:6
 msgid "Add bookmark"
-msgstr ""
+msgstr "Agiunghe marcadore"
 
 #: ../src/app/qml/actions/ArchiveExtract.qml:6
 #: ../src/app/qml/dialogs/OpenArchiveDialog.qml:18
@@ -51,7 +51,7 @@ msgid "Cut"
 msgstr "Sega"
 
 #: ../src/app/qml/actions/FilePaste.qml:30
-#, fuzzy, qt-format
+#, qt-format
 msgid "Paste %1 file"
 msgid_plural "Paste %1 files"
 msgstr[0] "Incolla %1 archìviu"
@@ -59,11 +59,11 @@ msgstr[1] "Incolla %1 archìvios"
 
 #: ../src/app/qml/actions/GoBack.qml:5
 msgid "Go back"
-msgstr ""
+msgstr "In segus"
 
 #: ../src/app/qml/actions/GoNext.qml:5
 msgid "Go next"
-msgstr ""
+msgstr "In antis"
 
 #: ../src/app/qml/actions/GoTo.qml:6
 msgid "Go To"
@@ -71,7 +71,7 @@ msgstr "Bae a"
 
 #: ../src/app/qml/actions/NewItem.qml:6
 msgid "New Item"
-msgstr ""
+msgstr "Elementu nou"
 
 #: ../src/app/qml/actions/PlacesBookmarks.qml:6
 #: ../src/app/qml/ui/PlacesPage.qml:16
@@ -94,14 +94,12 @@ msgid "Select"
 msgstr "Seletziona"
 
 #: ../src/app/qml/actions/SelectUnselectAll.qml:6
-#, fuzzy
 msgid "Select None"
-msgstr "Seletziona"
+msgstr "Non seletziones nudda"
 
 #: ../src/app/qml/actions/SelectUnselectAll.qml:6
-#, fuzzy
 msgid "Select All"
-msgstr "Seletziona"
+msgstr "Seletziona totus"
 
 #: ../src/app/qml/actions/Settings.qml:6
 msgid "Settings"
@@ -113,7 +111,7 @@ msgstr "Cumpartzi"
 
 #: ../src/app/qml/actions/TabsAdd.qml:5
 msgid "Add tab"
-msgstr ""
+msgstr "Agiunghe ischeda"
 
 #: ../src/app/qml/actions/TabsCloseThis.qml:5
 msgid "Close this tab"
@@ -125,7 +123,7 @@ msgstr "Aberi in un'ischeda noa"
 
 #: ../src/app/qml/actions/UnlockFullAccess.qml:6
 msgid "Unlock"
-msgstr ""
+msgstr "Isbloca"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:26
 #: ../src/app/qml/authentication/PasswordDialog.qml:43
@@ -135,17 +133,16 @@ msgstr "Autenticatzione rechèdida"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:27
 msgid "Use your fingerprint to access restricted content"
-msgstr ""
+msgstr "Imprea s'imprenta tua pro atzèdere a cuntenutos restrintos"
 
 #. TRANSLATORS: "Touch" here is a verb
 #: ../src/app/qml/authentication/FingerprintDialog.qml:55
 msgid "Touch sensor"
-msgstr ""
+msgstr "Toca su sensore"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:60
-#, fuzzy
 msgid "Use password"
-msgstr "Sarva sa crae"
+msgstr "Imprea una crae"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:69
 #: ../src/app/qml/authentication/PasswordDialog.qml:80
@@ -165,66 +162,60 @@ msgid "Cancel"
 msgstr "Annulla"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:126
-#, fuzzy
 msgid "Authentication failed!"
 msgstr "Autenticatzione faddida"
 
 #: ../src/app/qml/authentication/FingerprintDialog.qml:137
 msgid "Please retry"
-msgstr ""
+msgstr "Torra·bi a proare"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:35
 msgid "Authentication failed"
 msgstr "Autenticatzione faddida"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:45
-#, fuzzy
 msgid "Your passphrase is required to access restricted content"
-msgstr "Sa crae est rechesta pro atzèdere a totu is archìvios"
+msgstr "Sa crae est rechesta pro atzèdere a cuntenutos restrintos"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:46
-#, fuzzy
 msgid "Your passcode is required to access restricted content"
-msgstr "Sa crae est rechesta pro atzèdere a totu is archìvios"
+msgstr "Sa crae est rechesta pro atzèdere a cuntenutos restrintos"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passphrase (default is 0000 if unset)"
-msgstr ""
+msgstr "Crae (cussa predefinida est 0000)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:57
 msgid "passcode (default is 0000 if unset)"
-msgstr ""
+msgstr "Còdighe de atzessu (cussu predefinidu est 0000)"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:69
-#, fuzzy
 msgid "Authentication failed. Please retry"
-msgstr "Autenticatzione faddida"
+msgstr "Autenticatzione faddida. Torra·bi a proare"
 
 #: ../src/app/qml/authentication/PasswordDialog.qml:74
-#, fuzzy
 msgid "Authenticate"
-msgstr "Autenticatzione faddida"
+msgstr "Autèntica·ti"
 
 #: ../src/app/qml/backend/FolderListModel.qml:123
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 file"
 msgstr "%1 archìviu"
 
 #: ../src/app/qml/backend/FolderListModel.qml:124
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 files"
-msgstr "%1 archìviu"
+msgstr "%1 archìvios"
 
 #: ../src/app/qml/backend/FolderListModel.qml:135
-#, fuzzy
 msgid "Folder"
-msgstr "Cartella noa"
+msgstr "Cartella"
 
 #: ../src/app/qml/components/TextualButtonStyle.qml:48
 #: ../src/app/qml/components/TextualButtonStyle.qml:56
 #: ../src/app/qml/components/TextualButtonStyle.qml:63
 msgid "Pick"
-msgstr ""
+msgstr "Sèbera"
 
 #: ../src/app/qml/content-hub/FileOpener.qml:27
 msgid "Open with"
@@ -246,9 +237,8 @@ msgid "Are you sure you want to permanently delete '%1'?"
 msgstr "Seguru chi boles cantzellare '%1' de manera definitiva?"
 
 #: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:15
-#, fuzzy
 msgid "these files"
-msgstr "Incolla archìvios"
+msgstr "custos archìvios"
 
 #: ../src/app/qml/dialogs/ConfirmMultipleDeleteDialog.qml:18
 #: ../src/app/qml/dialogs/ConfirmSingleDeleteDialog.qml:21
@@ -260,26 +250,22 @@ msgid "Enter a new name"
 msgstr "Inserta·nche unu nòmine nou"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:13
-#, fuzzy
 msgid "Create Item"
-msgstr "Crea un'archìviu"
+msgstr "Crea un'elementu"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:14
-#, fuzzy
 msgid "Enter name for new item"
-msgstr "Inserta·nche su nòmine de s'archìviu nou"
+msgstr "Inserta·nche su nòmine de s'elementu nou"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:18
-#, fuzzy
 msgid "Item name"
-msgstr "Muda su nòmine"
+msgstr "Nòmine de s'elementu"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:24
 msgid "Create file"
 msgstr "Crea un'archìviu"
 
 #: ../src/app/qml/dialogs/CreateItemDialog.qml:43
-#, fuzzy
 msgid "Create Folder"
 msgstr "Crea una cartella"
 
@@ -355,18 +341,16 @@ msgid "Open with another app"
 msgstr "Aberi cun un'àtera aplicatzione"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:8
-#, fuzzy
 msgid "Open file"
-msgstr "Aberi cun"
+msgstr "Aberi s'archìviu"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:9
-#, fuzzy
 msgid "What do you want to do with the clicked file?"
-msgstr "Nde boles bogare s'archiviu inoghe?"
+msgstr "Ite boles fàghere cun s'archìviu seletzionadu?"
 
 #: ../src/app/qml/dialogs/OpenWithDialog.qml:22
 msgid "Preview"
-msgstr ""
+msgstr "Anteprima"
 
 #: ../src/app/qml/filemanager.qml:170
 #, qt-format
@@ -401,12 +385,11 @@ msgstr "Esecutàbile"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:100
 msgid "Where:"
-msgstr ""
+msgstr "In ue:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:127
-#, fuzzy
 msgid "Created:"
-msgstr "Crea una cartella"
+msgstr "Creadu:"
 
 #: ../src/app/qml/ui/FileDetailsPopover.qml:141
 msgid "Modified:"
@@ -423,12 +406,12 @@ msgstr "Permissos:"
 #: ../src/app/qml/ui/FolderListPage.qml:241
 #: ../src/app/qml/ui/FolderListPage.qml:296
 msgid "Restricted access"
-msgstr ""
+msgstr "Atzessu limitadu"
 
 #: ../src/app/qml/ui/FolderListPage.qml:245
 msgid ""
 "Authentication is required in order to see all the content of this folder."
-msgstr ""
+msgstr "Ti depes autenticare pro bìdere su cuntenutu de custa cartella."
 
 #: ../src/app/qml/ui/FolderListPage.qml:282
 msgid "No files"
@@ -436,11 +419,11 @@ msgstr "Perunu archìviu"
 
 #: ../src/app/qml/ui/FolderListPage.qml:283
 msgid "This folder is empty."
-msgstr ""
+msgstr "Sa cartella est boida."
 
 #: ../src/app/qml/ui/FolderListPage.qml:297
 msgid "Authentication is required in order to see the content of this folder."
-msgstr ""
+msgstr "Ti depes autenticare pro bìdere su cuntenutu de custa cartella."
 
 #: ../src/app/qml/ui/FolderListPage.qml:313
 msgid "File operation error"
@@ -448,23 +431,22 @@ msgstr "B'est istada una faddina in un'operatzione de archìviu"
 
 #: ../src/app/qml/ui/FolderListPageDefaultHeader.qml:21
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
-#, fuzzy, qt-format
+#, qt-format
 msgid "%1 item"
 msgid_plural "%1 items"
-msgstr[0] "cuntenutos"
-msgstr[1] "cuntenutos"
+msgstr[0] "%1 cuntenutu"
+msgstr[1] "%1 cuntenutos"
 
 #: ../src/app/qml/ui/FolderListPagePickModeHeader.qml:21
-#, fuzzy
 msgid "Save here"
-msgstr "Sarva"
+msgstr "Sarva inoghe"
 
 #: ../src/app/qml/ui/FolderListPageSelectionHeader.qml:18
 #, qt-format
 msgid "%1 item selected"
 msgid_plural "%1 items selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 elementu seletzionadu"
+msgstr[1] "%1 elementos seletzionados"
 
 #: ../src/app/qml/ui/ViewPopover.qml:24
 msgid "Show Hidden Files"
@@ -484,28 +466,27 @@ msgstr "Iconas"
 
 #: ../src/app/qml/ui/ViewPopover.qml:44
 msgid "Grid size"
-msgstr ""
+msgstr "Mannària de sa grìllia"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: ../src/app/qml/ui/ViewPopover.qml:47 ../src/app/qml/ui/ViewPopover.qml:55
 msgid "XL"
-msgstr ""
+msgstr "XL"
 
 #: ../src/app/qml/ui/ViewPopover.qml:52
-#, fuzzy
 msgid "List size"
-msgstr "Lista"
+msgstr "Mannària de sa lista"
 
 #: ../src/app/qml/ui/ViewPopover.qml:60
 msgid "Sort By"
@@ -520,9 +501,8 @@ msgid "Date"
 msgstr "Data"
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
-#, fuzzy
 msgid "Size"
-msgstr "Mannària:"
+msgstr "Mannària"
 
 #: ../src/app/qml/ui/ViewPopover.qml:67
 msgid "Sort Order"
@@ -530,15 +510,15 @@ msgstr "Ordinamentu"
 
 #: ../src/app/qml/ui/ViewPopover.qml:74
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Light"
-msgstr ""
+msgstr "Craru"
 
 #: ../src/app/qml/ui/ViewPopover.qml:76
 msgid "Dark"
-msgstr ""
+msgstr "Iscuru"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:40
 msgid "Folder not accessible"
@@ -555,20 +535,20 @@ msgid "Could not rename"
 msgstr "Impossìbile mudare su nòmine"
 
 #: ../src/app/qml/views/FolderDelegateActions.qml:137
-#, fuzzy
 msgid ""
 "Insufficient permissions, name contains special chars (e.g. '/'), or already "
 "exists"
-msgstr "No tenes permissos o su nòmine esistet giai."
+msgstr ""
+"No tenes permissos, su nòmine tenet caràteres ispetziales (che a «/») o "
+"esistet giai"
 
 #: ../src/app/qml/views/FolderListView.qml:72
 msgid "Directories"
-msgstr ""
+msgstr "Cartellas"
 
 #: ../src/app/qml/views/FolderListView.qml:72
-#, fuzzy
 msgid "Files"
-msgstr "Archìviu"
+msgstr "Archìvios"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:360
 msgid "Unknown"
@@ -588,7 +568,7 @@ msgstr "Faddina in sa creatzione de sa cartella noa"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:740
 msgid "Touch file error"
-msgstr ""
+msgstr "Faddina in sa creatzione de s'archìviu"
 
 #: ../src/plugin/folderlistmodel/dirmodel.cpp:1353
 msgid "items"
@@ -710,7 +690,7 @@ msgstr "Gestore de archìvios"
 
 #: com.ubuntu.filemanager.desktop.in.in.h:2
 msgid "folder;manager;explore;disk;filesystem;"
-msgstr ""
+msgstr "cartella;gestore;esplorare;discu;filesystem;"
 
 #~ msgid "About Application"
 #~ msgstr "Informatziones de s'aplicatzione"
