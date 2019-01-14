@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ubuntu-filemanager-app\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-03 13:35+0000\n"
-"PO-Revision-Date: 2018-12-22 17:40+0000\n"
+"PO-Revision-Date: 2018-12-26 10:53+0000\n"
 "Last-Translator: ierihon <idekovets@mail.ru>\n"
 "Language-Team: Belarusian <https://translate.ubports.com/projects/ubports/"
 "filemanager-app/be/>\n"
@@ -292,7 +292,7 @@ msgstr "Памылка выняцця"
 #: ../src/app/qml/dialogs/ExtractingDialog.qml:60
 #, qt-format
 msgid "Extracting the archive '%1' failed."
-msgstr "Не атрымалася распакаваць архіў \"%1\""
+msgstr "Не атрымалася распакаваць архіў '%1'."
 
 #: ../src/app/qml/dialogs/FileActionDialog.qml:30
 msgid "Choose action"
@@ -500,7 +500,7 @@ msgstr "Парадкаваць паводле"
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
 msgid "Name"
-msgstr "Назве"
+msgstr "Імя"
 
 #: ../src/app/qml/ui/ViewPopover.qml:62
 msgid "Date"
